@@ -36,6 +36,8 @@ $ npm install
 
 ## Running the app
 
+Create a `development.env` file in this folder (`./server`) with the required environment variables.
+
 ```bash
 # development
 $ npm run start
