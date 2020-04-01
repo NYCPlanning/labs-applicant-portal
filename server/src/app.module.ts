@@ -6,10 +6,13 @@ import { ConfigService } from './config/config.service';
 import { ContactService } from './contact/contact.service';
 import { CrmService } from './crm/crm.service';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from './config/config.module';
+import { ContactModule } from './contact/contact.module';
+import { CrmModule } from './crm/crm.module';
 
 @Module({
-  imports: [AuthModule],
+  imports: [AuthModule, ConfigModule, ContactModule, CrmModule],
   controllers: [AppController],
-  providers: [AppService, AuthService, ConfigService, ContactService, CrmService],
+  // providers: [AppService, AuthService, ConfigService, ContactService, CrmService],
 })
 export class AppModule {}
