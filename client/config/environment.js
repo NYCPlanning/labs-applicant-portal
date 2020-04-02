@@ -16,11 +16,18 @@ module.exports = function(environment) {
         Date: false
       }
     },
+    fontawesome: {
+      icons: {
+        'free-brands-svg-icons': 'all',
+        'free-regular-svg-icons': 'all',
+        'free-solid-svg-icons': 'all',
+      },
+    },
 
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
+    },
   };
 
   if (environment === 'development') {

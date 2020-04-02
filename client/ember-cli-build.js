@@ -4,7 +4,13 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
-    // Add options here
+    'sassOptions': {
+      'includePaths': [
+        'node_modules/',
+        'node_modules/foundation-sites/scss',
+        'node_modules/nyc-planning-style-guide/dist/assets/scss'
+      ]
+    }
   });
 
   // Use `app.import` to add additional libraries to the generated
