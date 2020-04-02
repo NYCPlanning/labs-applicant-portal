@@ -12,7 +12,7 @@ import { AuthService } from './auth.service';
     ConfigModule,
     ContactModule,
   ],
-  providers: [AuthService, ContactService, ConfigService],
+  providers: [AuthService],
   exports: [AuthService],
 })
 export class AuthModule {
@@ -45,9 +45,9 @@ export class AuthModule {
       console.log('generating cookie...');
 
       const response = await superagent.get(`http://localhost:3000/login?accessToken=${mockNycIdToken}`);
-      const { header: { 'set-cookie': [, token] } } = response;
+      const { header: { 'set-cookie': [token] } } = response;
 
-      console.log(`SKIP_AUTH is true! The cookie token is ${token}. Add this to your request headers.`);
+      console.log(`SKIP_AUTH is true! Add the following ZAP token to your request header, in the 'Cookie' property: ${token}.`);
     }, 3000);
   }
 

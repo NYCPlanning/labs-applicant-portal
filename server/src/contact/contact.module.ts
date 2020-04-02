@@ -10,7 +10,7 @@ import { ConfigService } from '../config/config.service';
     CrmModule,
     ConfigModule,
   ],
-  providers: [CrmService, ContactService, ConfigService],
+  providers: [ContactService],
   exports: [ContactService],
 })
 export class ContactModule {}

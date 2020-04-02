@@ -22,6 +22,7 @@ export class AuthService {
   ) {
     this.NYCID_TOKEN_SECRET = this.config.get('NYCID_TOKEN_SECRET');
     this.CRM_IMPOSTER_ID = this.config.get('CRM_IMPOSTER_ID');
+    this.ZAP_TOKEN_SECRET = this.config.get('ZAP_TOKEN_SECRET');
   }
 
   private signNewToken(
@@ -61,14 +62,14 @@ export class AuthService {
     const { email, expirationDate } = this.verifyNYCIDToken(NYCIDToken);
     const { CRM_IMPOSTER_ID } = this;
 
-    let contactId = '';
+    let contact = null;
     // prefer CRM_IMPOSTER_ID if it exists
 	if (CRM_IMPOSTER_ID) {
-	  contactId = await this.contactService.findOneById(CRM_IMPOSTER_ID)
+	  contact = await this.contactService.findOneById(CRM_IMPOSTER_ID)
 	} else {
- 	  contactId = await this.lookupContact(email);
+ 	  contact = await this.lookupContact(email);
 	};
     
-    return this.signNewToken(contactId, expirationDate);
+    return this.signNewToken(contact.contactid, expirationDate);
   }	
 }

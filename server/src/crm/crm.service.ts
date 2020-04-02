@@ -14,13 +14,13 @@ export class CrmService {
     private readonly config: ConfigService,
   ) {
 	 ADAL.ADAL_CONFIG = {
-	 CRMUrl: this.config.get('CRM_HOST'),
-	 webAPIurl: this.config.get('CRM_URL_PATH'),
-	 clientId: this.config.get('CLIENT_ID'),
-	 clientSecret: this.config.get('CLIENT_SECRET'),
-	 tenantId: this.config.get('TENANT_ID'),
-	 authorityHostUrl: this.config.get('AUTHORITY_HOST_URL'),
-	 tokenPath: this.config.get('TOKEN_PATH'),
+    CRMUrl: this.config.get('CRM_HOST'),
+    webAPIurl: this.config.get('CRM_URL_PATH'),
+    clientId: this.config.get('CLIENT_ID'),
+    clientSecret: this.config.get('CLIENT_SECRET'),
+    tenantId: this.config.get('TENANT_ID'),
+    authorityHostUrl: this.config.get('AUTHORITY_HOST_URL'),
+    tokenPath: this.config.get('TOKEN_PATH'),
 	};
 	 this.crmUrlPath = this.config.get('CRM_URL_PATH');
 	 this.crmHost = this.config.get('CRM_HOST');
