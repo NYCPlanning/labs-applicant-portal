@@ -3,7 +3,6 @@ import * as superagent from 'superagent';
 import * as jwt from 'jsonwebtoken';
 import { ConfigModule } from '../config/config.module';
 import { ContactModule } from '../contact/contact.module';
-import { ContactService } from '../contact/contact.service';
 import { ConfigService } from '../config/config.service';
 import { AuthService } from './auth.service';
 

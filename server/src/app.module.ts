@@ -6,7 +6,12 @@ import { ContactModule } from './contact/contact.module';
 import { CrmModule } from './crm/crm.module';
 
 @Module({
-  imports: [AuthModule, ConfigModule, ContactModule, CrmModule],
+  imports: [
+    AuthModule,
+    ConfigModule,
+    ContactModule,
+    CrmModule
+  ],
   controllers: [AppController],
 })
 export class AppModule {}
