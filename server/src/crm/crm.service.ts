@@ -1,12 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '../config/config.service';
-import { ADAL } from './adal';
+import { ADAL } from '../_utils/adal';
+import * as Request from 'request';
+import * as zlib from 'zlib';
 
 @Injectable()
 export class CrmService {
+  crmUrlPath = '';
+  crmHost = '';
+  host = '';
+
   constructor(
     private readonly config: ConfigService,
-    private readonly 
   ) {
 	 ADAL.ADAL_CONFIG = {
 	 CRMUrl: this.config.get('CRM_HOST'),
@@ -20,6 +25,74 @@ export class CrmService {
 	 this.crmUrlPath = this.config.get('CRM_URL_PATH');
 	 this.crmHost = this.config.get('CRM_HOST');
 	 this.host = `${this.crmHost}${this.crmUrlPath}`;
+  }
+
+  private parseErrorMessage (json) {
+    if (json) {
+      if (json.error) {
+        return json.error;
+      }
+      if (json._error) {
+        return json._error;
+      }
+    }
+    return "Error";
+  }
+
+  private dateReviver (key, value) {
+    if (typeof value === 'string') {
+      // YYYY-MM-DDTHH:mm:ss.sssZ => parsed as UTC
+      // YYYY-MM-DD => parsed as local date
+
+      if (value != "") {
+        const a = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/.exec(value);
+
+        if (a) {
+          const s = parseInt(a[6]);
+          const ms = Number(a[6]) * 1000 - s * 1000;
+          return new Date(Date.UTC(parseInt(a[1]), parseInt(a[2]) - 1, parseInt(a[3]), parseInt(a[4]), parseInt(a[5]), s, ms));
+        }
+
+        const b = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+
+        if (b) {
+          return new Date(parseInt(b[1]), parseInt(b[2]) - 1, parseInt(b[3]), 0, 0, 0, 0);
+        }
+      }
+    }
+
+    return value;
+  }
+
+  private fixLongODataAnnotations (dataObj) {
+    const newObj = {};
+
+    for (let name in dataObj) {
+      const formattedValuePrefix = name.indexOf("@OData.Community.Display.V1.FormattedValue");
+      const logicalNamePrefix = name.indexOf("@Microsoft.Dynamics.CRM.lookuplogicalname");
+      const navigationPropertyPrefix = name.indexOf("@Microsoft.Dynamics.CRM.associatednavigationproperty");
+
+      if (formattedValuePrefix >= 0) {
+        const newName = name.substring(0, formattedValuePrefix);
+        if(newName) newObj[`${newName}_formatted`] = dataObj[name];
+      }
+
+      else if (logicalNamePrefix >= 0) {
+        const newName = name.substring(0, logicalNamePrefix);
+        if(newName) newObj[`${newName}_logical`] = dataObj[name];
+      }
+
+      else if (navigationPropertyPrefix >= 0) {
+        const newName = name.substring(0, navigationPropertyPrefix);
+        if (newName) newObj[`${newName}_navigationproperty`] = dataObj[name];
+      }
+
+      else {
+        newObj[name] = dataObj[name];
+      }
+    }
+
+    return newObj;
   }
 
   async get(query, maxPageSize = 100, headers= {}) {
@@ -41,7 +114,7 @@ export class CrmService {
     };
 
     return new Promise((resolve, reject) => {
-      request.get(options, (error, response, body) => {
+      Request.get(options, (error, response, body) => {
         const encoding = response.headers['content-encoding'];
 
         if (!error && response.statusCode === 200) {

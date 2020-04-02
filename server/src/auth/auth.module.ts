@@ -1,21 +1,24 @@
 import { Module } from '@nestjs/common';
+import * as superagent from 'superagent';
+import * as jwt from 'jsonwebtoken';
 import { ConfigModule } from '../config/config.module';
 import { ContactModule } from '../contact/contact.module';
+import { ContactService } from '../contact/contact.service';
 import { ConfigService } from '../config/config.service';
-import { AuthModule } from './auth/auth.module';
-import { AuthService } from './auth/auth.service';
+import { AuthService } from './auth.service';
 
 @Module({
   imports: [
     ConfigModule,
     ContactModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService, ContactService, ConfigService],
   exports: [AuthService],
 })
 export class AuthModule {
   SKIP_AUTH = false;
   CRM_IMPOSTER_EMAIL = 'labs_dl@planning.nyc.gov';
+  NYCID_TOKEN_SECRET = '';
 
  constructor(private readonly config: ConfigService) {
     this.SKIP_AUTH = this.config.get('SKIP_AUTH');

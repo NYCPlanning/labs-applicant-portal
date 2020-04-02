@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { 
+  Injectable, 
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
 import * as moment from 'moment';
 import { ConfigService } from '../config/config.service';
@@ -10,6 +14,7 @@ export class AuthService {
   NYCID_TOKEN_SECRET = '';
   // development environment features
   CRM_IMPOSTER_ID = '';
+  ZAP_TOKEN_SECRET = '';
 
   constructor(
     private readonly config: ConfigService,
@@ -30,7 +35,7 @@ export class AuthService {
 
   private async lookupContact(email: string) {
     try {
-      return this.contactService.findByEmail(email);
+      return await this.contactService.findOneByEmail(email);
     } catch (e) {
       throw new HttpException(`
         CRM user not found. Please make sure your e-mail is associated with an assignment.
@@ -59,7 +64,7 @@ export class AuthService {
     let contactId = '';
     // prefer CRM_IMPOSTER_ID if it exists
 	if (CRM_IMPOSTER_ID) {
-	  contactId = this.contactService.findOne(CRM_IMPOSTER_ID)
+	  contactId = await this.contactService.findOneById(CRM_IMPOSTER_ID)
 	} else {
  	  contactId = await this.lookupContact(email);
 	};
