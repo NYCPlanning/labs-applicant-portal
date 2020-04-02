@@ -10,9 +10,7 @@ import { ContactService } from '../contact/contact.service';
 
 @Injectable()
 export class AuthService {
-  // required env variables
   NYCID_TOKEN_SECRET = '';
-  // development environment features
   CRM_IMPOSTER_ID = '';
   ZAP_TOKEN_SECRET = '';
 
@@ -34,21 +32,13 @@ export class AuthService {
     return jwt.sign({ contactId, expiration }, ZAP_TOKEN_SECRET);
   }
 
-  private async lookupContact(email: string) {
-    try {
-      return await this.contactService.findOneByEmail(email);
-    } catch (e) {
-      throw new HttpException(`
-        CRM user not found. Please make sure your e-mail is associated with an assignment.
-      `, HttpStatus.UNAUTHORIZED);
-    }
-  }
-
   private verifyToken(token, secret): string | {} {
     try {
       return jwt.verify(token, secret);
     } catch (e) {
-      throw new HttpException(e, HttpStatus.UNAUTHORIZED);
+      const errorMessage = `Could not verify token. ${e}`;
+      console.log(errorMessage);
+      throw new HttpException(errorMessage, HttpStatus.UNAUTHORIZED);
     }
   }
 
@@ -59,17 +49,24 @@ export class AuthService {
   }
 
   public async generateNewToken(NYCIDToken: string): Promise<string> {
-    const { email, expirationDate } = this.verifyNYCIDToken(NYCIDToken);
+    const { mail, exp } = this.verifyNYCIDToken(NYCIDToken);
     const { CRM_IMPOSTER_ID } = this;
 
     let contact = null;
-    // prefer CRM_IMPOSTER_ID if it exists
+
+    // prefer finding contact by CRM_IMPOSTER_ID, if it exists
     if (CRM_IMPOSTER_ID) {
       contact = await this.contactService.findOneById(CRM_IMPOSTER_ID)
     } else {
-      contact = await this.lookupContact(email);
+      contact = await this.contactService.findOneByEmail(mail);
     };
-    
-    return this.signNewToken(contact.contactid, expirationDate);
+
+    if (!contact) {
+      const errorMessage = 'CRM user not found. Please make sure your e-mail or ID is associated with an assignment.';
+      console.log(errorMessage);
+      throw new HttpException(errorMessage, HttpStatus.UNAUTHORIZED);
+    }
+
+    return this.signNewToken(contact.contactid, exp);
   }	
 }
