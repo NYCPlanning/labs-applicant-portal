@@ -64,11 +64,11 @@ export class AuthService {
 
     let contact = null;
     // prefer CRM_IMPOSTER_ID if it exists
-	if (CRM_IMPOSTER_ID) {
-	  contact = await this.contactService.findOneById(CRM_IMPOSTER_ID)
-	} else {
- 	  contact = await this.lookupContact(email);
-	};
+    if (CRM_IMPOSTER_ID) {
+      contact = await this.contactService.findOneById(CRM_IMPOSTER_ID)
+    } else {
+      contact = await this.lookupContact(email);
+    };
     
     return this.signNewToken(contact.contactid, expirationDate);
   }	
