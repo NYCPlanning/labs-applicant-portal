@@ -1,0 +1,17 @@
+// Foundation utilities
+@import 'foundation-sites/scss/util/util';
+
+// Labs UI variables
+@import 'nyc-planning-variables';
+
+// Foundation mixins
+@import 'foundation-sites/scss/foundation';
+
+// Foundation components
+@include foundation-everything; // or a subset
+
+// Style Guide components
+@import 'modules/nyc-planning-all-modules'; // or a subset
+
+// Labs UI components
+@import 'labs-ui/all-modules'; // or a subset

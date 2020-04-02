@@ -1,0 +1,25 @@
+<LabsUi::SiteHeader
+  @responsiveNav={{true}}
+  @responsiveSize="medium"
+  @betaNotice={{true}}
+  as |banner|
+>
+  <banner.title>
+    <LinkTo @route="index" class="site-title">
+      Applicants
+      <small class="site-subtitle show-for-medium">File and track your applications</small>
+    </LinkTo>
+  </banner.title>
+  <banner.nav>
+    <ul class="menu vertical medium-horizontal">
+      <li><a href="https://zap.planning.nyc.gov">Find Projects</a></li>
+      <li><a href=""><FaIcon @icon="user-circle" @prefix="fas" class="text-light-gray tiny-margin-right" /> Sign In</a></li>
+    </ul>
+  </banner.nav>
+</LabsUi::SiteHeader>
+
+<div class="site-main large-padding-bottom">
+  <div class="grid-container large-padding-top">
+    {{outlet}}
+  </div>
+</div>
