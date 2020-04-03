@@ -9,52 +9,42 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { ProjectsService } from './projects.service';
+import { ConfigService } from '../config/config.service';
 import { ContactService } from '../contact/contact.service';
 import { AuthService } from '../auth/auth.service';
 
 @Controller()
 export class ProjectsController {
+  CRM_IMPOSTER_ID = '';
+
   constructor(
   	private readonly projectsService: ProjectsService,
   	private readonly contactService: ContactService,
   	private readonly authService: AuthService,
-  ) {}
+    private readonly config: ConfigService,
+  ) {
+    this.CRM_IMPOSTER_ID = this.config.get('CRM_IMPOSTER_ID');
+  }
 
   @Get('/projects')
-  async index(@Session() session) {
+  // async index(@Session() session) {
+  async index() {
+    // TODO: build out middleware so session is accessible
     // if (!session) throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+    // let { contactid } = session;
 
+    // TODO: In the meantime, use CRM_IMPOSTER_ID for contactid
+    // const contactid = this.CRM_IMPOSTER_ID;
+    // console.log('imposter boop', contactid);
     // CRM_IMPOSTER_ID
-    let contactid = 'a42c6343-455a-ea11-a9a8-001dd8308047';
+    let contactid = '3380DBBD-995C-EA11-A9AF-001DD83080AB';
 
     if (contactid) {
-    	console.log('is there a contactid walnut?');
-
       const currentUserListOfProjects = this.projectsService.findManyByContactId(contactid)
 
       return currentUserListOfProjects;
+
     }
   }
-
-  // @Get('/projects')
-  // async getListOfProjectsByContact(@Res() res: Response) {
-  //   try {
-  //     // I'm assuming we'll want to already have this stored in the app
-  //     const contactId = this.authService.get('currentContactId');
-  //     const currentUserProjects = await this.projectsService.findManyByContactId(contactId);
-
-  //     res.status(201).send({
-  //       message: 'success getting projects list for contact',
-  //     });
-  //   } catch (e) {
-  //     if (e instanceof HttpException) {
-  //       res.status(401).send({ errors: [e] });
-  //     } else {
-  //       console.log(e);
-
-  //       res.status(500).send({ errors: [e] });
-  //     }
-  //   }
-  // }
 }
 
