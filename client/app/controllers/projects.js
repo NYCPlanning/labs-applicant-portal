@@ -1,26 +1,42 @@
 import Controller from '@ember/controller';
 
 export default class ProjectsController extends Controller {
-    // project should only show up if 
-    get toDoProjects () {
-        // handle filtering here, reference in template
+    // projects for applicant to do
+    get applicantProjects () {
+        // handle filtering here, reference in template as this.applicantProjects
         // todo if statuscode is "Save" or "Package Preparation"
-        this.model.filter(function(value) {
-            console.log('value ', value)
-            // if (!value.packages[0].statuscode) {
-            //     console.log('packages do not exist on this object')
-            // }
-            // else {
-            //     return value.packages[0].statuscode === "Active"
-            // }
-        })
+        return this.model.filter((project) => {
+            console.log('project being filtered', project)
+            // if (project.primaryApplicant === 'Brandyn Friedly') { return true}
 
-        // just return all the projects
-        return this.model
+            return project.packages.some((projectpackage) => {
+                if (projectpackage.statuscode === 'Saved' || projectpackage.statuscode === 'Package Preparation') {
+                    console.log("TRUEEE", project)
+                    return true
+                    } else { 
+                        console.log('FAAALSE') 
+                        return false
+                    }
+            })
+
+        })
     }
 
+    // projects for nyc planning to do
     get planningProjects () {
-        // "working on it" projects if statuscode is "Submitted", "Under Review", or "Revision Required"
+        // if statuscode is "Submitted", "Under Review", or "Revision Required"
         console.log("planningProjects getter")
+        return this.model.filter((project) => {
+            return project.packages.some((projectpackage) => {
+                if (projectpackage.statuscode === 'Submitted' || projectpackage.statuscode === 'Under Review' || projectpackage.statuscode === "Revision Required") {
+                    console.log("TRUEEE", project)
+                    return true
+                    } else { 
+                        console.log('FAAALSE') 
+                        return false
+                    }
+            })
+
+        })
     }
 }
