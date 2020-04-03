@@ -16,7 +16,6 @@ export class AppController {
   async login(@Res() res: Response, @Query('accessToken') NYCIDToken: string) {
     try {
       const ZAPToken = await this.authService.generateNewToken(NYCIDToken);
-      console.log('melon', ZAPToken);
 
       res.cookie('token', ZAPToken, { httpOnly: true })
         .send({ message: 'Login successful!' });

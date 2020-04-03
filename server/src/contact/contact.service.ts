@@ -17,7 +17,6 @@ export class ContactService {
 
     try  {
       results = await this.crmService.get(`contacts?$filter=contactid%20eq%20${contactId}&$top=1`);
-      // console.log('peaches results', results);
     } catch(e) {
       const errorMessage = `Error finding contact by ID. ${e.message}`;
       console.log(errorMessage);
@@ -34,7 +33,6 @@ export class ContactService {
 
     try {
       results = await this.crmService.get(`contacts?$filter=emailaddress1%20eq%20'${email}'&$top=1`);
-      // console.log('peaches results', results);
     } catch(e) {
       const errorMessage = `Error finding contact by email. ${e.message}`;
       console.log(errorMessage);

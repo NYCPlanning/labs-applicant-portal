@@ -4,6 +4,7 @@ import { ContactModule } from '../contact/contact.module';
 import { ContactService } from '../contact/contact.service';
 import { ProjectsService } from './projects.service';
 import { ConfigModule } from '../config/config.module';
+import { AuthModule } from '../auth/auth.module';
 import { ProjectsController } from './projects.controller';
 
 @Module({
@@ -11,6 +12,7 @@ import { ProjectsController } from './projects.controller';
     CrmModule,
     ConfigModule,
     ContactModule,
+    AuthModule,
   ],
   providers: [ProjectsService],
   exports: [ProjectsService],

@@ -48,27 +48,9 @@ export class AuthService {
     return this.verifyToken(token, NYCID_TOKEN_SECRET);
   }
 
-  public async currentContactId(NYCIDToken: string) {
-    const { mail, exp } = this.verifyNYCIDToken(NYCIDToken);
-    const { CRM_IMPOSTER_ID } = this;
-
-    let contact = null;
-
-    // prefer finding contact by CRM_IMPOSTER_ID, if it exists
-    if (CRM_IMPOSTER_ID) {
-      contact = await this.contactService.findOneById(CRM_IMPOSTER_ID)
-    } else {
-      contact = await this.contactService.findOneByEmail(mail);
-    };
-
-    return contact.contactid;
-  }
-
   public async generateNewToken(NYCIDToken: string): Promise<string> {
     const { mail, exp } = this.verifyNYCIDToken(NYCIDToken);
     const { CRM_IMPOSTER_ID } = this;
-
-    console.log('ice cream currentContactId', this.currentContactId(NYCIDToken));
 
     let contact = null;
 
