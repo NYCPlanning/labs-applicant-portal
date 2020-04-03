@@ -4,13 +4,15 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from './config/config.module';
 import { ContactModule } from './contact/contact.module';
 import { CrmModule } from './crm/crm.module';
+import { ProjectsModule } from './projects/projects.module';
 
 @Module({
   imports: [
     AuthModule,
     ConfigModule,
     ContactModule,
-    CrmModule
+    CrmModule,
+    ProjectsModule
   ],
   controllers: [AppController],
 })
