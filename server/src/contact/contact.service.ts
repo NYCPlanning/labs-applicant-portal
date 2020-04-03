@@ -25,9 +25,10 @@ export class ContactService {
    */
   public async findOneById(contactId: string) {
     let results = null;
+    const activeCode = 1;
 
     try  {
-      results = await this.crmService.get(`contacts?$filter=contactid%20eq%20${contactId}&$top=1`);
+      results = await this.crmService.get(`contacts?$filter=contactid%20eq%20${contactId}%20and%20statuscode%20eq%20${activeCode}&$top=1`);
     } catch(e) {
       const errorMessage = `Error finding contact by ID. ${e.message}`;
       console.log(errorMessage);
@@ -47,9 +48,10 @@ export class ContactService {
    */
   public async findOneByEmail(email: string) {
     let results = null;
+    const activeCode = 1;
 
     try {
-      results = await this.crmService.get(`contacts?$filter=emailaddress1%20eq%20'${email}'&$top=1`);
+      results = await this.crmService.get(`contacts?$filter=emailaddress1%20eq%20'${email}'%20and%20statuscode%20eq%20${activeCode}&$top=1`);
     } catch(e) {
       const errorMessage = `Error finding contact by email. ${e.message}`;
       console.log(errorMessage);
