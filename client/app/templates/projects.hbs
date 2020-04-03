@@ -1,1 +1,70 @@
+<div class="site-main large-padding-bottom">
+    <section class="grid-container large-padding-top large-padding-bottom">
+
+    <div class="grid-x grid-padding-x">
+        <div class="cell">
+        <nav aria-label="You are here:" role="navigation">
+            <ul class="breadcrumbs">
+            <li><span class="show-for-sr">Current: </span> My Projects</li>
+            </ul>
+        </nav>
+        <hr />
+        </div>
+
+        <div class="cell auto">
+        <h2 class="h4 text-dark-gray large-margin-bottom text-weight-normal">
+            <i class="fas fa-inbox fa-fw"></i>
+            TO DO
+        </h2>
+        <ul class="no-bullet">
+            {{!-- define toDoProjects in projects controller --}}
+            <ProjectListItem @projects= {{ this.toDoProjects }} />
+        </ul>
+        </div>
+
+        <div class="cell large-shrink">
+        <div class="callout bg-white-smoke large-padding-left large-padding-right" style="border:0;">
+            <h2 class="h4 text-weight-normal">
+            <i class="fas fa-lock fa-fw text-dark-gray"></i>
+            <small class="text-small"><i>NYC Planning is working on it&hellip;</i></small>
+            </h2>
+            <ul class="no-bullet">
+            <li class="large-margin-bottom">
+                <div class="grid-x grid-margin-x">
+                <div class="cell auto">
+                    <h3 class="h5 no-margin">
+                    My Minor Modification
+                    <small class="text-weight-normal">P2020M7890</small>
+                    </h3>
+                    <p class="tiny-margin-bottom text-small">
+                    <span class="text-dark-gray">Primary Applicant:</span> 
+                    <strong>Cuthbert Mockridge</strong>
+                    </p>
+                </div>
+                </div>
+            </li>
+            <li class="large-margin-bottom">
+                <div class="grid-x grid-margin-x">
+                <div class="cell auto">
+                    <h3 class="h5 no-margin">
+                    TomSquaPaNo Rezoning Project
+                    <small class="text-weight-normal">P2019M1234</small>
+                    </h3>
+                    <p class="tiny-margin-bottom text-small">
+                    <span class="text-dark-gray">Primary Applicant:</span> 
+                    <strong>Cuthbert Mockridge</strong>
+                    </p>
+                    <a href="/pas.html" class="button hollow tiny">View Pre-Application Statement</a>
+                </div>
+                </div>
+            </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+
+    </section>
+
+</div>
+
 {{outlet}}
