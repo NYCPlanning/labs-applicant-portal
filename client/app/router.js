@@ -8,5 +8,9 @@ export default class Router extends EmberRouter {
 }
 
 Router.map(function() { // eslint-disable-line
-  this.route('projects');
+  this.route('login');
+  // Nest all routes that require user login under this 'authenticated' route:
+  this.route('authenticated', { path: '' }, function() {
+    this.route('projects');
+  });
 });
