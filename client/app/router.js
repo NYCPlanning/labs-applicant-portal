@@ -7,4 +7,9 @@ export default class Router extends EmberRouter {
 }
 
 Router.map(function() {
+  this.route('login');
+  // Nest all routes that require user login under this 'authenticated' route:
+  this.route('authenticated', { path: '' }, function() {
+    // e.g. /projects
+  });
 });
