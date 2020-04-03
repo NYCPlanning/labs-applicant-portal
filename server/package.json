@@ -26,12 +26,15 @@
     "@nestjs/platform-express": "^7.0.0",
     "adal-node": "^0.2.1",
     "dotenv": "^8.1.0",
+    "inflected": "^2.0.4",
+    "jsonapi-serializer": "^3.6.6",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4",
-    "superagent": "^5.2.2"
+    "superagent": "^5.2.2",
+    "underscore": "^1.10.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.0.0",
