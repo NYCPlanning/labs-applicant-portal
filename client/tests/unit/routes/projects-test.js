@@ -5,7 +5,7 @@ module('Unit | Route | projects', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let route = this.owner.lookup('route:projects');
+    const route = this.owner.lookup('route:projects');
     assert.ok(route);
   });
 });
