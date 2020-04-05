@@ -5,15 +5,26 @@
   as |banner|
 >
   <banner.title>
-    <LinkTo @route="index" class="site-title">
+    <LinkTo @route="application" class="site-title">
       Applicants
       <small class="site-subtitle show-for-medium">File and track your applications</small>
     </LinkTo>
   </banner.title>
   <banner.nav>
     <ul class="menu vertical medium-horizontal">
-      <li><a href="https://zap.planning.nyc.gov"><span class="text-a11y-orange">Find Projects</span></a></li>
-      <li><a href=""><FaIcon @icon="user-circle" @prefix="fas" class="text-light-gray tiny-margin-right" /> <span class="text-a11y-orange">Sign In</span></a></li>
+      <li><a href="https://zap.planning.nyc.gov">Find Projects</a></li>
+      <li>
+        {{#if this.session.isAuthenticated}}
+          <button {{on "click" this.invalidateSession}}
+            href="#"
+            type="button"
+          >
+            Logout
+          </button>
+        {{else}}
+          <SignInButton />
+        {{/if}}
+      </li>
     </ul>
   </banner.nav>
 </LabsUi::SiteHeader>

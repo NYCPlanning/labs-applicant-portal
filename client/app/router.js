@@ -7,6 +7,8 @@ export default class Router extends EmberRouter {
   rootURL = config.rootURL;
 }
 
+// TODO: wrap in an authenticated route
 Router.map(function() { // eslint-disable-line
   this.route('projects');
+  this.route('login');
 });
