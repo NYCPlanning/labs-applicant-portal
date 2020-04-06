@@ -40,13 +40,13 @@ export class AppController {
   async getUser(@Session() session, @Res() res) {
     const { contactId } = session;
 
-    const contact = await this.contactService.findOneById(contactId);
-
     if (!contactId) {
       res.status(401).send({
         errors: ['Authentication required for this route'],
       });
     } else {
+      const contact = await this.contactService.findOneById(contactId);
+
       res.send(this.serialize([contact]));
     }
   }
