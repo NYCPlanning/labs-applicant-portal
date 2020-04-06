@@ -29,18 +29,14 @@ export class ProjectsController {
   }
 
   @Get('/projects')
-  // async index(@Session() session) {
-   async listOfCurrentUserProjects() {
-    // TODO: build out middleware so session is accessible
-    // if (!session) throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
-    // let { contactid } = session;
-
-    // TODO: In the meantime, use CRM_IMPOSTER_ID for contactid
-    const contactid = this.CRM_IMPOSTER_ID;
+  async listOfCurrentUserProjects(@Session() session) {
+    if (!session) throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+    
+    let { contactId } = session;
 
     try {
-      if (contactid) {
-        const currentUserListOfProjects = await this.projectsService.findManyByContactId(contactid);
+      if (contactId) {
+        const currentUserListOfProjects = await this.projectsService.findManyByContactId(contactId);
 
         return this.serialize(currentUserListOfProjects);
       }
