@@ -1,5 +1,7 @@
 import { Module, MiddlewareConsumer } from '@nestjs/common';
 import * as cookieparser from 'cookie-parser';
+import * as bodyParser from 'body-parser';
+import * as compression from 'compression';
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
 import { AuthMiddleware } from './auth.middleware';
@@ -26,6 +28,16 @@ export class AppModule {
 
     consumer
       .apply(AuthMiddleware)
+      .forRoutes('*');
+
+    consumer
+      .apply(bodyParser.json({
+        type: 'application/vnd.api+json'
+      }))
+      .forRoutes('*');
+
+    consumer
+      .apply(compression())
       .forRoutes('*');
   }
 }
