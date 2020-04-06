@@ -1,7 +1,5 @@
-'use strict';
-
 module.exports = function(environment) {
-  let ENV = {
+  const ENV = {
     modulePrefix: 'client',
     environment,
     rootURL: '/',
@@ -13,8 +11,8 @@ module.exports = function(environment) {
       },
       EXTEND_PROTOTYPES: {
         // Prevent Ember Data from overriding Date.parse.
-        Date: false
-      }
+        Date: false,
+      },
     },
     fontawesome: {
       icons: {
