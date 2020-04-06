@@ -10,8 +10,10 @@
 
   <p class="tiny-margin-bottom text-small">
     <span class="text-dark-gray">Primary Applicant:</span> 
-    <strong>{{@project.primaryApplicant}}</strong>
+    {{@project.primaryApplicant}}
   </p>
 
-  <a href="/pas.html" class="button hollow tiny">View Pre-Application Statement</a>
+  {{#if (eq @type 'planning-project')}}
+    <a href="/pas.html" class="button hollow tiny">View Pre-Application Statement</a>
+  {{/if}}
 </li>
