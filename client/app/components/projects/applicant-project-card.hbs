@@ -1,0 +1,16 @@
+<li class="large-margin-bottom"
+  data-test-project-name={{@project.name}}
+  data-test-type='to-do'
+>
+  <h3 class="no-margin">
+    {{@project.name}}
+    <small class="text-weight-normal">{{@project.id}}</small>
+  </h3>
+
+  <p class="tiny-margin-bottom">
+    <span class="text-dark-gray">Primary Applicant:</span> 
+    {{@project.primaryApplicant}}
+  </p>
+
+  <a href="/pas-edit.html" class="button small"><i class="fas fa-pen"></i> Edit Pre-Application Statement</a>
+</li>

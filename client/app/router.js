@@ -4,8 +4,9 @@ import config from './config/environment';
 export default class Router extends EmberRouter {
   location = config.locationType;
 
-  rootURL = config.rootURL
+  rootURL = config.rootURL;
 }
 
-Router.map(function() {
+Router.map(function() { // eslint-disable-line
+  this.route('projects');
 });

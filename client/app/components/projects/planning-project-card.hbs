@@ -1,0 +1,19 @@
+<li
+  class="large-margin-bottom"
+  data-test-project-name={{@project.name}}
+  data-test-type='working-on-it'
+>
+  <h5 class="no-margin">
+    {{@project.name}}
+    <small class="text-weight-normal">{{@project.id}}</small>
+  </h5>
+
+  <p class="tiny-margin-bottom text-small">
+    <span class="text-dark-gray">Primary Applicant:</span> 
+    {{@project.primaryApplicant}}
+  </p>
+
+  {{#if (eq @type 'planning-project')}}
+    <a href="/pas.html" class="button hollow tiny">View Pre-Application Statement</a>
+  {{/if}}
+</li>
