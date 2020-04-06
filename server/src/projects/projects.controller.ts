@@ -51,7 +51,7 @@ export class ProjectsController {
   serialize(records, opts?: object): Serializer {
 
     const ProjectsSerializer = new Serializer('projects', {
-      attributes: ['dcp_projectname', 'dcp_name', 'statecode', 'dcp_visibility', 'dcp_dcp_project_dcp_projectapplicant_Project', 'dcp_dcp_project_dcp_package_project'],
+      attributes: ['dcp_projectname', 'dcp_name', 'statecode', 'dcp_visibility', '_dcp_applicantadministrator_customer_value', 'dcp_dcp_project_dcp_projectapplicant_Project', 'dcp_dcp_project_dcp_package_project'],
       id: 'dcp_projectid',
       meta: { ...opts },
       keyForAttribute(key) {
