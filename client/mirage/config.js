@@ -12,7 +12,9 @@ export default function() {
   // this.timing = 400;      // delay for each request, automatically set to 0 during testing
 
   this.get('/projects');
+  this.get('/users', (schema) => schema.users.first());
 
+  this.get('/login', () => ({ ok: true }));
   /*
     Shorthand cheatsheet:
 

@@ -34,6 +34,9 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+
+    ENV.host = '';
+    ENV.NYCIDLocation = '/login#access_token=test';
   }
 
   if (environment === 'test') {
@@ -46,6 +49,9 @@ module.exports = function(environment) {
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
+
+    ENV.host = '';
+    ENV.NYCIDLocation = '/login#access_token=test';
   }
 
   if (environment === 'production') {
