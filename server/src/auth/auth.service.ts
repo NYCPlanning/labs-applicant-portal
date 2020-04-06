@@ -110,8 +110,6 @@ export class AuthService {
    * @param      {string}  token   The token
    */
   public validateCurrentToken(token: string) {
-    const { CRM_IMPOSTER_ID } = this;
-
     return this.verifyCRMToken(token);
   }
 

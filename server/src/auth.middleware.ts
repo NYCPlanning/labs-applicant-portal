@@ -11,6 +11,13 @@ export class AuthMiddleware implements NestMiddleware {
   constructor(private readonly authService: AuthService) { }
 
   async use(req: any, res: any, next: () => void) {
+    // skip for the login route
+    if (req.originalUrl.includes('login')) {
+      next();
+
+      return;
+    }
+
     req.session = false;
 
     const { token } = req.cookies;
