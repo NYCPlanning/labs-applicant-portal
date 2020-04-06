@@ -8,12 +8,10 @@
 @import 'foundation-sites/scss/foundation';
 
 // Foundation components
-// TODO: use a subset
-@include foundation-everything;
+@include foundation-everything; // or a subset
 
 // Style Guide components
-// TODO: use a subset
-@import 'modules/nyc-planning-all-modules';
+@import 'modules/nyc-planning-all-modules'; // or a subset
 
 // Labs UI components
 @import 'labs-ui/all-modules'; // or a subset
