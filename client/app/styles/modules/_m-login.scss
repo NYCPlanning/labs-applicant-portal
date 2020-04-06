@@ -1,0 +1,33 @@
+/* Module: Login */
+
+.auth--container {
+  display: flex;
+  align-items: center;
+  line-height: 1.2;
+  color: #828892;
+  font-size: 0.875rem;
+  padding: 0 1.25rem;
+}
+
+.auth--container .auth--icon {
+  margin-right: 0.375rem;
+}
+
+.auth--container .auth--name {
+  display: block;
+  color: #393c41;
+  font-weight: normal;
+}
+
+.site-header .menu a.auth--logout-button {
+  display: inline-block;
+  padding: 0;
+  color: #ae561f;
+  background-color: transparent;
+  font-size: 0.75rem;
+}
+
+.site-header .menu a.auth--logout-button:hover {
+  color:#8b4519;
+  background-color:transparent
+}
