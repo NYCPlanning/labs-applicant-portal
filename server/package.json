@@ -23,6 +23,7 @@
   "dependencies": {
     "adal-node": "^0.2.1",
     "dotenv":"^8.1.0",
+    "jsonapi-serializer": "^3.6.6",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "@nestjs/common": "^7.0.0",
