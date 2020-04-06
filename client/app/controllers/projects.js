@@ -1,10 +1,9 @@
 import Controller from '@ember/controller';
 
 export default class ProjectsController extends Controller {
+  // TODO: organize this business logic as computed properties on the projects model
   // projects for applicant to do
   get applicantProjects () {
-    // handle filtering here, reference in template as this.applicantProjects
-    // todo if statuscode is "Save" or "Package Preparation"
     return this.model.filter((project) => project.packages.some((projectpackage) => {
       if (projectpackage.statuscode === 'Saved' || projectpackage.statuscode === 'Package Preparation') {
         return true;
@@ -21,8 +20,20 @@ export default class ProjectsController extends Controller {
     }));
   }
 
-  get upcomingProjects () {
-    // TODO: write filter for projects with no pas package objects
-    return null;
+  // projects that have no pas packages are shown as "upcoming"
+  get noPasProjects () {
+    return this.model.filter((project) => {
+      // filter to get only pas packages
+      const pasPackages = project.packages.filter((projectpackage) => {
+        if (projectpackage.type === 'pas') {
+          return true;
+        } return false;
+      });
+
+      // return the project if there are no pasPackages
+      if (pasPackages.length === 0) {
+        return true;
+      } return false;
+    });
   }
 }

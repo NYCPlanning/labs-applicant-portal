@@ -28,6 +28,7 @@
 
         {{!-- right list column --}}
         <div class="cell large-shrink">
+            {{!-- template-lint-disable no-inline-styles--}}
             <div class="callout bg-white-smoke large-padding-left large-padding-right" style="border:0;">
                 {{!-- upcoming projects list header --}}
                 <h4 class="text-dark-gray large-margin-bottom text-weight-normal">
@@ -35,7 +36,7 @@
                 </h4>
                 {{!-- projects list --}}
                 <ul class="no-bullet">
-                    {{#each this.upcomingProjects as |project|}}
+                    {{#each this.noPasProjects as |project|}}
                         <Projects::PlanningProjectCard @project={{project}} />
                     {{/each}}
                 </ul>
