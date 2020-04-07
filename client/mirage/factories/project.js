@@ -34,6 +34,8 @@ export default Factory.extend({
   }),
 
   noPackages: trait({
-    packages: [],
+    // we _want_ this to be blank because we want to test that the
+    // model's default value is used when this is absent
+    // packages: [],
   }),
 });
