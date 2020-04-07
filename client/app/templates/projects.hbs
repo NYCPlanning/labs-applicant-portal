@@ -1,89 +1,82 @@
-<div class="site-main large-padding-bottom">
-    <section class="grid-container large-padding-top large-padding-bottom">
+{{!-- TODO:  Make this breadcrumb dynamic with application routing --}}
+{{!-- breadcrumb --}}
+<nav aria-label="You are here:" role="navigation">
+  <ul class="breadcrumbs">
+    <li class="text-extra-large">
+      <span class="show-for-sr">Current: </span>
+      My Projects
+    </li>
+  </ul>
+</nav>
 
-    <div class="grid-x grid-padding-x">
-        {{!-- TODO:  Make this breadcrumb dynamic with application routing --}}
-        {{!-- breadcrumb --}}
-        <div class="cell">
-            <nav aria-label="You are here:" role="navigation">
-                <ul class="breadcrumbs">
-                    <li class="text-extra-large">
-                        <span class="show-for-sr">Current: </span> 
-                        My Projects
-                    </li>
-                </ul>
-            </nav>
-            <hr />
-        </div>
+<hr />
 
-        {{!-- left column --}}
-        <div class="cell auto">
-            {{!-- applicant projects --}}
-            <h4 class="text-dark-gray large-margin-bottom text-weight-normal">
-                TO DO
-            </h4>
-            {{#if (gt this.applicantProjects.length 0)}}
-                <ul class="no-bullet">
-                    {{#each this.applicantProjects as |project|}}
-                        <Projects::ApplicantProjectCard @project={{project}} />
-                    {{/each}}
-                </ul>
-            {{else}}
-                <div class="large-margin-bottom">
-                    <strong class="text-dark-gray">Nothing to do.</strong>
-                    <p>You do not currently have any projects that require your response.</p>
-                </div>
-            {{/if}}
+<div class="grid-x grid-padding-x">
 
-            <hr />
-            <p class="large-margin-top large-padding-right">
-                If something has gone wrong, or you believe projects are missing from this list, please contact City Planning at 
-                <a href="mailto:ZAP_feedback_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a> or <a href="tel:212-720-3300">212-720-3300</a>.
-            </p>
-        </div>
+  {{!-- left column --}}
+  <div class="cell auto">
 
-        {{!-- right column --}}
-        <div class="cell large-shrink">
-            <div class="large-padding-left large-padding-right">
+    {{!-- applicant projects --}}
+    <h4 class="text-dark-gray large-margin-bottom text-weight-normal text-uppercase">
+      <FaIcon @icon="inbox" @fixedWidth={{true}} />
+      TO DO
+    </h4>
+    {{#if (gt this.applicantProjects.length 0)}}
+      <ul class="no-bullet">
+        {{#each this.applicantProjects as |project|}}
+          <Projects::ApplicantProjectCard @project={{project}} />
+        {{/each}}
+      </ul>
+    {{else}}
+      <div class="large-margin-bottom">
+        <strong class="text-dark-gray">Nothing to do.</strong>
+        <p>You do not currently have any projects that require your response.</p>
+      </div>
+    {{/if}}
 
-                {{!-- upcoming projects --}}
-                <div class="large-margin-bottom">
-                    <h5 class="text-dark-gray large-margin-bottom text-weight-normal">
-                        UPCOMING
-                    </h5>
-                    {{#if (gt this.noPasProjects.length 0)}}
-                        <ul class="no-bullet">
-                            {{#each this.noPasProjects as |project|}}
-                                <Projects::PlanningProjectCard @project={{project}} />
-                            {{/each}}
-                        </ul>
-                    {{else}}
-                        <p class="text-light-gray">No projects.</p>
-                    {{/if}}
-                </div>
-                
-                {{!-- planning projects --}}
-                <div class="large-margin-top">
-                    <h5 class="text-dark-gray large-margin-bottom  text-weight-normal">
-                        NYC PLANNING IS WORKING ON IT...
-                    </h5>
-                    {{#if (gt this.planningProjects.length 0)}}
-                        <ul class="no-bullet">
-                            {{#each this.planningProjects as |project|}}
-                                <Projects::PlanningProjectCard @type="planning-project" @project={{project}} />
-                            {{/each}}
-                        </ul>
-                    {{else}}
-                        <p class="text-light-gray">No projects.</p>
-                    {{/if}}
+    <hr />
 
-                </div>
-            </div>
-        </div>
-    </div>
+    <p class="large-margin-top large-padding-right">
+      If something has gone wrong, or you believe projects are missing from this list, please contact City Planning at
+      <a href="mailto:ZAP_feedback_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a> or <a href="tel:212-720-3300">212-720-3300</a>.
+    </p>
 
-    </section>
+  </div>
 
+  {{!-- right column --}}
+  <div class="cell large-4">
+
+    {{!-- upcoming projects --}}
+    {{#if (gt this.noPasProjects.length 0)}}
+      <div class="large-margin-bottom bg-white-smoke large-padding">
+        <h5 class="text-dark-gray large-margin-bottom text-weight-normal">
+          <FaIcon @icon="lock" @fixedWidth={{true}} />
+          UPCOMING
+        </h5>
+        <ul class="no-bullet">
+          {{#each this.noPasProjects as |project|}}
+            <Projects::PlanningProjectCard @project={{project}} />
+          {{/each}}
+        </ul>
+      </div>
+    {{/if}}
+
+    {{!-- planning projects --}}
+    {{#if (gt this.planningProjects.length 0)}}
+      <div class="large-margin-top bg-white-smoke large-padding">
+        <h5 class="text-dark-gray large-margin-bottom  text-weight-normal">
+          <FaIcon @icon="lock" @fixedWidth={{true}} />
+          NYC PLANNING IS WORKING ON IT&hellip;
+        </h5>
+        <ul class="no-bullet">
+          {{#each this.planningProjects as |project|}}
+            <Projects::PlanningProjectCard @type="planning-project" @project={{project}} />
+          {{/each}}
+        </ul>
+      </div>
+    {{/if}}
+
+  </div>
 </div>
 
 {{outlet}}
