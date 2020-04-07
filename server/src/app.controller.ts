@@ -37,7 +37,7 @@ export class AppController {
   }
 
   @Get('/users')
-  async getUser(@Session() session, @Res() res) {
+  async getUser(@Session() session, @Res() res, @Query('me') me) {
     const { contactId } = session;
 
     if (!contactId) {
@@ -47,15 +47,16 @@ export class AppController {
     } else {
       const contact = await this.contactService.findOneById(contactId);
 
-      res.send(this.serialize([contact]));
+      res.send(this.serialize(me ? contact : [contact]));
     }
   }
 
   // Serializes an array of objects into a JSON:API document
   serialize(records, opts?: object): Serializer {
     const UserSerializer = new Serializer('users', {
-      attributes: ['contactId', 'emailaddress1'],
-      id: 'contactId',
+      attributes: ['contactid', 'emailaddress1'],
+      // TODO: annoying. the JWT/cookie is camelcase but CRM isn't.
+      id: 'contactid',
       meta: { ...opts },
     });
 
