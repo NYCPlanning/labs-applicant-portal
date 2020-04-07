@@ -50,7 +50,6 @@ module.exports = function(environment) {
     ENV.APP.autoboot = false;
 
     ENV.host = '';
-    ENV.NYCIDLocation = '/login#access_token=test';
   }
 
   if (environment === 'production') {
@@ -77,5 +76,9 @@ function getOAuthHost(environment) {
     return 'https://accounts-nonprd.nyc.gov/account/api/oauth/authorize.htm?response_type=token&client_id=applicant-portal-staging';
   }
 
-  return '/';
+  if (environment === 'test') {
+    return '';
+  }
+
+  return '';
 }
