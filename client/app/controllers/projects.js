@@ -27,7 +27,7 @@ export default class ProjectsController extends Controller {
     return this.model.filter((project) => {
       // filter to get only pas packages
       const pasPackages = project.packages.filter((projectpackage) => {
-        if (projectpackage.type === 'pas') {
+        if (projectpackage['dcp-packagetype'] === 'PAS Package') {
           return true;
         } return false;
       });

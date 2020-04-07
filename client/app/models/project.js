@@ -1,5 +1,4 @@
 import Model, { attr } from '@ember-data/model';
-import { alias } from '@ember/object/computed';
 
 export default class ProjectModel extends Model {
   @attr dcpProjectname;
@@ -8,5 +7,17 @@ export default class ProjectModel extends Model {
 
   @attr({ defaultValue: () => [] }) dcpDcpProjectDcpPackageProject;
 
-  @alias('dcpDcpProjectDcpPackageProject') packages;
+  get packages() {
+    const [firstPackage] =
+      this.dcpDcpProjectDcpPackageProject
+        .filter(projectPackage => projectPackage['dcp-packagetype'] === 'PAS Package')
+        .sortBy('versionnumber')
+        .reverse();
+
+    if (firstPackage) {
+      return [firstPackage];
+    } else {
+      return [];
+    }
+  }
 }

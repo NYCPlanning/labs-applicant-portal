@@ -7,7 +7,7 @@ export default Factory.extend({
 
       return [
         {
-          type: 'pas',
+          'dcp-packagetype': 'PAS Package',
 
           // allows us to have an evenly distributed
           // # of projects with these statuses
@@ -26,7 +26,7 @@ export default Factory.extend({
 
       return [
         {
-          type: 'pas',
+          'dcp-packagetype': 'PAS Package',
           statuscode: statuses[i % statuses.length],
         },
       ];

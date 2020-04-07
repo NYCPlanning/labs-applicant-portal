@@ -44,7 +44,7 @@ export class ProjectsController {
         const currentUserListOfProjects = await this.projectsService.findManyByContactId(contactId);
 
         return this.serialize(
-          overwriteCodesWithLabels(currentUserListOfProjects, ['statuscode', '_dcp_applicant_customer_value'])
+          overwriteCodesWithLabels(currentUserListOfProjects, ['statuscode', '_dcp_applicant_customer_value', 'dcp_packagetype'])
         );
       }
     } catch (e) {
@@ -56,7 +56,6 @@ export class ProjectsController {
 
   // Serializes an array of objects into a JSON:API document
   serialize(records, opts?: object): Serializer {
-    console.log(records);
     const ProjectsSerializer = new Serializer('projects', {
       attributes: ['dcp_projectname', 'dcp_name', 'statecode', 'dcp_visibility', '_dcp_applicant_customer_value', 'dcp_dcp_project_dcp_projectapplicant_Project', 'dcp_dcp_project_dcp_package_project'],
       id: 'dcp_name',
