@@ -7,7 +7,7 @@ In order for cookies to work across both the client and the server during local 
 
 2. Grab two files from step 1, `server.key` and `server.crt`. Copy and paste both files into BOTH `ssl/` folders under /client and /server.
 
-3. Run the server as you normally would. With SSL, the ember app should be run as `yarn run start:ssl`.
+3. With SSL enabled, go to the root of the app and run: `yarn run start`. It should run both the client and server servers.
 
 ## Why?
 Google Chrome is beginning to enforce some restrictions on particular uses of cookies in cross-origon contexts. In our case, our server provides a cookie from one domain and is expected to be sent across subsequent requests via another. The only way to simulate this behavior as it works on a production environment is to run our local development servers with SSL enabled.
