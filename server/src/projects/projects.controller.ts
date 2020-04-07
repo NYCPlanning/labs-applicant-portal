@@ -14,6 +14,7 @@ import { ProjectsService } from './projects.service';
 import { ConfigService } from '../config/config.service';
 import { ContactService } from '../contact/contact.service';
 import { AuthService } from '../auth/auth.service';
+import { overwriteCodesWithLabels } from '../_utils/overwrite-codes-with-labels';
 
 @Controller()
 export class ProjectsController {
@@ -42,7 +43,7 @@ export class ProjectsController {
       if (contactId) {
         const currentUserListOfProjects = await this.projectsService.findManyByContactId(contactId);
 
-        return this.serialize(currentUserListOfProjects);
+        return this.serialize(overwriteCodesWithLabels(currentUserListOfProjects, ['statuscode']));
       }
     } catch (e) {
       const errorMessage = `${e}`;
@@ -53,7 +54,7 @@ export class ProjectsController {
 
   // Serializes an array of objects into a JSON:API document
   serialize(records, opts?: object): Serializer {
-
+    console.log(records);
     const ProjectsSerializer = new Serializer('projects', {
       attributes: ['dcp_projectname', 'dcp_name', 'statecode', 'dcp_visibility', '_dcp_applicant_customer_value', 'dcp_dcp_project_dcp_projectapplicant_Project', 'dcp_dcp_project_dcp_package_project'],
       id: 'dcp_projectid',

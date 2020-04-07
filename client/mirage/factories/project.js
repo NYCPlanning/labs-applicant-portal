@@ -2,7 +2,7 @@ import { Factory, trait } from 'ember-cli-mirage';
 
 export default Factory.extend({
   toDo: trait({
-    packages(i) {
+    dcpDcpProjectDcpPackageProject(i) {
       const statuses = ['Saved', 'Package Preparation'];
 
       return [
@@ -21,7 +21,7 @@ export default Factory.extend({
   }),
 
   workingOnIt: trait({
-    packages(i) {
+    dcpDcpProjectDcpPackageProject(i) {
       const statuses = ['Submitted', 'Under Review', 'Revision Required'];
 
       return [
@@ -34,8 +34,6 @@ export default Factory.extend({
   }),
 
   noPackages: trait({
-    // we _want_ this to be blank because we want to test that the
-    // model's default value is used when this is absent
-    // packages: [],
+    dcpDcpProjectDcpPackageProject: [],
   }),
 });

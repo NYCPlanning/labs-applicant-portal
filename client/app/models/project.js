@@ -1,9 +1,12 @@
 import Model, { attr } from '@ember-data/model';
+import { alias } from '@ember/object/computed';
 
 export default class ProjectModel extends Model {
-  @attr name;
+  @attr dcpProjectname;
 
   @attr primaryApplicant;
 
-  @attr({ defaultValue: () => [] }) packages;
+  @attr({ defaultValue: () => [] }) dcpDcpProjectDcpPackageProject;
+
+  @alias('dcpDcpProjectDcpPackageProject') packages;
 }

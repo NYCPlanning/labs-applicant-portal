@@ -8,7 +8,7 @@ export default function(server) {
 
   [
     {
-      name: 'Huge New Public Library',
+      dcpProjectname: 'Huge New Public Library',
       primaryApplicant: 'Brandyn Friedly',
       packages: [
         {
@@ -18,7 +18,7 @@ export default function(server) {
       ],
     },
     {
-      name: 'Bagel Factory',
+      dcpProjectname: 'Bagel Factory',
       primaryApplicant: 'Godfrey Yeung',
       packages: [
         {
@@ -28,7 +28,7 @@ export default function(server) {
       ],
     },
     {
-      name: '123 Ember Avenue',
+      dcpProjectname: '123 Ember Avenue',
       primaryApplicant: 'Matt Gardner',
       packages: [
         {
@@ -38,7 +38,7 @@ export default function(server) {
       ],
     },
     {
-      name: 'Arizona Sun Dog Kennel',
+      dcpProjectname: 'Arizona Sun Dog Kennel',
       primaryApplicant: 'Taylor McGinnis',
       packages: [
         {
@@ -48,7 +48,7 @@ export default function(server) {
       ],
     },
     {
-      name: 'All Things Blue For You Merch',
+      dcpProjectname: 'All Things Blue For You Merch',
       primaryApplicant: 'Hannah Kates',
       packages: [
         {
@@ -58,7 +58,7 @@ export default function(server) {
       ],
     },
     {
-      name: 'Pop Up Palm Tree & Goat Farm',
+      dcpProjectname: 'Pop Up Palm Tree & Goat Farm',
       primaryApplicant: 'Nneka Sobers',
       packages: [],
     },
