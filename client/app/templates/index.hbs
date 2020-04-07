@@ -34,7 +34,7 @@
   </div>
   <div class="cell large-5">
 
-    <a href="/nycid.html" class="button large expanded">
+    <a {{ on "click" this.handleLogin }} href="#" class="button large expanded">
       <b>Sign In</b>
       &nbsp;<FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} />
     </a>
