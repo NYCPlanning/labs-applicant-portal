@@ -1,6 +1,8 @@
 import Controller from '@ember/controller';
 
 export default class ProjectsController extends Controller {
+  queryParams = ['email'];
+
   // TODO: organize this business logic as computed properties on the projects model
   // projects for applicant to do
   get applicantProjects () {

@@ -5,7 +5,7 @@ import Route from '@ember/routing/route';
 // objects into appropriate buckets
 export default class ProjectsRoute extends Route {
   // where we define the model of this part of the application
-  model() {
-    return this.store.findAll('project');
+  model(params) {
+    return this.store.query('project', params);
   }
 }

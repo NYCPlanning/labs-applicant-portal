@@ -5,5 +5,5 @@ export default class ProjectModel extends Model {
 
   @attr primaryApplicant;
 
-  @attr packages;
+  @attr({ defaultValue: () => [] }) packages;
 }
