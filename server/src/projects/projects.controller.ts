@@ -43,7 +43,9 @@ export class ProjectsController {
       if (contactId) {
         const currentUserListOfProjects = await this.projectsService.findManyByContactId(contactId);
 
-        return this.serialize(overwriteCodesWithLabels(currentUserListOfProjects, ['statuscode']));
+        return this.serialize(
+          overwriteCodesWithLabels(currentUserListOfProjects, ['statuscode', '_dcp_applicant_customer_value'])
+        );
       }
     } catch (e) {
       const errorMessage = `${e}`;

@@ -4,7 +4,7 @@ import { alias } from '@ember/object/computed';
 export default class ProjectModel extends Model {
   @attr dcpProjectname;
 
-  @attr primaryApplicant;
+  @attr dcpApplicantCustomerValue;
 
   @attr({ defaultValue: () => [] }) dcpDcpProjectDcpPackageProject;
 

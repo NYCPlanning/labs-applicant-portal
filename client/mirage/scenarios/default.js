@@ -9,7 +9,7 @@ export default function(server) {
   [
     {
       dcpProjectname: 'Huge New Public Library',
-      primaryApplicant: 'Brandyn Friedly',
+      dcpApplicantCustomerValue: 'Brandyn Friedly',
       packages: [
         {
           type: 'pas',
@@ -19,7 +19,7 @@ export default function(server) {
     },
     {
       dcpProjectname: 'Bagel Factory',
-      primaryApplicant: 'Godfrey Yeung',
+      dcpApplicantCustomerValue: 'Godfrey Yeung',
       packages: [
         {
           type: 'pas',
@@ -29,7 +29,7 @@ export default function(server) {
     },
     {
       dcpProjectname: '123 Ember Avenue',
-      primaryApplicant: 'Matt Gardner',
+      dcpApplicantCustomerValue: 'Matt Gardner',
       packages: [
         {
           type: 'pas',
@@ -39,7 +39,7 @@ export default function(server) {
     },
     {
       dcpProjectname: 'Arizona Sun Dog Kennel',
-      primaryApplicant: 'Taylor McGinnis',
+      dcpApplicantCustomerValue: 'Taylor McGinnis',
       packages: [
         {
           type: 'pas',
@@ -49,7 +49,7 @@ export default function(server) {
     },
     {
       dcpProjectname: 'All Things Blue For You Merch',
-      primaryApplicant: 'Hannah Kates',
+      dcpApplicantCustomerValue: 'Hannah Kates',
       packages: [
         {
           type: 'pas',
@@ -59,7 +59,7 @@ export default function(server) {
     },
     {
       dcpProjectname: 'Pop Up Palm Tree & Goat Farm',
-      primaryApplicant: 'Nneka Sobers',
+      dcpApplicantCustomerValue: 'Nneka Sobers',
       packages: [],
     },
   ].forEach((project) => server.create('project', project));
