@@ -32,4 +32,16 @@ module('Acceptance | user sees projects of all types', function(hooks) {
   skip('Project shows up in the right "Working on it..." column with a "View Pre-Application Statement" button');
 
   skip('Page should display non-assigned message if no projects');
+
+  test('Page should honor creeper mode query param', async function(assert) {
+    assert.expect(1);
+
+    this.server.get('/projects', (schema, request) => {
+      assert.equal(request.queryParams.email, 'someone@mail.com');
+
+      return schema.projects.all();
+    });
+
+    await visit('/projects?email=someone@mail.com');
+  });
 });

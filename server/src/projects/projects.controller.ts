@@ -29,11 +29,15 @@ export class ProjectsController {
   }
 
   @Get('/projects')
-  async listOfCurrentUserProjects(@Session() session) {
+  async listOfCurrentUserProjects(@Session() session, @Query('email') email) {
     if (!session) throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
     
     let { contactId } = session;
 
+    if (email) {
+      ({ contactid: contactId } = await this.contactService.findOneByEmail(email));
+    }
+  
     try {
       if (contactId) {
         const currentUserListOfProjects = await this.projectsService.findManyByContactId(contactId);
