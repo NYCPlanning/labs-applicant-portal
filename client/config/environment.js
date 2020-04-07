@@ -5,6 +5,7 @@ module.exports = function(environment) {
     rootURL: '/',
     locationType: 'auto',
     host: getHost(environment),
+    NYCIDLocation: getOAuthHost(environment),
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -35,8 +36,6 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-
-    ENV.NYCIDLocation = '/login#access_token=test';
   }
 
   if (environment === 'test') {
@@ -71,4 +70,12 @@ function getHost(environment) {
   }
 
   return '';
+}
+
+function getOAuthHost(environment) {
+  if (environment === 'development' || environment === 'staging') {
+    return 'https://accounts-nonprd.nyc.gov/account/api/oauth/authorize.htm?response_type=token&client_id=applicant-portal-staging';
+  }
+
+  return '/';
 }

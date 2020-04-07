@@ -16,6 +16,7 @@
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
     "start": "ember serve",
+    "start:ssl": "ember serve --ssl",
     "test": "npm-run-all lint:* test:*",
     "test:ember": "ember test"
   },

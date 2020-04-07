@@ -13,6 +13,7 @@ export default function() {
   // this.namespace = '';    // make this `/api`, for example, if your API is namespaced
   // this.timing = 400;      // delay for each request, automatically set to 0 during testing
 
+  // conditionally allow the host to pass through if present
   if (ENV.host) {
     this.passthrough(`${ENV.host}/**`);
   }
