@@ -1,0 +1,8 @@
+[build]
+command = "yarn build --environment=production"
+
+[context.master]
+command = "yarn build --environment=production"
+
+[context.develop]
+command = "yarn build --environment=production"
