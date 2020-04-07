@@ -10,14 +10,12 @@ export default class ProjectModel extends Model {
   get packages() {
     const [firstPackage] =
       this.dcpDcpProjectDcpPackageProject
-        .filter(projectPackage => projectPackage['dcp-packagetype'] === 'PAS Package')
+        .filter((projectPackage) => projectPackage['dcp-packagetype'] === 'PAS Package')
         .sortBy('versionnumber')
         .reverse();
 
     if (firstPackage) {
       return [firstPackage];
-    } else {
-      return [];
-    }
+    } return [];
   }
 }
