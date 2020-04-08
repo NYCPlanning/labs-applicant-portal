@@ -1,8 +1,0 @@
-[build]
-command = "HOST=https://applicant-portal-staging.herokuapp.com yarn build --environment=production"
-
-[context.master]
-command = "HOST=https://applicant-portal-staging.herokuapp.com yarn build --environment=production"
-
-[context.develop]
-command = "HOST=https://applicant-portal-staging.herokuapp.com yarn build --environment=production"

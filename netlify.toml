@@ -1,0 +1,20 @@
+[build]
+  base= "client/"
+  command = "yarn build --environment=production"
+
+# production
+[context.master]
+  environment = { HOST="https://applicant-portal.herokuapp.com/" }
+
+# staging
+[context.staging]
+  environment = { HOST="https://applicant-portal-staging.herokuapp.com" }
+
+# qa team
+[context.qa]
+  environment = { HOST="https://applicant-portal-qa.herokuapp.com" }
+
+# develop
+[context.develop]
+  environment = { HOST="https://applicant-portal-develop.herokuapp.com" }
+
