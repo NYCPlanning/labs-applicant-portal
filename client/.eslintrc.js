@@ -10,6 +10,7 @@ module.exports = {
   },
   plugins: [
     'ember',
+    'hbs',
   ],
   extends: [
     'eslint:recommended',
