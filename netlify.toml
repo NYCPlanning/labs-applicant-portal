@@ -4,17 +4,16 @@
 
 # production
 [context.master]
-  environment = { HOST="https://applicant-portal.herokuapp.com/" }
+  environment = { HOST="https://applicant-portal.herokuapp.com/", NYCID_CLIENT_ID='' }
 
 # staging
 [context.staging]
-  environment = { HOST="https://applicant-portal-staging.herokuapp.com" }
+  environment = { HOST="https://applicant-portal-staging.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-staging' }
 
 # qa team
 [context.qa]
-  environment = { HOST="https://applicant-portal-qa.herokuapp.com" }
+  environment = { HOST="https://applicant-portal-qa.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-qa' }
 
 # develop
 [context.develop]
-  environment = { HOST="https://applicant-portal-develop.herokuapp.com" }
-
+  environment = { HOST="https://applicant-portal-develop.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-develop' }

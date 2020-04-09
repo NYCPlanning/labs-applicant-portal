@@ -73,8 +73,10 @@ function getHost(environment) {
 }
 
 function getOAuthHost(environment) {
-  if (environment === 'development' || environment === 'staging' || environment === 'production') {
-    return 'https://accounts-nonprd.nyc.gov/account/api/oauth/authorize.htm?response_type=token&client_id=applicant-portal-staging';
+  const { NYCID_CLIENT_ID } = process.env;
+
+  if (environment === 'development' || environment === 'production') {
+    return `https://accounts-nonprd.nyc.gov/account/api/oauth/authorize.htm?response_type=token&client_id=${NYCID_CLIENT_ID}`;
   }
 
   return '/';
