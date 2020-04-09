@@ -21,7 +21,7 @@ function generateSSLConfiguration() {
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: {
-      origin: [/\.planninglabs\.nyc$/, /\.planning\.nyc\.gov$/, 'http://localhost:4200', 'https://localhost:4200', /\.netlify\.com/],
+      origin: [/\.planninglabs\.nyc$/, /\.planning\.nyc\.gov$/, 'http://localhost:4200', 'https://localhost:4200', /\.netlify\.com/, 'https://local.planninglabs.nyc:4200'],
       credentials: true,
     },
 
