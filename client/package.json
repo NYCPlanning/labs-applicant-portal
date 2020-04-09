@@ -16,7 +16,7 @@
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
     "start": "ember serve",
-    "start:ssl": "HOST=https://localhost:3000 ember serve --ssl",
+    "start:ssl": "HOST=https://local.planninglabs.nyc:3000 ember serve --host local.planninglabs.nyc --ssl",
     "test": "npm-run-all lint:* test:*",
     "test:ember": "ember test"
   },
