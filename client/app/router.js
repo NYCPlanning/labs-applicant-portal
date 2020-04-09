@@ -11,4 +11,5 @@ export default class Router extends EmberRouter {
 Router.map(function() { // eslint-disable-line
   this.route('projects');
   this.route('login');
+  this.route('logout');
 });

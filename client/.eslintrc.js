@@ -43,7 +43,7 @@ module.exports = {
     'no-restricted-syntax': 1,
     'prefer-const': 1,
     'no-underscore-dangle': 0,
-    'no-use-before-define': 1,
+    'no-use-before-define': 0,
     'no-return-assign': 1,
     camelcase: 0,
     'class-methods-use-this': 0,

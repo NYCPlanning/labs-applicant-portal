@@ -5,7 +5,7 @@ export default class ProjectModel extends Model {
 
   @attr dcpApplicantCustomerValue;
 
-  @attr() dcpDcpProjectDcpPackageProject;
+  @attr({ defaultValue: () => [] }) dcpDcpProjectDcpPackageProject;
 
   get packages() {
     const [firstPackage] = this.dcpDcpProjectDcpPackageProject
