@@ -31,9 +31,10 @@ export class ProjectsController {
 
   @Get('/projects')
   async listOfCurrentUserProjects(@Session() session, @Query('email') email) {
-    if (!session) throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
-    
     let { contactId } = session;
+
+    // TODO: Use a NestJS interceptor object or something to help with this
+    if (!contactId) throw new HttpException('Unauthorized. Please login.', HttpStatus.UNAUTHORIZED);
 
     if (email) {
       ({ contactid: contactId } = await this.contactService.findOneByEmail(email));
@@ -49,8 +50,8 @@ export class ProjectsController {
       }
     } catch (e) {
       const errorMessage = `${e}`;
-      console.log(errorMessage);
-      throw new HttpException(errorMessage, HttpStatus.UNAUTHORIZED);
+
+      throw new HttpException(errorMessage, HttpStatus.BAD_REQUEST);
     }
   }
 

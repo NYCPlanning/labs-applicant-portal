@@ -22,6 +22,8 @@ export default function() {
   this.get('/users', (schema) => schema.users.first());
 
   this.get('/login', () => ({ ok: true }));
+  this.get('/logout');
+
   /*
     Shorthand cheatsheet:
 

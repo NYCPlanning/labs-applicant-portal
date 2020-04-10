@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import * as fs from 'fs';
 import { AppModule } from './app.module';
+import { HttpExceptionFilter } from './http-exception.filter';
 
 // Attempt to insert SSL certs, if they exist
 function generateSSLConfiguration() {
@@ -27,6 +28,8 @@ async function bootstrap() {
 
     ...generateSSLConfiguration(),
   });
+
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   await app.listen(process.env.PORT || 3000);
 }

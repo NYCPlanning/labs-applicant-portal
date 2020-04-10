@@ -36,6 +36,12 @@ export class AppController {
     }
   }
 
+  @Get('/logout')
+  async logout(@Res() res: Response) {
+    res.clearCookie('token')
+      .send({ message: 'Login successful!' });
+  }
+
   @Get('/users')
   async getUser(@Session() session, @Res() res, @Query('me') me) {
     const { contactId } = session;
