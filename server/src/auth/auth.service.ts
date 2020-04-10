@@ -2,6 +2,7 @@ import {
   Injectable, 
   HttpException,
   HttpStatus,
+  BadRequestException,
 } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
 import * as moment from 'moment';
@@ -52,9 +53,7 @@ export class AuthService {
     try {
       return jwt.verify(token, secret);
     } catch (e) {
-      const errorMessage = `Could not verify token. ${e}`;
-      console.log(errorMessage);
-      throw new HttpException(errorMessage, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(`Could not verify token. ${e}`, HttpStatus.UNAUTHORIZED);
     }
   }
 
@@ -67,7 +66,11 @@ export class AuthService {
   private verifyNYCIDToken(token): any {
     const { NYCID_TOKEN_SECRET } = this;
 
-    return this.verifyToken(token, NYCID_TOKEN_SECRET);
+    try {
+      return this.verifyToken(token, NYCID_TOKEN_SECRET);
+    } catch (e) {
+      throw new BadRequestException(`Could not verify NYCID Token: ${e}`);
+    }
   }
 
 
@@ -97,7 +100,7 @@ export class AuthService {
 
     if (!contact) {
       const errorMessage = 'CRM user not found. Please make sure your e-mail or ID is associated with an assignment.';
-      console.log(errorMessage);
+
       throw new HttpException(errorMessage, HttpStatus.UNAUTHORIZED);
     }
 
@@ -110,7 +113,11 @@ export class AuthService {
    * @param      {string}  token   The token
    */
   public validateCurrentToken(token: string) {
-    return this.verifyCRMToken(token);
+    try {
+      return this.verifyCRMToken(token);
+    } catch (e) {
+      throw new BadRequestException(e);
+    }
   }
 
   /**
@@ -122,6 +129,10 @@ export class AuthService {
   private verifyCRMToken(token): any {
     const { ZAP_TOKEN_SECRET } = this;
 
-    return this.verifyToken(token, ZAP_TOKEN_SECRET);
+    try {
+      return this.verifyToken(token, ZAP_TOKEN_SECRET);
+    } catch (e) {
+      throw new BadRequestException(e);
+    }
   }
 }
