@@ -3,7 +3,7 @@ import { visit, click, currentURL } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import window, { setupWindowMock } from 'ember-window-mock';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { authenticateSession, currentSession } from 'ember-simple-auth/test-support';
+import { currentSession } from 'ember-simple-auth/test-support';
 
 module('Acceptance | user can login', function(hooks) {
   setupApplicationTest(hooks);
@@ -11,7 +11,7 @@ module('Acceptance | user can login', function(hooks) {
   setupMirage(hooks);
 
   test('AccessToken is sent to server', async function(assert) {
-    assert.expect(1);
+    assert.expect(2);
 
     this.server.create('user');
     this.server.get('/login', (schema, request) => {
@@ -20,14 +20,18 @@ module('Acceptance | user can login', function(hooks) {
 
     window.location.hash = '#access_token=a-valid-jwt';
     await visit('/login');
+
+    assert.equal(currentSession().isAuthenticated, true);
   });
 
   test('User can logout', async function (assert) {
-    this.server.createList('project', 10);
+    assert.expect(3);
 
-    await authenticateSession();
+    this.server.create('user');
+    this.server.get('/logout', () => assert.ok(true));
 
-    await visit('/projects');
+    window.location.hash = '#access_token=a-valid-jwt';
+    await visit('/login');
     await click('[data-test-auth="logout"]');
 
     assert.equal(currentURL(), '/logout');

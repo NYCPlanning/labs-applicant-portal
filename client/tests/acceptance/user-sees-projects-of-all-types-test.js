@@ -20,7 +20,7 @@ module('Acceptance | user sees projects of all types', function(hooks) {
   // this test is failing because empty-package projects don't appear
   test('Project shows up in the right "Working on it..." column with no button', async function (assert) {
     this.server.createList('project', 5, 'workingOnIt');
-    this.server.createList('project', 3, 'noPackages');
+    this.server.createList('project', 3);
 
     await visit('/projects');
 
