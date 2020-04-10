@@ -39,7 +39,7 @@ export class AppController {
   @Get('/logout')
   async logout(@Res() res: Response) {
     res.clearCookie('token')
-      .send({ message: 'Login successful!' });
+      .send({ message: 'Logout successful!' });
   }
 
   @Get('/users')
