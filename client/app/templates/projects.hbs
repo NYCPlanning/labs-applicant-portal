@@ -9,16 +9,10 @@
   </ul>
 </nav>
 
-<hr />
+<hr class="large-margin-bottom" />
 
 <div class="grid-x grid-padding-x">
-
-  <div class="cell small-12">
-    {{!-- applicant projects --}}
-    <h4 class="text-dark-gray large-margin-bottom text-weight-normal text-uppercase">
-      <FaIcon @icon="inbox" @fixedWidth={{true}} />
-      TO DO
-    </h4>
+  <div class="cell large-8">
     {{#if (gt this.applicantProjects.length 0)}}
       <ul class="no-bullet">
         {{#each this.sortedApplicantProjects as |project|}}
@@ -26,35 +20,24 @@
         {{/each}}
       </ul>
     {{else}}
-      <div class="large-margin-bottom">
-        <strong class="text-dark-gray">Nothing to do.</strong>
-        <p>You do not currently have any projects that require your response.</p>
-      </div>
+      <h4 class="text-dark-gray tiny-margin-bottom">Nothing to do.</h4>
+      <p class="text-dark-gray">You do not currently have any projects that require your response.</p>
     {{/if}}
-  </div>
 
-  <hr />
-
-  <div class="cell small-12">
-    {{!-- planning projects --}}
     {{#if (gt this.planningProjects.length 0)}}
-      <div class="large-margin-top bg-white-smoke large-padding">
-        <h5 class="text-dark-gray large-margin-bottom  text-weight-normal">
-          <FaIcon @icon="lock" @fixedWidth={{true}} />
-          NYC PLANNING IS WORKING ON IT&hellip;
-        </h5>
-        <ul class="no-bullet">
-          {{#each this.sortedPlanningProjects as |project|}}
-            <Projects::PlanningProjectCard @project={{project}} />
-          {{/each}}
-        </ul>
-      </div>
+      <hr class="large-margin-top large-margin-bottom" />
+      <ul class="no-bullet">
+        {{#each this.sortedPlanningProjects as |project|}}
+          <Projects::PlanningProjectCard @project={{project}} />
+        {{/each}}
+      </ul>
     {{/if}}
   </div>
-  <div class="cell small-12">
-    <p class="large-margin-top large-padding-right">
+
+  <div class="cell large-4">
+    <p>
       If something has gone wrong, or you believe projects are missing from this list, please contact City Planning at
-      <a href="mailto:ZAP_feedback_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a> or <a href="tel:212-720-3300">212-720-3300</a>.
+      <a href="mailto:ZAP_feedback_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a> or <a href="tel:212-720-3300" class="nowrap">212-720-3300</a>.
     </p>
   </div>
 </div>
