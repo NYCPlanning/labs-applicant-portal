@@ -1,16 +1,16 @@
 import { Factory, trait } from 'ember-cli-mirage';
 
 const PACKAGE_STATUS_CODES = {
-  PACKAGE_PREPARATION: "Package Preparation",
-  CERTIFIED: "Certified",
-  FINAL_APPROVAL: "Final Approval",
-  REVIEWED_NO_REVISIONS_REQUIRED: "Reviewed - No Revisions Required",
-  REVIEWED_REVISIONS_REQUIRED: "Reviewed - Revisions Required",
-  WITHDRAWN: "Withdrawn",
-  SUBMITTED: "Submitted",
-  UNDER_REVIEW: "Under Review",
-  MISTAKE: "Mistake",
-}
+  PACKAGE_PREPARATION: 'Package Preparation',
+  CERTIFIED: 'Certified',
+  FINAL_APPROVAL: 'Final Approval',
+  REVIEWED_NO_REVISIONS_REQUIRED: 'Reviewed - No Revisions Required',
+  REVIEWED_REVISIONS_REQUIRED: 'Reviewed - Revisions Required',
+  WITHDRAWN: 'Withdrawn',
+  SUBMITTED: 'Submitted',
+  UNDER_REVIEW: 'Under Review',
+  MISTAKE: 'Mistake',
+};
 
 const PACKAGE_VISIBILITY_CODES = {
   INTERNAL_DCP_ONLY: 717170000,
@@ -18,7 +18,7 @@ const PACKAGE_VISIBILITY_CODES = {
   APPLICANT_ONLY: 717170002,
   GENERAL_PUBLIC: 717170003,
   LUP: 717170004,
-}
+};
 
 export default Factory.extend({
   toDo: trait({
@@ -55,14 +55,14 @@ export default Factory.extend({
       ];
 
       // Projects with General Public and Applicant Only packages
-      // may still still show in "Working on It" list as long as 
+      // may still still show in "Working on It" list as long as
       // the package statuscode is not "Prepared"
       const visibility = [
         PACKAGE_VISIBILITY_CODES.INTERNAL_DCP_ONLY,
         PACKAGE_VISIBILITY_CODES.CPC_ONLY,
         PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY,
         PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC,
-        PACKAGE_VISIBILITY_CODES.LUP
+        PACKAGE_VISIBILITY_CODES.LUP,
       ];
 
       return [
@@ -99,11 +99,11 @@ export default Factory.extend({
           'dcp-visibility': visibility[i % visibility.length],
         },
       ];
-    }
+    },
   }),
 
   // A "View PAS" button does not show up as long it is not
-  // BOTH submitted/under review/reviewed* and visible to 
+  // BOTH submitted/under review/reviewed* and visible to
   // applicant only/general public
   workingOnItNoViewPASButton: trait({
     dcpDcpProjectDcpPackageProject(i) {
@@ -127,7 +127,7 @@ export default Factory.extend({
           'dcp-visibility': visibility[i % visibility.length],
         },
       ];
-    }
+    },
   }),
 
   noPackages: trait({

@@ -3,21 +3,21 @@ import { sort } from '@ember/object/computed';
 
 // TODO: Get theses codes from a Constants service
 const PACKAGE_STATUS_CODES = {
-  PACKAGE_PREPARATION: "Package Preparation",
-  CERTIFIED: "Certified",
-  FINAL_APPROVAL: "Final Approval",
-  REVIEWED_NO_REVISIONS_REQUIRED: "Reviewed - No Revisions Required",
-  REVIEWED_REVISIONS_REQUIRED: "Reviewed - Revisions Required",
-  WITHDRAWN: "Withdrawn",
-  SUBMITTED: "Submitted",
-  UNDER_REVIEW: "Under Review",
-  MISTAKE: "Mistake",
-}
+  PACKAGE_PREPARATION: 'Package Preparation',
+  CERTIFIED: 'Certified',
+  FINAL_APPROVAL: 'Final Approval',
+  REVIEWED_NO_REVISIONS_REQUIRED: 'Reviewed - No Revisions Required',
+  REVIEWED_REVISIONS_REQUIRED: 'Reviewed - Revisions Required',
+  WITHDRAWN: 'Withdrawn',
+  SUBMITTED: 'Submitted',
+  UNDER_REVIEW: 'Under Review',
+  MISTAKE: 'Mistake',
+};
 
 const PACKAGE_VISIBILITY_CODES = {
   APPLICANT_ONLY: 717170002,
   GENERAL_PUBLIC: 717170003,
-}
+};
 
 export default class ProjectsController extends Controller {
   queryParams = ['email'];
@@ -30,7 +30,7 @@ export default class ProjectsController extends Controller {
         projectPackage.statuscode === PACKAGE_STATUS_CODES.PACKAGE_PREPARATION
         && [
           PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY,
-          PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC
+          PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC,
         ].includes(projectPackage['dcp-visibility'])
       ) {
         return true;
@@ -51,7 +51,7 @@ export default class ProjectsController extends Controller {
           projectPackage.statuscode === PACKAGE_STATUS_CODES.PACKAGE_PREPARATION
           && [
             PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY,
-            PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC
+            PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC,
           ].includes(projectPackage['dcp-visibility'])
         ) {
           return false;
@@ -62,16 +62,16 @@ export default class ProjectsController extends Controller {
   }
 
 
-  @sort('applicantProjects', function(projectA, projectB){
-    if ( projectA.dcpProjectname < projectB.dcpProjectname) {
+  @sort('applicantProjects', function(projectA, projectB) {
+    if (projectA.dcpProjectname < projectB.dcpProjectname) {
       return -1;
     }
     return 1;
   })
   sortedApplicantProjects;
 
-  @sort('planningProjects', function(projectA, projectB){
-    if ( projectA.dcpProjectname < projectB.dcpProjectname) {
+  @sort('planningProjects', function(projectA, projectB) {
+    if (projectA.dcpProjectname < projectB.dcpProjectname) {
       return -1;
     }
     return 1;
