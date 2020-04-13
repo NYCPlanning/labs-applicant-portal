@@ -21,7 +21,7 @@ const PACKAGE_VISIBILITY_CODES = {
 };
 
 export default Factory.extend({
-  toDo: trait({
+  applicant: trait({
     dcpDcpProjectDcpPackageProject(i) {
       const statuses = [
         PACKAGE_STATUS_CODES.PACKAGE_PREPARATION,
@@ -42,7 +42,7 @@ export default Factory.extend({
   }),
 
   // These can be either projects with or without a View PAS button
-  workingOnIt: trait({
+  planning: trait({
     dcpDcpProjectDcpPackageProject(i) {
       const statuses = [
         PACKAGE_STATUS_CODES.CERTIFIED,
@@ -70,7 +70,7 @@ export default Factory.extend({
           'dcp-packagetype': 'PAS Package',
           // allows us to have an evenly distributed
           // # of projects with these statuses. e.g.
-          // this.server.createList('project', 'workingOnIt', 10)
+          // this.server.createList('project', 'planning', 10)
           // ^ 5 will be WITHDRAWN, 6 will be SUBMITTED
           statuscode: statuses[i % statuses.length],
           'dcp-visibility': visibility[i % visibility.length],
@@ -79,7 +79,7 @@ export default Factory.extend({
     },
   }),
 
-  workingOnItWithViewPASButton: trait({
+  planningWithViewPASButton: trait({
     dcpDcpProjectDcpPackageProject(i) {
       const statuses = [
         PACKAGE_STATUS_CODES.REVIEWED_NO_REVISIONS_REQUIRED,
@@ -105,7 +105,7 @@ export default Factory.extend({
   // A "View PAS" button does not show up as long it is not
   // BOTH submitted/under review/reviewed* and visible to
   // applicant only/general public
-  workingOnItNoViewPASButton: trait({
+  planningNoViewPASButton: trait({
     dcpDcpProjectDcpPackageProject(i) {
       const statuses = [
         PACKAGE_STATUS_CODES.CERTIFIED,

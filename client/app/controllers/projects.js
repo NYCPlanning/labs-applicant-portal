@@ -61,7 +61,11 @@ export default class ProjectsController extends Controller {
     });
   }
 
-
+  // TODO: Possibly improve this sort to consider the house numbers
+  // in front of addresses. One possible implementation is that
+  // Addresses should first be sorted alphabetically by their street name,
+  // and secondly by their house number. (Currently, the sort is alphabetical
+  // even across the house number, so "123" < "8" === true)
   @sort('applicantProjects', function(projectA, projectB) {
     if (projectA.dcpProjectname < projectB.dcpProjectname) {
       return -1;
