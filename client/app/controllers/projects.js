@@ -1,4 +1,5 @@
 import Controller from '@ember/controller';
+import { sort } from '@ember/object/computed';
 
 // TODO: Get theses codes from a Constants service
 const PACKAGE_STATUS_CODES = {
@@ -59,4 +60,21 @@ export default class ProjectsController extends Controller {
       });
     });
   }
+
+
+  @sort('applicantProjects', function(projectA, projectB){
+    if ( projectA.dcpProjectname < projectB.dcpProjectname) {
+      return -1;
+    }
+    return 1;
+  })
+  sortedApplicantProjects;
+
+  @sort('planningProjects', function(projectA, projectB){
+    if ( projectA.dcpProjectname < projectB.dcpProjectname) {
+      return -1;
+    }
+    return 1;
+  })
+  sortedPlanningProjects;
 }

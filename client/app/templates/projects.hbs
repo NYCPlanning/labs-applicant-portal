@@ -21,7 +21,7 @@
     </h4>
     {{#if (gt this.applicantProjects.length 0)}}
       <ul class="no-bullet">
-        {{#each this.applicantProjects as |project|}}
+        {{#each this.sortedApplicantProjects as |project|}}
           <Projects::ApplicantProjectCard @project={{project}} />
         {{/each}}
       </ul>
@@ -44,7 +44,7 @@
           NYC PLANNING IS WORKING ON IT&hellip;
         </h5>
         <ul class="no-bullet">
-          {{#each this.planningProjects as |project|}}
+          {{#each this.sortedPlanningProjects as |project|}}
             <Projects::PlanningProjectCard @project={{project}} />
           {{/each}}
         </ul>

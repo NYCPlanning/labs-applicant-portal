@@ -29,6 +29,24 @@ module('Acceptance | user sees projects of all types', function(hooks) {
 
   skip('Page should display non-assigned message if no projects');
 
+  test('Projects are listed alphabetically', async function (assert) {
+    this.server.create('project', 'toDo', {
+      dcpProjectname: 'Title Is C',
+    });
+    this.server.create('project', 'toDo', {
+      dcpProjectname: 'Title Is A',
+    });
+    this.server.create('project', 'toDo', {
+      dcpProjectname: 'Title Is B',
+    });
+
+    await visit('/projects');
+
+    assert.ok(findAll("[data-test-type='to-do']")[0].textContent.includes("Title Is A"));
+    assert.ok(findAll("[data-test-type='to-do']")[1].textContent.includes("Title Is B"));
+    assert.ok(findAll("[data-test-type='to-do']")[2].textContent.includes("Title Is C"));
+  });
+
   test('Page should honor creeper mode query param', async function(assert) {
     assert.expect(1);
 
