@@ -60,4 +60,25 @@ module('Acceptance | user can login', function(hooks) {
     assert.ok(find('[data-test-applicant-error-message="contact-not-assigned"'));
     assert.equal(find('[data-test-error-response="code0"]').textContent.trim(), 'code: NO_CONTACT_FOUND');
   });
+
+  test('If user already logged in, revisiting index reroutes them to projects page', async function (assert) {
+    // user logs in
+    this.server.create('user');
+    this.server.get('/login', (schema, request) => {
+      assert.equal(request.queryParams.accessToken, 'a-valid-jwt');
+    });
+    window.location.hash = '#access_token=a-valid-jwt';
+    await visit('/login');
+
+    // because user is already logged in, route should redirect to /projects
+    await visit('/');
+    assert.equal(currentURL(), '/projects');
+
+    // user logs out
+    await click('[data-test-auth="logout"');
+
+    // because user is logged out, route should not redirect
+    await visit('/');
+    assert.equal(currentURL(), '/');
+  });
 });
