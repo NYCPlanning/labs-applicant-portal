@@ -79,6 +79,57 @@ export default Factory.extend({
     },
   }),
 
+  workingOnItWithViewPASButton: trait({
+    dcpDcpProjectDcpPackageProject(i) {
+      const statuses = [
+        PACKAGE_STATUS_CODES.REVIEWED_NO_REVISIONS_REQUIRED,
+        PACKAGE_STATUS_CODES.REVIEWED_REVISIONS_REQUIRED,
+        PACKAGE_STATUS_CODES.SUBMITTED,
+        PACKAGE_STATUS_CODES.UNDER_REVIEW,
+      ];
+      const visibility = [
+        PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY,
+        PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC,
+      ];
+
+      return [
+        {
+          'dcp-packagetype': 'PAS Package',
+          statuscode: statuses[i % statuses.length],
+          'dcp-visibility': visibility[i % visibility.length],
+        },
+      ];
+    }
+  }),
+
+  // A "View PAS" button does not show up as long it is not
+  // BOTH submitted/under review/reviewed* and visible to 
+  // applicant only/general public
+  workingOnItNoViewPASButton: trait({
+    dcpDcpProjectDcpPackageProject(i) {
+      const statuses = [
+        PACKAGE_STATUS_CODES.CERTIFIED,
+        PACKAGE_STATUS_CODES.FINAL_APPROVAL,
+        PACKAGE_STATUS_CODES.WITHDRAWN,
+      ];
+      const visibility = [
+        PACKAGE_VISIBILITY_CODES.INTERNAL_DCP_ONLY,
+        PACKAGE_VISIBILITY_CODES.CPC_ONLY,
+        PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY,
+        PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC,
+        PACKAGE_VISIBILITY_CODES.LUP,
+      ];
+
+      return [
+        {
+          'dcp-packagetype': 'PAS Package',
+          statuscode: statuses[i % statuses.length],
+          'dcp-visibility': visibility[i % visibility.length],
+        },
+      ];
+    }
+  }),
+
   noPackages: trait({
     dcpDcpProjectDcpPackageProject: [],
   }),

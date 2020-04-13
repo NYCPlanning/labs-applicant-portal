@@ -45,7 +45,7 @@
         </h5>
         <ul class="no-bullet">
           {{#each this.planningProjects as |project|}}
-            <Projects::PlanningProjectCard @type="planning-project" @project={{project}} />
+            <Projects::PlanningProjectCard @project={{project}} />
           {{/each}}
         </ul>
       </div>

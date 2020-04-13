@@ -13,7 +13,13 @@
     {{@project.dcpApplicantCustomerValue}}
   </p>
 
-  {{#if (eq @type 'planning-project')}}
-    <a href="/pas.html" class="button hollow tiny">View Pre-Application Statement</a>
+  {{#if this.showViewPas}}
+    <a
+      href="/pas.html"
+      class="button hollow tiny"
+      data-test-view-pas
+    >
+      View Pre-Application Statement
+    </a>
   {{/if}}
 </li>

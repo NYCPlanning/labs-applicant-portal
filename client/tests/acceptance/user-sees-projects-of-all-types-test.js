@@ -17,13 +17,15 @@ module('Acceptance | user sees projects of all types', function(hooks) {
     assert.equal(findAll("[data-test-type='working-on-it']").length, 5);
   });
 
-  skip('Project shows up in the bottom "Working on it..." section with no button', async function (assert) {
+  test('Project shows up in the bottom with "Working on it..." with a button when appropriate', async function (assert) {
+    this.server.createList('project', 3, 'workingOnItNoViewPASButton');
+    this.server.createList('project', 5, 'workingOnItWithViewPASButton');
+
     await visit('/projects');
+
+    assert.equal(findAll("[data-test-type='working-on-it']").length, 8);
+    assert.equal(findAll("[data-test-view-pas]").length, 5);
   });
-
-  skip('Project shows up in the left "To DO" column with an "Edit Pre-Application Statement" button');
-
-  skip('Project shows up in the right "Working on it..." column with a "View Pre-Application Statement" button');
 
   skip('Page should display non-assigned message if no projects');
 
