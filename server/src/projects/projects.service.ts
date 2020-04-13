@@ -17,13 +17,11 @@ export class ProjectsService {
 
     const applicantActiveStatusCode = '1';
     const projectActiveStateCode = '0';
-    const packageVisibilityApplicantOnly = '717170002';
-    const packageVisibilityGeneralPublic = '717170003';
     const projectVisibilityApplicantOnly = '717170002';
     const projectVisibilityGeneralPublic = '717170003';
 
     try  {
-      results = await this.crmService.get(`dcp_projects?$filter=dcp_dcp_project_dcp_projectapplicant_Project/any(o:o/_dcp_applicant_customer_value%20eq%20%27${contactId}%27)%20and%20(dcp_visibility%20eq%20${projectVisibilityApplicantOnly}%20or%20dcp_visibility%20eq%20${projectVisibilityGeneralPublic})%20and%20statecode%20eq%20${projectActiveStateCode}&$expand=dcp_dcp_project_dcp_package_project($filter=dcp_visibility%20eq%20${packageVisibilityApplicantOnly}%20or%20dcp_visibility%20eq%20${packageVisibilityGeneralPublic}),dcp_dcp_project_dcp_projectapplicant_Project($filter=%20statuscode%20eq%20${applicantActiveStatusCode})`);
+      results = await this.crmService.get(`dcp_projects?$filter=dcp_dcp_project_dcp_projectapplicant_Project/any(o:o/_dcp_applicant_customer_value%20eq%20%27${contactId}%27)%20and%20(dcp_visibility%20eq%20${projectVisibilityApplicantOnly}%20or%20dcp_visibility%20eq%20${projectVisibilityGeneralPublic})%20and%20statecode%20eq%20${projectActiveStateCode}&$expand=dcp_dcp_project_dcp_package_project,dcp_dcp_project_dcp_projectapplicant_Project($filter=%20statuscode%20eq%20${applicantActiveStatusCode})`);
     } catch(e) {
       const errorMessage = `Error finding projects by contact ID. ${e.message}`;
       console.log(errorMessage);

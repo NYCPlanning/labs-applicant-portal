@@ -7,7 +7,7 @@ export default class ProjectModel extends Model {
 
   @attr({ defaultValue: () => [] }) dcpDcpProjectDcpPackageProject;
 
-  get packages() {
+  get pasPackages() {
     const [firstPackage] = this.dcpDcpProjectDcpPackageProject
       .filter((projectPackage) => projectPackage['dcp-packagetype'] === 'PAS Package')
       .sortBy('versionnumber')

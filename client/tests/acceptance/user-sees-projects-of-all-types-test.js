@@ -8,8 +8,8 @@ module('Acceptance | user sees projects of all types', function(hooks) {
   setupMirage(hooks);
 
   test('Shows correct # of projects by type', async function(assert) {
-    this.server.createList('project', 4, 'toDo');
-    this.server.createList('project', 5, 'workingOnIt');
+    this.server.createList('project', 4, 'applicant');
+    this.server.createList('project', 5, 'planning');
 
     await visit('/projects');
 
@@ -17,21 +17,35 @@ module('Acceptance | user sees projects of all types', function(hooks) {
     assert.equal(findAll("[data-test-type='working-on-it']").length, 5);
   });
 
-  // this test is failing because empty-package projects don't appear
-  test('Project shows up in the right "Working on it..." column with no button', async function (assert) {
-    this.server.createList('project', 5, 'workingOnIt');
-    this.server.createList('project', 3);
+  test('Project shows up in the bottom with "Working on it..." with a button when appropriate', async function (assert) {
+    this.server.createList('project', 3, 'planningNoViewPASButton');
+    this.server.createList('project', 5, 'planningWithViewPASButton');
 
     await visit('/projects');
 
     assert.equal(findAll("[data-test-type='working-on-it']").length, 8);
+    assert.equal(findAll('[data-test-view-pas]').length, 5);
   });
 
-  skip('Project shows up in the left "To DO" column with an "Edit Pre-Application Statement" button');
-
-  skip('Project shows up in the right "Working on it..." column with a "View Pre-Application Statement" button');
-
   skip('Page should display non-assigned message if no projects');
+
+  test('Projects are listed alphabetically', async function (assert) {
+    this.server.create('project', 'applicant', {
+      dcpProjectname: 'Title Is C',
+    });
+    this.server.create('project', 'applicant', {
+      dcpProjectname: 'Title Is A',
+    });
+    this.server.create('project', 'applicant', {
+      dcpProjectname: 'Title Is B',
+    });
+
+    await visit('/projects');
+
+    assert.ok(findAll("[data-test-type='to-do']")[0].textContent.includes('Title Is A'));
+    assert.ok(findAll("[data-test-type='to-do']")[1].textContent.includes('Title Is B'));
+    assert.ok(findAll("[data-test-type='to-do']")[2].textContent.includes('Title Is C'));
+  });
 
   test('Page should honor creeper mode query param', async function(assert) {
     assert.expect(1);
