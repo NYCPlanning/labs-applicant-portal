@@ -99,9 +99,13 @@ export class AuthService {
     };
 
     if (!contact) {
-      const errorMessage = 'CRM user not found. Please make sure your e-mail or ID is associated with an assignment.';
 
-      throw new HttpException(errorMessage, HttpStatus.UNAUTHORIZED);
+      const responseBody = {
+        "code": "NO_CONTACT_FOUND",
+        "message": 'CRM Contact not found for given email or ID.',
+      }
+
+      throw new HttpException(responseBody, HttpStatus.UNAUTHORIZED);
     }
 
     return this.signNewToken(contact.contactid, exp);

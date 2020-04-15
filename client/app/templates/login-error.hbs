@@ -1,0 +1,42 @@
+<div class="cell">
+  <div class="grid-container">
+    <div class="grid-x grid-padding-x grid-padding-y align-middle">
+      <div class="cell large-6 large-offset-3 text-center">
+        <h2>Oops!</h2>
+
+        {{#if this.contactNotAssigned}}
+          <p data-test-applicant-error-message="contact-not-assigned">
+            You are not currently assigned to a DCP project. Please email&nbsp;
+            <a href="mailto:ZAP_feedback_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a>&nbsp;
+            for further assistance.
+          </p>
+        {{else}}
+          <p>
+            Something went wrong.
+          </p>
+        {{/if}}
+
+        {{#each @model.errors as |error idx|}}
+          {{#if error.detail}}
+            <code class="callout display-block text-left red-muted" data-test-error-message={{idx}}>{{error.detail}}</code>
+          {{else}}
+            {{#each-in error.response as |key value|}}
+              <code class="callout display-block text-left red-muted" data-test-error-response={{concat key idx}}>
+                {{key}}: {{value}}
+              </code>
+            {{/each-in}}
+            <code class="callout display-block text-left red-muted">
+              status: {{error.status}}
+            </code>
+          {{/if}}
+        {{/each}}
+
+        <DoLogout />
+
+      </div>
+      <div class="cell large-10 large-offset-1 xlarge-8 xlarge-offset-2  text-center">
+        <p class="">Please contact City Planning at <a href="mailto:ZAP_feedback_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a> or 212-720-3300.</p>
+      </div>
+    </div>
+  </div>
+</div>
