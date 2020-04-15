@@ -1,49 +1,74 @@
+<h1 class="header-xlarge">
+  Draft, file, and track your land use and environmental applications with&nbsp;the Department&nbsp;of City&nbsp;Planning.
+</h1>
+
+<h6 class="-callout">
+  Sign in with NYC.ID to view your projects.
+  <a href="https://www1.nyc.gov/assets/nyc4d/html/services-nycid/user-features-benefits.shtml"
+    class="text-weight-bold"
+  >
+    What is NYC.ID?
+  </a>
+</h6>
+
+<hr>
+
 <div class="grid-x grid-margin-x">
-  <div class="cell">
+  <div class="cell large-4">
 
-    <h1 class="header-xlarge large-margin-bottom">
-      <strong>Sign in with your NYC.ID account to draft, submit, review, revise, file, and track your applications with the Department&nbsp;of City&nbsp;Planning.</strong>
-    </h1>
+    <h3>Already have an account?</h3>
 
-  </div>
-  <div class="cell large-7">
-
-    <div class="callout">
-      <h4>
-        <FaIcon @icon="exclamation-triangle" @prefix="fas" class="text-gold tiny-margin-right" />
-        <b class="text-gold-muted">Before signing in&hellip;</b>
-      </h4>
-
-      <p class="text-large">
-        An informational meeting must be held with the Department&nbsp;of City&nbsp;Planning.
-        Only then will a project be created and assigned to you in this system.
-      </p>
-
-      <p class="text-large">
-        Your NYC.ID account must use the email address that is associated with this system.
-        If you're unsure which email address to use, please contact City Planning at
-        <a href="mailto:ZAP_feedback_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a> or <a href="tel:212-720-3300">212-720-3300</a>.
-      </p>
-
-      <p>
-        <a href="https://www1.nyc.gov/assets/nyc4d/html/services-nycid/user-features-benefits.shtml">What is NYC.ID?</a>
-      </p>
-
-    </div>
-
-  </div>
-  <div class="cell large-5">
-
-    <a {{ on "click" this.handleLogin }} href="#" class="button large expanded">
+    <a {{on "click" this.handleLogin}} href="#" class="button large expanded">
       <b>Sign In</b>
       &nbsp;<FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} />
     </a>
 
-    <ul class="">
-      <li class="small-margin-bottom">For NYC.GOV credentials, select the "NYC Employees" option</li>
-      <li class="small-margin-bottom">For non-NYC.GOV email addresses, enter your existing NYC.ID credentials (you may need to create an NYC.ID account)</li>
-      <li class="small-margin-bottom">Once signed in, you'll be redirected back to this site, where you'll see your list of projects.</li>
-    </ul>
+    <p>
+      If you already have an NYC.ID account, sign in and you’ll be redirected back to this site, where you’ll see your list of projects.
+    </p>
+
+  </div>
+  <div class="cell large-8">
+
+    <hr class="hide-for-large">
+
+    <h3>Need an account?</h3>
+
+    <p>
+      If you don’t have an NYC.ID account, you’ll need to create one. Be sure to use the email address that’s associated with this system. If you're unsure which email address to use, please contact City Planning at <a href="mailto:ZAP_feedback_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a> or <a href="tel:212-720-3300" class="nowrap">212-720-3300</a>.
+    </p>
+
+    <a {{on "click" this.handleLogin}} href="#" class="button secondary no-margin">
+      Create NYC.ID account
+      &nbsp;<FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} />
+    </a>
+
+    <hr>
+
+    <div class="grid-x grid-margin-x">
+      <div class="cell medium-7">
+
+        <h3>NYC Employees</h3>
+
+        <p>
+          NYC employees do not need to create NYC.ID accounts. You can sign in with your nyc.gov credentials by select the "NYC Employees" option.
+        </p>
+
+        <a {{on "click" this.handleLogin}} href="#" class="button secondary">
+          Sign In
+          &nbsp;<FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} />
+        </a>
+
+      </div>
+      <div class="cell medium-5">
+
+        <figure class="callout bg-off-white small-padding">
+          <img src="/img/nycid-login-nyc-employees.png">
+          <figcaption class="text-tiny text-dark-gray text-center">The NYC Employee button on NYC.ID</figcaption>
+        </figure>
+
+      </div>
+    </div>
 
   </div>
 </div>
