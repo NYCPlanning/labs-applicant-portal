@@ -58,7 +58,7 @@ export class ProjectsController {
   // Serializes an array of objects into a JSON:API document
   serialize(records, opts?: object): Serializer {
     const ProjectsSerializer = new Serializer('projects', {
-      attributes: ['dcp_projectname', 'dcp_name', 'statecode', 'dcp_visibility', '_dcp_applicant_customer_value', 'dcp_dcp_project_dcp_projectapplicant_Project', 'dcp_dcp_project_dcp_package_project'],
+      attributes: ['dcp_projectname', 'dcp_name', 'statecode', 'statuscode', 'dcp_visibility', '_dcp_applicant_customer_value', 'dcp_dcp_project_dcp_projectapplicant_Project', 'dcp_dcp_project_dcp_package_project'],
       id: 'dcp_name',
       meta: { ...opts },
       keyForAttribute(key) {
