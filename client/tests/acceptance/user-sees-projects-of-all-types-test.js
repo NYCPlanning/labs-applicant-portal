@@ -1,5 +1,5 @@
-import { module, test, skip } from 'qunit';
-import { visit, findAll } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { visit, find, findAll } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -27,7 +27,10 @@ module('Acceptance | user sees projects of all types', function(hooks) {
     assert.equal(findAll('[data-test-view-pas]').length, 5);
   });
 
-  skip('Page should display non-assigned message if no projects');
+  test('Page should display non-assigned message if no projects', async function(assert) {
+    await visit('/projects');
+    assert.ok(find('[data-test-not-assigned]'));
+  });
 
   test('Projects are listed alphabetically', async function (assert) {
     this.server.create('project', 'applicant', {
