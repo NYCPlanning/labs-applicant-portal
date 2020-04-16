@@ -21,6 +21,8 @@ const PACKAGE_VISIBILITY_CODES = {
 };
 
 export default Factory.extend({
+  statuscode: 'Active', // default project statuscode
+
   applicant: trait({
     dcpDcpProjectDcpPackageProject(i) {
       const statuses = [
@@ -132,5 +134,9 @@ export default Factory.extend({
 
   noPackages: trait({
     dcpDcpProjectDcpPackageProject: [],
+  }),
+
+  onHold: trait({
+    statuscode: 'On-Hold',
   }),
 });
