@@ -21,7 +21,12 @@
       </ul>
     {{else}}
       <h4 class="text-dark-gray tiny-margin-bottom">Nothing to do.</h4>
-      <p class="text-dark-gray">You do not currently have any projects that require your response.</p>
+      <p 
+        class="text-dark-gray"
+        data-test-not-assigned
+      >
+        You are not currently assigned to a DCP project.
+      </p>
     {{/if}}
 
     {{#if (gt this.planningProjects.length 0)}}
