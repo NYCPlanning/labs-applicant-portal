@@ -5,6 +5,15 @@
 >
   <h3 class="no-margin">
     {{@project.dcpProjectname}}
+
+    {{#if (eq @project.statuscode "On-Hold")}}
+      <span class="text-red text-weight-normal"
+            data-test-project-on-hold
+      > 
+        (On Hold) 
+      </span>
+    {{/if}}
+
     <small class="text-weight-normal">{{@project.id}}</small>
   </h3>
 

@@ -3,6 +3,8 @@ import Model, { attr } from '@ember-data/model';
 export default class ProjectModel extends Model {
   @attr dcpProjectname;
 
+  @attr statuscode;
+
   @attr dcpApplicantCustomerValue;
 
   @attr({ defaultValue: () => [] }) dcpDcpProjectDcpPackageProject;
