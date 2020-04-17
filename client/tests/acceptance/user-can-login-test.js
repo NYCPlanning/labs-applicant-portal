@@ -1,9 +1,12 @@
 import { module, test } from 'qunit';
-import { visit, click, currentURL } from '@ember/test-helpers';
+import {
+  visit, click, currentURL, find,
+} from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import window, { setupWindowMock } from 'ember-window-mock';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { currentSession } from 'ember-simple-auth/test-support';
+import { Response } from 'ember-cli-mirage';
 
 module('Acceptance | user can login', function(hooks) {
   setupApplicationTest(hooks);
@@ -36,5 +39,25 @@ module('Acceptance | user can login', function(hooks) {
 
     assert.equal(currentURL(), '/logout');
     assert.equal(currentSession().isAuthenticated, false);
+  });
+
+  test('User sees error message if no CRM contact is found for their email', async function (assert) {
+    const accessToken = 'a-valid-jwt';
+    this.server.create('user');
+    this.server.get('/login', () => new Response(401, { some: 'header' }, {
+      errors: [{
+        response: {
+          code: 'NO_CONTACT_FOUND',
+          message: 'This message is nice but does not affect frontend logic',
+        },
+        status: 401,
+      }],
+    }));
+
+    window.location.hash = `#access_token=${accessToken}`;
+    await visit('/login');
+
+    assert.ok(find('[data-test-applicant-error-message="contact-not-assigned"'));
+    assert.equal(find('[data-test-error-response="code0"]').textContent.trim(), 'code: NO_CONTACT_FOUND');
   });
 });
