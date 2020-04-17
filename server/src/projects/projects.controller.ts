@@ -1,6 +1,6 @@
-import { 
-  Controller, 
-  Get, 
+import {
+  Controller,
+  Get,
   Query,
   Res,
   HttpException,
@@ -34,18 +34,30 @@ export class ProjectsController {
     let { contactId } = session;
 
     // TODO: Use a NestJS interceptor object or something to help with this
-    if (!contactId) throw new HttpException('Unauthorized. Please login.', HttpStatus.UNAUTHORIZED);
+    if (!contactId)
+      throw new HttpException(
+        'Unauthorized. Please login.',
+        HttpStatus.UNAUTHORIZED,
+      );
 
     if (email) {
-      ({ contactid: contactId } = await this.contactService.findOneByEmail(email));
+      ({ contactid: contactId } = await this.contactService.findOneByEmail(
+        email,
+      ));
     }
-  
+
     try {
       if (contactId) {
-        const currentUserListOfProjects = await this.projectsService.findManyByContactId(contactId);
+        const currentUserListOfProjects = await this.projectsService.findManyByContactId(
+          contactId,
+        );
 
         return this.serialize(
-          overwriteCodesWithLabels(currentUserListOfProjects, ['statuscode', '_dcp_applicant_customer_value', 'dcp_packagetype'])
+          overwriteCodesWithLabels(currentUserListOfProjects, [
+            'statuscode',
+            '_dcp_applicant_customer_value',
+            'dcp_packagetype',
+          ]),
         );
       }
     } catch (e) {
@@ -58,7 +70,16 @@ export class ProjectsController {
   // Serializes an array of objects into a JSON:API document
   serialize(records, opts?: object): Serializer {
     const ProjectsSerializer = new Serializer('projects', {
-      attributes: ['dcp_projectname', 'dcp_name', 'statecode', 'statuscode', 'dcp_visibility', '_dcp_applicant_customer_value', 'dcp_dcp_project_dcp_projectapplicant_Project', 'dcp_dcp_project_dcp_package_project'],
+      attributes: [
+        'dcp_projectname',
+        'dcp_name',
+        'statecode',
+        'statuscode',
+        'dcp_visibility',
+        '_dcp_applicant_customer_value',
+        'dcp_dcp_project_dcp_projectapplicant_Project',
+        'dcp_dcp_project_dcp_package_project',
+      ],
       id: 'dcp_name',
       meta: { ...opts },
       keyForAttribute(key) {
