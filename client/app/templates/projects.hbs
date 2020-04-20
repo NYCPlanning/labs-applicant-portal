@@ -13,37 +13,45 @@
 
 <div class="grid-x grid-padding-x">
   <div class="cell large-8">
-    {{#if (gt this.applicantProjects.length 0)}}
-      <ul class="no-bullet">
-        {{#each this.sortedApplicantProjects as |project|}}
-          <Projects::ApplicantProjectCard @project={{project}} />
-        {{/each}}
-      </ul>
+    {{#if (gt this.model.length 0)}}
+      {{#if (gt this.applicantProjects.length 0)}}
+        <ul class="no-bullet">
+          {{#each this.sortedApplicantProjects as |project|}}
+            <Projects::ApplicantProjectCard @project={{project}} />
+          {{/each}}
+        </ul>
+      {{else}}
+        <h4 class="text-dark-gray tiny-margin-bottom">Nothing to do.</h4>
+        <p 
+          class="text-dark-gray"
+          data-test-no-response-required
+        >
+          You do not currently have any projects that require your response.
+        </p>
+      {{/if}}
+
+      {{#if (gt this.planningProjects.length 0)}}
+        <hr class="large-margin-top large-margin-bottom" />
+        <ul class="no-bullet">
+          {{#each this.sortedPlanningProjects as |project|}}
+            <Projects::PlanningProjectCard @project={{project}} />
+          {{/each}}
+        </ul>
+      {{/if}}
     {{else}}
       <h4 class="text-dark-gray tiny-margin-bottom">Nothing to do.</h4>
-      <p 
-        class="text-dark-gray"
-        data-test-not-assigned
-      >
-        You are not currently assigned to a DCP project.
-      </p>
+        <p 
+          class="text-dark-gray"
+          data-test-not-assigned-any-active-project
+        >
+          You are not currently assigned to any active DCP projects.
+        </p>
+        <p>
+          Please reach out to&nbsp;
+          <a href="mailto:ZAP_feedback_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a>&nbsp;
+          if you believe this is an error.
+        </p>
     {{/if}}
-
-    {{#if (gt this.planningProjects.length 0)}}
-      <hr class="large-margin-top large-margin-bottom" />
-      <ul class="no-bullet">
-        {{#each this.sortedPlanningProjects as |project|}}
-          <Projects::PlanningProjectCard @project={{project}} />
-        {{/each}}
-      </ul>
-    {{/if}}
-  </div>
-
-  <div class="cell large-4">
-    <p>
-      If something has gone wrong, or you believe projects are missing from this list, please contact City Planning at
-      <a href="mailto:ZAP_feedback_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a> or <a href="tel:212-720-3300" class="nowrap">212-720-3300</a>.
-    </p>
   </div>
 </div>
 
