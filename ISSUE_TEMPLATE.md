@@ -1,21 +1,37 @@
-<!-- For Feature Requests/Enhancements -->
-#### User Story
-As a {type of user}, I want {some goal} so that {some reason}
+<!-- Don't forget to add labels to this issue! -->
 
-#### Description
-What's it all about?
+<!-- For Feature Requests/Enhancements -->
+## User Story / User Journey
+### User Story
+As a {type of user}, I want {some goal} so that {some reason}
+### User Journey
+Capture the experience of interacting with a specific feature. This should capture any conditional experiences depending on actions the user takes.
+
+## Front End
+### [Wireframes](#)
+Provide link to Figma
+Paste in screenshots
+
+### Display Logic
+Captures specifics about the data and how attributes of the data should determine a record’s styling or where a record gets displayed on the page.
+
+## Back End
+### Attributes
+What attributes should the API response include?
+### Filter Logic
+Which records should be included? Which should be excluded?
+
+## Unresolved Questions
 
 <!-- For Bugs -->
-#### What should happen:
+## What should happen:
 
-#### What happened instead:
+## What happened instead:
 
-#### How to reproduce this bug:
+## How to reproduce this bug:
 
 1. Step one
 2. ???
 3. Error
 
-#### Browser(s) and Device(s) observed on:
-
-<!-- Don't forget to add tags to this issue after you create it! -->
+## Browser(s) and Device(s) observed on:
