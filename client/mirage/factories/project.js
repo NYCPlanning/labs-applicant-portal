@@ -23,6 +23,31 @@ const PACKAGE_VISIBILITY_CODES = {
 export default Factory.extend({
   statuscode: 'Active', // default project statuscode
 
+  dcpProjectname(i) {
+    const SAMPLE_NAMES = [
+      'Huge New Public Library',
+      'Bagel Factory',
+      '123 Ember Avenue',
+      'Arizona Sun Dog Kennel',
+      'All Things Blue For You Merch',
+      'Pop Up Palm Tree & Goat Farm'];
+
+    return SAMPLE_NAMES[i % SAMPLE_NAMES.length];
+  },
+
+  dcpApplicantCustomerValue(i) {
+    const SAMPLE_CUSTOMERS = [
+      'Brandyn Friedly',
+      'Godfrey Yeung',
+      'Matt Gardner',
+      'Taylor McGinnis',
+      'Hannah Kates',
+      'Nneka Sobers',
+    ];
+
+    return SAMPLE_CUSTOMERS[i % SAMPLE_CUSTOMERS.length];
+  },
+
   applicant: trait({
     dcpDcpProjectDcpPackageProject(i) {
       const statuses = [
@@ -35,6 +60,7 @@ export default Factory.extend({
 
       return [
         {
+          id: `applicant-${i}`,
           'dcp-packagetype': 'PAS Package',
           statuscode: statuses[i % statuses.length],
           'dcp-visibility': visibility[i % visibility.length],
@@ -69,6 +95,7 @@ export default Factory.extend({
 
       return [
         {
+          id: `planning-${i}`,
           'dcp-packagetype': 'PAS Package',
           // allows us to have an evenly distributed
           // # of projects with these statuses. e.g.
@@ -96,6 +123,7 @@ export default Factory.extend({
 
       return [
         {
+          id: `planningWithViewPASButton-${i}`,
           'dcp-packagetype': 'PAS Package',
           statuscode: statuses[i % statuses.length],
           'dcp-visibility': visibility[i % visibility.length],
@@ -124,6 +152,7 @@ export default Factory.extend({
 
       return [
         {
+          id: `planningNoViewPASButton-${i}`,
           'dcp-packagetype': 'PAS Package',
           statuscode: statuses[i % statuses.length],
           'dcp-visibility': visibility[i % visibility.length],
