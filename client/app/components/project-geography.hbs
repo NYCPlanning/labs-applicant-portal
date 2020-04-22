@@ -1,0 +1,38 @@
+<div class="row">
+	<Input
+		type="text"
+		data-test-input="bbl"
+		@value={{this.bblNumberToAdd}}
+		@placeholder="BBL (ex 1001440001)"
+		maxlength="10"
+		data-test-bbl-list="bbl-input"
+	/>
+	<button
+		onClick={{fn this.addBbl this.bblNumberToAdd}}
+		data-test-button="add-bbl"
+		type="button"
+		class="ui primary button"
+		data-test-bbl-list="bbl-add"
+	>
+		Add
+	</button>
+</div>
+
+<div class="row">
+  <p>Project BBLs</p>
+</div>
+
+<div class="row">
+	{{#each @pasForm.bbls as |bbl|}}
+	  <div class="item">
+	      <a
+	        href="https://zola.planning.nyc.gov/bbl/{{bbl.dcp_bblnumber}}"
+	        target="_blank"
+	        rel="noopener noreferrer"
+	      >
+	        {{bbl.dcp_bblnumber}}
+	      </a>
+	      <i data-test-button-remove-bbl="{{bbl.dcp_bblnumber}}" onClick={{fn this.removeBbl bbl}}>{{fa-icon 'times' class='red'}}</i>
+	  </div>
+	{{/each}}
+</div>
