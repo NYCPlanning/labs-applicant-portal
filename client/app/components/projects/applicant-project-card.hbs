@@ -22,8 +22,12 @@
     {{@project.dcpApplicantCustomerValue}}
   </p>
 
-  <a href="/pas-edit.html" class="button small">
+  <LinkTo
+    @route='packages.edit'
+    @model={{@project.pasPackages.firstObject.id}}
+    class="button small"
+  >
     <FaIcon @icon="pen" @prefix="fas" />
     Edit Pre-Application Statement
-  </a>
+  </LinkTo>
 </li>

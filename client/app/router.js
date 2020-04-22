@@ -8,8 +8,14 @@ export default class Router extends EmberRouter {
 }
 
 // TODO: wrap in an authenticated route
-Router.map(function() { // eslint-disable-line
+Router.map(function() {
+  // eslint-disable-line
   this.route('projects');
   this.route('login');
   this.route('logout');
+
+  this.route('packages', function() {
+    this.route('edit', { path: ':id/edit' });
+    this.route('show', { path: ':id' });
+  });
 });
