@@ -8,7 +8,7 @@
 
     {{#if (eq @project.statuscode "On-Hold")}}
       <span class="text-red text-weight-normal"
-            data-test-project-on-hold
+        data-test-project-on-hold
       > 
         (On Hold) 
       </span>
@@ -26,6 +26,7 @@
     @route='packages.edit'
     @model={{@project.pasPackages.firstObject.id}}
     class="button small"
+    data-test-project="edit-pas"
   >
     <FaIcon @icon="pen" @prefix="fas" />
     Edit Pre-Application Statement

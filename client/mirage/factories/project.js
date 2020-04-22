@@ -56,9 +56,6 @@ export default Factory.extend({
     },
   }),
 
-  // are these used? are they even correct?
-  noPackages: trait({}),
-
   onHold: trait({
     statuscode: 'On-Hold',
   }),
