@@ -8,6 +8,9 @@ module('Unit | Model | project', function(hooks) {
   test('it exists', function(assert) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('project', {});
+
+    assert.equal(model.packages.length, 0);
+
     assert.ok(model);
   });
 });
