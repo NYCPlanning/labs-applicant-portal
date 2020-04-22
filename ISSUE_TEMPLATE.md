@@ -1,5 +1,7 @@
 <!-- Don't forget to add labels to this issue! -->
 
+[Azure Requirement](#)
+
 <!-- For Feature Requests/Enhancements -->
 ## User Story / User Journey
 ### User Story
