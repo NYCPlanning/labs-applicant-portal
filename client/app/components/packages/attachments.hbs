@@ -27,27 +27,32 @@
         </b>
       </legend>
       <ul class="no-bullet">  
-        <li
+        {{#each @package.documents as |document idx|}}
+          <li
           class="text-justify"
-        >
-         <div class="grid-x">
-           <div class="cell small-8">
-             <a>
-              file-already-in-CRM.pptx
-             </a>
-           </div>
-           <div class="cell small-3 text-right">
-            <small>
-              added 3/14/2020
-            </small>
-           </div>
-           <div class="cell small-1 text-right">
-            <button>
-              <FaIcon @icon="times" @prefix="fas" class="text-red" />
-            </button>
-           </div>
-         </div>
-        </li>
+          >
+          <div class="grid-x">
+            <div class="cell small-8">
+              <a
+                data-test-document-name={{idx}}
+              >
+                {{document.name}}
+              </a>
+            </div>
+            <div class="cell small-3 text-right">
+              <small>
+                {{document.timeCreated}}
+              </small>
+            </div>
+            <div class="cell small-1 text-right">
+              <button
+              >
+                <FaIcon @icon="times" @prefix="fas" class="text-red" />
+              </button>
+            </div>
+          </div>
+          </li>
+        {{/each}}
       </ul>
       <hr>
       <ul class="no-bullet">
