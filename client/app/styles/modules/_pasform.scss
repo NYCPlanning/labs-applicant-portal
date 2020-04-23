@@ -1,0 +1,8 @@
+/* Module: PasForm */
+
+.fieldset-adder {
+  @extend .callout;
+  background-color: transparent;
+  border-width: 2px;
+  border-style: dashed;
+}

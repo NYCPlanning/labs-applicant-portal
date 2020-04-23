@@ -1,0 +1,48 @@
+<fieldset class="fieldset relative">
+  <legend>
+    <strong>
+      {{@role}}
+    </strong>
+  </legend>
+
+  <div class="grid-x grid-margin-x">
+    <div class="cell medium-6">
+      <label>First Name <input type="text"></label>
+    </div>
+    <div class="cell medium-6">
+      <label>Last Name <input type="text"></label>
+    </div>
+  </div>
+  
+  <label>Organization <input type="text"></label>
+  <label>Email Address <input type="email"></label>
+  <label>Address <input type="text"></label>
+
+  <div class="grid-x grid-margin-x">
+    <div class="cell medium-auto">
+      <label>City <input type="text"></label>
+    </div>
+    <div class="cell auto medium-2">
+      <label>State <input type="text"></label>
+    </div>
+    <div class="cell auto medium-4">
+      <label>ZIP <input type="text"></label>
+    </div>
+  </div>
+  
+  <label>Phone <input type="text"></label>
+
+  {{!-- Remove button if not Primary Applicant --}}
+  {{#if (not-eq @role "Primary Applicant") }}
+    <p class="text-right no-margin text-small">
+      <button class="trash-button text-red-dark">
+        <FaIcon
+          @icon="trash"
+          @prefix="fas"
+        />
+        Remove Applicant
+      </button>
+    </p>
+  {{/if}}
+
+</fieldset>

@@ -1,0 +1,35 @@
+<section>
+  <Packages::ApplicantFieldset
+    @role="Primary Applicant"
+  />
+
+  <div class="fieldset-adder">
+    <p class="small-margin-bottom">
+      Add a team member:
+    </p>
+    <p class="button-group">
+      <button class="button secondary" data-add-applicant>
+        <FaIcon
+          @icon="plus"
+          @prefix="fas"
+        />
+        Applicant
+      </button>
+      <button class="button secondary" data-add-applicant-rep>
+        <FaIcon
+          @icon="plus"
+          @prefix="fas"
+        />
+        Representative
+      </button>
+      <button class="button secondary" data-add-env-consultant>
+        <FaIcon
+          @icon="plus"
+          @prefix="fas"
+        />
+        Environmental Consultant
+      </button>
+    </p>
+  </div>
+</section>
+{{yield}}
