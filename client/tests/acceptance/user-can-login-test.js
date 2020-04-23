@@ -58,7 +58,8 @@ module('Acceptance | user can login', function(hooks) {
     await visit('/login');
 
     assert.ok(find('[data-test-applicant-error-message="contact-not-assigned"'));
-    assert.equal(find('[data-test-error-response="code0"]').textContent.trim(), 'code: NO_CONTACT_FOUND');
+    assert.dom('[data-test-error-response="code0"]')
+      .hasText('code: NO_CONTACT_FOUND', 'It displays the correct error code');
   });
 
   test('If user already logged in, revisiting index reroutes them to projects page', async function (assert) {
