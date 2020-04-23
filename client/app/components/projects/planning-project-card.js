@@ -32,7 +32,7 @@ export default class ProjectsPlanningProjectCardComponent extends Component {
         && [
           PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY,
           PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC,
-        ].includes(projectPackage['dcp-visibility'])
+        ].includes(projectPackage.dcpVisibility)
       ) {
         return true;
       }

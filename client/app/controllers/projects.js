@@ -31,7 +31,7 @@ export default class ProjectsController extends Controller {
         && [
           PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY,
           PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC,
-        ].includes(projectPackage['dcp-visibility'])
+        ].includes(projectPackage.dcpVisibility)
       ) {
         return true;
       }
@@ -52,7 +52,7 @@ export default class ProjectsController extends Controller {
           && [
             PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY,
             PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC,
-          ].includes(projectPackage['dcp-visibility'])
+          ].includes(projectPackage.dcpVisibility)
         ) {
           return false;
         }

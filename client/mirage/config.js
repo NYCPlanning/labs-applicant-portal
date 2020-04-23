@@ -24,6 +24,8 @@ export default function() {
   this.get('/login', () => ({ ok: true }));
   this.get('/logout');
 
+  this.get('/packages/:id');
+
   /*
     Shorthand cheatsheet:
 
