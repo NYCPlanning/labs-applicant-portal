@@ -79,31 +79,41 @@
         </li>
       </ul>
       <ul class="no-bullet">
-        <li
-          class="text-justify"
-        >
-         <div class="grid-x">
-           <div class="cell small-8">
-             <b>
-              file-to-be-uploaded.pptx
-             </b>
-           </div>
-           <div class="cell small-3 text-right">
-            <small>
-              TO BE ADDED
-            </small>
-           </div>
-           <div class="cell small-1 text-right">
-            <button>
-              <FaIcon @icon="times" @prefix="fas" class="text-red" />
-            </button>
-           </div>
-         </div>
-        </li>
+        {{#each this.fileManager.uploadFiles.files as |file idx|}}
+          <li
+            class="text-justify"
+          >
+          <div class="grid-x">
+            <div class="cell small-8">
+              <b>
+                {{file.name}}
+              </b>
+            </div>
+            <div class="cell small-3 text-right">
+              <small>
+                TO BE ADDED
+              </small>
+            </div>
+            <div class="cell small-1 text-right">
+              <button>
+                <FaIcon @icon="times" @prefix="fas" class="text-red" />
+              </button>
+            </div>
+          </div>
+          </li>
+        {{/each}}
       </ul>
       <div class="cell large-auto">
-        <label for="fileUpload" class="button secondary expanded">Choose Files</label>
-        <input type="file" id="fileUpload" class="show-for-sr" multiple>
+        <FileUpload
+          @name={{this.args.package.id}}
+          @accept='*/*'
+          @multiple={{true}}
+          class="button secondary expanded"
+        >
+          <FaIcon @icon="upload" @prefix="fas" />
+          Choose Files
+        </FileUpload>
+
       </div>
     </fieldset>
   </div>
