@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { dasherize } from 'inflected';
 import { Serializer } from 'jsonapi-serializer';
-import { CrmService, all, any, list, equals, subquery, lambdaFilter } from '../crm/crm.service';
+import { CrmService } from '../crm/crm.service';
 import { overwriteCodesWithLabels } from '../_utils/overwrite-codes-with-labels';
 
 const APPLICANT_ACTIVE_STATUS_CODE = 1;
@@ -21,26 +21,24 @@ export class ProjectsService {
 
   public async findManyByContactId(contactId: string) {
     try {
-      const { records } = await this.crmService.getFromObject('dcp_projects', {
-        $filter: all(
-          lambdaFilter('dcp_dcp_project_dcp_projectapplicant_Project', 'applicant',
-            equals('applicant/_dcp_applicant_customer_value', contactId),
-            equals('applicant/statuscode', APPLICANT_ACTIVE_STATUS_CODE),
-          ),
-          any(
-            equals('dcp_visibility', PROJECT_VISIBILITY_APPLICANT_ONLY),
-            equals('dcp_visibility', PROJECT_VISIBILITY_GENERAL_PUBLIC),
-          ),
-          equals('statecode', PROJECT_ACTIVE_STATE_CODE),
-        ),
-        $expand: list(
-          'dcp_dcp_project_dcp_package_project',
-          subquery('dcp_dcp_project_dcp_projectapplicant_Project', {
-            $filter: equals('statuscode', APPLICANT_ACTIVE_STATUS_CODE),
-          })
-        ),
-      });
-
+      const { records } = await this.crmService.get('dcp_projects', `
+        $filter=dcp_dcp_project_dcp_projectapplicant_Project/
+          any(o:
+            o/_dcp_applicant_customer_value eq '${contactId}'
+            and o/statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
+          ) 
+          and (
+            dcp_visibility eq ${PROJECT_VISIBILITY_APPLICANT_ONLY}
+            or dcp_visibility eq ${PROJECT_VISIBILITY_GENERAL_PUBLIC}
+          )
+          and statecode eq ${PROJECT_ACTIVE_STATE_CODE}
+        &$expand=
+          dcp_dcp_project_dcp_package_project,
+          dcp_dcp_project_dcp_projectapplicant_Project(
+            $filter= statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
+          )
+      `);
+   
       return this.serialize(
         this.overwriteCodesWithLabels(records),
       );

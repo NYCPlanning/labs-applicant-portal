@@ -3,7 +3,7 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { CrmService, equals, all } from '../crm/crm.service';
+import { CrmService } from '../crm/crm.service';
 
 const ACTIVE_CODE = 1;
 
@@ -27,15 +27,11 @@ export class ContactService {
    */
   public async findOneById(contactId: string) {
     try  {
-      const { records: [firstRecord] } = await this.crmService.getFromObject('contacts', 
-        {
-          $filter: all(
-            equals('contactid', contactId),
-            equals('statuscode', ACTIVE_CODE),
-          ),
-          $top: 1,
-        }
-      );
+      const { records: [firstRecord] } = await this.crmService.get('contacts', `
+        $filter=contactid eq ${contactId}
+          and statuscode eq ${ACTIVE_CODE}
+        &$top=1
+      `);
 
       return firstRecord;
     } catch(e) {
@@ -53,13 +49,11 @@ export class ContactService {
    */
   public async findOneByEmail(email: string) {
     try {
-      const { records: [firstRecord] } = await this.crmService.getFromObject('contacts', {
-        $filter: all(
-          equals('emailaddress1', email),
-          equals('statuscode', ACTIVE_CODE),
-        ),
-        $top: 1,
-      });
+      const { records: [firstRecord] } = await this.crmService.get('contacts', `
+        $filter=emailaddress1 eq '${email}'
+          and statuscode eq ${ACTIVE_CODE}
+        &$top=1
+      `);
 
       return firstRecord;
     } catch(e) {

@@ -39,7 +39,8 @@ export class CrmService {
   }
 
   async get(entity: string, query: string, ...options) {
-    const response = await this._get(`${entity}?${query}`, ...options);
+    const sanitizedQuery = query.replace(/^\s+|\s+$/g, '');
+    const response = await this._get(`${entity}?${sanitizedQuery}`, ...options);
     const {
       value: records,
       '@odata.count': count,
@@ -49,24 +50,6 @@ export class CrmService {
       count,
       records,
     };
-  }
-
-  getFromObject(entity: string, query: any, ...options) {
-    const queryStringForEntity = this.serializeToQueryString(query);
-
-    return this.get(entity, queryStringForEntity, ...options);
-  }
-
-  private serializeToQueryString(query: any) {
-    const truthyKeyedObject = Object.keys(query).reduce((acc, curr) => {
-      if (query[curr]) {
-        acc[curr] = query[curr];
-      }
-
-      return acc;
-    }, {})
-
-    return convertQueryObjectToURL(truthyKeyedObject);
   }
 
   // this provides the formatted values but doesn't do it for top level
@@ -193,70 +176,6 @@ export class CrmService {
       });
     });
   }
-}
-
-export function all(...statements): string {
-  return '(' + statements
-    .filter(Boolean)
-    .join(' and ') + ')';
-}
-
-export function any(...statements): string {
-  return `(${(statements.join(' or '))})`;
-}
-
-// convenience function that takes an iterable and inserts commas
-export function list(...statements): string {
-  return `${(statements.join(','))}`;
-}
-
-export function comparisonOperator(propertyName, operator, value) {
-  let typeSafeValue = value
-
-  if (typeof value === 'string') {
-    if (value !== 'false' && value !== 'true') {
-      typeSafeValue = `'${value}'`;
-    }
-  }
-
-  // most likely means it's a date. we want the date formatting that
-  // json stringify provides.
-  if (typeof value === 'object') {
-    const stringyDate = JSON.stringify(value).replace(/"/g, "'");
-
-    typeSafeValue = `${stringyDate}`;
-  }
-
-  return `${propertyName} ${operator} ${typeSafeValue}`;
-}
-
-export const equals = (left, right) => comparisonOperator(left, 'eq', right);
-
-export function subquery(entity, subquery) {
-  const stringifiedSubquery = Object.entries(subquery)
-    .map(([key, value]) => `${key}=${value}`)
-    .join(';');
-
-  return `${entity}(${stringifiedSubquery})`;
-}
-
-// constructs a lambda filter, which filters entities by a properties
-// on an associated entity. the alias param is required for scope property
-// name references
-export function lambdaFilter(linkEntity, alias, ...filterConditions: Array<string>) {
-  // quick sanity check
-  if (!assertStringsIncludeValue(filterConditions, alias)) {
-    console.log('You used lambdaFilter method but did not scope the keys on filters.');
-  }
-
-  const prefixedFilterConditions = filterConditions
-    .join(' and ');
-
-  return `${linkEntity}/any(${alias}:${prefixedFilterConditions})`;
-}
-
-function assertStringsIncludeValue(strings: Array<string>, value: string) {
-  return strings.every(condition => condition.includes(value));
 }
 
 function convertQueryObjectToURL(query: any) {
