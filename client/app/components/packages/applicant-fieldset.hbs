@@ -1,7 +1,7 @@
 <fieldset class="fieldset relative">
   <legend>
     <strong>
-      {{@role}}
+      {{@title}}
     </strong>
   </legend>
 
@@ -33,9 +33,9 @@
   <label>Phone <input type="text"></label>
 
   {{!-- Remove button if not Primary Applicant --}}
-  {{#if (not-eq @role "Primary Applicant") }}
+  {{#if (not-eq @title "Primary Applicant") }}
     <p class="text-right no-margin text-small">
-      <button class="trash-button text-red-dark">
+      <button {{on "click" @removeApplicant}} class="trash-button text-red-dark">
         <FaIcon
           @icon="trash"
           @prefix="fas"

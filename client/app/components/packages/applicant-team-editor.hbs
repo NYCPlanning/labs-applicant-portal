@@ -1,28 +1,36 @@
 <section>
-  <Packages::ApplicantFieldset
-    @role="Primary Applicant"
-  />
+  {{!-- always render a Primary Applicant fieldset --}}
+  {{!-- TODO: handle when applicants is an empty array --}}
+  {{#each @applicants as |applicant|}}
+    <Packages::ApplicantFieldset
+      @applicant={{applicant}}
+      @title={{applicant.title}}
+      @role={{applicant.role}}
+      @removeApplicant = {{fn this.removeApplicant}}
+    />
+  {{/each}}
 
+  {{!-- buttons for user to add new applicants --}}
   <div class="fieldset-adder">
     <p class="small-margin-bottom">
       Add a team member:
     </p>
     <p class="button-group">
-      <button class="button secondary" data-add-applicant>
+      <button {{on "click" (fn this.addApplicant "Applicant") }} class="button secondary">
         <FaIcon
           @icon="plus"
           @prefix="fas"
         />
-        Applicant
+        Co-Applicant
       </button>
-      <button class="button secondary" data-add-applicant-rep>
+      <button {{on "click" (fn this.addApplicant "Representative") }} class="button secondary">
         <FaIcon
           @icon="plus"
           @prefix="fas"
         />
         Representative
       </button>
-      <button class="button secondary" data-add-env-consultant>
+      <button {{on "click" (fn this.addApplicant "Environmental Consultant") }} class="button secondary">
         <FaIcon
           @icon="plus"
           @prefix="fas"
@@ -32,4 +40,3 @@
     </p>
   </div>
 </section>
-{{yield}}
