@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import * as zlib from 'zlib';
+import * as Request from 'request';
 import { ConfigService } from '../config/config.service';
 import { ADAL } from '../_utils/adal';
-import { CRMWebAPI } from '../_utils/crm-web-api';
 
 /**
  * This service is responsible for providing convenience
@@ -35,13 +36,10 @@ export class CrmService {
     this.crmUrlPath = this.config.get('CRM_URL_PATH');
     this.crmHost = this.config.get('CRM_HOST');
     this.host = `${this.crmHost}${this.crmUrlPath}`;
-
-    CRMWebAPI.webAPIurl = this.config.get('CRM_URL_PATH');
-    CRMWebAPI.CRMUrl = this.config.get('CRM_HOST');
   }
 
   async get(entity: string, query: string, ...options) {
-    const response = await CRMWebAPI.get(`${entity}?${query}`, ...options);
+    const response = await this._get(`${entity}?${query}`, ...options);
     const {
       value: records,
       '@odata.count': count,
@@ -70,36 +68,131 @@ export class CrmService {
 
     return convertQueryObjectToURL(truthyKeyedObject);
   }
-}
 
-export function coerceToNumber(numericStrings) {
-  return numericStrings
-    // filter out blank strings and undefined, which aren't meaningfully
-    // coercible in CRM
-    .filter(stringish => stringish !== '' && stringish !== undefined)
-    .map(stringish => {
-      // smelly; but let's prefer actual null
-      // coercing 'null' turns to 0, which we don't
-      // want in the API query
-      if (stringish === null) return stringish;
+  // this provides the formatted values but doesn't do it for top level
+  // TODO: where should this happen? 
+  _fixLongODataAnnotations(dataObj) {
+    return dataObj;
+  }
 
-      // Coercing an empty string into a number returns
-      // NaN, which, although a number, is a Double in CRM
-      // which typically expects an Int
-      if (stringish === '') return stringish;
+  _parseErrorMessage(json) {
+    if (json) {
+      if (json.error) {
+        return json.error;
+      }
+      if (json._error) {
+        return json._error;
+      }
+    }
+    return "Error";
+  }
 
-      return Number(stringish);
+  _dateReviver(key, value) {
+    if (typeof value === 'string') {
+      // YYYY-MM-DDTHH:mm:ss.sssZ => parsed as UTC
+      // YYYY-MM-DD => parsed as local date
+
+      if (value != "") {
+        const a = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/.exec(value);
+
+        if (a) {
+          const s = parseInt(a[6]);
+          const ms = Number(a[6]) * 1000 - s * 1000;
+          return new Date(Date.UTC(parseInt(a[1]), parseInt(a[2]) - 1, parseInt(a[3]), parseInt(a[4]), parseInt(a[5]), s, ms));
+        }
+
+        const b = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+
+        if (b) {
+          return new Date(parseInt(b[1]), parseInt(b[2]) - 1, parseInt(b[3]), 0, 0, 0, 0);
+        }
+      }
+    }
+
+    return value;
+  }
+
+  async _get(query, maxPageSize = 100, headers = {}): Promise<any> {
+    //  get token
+    const JWToken = await ADAL.acquireToken();
+    const options = {
+      url: `${this.host}${query}`,
+      headers: {
+        'Accept-Encoding': 'gzip, deflate',
+        'Content-Type': 'application/json; charset=utf-8',
+        Authorization: `Bearer ${JWToken}`,
+        'OData-MaxVersion': '4.0',
+        'OData-Version': '4.0',
+        Accept: 'application/json',
+        Prefer: 'odata.include-annotations="*"',
+        ...headers
+      },
+      encoding: null,
+    };
+
+    return new Promise((resolve, reject) => {
+      Request.get(options, (error, response, body) => {
+        const encoding = response.headers['content-encoding'];
+
+        if (!error && response.statusCode === 200) {
+          // If response is gzip, unzip first
+
+          const parseResponse = jsonText => {
+            const json_string = jsonText.toString('utf-8');
+
+            var result = JSON.parse(json_string, this._dateReviver);
+            if (result["@odata.context"].indexOf("/$entity") >= 0) {
+              // retrieve single
+              result = this._fixLongODataAnnotations(result);
+            }
+            else if (result.value) {
+              // retrieve multiple
+              var array = [];
+              for (var i = 0; i < result.value.length; i++) {
+                array.push(this._fixLongODataAnnotations(result.value[i]));
+              }
+              result.value = array;
+            }
+            resolve(result);
+          };
+
+          if (encoding && encoding.indexOf('gzip') >= 0) {
+            zlib.gunzip(body, (err, dezipped) => {
+              parseResponse(dezipped);
+            });
+          }
+          else {
+            parseResponse(body);
+          }
+        } else {
+          const parseError = jsonText => {
+            // Bug: sometimes CRM returns 'object reference' error
+            // Fix: if we retry error will not show again
+            const json_string = jsonText.toString('utf-8');
+            const result = JSON.parse(json_string, this._dateReviver);
+            const err = this._parseErrorMessage(result);
+
+            if (err == "Object reference not set to an instance of an object.") {
+              this._get(query, maxPageSize, options)
+                .then(
+                  resolve, reject
+                );
+            } else {
+              reject(err);
+            }
+          };
+
+          if (encoding && encoding.indexOf('gzip') >= 0) {
+            zlib.gunzip(body, (err, dezipped) => {
+              parseError(dezipped);
+            });
+          } else {
+            parseError(body);
+          }
+        }
+      });
     });
-}
-
-export function coerceToDateString(epoch) {
-  const date = new Date(epoch * 1000);
-
-  return date;
-}
-
-export function mapInLookup(arrayOfStrings, lookupHash) {
-  return arrayOfStrings.map(string => lookupHash[string]);
+  }
 }
 
 export function all(...statements): string {
@@ -185,4 +278,3 @@ function convertQueryObjectToURL(query: any) {
 
   return search.split('?')[1];
 }
-
