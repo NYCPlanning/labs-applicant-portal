@@ -5,25 +5,41 @@ import {
 } from '@nestjs/common';
 import { dasherize } from 'inflected';
 import { Serializer } from 'jsonapi-serializer';
-import { CrmService } from '../crm/crm.service';
+import { CrmService, all, any, list, equals, subquery, lambdaFilter } from '../crm/crm.service';
 import { overwriteCodesWithLabels } from '../_utils/overwrite-codes-with-labels';
+
+const APPLICANT_ACTIVE_STATUS_CODE = 1;
+const PROJECT_ACTIVE_STATE_CODE = 0;
+const PROJECT_VISIBILITY_APPLICANT_ONLY = 717170002;
+const PROJECT_VISIBILITY_GENERAL_PUBLIC = 717170003;
 
 @Injectable()
 export class ProjectsService {
   constructor(
     private readonly crmService: CrmService,
-  ) {
-  }
+  ) {}
 
   public async findManyByContactId(contactId: string) {
-    const applicantActiveStatusCode = '1';
-    const projectActiveStateCode = '0';
-    const projectVisibilityApplicantOnly = '717170002';
-    const projectVisibilityGeneralPublic = '717170003';
-
-    // Todo: Migrate this query to use oData service and write tests for this 
-    try  {
-      const { records } = await this.crmService.get('dcp_projects', `$filter=dcp_dcp_project_dcp_projectapplicant_Project/any(o:o/_dcp_applicant_customer_value%20eq%20%27${contactId}%27%20and%20o/statuscode%20eq%20${applicantActiveStatusCode})%20and%20(dcp_visibility%20eq%20${projectVisibilityApplicantOnly}%20or%20dcp_visibility%20eq%20${projectVisibilityGeneralPublic})%20and%20statecode%20eq%20${projectActiveStateCode}&$expand=dcp_dcp_project_dcp_package_project,dcp_dcp_project_dcp_projectapplicant_Project($filter=%20statuscode%20eq%20${applicantActiveStatusCode})`);
+    try {
+      const { records } = await this.crmService.getFromObject('dcp_projects', {
+        $filter: all(
+          lambdaFilter('dcp_dcp_project_dcp_projectapplicant_Project', 'applicant',
+            equals('applicant/_dcp_applicant_customer_value', contactId),
+            equals('applicant/statuscode', APPLICANT_ACTIVE_STATUS_CODE),
+          ),
+          any(
+            equals('dcp_visibility', PROJECT_VISIBILITY_APPLICANT_ONLY),
+            equals('dcp_visibility', PROJECT_VISIBILITY_GENERAL_PUBLIC),
+          ),
+          equals('statecode', PROJECT_ACTIVE_STATE_CODE),
+        ),
+        $expand: list(
+          'dcp_dcp_project_dcp_package_project',
+          subquery('dcp_dcp_project_dcp_projectapplicant_Project', {
+            $filter: equals('statuscode', APPLICANT_ACTIVE_STATUS_CODE),
+          })
+        ),
+      });
 
       return this.serialize(
         this.overwriteCodesWithLabels(records),

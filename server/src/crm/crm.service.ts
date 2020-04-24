@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '../config/config.service';
 import { ADAL } from '../_utils/adal';
 import { CRMWebAPI } from '../_utils/crm-web-api';
-import { ORequest } from 'odata';
 
 /**
  * This service is responsible for providing convenience
@@ -69,12 +68,7 @@ export class CrmService {
       return acc;
     }, {})
 
-    const oDataReq = new ORequest(this.config.get('CRM_HOST'), {});
-    oDataReq.applyQuery(truthyKeyedObject);
-
-    const { url: { search } } = oDataReq;
-
-    return search.split('?')[1];
+    return convertQueryObjectToURL(truthyKeyedObject);
   }
 }
 
@@ -109,13 +103,18 @@ export function mapInLookup(arrayOfStrings, lookupHash) {
 }
 
 export function all(...statements): string {
-  return statements
+  return '(' + statements
     .filter(Boolean)
-    .join(' and ');
+    .join(' and ') + ')';
 }
 
 export function any(...statements): string {
   return `(${(statements.join(' or '))})`;
+}
+
+// convenience function that takes an iterable and inserts commas
+export function list(...statements): string {
+  return `${(statements.join(','))}`;
 }
 
 export function comparisonOperator(propertyName, operator, value) {
@@ -135,41 +134,55 @@ export function comparisonOperator(propertyName, operator, value) {
     typeSafeValue = `${stringyDate}`;
   }
 
-  return `(${propertyName} ${operator} ${typeSafeValue})`;
+  return `${propertyName} ${operator} ${typeSafeValue}`;
 }
 
-export function containsString(propertyName, string) {
-  return `contains(${propertyName}, '${string}')`;
+export const equals = (left, right) => comparisonOperator(left, 'eq', right);
+
+export function subquery(entity, subquery) {
+  const stringifiedSubquery = Object.entries(subquery)
+    .map(([key, value]) => `${key}=${value}`)
+    .join(';');
+
+  return `${entity}(${stringifiedSubquery})`;
 }
 
-export function equalsAnyOf(propertyName, strings = []) {
-  const querySegment = strings
-    .map(string => comparisonOperator(propertyName, 'eq', string))
-    .join(' or ');
+// constructs a lambda filter, which filters entities by a properties
+// on an associated entity. the alias param is required for scope property
+// name references
+export function lambdaFilter(linkEntity, alias, ...filterConditions: Array<string>) {
+  // quick sanity check
+  if (!assertStringsIncludeValue(filterConditions, alias)) {
+    console.log('You used lambdaFilter method but did not scope the keys on filters.');
+  }
 
-  // Empty parenthases are invalid
-  return querySegment ? `(${querySegment})` : '';
+  const prefixedFilterConditions = filterConditions
+    .join(' and ');
+
+  return `${linkEntity}/any(${alias}:${prefixedFilterConditions})`;
 }
 
-export function containsAnyOf(propertyName, strings = [], options?) {
-  const {
-    childEntity = '',
-    comparisonStrategy = containsString,
-    not = false,
-  } = options || {};
+function assertStringsIncludeValue(strings: Array<string>, value: string) {
+  return strings.every(condition => condition.includes(value));
+}
 
-  const containsQuery = strings
-    .map((string, i) => {
-      // in odata syntax, this character o is a variable for scoping
-      // logic for related entities. it needs to only appear once.
-      const lambdaScope = (childEntity && i === 0) ? `${childEntity}:` : '';
-      const lambdaScopedProperty = childEntity ? `${childEntity}/${propertyName}` : propertyName;
+function convertQueryObjectToURL(query: any) {
+  const url = new URL('https://google.com');
 
-      return `${lambdaScope}${comparisonStrategy(lambdaScopedProperty, string)}`;
-    })
-    .join(' or ');
-  const lambdaQueryPrefix = childEntity ? `${childEntity}/any` : '';
+  for (const key in query) {
+    if (query.hasOwnProperty(key)) {
+      const value = query[key];
 
-  return `(${not ? 'not ' : ''}${lambdaQueryPrefix}(${containsQuery}))`;
+      if (url.searchParams.get(key)) {
+        url.searchParams.set(key, value);
+      } else {
+        url.searchParams.append(key, value);
+      }
+    }
+  }
+
+  const { search } = url;
+
+  return search.split('?')[1];
 }
 
