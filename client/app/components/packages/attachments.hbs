@@ -27,7 +27,7 @@
         </b>
       </legend>
       <ul class="no-bullet">  
-        {{#each this.fileManager.existingDocuments as |document idx|}}
+        {{#each this.fileManager.existingFiles as |file idx|}}
           <li
           class="text-justify"
           >
@@ -36,12 +36,12 @@
               <a
                 data-test-document-name={{idx}}
               >
-                {{document.name}}
+                {{file.name}}
               </a>
             </div>
             <div class="cell small-3 text-right">
               <small>
-                {{document.timeCreated}}
+                {{file.timeCreated}}
               </small>
             </div>
             <div class="cell small-1 text-right">

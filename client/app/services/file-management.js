@@ -1,6 +1,9 @@
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 
 export default class FileManagementService extends Service {
+  @service
+  fileQueue;
+
   // A hash of all File Managers in the app.
   // There is one File Manager per editable Package.
   // The key to access a File Manager is the respective
@@ -9,14 +12,12 @@ export default class FileManagementService extends Service {
 
   createFileManager(
     id = '',
-    existingDocuments = [],
-    deleteDocuments = [],
-    uploadDocuments = [],
+    existingFiles = [],
   ) {
     this.fileManagers[id] = {
-      existingDocuments,
-      deleteDocuments,
-      uploadDocuments,
+      existingFiles,
+      deleteFiles: [],
+      uploadFiles: this.fileQueue.create(id),
     };
 
     return this.fileManagers[id];

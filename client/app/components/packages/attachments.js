@@ -5,7 +5,6 @@ import { inject as service } from '@ember/service';
   * This component creates a new File Manager specifically for
   * the passed in package. The File Manager is among one of many
   * on the the application File Manager service.
-  *
   * @param      {Package Model}  package
   */
 export default class PackagesAttachmentsComponent extends Component {
@@ -13,7 +12,7 @@ export default class PackagesAttachmentsComponent extends Component {
   fileManagement;
 
   get fileManager() {
-    return this.fileManagement.fileManagers[this.args.packageId]
+    return this.fileManagement.fileManagers[this.args.package.id]
     || this.fileManagement.createFileManager(
       this.args.package.id,
       this.args.package.documents,

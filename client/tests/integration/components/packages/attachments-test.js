@@ -8,6 +8,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
 
   test('it displays a list attachments already uploaded to the package', async function(assert) {
     this.package = {
+      id: '123',
       documents: [
         {
           name: 'PAS Form.pdf',
