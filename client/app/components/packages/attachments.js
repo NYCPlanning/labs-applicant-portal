@@ -13,7 +13,10 @@ export default class PackagesAttachmentsComponent extends Component {
   fileManagement;
 
   get fileManager() {
-    return this.fileManagement.fileManagers[this.args.packageId] ||
-      this.fileManagement.createFileManager(this.args.package);
+    return this.fileManagement.fileManagers[this.args.packageId]
+    || this.fileManagement.createFileManager(
+      this.args.package.id,
+      this.args.package.documents,
+    );
   }
 }
