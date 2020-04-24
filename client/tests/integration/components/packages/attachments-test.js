@@ -12,7 +12,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
         {
           name: 'PAS Form.pdf',
           // TODO: Format that this is the final serialized
-          // format of the "timeCreated" property 
+          // format of the "timeCreated" property
           timeCreated: '2020-04-23T22:35:30Z',
           id: '59fbf112-71a5-4af5-b20a-a746g08c4c6p',
         },
@@ -21,7 +21,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
           timeCreated: '2020-02-21T22:25:10Z',
           id: 'f0f2f3a3-3936-499b-8f37-a9827a1c14f2',
         },
-      ]
+      ],
     };
 
     await render(hbs`<
@@ -29,8 +29,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
       @package={{this.package}}
      />`);
 
-
-     assert.equal(find('[data-test-document-name="0"]').textContent.trim(), 'PAS Form.pdf');
-     assert.equal(find('[data-test-document-name="1"]').textContent.trim(), 'Action Changes.excel');
+    assert.equal(find('[data-test-document-name="0"]').textContent.trim(), 'PAS Form.pdf');
+    assert.equal(find('[data-test-document-name="1"]').textContent.trim(), 'Action Changes.excel');
   });
 });

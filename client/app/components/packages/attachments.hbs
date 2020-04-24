@@ -27,7 +27,7 @@
         </b>
       </legend>
       <ul class="no-bullet">  
-        {{#each @package.documents as |document idx|}}
+        {{#each this.fileManager.existingDocuments as |document idx|}}
           <li
           class="text-justify"
           >
