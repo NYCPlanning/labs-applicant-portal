@@ -1,33 +1,31 @@
 import Component from '@glimmer/component';
-import EmberObject, { action } from '@ember/object';
+import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
-const bblObject = EmberObject.extend({
-  dcp_validatedlot: '',
-  dcp_bblnumber: '',
-  versionnumber: '',
-  dcp_partiallot: null,
-  dcp_developmentsite: null,
-});
-
 export default class ProjectGeographyComponent extends Component {
-  // object that mimicks the objects that exist in the bbls array
-  // of the pasForm (expand entity: dcp_dcp_projectbbl_dcp_pasform)
-  bblObject = bblObject.create();
-
-  // user-entered bbl number
-  @tracked bblNumberToAdd = '';
-
   // represents the pasForm model
   @tracked pasForm;
 
   @action
-  async addBbl(bblNumber) {
+  selectSearchResult(result) {
+    // object that mimicks the objects that exist in the bbls array
+    // of the pasForm (expand entity: dcp_dcp_projectbbl_dcp_pasform)
     // bblObjectToPush will be pushed into bbls array of pasForm
-    const bblObjectToPush = this.bblObject;
+    const bblObjectToPush = {
+      dcp_validatedlot: '',
+      dcp_bblnumber: '',
+      versionnumber: '',
+      dcp_partiallot: null,
+      dcp_developmentsite: null,
+    };
+
+    // set bblToAdd to the search result's bbl value
+    // result.bbl comes back as a number
+    // dcp_bblnumber in CRM is stored as a string
+    const bblToAdd = result.bbl.toString();
 
     // update the dcp_bblnumber attribute to the user-entered value
-    bblObjectToPush.dcp_bblnumber = bblNumber.toString();
+    bblObjectToPush.dcp_bblnumber = bblToAdd;
 
     // push the updated bbl object into the bbls array of the pasForm
     this.args.pasForm.bbls.pushObject(bblObjectToPush);

@@ -1,76 +1,81 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, fillIn } from '@ember/test-helpers';
+import {
+  render,
+  click,
+  fillIn,
+  triggerKeyEvent,
+  find,
+} from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import EmberObject from '@ember/object';
 
 module('Integration | Component | project-geography', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('user can add a new bbl', async function(assert) {
-    const ourModel = EmberObject.extend({});
-
+  test('user can search and add a new bbl', async function(assert) {
     // array of objects
     // bbls array is dcp_dcp_projectbbl_dcp_pasform
-    const pasFormModel = ourModel.create({
+    const pasFormModel = {
       dcp_pasformid: '09c0127a-415b-ea11-a9af-001dd83080ab',
       bbls: [
-        ourModel.create({
+        {
           dcp_validatedlot: '0111',
           dcp_bblnumber: '3071590111',
           versionnumber: '42470724',
           dcp_partiallot: null,
           dcp_developmentsite: null,
-        }),
-        ourModel.create({
+        },
+        {
           dcp_validatedlot: '0115',
           dcp_bblnumber: '3071590115',
           versionnumber: '42470776',
           dcp_partiallot: null,
           dcp_developmentsite: null,
-        }),
+        },
       ],
-    });
+    };
 
     this.currentPasFormModel = pasFormModel;
 
-    // Template block usage:
     await render(hbs`
       <ProjectGeography
         @pasForm={{this.currentPasFormModel}} />
     `);
 
-    await fillIn('[data-test-input="bbl"]', '1001440001');
+    // labs-ember-search class for search input
+    await fillIn('.map-search-input', '1000120001');
+    await triggerKeyEvent('.labs-geosearch', 'keypress', 13);
 
-    await click('[data-test-button="add-bbl"]');
+    assert.ok(find('[data-test-bbl-link="1000120001"]'));
 
-    assert.ok(this.element.textContent.includes('1001440001'));
+    await fillIn('.map-search-input', '1000030001');
+    await triggerKeyEvent('.labs-geosearch', 'keypress', 13);
+
+    assert.ok(find('[data-test-bbl-link="1000030001"]'));
   });
 
   test('user can remove a bbl', async function(assert) {
-    const ourModel = EmberObject.extend({});
-
     // array of objects
     // bbls array is dcp_dcp_projectbbl_dcp_pasform
-    const pasFormModel = ourModel.create({
+    const pasFormModel = {
       dcp_pasformid: '09c0127a-415b-ea11-a9af-001dd83080ab',
       bbls: [
-        ourModel.create({
+        {
           dcp_validatedlot: '0111',
           dcp_bblnumber: '3071590111',
           versionnumber: '42470724',
           dcp_partiallot: null,
           dcp_developmentsite: null,
-        }),
-        ourModel.create({
+        },
+        {
           dcp_validatedlot: '0115',
           dcp_bblnumber: '3071590115',
           versionnumber: '42470776',
           dcp_partiallot: null,
           dcp_developmentsite: null,
-        }),
+        },
       ],
-    });
+    };
 
     this.set('currentPasFormModel', pasFormModel);
 
@@ -80,21 +85,21 @@ module('Integration | Component | project-geography', function(hooks) {
         @pasForm={{this.currentPasFormModel}} />
     `);
 
-    await fillIn('[data-test-input="bbl"]', '1001440001');
+    // labs-ember-search class for search input
+    await fillIn('.map-search-input', '1000120001');
+    await triggerKeyEvent('.labs-geosearch', 'keypress', 13);
 
-    await click('[data-test-button="add-bbl"]');
+    assert.ok(find('[data-test-bbl-link="3071590115"]'));
+    assert.ok(find('[data-test-bbl-link="1000120001"]'));
 
-    assert.ok(this.element.textContent.includes('3071590115'));
-    assert.ok(this.element.textContent.includes('1001440001'));
+    await click('[data-test-button-remove-bbl="1000120001"]');
 
-    await click('[data-test-button-remove-bbl="1001440001"]');
-
-    assert.ok(this.element.textContent.includes('3071590115'));
-    assert.notOk(this.element.textContent.includes('1001440001'));
+    assert.ok(find('[data-test-bbl-link="3071590115"]'));
+    assert.notOk(find('[data-test-bbl-link="1000120001"]'));
 
     await click('[data-test-button-remove-bbl="3071590115"]');
 
-    assert.notOk(this.element.textContent.includes('3071590115'));
-    assert.notOk(this.element.textContent.includes('1001440001'));
+    assert.notOk(find('[data-test-bbl-link="3071590115"]'));
+    assert.notOk(find('[data-test-bbl-link="1000120001"]'));
   });
 });

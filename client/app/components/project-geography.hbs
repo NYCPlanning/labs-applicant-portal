@@ -1,21 +1,11 @@
 <div class="row">
-	<Input
-		type="text"
-		data-test-input="bbl"
-		@value={{this.bblNumberToAdd}}
-		@placeholder="BBL (ex 1001440001)"
-		maxlength="10"
-		data-test-bbl-list="bbl-input"
-	/>
-	<button
-		onClick={{fn this.addBbl this.bblNumberToAdd}}
-		data-test-button="add-bbl"
-		type="button"
-		class="ui primary button"
-		data-test-bbl-list="bbl-add"
-	>
-		Add
-	</button>
+	<LabsSearch
+		@searchPlaceholder='Look up BBL (ex 1001440001)'
+		data-test-input="bbl-search"
+		@onSelect={{fn this.selectSearchResult}} as |search|>
+
+		<small class="dark-gray">{{search.result.label}} <br> {{bbl-breakup search.result.bbl}}</small>
+	</LabsSearch>
 </div>
 
 <div class="row">
@@ -29,6 +19,7 @@
 	        href="https://zola.planning.nyc.gov/bbl/{{bbl.dcp_bblnumber}}"
 	        target="_blank"
 	        rel="noopener noreferrer"
+			data-test-bbl-link="{{bbl.dcp_bblnumber}}"
 	      >
 	        {{bbl.dcp_bblnumber}}
 	      </a>
