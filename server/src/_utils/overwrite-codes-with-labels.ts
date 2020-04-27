@@ -9,11 +9,11 @@ export function overwriteCodesWithLabels(records, targetFields) {
 
     // parent record
     Object.keys(record)
-      .filter(key => key.includes('_formatted'))
-      .map(key => key.replace('_formatted', ''))
+      .filter(key => key.includes(COMMUNITY_DISPLAY_TOKEN))
+      .map(key => key.replace(COMMUNITY_DISPLAY_TOKEN, ''))
       .forEach(key => {
         if (targetFields.includes(key)) {
-          newRecord[key] = record[`${key}_formatted`];
+          newRecord[key] = record[`${key}${COMMUNITY_DISPLAY_TOKEN}`];
         }
       });
 
