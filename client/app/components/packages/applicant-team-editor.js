@@ -9,8 +9,8 @@ export default class ApplicantTeamEditorComponent extends Component {
     this.args.applicants.pushObject({ title });
   }
 
-  // TODO: connect this to applicant model
+  // TODO: figure out how to delete this object
   @action removeApplicant(applicant) {
-    console.log(`REMOVE APPLICANT:  ${applicant}`)
+    console.log(`REMOVE APPLICANT:  ${applicant}`) // logs "REMOVE APPLICANT:  model:applicant(:id)"
   }
 }
