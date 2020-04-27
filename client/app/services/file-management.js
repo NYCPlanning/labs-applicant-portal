@@ -1,4 +1,5 @@
 import Service, { inject as service } from '@ember/service';
+import FileManager from './file-manager';
 
 export default class FileManagementService extends Service {
   @service
@@ -14,11 +15,11 @@ export default class FileManagementService extends Service {
     id = '',
     existingFiles = [],
   ) {
-    this.fileManagers[id] = {
+    this.fileManagers[id] = new FileManager(
       existingFiles,
-      deleteFiles: [],
-      uploadFiles: this.fileQueue.create(id),
-    };
+      [],
+      this.fileQueue.create(id),
+    );
 
     return this.fileManagers[id];
   }

@@ -46,6 +46,8 @@
             </div>
             <div class="cell small-1 text-right">
               <button
+                {{on "click" (fn this.markFileForDeletion file)}}
+                data-test-delete-file-button={{idx}}
               >
                 <FaIcon @icon="times" @prefix="fas" class="text-red" />
               </button>
@@ -56,27 +58,34 @@
       </ul>
       <hr>
       <ul class="no-bullet">
-        <li
-          class="text-justify"
-        >
-         <div class="grid-x">
-           <div class="cell small-8">
-             <b>
-              file-to-be-deleted.pptx
-             </b>
-           </div>
-           <div class="cell small-3 text-right">
-            <small>
-              TO BE DELETED
-            </small>
-           </div>
-           <div class="cell small-1 text-right">
-            <button>
-              <FaIcon @icon="undo" @prefix="fas" />
-            </button>
-           </div>
-         </div>
-        </li>
+        {{#each this.fileManager.deleteFiles as |file idx|}}
+          <li
+            class="text-justify"
+          >
+          <div class="grid-x">
+            <div class="cell small-8">
+              <b
+                data-test-document-to-be-deleted-name={{idx}}
+              >
+                {{file.name}}
+              </b>
+            </div>
+            <div class="cell small-3 text-right">
+              <small>
+                TO BE DELETED
+              </small>
+            </div>
+            <div class="cell small-1 text-right">
+              <button
+                {{on "click" (fn this.unmarkFileForDeletion file)}}
+                data-test-undo-delete-file-button={{idx}}
+              >
+                <FaIcon @icon="undo" @prefix="fas" />
+              </button>
+            </div>
+          </div>
+          </li>
+        {{/each}}
       </ul>
       <ul class="no-bullet">
         {{#each this.fileManager.uploadFiles.files as |file idx|}}

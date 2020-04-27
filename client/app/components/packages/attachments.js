@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 
 /**
   * This component creates a new File Manager specifically for
@@ -17,5 +18,15 @@ export default class PackagesAttachmentsComponent extends Component {
       this.args.package.id,
       this.args.package.documents,
     );
+  }
+
+  @action
+  markFileForDeletion(file) {
+    this.fileManager.deleteFile(file);
+  }
+
+  @action
+  unmarkFileForDeletion(file) {
+    this.fileManager.undoDeleteFile(file);
   }
 }
