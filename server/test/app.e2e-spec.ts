@@ -15,9 +15,9 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/users (GET) is authenticated', () => {
+  it('/contacts (GET) is authenticated', () => {
     return request(app.getHttpServer())
-      .get('/users')
+      .get('/contacts')
       .expect(401);
   });
 });
