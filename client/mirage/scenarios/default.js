@@ -4,6 +4,6 @@ export default function(server) {
     This data will not be loaded in your tests.
   */
 
-  server.create('user');
+  server.create('contact');
   server.createList('project', 3, 'applicant');
 }

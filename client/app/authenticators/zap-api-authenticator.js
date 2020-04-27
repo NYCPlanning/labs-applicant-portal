@@ -28,7 +28,7 @@ export default class ZAPAuthenticator extends BaseAuthenticator {
   // a ZAP Token. This request will fail if that cookie doesn't exist
   // https://github.com/simplabs/ember-simple-auth/blob/master/guides/managing-current-user.md#using-a-dedicated-endpoint
   async _fetchUserObject() {
-    const { id, emailaddress1, contactid } = await this.store.queryRecord('user', { me: true });
+    const { id, emailaddress1, contactid } = await this.store.queryRecord('contact', { me: true });
 
     return { id, emailaddress1, contactid };
   }
