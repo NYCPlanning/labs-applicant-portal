@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import * as zlib from 'zlib';
+import * as Request from 'request';
 import { ConfigService } from '../config/config.service';
 import { ADAL } from '../_utils/adal';
-import * as Request from 'request';
-import * as zlib from 'zlib';
 
 /**
  * This service is responsible for providing convenience
@@ -23,7 +23,7 @@ export class CrmService {
   constructor(
     private readonly config: ConfigService,
   ) {
-      ADAL.ADAL_CONFIG = {
+    ADAL.ADAL_CONFIG = {
       CRMUrl: this.config.get('CRM_HOST'),
       webAPIurl: this.config.get('CRM_URL_PATH'),
       clientId: this.config.get('CLIENT_ID'),
@@ -32,12 +32,33 @@ export class CrmService {
       authorityHostUrl: this.config.get('AUTHORITY_HOST_URL'),
       tokenPath: this.config.get('TOKEN_PATH'),
     };
-      this.crmUrlPath = this.config.get('CRM_URL_PATH');
-      this.crmHost = this.config.get('CRM_HOST');
-      this.host = `${this.crmHost}${this.crmUrlPath}`;
-    }
 
-  private parseErrorMessage (json) {
+    this.crmUrlPath = this.config.get('CRM_URL_PATH');
+    this.crmHost = this.config.get('CRM_HOST');
+    this.host = `${this.crmHost}${this.crmUrlPath}`;
+  }
+
+  async get(entity: string, query: string, ...options) {
+    const sanitizedQuery = query.replace(/^\s+|\s+$/g, '');
+    const response = await this._get(`${entity}?${sanitizedQuery}`, ...options);
+    const {
+      value: records,
+      '@odata.count': count,
+    } = response;
+
+    return {
+      count,
+      records,
+    };
+  }
+
+  // this provides the formatted values but doesn't do it for top level
+  // TODO: where should this happen? 
+  _fixLongODataAnnotations(dataObj) {
+    return dataObj;
+  }
+
+  _parseErrorMessage(json) {
     if (json) {
       if (json.error) {
         return json.error;
@@ -49,7 +70,7 @@ export class CrmService {
     return "Error";
   }
 
-  private dateReviver (key, value) {
+  _dateReviver(key, value) {
     if (typeof value === 'string') {
       // YYYY-MM-DDTHH:mm:ss.sssZ => parsed as UTC
       // YYYY-MM-DD => parsed as local date
@@ -74,38 +95,7 @@ export class CrmService {
     return value;
   }
 
-  private fixLongODataAnnotations (dataObj) {
-    const newObj = {};
-
-    for (let name in dataObj) {
-      const formattedValuePrefix = name.indexOf("@OData.Community.Display.V1.FormattedValue");
-      const logicalNamePrefix = name.indexOf("@Microsoft.Dynamics.CRM.lookuplogicalname");
-      const navigationPropertyPrefix = name.indexOf("@Microsoft.Dynamics.CRM.associatednavigationproperty");
-
-      if (formattedValuePrefix >= 0) {
-        const newName = name.substring(0, formattedValuePrefix);
-        if(newName) newObj[`${newName}_formatted`] = dataObj[name];
-      }
-
-      else if (logicalNamePrefix >= 0) {
-        const newName = name.substring(0, logicalNamePrefix);
-        if(newName) newObj[`${newName}_logical`] = dataObj[name];
-      }
-
-      else if (navigationPropertyPrefix >= 0) {
-        const newName = name.substring(0, navigationPropertyPrefix);
-        if (newName) newObj[`${newName}_navigationproperty`] = dataObj[name];
-      }
-
-      else {
-        newObj[name] = dataObj[name];
-      }
-    }
-
-    return newObj;
-  }
-
-  async get(query, maxPageSize = 100, headers= {}) {
+  async _get(query, maxPageSize = 100, headers = {}): Promise<any> {
     //  get token
     const JWToken = await ADAL.acquireToken();
     const options = {
@@ -133,25 +123,25 @@ export class CrmService {
           const parseResponse = jsonText => {
             const json_string = jsonText.toString('utf-8');
 
-            var result = JSON.parse(json_string, this.dateReviver);
+            var result = JSON.parse(json_string, this._dateReviver);
             if (result["@odata.context"].indexOf("/$entity") >= 0) {
-                // retrieve single
-                result = this.fixLongODataAnnotations(result);
+              // retrieve single
+              result = this._fixLongODataAnnotations(result);
             }
-            else if (result.value ) {
-                // retrieve multiple
-                var array = [];
-                for (var i = 0; i < result.value.length; i++) {
-                  array.push(this.fixLongODataAnnotations(result.value[i]));
-                }
-                result.value = array;
+            else if (result.value) {
+              // retrieve multiple
+              var array = [];
+              for (var i = 0; i < result.value.length; i++) {
+                array.push(this._fixLongODataAnnotations(result.value[i]));
+              }
+              result.value = array;
             }
             resolve(result);
           };
 
           if (encoding && encoding.indexOf('gzip') >= 0) {
             zlib.gunzip(body, (err, dezipped) => {
-                parseResponse(dezipped);
+              parseResponse(dezipped);
             });
           }
           else {
@@ -162,11 +152,11 @@ export class CrmService {
             // Bug: sometimes CRM returns 'object reference' error
             // Fix: if we retry error will not show again
             const json_string = jsonText.toString('utf-8');
-            const result = JSON.parse(json_string, this.dateReviver);
-            const err = this.parseErrorMessage(result);
+            const result = JSON.parse(json_string, this._dateReviver);
+            const err = this._parseErrorMessage(result);
 
             if (err == "Object reference not set to an instance of an object.") {
-              this.get(query, maxPageSize, options)
+              this._get(query, maxPageSize, options)
                 .then(
                   resolve, reject
                 );
@@ -186,4 +176,24 @@ export class CrmService {
       });
     });
   }
+}
+
+function convertQueryObjectToURL(query: any) {
+  const url = new URL('https://google.com');
+
+  for (const key in query) {
+    if (query.hasOwnProperty(key)) {
+      const value = query[key];
+
+      if (url.searchParams.get(key)) {
+        url.searchParams.set(key, value);
+      } else {
+        url.searchParams.append(key, value);
+      }
+    }
+  }
+
+  const { search } = url;
+
+  return search.split('?')[1];
 }

@@ -1,9 +1,19 @@
-<li class="large-margin-bottom"
+<li
+  class="large-margin-bottom"
   data-test-project-name={{@project.dcpProjectname}}
   data-test-type='to-do'
 >
   <h3 class="no-margin">
     {{@project.dcpProjectname}}
+
+    {{#if (eq @project.statuscode "On-Hold")}}
+      <span class="text-red text-weight-normal"
+        data-test-project-on-hold
+      > 
+        (On Hold) 
+      </span>
+    {{/if}}
+
     <small class="text-weight-normal">{{@project.id}}</small>
   </h3>
 
@@ -12,8 +22,13 @@
     {{@project.dcpApplicantCustomerValue}}
   </p>
 
-  <a href="/pas-edit.html" class="button small">
+  <LinkTo
+    @route='packages.edit'
+    @model={{@project.pasPackages.firstObject.id}}
+    class="button small"
+    data-test-project="edit-pas"
+  >
     <FaIcon @icon="pen" @prefix="fas" />
     Edit Pre-Application Statement
-  </a>
+  </LinkTo>
 </li>

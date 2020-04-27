@@ -3,17 +3,32 @@
   data-test-project-name={{@project.dcpProjectname}}
   data-test-type='working-on-it'
 >
-  <h5 class="no-margin">
+  <h3 class="no-margin">
     {{@project.dcpProjectname}}
-    <small class="text-weight-normal">{{@project.id}}</small>
-  </h5>
 
-  <p class="tiny-margin-bottom text-small">
-    <span class="text-dark-gray">Primary Applicant:</span> 
+    {{#if (eq @project.statuscode "On-Hold")}}
+      <span class="text-red text-weight-normal"
+            data-test-project-on-hold
+      > 
+        (On Hold) 
+      </span>
+    {{/if}}
+
+    <small class="text-weight-normal">{{@project.id}}</small>
+  </h3>
+
+  <p class="tiny-margin-bottom">
+    <span class="text-dark-gray">Primary Applicant:</span>
     {{@project.dcpApplicantCustomerValue}}
   </p>
 
-  {{#if (eq @type 'planning-project')}}
-    <a href="/pas.html" class="button hollow tiny">View Pre-Application Statement</a>
+  {{#if this.showViewPas}}
+    <a
+      href="/pas.html"
+      class="button hollow tiny"
+      data-test-view-pas
+    >
+      View Pre-Application Statement
+    </a>
   {{/if}}
 </li>

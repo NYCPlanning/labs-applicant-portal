@@ -19,10 +19,12 @@ export default function() {
   }
 
   this.get('/projects');
-  this.get('/users', (schema) => schema.users.first());
+  this.get('/contacts', (schema) => schema.contacts.first());
 
   this.get('/login', () => ({ ok: true }));
   this.get('/logout');
+
+  this.get('/packages/:id');
 
   /*
     Shorthand cheatsheet:

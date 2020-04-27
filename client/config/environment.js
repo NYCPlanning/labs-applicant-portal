@@ -72,9 +72,15 @@ function getHost(environment) {
 }
 
 function getOAuthHost(environment) {
-  const { NYCID_CLIENT_ID } = process.env;
+  const { NYCID_CLIENT_ID, HOST } = process.env;
 
-  if (environment === 'development') {
+  // plain local development, no local backing server
+  if (environment === 'development' && !HOST) {
+    return 'http://localhost:4200/login#access_token=test';
+  }
+
+  // if we're running locally and a HOST is provided
+  if (environment === 'development' && HOST) {
     const NYCID_CLIENT_ID_LOCAL = 'applicant-portal-local';
 
     return `https://accounts-nonprd.nyc.gov/account/api/oauth/authorize.htm?response_type=token&client_id=${NYCID_CLIENT_ID_LOCAL}`;
