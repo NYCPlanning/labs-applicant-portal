@@ -13,6 +13,7 @@ import { ContactService } from '../contact/contact.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('projects', {
+  id: 'dcp_name',
   attributes: [
     'dcp_projectname',
     'dcp_name',
@@ -21,9 +22,22 @@ import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
     'dcp_visibility',
     '_dcp_applicant_customer_value',
     'dcp_dcp_project_dcp_projectapplicant_Project',
-    'dcp_dcp_project_dcp_package_project',
+    'packages',
   ],
-  id: 'dcp_name'
+  packages: {
+    ref: 'dcp_packageid',
+    attributes: [
+      'statuscode',
+      'dcp_packagetype',
+      'dcp_visibility',
+    ],
+  },
+  transform(project) {
+    return {
+      ...project,
+      packages: project.dcp_dcp_project_dcp_package_project,
+    };
+  },
 }))
 @Controller()
 export class ProjectsController {
