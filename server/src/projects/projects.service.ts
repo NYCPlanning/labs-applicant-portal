@@ -3,8 +3,6 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { dasherize } from 'inflected';
-import { Serializer } from 'jsonapi-serializer';
 import { CrmService } from '../crm/crm.service';
 import { overwriteCodesWithLabels } from '../_utils/overwrite-codes-with-labels';
 
@@ -39,9 +37,7 @@ export class ProjectsService {
           )
       `);
    
-      return this.serialize(
-        this.overwriteCodesWithLabels(records),
-      );
+      return this.overwriteCodesWithLabels(records);
     } catch(e) {
       const errorMessage = `Error finding projects by contact ID. ${e.message}`;
       console.log(errorMessage);
@@ -55,34 +51,5 @@ export class ProjectsService {
       '_dcp_applicant_customer_value',
       'dcp_packagetype',
     ]);
-  }
-
-  // Serializes an array of objects into a JSON:API document
-  private serialize(records, opts?: object): Serializer {
-    const ProjectsSerializer = new Serializer('projects', {
-      attributes: [
-        'dcp_projectname',
-        'dcp_name',
-        'statecode',
-        'statuscode',
-        'dcp_visibility',
-        '_dcp_applicant_customer_value',
-        'dcp_dcp_project_dcp_projectapplicant_Project',
-        'dcp_dcp_project_dcp_package_project',
-      ],
-      id: 'dcp_name',
-      meta: { ...opts },
-      keyForAttribute(key) {
-        let dasherized = dasherize(key);
-
-        if (dasherized[0] === '-') {
-          dasherized = dasherized.substring(1);
-        }
-
-        return dasherized;
-      },
-    });
-
-    return ProjectsSerializer.serialize(records);
   }
 }

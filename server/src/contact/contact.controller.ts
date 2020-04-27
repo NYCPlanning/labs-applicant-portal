@@ -1,35 +1,26 @@
-import { Controller, Session, Res, Query, Get } from '@nestjs/common';
-import { Serializer } from 'jsonapi-serializer';
+import { Controller, Session, Get, UseInterceptors, HttpException, HttpStatus } from '@nestjs/common';
 import { ContactService } from './contact.service';
+import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 
+@UseInterceptors(new JsonApiSerializeInterceptor('contacts', {
+  attributes: ['contactid', 'emailaddress1'],
+  id: 'contactid',
+}))
 @Controller('contacts')
 export class ContactController {
   constructor(private readonly contactService: ContactService) {}
 
   @Get('/')
-  async getUser(@Session() session, @Res() res, @Query('me') me) {
+  async getContact(@Session() session) {
     const { contactId } = session;
 
     if (!contactId) {
-      res.status(401).send({
-        errors: ['Authentication required for this route'],
-      });
+      throw new HttpException(
+        'Authentication required for this route',
+        HttpStatus.UNAUTHORIZED,
+      );
     } else {
-      const contact = await this.contactService.findOneById(contactId);
-
-      res.send(this.serialize(me ? contact : [contact]));
+      return this.contactService.findOneById(contactId);
     }
-  }
-
-  // Serializes an array of objects into a JSON:API document
-  serialize(records, opts?: object): Serializer {
-    const ContactSerializer = new Serializer('contacts', {
-      attributes: ['contactid', 'emailaddress1'],
-      // TODO: annoying. the JWT/cookie is camelcase but CRM isn't.
-      id: 'contactid',
-      meta: { ...opts },
-    });
-
-    return ContactSerializer.serialize(records);
   }
 }

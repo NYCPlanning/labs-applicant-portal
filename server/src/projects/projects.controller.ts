@@ -5,12 +5,26 @@ import {
   HttpException,
   HttpStatus,
   Session,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { ConfigService } from '../config/config.service';
 import { ContactService } from '../contact/contact.service';
-import { AuthService } from '../auth/auth.service';
+import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 
+@UseInterceptors(new JsonApiSerializeInterceptor('projects', {
+  attributes: [
+    'dcp_projectname',
+    'dcp_name',
+    'statecode',
+    'statuscode',
+    'dcp_visibility',
+    '_dcp_applicant_customer_value',
+    'dcp_dcp_project_dcp_projectapplicant_Project',
+    'dcp_dcp_project_dcp_package_project',
+  ],
+  id: 'dcp_name'
+}))
 @Controller()
 export class ProjectsController {
   CRM_IMPOSTER_ID = '';
@@ -18,7 +32,6 @@ export class ProjectsController {
   constructor(
     private readonly projectsService: ProjectsService,
     private readonly contactService: ContactService,
-    private readonly authService: AuthService,
     private readonly config: ConfigService,
   ) {
     this.CRM_IMPOSTER_ID = this.config.get('CRM_IMPOSTER_ID');
