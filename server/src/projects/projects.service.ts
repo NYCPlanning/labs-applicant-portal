@@ -20,11 +20,12 @@ export class ProjectsService {
   public async findManyByContactId(contactId: string) {
     try {
       const { records } = await this.crmService.get('dcp_projects', `
-        $filter=dcp_dcp_project_dcp_projectapplicant_Project/
-          any(o:
-            o/_dcp_applicant_customer_value eq '${contactId}'
-            and o/statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
-          ) 
+        $filter=
+          dcp_dcp_project_dcp_projectapplicant_Project/
+            any(o:
+              o/_dcp_applicant_customer_value eq '${contactId}'
+              and o/statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
+            ) 
           and (
             dcp_visibility eq ${PROJECT_VISIBILITY_APPLICANT_ONLY}
             or dcp_visibility eq ${PROJECT_VISIBILITY_GENERAL_PUBLIC}
