@@ -94,7 +94,9 @@
           >
           <div class="grid-x">
             <div class="cell small-8">
-              <b>
+              <b
+                data-test-document-to-be-uploaded-name={{idx}}
+              >
                 {{file.name}}
               </b>
             </div>
@@ -114,6 +116,7 @@
       </ul>
       <div class="cell large-auto">
         <FileUpload
+          id={{concat "FileUploader" this.args.package.id}}
           @name={{this.args.package.id}}
           @accept='*/*'
           @multiple={{true}}

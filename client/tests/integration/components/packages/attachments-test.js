@@ -7,6 +7,7 @@ import {
   click,
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import { selectFiles } from 'ember-file-upload/test-support';
 
 module('Integration | Component | packages/attachments', function(hooks) {
   setupRenderingTest(hooks);
@@ -94,5 +95,35 @@ module('Integration | Component | packages/attachments', function(hooks) {
     await assert.equal(findAll('[data-test-document-to-be-deleted-name]').length, 0);
     await assert.equal(find('[data-test-document-name="0"]').textContent.trim(), 'Action Changes.excel');
     await assert.equal(find('[data-test-document-name="1"]').textContent.trim(), 'PAS Form.pdf');
+  });
+
+  test('user can select local files for upload', async function(assert) {
+    this.package = {
+      id: '123',
+      documents: [
+      ],
+    };
+
+    await render(hbs`<
+      Packages::Attachments
+      @package={{this.package}}
+     />`);
+
+
+    const file = new File(['foo'], 'PAS Form.pdf', { type: 'text/plain' });
+    const file2 = new File(['foo'], 'Action Changes.excel', { type: 'text/plain' });
+
+    await render(hbs`<
+      Packages::Attachments
+      @package={{this.package}}
+    />`);
+
+    await assert.equal(findAll('[data-test-document-to-be-uploaded-name]').length, 0);
+
+    await selectFiles('#FileUploader123 > input', file, file2);
+
+    await assert.equal(findAll('[data-test-document-to-be-uploaded-name]').length, 2);
+    await assert.equal(find('[data-test-document-to-be-uploaded-name="0"]').textContent.trim(), 'PAS Form.pdf');
+    await assert.equal(find('[data-test-document-to-be-uploaded-name="1"]').textContent.trim(), 'Action Changes.excel');
   });
 });
