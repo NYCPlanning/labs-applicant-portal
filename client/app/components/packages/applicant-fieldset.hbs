@@ -1,48 +1,61 @@
 <fieldset class="fieldset relative">
   <legend>
     <strong>
-      {{@title}}
+      {{@applicant.role}}
     </strong>
   </legend>
 
+  {{!-- if sent to CRM "Applicant Information" table, need to know "type" --}}
+  {{#if (eq @applicant.role "Applicant")}}
+    <div class="cell medium-6">
+      {{!-- TODO: bind this to @applicant.applicantType --}}
+      <Input type="radio" name="applicant-type" @value="Individual"/><label>Individual</label>
+      <Input type="radio" name="applicant-type" @value="Organization"/><label>Organization</label>
+    </div>
+  {{/if}}
+
+  {{!-- and if the applicant is on behalf of an organization, we need to know which organization --}}
+  {{#if (eq @applicant.applicantType "Organization")}}
+    <label>Organization <Input type="text" @value={{@applicant.organization}}/></label>
+    <hr/>
+  {{/if}}
+
   <div class="grid-x grid-margin-x">
     <div class="cell medium-6">
-      <label>First Name <input type="text"></label>
+      <label>First Name</label>
+      <Input type="text" @value={{@applicant.firstName}}/>
     </div>
     <div class="cell medium-6">
-      <label>Last Name <input type="text"></label>
+      <label>Last Name <Input type="text" @value={{@applicant.lastName}}/></label>
     </div>
   </div>
   
-  <label>Organization <input type="text"></label>
-  <label>Email Address <input type="email"></label>
-  <label>Address <input type="text"></label>
+  {{!-- always allow input for Applicant Team Members --}}
+  {{#if (eq @applicant.role "ApplicantTeamMember")}}
+    <label>Organization <Input type="text" @value={{@applicant.organization}}/></label>
+  {{/if}}
+
+  <label>Email Address <Input type="email" @value={{@applicant.emailAddress}}/></label>
+  <label>Address <Input type="text" @value={{@applicant.address}}/></label>
 
   <div class="grid-x grid-margin-x">
     <div class="cell medium-auto">
-      <label>City <input type="text"></label>
+      <label>City <Input type="text" @value={{@applicant.city}}/></label>
     </div>
     <div class="cell auto medium-2">
-      <label>State <input type="text"></label>
+      <label>State <Input type="text" @value={{@applicant.state}}/></label>
     </div>
     <div class="cell auto medium-4">
-      <label>ZIP <input type="text"></label>
+      <label>ZIP <Input type="text" @value={{@applicant.zip}}/></label>
     </div>
   </div>
   
-  <label>Phone <input type="text"></label>
+  <label>Phone <Input type="text" @value={{@applicant.phone}}/></label>
 
-  {{!-- Remove button if not Primary Applicant --}}
-  {{#if (not-eq @title "Primary Applicant") }}
-    <p class="text-right no-margin text-small">
-      <button {{on "click" @removeApplicant}} class="trash-button text-red-dark">
-        <FaIcon
-          @icon="trash"
-          @prefix="fas"
-        />
-        Remove Applicant
-      </button>
-    </p>
-  {{/if}}
+  <p class="text-right no-margin text-small">
+    <button onClick={{fn @removeApplicant @applicant}} class="trash-button text-red-dark">
+      Remove Applicant
+    </button>
+  </p>
 
 </fieldset>

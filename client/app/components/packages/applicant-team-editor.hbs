@@ -1,11 +1,13 @@
 <section>
+  {{log "@applicants passed to component:"}}
+  {{log @applicants}}
   {{!-- always render a Primary Applicant fieldset --}}
   {{!-- TODO: handle when applicants is an empty array --}}
   {{#each @applicants as |applicant|}}
+    {{log "applicant fieldset being rendered with: "}}
+    {{log applicant}}
     <Packages::ApplicantFieldset
       @applicant={{applicant}}
-      @title={{applicant.title}}
-      @role={{applicant.role}}
       @removeApplicant = {{fn this.removeApplicant}}
     />
   {{/each}}
@@ -13,29 +15,14 @@
   {{!-- buttons for user to add new applicants --}}
   <div class="fieldset-adder">
     <p class="small-margin-bottom">
-      Add a team member:
+      Add an Applicant Team Member:
     </p>
     <p class="button-group">
       <button {{on "click" (fn this.addApplicant "Applicant") }} class="button secondary">
-        <FaIcon
-          @icon="plus"
-          @prefix="fas"
-        />
-        Co-Applicant
+        Add Applicant
       </button>
-      <button {{on "click" (fn this.addApplicant "Representative") }} class="button secondary">
-        <FaIcon
-          @icon="plus"
-          @prefix="fas"
-        />
-        Representative
-      </button>
-      <button {{on "click" (fn this.addApplicant "Environmental Consultant") }} class="button secondary">
-        <FaIcon
-          @icon="plus"
-          @prefix="fas"
-        />
-        Environmental Consultant
+      <button {{on "click" (fn this.addApplicant "Applicant Team Member") }} class="button secondary">
+        Add Other Team Member
       </button>
     </p>
   </div>
