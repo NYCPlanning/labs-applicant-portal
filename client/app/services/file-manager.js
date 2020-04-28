@@ -1,4 +1,5 @@
 import ENV from 'client/config/environment';
+import fetch from 'fetch';
 
 // This class supports the FileManagement service
 // TODO: We need to handle rehydrating the existingFiles.
@@ -48,10 +49,28 @@ export default class FileManager {
     }));
   }
 
-  save() {
-    // todo: add promises from filesToDelete()
-    return Promise.all(
-      this.uploadFiles(),
-    );
+  deleteFiles() {
+    // Assumes that the backend delivers files each with
+    // a unique CRM or sharepoint based ID.
+    // TODO: If this is not possible, rework this to be a
+    // POST request to a differently named endpoint, like
+    // deleteDocument
+    return this.filesToDelete.map((file) => fetch(
+      `${ENV.host}/document/${file.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    ));
+  }
+
+  async save() {
+    // See TODO at top of this file.
+    await this.uploadFiles();
+
+    await this.deleteFiles();
+
+    this.filesToDelete.clear();
   }
 }
