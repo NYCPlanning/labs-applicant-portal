@@ -27,3 +27,10 @@
     padding-top: $global-margin*3;
   }
 }
+
+.sticky {
+  position: sticky;
+  top: $global-margin*2;
+  max-height: calc(100vh - #{$global-margin*2});
+  overflow: auto;
+}
