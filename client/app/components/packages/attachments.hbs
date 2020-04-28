@@ -127,6 +127,8 @@
             </div>
             <div class="cell small-1 text-right">
               <button
+                 {{on "click" (fn this.deselectFileForUpload file)}}
+                data-test-deselect-file-button={{idx}}
                 type="button"
               >
                 <FaIcon @icon="times" @prefix="fas" class="text-red" />

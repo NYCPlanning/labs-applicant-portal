@@ -100,7 +100,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
     await assert.equal(find('[data-test-document-name="1"]').textContent.trim(), 'PAS Form.pdf');
   });
 
-  test('user can select local files for upload', async function(assert) {
+  test('user can select and deselect local files for upload', async function(assert) {
     this.package = {
       id: '123',
       documents: [
@@ -128,5 +128,13 @@ module('Integration | Component | packages/attachments', function(hooks) {
     await assert.equal(findAll('[data-test-document-to-be-uploaded-name]').length, 2);
     await assert.equal(find('[data-test-document-to-be-uploaded-name="0"]').textContent.trim(), 'PAS Form.pdf');
     await assert.equal(find('[data-test-document-to-be-uploaded-name="1"]').textContent.trim(), 'Action Changes.excel');
+
+    await click('[data-test-deselect-file-button="0"]');
+
+    await assert.equal(findAll('[data-test-document-to-be-uploaded-name]').length, 1);
+
+    await click('[data-test-deselect-file-button="0"]');
+
+    await assert.equal(findAll('[data-test-document-to-be-uploaded-name]').length, 0);
   });
 });

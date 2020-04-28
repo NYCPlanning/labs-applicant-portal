@@ -22,11 +22,16 @@ export default class PackagesAttachmentsComponent extends Component {
 
   @action
   markFileForDeletion(file) {
-    this.fileManager.deleteFile(file);
+    this.fileManager.markFileForDeletion(file);
   }
 
   @action
   unmarkFileForDeletion(file) {
-    this.fileManager.undoDeleteFile(file);
+    this.fileManager.unMarkFileForDeletion(file);
+  }
+
+  @action
+  deselectFileForUpload(file) {
+    this.fileManager.deselectFileForUpload(file);
   }
 }

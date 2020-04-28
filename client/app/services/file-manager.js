@@ -8,14 +8,18 @@ export default class FileManager {
     this.uploadFiles = uploadFiles;
   }
 
-  deleteFile(existingFile) {
+  markFileForDeletion(existingFile) {
     this.deleteFiles.addObject(existingFile);
     this.existingFiles.removeObject(existingFile);
   }
 
-  undoDeleteFile(deleteFile) {
+  unMarkFileForDeletion(deleteFile) {
     this.existingFiles.addObject(deleteFile);
     this.deleteFiles.removeObject(deleteFile);
+  }
+
+  deselectFileForUpload(fileToUpload) {
+    this.uploadFiles.remove(fileToUpload);
   }
 
   uploadAllFiles(packageId) {
