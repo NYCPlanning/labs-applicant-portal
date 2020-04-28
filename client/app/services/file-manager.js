@@ -2,28 +2,28 @@ import ENV from 'client/config/environment';
 
 // This class supports the FileManagement service
 export default class FileManager {
-  constructor(existingFiles, deleteFiles, uploadFiles) {
+  constructor(existingFiles, filesToDelete, filesToUpload) {
     this.existingFiles = existingFiles || [];
-    this.deleteFiles = deleteFiles || [];
-    this.uploadFiles = uploadFiles;
+    this.filesToDelete = filesToDelete || [];
+    this.filesToUpload = filesToUpload;
   }
 
   markFileForDeletion(existingFile) {
-    this.deleteFiles.addObject(existingFile);
+    this.filesToDelete.addObject(existingFile);
     this.existingFiles.removeObject(existingFile);
   }
 
   unMarkFileForDeletion(deleteFile) {
     this.existingFiles.addObject(deleteFile);
-    this.deleteFiles.removeObject(deleteFile);
+    this.filesToDelete.removeObject(deleteFile);
   }
 
   deselectFileForUpload(fileToUpload) {
-    this.uploadFiles.remove(fileToUpload);
+    this.filesToUpload.remove(fileToUpload);
   }
 
-  uploadAllFiles(packageId) {
-    return this.uploadFiles.files.map((file) => file.upload(`${ENV.host}/document`, {
+  uploadFiles(packageId) {
+    return this.filesToUpload.files.map((file) => file.upload(`${ENV.host}/document`, {
       fileKey: 'file',
       withCredentials: true,
       data: {
@@ -34,9 +34,9 @@ export default class FileManager {
   }
 
   save() {
-    // todo: add promises from deleteFiles()
+    // todo: add promises from filesToDelete()
     return Promise.all(
-      this.uploadAllFiles(),
+      this.uploadFiles(),
     );
   }
 }

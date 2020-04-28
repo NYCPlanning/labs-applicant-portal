@@ -77,7 +77,7 @@
       </ul>
       <hr>
       <ul class="no-bullet">
-        {{#each this.fileManager.deleteFiles as |file idx|}}
+        {{#each this.fileManager.filesToDelete as |file idx|}}
           <li
             class="text-justify"
           >
@@ -108,7 +108,7 @@
         {{/each}}
       </ul>
       <ul class="no-bullet">
-        {{#each this.fileManager.uploadFiles.files as |file idx|}}
+        {{#each this.fileManager.filesToUpload.files as |file idx|}}
           <li
             class="text-justify"
           >
