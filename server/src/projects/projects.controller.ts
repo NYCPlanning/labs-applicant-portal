@@ -32,6 +32,9 @@ import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
       'dcp_visibility',
     ],
   },
+
+  // remap verbose navigation link names to
+  // more concise names
   transform(project) {
     return {
       ...project,
