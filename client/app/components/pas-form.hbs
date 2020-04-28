@@ -5,15 +5,16 @@
       <a id="#project-info"></a>
       <h3>Project Information</h3>
 
-      <p class="text-small">
+      <p>
         The <strong>Pre-Application Statement</strong> requests pertinent information about a site and proposed project. By submitting the PAS, a prospective applicant acknowledges that they intend to file a land use application with NYC Planning. Submission allows staff to be assigned from appropriate divisions and project tracking to commence.
       </p>
 
-      <p class="text-small">
+      <p>
         NYC Planning understands that some projects may not be fully formed at the submission of the PAS. Give as much detailed information as possible. Failure to provide detailed, relevant information will result in the PAS being rejected.
       </p>
 
-      <label>Project Name
+      <label>
+        <strong>Project Name</strong>
         <Input
           @type="text"
           @value={{this.dcp_revisedprojectname}}
@@ -36,7 +37,8 @@
       {{!-- TODO: Add project-geography-editor component --}}
       <div class="bg-red-dim xlarge-padding medium-margin-bottom">project-geography-editor component</div>
 
-      <label>Description of geography
+      <label>
+        <strong>Description of geography</strong>
         <Textarea @value={{this.dcp_descriptionofprojectareageography}} rows="5" />
       </label>
     </section>
@@ -45,7 +47,7 @@
       <a id="#proposed-land-use-actions"></a>
       <h3>Proposed Land Use Actions</h3>
 
-      <p class="text-small">
+      <p>
         What land use actions does the proposed project require? Identify all that apply, adding multiple of the same type when necessary, and fill in the appropriate related information.
       </p>
 
@@ -61,13 +63,13 @@
       <a id="#project-area"></a>
       <h3>Project Area</h3>
 
-      <p class="text-small">
+      <p>
         Project Area refers to all property that would be subject to the proposed actions.
       </p>
 
       <fieldset class="medium-margin-bottom">
         <legend>
-          Does the proposed Project, or portion thereof, require a NYC DEP Storm Water Construction Permit?
+          <strong>Does the proposed Project, or portion thereof, require a NYC DEP Storm Water Construction Permit?</strong>
         </legend>
         <Input
           @type="radio"
@@ -91,7 +93,7 @@
 
       <fieldset class="medium-margin-bottom">
         <legend>
-          Is the proposed Project Area located in a current or former <a href="#">Urban Renewal Area</a>?
+          <strong>Is the proposed Project Area located in a current or former <a href="#">Urban Renewal Area</a>?</strong>
           {{!-- TODO: add link --}}
         </legend>
         <Input
@@ -115,7 +117,8 @@
       </fieldset>
 
       {{#if this.dcp_urbanrenewalarea}}
-        <label>What is the name of the Urban Renewal Area?
+        <label>
+          <strong>What is the name of the Urban Renewal Area?</strong>
           <Input
           @type="text"
           @value={{this.dcp_urbanareaname}}
@@ -125,7 +128,7 @@
 
       <fieldset class="medium-margin-bottom">
         <legend>
-          What is the <a href="#">Legal Street Frontage Status in the Project Area</a>?
+          <strong>What is the <a href="#">Legal Street Frontage Status in the Project Area</a>?</strong>
           {{!-- TODO: add link --}}
         </legend>
         <span class="nowrap">
@@ -172,7 +175,7 @@
 
       <fieldset class="medium-margin-bottom">
         <legend>
-          Do all land use actions meet <a href="#">SEQRA or CEQR criteria</a> for Type II status?
+          <strong>Do all land use actions meet <a href="#">SEQRA or CEQR criteria</a> for Type II status?</strong>
           {{!-- TODO: add link --}}
         </legend>
         <Input
@@ -196,7 +199,8 @@
       </fieldset>
 
       {{#if this.dcp_landuseactiontype2}}
-        <label>Indicate which SEQRA or CEQR category each action fulfills
+        <label>
+          <strong>Indicate which SEQRA or CEQR category each action fulfills</strong>
           <Input
             @type="text"
             @value={{this.dcp_pleaseexplaintypeiienvreview}}
@@ -206,7 +210,7 @@
 
       <fieldset class="medium-margin-bottom">
         <legend>
-          Is the proposed Project Area in an <a href="#">Industrial Business Zone</a>?
+          <strong>Is the proposed Project Area in an <a href="#">Industrial Business Zone</a>?</strong>
           {{!-- TODO: add link --}}
         </legend>
         <Input
@@ -224,7 +228,8 @@
       </fieldset>
 
       {{#if this.dcp_projectareaindustrialbusinesszone}}
-        <label>Name of Industrial Business Zone
+        <label>
+          <strong>Name of Industrial Business Zone</strong>
           <Input
             @type="text"
             @value={{this.dcp_projectareaindutrialzonename}}
@@ -234,7 +239,7 @@
 
       <fieldset class="medium-margin-bottom">
         <legend>
-          Is the proposed Project Area within or adjacent to a designated (City or State) <a href="#">Landmark or Historic District</a>?
+          <strong>Is the proposed Project Area within or adjacent to a designated (City or State) <a href="#">Landmark or Historic District</a>?</strong>
           {{!-- TODO: add link --}}
         </legend>
         <Input
@@ -252,7 +257,8 @@
       </fieldset>
 
       {{#if this.dcp_isprojectarealandmark}}
-        <label>Name of Landmark or Historic District
+        <label>
+          <strong>Name of Landmark or Historic District</strong>
           <Input
             @type="text"
             @value={{this.dcp_projectarealandmarkname}}
@@ -262,7 +268,7 @@
 
       <fieldset class="medium-margin-bottom">
         <legend>
-          Is the proposed Project Area located within the <a href="#">NYC Coastal Zone</a>?
+          <strong>Is the proposed Project Area located within the <a href="#">NYC Coastal Zone</a>?</strong>
           {{!-- TODO: add link --}}
         </legend>
         <Input
@@ -281,7 +287,7 @@
 
       <fieldset class="medium-margin-bottom">
         <legend>
-          Is the Project Area located within the <a href="#">1% annual chance floodplain</a>?
+          <strong>Is the Project Area located within the <a href="#">1% annual chance floodplain</a>?</strong>
           {{!-- TODO: add link --}}
         </legend>
         <Input
@@ -306,7 +312,7 @@
 
       <fieldset class="medium-margin-bottom">
         <legend>
-          Is a <a href="#">legal instrument</a> associated with a previous CPC or CPC Chair action recorded against the project site?
+          <strong>Is a <a href="#">legal instrument</a> associated with a previous CPC or CPC Chair action recorded against the project site?</strong>
           {{!-- TODO: add link --}}
         </legend>
         <Input
@@ -323,7 +329,8 @@
         /><label for="dcp_restrictivedeclaration_no">No</label>
       </fieldset>
 
-      <label>City Register File Number
+      <label>
+        <strong>City Register File Number</strong>
         <Input
           @type="text"
           @value={{this.dcp_cityregisterfilenumber}}
@@ -332,7 +339,7 @@
 
       <fieldset class="medium-margin-bottom">
         <legend>
-          Will a new legal instrument or modification of a current legal instrument be necessary to approve/implement these actions?
+          <strong>Will a new legal instrument or modification of a current legal instrument be necessary to approve/implement these actions?</strong>
         </legend>
         <Input
           @type="radio"
@@ -359,11 +366,12 @@
     <section class="form-section">
       <a id="#proposed-development-site"></a>
       <h3>Proposed Development Site</h3>
-      <p class="text-small">
+      <p>
         Development Site refers to all property to be developed as part of the applicant’s specific proposal which the land use actions would facilitate. Typically, the Development Site and the Project Area will comprise the same property(ies) unless the application is requesting a zoning map amendment covering an area greater than an applicant’s property to be developed or a large-scale special approval involving multiple tax lots. In these cases, the Development Site may be one or several tax lots within a broader Project Area.
       </p>
 
-      <label>In what year do you expect the development to complete?
+      <label>
+        <strong>In what year do you expect the development to complete?</strong>
         <Input
           @type="text" @value={{this.dcp_estimatedcompletiondate}}
         />
@@ -372,9 +380,9 @@
 
       <fieldset class="medium-margin-bottom">
         <legend>
-          What Type of Development is Proposed? (select all that apply)
+          <strong>What Type of Development is Proposed? (select all that apply)</strong>
         </legend>
-        <ul class="no-bullet">
+        <ul class="no-bullet no-margin">
           <li>
             <Input
               @type="checkbox"
@@ -431,7 +439,7 @@
 
       <fieldset class="medium-margin-bottom">
         <legend>
-          Is Development Site in an <a href="#">Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area</a>?
+          <strong>Is the Development Site in an <a href="#">Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area</a>?</strong>
           {{!-- TODO: add link --}}
         </legend>
         <Input
@@ -453,7 +461,8 @@
       </fieldset>
 
       {{#if this.dcp_isinclusionaryhousingdesignatedarea}}
-        <label>Name of Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area
+        <label>
+          <strong>Name of Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area</strong>
           <Input
             @type="text"
             @value={{this.dcp_inclusionaryhousingdesignatedareaname}}
@@ -463,7 +472,7 @@
 
       <fieldset class="medium-margin-bottom">
         <legend>
-          Does the proposed Development involve discretionary funding for Affordable Housing Units?
+          <strong>Does the proposed development involve discretionary funding for Affordable Housing Units?</strong>
         </legend>
         <Input
           @type="radio"
@@ -488,7 +497,7 @@
       {{#if this.dcp_discressionaryfundingforffordablehousing}}
         <fieldset class="medium-margin-bottom">
           <legend>
-            Funding source
+            <strong>Funding source</strong>
           </legend>
           <Input
             @type="radio"
@@ -522,27 +531,33 @@
       <a id="#project-description"></a>
       <h3>Project Description</h3>
 
-      <label>Description of the proposed development being facilitated by the land use actions
+      <label>
+        <strong>Description of the proposed development being facilitated by the land use actions</strong>
         <Textarea @value={{this.dcp_projectdescriptionproposeddevelopment}} rows="5" />
       </label>
 
-      <label>Why is this application being proposed? What is the legal, environmental, or land use background?
+      <label>
+        <strong>Why is this application being proposed? What is the legal, environmental, or land use background?</strong>
         <Textarea @value={{this.dcp_projectdescriptionbackground}} rows="5" />
       </label>
 
-      <label>What is the land use rationale for all the proposed actions?
+      <label>
+        <strong>What is the land use rationale for all the proposed actions?</strong>
         <Textarea @value={{this.dcp_projectdescriptionproposedactions}} rows="5" />
       </label>
 
-      <label>Description of existing land uses and structures in the proposed Project Area and Development Site
+      <label>
+        <strong>Description of existing land uses and structures in the proposed Project Area and Development Site</strong>
         <Textarea @value={{this.dcp_projectdescriptionproposedarea}} rows="5" />
       </label>
 
-      <label>Description of land uses and built context in surrounding area (within 1000 ft)
+      <label>
+        <strong>Description of land uses and built context in surrounding area (within 1000 ft)</strong>
         <Textarea @value={{this.dcp_projectdescriptionsurroundingarea}} rows="5" />
       </label>
 
-      <label>Description of proposed CEQR scope
+      <label>
+        <strong>Description of proposed CEQR scope</strong>
         <Textarea @value={{this.dcp_projectattachmentsotherinformation}} rows="5" />
       </label>
       <p class="help-text">
