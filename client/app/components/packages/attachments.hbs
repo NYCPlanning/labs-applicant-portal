@@ -1,6 +1,12 @@
 <h3>
   Attached Documents
-  <a class="section-anchor" id="uploads" data-magellan-target="uploads"></a>
+  <a
+    href="#"
+    class="section-anchor"
+    id="uploads"
+    data-magellan-target="uploads"
+  >
+  </a>
 </h3>
 
 <p>
@@ -9,15 +15,26 @@
 
 <div class="site-main grid-x grid-margin-x">
   <div class="cell small-6">
-    REQUIRED FOR ALL PROJECTS:
+    <b>REQUIRED FOR ALL PROJECTS:</b>
     <ul>
-      <li>Official Zoning Sectional Map</li>
-      <li>Project Area Photographs</li>
-      <li>Tax Map(s)</li>
+      <li><a href="#">Tax Map(s)</a> — if project area has more than one tax block submit a separate map for each tax block</li>
+      <li><a href="#">Official Zoning Map</a> — circle the project area</li>
+      <li><a href="#">Land Use Map</a></li>
+      <li>Site Plan — include building heights, unit counts and square footage calculations (GSF &nbsp; ZSF) for proposed project (certain exceptions apply, consult the Lead Planner)</li>
+      <li>Photographs</li>
+      <li>Signature Form</li>
     </ul>
   </div>
   <div class="cell small-6">
-    FOR PROJECTS IN THE NYC COASTAL ZONE:
+    <b>FOR PROJECTS IN THE NYC COASTAL ZONE:</b>
+    <ul>
+      <li>Map of <a href="#">project location within the NYC coastal zone</a> including Special Area Designations</li>
+    </ul>
+    <b>FOR <a href="#">CITY MAP CHANGES</a>:</b>
+    <ul>
+      <li>Most recent Borough President’s final Section Map or most recent approved and filed Alteration Map for the project area</li>
+      <li>Site survey — recommended but not required</li>
+    </ul>
   </div>
   <div class="cell">
     <fieldset class="fieldset">
@@ -34,6 +51,7 @@
           <div class="grid-x">
             <div class="cell small-8">
               <a
+                href="#"
                 data-test-document-name={{idx}}
               >
                 {{file.name}}
@@ -46,6 +64,7 @@
             </div>
             <div class="cell small-1 text-right">
               <button
+                type="button"
                 {{on "click" (fn this.markFileForDeletion file)}}
                 data-test-delete-file-button={{idx}}
               >
@@ -77,6 +96,7 @@
             </div>
             <div class="cell small-1 text-right">
               <button
+                type="button"
                 {{on "click" (fn this.unmarkFileForDeletion file)}}
                 data-test-undo-delete-file-button={{idx}}
               >
@@ -106,7 +126,9 @@
               </small>
             </div>
             <div class="cell small-1 text-right">
-              <button>
+              <button
+                type="button"
+              >
                 <FaIcon @icon="times" @prefix="fas" class="text-red" />
               </button>
             </div>
@@ -116,8 +138,8 @@
       </ul>
       <div class="cell large-auto">
         <FileUpload
-          id={{concat "FileUploader" this.args.package.id}}
-          @name={{this.args.package.id}}
+          id={{concat "FileUploader" @package.id}}
+          @name={{@package.id}}
           @accept='*/*'
           @multiple={{true}}
           class="button secondary expanded"
