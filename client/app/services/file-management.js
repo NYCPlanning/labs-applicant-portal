@@ -9,6 +9,7 @@ export default class FileManagementService extends Service {
   // There is one File Manager per editable Package.
   // The key to access a File Manager is the respective
   // package ID.
+  // REDO: Look into managing this through Package models
   fileManagers = {}
 
   createFileManager(

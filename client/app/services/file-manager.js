@@ -1,5 +1,6 @@
 import ENV from 'client/config/environment';
 
+// This class supports the FileManagement service
 export default class FileManager {
   constructor(existingFiles, deleteFiles, uploadFiles) {
     this.existingFiles = existingFiles || [];

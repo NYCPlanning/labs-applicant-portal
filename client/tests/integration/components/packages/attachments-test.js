@@ -9,6 +9,9 @@ import {
 import { hbs } from 'ember-cli-htmlbars';
 import { selectFiles } from 'ember-file-upload/test-support';
 
+// TODO:
+//   - Make use of qunit-dom
+//   - Use server.create and store.findAll to set up test data
 module('Integration | Component | packages/attachments', function(hooks) {
   setupRenderingTest(hooks);
 
