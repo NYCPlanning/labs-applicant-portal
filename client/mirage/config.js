@@ -1,6 +1,7 @@
 import ENV from '../config/environment';
 
 export default function() {
+  this.passthrough('https://search-api.planninglabs.nyc/**');
   // These comments are here to help you get started. Feel free to delete them.
 
   /*
@@ -25,6 +26,10 @@ export default function() {
   this.get('/logout');
 
   this.get('/packages/:id');
+
+  this.get('/bbls');
+  this.get('/bbls/:id');
+  this.patch('/bbls/:id');
 
   /*
     Shorthand cheatsheet:

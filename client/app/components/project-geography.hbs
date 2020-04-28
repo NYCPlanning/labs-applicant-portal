@@ -1,29 +1,80 @@
-<div class="row">
-	<LabsSearch
-		@searchPlaceholder='Look up BBL (ex 1001440001)'
-		data-test-input="bbl-search"
-		@onSelect={{fn this.selectSearchResult}} as |search|>
-
-		<small class="dark-gray">{{search.result.label}} <br> {{bbl-breakup search.result.bbl}}</small>
-	</LabsSearch>
-</div>
-
-<div class="row">
-  <p>Project BBLs</p>
-</div>
-
-<div class="row">
-	{{#each @pasForm.bbls as |bbl|}}
-	  <div class="item">
-	      <a
-	        href="https://zola.planning.nyc.gov/bbl/{{bbl.dcp_bblnumber}}"
-	        target="_blank"
-	        rel="noopener noreferrer"
-			data-test-bbl-link="{{bbl.dcp_bblnumber}}"
-	      >
-	        {{bbl.dcp_bblnumber}}
-	      </a>
-	      <i data-test-button-remove-bbl="{{bbl.dcp_bblnumber}}" onClick={{fn this.removeBbl bbl}}>{{fa-icon 'times' class='red'}}</i>
+<h5>Add a Tax Lot by Searching a BBL or an Address</h5>
+<LabsSearch
+  @searchPlaceholder='Look up BBL (ex 1001440001)'
+  data-test-input="bbl-search"
+  @onSelect={{fn this.selectSearchResult}} as |search|
+>
+  <small class="dark-gray">{{search.result.label}} <br> {{bbl-breakup search.result.bbl}}</small>
+</LabsSearch>
+ 
+{{#each @bbls as |bbl idx|}}
+  <fieldset class="fieldset">
+    <legend data-test-bbl-title="{{bbl.dcpBblnumber}}">
+	  <strong>{{bbl.dcpBblnumber}}</strong>
+	</legend>
+	<fieldset>
+	  <legend data-test-development-site-question="{{bbl.dcpBblnumber}}-{{bbl.dcpDevelopmentsite}}">
+	    Is this BBL part of the development site?
+	  </legend>
+	  <input
+		type="radio"
+		name={{concat idx '-bbl-dev-site'}}
+		id={{concat idx '-bbl-dev-site-yes'}}
+		data-test-bbl-development-site-yes="{{bbl.dcpBblnumber}}"
+		checked={{if bbl.dcpDevelopmentsite "checked"}}
+		onClick={{fn this.updateAttr bbl "dcpDevelopmentsite" true}}
+	  />
+	  <label for="{{concat idx '-bbl-dev-site-yes'}}">
+	    Yes
+	  </label>
+	  <input
+	    type="radio"
+		name={{concat idx '-bbl-dev-site'}}
+		id={{concat idx '-bbl-dev-site-no'}}
+		data-test-bbl-development-site-no="{{bbl.dcpBblnumber}}"
+		checked={{if (eq bbl.dcpDevelopmentsite false) "checked"}}
+		onClick={{fn this.updateAttr bbl "dcpDevelopmentsite" false}}
+	  />
+	  <label for="{{concat idx '-bbl-dev-site-no'}}">
+		No
+	  </label>
+	</fieldset>
+	<fieldset>
+	  <legend data-test-partial-lot-question="{{bbl.dcpBblnumber}}-{{bbl.dcpPartiallot}}">
+		Is this a partial lot?
+	  </legend>
+	  <Input
+	    type="radio"
+		name="bbl-partial-lot-yes"
+		id="bbl-partial-lot-yes"
+		data-test-bbl-partial-lot-yes="{{bbl.dcpBblnumber}}"
+		checked={{if (eq bbl.dcpPartiallot true) "checked"}}
+		onClick={{fn this.updateAttr bbl "dcpPartiallot" true}}
+	  />
+	  <label for="bbl-partial-lot-yes">
+		Yes
+	  </label>
+	  <input
+	    type="radio"
+		name="bbl-partial-lot-no"
+		id="bbl-partial-lot-no"
+		data-test-bbl-partial-lot-no="{{bbl.dcpBblnumber}}"
+		checked={{if (eq bbl.dcpPartiallot false) "checked"}}
+		onClick={{fn this.updateAttr bbl "dcpPartiallot" false}}
+	  />
+	  <label for="bbl-partial-lot-no">
+		No
+	  </label>
+	</fieldset>
+	  <div class="text-right">
+	    <button 
+		  type="button" 
+		  class="text-red"
+		  data-test-button-remove-bbl="{{bbl.dcpBblnumber}}" 
+		  onClick={{fn this.removeBbl bbl}}
+		>
+		  {{fa-icon 'times'}} DELETE
+		</button>
 	  </div>
-	{{/each}}
-</div>
+  </fieldset>
+{{/each}}

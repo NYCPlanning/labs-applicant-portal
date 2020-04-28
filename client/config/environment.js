@@ -37,10 +37,6 @@ module.exports = function(environment) {
   };
 
   if (environment === 'development') {
-    ENV['labs-search'] = {
-      host: 'https://search-api.planninglabs.nyc',
-      helpers: ['geosearch', 'bbl'],
-    };
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
@@ -60,11 +56,6 @@ module.exports = function(environment) {
     ENV.APP.autoboot = false;
 
     ENV.host = '';
-
-    ENV['labs-search'] = {
-      host: 'https://search-api.planninglabs.nyc',
-      helpers: ['geosearch', 'bbl'],
-    };
   }
 
   if (environment === 'production') {

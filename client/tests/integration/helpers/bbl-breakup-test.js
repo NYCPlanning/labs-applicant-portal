@@ -10,6 +10,6 @@ module('Integration | Helper | bbl-breakup', function(hooks) {
   test('correctly breaks up bbl', async function(assert) {
     await render(hbs`{{bbl-breakup "1234567890"}}`);
 
-    assert.equal(this.element.textContent.trim(), 'Borough 1, Block 23456, Lot 7890');
+    assert.dom(this.element).hasText('Borough 1, Block 23456, Lot 7890');
   });
 });
