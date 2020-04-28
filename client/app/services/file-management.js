@@ -13,15 +13,16 @@ export default class FileManagementService extends Service {
   fileManagers = {}
 
   createFileManager(
-    id = '',
+    packageId = '',
     existingFiles = [],
   ) {
-    this.fileManagers[id] = new FileManager(
+    this.fileManagers[packageId] = new FileManager(
+      packageId,
       existingFiles,
       [],
-      this.fileQueue.create(id),
+      this.fileQueue.create(packageId),
     );
 
-    return this.fileManagers[id];
+    return this.fileManagers[packageId];
   }
 }
