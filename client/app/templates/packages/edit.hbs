@@ -1,1 +1,10 @@
+<Breadcrumbs />
+
+<hr class="large-margin-bottom">
+
+{{!-- Load appropriate form component for the type of package being edited --}}
+{{#if (eq model.dcpPackagetype "PAS Package")}}
+  <PasForm @package={{model}} />
+{{/if}}
+
 {{outlet}}

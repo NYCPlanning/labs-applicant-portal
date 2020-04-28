@@ -18,3 +18,12 @@
 
 // Custom app components
 @import 'modules/_login';
+
+
+.form-section {
+  & + & {
+    border-top: $hr-border;
+    margin-top: $global-margin*3;
+    padding-top: $global-margin*3;
+  }
+}

@@ -1,0 +1,656 @@
+<div class="grid-x grid-margin-x">
+  <div class="cell large-8">
+
+    <section class="form-section">
+      <a id="#project-info"></a>
+      <h3>Project Information</h3>
+
+      <p class="text-small">
+        The <strong>Pre-Application Statement</strong> requests pertinent information about a site and proposed project. By submitting the PAS, a prospective applicant acknowledges that they intend to file a land use application with NYC Planning. Submission allows staff to be assigned from appropriate divisions and project tracking to commence.
+      </p>
+
+      <p class="text-small">
+        NYC Planning understands that some projects may not be fully formed at the submission of the PAS. Give as much detailed information as possible. Failure to provide detailed, relevant information will result in the PAS being rejected.
+      </p>
+
+      <label>Project Name
+        <input type="text" value={{this.dcp_revisedprojectname}}>
+      </label>
+    </section>
+
+    <section class="form-section">
+      <a id="#applicant-team"></a>
+      <h3>Applicant Team</h3>
+
+      {{!-- TODO: Add applicant-team-editor component --}}
+      <div class="bg-red-dim xlarge-padding medium-margin-bottom">applicant-team-editor component</div>
+    </section>
+
+    <section class="form-section">
+      <a id="#applicant-team"></a>
+      <h3>Project Geography</h3>
+
+      {{!-- TODO: Add project-geography-editor component --}}
+      <div class="bg-red-dim xlarge-padding medium-margin-bottom">project-geography-editor component</div>
+
+      <label>Description of geography
+        <textarea rows="5">{{this.dcp_descriptionofprojectareageography}}</textarea>
+      </label>
+    </section>
+
+    <section class="form-section">
+      <a id="#proposed-land-use-actions"></a>
+      <h3>Proposed Land Use Actions</h3>
+
+      <p class="text-small">
+        What land use actions does the proposed project require? Identify all that apply, adding multiple of the same type when necessary, and fill in the appropriate related information.
+      </p>
+
+      <p class="text-small">
+        Note: This is preliminary information and may change following discussion with NYC Planning.
+      </p>
+
+      {{!-- TODO: Add land-use-actions-editor component --}}
+      <div class="bg-red-dim xlarge-padding medium-margin-bottom">land-use-actions-editor component</div>
+    </section>
+
+    <section class="form-section">
+      <a id="#project-area"></a>
+      <h3>Project Area</h3>
+
+      <p class="text-small">
+        Project Area refers to all property that would be subject to the proposed actions.
+      </p>
+
+      <fieldset class="medium-margin-bottom">
+        <legend>
+          Does the proposed Project, or portion thereof, require a NYC DEP Storm Water Construction Permit?
+        </legend>
+        {{input
+          type="radio"
+          name="dcp_proposedprojectorportionconstruction"
+          value='717170000'
+          id="dcp_proposedprojectorportionconstruction_yes"
+        }}<label for="dcp_proposedprojectorportionconstruction_yes">Yes</label>
+        {{input
+          type="radio"
+          name="dcp_proposedprojectorportionconstruction"
+          value='717170001'
+          id="dcp_proposedprojectorportionconstruction_no"
+        }}<label for="dcp_proposedprojectorportionconstruction_no">No</label>
+        {{input
+          type="radio"
+          name="dcp_proposedprojectorportionconstruction"
+          value='717170002'
+          id="dcp_proposedprojectorportionconstruction_unsure"
+        }}<label for="dcp_proposedprojectorportionconstruction_unsure">Unsure at this time</label>
+      </fieldset>
+
+      <fieldset class="medium-margin-bottom">
+        <legend>
+          Is the proposed Project Area located in a current or former <a href="#">Urban Renewal Area</a>?
+          {{!-- TODO: add link --}}
+        </legend>
+        {{input
+          type="radio"
+          name="dcp_urbanrenewalarea"
+          value='717170000'
+          id="dcp_urbanrenewalarea_yes"
+        }}<label for="dcp_urbanrenewalarea_yes">Yes</label>
+        {{input
+          type="radio"
+          name="dcp_urbanrenewalarea"
+          value='717170001'
+          id="dcp_urbanrenewalarea_no"
+        }}<label for="dcp_urbanrenewalarea_no">No</label>
+        {{input
+          type="radio"
+          name="dcp_urbanrenewalarea"
+          value='717170002'
+          id="dcp_urbanrenewalarea_unsure"
+        }}<label for="dcp_urbanrenewalarea_unsure">Unsure at this time</label>
+      </fieldset>
+
+      {{#if this.dcp_urbanrenewalarea}}
+        <label>What is the name of the Urban Renewal Area?
+          <input type="text" value={{this.dcp_urbanareaname}}>
+        </label>
+      {{/if}}
+
+      <fieldset class="medium-margin-bottom">
+        <legend>
+          What is the <a href="#">Legal Street Frontage Status in the Project Area</a>?
+          {{!-- TODO: add link --}}
+        </legend>
+        <span class="nowrap">
+          {{input
+            type="radio"
+            name="dcp_legalstreetfrontage"
+            value='717170000'
+            id="dcp_legalstreetfrontage_717170000"
+          }}<label for="dcp_legalstreetfrontage_717170000">Mapped and Build</label>
+        </span>
+        <span class="nowrap">
+          {{input
+            type="radio"
+            name="dcp_legalstreetfrontage"
+            value='717170001'
+            id="dcp_legalstreetfrontage_717170001"
+          }}<label for="dcp_legalstreetfrontage_717170001">Private Road</label>
+        </span>
+        <span class="nowrap">
+          {{input
+            type="radio"
+            name="dcp_legalstreetfrontage"
+            value='717170002'
+            id="dcp_legalstreetfrontage_717170002"
+          }}<label for="dcp_legalstreetfrontage_717170002">Record Street</label>
+        </span>
+        <span class="nowrap">
+          {{input
+            type="radio"
+            name="dcp_legalstreetfrontage"
+            value='717170003'
+            id="dcp_legalstreetfrontage_717170003"
+          }}<label for="dcp_legalstreetfrontage_717170003">Corporation Counsel Opinion</label>
+        </span>
+        <span class="nowrap">
+          {{input
+            type="radio"
+            name="dcp_legalstreetfrontage"
+            value='717170004'
+            id="dcp_legalstreetfrontage_717170004"
+          }}<label for="dcp_legalstreetfrontage_717170004">Mapped but not Build</label>
+        </span>
+      </fieldset>
+
+      <fieldset class="medium-margin-bottom">
+        <legend>
+          Do all land use actions meet <a href="#">SEQRA or CEQR criteria</a> for Type II status?
+          {{!-- TODO: add link --}}
+        </legend>
+        {{input
+          type="radio"
+          name="dcp_landuseactiontype2"
+          value='717170000'
+          id="dcp_landuseactiontype2_yes"
+        }}<label for="dcp_landuseactiontype2_yes">Yes</label>
+        {{input
+          type="radio"
+          name="dcp_landuseactiontype2"
+          value='717170001'
+          id="dcp_landuseactiontype2_no"
+        }}<label for="dcp_landuseactiontype2_no">No</label>
+        {{input
+          type="radio"
+          name="dcp_landuseactiontype2"
+          value='717170002'
+          id="dcp_landuseactiontype2_unsure"
+        }}<label for="dcp_landuseactiontype2_unsure">Unsure at this time</label>
+      </fieldset>
+
+      {{#if this.dcp_landuseactiontype2}}
+        <label>Indicate which SEQRA or CEQR category each action fulfills
+          <input type="text" value={{this.dcp_pleaseexplaintypeiienvreview}}>
+        </label>
+      {{/if}}
+
+      <fieldset class="medium-margin-bottom">
+        <legend>
+          Is the proposed Project Area in an <a href="#">Industrial Business Zone</a>?
+          {{!-- TODO: add link --}}
+        </legend>
+        {{input
+          type="radio"
+          name="dcp_projectareaindustrialbusinesszone"
+          value=true
+          id="dcp_projectareaindustrialbusinesszone_yes"
+        }}<label for="dcp_projectareaindustrialbusinesszone_yes">Yes</label>
+        {{input
+          type="radio"
+          name="dcp_projectareaindustrialbusinesszone"
+          value=false
+          id="dcp_projectareaindustrialbusinesszone_no"
+        }}<label for="dcp_projectareaindustrialbusinesszone_no">No</label>
+      </fieldset>
+
+      {{#if this.dcp_projectareaindustrialbusinesszone}}
+        <label>Name of Industrial Business Zone
+          <input type="text" value={{this.dcp_projectareaindutrialzonename}}>
+        </label>
+      {{/if}}
+
+      <fieldset class="medium-margin-bottom">
+        <legend>
+          Is the proposed Project Area within or adjacent to a designated (City or State) <a href="#">Landmark or Historic District</a>?
+          {{!-- TODO: add link --}}
+        </legend>
+        {{input
+          type="radio"
+          name="dcp_isprojectarealandmark"
+          value=true
+          id="dcp_isprojectarealandmark_yes"
+        }}<label for="dcp_isprojectarealandmark_yes">Yes</label>
+        {{input
+          type="radio"
+          name="dcp_isprojectarealandmark"
+          value=false
+          id="dcp_isprojectarealandmark_no"
+        }}<label for="dcp_isprojectarealandmark_no">No</label>
+      </fieldset>
+
+      {{#if this.dcp_isprojectarealandmark}}
+        <label>Name of Landmark or Historic District
+          <input type="text" value={{this.dcp_projectarealandmarkname}}>
+        </label>
+      {{/if}}
+
+      <fieldset class="medium-margin-bottom">
+        <legend>
+          Is the proposed Project Area located within the <a href="#">NYC Coastal Zone</a>?
+          {{!-- TODO: add link --}}
+        </legend>
+        {{input
+          type="radio"
+          name="dcp_projectareacoastalzonelocatedin"
+          value=true
+          id="dcp_projectareacoastalzonelocatedin_yes"
+        }}<label for="dcp_projectareacoastalzonelocatedin_yes">Yes</label>
+        {{input
+          type="radio"
+          name="dcp_projectareacoastalzonelocatedin"
+          value=false
+          id="dcp_projectareacoastalzonelocatedin_no"
+        }}<label for="dcp_projectareacoastalzonelocatedin_no">No</label>
+      </fieldset>
+
+      <fieldset class="medium-margin-bottom">
+        <legend>
+          Is the Project Area located within the <a href="#">1% annual chance floodplain</a>?
+          {{!-- TODO: add link --}}
+        </legend>
+        {{input
+          type="radio"
+          name="dcp_projectareaischancefloodplain"
+          value='717170000'
+          id="dcp_projectareaischancefloodplain_yes"
+        }}<label for="dcp_projectareaischancefloodplain_yes">Yes</label>
+        {{input
+          type="radio"
+          name="dcp_projectareaischancefloodplain"
+          value='717170001'
+          id="dcp_projectareaischancefloodplain_no"
+        }}<label for="dcp_projectareaischancefloodplain_no">No</label>
+        {{input
+          type="radio"
+          name="dcp_projectareaischancefloodplain"
+          value='717170002'
+          id="dcp_projectareaischancefloodplain_unsure"
+        }}<label for="dcp_projectareaischancefloodplain_unsure">Unsure at this time</label>
+      </fieldset>
+
+      <fieldset class="medium-margin-bottom">
+        <legend>
+          Is a <a href="#">legal instrument</a> associated with a previous CPC or CPC Chair action recorded against the project site?
+          {{!-- TODO: add link --}}
+        </legend>
+        {{input
+          type="radio"
+          name="dcp_restrictivedeclaration"
+          value=true
+          id="dcp_restrictivedeclaration_yes"
+        }}<label for="dcp_restrictivedeclaration_yes">Yes</label>
+        {{input
+          type="radio"
+          name="dcp_restrictivedeclaration"
+          value=false
+          id="dcp_restrictivedeclaration_no"
+        }}<label for="dcp_restrictivedeclaration_no">No</label>
+      </fieldset>
+
+      <label>City Register File Number
+        <input type="text" value={{this.dcp_cityregisterfilenumber}}>
+      </label>
+
+      <fieldset class="medium-margin-bottom">
+        <legend>
+          Will a new legal instrument or modification of a current legal instrument be necessary to approve/implement these actions?
+        </legend>
+        {{input
+          type="radio"
+          name="dcp_restrictivedeclarationrequired"
+          value='717170000'
+          id="dcp_restrictivedeclarationrequired_yes"
+        }}<label for="dcp_restrictivedeclarationrequired_yes">Yes</label>
+        {{input
+          type="radio"
+          name="dcp_restrictivedeclarationrequired"
+          value='717170001'
+          id="dcp_restrictivedeclarationrequired_no"
+        }}<label for="dcp_restrictivedeclarationrequired_no">No</label>
+        {{input
+          type="radio"
+          name="dcp_restrictivedeclarationrequired"
+          value='717170002'
+          id="dcp_restrictivedeclarationrequired_unsure"
+        }}<label for="dcp_restrictivedeclarationrequired_unsure">Unsure at this time</label>
+      </fieldset>
+
+    </section>
+
+    <section class="form-section">
+      <a id="#proposed-development-site"></a>
+      <h3>Proposed Development Site</h3>
+      <p class="text-small">
+        Development Site refers to all property to be developed as part of the applicant’s specific proposal which the land use actions would facilitate. Typically, the Development Site and the Project Area will comprise the same property(ies) unless the application is requesting a zoning map amendment covering an area greater than an applicant’s property to be developed or a large-scale special approval involving multiple tax lots. In these cases, the Development Site may be one or several tax lots within a broader Project Area.
+      </p>
+
+      <label>In what year do you expect the development to complete?
+        <input type="text" value={{this.dcp_estimatedcompletiondate}}>
+        {{!-- TODO: Do we need a date picker here? --}}
+      </label>
+
+      <fieldset class="medium-margin-bottom">
+        <legend>
+          What Type of Development is Proposed? (select all that apply)
+        </legend>
+        <ul class="no-bullet">
+          <li>
+            {{input
+              type="checkbox"
+              id="dcp_proposeddevelopmentsitenewconstruction"
+            }}<label for="dcp_proposeddevelopmentsitenewconstruction">Newly constructed buildings</label>
+          </li>
+          <li>
+            {{input
+              type="checkbox"
+              id="dcp_proposeddevelopmentsitedemolition"
+            }}<label for="dcp_proposeddevelopmentsitedemolition">Demolition</label>
+          </li>
+          <li>
+            {{input
+              type="checkbox"
+              id="dcp_proposeddevelopmentsiteinfoalteration"
+            }}<label for="dcp_proposeddevelopmentsiteinfoalteration">Alteration</label>
+          </li>
+          <li>
+            {{input
+              type="checkbox"
+              id="dcp_proposeddevelopmentsiteinfoaddition"
+            }}<label for="dcp_proposeddevelopmentsiteinfoaddition">Addition</label>
+          </li>
+          <li>
+            {{input
+              type="checkbox"
+              id="dcp_proposeddevelopmentsitechnageofuse"
+            }}<label for="dcp_proposeddevelopmentsitechnageofuse">Change of use</label>
+          </li>
+          <li>
+            {{input
+              type="checkbox"
+              id="dcp_proposeddevelopmentsiteenlargement"
+            }}<label for="dcp_proposeddevelopmentsiteenlargement">Enlargement</label>
+          </li>
+          <li>
+            {{input
+              type="checkbox"
+              id="dcp_proposeddevelopmentsiteinfoother"
+            }}<label for="dcp_proposeddevelopmentsiteinfoother">Other&hellip;</label>
+          </li>
+        </ul>
+      </fieldset>
+
+      {{#if this.dcp_proposeddevelopmentsiteinfoother}}
+        <label>Explain:
+          <input type="text" value={{this.dcp_proposeddevelopmentsiteotherexplanation}}>
+        </label>
+      {{/if}}
+
+      <fieldset class="medium-margin-bottom">
+        <legend>
+          Is Development Site in an <a href="#">Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area</a>?
+          {{!-- TODO: add link --}}
+        </legend>
+        {{input
+          type="radio"
+          name="dcp_isinclusionaryhousingdesignatedarea"
+          value=true
+          id="dcp_isinclusionaryhousingdesignatedarea_yes"
+        }}<label for="dcp_isinclusionaryhousingdesignatedarea_yes">Yes</label>
+        {{input
+          type="radio"
+          name="dcp_isinclusionaryhousingdesignatedarea"
+          value=false
+          id="dcp_isinclusionaryhousingdesignatedarea_no"
+        }}<label for="dcp_isinclusionaryhousingdesignatedarea_no">No</label>
+        <p class="help-text">
+          Refer to <a  href="#">Appendix F</a> of the Zoning Resolution for full list of all inclusionary housing areas which are areas that incentivize or require affordable housing in certain areas.
+          {{!-- TODO: add link --}}
+        </p>
+      </fieldset>
+
+      {{#if this.dcp_isinclusionaryhousingdesignatedarea}}
+        <label>Name of Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area
+          <input type="text" value={{this.dcp_inclusionaryhousingdesignatedareaname}}>
+        </label>
+      {{/if}}
+
+      <fieldset class="medium-margin-bottom">
+        <legend>
+          Does the proposed Development involve discretionary funding for Affordable Housing Units?
+        </legend>
+        {{input
+          type="radio"
+          name="dcp_discressionaryfundingforffordablehousing"
+          value='717170000'
+          id="dcp_discressionaryfundingforffordablehousing_yes"
+        }}<label for="dcp_discressionaryfundingforffordablehousing_yes">Yes</label>
+        {{input
+          type="radio"
+          name="dcp_discressionaryfundingforffordablehousing"
+          value='717170001'
+          id="dcp_discressionaryfundingforffordablehousing_no"
+        }}<label for="dcp_discressionaryfundingforffordablehousing_no">No</label>
+        {{input
+          type="radio"
+          name="dcp_discressionaryfundingforffordablehousing"
+          value='717170002'
+          id="dcp_discressionaryfundingforffordablehousing_unsure"
+        }}<label for="dcp_discressionaryfundingforffordablehousing_unsure">Unsure at this time</label>
+      </fieldset>
+
+      {{#if this.dcp_discressionaryfundingforffordablehousing}}
+        <fieldset class="medium-margin-bottom">
+          <legend>
+            Funding source
+          </legend>
+          {{input
+            type="radio"
+            name="dcp_housingunittype"
+            value='717170000'
+            id="dcp_housingunittype_city"
+          }}<label for="dcp_housingunittype_city">City</label>
+          {{input
+            type="radio"
+            name="dcp_housingunittype"
+            value='717170001'
+            id="dcp_housingunittype_state"
+          }}<label for="dcp_housingunittype_state">State</label>
+          {{input
+            type="radio"
+            name="dcp_housingunittype"
+            value='717170002'
+            id="dcp_housingunittype_federal"
+          }}<label for="dcp_housingunittype_federal">Federal</label>
+          {{input
+            type="radio"
+            name="dcp_housingunittype"
+            value='717170003'
+            id="dcp_housingunittype_other"
+          }}<label for="dcp_housingunittype_other">Other</label>
+        </fieldset>
+      {{/if}}
+    </section>
+
+    <section class="form-section">
+      <a id="#project-description"></a>
+      <h3>Project Description</h3>
+
+      <label>Description of the proposed development being facilitated by the land use actions
+        <textarea rows="5">{{this.dcp_projectdescriptionproposeddevelopment}}</textarea>
+      </label>
+
+      <label>Why is this application being proposed? What is the legal, environmental, or land use background?
+        <textarea rows="5">{{this.dcp_projectdescriptionbackground}}</textarea>
+      </label>
+
+      <label>What is the land use rationale for all the proposed actions?
+        <textarea rows="5">{{this.dcp_projectdescriptionproposedactions}}</textarea>
+      </label>
+
+      <label>Description of existing land uses and structures in the proposed Project Area and Development Site
+        <textarea rows="5">{{this.dcp_projectdescriptionproposedarea}}</textarea>
+      </label>
+
+      <label>Description of land uses and built context in surrounding area (within 1000 ft)
+        <textarea rows="5">{{this.dcp_projectdescriptionsurroundingarea}}</textarea>
+      </label>
+
+      <label>Description of proposed CEQR scope
+        <textarea rows="5">{{this.dcp_projectattachmentsotherinformation}}</textarea>
+      </label>
+      <p class="help-text">
+        Include to expedite CEQR guidance: If proposed actions are not approved, what is the applicant’s as-of-right development (CEQR “no-action”) proposal? What would be expected to occur on non-applicant-controlled sites because of the Proposed Actions (CEQR “with-action”)?
+      </p>
+    </section>
+
+    <section class="form-section">
+      <a id="#attached-documents"></a>
+      <h3>Attached Documents</h3>
+
+      <p>
+        Please attach the following required documents. (Additional materials that help to explain the proposed project may also be submitted.)
+      </p>
+
+      <div class="grid-x grid-margin-x">
+        <div class="cell large-6">
+          <h5>Required for all projects:</h5>
+          <ul class="text-small">
+            <li class="small-margin-bottom">
+              <a href="#">Tax Map(s)</a> — if project area has more than one tax block submit a separate map for each tax block
+              {{!-- TODO: add link --}}
+            </li>
+            <li class="small-margin-bottom">
+              <a href="#">Official Zoning Map</a> — circle the project area
+              {{!-- TODO: add link --}}
+            </li>
+            <li class="small-margin-bottom">
+              <a href="#">Land Use Map</a>
+              {{!-- TODO: add link --}}
+            </li>
+            <li class="small-margin-bottom">
+              Site Plan — include building heights, unit counts and square footage calculations (GSF & ZSF) for proposed project (certain exceptions apply, consult the Lead Planner)
+            </li>
+            <li class="small-margin-bottom">
+              Photographs
+            </li>
+            <li class="small-margin-bottom">
+              Signature Form
+            </li>
+          </ul>
+        </div>
+        <div class="cell large-6">
+          <h5>For projects in the NYC Coastal Zone: </h5>
+          <ul class="text-small">
+            <li class="small-margin-bottom">
+              Map of <a href="#">project location within the NYC coastal zone</a> including Special Area Designations
+              {{!-- TODO: add link --}}
+            </li>
+          </ul>
+
+          <h5>
+            For <a href="#">City Map changes</a>:
+            {{!-- TODO: add link --}}
+          </h5>
+          <ul class="text-small">
+            <li class="small-margin-bottom">Most recent Borough President’s final Section Map or most recent approved and filed Alteration Map for the project area</li>
+            <li class="small-margin-bottom">Site survey — recommended but not required</li>
+          </ul>
+        </div>
+      </div>
+
+      {{!-- TODO: Add attachments-editor component --}}
+      <div class="bg-red-dim xlarge-padding medium-margin-bottom">attachments-editor component</div>
+    </section>
+
+  </div>
+  <div class="cell large-4">
+
+    <div class="sticky">
+      <p>
+        <button class="button expanded large">
+          Save
+        </button>
+        <button class="button expanded large secondary" disabled="">
+          Submit
+        </button>
+      </p>
+      <nav>
+        <ul class="no-bullet text-weight-bold">
+          <li class="medium-margin-bottom">
+            <a href="#project-info">
+              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+              Project Information
+            </a>
+          </li>
+          <li class="medium-margin-bottom">
+            <a href="#applicant-team">
+              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+              Applicant Team
+            </a>
+          </li>
+          <li class="medium-margin-bottom">
+            <a href="#">
+              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+              Project Geography
+            </a>
+          </li>
+          <li class="medium-margin-bottom">
+            <a href="#">
+              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+              Proposed Land Use Actions
+            </a>
+          </li>
+          <li class="medium-margin-bottom">
+            <a href="#">
+              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+              Project Area
+            </a>
+          </li>
+          <li class="medium-margin-bottom">
+            <a href="#">
+              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+              Proposed Development Site
+            </a>
+          </li>
+          <li class="medium-margin-bottom">
+            <a href="#">
+              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+              Project Description
+            </a>
+          </li>
+          <li class="medium-margin-bottom">
+            <a href="#">
+              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+              Attached Documents
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>{{!-- end .sticky --}}
+
+  </div>
+</div>
+
+
+{{yield}}
