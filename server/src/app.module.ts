@@ -9,6 +9,7 @@ import { ConfigModule } from './config/config.module';
 import { ContactModule } from './contact/contact.module';
 import { CrmModule } from './crm/crm.module';
 import { ProjectsModule } from './projects/projects.module';
+import { PackagesModule } from './packages/packages.module';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { ProjectsModule } from './projects/projects.module';
     ConfigModule,
     ContactModule,
     CrmModule,
-    ProjectsModule
+    ProjectsModule,
+    PackagesModule,
   ],
   controllers: [AppController],
 })

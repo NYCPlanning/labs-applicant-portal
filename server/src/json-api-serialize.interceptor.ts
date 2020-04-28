@@ -12,6 +12,9 @@ export class JsonApiSerializeInterceptor implements NestInterceptor {
   constructor(resourceName, serializationOptions) {
     this.serializer = new Serializer(resourceName, {
       ...serializationOptions,
+
+      // REDO: we should just make the client support dash prefixes
+      // because it'll be tough when we have to deserialize
       keyForAttribute(key) {
         let dasherized = dasherize(key);
 
