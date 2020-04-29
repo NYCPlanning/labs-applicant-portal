@@ -17,23 +17,10 @@ module('Integration | Component | packages/attachments', function(hooks) {
   setupMirage(hooks);
 
   test('it displays a list attachments already uploaded to the package', async function(assert) {
-    this.package = {
-      id: '123',
-      documents: [
-        {
-          name: 'PAS Form.pdf',
-          // TODO: Format that this is the final serialized
-          // format of the "timeCreated" property
-          timeCreated: '2020-04-23T22:35:30Z',
-          id: '59fbf112-71a5-4af5-b20a-a746g08c4c6p',
-        },
-        {
-          name: 'Action Changes.excel',
-          timeCreated: '2020-02-21T22:25:10Z',
-          id: 'f0f2f3a3-3936-499b-8f37-a9827a1c14f2',
-        },
-      ],
-    };
+    this.server.create('package', 'withExistingDocuments', { id: '123' });
+
+    const store = this.owner.lookup('service:store');
+    this.package = await store.findRecord('package', '123');
 
     await render(hbs`<
       Packages::Attachments
@@ -45,23 +32,10 @@ module('Integration | Component | packages/attachments', function(hooks) {
   });
 
   test('user can mark and unmark an existing document for deletion', async function(assert) {
-    this.package = {
-      id: '123',
-      documents: [
-        {
-          name: 'PAS Form.pdf',
-          // TODO: Format that this is the final serialized
-          // format of the "timeCreated" property
-          timeCreated: '2020-04-23T22:35:30Z',
-          id: '59fbf112-71a5-4af5-b20a-a746g08c4c6p',
-        },
-        {
-          name: 'Action Changes.excel',
-          timeCreated: '2020-02-21T22:25:10Z',
-          id: 'f0f2f3a3-3936-499b-8f37-a9827a1c14f2',
-        },
-      ],
-    };
+    this.server.create('package', 'withExistingDocuments', { id: '123' });
+
+    const store = this.owner.lookup('service:store');
+    this.package = await store.findRecord('package', '123');
 
     await render(hbs`<
       Packages::Attachments
@@ -102,11 +76,10 @@ module('Integration | Component | packages/attachments', function(hooks) {
   });
 
   test('user can select and deselect local files for upload', async function(assert) {
-    this.package = {
-      id: '123',
-      documents: [
-      ],
-    };
+    this.server.create('package', { id: '123' });
+
+    const store = this.owner.lookup('service:store');
+    this.package = await store.findRecord('package', '123');
 
     const file = new File(['foo'], 'PAS Form.pdf', { type: 'text/plain' });
     const file2 = new File(['foo'], 'Action Changes.excel', { type: 'text/plain' });
@@ -134,11 +107,10 @@ module('Integration | Component | packages/attachments', function(hooks) {
   });
 
   test('user can return to attachments component and see correct files', async function (assert) {
-    this.package = {
-      id: '123',
-      documents: [
-      ],
-    };
+    this.server.create('package', { id: '123' });
+
+    const store = this.owner.lookup('service:store');
+    this.package = await store.findRecord('package', '123');
 
     const file = new File(['foo'], 'PAS Form.pdf', { type: 'text/plain' });
     const file2 = new File(['foo'], 'Action Changes.excel', { type: 'text/plain' });
@@ -161,23 +133,10 @@ module('Integration | Component | packages/attachments', function(hooks) {
   });
 
   test('fileManager.save() will upload and delete files, then reset to-be-uploaded/deleted lists', async function (assert) {
-    this.package = {
-      id: '123',
-      documents: [
-        {
-          name: 'PAS Form.pdf',
-          // TODO: Format that this is the final serialized
-          // format of the "timeCreated" property
-          timeCreated: '2020-04-23T22:35:30Z',
-          id: '59fbf112-71a5-4af5-b20a-a746g08c4c6p',
-        },
-        {
-          name: 'Action Changes.excel',
-          timeCreated: '2020-02-21T22:25:10Z',
-          id: 'f0f2f3a3-3936-499b-8f37-a9827a1c14f2',
-        },
-      ],
-    };
+    this.server.create('package', 'withExistingDocuments', { id: '123' });
+
+    const store = this.owner.lookup('service:store');
+    this.package = await store.findRecord('package', '123');
 
     await render(hbs`<
       Packages::Attachments
