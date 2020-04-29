@@ -3,9 +3,9 @@
 <hr class="large-margin-bottom">
 
 {{!-- Load appropriate form component for the type of package being edited --}}
-{{#if (eq model.dcpPackagetype "PAS Package")}}
+{{#if (eq this.model.dcpPackagetype "PAS Package")}}
   <PasForm
-    @package={{model}}
+    @package={{this.model}}
     @save={{this.save}}
     @submit={{this.submit}}
   />
