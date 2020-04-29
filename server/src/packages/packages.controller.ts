@@ -1,6 +1,7 @@
-import { Controller, Get, Param, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Param, UseInterceptors, Patch, Body, Session, HttpException, HttpStatus, UsePipes } from '@nestjs/common';
 import { PackagesService } from './packages.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
+import { JsonApiDeserializePipe } from '../json-api-deserialize.pipe';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('packages', {
   id: 'dcp_packageid',
@@ -129,12 +130,23 @@ import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
     };
   },
 }))
-@Controller('packages')
+@UsePipes(JsonApiDeserializePipe)
+@Controller()
 export class PackagesController {
   constructor(private readonly packagesService: PackagesService) {}
 
-  @Get('/:id')
-  packages(@Param('id') id) {
+  @Get('/packages/:id')
+  getPackage(@Param('id') id) {
     return this.packagesService.getPackage(id);
+  }
+
+  @Patch('/packages/:id')
+  patchPackage(@Body() body, @Param('id') id, @Session() session) {
+    // TODO: find a stronger check for authentication. perhaps a service method
+    // that encapsulates the "authorized editor" lookup logic, ie who are the
+    // assigned applicant team members. ALSO use a "guard"
+    if (!session.contactId) throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+
+    return body;
   }
 }
