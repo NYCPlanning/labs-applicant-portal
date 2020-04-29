@@ -16,7 +16,7 @@
         <strong>Project Name</strong>
         <Input
           @type="text"
-          @value={{this.dcp_revisedprojectname}}
+          @value={{this.dcpRevisedprojectname}}
         />
       </label>
     </section>
@@ -36,7 +36,7 @@
 
       <label>
         <strong>Description of geography</strong>
-        <Textarea @value={{this.dcp_descriptionofprojectareageography}} rows="5" />
+        <Textarea @value={{this.dcpDescriptionofprojectareageography}} rows="5" />
       </label>
     </section>
 
@@ -68,22 +68,22 @@
         </legend>
         <Input
           @type="radio"
-          @name="dcp_proposedprojectorportionconstruction"
+          @name="dcpProposedprojectorportionconstruction"
           @value='717170000'
-          id="dcp_proposedprojectorportionconstruction_yes"
-        /><label for="dcp_proposedprojectorportionconstruction_yes">Yes</label>
+          id="dcpProposedprojectorportionconstructionYes"
+        /><label for="dcpProposedprojectorportionconstructionYes">Yes</label>
         <Input
           @type="radio"
-          @name="dcp_proposedprojectorportionconstruction"
+          @name="dcpProposedprojectorportionconstruction"
           @value='717170001'
-          id="dcp_proposedprojectorportionconstruction_no"
-        /><label for="dcp_proposedprojectorportionconstruction_no">No</label>
+          id="dcpProposedprojectorportionconstructionNo"
+        /><label for="dcpProposedprojectorportionconstructionNo">No</label>
         <Input
           @type="radio"
-          @name="dcp_proposedprojectorportionconstruction"
+          @name="dcpProposedprojectorportionconstruction"
           @value='717170002'
-          id="dcp_proposedprojectorportionconstruction_unsure"
-        /><label for="dcp_proposedprojectorportionconstruction_unsure">Unsure at this time</label>
+          id="dcpProposedprojectorportionconstructionUnsure"
+        /><label for="dcpProposedprojectorportionconstructionUnsure">Unsure at this time</label>
       </fieldset>
 
       <fieldset class="medium-margin-bottom">
@@ -93,30 +93,30 @@
         </legend>
         <Input
           @type="radio"
-          @name="dcp_urbanrenewalarea"
+          @name="dcpUrbanrenewalarea"
           @value='717170000'
-          id="dcp_urbanrenewalarea_yes"
-        /><label for="dcp_urbanrenewalarea_yes">Yes</label>
+          id="dcpUrbanrenewalareaYes"
+        /><label for="dcpUrbanrenewalareaYes">Yes</label>
         <Input
           @type="radio"
-          @name="dcp_urbanrenewalarea"
+          @name="dcpUrbanrenewalarea"
           @value='717170001'
-          id="dcp_urbanrenewalarea_no"
-        /><label for="dcp_urbanrenewalarea_no">No</label>
+          id="dcpUrbanrenewalareaNo"
+        /><label for="dcpUrbanrenewalareaNo">No</label>
         <Input
           @type="radio"
-          @name="dcp_urbanrenewalarea"
+          @name="dcpUrbanrenewalarea"
           @value='717170002'
-          id="dcp_urbanrenewalarea_unsure"
-        /><label for="dcp_urbanrenewalarea_unsure">Unsure at this time</label>
+          id="dcpUrbanrenewalareaUnsure"
+        /><label for="dcpUrbanrenewalareaUnsure">Unsure at this time</label>
       </fieldset>
 
-      {{#if this.dcp_urbanrenewalarea}}
+      {{#if this.dcpUrbanrenewalarea}}
         <label>
           <strong>What is the name of the Urban Renewal Area?</strong>
           <Input
           @type="text"
-          @value={{this.dcp_urbanareaname}}
+          @value={{this.dcpUrbanareaname}}
         />
         </label>
       {{/if}}
@@ -129,42 +129,42 @@
         <span class="nowrap">
           <Input
             @type="radio"
-            @name="dcp_legalstreetfrontage"
+            @name="dcpLegalstreetfrontage"
             @value='717170000'
-            id="dcp_legalstreetfrontage_717170000"
-          /><label for="dcp_legalstreetfrontage_717170000">Mapped and Build</label>
+            id="dcpLegalstreetfrontage717170000"
+          /><label for="dcpLegalstreetfrontage717170000">Mapped and Build</label>
         </span>
         <span class="nowrap">
           <Input
             @type="radio"
-            @name="dcp_legalstreetfrontage"
+            @name="dcpLegalstreetfrontage"
             @value='717170001'
-            id="dcp_legalstreetfrontage_717170001"
-          /><label for="dcp_legalstreetfrontage_717170001">Private Road</label>
+            id="dcpLegalstreetfrontage717170001"
+          /><label for="dcpLegalstreetfrontage717170001">Private Road</label>
         </span>
         <span class="nowrap">
           <Input
             @type="radio"
-            @name="dcp_legalstreetfrontage"
+            @name="dcpLegalstreetfrontage"
             @value='717170002'
-            id="dcp_legalstreetfrontage_717170002"
-          /><label for="dcp_legalstreetfrontage_717170002">Record Street</label>
+            id="dcpLegalstreetfrontage717170002"
+          /><label for="dcpLegalstreetfrontage717170002">Record Street</label>
         </span>
         <span class="nowrap">
           <Input
             @type="radio"
-            @name="dcp_legalstreetfrontage"
+            @name="dcpLegalstreetfrontage"
             @value='717170003'
-            id="dcp_legalstreetfrontage_717170003"
-          /><label for="dcp_legalstreetfrontage_717170003">Corporation Counsel Opinion</label>
+            id="dcpLegalstreetfrontage717170003"
+          /><label for="dcpLegalstreetfrontage717170003">Corporation Counsel Opinion</label>
         </span>
         <span class="nowrap">
           <Input
             @type="radio"
-            @name="dcp_legalstreetfrontage"
+            @name="dcpLegalstreetfrontage"
             @value='717170004'
-            id="dcp_legalstreetfrontage_717170004"
-          /><label for="dcp_legalstreetfrontage_717170004">Mapped but not Build</label>
+            id="dcpLegalstreetfrontage717170004"
+          /><label for="dcpLegalstreetfrontage717170004">Mapped but not Build</label>
         </span>
       </fieldset>
 
@@ -175,30 +175,30 @@
         </legend>
         <Input
           @type="radio"
-          @name="dcp_landuseactiontype2"
+          @name="dcpLanduseactiontype2"
           @value='717170000'
-          id="dcp_landuseactiontype2_yes"
-        /><label for="dcp_landuseactiontype2_yes">Yes</label>
+          id="dcpLanduseactiontype2Yes"
+        /><label for="dcpLanduseactiontype2Yes">Yes</label>
         <Input
           @type="radio"
-          @name="dcp_landuseactiontype2"
+          @name="dcpLanduseactiontype2"
           @value='717170001'
-          id="dcp_landuseactiontype2_no"
-        /><label for="dcp_landuseactiontype2_no">No</label>
+          id="dcpLanduseactiontype2No"
+        /><label for="dcpLanduseactiontype2No">No</label>
         <Input
           @type="radio"
-          @name="dcp_landuseactiontype2"
+          @name="dcpLanduseactiontype2"
           @value='717170002'
-          id="dcp_landuseactiontype2_unsure"
-        /><label for="dcp_landuseactiontype2_unsure">Unsure at this time</label>
+          id="dcpLanduseactiontype2Unsure"
+        /><label for="dcpLanduseactiontype2Unsure">Unsure at this time</label>
       </fieldset>
 
-      {{#if this.dcp_landuseactiontype2}}
+      {{#if this.dcpLanduseactiontype2}}
         <label>
           <strong>Indicate which SEQRA or CEQR category each action fulfills</strong>
           <Input
             @type="text"
-            @value={{this.dcp_pleaseexplaintypeiienvreview}}
+            @value={{this.dcpPleaseexplaintypeiienvreview}}
           />
         </label>
       {{/if}}
@@ -210,24 +210,24 @@
         </legend>
         <Input
           @type="radio"
-          @name="dcp_projectareaindustrialbusinesszone"
+          @name="dcpProjectareaindustrialbusinesszone"
           @value={{true}}
-          id="dcp_projectareaindustrialbusinesszone_yes"
-        /><label for="dcp_projectareaindustrialbusinesszone_yes">Yes</label>
+          id="dcpProjectareaindustrialbusinesszoneYes"
+        /><label for="dcpProjectareaindustrialbusinesszoneYes">Yes</label>
         <Input
           @type="radio"
-          @name="dcp_projectareaindustrialbusinesszone"
+          @name="dcpProjectareaindustrialbusinesszone"
           @value=false
-          id="dcp_projectareaindustrialbusinesszone_no"
-        /><label for="dcp_projectareaindustrialbusinesszone_no">No</label>
+          id="dcpProjectareaindustrialbusinesszoneNo"
+        /><label for="dcpProjectareaindustrialbusinesszoneNo">No</label>
       </fieldset>
 
-      {{#if this.dcp_projectareaindustrialbusinesszone}}
+      {{#if this.dcpProjectareaindustrialbusinesszone}}
         <label>
           <strong>Name of Industrial Business Zone</strong>
           <Input
             @type="text"
-            @value={{this.dcp_projectareaindutrialzonename}}
+            @value={{this.dcpProjectareaindutrialzonename}}
           />
         </label>
       {{/if}}
@@ -239,24 +239,24 @@
         </legend>
         <Input
           @type="radio"
-          @name="dcp_isprojectarealandmark"
+          @name="dcpIsprojectarealandmark"
           @value={{true}}
-          id="dcp_isprojectarealandmark_yes"
-        /><label for="dcp_isprojectarealandmark_yes">Yes</label>
+          id="dcpIsprojectarealandmarkYes"
+        /><label for="dcpIsprojectarealandmarkYes">Yes</label>
         <Input
           @type="radio"
-          @name="dcp_isprojectarealandmark"
+          @name="dcpIsprojectarealandmark"
           @value=false
-          id="dcp_isprojectarealandmark_no"
-        /><label for="dcp_isprojectarealandmark_no">No</label>
+          id="dcpIsprojectarealandmarkNo"
+        /><label for="dcpIsprojectarealandmarkNo">No</label>
       </fieldset>
 
-      {{#if this.dcp_isprojectarealandmark}}
+      {{#if this.dcpIsprojectarealandmark}}
         <label>
           <strong>Name of Landmark or Historic District</strong>
           <Input
             @type="text"
-            @value={{this.dcp_projectarealandmarkname}}
+            @value={{this.dcpProjectarealandmarkname}}
           />
         </label>
       {{/if}}
@@ -268,16 +268,16 @@
         </legend>
         <Input
           @type="radio"
-          @name="dcp_projectareacoastalzonelocatedin"
+          @name="dcpProjectareacoastalzonelocatedin"
           @value={{true}}
-          id="dcp_projectareacoastalzonelocatedin_yes"
-        /><label for="dcp_projectareacoastalzonelocatedin_yes">Yes</label>
+          id="dcpProjectareacoastalzonelocatedinYes"
+        /><label for="dcpProjectareacoastalzonelocatedinYes">Yes</label>
         <Input
           @type="radio"
-          @name="dcp_projectareacoastalzonelocatedin"
+          @name="dcpProjectareacoastalzonelocatedin"
           @value=false
-          id="dcp_projectareacoastalzonelocatedin_no"
-        /><label for="dcp_projectareacoastalzonelocatedin_no">No</label>
+          id="dcpProjectareacoastalzonelocatedinNo"
+        /><label for="dcpProjectareacoastalzonelocatedinNo">No</label>
       </fieldset>
 
       <fieldset class="medium-margin-bottom">
@@ -287,22 +287,22 @@
         </legend>
         <Input
           @type="radio"
-          @name="dcp_projectareaischancefloodplain"
+          @name="dcpProjectareaischancefloodplain"
           @value='717170000'
-          id="dcp_projectareaischancefloodplain_yes"
-        /><label for="dcp_projectareaischancefloodplain_yes">Yes</label>
+          id="dcpProjectareaischancefloodplainYes"
+        /><label for="dcpProjectareaischancefloodplainYes">Yes</label>
         <Input
           @type="radio"
-          @name="dcp_projectareaischancefloodplain"
+          @name="dcpProjectareaischancefloodplain"
           @value='717170001'
-          id="dcp_projectareaischancefloodplain_no"
-        /><label for="dcp_projectareaischancefloodplain_no">No</label>
+          id="dcpProjectareaischancefloodplainNo"
+        /><label for="dcpProjectareaischancefloodplainNo">No</label>
         <Input
           @type="radio"
-          @name="dcp_projectareaischancefloodplain"
+          @name="dcpProjectareaischancefloodplain"
           @value='717170002'
-          id="dcp_projectareaischancefloodplain_unsure"
-        /><label for="dcp_projectareaischancefloodplain_unsure">Unsure at this time</label>
+          id="dcpProjectareaischancefloodplainUnsure"
+        /><label for="dcpProjectareaischancefloodplainUnsure">Unsure at this time</label>
       </fieldset>
 
       <fieldset class="medium-margin-bottom">
@@ -312,23 +312,23 @@
         </legend>
         <Input
           @type="radio"
-          @name="dcp_restrictivedeclaration"
+          @name="dcpRestrictivedeclaration"
           @value={{true}}
-          id="dcp_restrictivedeclaration_yes"
-        /><label for="dcp_restrictivedeclaration_yes">Yes</label>
+          id="dcpRestrictivedeclarationYes"
+        /><label for="dcpRestrictivedeclarationYes">Yes</label>
         <Input
           @type="radio"
-          @name="dcp_restrictivedeclaration"
+          @name="dcpRestrictivedeclaration"
           @value=false
-          id="dcp_restrictivedeclaration_no"
-        /><label for="dcp_restrictivedeclaration_no">No</label>
+          id="dcpRestrictivedeclarationNo"
+        /><label for="dcpRestrictivedeclarationNo">No</label>
       </fieldset>
 
       <label>
         <strong>City Register File Number</strong>
         <Input
           @type="text"
-          @value={{this.dcp_cityregisterfilenumber}}
+          @value={{this.dcpCityregisterfilenumber}}
         />
       </label>
 
@@ -338,22 +338,22 @@
         </legend>
         <Input
           @type="radio"
-          @name="dcp_restrictivedeclarationrequired"
+          @name="dcpRestrictivedeclarationrequired"
           @value='717170000'
-          id="dcp_restrictivedeclarationrequired_yes"
-        /><label for="dcp_restrictivedeclarationrequired_yes">Yes</label>
+          id="dcpRestrictivedeclarationrequiredYes"
+        /><label for="dcpRestrictivedeclarationrequiredYes">Yes</label>
         <Input
           @type="radio"
-          @name="dcp_restrictivedeclarationrequired"
+          @name="dcpRestrictivedeclarationrequired"
           @value='717170001'
-          id="dcp_restrictivedeclarationrequired_no"
-        /><label for="dcp_restrictivedeclarationrequired_no">No</label>
+          id="dcpRestrictivedeclarationrequiredNo"
+        /><label for="dcpRestrictivedeclarationrequiredNo">No</label>
         <Input
           @type="radio"
-          @name="dcp_restrictivedeclarationrequired"
+          @name="dcpRestrictivedeclarationrequired"
           @value='717170002'
-          id="dcp_restrictivedeclarationrequired_unsure"
-        /><label for="dcp_restrictivedeclarationrequired_unsure">Unsure at this time</label>
+          id="dcpRestrictivedeclarationrequiredUnsure"
+        /><label for="dcpRestrictivedeclarationrequiredUnsure">Unsure at this time</label>
       </fieldset>
 
     </section>
@@ -367,7 +367,7 @@
       <label>
         <strong>In what year do you expect the development to complete?</strong>
         <Input
-          @type="text" @value={{this.dcp_estimatedcompletiondate}}
+          @type="text" @value={{this.dcpEstimatedcompletiondate}}
         />
         {{!-- TODO: Do we need a date picker here? --}}
       </label>
@@ -380,53 +380,53 @@
           <li>
             <Input
               @type="checkbox"
-              id="dcp_proposeddevelopmentsitenewconstruction"
-            /><label for="dcp_proposeddevelopmentsitenewconstruction">Newly constructed buildings</label>
+              id="dcpProposeddevelopmentsitenewconstruction"
+            /><label for="dcpProposeddevelopmentsitenewconstruction">Newly constructed buildings</label>
           </li>
           <li>
             <Input
               @type="checkbox"
-              id="dcp_proposeddevelopmentsitedemolition"
-            /><label for="dcp_proposeddevelopmentsitedemolition">Demolition</label>
+              id="dcpProposeddevelopmentsitedemolition"
+            /><label for="dcpProposeddevelopmentsitedemolition">Demolition</label>
           </li>
           <li>
             <Input
               @type="checkbox"
-              id="dcp_proposeddevelopmentsiteinfoalteration"
-            /><label for="dcp_proposeddevelopmentsiteinfoalteration">Alteration</label>
+              id="dcpProposeddevelopmentsiteinfoalteration"
+            /><label for="dcpProposeddevelopmentsiteinfoalteration">Alteration</label>
           </li>
           <li>
             <Input
               @type="checkbox"
-              id="dcp_proposeddevelopmentsiteinfoaddition"
-            /><label for="dcp_proposeddevelopmentsiteinfoaddition">Addition</label>
+              id="dcpProposeddevelopmentsiteinfoaddition"
+            /><label for="dcpProposeddevelopmentsiteinfoaddition">Addition</label>
           </li>
           <li>
             <Input
               @type="checkbox"
-              id="dcp_proposeddevelopmentsitechnageofuse"
-            /><label for="dcp_proposeddevelopmentsitechnageofuse">Change of use</label>
+              id="dcpProposeddevelopmentsitechnageofuse"
+            /><label for="dcpProposeddevelopmentsitechnageofuse">Change of use</label>
           </li>
           <li>
             <Input
               @type="checkbox"
-              id="dcp_proposeddevelopmentsiteenlargement"
-            /><label for="dcp_proposeddevelopmentsiteenlargement">Enlargement</label>
+              id="dcpProposeddevelopmentsiteenlargement"
+            /><label for="dcpProposeddevelopmentsiteenlargement">Enlargement</label>
           </li>
           <li>
             <Input
               @type="checkbox"
-              id="dcp_proposeddevelopmentsiteinfoother"
-            /><label for="dcp_proposeddevelopmentsiteinfoother">Other&hellip;</label>
+              id="dcpProposeddevelopmentsiteinfoother"
+            /><label for="dcpProposeddevelopmentsiteinfoother">Other&hellip;</label>
           </li>
         </ul>
       </fieldset>
 
-      {{#if this.dcp_proposeddevelopmentsiteinfoother}}
+      {{#if this.dcpProposeddevelopmentsiteinfoother}}
         <label>Explain:
           <Input
             @type="text"
-            @value={{this.dcp_proposeddevelopmentsiteotherexplanation}}
+            @value={{this.dcpProposeddevelopmentsiteotherexplanation}}
           />
         </label>
       {{/if}}
@@ -438,28 +438,28 @@
         </legend>
         <Input
           @type="radio"
-          @name="dcp_isinclusionaryhousingdesignatedarea"
+          @name="dcpIsinclusionaryhousingdesignatedarea"
           @value={{true}}
-          id="dcp_isinclusionaryhousingdesignatedarea_yes"
-        /><label for="dcp_isinclusionaryhousingdesignatedarea_yes">Yes</label>
+          id="dcpIsinclusionaryhousingdesignatedareaYes"
+        /><label for="dcpIsinclusionaryhousingdesignatedareaYes">Yes</label>
         <Input
           @type="radio"
-          @name="dcp_isinclusionaryhousingdesignatedarea"
+          @name="dcpIsinclusionaryhousingdesignatedarea"
           @value=false
-          id="dcp_isinclusionaryhousingdesignatedarea_no"
-        /><label for="dcp_isinclusionaryhousingdesignatedarea_no">No</label>
+          id="dcpIsinclusionaryhousingdesignatedareaNo"
+        /><label for="dcpIsinclusionaryhousingdesignatedareaNo">No</label>
         <p class="help-text">
           Refer to <a  href="#">Appendix F</a> of the Zoning Resolution for full list of all inclusionary housing areas which are areas that incentivize or require affordable housing in certain areas.
           {{!-- TODO: add link --}}
         </p>
       </fieldset>
 
-      {{#if this.dcp_isinclusionaryhousingdesignatedarea}}
+      {{#if this.dcpIsinclusionaryhousingdesignatedarea}}
         <label>
           <strong>Name of Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area</strong>
           <Input
             @type="text"
-            @value={{this.dcp_inclusionaryhousingdesignatedareaname}}
+            @value={{this.dcpInclusionaryhousingdesignatedareaname}}
           />
         </label>
       {{/if}}
@@ -470,53 +470,53 @@
         </legend>
         <Input
           @type="radio"
-          @name="dcp_discressionaryfundingforffordablehousing"
+          @name="dcpDiscressionaryfundingforffordablehousing"
           @value='717170000'
-          id="dcp_discressionaryfundingforffordablehousing_yes"
-        /><label for="dcp_discressionaryfundingforffordablehousing_yes">Yes</label>
+          id="dcpDiscressionaryfundingforffordablehousingYes"
+        /><label for="dcpDiscressionaryfundingforffordablehousingYes">Yes</label>
         <Input
           @type="radio"
-          @name="dcp_discressionaryfundingforffordablehousing"
+          @name="dcpDiscressionaryfundingforffordablehousing"
           @value='717170001'
-          id="dcp_discressionaryfundingforffordablehousing_no"
-        /><label for="dcp_discressionaryfundingforffordablehousing_no">No</label>
+          id="dcpDiscressionaryfundingforffordablehousingNo"
+        /><label for="dcpDiscressionaryfundingforffordablehousingNo">No</label>
         <Input
           @type="radio"
-          @name="dcp_discressionaryfundingforffordablehousing"
+          @name="dcpDiscressionaryfundingforffordablehousing"
           @value='717170002'
-          id="dcp_discressionaryfundingforffordablehousing_unsure"
-        /><label for="dcp_discressionaryfundingforffordablehousing_unsure">Unsure at this time</label>
+          id="dcpDiscressionaryfundingforffordablehousingUnsure"
+        /><label for="dcpDiscressionaryfundingforffordablehousingUnsure">Unsure at this time</label>
       </fieldset>
 
-      {{#if this.dcp_discressionaryfundingforffordablehousing}}
+      {{#if this.dcpDiscressionaryfundingforffordablehousing}}
         <fieldset class="medium-margin-bottom">
           <legend>
             <strong>Funding source</strong>
           </legend>
           <Input
             @type="radio"
-            @name="dcp_housingunittype"
+            @name="dcpHousingunittype"
             @value='717170000'
-            id="dcp_housingunittype_city"
-          /><label for="dcp_housingunittype_city">City</label>
+            id="dcpHousingunittypeCity"
+          /><label for="dcpHousingunittypeCity">City</label>
           <Input
             @type="radio"
-            @name="dcp_housingunittype"
+            @name="dcpHousingunittype"
             @value='717170001'
-            id="dcp_housingunittype_state"
-          /><label for="dcp_housingunittype_state">State</label>
+            id="dcpHousingunittypeState"
+          /><label for="dcpHousingunittypeState">State</label>
           <Input
             @type="radio"
-            @name="dcp_housingunittype"
+            @name="dcpHousingunittype"
             @value='717170002'
-            id="dcp_housingunittype_federal"
-          /><label for="dcp_housingunittype_federal">Federal</label>
+            id="dcpHousingunittypeFederal"
+          /><label for="dcpHousingunittypeFederal">Federal</label>
           <Input
             @type="radio"
-            @name="dcp_housingunittype"
+            @name="dcpHousingunittype"
             @value='717170003'
-            id="dcp_housingunittype_other"
-          /><label for="dcp_housingunittype_other">Other</label>
+            id="dcpHousingunittypeOther"
+          /><label for="dcpHousingunittypeOther">Other</label>
         </fieldset>
       {{/if}}
     </section>
@@ -526,32 +526,32 @@
 
       <label>
         <strong>Description of the proposed development being facilitated by the land use actions</strong>
-        <Textarea @value={{this.dcp_projectdescriptionproposeddevelopment}} rows="5" />
+        <Textarea @value={{this.dcpProjectdescriptionproposeddevelopment}} rows="5" />
       </label>
 
       <label>
         <strong>Why is this application being proposed? What is the legal, environmental, or land use background?</strong>
-        <Textarea @value={{this.dcp_projectdescriptionbackground}} rows="5" />
+        <Textarea @value={{this.dcpProjectdescriptionbackground}} rows="5" />
       </label>
 
       <label>
         <strong>What is the land use rationale for all the proposed actions?</strong>
-        <Textarea @value={{this.dcp_projectdescriptionproposedactions}} rows="5" />
+        <Textarea @value={{this.dcpProjectdescriptionproposedactions}} rows="5" />
       </label>
 
       <label>
         <strong>Description of existing land uses and structures in the proposed Project Area and Development Site</strong>
-        <Textarea @value={{this.dcp_projectdescriptionproposedarea}} rows="5" />
+        <Textarea @value={{this.dcpProjectdescriptionproposedarea}} rows="5" />
       </label>
 
       <label>
         <strong>Description of land uses and built context in surrounding area (within 1000 ft)</strong>
-        <Textarea @value={{this.dcp_projectdescriptionsurroundingarea}} rows="5" />
+        <Textarea @value={{this.dcpProjectdescriptionsurroundingarea}} rows="5" />
       </label>
 
       <label>
         <strong>Description of proposed CEQR scope</strong>
-        <Textarea @value={{this.dcp_projectattachmentsotherinformation}} rows="5" />
+        <Textarea @value={{this.dcpProjectattachmentsotherinformation}} rows="5" />
       </label>
       <p class="help-text">
         Include to expedite CEQR guidance: If proposed actions are not approved, what is the applicant’s as-of-right development (CEQR “no-action”) proposal? What would be expected to occur on non-applicant-controlled sites because of the Proposed Actions (CEQR “with-action”)?
