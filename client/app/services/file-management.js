@@ -10,17 +10,24 @@ export default class FileManagementService extends Service {
   // The key to access a File Manager is the respective
   // package ID.
   // REDO: Look into managing this through Package models
-  fileManagers = {}
+  fileManagers = {} // REDO: WeakMap? Map?
 
-  createFileManager(
-    packageId = '',
-    existingFiles = [],
-  ) {
+  findOrCreate(packageId = '', existingFiles = []) {
+    if (this.fileManagers[packageId]) {
+      return this.fileManagers[packageId];
+    }
+
+    return this.registerFileManager(packageId, existingFiles);
+  }
+
+  registerFileManager(packageId, existingFiles) {
+    const fileQueue = this.fileQueue.create(packageId);
+
     this.fileManagers[packageId] = new FileManager(
       packageId,
       existingFiles,
       [],
-      this.fileQueue.create(packageId),
+      fileQueue,
     );
 
     return this.fileManagers[packageId];

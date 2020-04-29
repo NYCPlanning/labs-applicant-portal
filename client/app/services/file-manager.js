@@ -12,12 +12,12 @@ export default class FileManager {
     packageId,
     existingFiles,
     filesToDelete,
-    filesToUpload,
+    filesToUpload, // EmberFileUpload Queue Object
   ) {
     this.packageId = packageId;
     this.existingFiles = existingFiles || [];
     this.filesToDelete = filesToDelete || [];
-    this.filesToUpload = filesToUpload;
+    this.filesToUpload = filesToUpload; // EmberFileUpload QUEUE Object
   }
 
   markFileForDeletion(existingFile) {

@@ -9,16 +9,17 @@ import { action } from '@ember/object';
   * @param      {Package Model}  package
   */
 export default class PackagesAttachmentsComponent extends Component {
-  @service
-  fileManagement;
+  constructor() {
+    super(...arguments);
 
-  get fileManager() {
-    return this.fileManagement.fileManagers[this.args.package.id]
-    || this.fileManagement.createFileManager(
+    this.fileManager = this.fileManagement.findOrCreate(
       this.args.package.id,
       this.args.package.documents,
     );
   }
+
+  @service
+  fileManagement;
 
   @action
   markFileForDeletion(file) {

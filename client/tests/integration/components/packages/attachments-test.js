@@ -5,6 +5,7 @@ import {
   find,
   findAll,
   click,
+  clearRender,
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { selectFiles } from 'ember-file-upload/test-support';
@@ -107,12 +108,6 @@ module('Integration | Component | packages/attachments', function(hooks) {
       ],
     };
 
-    await render(hbs`<
-      Packages::Attachments
-      @package={{this.package}}
-     />`);
-
-
     const file = new File(['foo'], 'PAS Form.pdf', { type: 'text/plain' });
     const file2 = new File(['foo'], 'Action Changes.excel', { type: 'text/plain' });
 
@@ -136,5 +131,32 @@ module('Integration | Component | packages/attachments', function(hooks) {
     await click('[data-test-deselect-file-button="0"]');
 
     await assert.equal(findAll('[data-test-document-to-be-uploaded-name]').length, 0);
+  });
+
+  test('user can return to attachments component and see correct files', async function (assert) {
+    this.package = {
+      id: '123',
+      documents: [
+      ],
+    };
+
+    const file = new File(['foo'], 'PAS Form.pdf', { type: 'text/plain' });
+    const file2 = new File(['foo'], 'Action Changes.excel', { type: 'text/plain' });
+
+    await render(hbs`<
+      Packages::Attachments
+      @package={{this.package}}
+    />`);
+
+    await selectFiles('#FileUploader123 > input', file, file2);
+
+    await clearRender();
+
+    await render(hbs`<
+      Packages::Attachments
+      @package={{this.package}}
+    />`);
+
+    await assert.equal(findAll('[data-test-document-to-be-uploaded-name]').length, 2);
   });
 });
