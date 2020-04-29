@@ -2,8 +2,6 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import {
   render,
-  find,
-  findAll,
   click,
   clearRender,
 } from '@ember/test-helpers';
@@ -42,8 +40,8 @@ module('Integration | Component | packages/attachments', function(hooks) {
       @package={{this.package}}
      />`);
 
-    assert.equal(find('[data-test-document-name="0"]').textContent.trim(), 'PAS Form.pdf');
-    assert.equal(find('[data-test-document-name="1"]').textContent.trim(), 'Action Changes.excel');
+    assert.dom('[data-test-document-name="0"]').hasText('PAS Form.pdf');
+    assert.dom('[data-test-document-name="1"]').hasText('Action Changes.excel');
   });
 
   test('user can mark and unmark an existing document for deletion', async function(assert) {
@@ -70,37 +68,37 @@ module('Integration | Component | packages/attachments', function(hooks) {
       @package={{this.package}}
      />`);
 
-    await assert.equal(findAll('[data-test-document-to-be-deleted-name]').length, 0);
+    await assert.dom('[data-test-document-to-be-deleted-name]').doesNotExist();
 
     // mark a file for deletion
     await click('[data-test-delete-file-button="0"]');
 
-    await assert.equal(findAll('[data-test-document-name]').length, 1);
-    await assert.equal(findAll('[data-test-document-to-be-deleted-name]').length, 1);
-    await assert.equal(find('[data-test-document-to-be-deleted-name]').textContent.trim(), 'PAS Form.pdf');
+    await assert.dom('[data-test-document-name]').exists({ count: 1 });
+    await assert.dom('[data-test-document-to-be-deleted-name]').exists({ count: 1 });
+    await assert.dom('[data-test-document-to-be-deleted-name]').hasText('PAS Form.pdf');
 
     // mark second file for deletion
     await click('[data-test-delete-file-button="0"]');
 
-    await assert.equal(findAll('[data-test-document-name]').length, 0);
-    await assert.equal(findAll('[data-test-document-to-be-deleted-name]').length, 2);
-    await assert.equal(find('[data-test-document-to-be-deleted-name="0"]').textContent.trim(), 'PAS Form.pdf');
-    await assert.equal(find('[data-test-document-to-be-deleted-name="1"]').textContent.trim(), 'Action Changes.excel');
+    await assert.dom('[data-test-document-name]').doesNotExist();
+    await assert.dom('[data-test-document-to-be-deleted-name]').exists({ count: 2 });
+    await assert.dom('[data-test-document-to-be-deleted-name="0"]').hasText('PAS Form.pdf');
+    await assert.dom('[data-test-document-to-be-deleted-name="1"]').hasText('Action Changes.excel');
 
     // unmark a file for deletion
     await click('[data-test-undo-delete-file-button="1"]');
 
-    await assert.equal(findAll('[data-test-document-name]').length, 1);
-    await assert.equal(findAll('[data-test-document-to-be-deleted-name]').length, 1);
-    await assert.equal(find('[data-test-document-name]').textContent.trim(), 'Action Changes.excel');
+    await assert.dom('[data-test-document-name]').exists({ count: 1 });
+    await assert.dom('[data-test-document-to-be-deleted-name]').exists({ count: 1 });
+    await assert.dom('[data-test-document-name]').hasText('Action Changes.excel');
 
     // unmark another file for deletion
     await click('[data-test-undo-delete-file-button="0"]');
 
-    await assert.equal(findAll('[data-test-document-name]').length, 2);
-    await assert.equal(findAll('[data-test-document-to-be-deleted-name]').length, 0);
-    await assert.equal(find('[data-test-document-name="0"]').textContent.trim(), 'Action Changes.excel');
-    await assert.equal(find('[data-test-document-name="1"]').textContent.trim(), 'PAS Form.pdf');
+    await assert.dom('[data-test-document-name]').exists({ count: 2 });
+    await assert.dom('[data-test-document-to-be-deleted-name]').doesNotExist();
+    await assert.dom('[data-test-document-name="0"]').hasText('Action Changes.excel');
+    await assert.dom('[data-test-document-name="1"]').hasText('PAS Form.pdf');
   });
 
   test('user can select and deselect local files for upload', async function(assert) {
@@ -118,21 +116,21 @@ module('Integration | Component | packages/attachments', function(hooks) {
       @package={{this.package}}
     />`);
 
-    await assert.equal(findAll('[data-test-document-to-be-uploaded-name]').length, 0);
+    await assert.dom('[data-test-document-to-be-uploaded-name]').doesNotExist();
 
     await selectFiles('#FileUploader123 > input', file, file2);
 
-    await assert.equal(findAll('[data-test-document-to-be-uploaded-name]').length, 2);
-    await assert.equal(find('[data-test-document-to-be-uploaded-name="0"]').textContent.trim(), 'PAS Form.pdf');
-    await assert.equal(find('[data-test-document-to-be-uploaded-name="1"]').textContent.trim(), 'Action Changes.excel');
+    await assert.dom('[data-test-document-to-be-uploaded-name]').exists({ count: 2 });
+    await assert.dom('[data-test-document-to-be-uploaded-name="0"]').hasText('PAS Form.pdf');
+    await assert.dom('[data-test-document-to-be-uploaded-name="1"]').hasText('Action Changes.excel');
 
     await click('[data-test-deselect-file-button="0"]');
 
-    await assert.equal(findAll('[data-test-document-to-be-uploaded-name]').length, 1);
+    await assert.dom('[data-test-document-to-be-uploaded-name]').exists({ count: 1 });
 
     await click('[data-test-deselect-file-button="0"]');
 
-    await assert.equal(findAll('[data-test-document-to-be-uploaded-name]').length, 0);
+    await assert.dom('[data-test-document-to-be-uploaded-name]').doesNotExist();
   });
 
   test('user can return to attachments component and see correct files', async function (assert) {
@@ -159,7 +157,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
       @package={{this.package}}
     />`);
 
-    await assert.equal(findAll('[data-test-document-to-be-uploaded-name]').length, 2);
+    await assert.dom('[data-test-document-to-be-uploaded-name]').exists({ count: 2 });
   });
 
   test('fileManager.save() will upload and delete files, then reset to-be-uploaded/deleted lists', async function (assert) {
@@ -196,17 +194,17 @@ module('Integration | Component | packages/attachments', function(hooks) {
 
     const fileManager = this.owner.lookup('service:fileManagement').fileManagers['123'];
 
-    await assert.equal(findAll('[data-test-document-name]').length, 0);
-    await assert.equal(findAll('[data-test-document-to-be-deleted-name]').length, 2);
-    await assert.equal(find('[data-test-document-to-be-deleted-name="0"]').textContent.trim(), 'PAS Form.pdf');
-    await assert.equal(find('[data-test-document-to-be-deleted-name="1"]').textContent.trim(), 'Action Changes.excel');
-    await assert.equal(findAll('[data-test-document-to-be-uploaded-name]').length, 2);
-    await assert.equal(find('[data-test-document-to-be-uploaded-name="0"]').textContent.trim(), 'Zoning Application.pdf');
-    await assert.equal(find('[data-test-document-to-be-uploaded-name="1"]').textContent.trim(), 'RWCDS.excel');
+    await assert.dom('[data-test-document-name]').doesNotExist();
+    await assert.dom('[data-test-document-to-be-deleted-name]').exists({ count: 2 });
+    await assert.dom('[data-test-document-to-be-deleted-name="0"]').hasText('PAS Form.pdf');
+    await assert.dom('[data-test-document-to-be-deleted-name="1"]').hasText('Action Changes.excel');
+    await assert.dom('[data-test-document-to-be-uploaded-name]').exists({ count: 2 });
+    await assert.dom('[data-test-document-to-be-uploaded-name="0"]').hasText('Zoning Application.pdf');
+    await assert.dom('[data-test-document-to-be-uploaded-name="1"]').hasText('RWCDS.excel');
 
     await fileManager.save();
 
-    await assert.equal(findAll('[data-test-document-to-be-deleted-name]').length, 0);
-    await assert.equal(findAll('[data-test-document-to-be-uploaded-name]').length, 0);
+    await assert.dom('[data-test-document-to-be-deleted-name]').doesNotExist();
+    await assert.dom('[data-test-document-to-be-uploaded-name]').doesNotExist();
   });
 });
