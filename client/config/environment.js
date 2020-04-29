@@ -28,6 +28,12 @@ module.exports = function(environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
+
+    'labs-search': {
+      host: 'https://search-api.planninglabs.nyc',
+      route: 'search',
+      helpers: ['geosearch', 'bbl'],
+    },
   };
 
   if (environment === 'development') {
