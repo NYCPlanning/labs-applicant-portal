@@ -35,7 +35,7 @@ export default class FileManager {
   }
 
   uploadFiles() {
-    return this.filesToUpload.files.map((file) => file.upload(`${ENV.host}/document`, {
+    return Promise.all(this.filesToUpload.files.map((file) => file.upload(`${ENV.host}/document`, {
       fileKey: 'file',
       withCredentials: true,
       data: {
@@ -46,7 +46,7 @@ export default class FileManager {
         // remove `entityName` after deprecating it from the backend
         entityName: 'dcp_package',
       },
-    }));
+    })));
   }
 
   deleteFiles() {
@@ -55,14 +55,14 @@ export default class FileManager {
     // TODO: If this is not possible, rework this to be a
     // POST request to a differently named endpoint, like
     // deleteDocument
-    return this.filesToDelete.map((file) => fetch(
+    return Promise.all(this.filesToDelete.map((file) => fetch(
       `${ENV.host}/document/${file.id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
         },
       },
-    ));
+    )));
   }
 
   async save() {

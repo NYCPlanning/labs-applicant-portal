@@ -8,6 +8,7 @@ import {
   clearRender,
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 import { selectFiles } from 'ember-file-upload/test-support';
 
 // TODO:
@@ -15,6 +16,7 @@ import { selectFiles } from 'ember-file-upload/test-support';
 //   - Use server.create and store.findAll to set up test data
 module('Integration | Component | packages/attachments', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it displays a list attachments already uploaded to the package', async function(assert) {
     this.package = {
@@ -158,5 +160,53 @@ module('Integration | Component | packages/attachments', function(hooks) {
     />`);
 
     await assert.equal(findAll('[data-test-document-to-be-uploaded-name]').length, 2);
+  });
+
+  test('fileManager.save() will upload and delete files, then reset to-be-uploaded/deleted lists', async function (assert) {
+    this.package = {
+      id: '123',
+      documents: [
+        {
+          name: 'PAS Form.pdf',
+          // TODO: Format that this is the final serialized
+          // format of the "timeCreated" property
+          timeCreated: '2020-04-23T22:35:30Z',
+          id: '59fbf112-71a5-4af5-b20a-a746g08c4c6p',
+        },
+        {
+          name: 'Action Changes.excel',
+          timeCreated: '2020-02-21T22:25:10Z',
+          id: 'f0f2f3a3-3936-499b-8f37-a9827a1c14f2',
+        },
+      ],
+    };
+
+    await render(hbs`<
+      Packages::Attachments
+      @package={{this.package}}
+    />`);
+
+    await click('[data-test-delete-file-button="0"]');
+    await click('[data-test-delete-file-button="0"]');
+
+    const file = new File(['foo'], 'Zoning Application.pdf', { type: 'text/plain' });
+    const file2 = new File(['foo'], 'RWCDS.excel', { type: 'text/plain' });
+
+    await selectFiles('#FileUploader123 > input', file, file2);
+
+    const fileManager = this.owner.lookup('service:fileManagement').fileManagers['123'];
+
+    await assert.equal(findAll('[data-test-document-name]').length, 0);
+    await assert.equal(findAll('[data-test-document-to-be-deleted-name]').length, 2);
+    await assert.equal(find('[data-test-document-to-be-deleted-name="0"]').textContent.trim(), 'PAS Form.pdf');
+    await assert.equal(find('[data-test-document-to-be-deleted-name="1"]').textContent.trim(), 'Action Changes.excel');
+    await assert.equal(findAll('[data-test-document-to-be-uploaded-name]').length, 2);
+    await assert.equal(find('[data-test-document-to-be-uploaded-name="0"]').textContent.trim(), 'Zoning Application.pdf');
+    await assert.equal(find('[data-test-document-to-be-uploaded-name="1"]').textContent.trim(), 'RWCDS.excel');
+
+    await fileManager.save();
+
+    await assert.equal(findAll('[data-test-document-to-be-deleted-name]').length, 0);
+    await assert.equal(findAll('[data-test-document-to-be-uploaded-name]').length, 0);
   });
 });
