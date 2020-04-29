@@ -380,56 +380,62 @@
           <li>
             <Input
               @type="checkbox"
+              @checked={{@package.dcpProposeddevelopmentsitenewconstruction}}
               id="dcpProposeddevelopmentsitenewconstruction"
             /><label for="dcpProposeddevelopmentsitenewconstruction">Newly constructed buildings</label>
           </li>
           <li>
             <Input
               @type="checkbox"
+              @checked={{@package.dcpProposeddevelopmentsitedemolition}}
               id="dcpProposeddevelopmentsitedemolition"
             /><label for="dcpProposeddevelopmentsitedemolition">Demolition</label>
           </li>
           <li>
             <Input
               @type="checkbox"
+              @checked={{@package.dcpProposeddevelopmentsiteinfoalteration}}
               id="dcpProposeddevelopmentsiteinfoalteration"
             /><label for="dcpProposeddevelopmentsiteinfoalteration">Alteration</label>
           </li>
           <li>
             <Input
               @type="checkbox"
+              @checked={{@package.dcpProposeddevelopmentsiteinfoaddition}}
               id="dcpProposeddevelopmentsiteinfoaddition"
             /><label for="dcpProposeddevelopmentsiteinfoaddition">Addition</label>
           </li>
           <li>
             <Input
               @type="checkbox"
+              @checked={{@package.dcpProposeddevelopmentsitechnageofuse}}
               id="dcpProposeddevelopmentsitechnageofuse"
             /><label for="dcpProposeddevelopmentsitechnageofuse">Change of use</label>
           </li>
           <li>
             <Input
               @type="checkbox"
+              @checked={{@package.dcpProposeddevelopmentsiteenlargement}}
               id="dcpProposeddevelopmentsiteenlargement"
             /><label for="dcpProposeddevelopmentsiteenlargement">Enlargement</label>
           </li>
           <li>
             <Input
               @type="checkbox"
+              @checked={{@package.dcpProposeddevelopmentsiteinfoother}}
               id="dcpProposeddevelopmentsiteinfoother"
             /><label for="dcpProposeddevelopmentsiteinfoother">Other&hellip;</label>
           </li>
         </ul>
+        {{#if @package.dcpProposeddevelopmentsiteinfoother}}
+          <label>Explain:
+            <Input
+              @type="text"
+              @value={{@package.dcpProposeddevelopmentsiteotherexplanation}}
+            />
+          </label>
+        {{/if}}
       </fieldset>
-
-      {{#if @package.dcpProposeddevelopmentsiteinfoother}}
-        <label>Explain:
-          <Input
-            @type="text"
-            @value={{@package.dcpProposeddevelopmentsiteotherexplanation}}
-          />
-        </label>
-      {{/if}}
 
       <fieldset class="medium-margin-bottom">
         <legend>
