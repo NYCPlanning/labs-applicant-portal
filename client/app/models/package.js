@@ -15,4 +15,7 @@ export default class PackageModel extends Model {
 
   @attr('number')
   dcpVisibility;
+
+  @attr()
+  documents;
 }
