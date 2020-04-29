@@ -16,7 +16,7 @@
         <strong>Project Name</strong>
         <Input
           @type="text"
-          @value={{this.dcpRevisedprojectname}}
+          @value={{@package.dcpRevisedprojectname}}
         />
       </label>
     </section>
@@ -36,7 +36,7 @@
 
       <label>
         <strong>Description of geography</strong>
-        <Textarea @value={{this.dcpDescriptionofprojectareageography}} rows="5" />
+        <Textarea @value={{@package.dcpDescriptionofprojectareageography}} rows="5" />
       </label>
     </section>
 
@@ -111,12 +111,12 @@
         /><label for="dcpUrbanrenewalareaUnsure">Unsure at this time</label>
       </fieldset>
 
-      {{#if this.dcpUrbanrenewalarea}}
+      {{#if @package.dcpUrbanrenewalarea}}
         <label>
           <strong>What is the name of the Urban Renewal Area?</strong>
           <Input
           @type="text"
-          @value={{this.dcpUrbanareaname}}
+          @value={{@package.dcpUrbanareaname}}
         />
         </label>
       {{/if}}
@@ -193,12 +193,12 @@
         /><label for="dcpLanduseactiontype2Unsure">Unsure at this time</label>
       </fieldset>
 
-      {{#if this.dcpLanduseactiontype2}}
+      {{#if @package.dcpLanduseactiontype2}}
         <label>
           <strong>Indicate which SEQRA or CEQR category each action fulfills</strong>
           <Input
             @type="text"
-            @value={{this.dcpPleaseexplaintypeiienvreview}}
+            @value={{@package.dcpPleaseexplaintypeiienvreview}}
           />
         </label>
       {{/if}}
@@ -222,12 +222,12 @@
         /><label for="dcpProjectareaindustrialbusinesszoneNo">No</label>
       </fieldset>
 
-      {{#if this.dcpProjectareaindustrialbusinesszone}}
+      {{#if @package.dcpProjectareaindustrialbusinesszone}}
         <label>
           <strong>Name of Industrial Business Zone</strong>
           <Input
             @type="text"
-            @value={{this.dcpProjectareaindutrialzonename}}
+            @value={{@package.dcpProjectareaindutrialzonename}}
           />
         </label>
       {{/if}}
@@ -251,12 +251,12 @@
         /><label for="dcpIsprojectarealandmarkNo">No</label>
       </fieldset>
 
-      {{#if this.dcpIsprojectarealandmark}}
+      {{#if @package.dcpIsprojectarealandmark}}
         <label>
           <strong>Name of Landmark or Historic District</strong>
           <Input
             @type="text"
-            @value={{this.dcpProjectarealandmarkname}}
+            @value={{@package.dcpProjectarealandmarkname}}
           />
         </label>
       {{/if}}
@@ -328,7 +328,7 @@
         <strong>City Register File Number</strong>
         <Input
           @type="text"
-          @value={{this.dcpCityregisterfilenumber}}
+          @value={{@package.dcpCityregisterfilenumber}}
         />
       </label>
 
@@ -367,7 +367,7 @@
       <label>
         <strong>In what year do you expect the development to complete?</strong>
         <Input
-          @type="text" @value={{this.dcpEstimatedcompletiondate}}
+          @type="text" @value={{@package.dcpEstimatedcompletiondate}}
         />
         {{!-- TODO: Do we need a date picker here? --}}
       </label>
@@ -422,11 +422,11 @@
         </ul>
       </fieldset>
 
-      {{#if this.dcpProposeddevelopmentsiteinfoother}}
+      {{#if @package.dcpProposeddevelopmentsiteinfoother}}
         <label>Explain:
           <Input
             @type="text"
-            @value={{this.dcpProposeddevelopmentsiteotherexplanation}}
+            @value={{@package.dcpProposeddevelopmentsiteotherexplanation}}
           />
         </label>
       {{/if}}
@@ -454,12 +454,12 @@
         </p>
       </fieldset>
 
-      {{#if this.dcpIsinclusionaryhousingdesignatedarea}}
+      {{#if @package.dcpIsinclusionaryhousingdesignatedarea}}
         <label>
           <strong>Name of Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area</strong>
           <Input
             @type="text"
-            @value={{this.dcpInclusionaryhousingdesignatedareaname}}
+            @value={{@package.dcpInclusionaryhousingdesignatedareaname}}
           />
         </label>
       {{/if}}
@@ -488,7 +488,7 @@
         /><label for="dcpDiscressionaryfundingforffordablehousingUnsure">Unsure at this time</label>
       </fieldset>
 
-      {{#if this.dcpDiscressionaryfundingforffordablehousing}}
+      {{#if @package.dcpDiscressionaryfundingforffordablehousing}}
         <fieldset class="medium-margin-bottom">
           <legend>
             <strong>Funding source</strong>
@@ -526,32 +526,32 @@
 
       <label>
         <strong>Description of the proposed development being facilitated by the land use actions</strong>
-        <Textarea @value={{this.dcpProjectdescriptionproposeddevelopment}} rows="5" />
+        <Textarea @value={{@package.dcpProjectdescriptionproposeddevelopment}} rows="5" />
       </label>
 
       <label>
         <strong>Why is this application being proposed? What is the legal, environmental, or land use background?</strong>
-        <Textarea @value={{this.dcpProjectdescriptionbackground}} rows="5" />
+        <Textarea @value={{@package.dcpProjectdescriptionbackground}} rows="5" />
       </label>
 
       <label>
         <strong>What is the land use rationale for all the proposed actions?</strong>
-        <Textarea @value={{this.dcpProjectdescriptionproposedactions}} rows="5" />
+        <Textarea @value={{@package.dcpProjectdescriptionproposedactions}} rows="5" />
       </label>
 
       <label>
         <strong>Description of existing land uses and structures in the proposed Project Area and Development Site</strong>
-        <Textarea @value={{this.dcpProjectdescriptionproposedarea}} rows="5" />
+        <Textarea @value={{@package.dcpProjectdescriptionproposedarea}} rows="5" />
       </label>
 
       <label>
         <strong>Description of land uses and built context in surrounding area (within 1000 ft)</strong>
-        <Textarea @value={{this.dcpProjectdescriptionsurroundingarea}} rows="5" />
+        <Textarea @value={{@package.dcpProjectdescriptionsurroundingarea}} rows="5" />
       </label>
 
       <label>
         <strong>Description of proposed CEQR scope</strong>
-        <Textarea @value={{this.dcpProjectattachmentsotherinformation}} rows="5" />
+        <Textarea @value={{@package.dcpProjectattachmentsotherinformation}} rows="5" />
       </label>
       <p class="help-text">
         Include to expedite CEQR guidance: If proposed actions are not approved, what is the applicant’s as-of-right development (CEQR “no-action”) proposal? What would be expected to occur on non-applicant-controlled sites because of the Proposed Actions (CEQR “with-action”)?
@@ -621,10 +621,19 @@
 
     <div class="sticky-sidebar">
       <p>
-        <button type="button" class="button expanded large">
+        <button
+          type="button"
+          class="button expanded large"
+          {{!-- {{on "click" @save}} --}}
+        >
           Save
         </button>
-        <button type="button" class="button expanded large secondary" disabled="">
+        <button
+          type="button"
+          class="button expanded large secondary"
+          {{!-- {{on "click" @submit}} --}}
+          disabled
+        >
           Submit
         </button>
       </p>

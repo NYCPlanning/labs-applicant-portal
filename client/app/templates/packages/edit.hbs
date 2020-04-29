@@ -4,7 +4,12 @@
 
 {{!-- Load appropriate form component for the type of package being edited --}}
 {{#if (eq model.dcpPackagetype "PAS Package")}}
-  <PasForm @package={{model}} />
+  <PasForm
+    @package={{model}}
+    @save={{this.save}}
+    @submit={{this.submit}}
+  />
+  {{!-- TODO: Pass Save/Submit actions to the PASForm --}}
 {{/if}}
 
 {{outlet}}
