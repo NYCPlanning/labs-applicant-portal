@@ -20,6 +20,13 @@
 @import 'modules/_login';
 
 
+.site-header {
+  @include breakpoint(large) {
+    position: sticky;
+    top: 0;
+  }
+}
+
 .form-section {
   & + & {
     border-top: $hr-border;
@@ -28,9 +35,12 @@
   }
 }
 
-.sticky {
-  position: sticky;
-  top: $global-margin*2;
-  max-height: calc(100vh - #{$global-margin*2});
-  overflow: auto;
+$sticky-sidebar-offset: 6rem + rem-calc(20);
+.sticky-sidebar {
+  @include breakpoint(large) {
+    position: sticky;
+    top: $sticky-sidebar-offset;
+    max-height: calc(100vh - #{$sticky-sidebar-offset});
+    overflow: auto;
+  }
 }
