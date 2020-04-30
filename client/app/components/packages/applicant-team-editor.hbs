@@ -9,7 +9,8 @@
     >
       <button
         class="trash-button text-red-dark"
-        onClick={{action this.removeApplicant applicant}}
+        type="button"
+        onClick={{fn this.removeApplicant applicant}}
         data-test-remove-applicant-button
       >
         Remove Applicant
@@ -24,15 +25,17 @@
     </p>
     <p class="button-group">
       <button 
-        {{on "click" (fn this.addApplicant "Applicant") }} 
         class="button secondary"
+        type="button"
+        {{on "click" (fn this.addApplicant "Applicant") }}
         data-test-add-applicant-button
       >
         Add Applicant
       </button>
       <button 
-        {{on "click" (fn this.addApplicant "Applicant Team Member") }} 
         class="button secondary"
+        type="button"
+        {{on "click" (fn this.addApplicant "Applicant Team Member") }}
         data-test-add-applicant-team-member-button
       >
         Add Other Team Member

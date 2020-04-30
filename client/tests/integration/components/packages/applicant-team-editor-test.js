@@ -26,13 +26,13 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
     this.server.create('applicant', 'organizationApplicant');
     this.server.create('applicant', 'individualApplicant');
     this.server.create('applicant', 'applicantTeamMember');
-  
+
     this.applicants = [
       await this.owner.lookup('service:store').findRecord('applicant', 1),
       await this.owner.lookup('service:store').findRecord('applicant', 2),
       await this.owner.lookup('service:store').findRecord('applicant', 3),
     ];
-  
+
     await render(hbs`
       <Packages::ApplicantTeamEditor 
         @applicants={{this.applicants}}
@@ -61,7 +61,6 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
     // can add an applicant team member
     await click('[data-test-add-applicant-team-member-button]');
     assert.dom('[data-test-applicant-type="Applicant Team Member"').exists();
-    
   });
 
   test('user can remove applicants', async function(assert) {
@@ -80,5 +79,5 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
     await click('[data-test-remove-applicant-button');
 
     assert.dom('[data-test-applicant-fieldset="0"]').doesNotExist();
-  })
+  });
 });

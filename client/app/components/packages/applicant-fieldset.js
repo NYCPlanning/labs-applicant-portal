@@ -6,5 +6,5 @@ export default class ApplicantFieldset extends Component {
   @action
   updateAttr(currentObject, attr, newVal) {
     currentObject[attr] = newVal;
-  };
+  }
 }

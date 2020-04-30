@@ -30,7 +30,7 @@ export default function() {
   this.get('/applicants');
   this.get('/applicants/:id');
   this.patch('/applicants/:id');
-  this.post('/applicants')
+  this.post('/applicants');
 
   this.get('/bbls');
   this.get('/bbls/:id');

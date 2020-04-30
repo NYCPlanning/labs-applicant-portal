@@ -6,8 +6,8 @@ module('Unit | Model | applicant', function(hooks) {
 
   // Replace this with your real tests.
   test('it exists', function(assert) {
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('applicant', {});
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('applicant', {});
     assert.ok(model);
   });
 });
