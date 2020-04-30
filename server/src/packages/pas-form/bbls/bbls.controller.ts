@@ -6,7 +6,7 @@ export class BblsController {
   constructor(private readonly pasFormService: PasFormService) { }
 
   @Patch('/:id')
-  patchApplicant(@Body() body, @Param('id') id) {
+  patchBbl(@Body() body, @Param('id') id) {
     return {
       dcp_projectbblid: id,
       ...body,
@@ -14,7 +14,7 @@ export class BblsController {
   }
 
   @Post('/')
-  postApplicant(@Body() body) {
+  postBbl(@Body() body) {
     return {
       ...body,
     }

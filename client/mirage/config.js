@@ -35,7 +35,12 @@ export default function() {
 
   this.get('/bbls');
   this.get('/bbls/:id');
+  this.post('/bbls');
   this.patch('/bbls/:id');
+
+  this.post('/pas-forms');
+  this.post('/packages');
+  this.post('/applicants');
 
   this.post('/document', function(schema, request) {
     // requestBody should be a FormData object
