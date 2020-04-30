@@ -13,6 +13,10 @@
         onClick={{fn this.removeApplicant applicant}}
         data-test-remove-applicant-button
       >
+        <FaIcon 
+          @icon="times"
+          @prefix="fas"
+        />
         Remove Applicant
       </button>
     </Packages::ApplicantFieldset>
