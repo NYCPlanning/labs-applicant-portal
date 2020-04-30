@@ -18,8 +18,6 @@
           @type="text"
           @value={{@package.pasForm.dcpRevisedprojectname}}
         />
-        {{log "pasForm" @package.pasForm}}
-        {{log "dcpRevisedprojectname" @package.pasForm.dcpRevisedprojectname}}
       </label>
     </section>
 
@@ -99,7 +97,7 @@
           id="dcpurbanrenewalarea-yes"
           @value='717170000'
           @checked={{if (eq @package.dcpUrbanrenewalarea "717170000") true}}
-          onClick={{fn this.updateAttr @package "dcpUrbanrenewalarea" "717170000"}}
+          onClick={{fn this.updateAttr @package.pasForm "dcpUrbanrenewalarea" "717170000"}}
           data-test-dcpurbanrenewalarea-yes
         /><label for="dcpurbanrenewalarea-yes">Yes</label>
         <Input
@@ -108,7 +106,7 @@
           id="dcpurbanrenewalarea-no"
           @value='717170001'
           @checked={{if (eq this.dcpUrbanrenewalarea "717170001") true}}
-          onClick={{fn this.updateAttr "dcpUrbanrenewalarea" "717170001"}}
+          onClick={{fn this.updateAttr @package.pasForm "dcpUrbanrenewalarea" "717170001"}}
           data-test-dcpurbanrenewalarea-no
         /><label for="dcpurbanrenewalarea-no">No</label>
         <Input
@@ -117,10 +115,10 @@
           id="dcpurbanrenewalarea-unsure"
           @value='717170002'
           @checked={{if (eq this.dcpUrbanrenewalarea "717170002") true}}
-          onClick={{fn this.updateAttr "dcpUrbanrenewalarea" "717170002"}}
+          onClick={{fn this.updateAttr @package.pasForm "dcpUrbanrenewalarea" "717170002"}}
           data-test-dcpurbanrenewalarea-unsure
         /><label for="dcpurbanrenewalarea-unsure">Unsure at this time</label>
-        {{#if (eq this.dcpUrbanrenewalarea "717170000")}}
+        {{#if (eq @package.pasForm.dcpUrbanrenewalarea "717170000")}}
           <label>
             What is the name of the Urban Renewal Area?
             <Input

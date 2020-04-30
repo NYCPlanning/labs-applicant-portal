@@ -7,6 +7,7 @@ export default class PasFormComponent extends Component {
 
   @action
   updateAttr(obj, attr, newVal) {
+    console.log(...arguments);
     obj[attr] = newVal;
   }
 }
