@@ -94,32 +94,40 @@
         <Input
           @type="radio"
           @name="dcpUrbanrenewalarea"
+          id="dcpurbanrenewalarea-yes"
           @value='717170000'
-          id="dcpUrbanrenewalareaYes"
-        /><label for="dcpUrbanrenewalareaYes">Yes</label>
+          @checked={{if (eq this.dcpUrbanrenewalarea "717170000") true}}
+          onClick={{fn this.updateAttr "dcpUrbanrenewalarea" "717170000"}}
+          data-test-dcpurbanrenewalarea-yes
+        /><label for="dcpurbanrenewalarea-yes">Yes</label>
         <Input
           @type="radio"
           @name="dcpUrbanrenewalarea"
+          id="dcpurbanrenewalarea-no"
           @value='717170001'
-          id="dcpUrbanrenewalareaNo"
-        /><label for="dcpUrbanrenewalareaNo">No</label>
+          @checked={{if (eq this.dcpUrbanrenewalarea "717170001") true}}
+          onClick={{fn this.updateAttr "dcpUrbanrenewalarea" "717170001"}}
+          data-test-dcpurbanrenewalarea-no
+        /><label for="dcpurbanrenewalarea-no">No</label>
         <Input
           @type="radio"
           @name="dcpUrbanrenewalarea"
+          id="dcpurbanrenewalarea-unsure"
           @value='717170002'
-          id="dcpUrbanrenewalareaUnsure"
-        /><label for="dcpUrbanrenewalareaUnsure">Unsure at this time</label>
+          @checked={{if (eq this.dcpUrbanrenewalarea "717170002") true}}
+          onClick={{fn this.updateAttr "dcpUrbanrenewalarea" "717170002"}}
+          data-test-dcpurbanrenewalarea-unsure
+        /><label for="dcpurbanrenewalarea-unsure">Unsure at this time</label>
+        {{#if (eq this.dcpUrbanrenewalarea "717170000")}}
+          <label>
+            What is the name of the Urban Renewal Area?
+            <Input
+            @type="text"
+            @value={{@package.dcpUrbanareaname}}
+          />
+          </label>
+        {{/if}}
       </fieldset>
-
-      {{#if @package.dcpUrbanrenewalarea}}
-        <label>
-          <strong>What is the name of the Urban Renewal Area?</strong>
-          <Input
-          @type="text"
-          @value={{@package.dcpUrbanareaname}}
-        />
-        </label>
-      {{/if}}
 
       <fieldset class="medium-margin-bottom">
         <legend>
@@ -176,32 +184,40 @@
         <Input
           @type="radio"
           @name="dcpLanduseactiontype2"
+          id="dcplanduseactiontype2-yes"
           @value='717170000'
-          id="dcpLanduseactiontype2Yes"
-        /><label for="dcpLanduseactiontype2Yes">Yes</label>
+          @checked={{if (eq this.dcpLanduseactiontype2 "717170000") true}}
+          onClick={{fn this.updateAttr "dcpLanduseactiontype2" "717170000"}}
+          data-test-dcplanduseactiontype2-yes
+        /><label for="dcplanduseactiontype2-yes">Yes</label>
         <Input
           @type="radio"
           @name="dcpLanduseactiontype2"
+          id="dcplanduseactiontype2-no"
           @value='717170001'
-          id="dcpLanduseactiontype2No"
-        /><label for="dcpLanduseactiontype2No">No</label>
+          @checked={{if (eq this.dcpLanduseactiontype2 "717170001") true}}
+          onClick={{fn this.updateAttr "dcpLanduseactiontype2" "717170001"}}
+          data-test-dcplanduseactiontype2-no
+        /><label for="dcplanduseactiontype2-no">No</label>
         <Input
           @type="radio"
           @name="dcpLanduseactiontype2"
+          id="dcplanduseactiontype2-unsure"
           @value='717170002'
-          id="dcpLanduseactiontype2Unsure"
-        /><label for="dcpLanduseactiontype2Unsure">Unsure at this time</label>
+          @checked={{if (eq this.dcpLanduseactiontype2 "717170002") true}}
+          onClick={{fn this.updateAttr "dcpLanduseactiontype2" "717170002"}}
+          data-test-dcplanduseactiontype2-unsure
+        /><label for="dcplanduseactiontype2-unsure">Unsure at this time</label>
+        {{#if (eq this.dcpLanduseactiontype2 "717170000")}}
+          <label>
+            Indicate which SEQRA or CEQR category each action fulfills
+            <Input
+              @type="text"
+              @value={{@package.dcpPleaseexplaintypeiienvreview}}
+            />
+          </label>
+        {{/if}}
       </fieldset>
-
-      {{#if @package.dcpLanduseactiontype2}}
-        <label>
-          <strong>Indicate which SEQRA or CEQR category each action fulfills</strong>
-          <Input
-            @type="text"
-            @value={{@package.dcpPleaseexplaintypeiienvreview}}
-          />
-        </label>
-      {{/if}}
 
       <fieldset class="medium-margin-bottom">
         <legend>
@@ -211,26 +227,31 @@
         <Input
           @type="radio"
           @name="dcpProjectareaindustrialbusinesszone"
+          id="dcpProjectareaindustrialbusinesszone-yes"
           @value={{true}}
-          id="dcpProjectareaindustrialbusinesszoneYes"
-        /><label for="dcpProjectareaindustrialbusinesszoneYes">Yes</label>
+          @checked={{if (eq this.dcpProjectareaindustrialbusinesszone true) true}}
+          onClick={{fn this.updateAttr "dcpProjectareaindustrialbusinesszone" true}}
+          data-test-dcpProjectareaindustrialbusinesszone-yes
+        /><label for="dcpProjectareaindustrialbusinesszone-yes">Yes</label>
         <Input
           @type="radio"
           @name="dcpProjectareaindustrialbusinesszone"
+          id="dcpProjectareaindustrialbusinesszone-no"
           @value={{false}}
-          id="dcpProjectareaindustrialbusinesszoneNo"
-        /><label for="dcpProjectareaindustrialbusinesszoneNo">No</label>
+          @checked={{if (eq this.dcpProjectareaindustrialbusinesszone false) true}}
+          onClick={{fn this.updateAttr "dcpProjectareaindustrialbusinesszone" false}}
+          data-test-dcpProjectareaindustrialbusinesszone-no
+        /><label for="dcpProjectareaindustrialbusinesszone-no">No</label>
+        {{#if (eq this.dcpProjectareaindustrialbusinesszone true)}}
+          <label>
+            Name of Industrial Business Zone
+            <Input
+              @type="text"
+              @value={{@package.dcpProjectareaindutrialzonename}}
+            />
+          </label>
+        {{/if}}
       </fieldset>
-
-      {{#if @package.dcpProjectareaindustrialbusinesszone}}
-        <label>
-          <strong>Name of Industrial Business Zone</strong>
-          <Input
-            @type="text"
-            @value={{@package.dcpProjectareaindutrialzonename}}
-          />
-        </label>
-      {{/if}}
 
       <fieldset class="medium-margin-bottom">
         <legend>
@@ -240,26 +261,31 @@
         <Input
           @type="radio"
           @name="dcpIsprojectarealandmark"
+          id="dcpIsprojectarealandmark-yes"
           @value={{true}}
-          id="dcpIsprojectarealandmarkYes"
-        /><label for="dcpIsprojectarealandmarkYes">Yes</label>
+          @checked={{if (eq this.dcpIsprojectarealandmark true) true}}
+          onClick={{fn this.updateAttr "dcpIsprojectarealandmark" true}}
+          data-test-dcpIsprojectarealandmark-yes
+        /><label for="dcpIsprojectarealandmark-yes">Yes</label>
         <Input
           @type="radio"
           @name="dcpIsprojectarealandmark"
+          id="dcpIsprojectarealandmark-no"
           @value={{false}}
-          id="dcpIsprojectarealandmarkNo"
-        /><label for="dcpIsprojectarealandmarkNo">No</label>
+          @checked={{if (eq this.dcpIsprojectarealandmark false) true}}
+          onClick={{fn this.updateAttr "dcpIsprojectarealandmark" false}}
+          data-test-dcpIsprojectarealandmark-no
+        /><label for="dcpIsprojectarealandmark-no">No</label>
+        {{#if (eq this.dcpIsprojectarealandmark true)}}
+          <label>
+            Name of Landmark or Historic District
+            <Input
+              @type="text"
+              @value={{@package.dcpProjectarealandmarkname}}
+            />
+          </label>
+        {{/if}}
       </fieldset>
-
-      {{#if @package.dcpIsprojectarealandmark}}
-        <label>
-          <strong>Name of Landmark or Historic District</strong>
-          <Input
-            @type="text"
-            @value={{@package.dcpProjectarealandmarkname}}
-          />
-        </label>
-      {{/if}}
 
       <fieldset class="medium-margin-bottom">
         <legend>
@@ -428,7 +454,8 @@
           </li>
         </ul>
         {{#if @package.dcpProposeddevelopmentsiteinfoother}}
-          <label>Explain:
+          <label>
+            Explain:
             <Input
               @type="text"
               @value={{@package.dcpProposeddevelopmentsiteotherexplanation}}
@@ -445,30 +472,35 @@
         <Input
           @type="radio"
           @name="dcpIsinclusionaryhousingdesignatedarea"
+          id="dcpisinclusionaryhousingdesignatedarea-yes"
           @value={{true}}
-          id="dcpIsinclusionaryhousingdesignatedareaYes"
-        /><label for="dcpIsinclusionaryhousingdesignatedareaYes">Yes</label>
+          @checked={{if (eq this.dcpIsinclusionaryhousingdesignatedarea true) true}}
+          onClick={{fn this.updateAttr "dcpIsinclusionaryhousingdesignatedarea" true}}
+          data-test-dcpisinclusionaryhousingdesignatedarea-yes
+        /><label for="dcpisinclusionaryhousingdesignatedarea-yes">Yes</label>
         <Input
           @type="radio"
           @name="dcpIsinclusionaryhousingdesignatedarea"
+          id="dcpisinclusionaryhousingdesignatedarea-no"
           @value={{false}}
-          id="dcpIsinclusionaryhousingdesignatedareaNo"
-        /><label for="dcpIsinclusionaryhousingdesignatedareaNo">No</label>
+          @checked={{if (eq this.dcpIsinclusionaryhousingdesignatedarea false) true}}
+          onClick={{fn this.updateAttr "dcpIsinclusionaryhousingdesignatedarea" false}}
+          data-test-dcpisinclusionaryhousingdesignatedarea-no
+        /><label for="dcpisinclusionaryhousingdesignatedarea-no">No</label>
         <p class="help-text">
           Refer to <a  href="#">Appendix F</a> of the Zoning Resolution for full list of all inclusionary housing areas which are areas that incentivize or require affordable housing in certain areas.
           {{!-- TODO: add link --}}
         </p>
+        {{#if (eq this.dcpIsinclusionaryhousingdesignatedarea true)}}
+          <label>
+            Name of Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area
+            <Input
+              @type="text"
+              @value={{@package.dcpInclusionaryhousingdesignatedareaname}}
+            />
+          </label>
+        {{/if}}
       </fieldset>
-
-      {{#if @package.dcpIsinclusionaryhousingdesignatedarea}}
-        <label>
-          <strong>Name of Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area</strong>
-          <Input
-            @type="text"
-            @value={{@package.dcpInclusionaryhousingdesignatedareaname}}
-          />
-        </label>
-      {{/if}}
 
       <fieldset class="medium-margin-bottom">
         <legend>
@@ -477,54 +509,62 @@
         <Input
           @type="radio"
           @name="dcpDiscressionaryfundingforffordablehousing"
+          id="dcpdiscressionaryfundingforffordablehousing-yes"
           @value='717170000'
-          id="dcpDiscressionaryfundingforffordablehousingYes"
-        /><label for="dcpDiscressionaryfundingforffordablehousingYes">Yes</label>
+          @checked={{if (eq this.dcpDiscressionaryfundingforffordablehousing '717170000') true}}
+          onClick={{fn this.updateAttr "dcpDiscressionaryfundingforffordablehousing" '717170000'}}
+          data-test-dcpdiscressionaryfundingforffordablehousing-yes
+        /><label for="dcpdiscressionaryfundingforffordablehousing-yes">Yes</label>
         <Input
           @type="radio"
           @name="dcpDiscressionaryfundingforffordablehousing"
+          id="dcpdiscressionaryfundingforffordablehousing-no"
           @value='717170001'
-          id="dcpDiscressionaryfundingforffordablehousingNo"
-        /><label for="dcpDiscressionaryfundingforffordablehousingNo">No</label>
+          @checked={{if (eq this.dcpDiscressionaryfundingforffordablehousing '717170001') true}}
+          onClick={{fn this.updateAttr "dcpDiscressionaryfundingforffordablehousing" '717170001'}}
+          data-test-dcpdiscressionaryfundingforffordablehousing-no
+        /><label for="dcpdiscressionaryfundingforffordablehousing-no">No</label>
         <Input
           @type="radio"
           @name="dcpDiscressionaryfundingforffordablehousing"
+          id="dcpdiscressionaryfundingforffordablehousing-unsure"
           @value='717170002'
-          id="dcpDiscressionaryfundingforffordablehousingUnsure"
-        /><label for="dcpDiscressionaryfundingforffordablehousingUnsure">Unsure at this time</label>
+          @checked={{if (eq this.dcpDiscressionaryfundingforffordablehousing '717170002') true}}
+          onClick={{fn this.updateAttr "dcpDiscressionaryfundingforffordablehousing" '717170002'}}
+          data-test-dcpdiscressionaryfundingforffordablehousing-unsure
+        /><label for="dcpdiscressionaryfundingforffordablehousing-unsure">Unsure at this time</label>
+        {{#if (eq this.dcpDiscressionaryfundingforffordablehousing '717170000')}}
+          <fieldset class="medium-margin-bottom">
+            <legend>
+              Funding source
+            </legend>
+            <Input
+              @type="radio"
+              @name="dcpHousingunittype"
+              @value='717170000'
+              id="dcpHousingunittypeCity"
+            /><label for="dcpHousingunittypeCity">City</label>
+            <Input
+              @type="radio"
+              @name="dcpHousingunittype"
+              @value='717170001'
+              id="dcpHousingunittypeState"
+            /><label for="dcpHousingunittypeState">State</label>
+            <Input
+              @type="radio"
+              @name="dcpHousingunittype"
+              @value='717170002'
+              id="dcpHousingunittypeFederal"
+            /><label for="dcpHousingunittypeFederal">Federal</label>
+            <Input
+              @type="radio"
+              @name="dcpHousingunittype"
+              @value='717170003'
+              id="dcpHousingunittypeOther"
+            /><label for="dcpHousingunittypeOther">Other</label>
+          </fieldset>
+        {{/if}}
       </fieldset>
-
-      {{#if @package.dcpDiscressionaryfundingforffordablehousing}}
-        <fieldset class="medium-margin-bottom">
-          <legend>
-            <strong>Funding source</strong>
-          </legend>
-          <Input
-            @type="radio"
-            @name="dcpHousingunittype"
-            @value='717170000'
-            id="dcpHousingunittypeCity"
-          /><label for="dcpHousingunittypeCity">City</label>
-          <Input
-            @type="radio"
-            @name="dcpHousingunittype"
-            @value='717170001'
-            id="dcpHousingunittypeState"
-          /><label for="dcpHousingunittypeState">State</label>
-          <Input
-            @type="radio"
-            @name="dcpHousingunittype"
-            @value='717170002'
-            id="dcpHousingunittypeFederal"
-          /><label for="dcpHousingunittypeFederal">Federal</label>
-          <Input
-            @type="radio"
-            @name="dcpHousingunittype"
-            @value='717170003'
-            id="dcpHousingunittypeOther"
-          /><label for="dcpHousingunittypeOther">Other</label>
-        </fieldset>
-      {{/if}}
     </section>
 
     <section class="form-section" id="#project-description">
