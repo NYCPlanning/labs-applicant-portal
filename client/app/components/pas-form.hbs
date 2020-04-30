@@ -1,23 +1,25 @@
 <div class="grid-x grid-margin-x">
   <div class="cell large-8">
 
+    <p>
+      The <strong>Pre-Application Statement</strong> requests pertinent information about a site and proposed project. By submitting the PAS, a prospective applicant acknowledges that they intend to file a land use application with NYC Planning. Submission allows staff to be assigned from appropriate divisions and project tracking to commence.
+    </p>
+
+    <p>
+      NYC Planning understands that some projects may not be fully formed at the submission of the PAS. Give as much detailed information as possible. Failure to provide detailed, relevant information will result in the PAS being rejected.
+    </p>
+
     <section class="form-section" id="#project-info">
       <h3>Project Information</h3>
-
-      <p>
-        The <strong>Pre-Application Statement</strong> requests pertinent information about a site and proposed project. By submitting the PAS, a prospective applicant acknowledges that they intend to file a land use application with NYC Planning. Submission allows staff to be assigned from appropriate divisions and project tracking to commence.
-      </p>
-
-      <p>
-        NYC Planning understands that some projects may not be fully formed at the submission of the PAS. Give as much detailed information as possible. Failure to provide detailed, relevant information will result in the PAS being rejected.
-      </p>
 
       <label>
         <strong>Project Name</strong>
         <Input
           @type="text"
-          @value={{@package.dcpRevisedprojectname}}
+          @value={{@package.pasForm.dcpRevisedprojectname}}
         />
+        {{log "pasForm" @package.pasForm}}
+        {{log "dcpRevisedprojectname" @package.pasForm.dcpRevisedprojectname}}
       </label>
     </section>
 
@@ -36,7 +38,7 @@
 
       <label>
         <strong>Description of geography</strong>
-        <Textarea @value={{@package.dcpDescriptionofprojectareageography}} rows="5" />
+        <Textarea @value={{@package.pasForm.dcpDescriptionofprojectareageography}} rows="5" />
       </label>
     </section>
 
@@ -69,7 +71,7 @@
         <Input
           @type="radio"
           @name="dcpProposedprojectorportionconstruction"
-            @value='717170000'
+          @value='717170000'
           id="dcpProposedprojectorportionconstructionYes"
         /><label for="dcpProposedprojectorportionconstructionYes">Yes</label>
         <Input
@@ -96,8 +98,8 @@
           @name="dcpUrbanrenewalarea"
           id="dcpurbanrenewalarea-yes"
           @value='717170000'
-          @checked={{if (eq this.dcpUrbanrenewalarea "717170000") true}}
-          onClick={{fn this.updateAttr "dcpUrbanrenewalarea" "717170000"}}
+          @checked={{if (eq @package.dcpUrbanrenewalarea "717170000") true}}
+          onClick={{fn this.updateAttr @package "dcpUrbanrenewalarea" "717170000"}}
           data-test-dcpurbanrenewalarea-yes
         /><label for="dcpurbanrenewalarea-yes">Yes</label>
         <Input

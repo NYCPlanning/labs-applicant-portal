@@ -1,6 +1,5 @@
 import { Model, belongsTo } from 'ember-cli-mirage';
 
 export default Model.extend({
-  project: belongsTo('project'),
-  pasForm: belongsTo('pas-form'),
+  package: belongsTo('package'),
 });

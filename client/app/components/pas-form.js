@@ -3,20 +3,10 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class PasFormComponent extends Component {
-  @tracked dcpUrbanrenewalarea;
-
-  @tracked dcpLanduseactiontype2;
-
-  @tracked dcpProjectareaindustrialbusinesszone;
-
-  @tracked dcpIsprojectarealandmark;
-
-  @tracked dcpIsinclusionaryhousingdesignatedarea;
-
-  @tracked dcpDiscressionaryfundingforffordablehousing;
+  @tracked package;
 
   @action
-  updateAttr(attr, newVal) {
-    this[attr] = newVal;
+  updateAttr(obj, attr, newVal) {
+    obj[attr] = newVal;
   }
 }

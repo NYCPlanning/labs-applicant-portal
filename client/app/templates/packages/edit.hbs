@@ -5,7 +5,7 @@
 {{!-- Load appropriate form component for the type of package being edited --}}
 {{#if (eq this.model.dcpPackagetype "PAS Package")}}
   <PasForm
-    @package={{this.model}}
+    @package={{@model}}
     @save={{this.save}}
     @submit={{this.submit}}
   />
