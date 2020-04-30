@@ -1,5 +1,5 @@
-<fieldset class="fieldset relative">
-  <legend>
+<fieldset class="fieldset relative" data-test-applicant-fieldset>
+  <legend data-test-applicant-title="{{@applicant.role}}">
     <strong>
       {{@applicant.role}}
     </strong>
@@ -8,9 +8,22 @@
   {{!-- if sent to CRM "Applicant Information" table, need to know "type" --}}
   {{#if (eq @applicant.role "Applicant")}}
     <div class="cell medium-6">
-      {{!-- TODO: bind this to @applicant.applicantType --}}
-      <Input type="radio" name="applicant-type" @value="Individual"/><label>Individual</label>
-      <Input type="radio" name="applicant-type" @value="Organization"/><label>Organization</label>
+      <Input 
+        type="radio" 
+        name="applicant-type" 
+        @value="Individual"
+        onClick={{fn this.updateAttr @applicant "applicantType" "Individual"}}
+        checked={{eq @applicant.applicantType "Individual"}}
+      />
+      <label>Individual</label>
+      <Input 
+        type="radio" 
+        name="applicant-type" 
+        @value="Organization"
+        onClick={{fn this.updateAttr @applicant "applicantType" "Organization"}}
+        checked={{eq @applicant.applicantType "Organization"}}
+      />
+      <label>Organization</label>
     </div>
   {{/if}}
 
@@ -31,7 +44,7 @@
   </div>
   
   {{!-- always allow input for Applicant Team Members --}}
-  {{#if (eq @applicant.role "ApplicantTeamMember")}}
+  {{#if (eq @applicant.role "Applicant Team Member")}}
     <label>Organization <Input type="text" @value={{@applicant.organization}}/></label>
   {{/if}}
 
