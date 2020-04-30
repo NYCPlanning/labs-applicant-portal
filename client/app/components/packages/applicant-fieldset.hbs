@@ -8,18 +8,18 @@
   {{!-- if sent to CRM "Applicant Information" table, need to know "type" --}}
   {{#if (eq @applicant.role "Applicant")}}
     <div class="cell medium-6" data-test-applicant-type-radio-group>
-      {{!-- <Input 
+      <Input 
         @type="radio" 
-        name="applicant-type" 
+        name={{concat 'applicant-type' @elementId}}
         @value="Individual"
         checked={{if (eq @applicant.applicantType "Individual") true}}
         onClick={{fn this.updateAttr @applicant "applicantType" "Individual"}}
         data-test-applicant-type-radio-individual
       />
-      <label>Individual</label> --}}
+      <label>Individual</label>
       <Input 
         @type="radio" 
-        name="applicant-type" 
+        name={{concat 'applicant-type' @elementId}} 
         @value="Organization"
         checked={{if (eq @applicant.applicantType "Organization") true}}
         onClick={{fn this.updateAttr @applicant "applicantType" "Organization"}}

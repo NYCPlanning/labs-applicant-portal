@@ -10,12 +10,15 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
   setupMirage(hooks);
 
   test('user has a blank fieldset when there are no existing applicants', async function(assert) {
-    const emptyApplicantsArray = [];
+    this.applicants = [];
+
     await render(hbs`
       <Packages::ApplicantTeamEditor
-        @applicants={{this.emptyApplicantsArray}}
+        @applicants={{this.applicants}}
       />
     `);
+
+    // assert what?
   });
 
   test('user can see existing applicants', async function(assert) {
@@ -23,17 +26,16 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
     this.server.create('applicant', 'organizationApplicant');
     this.server.create('applicant', 'individualApplicant');
     this.server.create('applicant', 'applicantTeamMember');
-
-    const applicant1 = await this.owner.lookup('service:store').findRecord('applicant', 1);
-    const applicant2 = await this.owner.lookup('service:store').findRecord('applicant', 2);
-    const applicant3 = await this.owner.lookup('service:store').findRecord('applicant', 3);
   
-    this.applicantsArray = [applicant1, applicant2, applicant3];
+    this.applicants = [
+      await this.owner.lookup('service:store').findRecord('applicant', 1),
+      await this.owner.lookup('service:store').findRecord('applicant', 2),
+      await this.owner.lookup('service:store').findRecord('applicant', 3),
+    ];
   
     await render(hbs`
-      {{log "Rendering Packages::ApplicantTeamEditor..."}}
       <Packages::ApplicantTeamEditor 
-        @applicants={{this.applicantsArray}}
+        @applicants={{this.applicants}}
       />
     `);
 
