@@ -7,21 +7,23 @@
 
   {{!-- if sent to CRM "Applicant Information" table, need to know "type" --}}
   {{#if (eq @applicant.role "Applicant")}}
-    <div class="cell medium-6">
-      <Input 
-        type="radio" 
+    <div class="cell medium-6" data-test-applicant-type-radio-group>
+      {{!-- <Input 
+        @type="radio" 
         name="applicant-type" 
         @value="Individual"
+        checked={{if (eq @applicant.applicantType "Individual") true}}
         onClick={{fn this.updateAttr @applicant "applicantType" "Individual"}}
-        checked={{eq @applicant.applicantType "Individual"}}
+        data-test-applicant-type-radio-individual
       />
-      <label>Individual</label>
+      <label>Individual</label> --}}
       <Input 
-        type="radio" 
+        @type="radio" 
         name="applicant-type" 
         @value="Organization"
+        checked={{if (eq @applicant.applicantType "Organization") true}}
         onClick={{fn this.updateAttr @applicant "applicantType" "Organization"}}
-        checked={{eq @applicant.applicantType "Organization"}}
+        data-test-applicant-type-radio-organization
       />
       <label>Organization</label>
     </div>
@@ -29,23 +31,43 @@
 
   {{!-- and if the applicant is on behalf of an organization, we need to know which organization --}}
   {{#if (eq @applicant.applicantType "Organization")}}
-    <label>Organization <Input type="text" @value={{@applicant.organization}}/></label>
+    <label>
+      Organization 
+      <Input 
+        type="text" 
+        @value={{@applicant.organization}}
+        data-test-applicant-organization
+      />
+    </label>
     <hr/>
   {{/if}}
 
   <div class="grid-x grid-margin-x">
     <div class="cell medium-6">
       <label>First Name</label>
-      <Input type="text" @value={{@applicant.firstName}}/>
+      <Input 
+        type="text" 
+        @value={{@applicant.firstName}}
+      />
     </div>
     <div class="cell medium-6">
-      <label>Last Name <Input type="text" @value={{@applicant.lastName}}/></label>
+      <label>Last Name</label>
+        <Input 
+          type="text" 
+          @value={{@applicant.lastName}}
+        />
     </div>
   </div>
   
   {{!-- always allow input for Applicant Team Members --}}
   {{#if (eq @applicant.role "Applicant Team Member")}}
-    <label>Organization <Input type="text" @value={{@applicant.organization}}/></label>
+    <label>
+      Organization
+      <Input 
+        type="text" 
+        @value={{@applicant.organization}}
+      />
+    </label>
   {{/if}}
 
   <label>Email Address <Input type="email" @value={{@applicant.emailAddress}}/></label>

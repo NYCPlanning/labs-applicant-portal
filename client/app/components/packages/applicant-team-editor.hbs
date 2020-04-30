@@ -1,14 +1,13 @@
 <section>
-  {{log "@applicants passed to component:"}}
-  {{log @applicants}}
-  {{!-- always render a Primary Applicant fieldset --}}
-  {{!-- TODO: handle when applicants is an empty array --}}
   {{#each @applicants as |applicant|}}
-    {{log "applicant fieldset being rendered with: "}}
-    {{log applicant}}
     <Packages::ApplicantFieldset
       @applicant={{applicant}}
       @removeApplicant = {{fn this.removeApplicant}}
+    />
+  {{else}}
+    {{!-- TODO:  Figure out how to handle empty array case --}}
+    <Packages::ApplicantFieldset
+      @removeApplicant={{fn this.removeApplicant}}
     />
   {{/each}}
 
