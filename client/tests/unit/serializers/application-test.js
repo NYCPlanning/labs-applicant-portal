@@ -11,13 +11,4 @@ module('Unit | Serializer | application', function(hooks) {
 
     assert.ok(serializer);
   });
-
-  test('it serializes records', function(assert) {
-    const store = this.owner.lookup('service:store');
-    const record = store.createRecord('application', {});
-
-    const serializedRecord = record.serialize();
-
-    assert.ok(serializedRecord);
-  });
 });
