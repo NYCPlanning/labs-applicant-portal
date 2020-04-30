@@ -80,4 +80,24 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
 
     assert.dom('[data-test-applicant-fieldset="0"]').doesNotExist();
   });
+
+  test('user can toggle individual or organization applicant type', async function(assert) {
+    this.server.create('applicant', 'individualApplicant');
+
+    this.applicants = [
+      await this.owner.lookup('service:store').findRecord('applicant', 1),
+    ];
+
+    await render(hbs`
+      <Packages::ApplicantTeamEditor 
+        @applicants={{this.applicants}}
+      />
+    `);
+
+    // switch from Individual to Organization applicant type
+    await click('[data-test-applicant-type-radio-organization]');
+
+    // should be reflected in the applicants array!
+    assert.equal(this.applicants[0].applicantType, 'Organization');
+  });
 });
