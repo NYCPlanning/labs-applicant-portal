@@ -20,7 +20,12 @@ export default class PackageModel extends Model {
   documents;
 
   async saveDescendants() {
-    await this.pasForm.save();
+    await this.pasForm?.applicants?.save();
+
+    // call special save method because there can be
+    // 100s of bbls
+    await this.pasForm?.saveDirtyBbls();
+    await this.pasForm?.save();
     await this.save();
   }
 }
