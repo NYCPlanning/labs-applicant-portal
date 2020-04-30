@@ -151,7 +151,10 @@ export class PackagesController {
   }
 
   @Patch('/packages/:id')
-  patchPackage(@Body() body, @Param('id') id, @Session() session) {
-    return body;
+  patchPackage(@Body() body, @Param('id') id) {
+    return {
+      dcp_packageid: id,
+      ...body,
+    };
   }
 }

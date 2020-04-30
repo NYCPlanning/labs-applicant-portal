@@ -2,6 +2,7 @@ import { Controller, Patch, Body, Param, UseGuards, UseInterceptors, UsePipes } 
 import { AuthenticateGuard } from '../../authenticate.guard';
 import { JsonApiSerializeInterceptor } from '../../json-api-serialize.interceptor';
 import { JsonApiDeserializePipe } from '../../json-api-deserialize.pipe';
+import { PasFormService } from './pas-form.service';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('pas-forms', {
   attributes: [
@@ -80,18 +81,19 @@ import { JsonApiDeserializePipe } from '../../json-api-deserialize.pipe';
     'dcp_projectdescriptionproposedarea',
     'dcp_projectdescriptionsurroundingarea',
     'dcp_projectattachmentsotherinformation',
-
-    // associations/relationships/navigation links/extensions
-    // 'applicants',
-    // 'bbls',
   ],
 }))
 @UseGuards(AuthenticateGuard)
 @UsePipes(JsonApiDeserializePipe)
 @Controller('pas-forms')
 export class PasFormController {
+  constructor(private readonly pasFormService: PasFormService) { }
+
   @Patch('/:id')
-  pasForm(@Body() body, @Param('id') id) {
-    return body;
+  patchPasForm(@Body() body, @Param('id') id) {
+    return {
+      dcp_pasformid: id,
+      ...body
+    };
   }
 }
