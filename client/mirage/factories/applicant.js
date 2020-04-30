@@ -11,18 +11,18 @@ export default Factory.extend({
   phone: '867-5309',
 
   individualApplicant: trait({
-    role: 'Applicant',
+    targetEntity: 'Applicant',
     applicantType: 'Individual',
     organization: null,
   }),
   organizationApplicant: trait({
-    role: 'Applicant',
+    targetEntity: 'Applicant',
     applicantType: 'Organization',
     organization: 'Planning Labs',
   }),
 
   applicantTeamMember: trait({
-    role: 'Applicant Team Member',
+    targetEntity: 'Applicant Team Member',
     applicantType: null,
     organization: 'Vandelay Industries',
   }),
