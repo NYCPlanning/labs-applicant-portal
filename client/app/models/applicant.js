@@ -2,8 +2,10 @@ import Model, { attr } from '@ember-data/model';
 
 export default class ApplicantModel extends Model {
   // indicates which table to send to crm ("Applicant" or "Applicant Representative")
-  @attr('string')
-  role;
+  @attr('string', {
+    defaultValue: 'Applicant'
+  })
+  targetEntity;
 
   // doesn't exist on "Applicant Representative Information" CRM table
   @attr('string')

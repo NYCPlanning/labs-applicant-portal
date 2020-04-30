@@ -8,9 +8,9 @@ export default class ApplicantTeamEditorComponent extends Component {
 
   // allow a user to add a new applicant fieldset
   @action
-  addApplicant(role) {
+  addApplicant(targetEntity) {
     // create a new applicant record in store
-    const newApplicant = this.store.createRecord('applicant', { role });
+    const newApplicant = this.store.createRecord('applicant', { targetEntity });
 
     // add the record to the array managing the editor's UI
     this.args.applicants.pushObject(newApplicant);

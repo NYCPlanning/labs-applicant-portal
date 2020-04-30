@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { render } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
 
@@ -9,7 +9,7 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('user has a blank fieldset when there are no existing applicants', async function(assert) {
+  test('user sees a blank fieldset when there are no existing applicants', async function(assert) {
     this.applicants = [];
 
     await render(hbs`
@@ -18,7 +18,7 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
       />
     `);
 
-    // assert what?
+    assert.dom('[data-test-applicant-fieldset="0"]').exists();
   });
 
   test('user can see existing applicants', async function(assert) {
@@ -39,18 +39,46 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
       />
     `);
 
-    await this.pauseTest();
+    // there are 3 fieldsets visibile
+    assert.dom('[data-test-applicant-fieldset="0"]').exists();
+    assert.dom('[data-test-applicant-fieldset="1"]').exists();
+    assert.dom('[data-test-applicant-fieldset="2"]').exists();
   });
 
   test('user can add new applicants', async function(assert) {
+    this.applicants = [];
 
-  });
+    await render(hbs`
+      <Packages::ApplicantTeamEditor 
+        @applicants={{this.applicants}}
+      />
+    `);
 
-  test('user can add new applicant team members', async function(assert) {
+    // can add an applicant
+    await click('[data-test-add-applicant-button]');
+    assert.dom('[data-test-applicant-type="Applicant"').exists();
 
+    // can add an applicant team member
+    await click('[data-test-add-applicant-team-member-button]');
+    assert.dom('[data-test-applicant-type="Applicant Team Member"').exists();
+    
   });
 
   test('user can remove applicants', async function(assert) {
-    
+    const applicant = this.server.create('applicant', 'organizationApplicant');
+
+    this.applicants = [
+      await this.owner.lookup('service:store').findRecord('applicant', applicant.id),
+    ];
+
+    await render(hbs`
+      <Packages::ApplicantTeamEditor 
+        @applicants={{this.applicants}}
+      />
+    `);
+
+    await click('[data-test-remove-applicant-button');
+
+    assert.dom('[data-test-applicant-fieldset="0"]').doesNotExist();
   })
 });

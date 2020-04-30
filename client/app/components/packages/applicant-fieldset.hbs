@@ -1,12 +1,12 @@
-<fieldset class="fieldset relative" data-test-applicant-fieldset>
-  <legend data-test-applicant-title="{{@applicant.role}}">
+<fieldset class="fieldset relative" ...attributes>
+  <legend data-test-applicant-title="{{@applicant.targetEntity}}">
     <strong>
-      {{@applicant.role}}
+      {{@applicant.targetEntity}}
     </strong>
   </legend>
 
   {{!-- if sent to CRM "Applicant Information" table, need to know "type" --}}
-  {{#if (eq @applicant.role "Applicant")}}
+  {{#if (eq @applicant.targetEntity "Applicant")}}
     <div class="cell medium-6" data-test-applicant-type-radio-group>
       <Input 
         @type="radio" 
@@ -58,9 +58,9 @@
         />
     </div>
   </div>
-  
+
   {{!-- always allow input for Applicant Team Members --}}
-  {{#if (eq @applicant.role "Applicant Team Member")}}
+  {{#if (eq @applicant.targetEntity "Applicant Team Member")}}
     <label>
       Organization
       <Input 
@@ -88,9 +88,7 @@
   <label>Phone <Input type="text" @value={{@applicant.phone}}/></label>
 
   <p class="text-right no-margin text-small">
-    <button onClick={{fn @removeApplicant @applicant}} class="trash-button text-red-dark">
-      Remove Applicant
-    </button>
+    {{yield}}
   </p>
 
 </fieldset>

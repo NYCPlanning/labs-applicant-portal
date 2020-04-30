@@ -4,7 +4,17 @@
       @elementId={{concat 'applicant-fieldset-' index}}
       @applicant={{applicant}}
       @removeApplicant={{fn this.removeApplicant}}
-    />
+      data-test-applicant-fieldset={{index}}
+      data-test-applicant-type={{applicant.targetEntity}}
+    >
+      <button
+        class="trash-button text-red-dark"
+        onClick={{action this.removeApplicant applicant}}
+        data-test-remove-applicant-button
+      >
+        Remove Applicant
+      </button>
+    </Packages::ApplicantFieldset>
   {{/each}}
 
   {{!-- buttons for user to add new applicants --}}
@@ -13,10 +23,18 @@
       Add an Applicant Team Member:
     </p>
     <p class="button-group">
-      <button {{on "click" (fn this.addApplicant "Applicant") }} class="button secondary">
+      <button 
+        {{on "click" (fn this.addApplicant "Applicant") }} 
+        class="button secondary"
+        data-test-add-applicant-button
+      >
         Add Applicant
       </button>
-      <button {{on "click" (fn this.addApplicant "Applicant Team Member") }} class="button secondary">
+      <button 
+        {{on "click" (fn this.addApplicant "Applicant Team Member") }} 
+        class="button secondary"
+        data-test-add-applicant-team-member-button
+      >
         Add Other Team Member
       </button>
     </p>
