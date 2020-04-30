@@ -18,4 +18,9 @@ export default class PackageModel extends Model {
 
   @attr()
   documents;
+
+  async saveDescendants() {
+    await this.pasForm.save();
+    await this.save();
+  }
 }

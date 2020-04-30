@@ -121,14 +121,22 @@ import { AuthenticateGuard } from '../authenticate.guard';
   // remap verbose navigation link names to
   // more concise names
   transform(projectPackage) {
-    return {
-      ...projectPackage,
-      'pas-form': {
-        ...projectPackage?.dcp_pasform,
-        applicants: projectPackage?.dcp_pasform?.dcp_dcp_applicantinformation_dcp_pasform,
-        bbls: projectPackage?.dcp_pasform?.dcp_dcp_projectbbl_dcp_pasform,
-      },
-    };
+    const { dcp_pasform: pasForm } = projectPackage;
+
+    if (!pasForm) {
+      return {
+        ...projectPackage,
+      };
+    } else {
+      return {
+        ...projectPackage,
+        'pas-form': {
+          ...pasForm,
+          applicants: pasForm.dcp_dcp_applicantinformation_dcp_pasform,
+          bbls: pasForm.dcp_dcp_projectbbl_dcp_pasform,
+        },
+      }
+    }
   },
 }))
 @UsePipes(JsonApiDeserializePipe)
