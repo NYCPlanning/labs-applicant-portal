@@ -4,10 +4,15 @@ import { tracked } from '@glimmer/tracking';
 
 export default class PasFormComponent extends Component {
   @tracked dcpUrbanrenewalarea;
+
   @tracked dcpLanduseactiontype2;
+
   @tracked dcpProjectareaindustrialbusinesszone;
+
   @tracked dcpIsprojectarealandmark;
+
   @tracked dcpIsinclusionaryhousingdesignatedarea;
+
   @tracked dcpDiscressionaryfundingforffordablehousing;
 
   @action
