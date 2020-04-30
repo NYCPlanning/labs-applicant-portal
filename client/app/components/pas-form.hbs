@@ -124,6 +124,7 @@
             <Input
             @type="text"
             @value={{@package.dcpUrbanareaname}}
+            data-test-dcpurbanrenewalarea
           />
           </label>
         {{/if}}
@@ -214,6 +215,7 @@
             <Input
               @type="text"
               @value={{@package.dcpPleaseexplaintypeiienvreview}}
+              data-test-dcppleaseexplaintypeiienvreview
             />
           </label>
         {{/if}}
@@ -227,27 +229,28 @@
         <Input
           @type="radio"
           @name="dcpProjectareaindustrialbusinesszone"
-          id="dcpProjectareaindustrialbusinesszone-yes"
+          id="dcpprojectareaindustrialbusinesszone-yes"
           @value={{true}}
           @checked={{if (eq this.dcpProjectareaindustrialbusinesszone true) true}}
           onClick={{fn this.updateAttr "dcpProjectareaindustrialbusinesszone" true}}
-          data-test-dcpProjectareaindustrialbusinesszone-yes
-        /><label for="dcpProjectareaindustrialbusinesszone-yes">Yes</label>
+          data-test-dcpprojectareaindustrialbusinesszone-yes
+        /><label for="dcpprojectareaindustrialbusinesszone-yes">Yes</label>
         <Input
           @type="radio"
           @name="dcpProjectareaindustrialbusinesszone"
-          id="dcpProjectareaindustrialbusinesszone-no"
+          id="dcpprojectareaindustrialbusinesszone-no"
           @value={{false}}
           @checked={{if (eq this.dcpProjectareaindustrialbusinesszone false) true}}
           onClick={{fn this.updateAttr "dcpProjectareaindustrialbusinesszone" false}}
-          data-test-dcpProjectareaindustrialbusinesszone-no
-        /><label for="dcpProjectareaindustrialbusinesszone-no">No</label>
+          data-test-dcpprojectareaindustrialbusinesszone-no
+        /><label for="dcpprojectareaindustrialbusinesszone-no">No</label>
         {{#if (eq this.dcpProjectareaindustrialbusinesszone true)}}
           <label>
             Name of Industrial Business Zone
             <Input
               @type="text"
               @value={{@package.dcpProjectareaindutrialzonename}}
+              data-test-dcpprojectareaindustrialbusinesszone
             />
           </label>
         {{/if}}
@@ -282,6 +285,7 @@
             <Input
               @type="text"
               @value={{@package.dcpProjectarealandmarkname}}
+              data-test-dcpisprojectarealandmark
             />
           </label>
         {{/if}}
@@ -407,50 +411,51 @@
             <Input
               @type="checkbox"
               @checked={{@package.dcpProposeddevelopmentsitenewconstruction}}
-              id="dcpProposeddevelopmentsitenewconstruction"
-            /><label for="dcpProposeddevelopmentsitenewconstruction">Newly constructed buildings</label>
+              id="dcpproposeddevelopmentsitenewconstruction"
+            /><label for="dcpproposeddevelopmentsitenewconstruction">Newly constructed buildings</label>
           </li>
           <li>
             <Input
               @type="checkbox"
               @checked={{@package.dcpProposeddevelopmentsitedemolition}}
-              id="dcpProposeddevelopmentsitedemolition"
-            /><label for="dcpProposeddevelopmentsitedemolition">Demolition</label>
+              id="dcpproposeddevelopmentsitedemolition"
+            /><label for="dcpproposeddevelopmentsitedemolition">Demolition</label>
           </li>
           <li>
             <Input
               @type="checkbox"
               @checked={{@package.dcpProposeddevelopmentsiteinfoalteration}}
-              id="dcpProposeddevelopmentsiteinfoalteration"
-            /><label for="dcpProposeddevelopmentsiteinfoalteration">Alteration</label>
+              id="dcpproposeddevelopmentsiteinfoalteration"
+            /><label for="dcpproposeddevelopmentsiteinfoalteration">Alteration</label>
           </li>
           <li>
             <Input
               @type="checkbox"
               @checked={{@package.dcpProposeddevelopmentsiteinfoaddition}}
-              id="dcpProposeddevelopmentsiteinfoaddition"
-            /><label for="dcpProposeddevelopmentsiteinfoaddition">Addition</label>
+              id="dcpproposeddevelopmentsiteinfoaddition"
+            /><label for="dcpproposeddevelopmentsiteinfoaddition">Addition</label>
           </li>
           <li>
             <Input
               @type="checkbox"
               @checked={{@package.dcpProposeddevelopmentsitechnageofuse}}
-              id="dcpProposeddevelopmentsitechnageofuse"
-            /><label for="dcpProposeddevelopmentsitechnageofuse">Change of use</label>
+              id="dcpproposeddevelopmentsitechnageofuse"
+            /><label for="dcpproposeddevelopmentsitechnageofuse">Change of use</label>
           </li>
           <li>
             <Input
               @type="checkbox"
               @checked={{@package.dcpProposeddevelopmentsiteenlargement}}
-              id="dcpProposeddevelopmentsiteenlargement"
-            /><label for="dcpProposeddevelopmentsiteenlargement">Enlargement</label>
+              id="dcpproposeddevelopmentsiteenlargement"
+            /><label for="dcpproposeddevelopmentsiteenlargement">Enlargement</label>
           </li>
           <li>
             <Input
               @type="checkbox"
               @checked={{@package.dcpProposeddevelopmentsiteinfoother}}
-              id="dcpProposeddevelopmentsiteinfoother"
-            /><label for="dcpProposeddevelopmentsiteinfoother">Other&hellip;</label>
+              id="dcpproposeddevelopmentsiteinfoother"
+              data-test-dcpproposeddevelopmentsiteinfoother
+            /><label for="dcpproposeddevelopmentsiteinfoother">Other&hellip;</label>
           </li>
         </ul>
         {{#if @package.dcpProposeddevelopmentsiteinfoother}}
@@ -459,6 +464,7 @@
             <Input
               @type="text"
               @value={{@package.dcpProposeddevelopmentsiteotherexplanation}}
+              data-test-dcpproposeddevelopmentsiteotherexplanation
             />
           </label>
         {{/if}}
@@ -497,6 +503,7 @@
             <Input
               @type="text"
               @value={{@package.dcpInclusionaryhousingdesignatedareaname}}
+              data-test-dcpinclusionaryhousingdesignatedareaname
             />
           </label>
         {{/if}}
@@ -541,26 +548,30 @@
             <Input
               @type="radio"
               @name="dcpHousingunittype"
+              id="dcphousingunittypecity"
               @value='717170000'
-              id="dcpHousingunittypeCity"
+              data-test-dcphousingunittypecity
             /><label for="dcpHousingunittypeCity">City</label>
             <Input
               @type="radio"
               @name="dcpHousingunittype"
+              id="dcphousingunittypestate"
               @value='717170001'
-              id="dcpHousingunittypeState"
+              data-test-dcphousingunittypestate
             /><label for="dcpHousingunittypeState">State</label>
             <Input
               @type="radio"
               @name="dcpHousingunittype"
+              id="dcphousingunittypefederal"
               @value='717170002'
-              id="dcpHousingunittypeFederal"
+              data-test-dcphousingunittypefederal
             /><label for="dcpHousingunittypeFederal">Federal</label>
             <Input
               @type="radio"
               @name="dcpHousingunittype"
+              id="dcphousingunittypeother"
               @value='717170003'
-              id="dcpHousingunittypeOther"
+              data-test-dcphousingunittypeother
             /><label for="dcpHousingunittypeOther">Other</label>
           </fieldset>
         {{/if}}
