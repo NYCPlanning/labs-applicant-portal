@@ -1,9 +1,14 @@
-import Model, { belongsTo, attr } from '@ember-data/model';
+import Model, { belongsTo, hasMany, attr } from '@ember-data/model';
 
 export default class PasFormModel extends Model {
-  @belongsTo('pas-form', { async: false })
+  @belongsTo('package', { async: false })
   package;
 
+  @hasMany({ async: false })
+  applicants;
+
+  @hasMany({ async: false })
+  bbls;
 
   // Project Information
   @attr('string')
@@ -207,4 +212,12 @@ export default class PasFormModel extends Model {
 
   @attr('string')
   dcpProjectattachmentsotherinformation;
+
+  async saveDirtyBbls() {
+    return Promise.all(
+      this.bbls
+        .filter((bbl) => bbl.hasDirtyAttributes)
+        .map((bbl) => bbl.save()),
+    );
+  }
 }

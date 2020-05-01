@@ -1,6 +1,8 @@
-import { Controller, Get, Param, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Param, UseInterceptors, Patch, Body, Session, HttpException, HttpStatus, UsePipes, UseGuards } from '@nestjs/common';
 import { PackagesService } from './packages.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
+import { JsonApiDeserializePipe } from '../json-api-deserialize.pipe';
+import { AuthenticateGuard } from '../authenticate.guard';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('packages', {
   id: 'dcp_packageid',
@@ -119,22 +121,40 @@ import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
   // remap verbose navigation link names to
   // more concise names
   transform(projectPackage) {
-    return {
-      ...projectPackage,
-      'pas-form': {
-        ...projectPackage?.dcp_pasform,
-        applicants: projectPackage?.dcp_pasform?.dcp_dcp_applicantinformation_dcp_pasform,
-        bbls: projectPackage?.dcp_pasform?.dcp_dcp_projectbbl_dcp_pasform,
-      },
-    };
+    const { dcp_pasform: pasForm } = projectPackage;
+
+    if (!pasForm) {
+      return {
+        ...projectPackage,
+      };
+    } else {
+      return {
+        ...projectPackage,
+        'pas-form': {
+          ...pasForm,
+          applicants: pasForm.dcp_dcp_applicantinformation_dcp_pasform,
+          bbls: pasForm.dcp_dcp_projectbbl_dcp_pasform,
+        },
+      }
+    }
   },
 }))
-@Controller('packages')
+@UsePipes(JsonApiDeserializePipe)
+@UseGuards(AuthenticateGuard)
+@Controller()
 export class PackagesController {
   constructor(private readonly packagesService: PackagesService) {}
 
-  @Get('/:id')
-  packages(@Param('id') id) {
+  @Get('/packages/:id')
+  getPackage(@Param('id') id) {
     return this.packagesService.getPackage(id);
+  }
+
+  @Patch('/packages/:id')
+  patchPackage(@Body() body, @Param('id') id) {
+    return {
+      dcp_packageid: id,
+      ...body,
+    };
   }
 }

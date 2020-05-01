@@ -6,11 +6,13 @@ import {
   HttpStatus,
   Session,
   UseInterceptors,
+  UseGuards,
 } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { ConfigService } from '../config/config.service';
 import { ContactService } from '../contact/contact.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
+import { AuthenticateGuard } from '../authenticate.guard';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('projects', {
   id: 'dcp_name',
@@ -42,6 +44,7 @@ import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
     };
   },
 }))
+@UseGuards(AuthenticateGuard)
 @Controller()
 export class ProjectsController {
   CRM_IMPOSTER_ID = '';
@@ -57,13 +60,6 @@ export class ProjectsController {
   @Get('/projects')
   async listOfCurrentUserProjects(@Session() session, @Query('email') email) {
     let { contactId } = session;
-
-    // TODO: Use a NestJS interceptor object or something to help with this
-    if (!contactId)
-      throw new HttpException(
-        'Unauthorized. Please login.',
-        HttpStatus.UNAUTHORIZED,
-      );
 
     if (email) {
       ({ contactid: contactId } = await this.contactService.findOneByEmail(
