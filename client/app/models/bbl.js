@@ -7,7 +7,7 @@ export default class BblModel extends Model {
   @attr
   dcpBblnumber;
 
-  @attr('boolean')
+  @attr('boolean', { allowNull: true })
   dcpDevelopmentsite;
 
   @attr

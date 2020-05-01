@@ -8,6 +8,7 @@ import { JsonApiDeserializePipe } from '../../../json-api-deserialize.pipe';
 export const BBL_ATTRIBUTES = [
   'dcp_partiallot',
   'dcp_developmentsite',
+  'dcp_bblnumber',
 ];
 
 @UseInterceptors(new JsonApiSerializeInterceptor('bbls', {
