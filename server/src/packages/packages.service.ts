@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CrmService } from '../crm/crm.service';
+import { pick } from 'underscore';
+import { PACKAGE_ATTRS } from './packages.controller';
 
 @Injectable()
 export class PackagesService {
@@ -22,9 +24,10 @@ export class PackagesService {
     // but it's slower.
 
     // Double network request approach
-    const { records: [{ _dcp_pasform_value }] } = await this.crmService.get('dcp_packages', `
+    const { records: [{ _dcp_pasform_value, dcp_project }] } = await this.crmService.get('dcp_packages', `
       $select=_dcp_pasform_value
       &$filter=dcp_packageid eq ${packageId}
+      &$expand=dcp_project
     `);
 
     const { records: [projectPackageForm] } = await this.crmService.get('dcp_pasforms', `
@@ -39,6 +42,13 @@ export class PackagesService {
     return {
       ...projectPackageForm.dcp_package,
       dcp_pasform: projectPackageForm,
+      project: dcp_project,
     };
+  }
+
+  async update(id, body) {
+    const allowedAttrs = pick(body, PACKAGE_ATTRS);
+
+    return this.crmService.update('dcp_packages', id, allowedAttrs);
   }
 }

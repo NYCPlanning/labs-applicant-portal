@@ -14,17 +14,21 @@ import { ContactService } from '../contact/contact.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 import { AuthenticateGuard } from '../authenticate.guard';
 
+export const PROJECT_ATTRIBUTES = [
+  'dcp_projectname',
+  'dcp_name',
+  'statecode',
+  'statuscode',
+  'dcp_visibility',
+  '_dcp_applicant_customer_value',
+  'dcp_dcp_project_dcp_projectapplicant_Project',
+  'packages',
+];
+
 @UseInterceptors(new JsonApiSerializeInterceptor('projects', {
   id: 'dcp_name',
   attributes: [
-    'dcp_projectname',
-    'dcp_name',
-    'statecode',
-    'statuscode',
-    'dcp_visibility',
-    '_dcp_applicant_customer_value',
-    'dcp_dcp_project_dcp_projectapplicant_Project',
-    'packages',
+    ...PROJECT_ATTRIBUTES,
   ],
   packages: {
     ref: 'dcp_packageid',

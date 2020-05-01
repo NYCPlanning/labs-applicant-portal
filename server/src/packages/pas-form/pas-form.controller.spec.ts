@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PasFormController } from './pas-form.controller';
-import { PasFormService } from './pas-form.service';
+import { CrmModule } from '../../crm/crm.module';
 
 describe('PasForm Controller', () => {
   let controller: PasFormController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PasFormService],
+      imports: [CrmModule],
       controllers: [PasFormController],
     }).compile();
 
