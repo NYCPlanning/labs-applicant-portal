@@ -1,12 +1,33 @@
-import { Controller, Patch, Body, Param, Post } from '@nestjs/common';
-import { PasFormService } from '../pas-form.service';
+import { Controller, Patch, Body, Param, Post, UseInterceptors, UseGuards, UsePipes } from '@nestjs/common';
+import { pick } from 'underscore';
+import { CrmService } from '../../../crm/crm.service';
+import { JsonApiSerializeInterceptor } from '../../../json-api-serialize.interceptor';
+import { AuthenticateGuard } from '../../../authenticate.guard';
+import { JsonApiDeserializePipe } from '../../../json-api-deserialize.pipe';
 
+export const BBL_ATTRIBUTES = [
+  'dcp_partiallot',
+  'dcp_developmentsite',
+];
+
+@UseInterceptors(new JsonApiSerializeInterceptor('bbls', {
+  id: 'dcp_projectbblid',
+  attributes: [
+    ...BBL_ATTRIBUTES,
+  ],
+}))
+@UseGuards(AuthenticateGuard)
+@UsePipes(JsonApiDeserializePipe)
 @Controller('bbls')
 export class BblsController {
-  constructor(private readonly pasFormService: PasFormService) { }
+  constructor(private readonly crmService: CrmService) {}
 
   @Patch('/:id')
-  patchBbl(@Body() body, @Param('id') id) {
+  async update(@Body() body, @Param('id') id) {
+    const allowedAttrs = pick(body, BBL_ATTRIBUTES);
+
+    await this.crmService.update('dcp_projectbbls', id, allowedAttrs);
+
     return {
       dcp_projectbblid: id,
       ...body,
@@ -14,9 +35,16 @@ export class BblsController {
   }
 
   @Post('/')
-  postBbl(@Body() body) {
-    return {
-      ...body,
-    }
+  async create(@Body() body) {
+    const allowedAttrs = pick(body, BBL_ATTRIBUTES);
+
+    const associatedPasForm = body.pas_form ? {
+      'dcp_dcp_projectbbl_dcp_pasform@odata.bind': [`/dcp_pasforms(${body.pas_form})`],
+    } : {};
+
+    return this.crmService.create('dcp_projectbbls', {
+      ...allowedAttrs,
+      ...associatedPasForm,
+    });
   }
 }

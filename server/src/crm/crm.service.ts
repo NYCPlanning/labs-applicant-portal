@@ -52,6 +52,18 @@ export class CrmService {
     };
   }
 
+  async create(query, data, headers = {}) {
+    return this._create(query, data, headers);
+  }
+
+  async update(entity, guid, data, headers = {}) {
+    return this._update(entity, guid, data, headers);
+  }
+
+  async associate(relationshipName, entitySetName1, guid1, entitySetName2, guid2, headers = {}) {
+    return this._associate(relationshipName, entitySetName1, guid1, entitySetName2, guid2, headers);
+  }
+
   // this provides the formatted values but doesn't do it for top level
   // TODO: where should this happen? 
   _fixLongODataAnnotations(dataObj) {
@@ -176,24 +188,143 @@ export class CrmService {
       });
     });
   }
-}
 
-function convertQueryObjectToURL(query: any) {
-  const url = new URL('https://google.com');
+  async _create(query, data, headers): Promise<any> {
+    //  get token
+    const JWToken = await ADAL.acquireToken();
+    const options = {
+      url: `${this.host + query}`,
+      headers: {
+        'Accept-Encoding': 'gzip, deflate',
+        'Content-Type': 'application/json; charset=utf-8',
+        Authorization: `Bearer ${JWToken}`,
+        'OData-MaxVersion': '4.0',
+        'OData-Version': '4.0',
+        Accept: 'application/json',
+        Prefer: 'return=representation',
+        ...headers
+      },
+      body: JSON.stringify(data),
+      encoding: null,
+    };
 
-  for (const key in query) {
-    if (query.hasOwnProperty(key)) {
-      const value = query[key];
+    return new Promise((resolve, reject) => {
+      Request.post(options, (error, response, body) => {
 
-      if (url.searchParams.get(key)) {
-        url.searchParams.set(key, value);
-      } else {
-        url.searchParams.append(key, value);
-      }
-    }
+        const encoding = response.headers['content-encoding'];
+
+        if (error || (response.statusCode != 200 && response.statusCode != 201 && response.statusCode != 204 && response.statusCode != 1223)) {
+          const parseError = jsonText => {
+            // Bug: sometimes CRM returns 'object reference' error
+            // Fix: if we retry error will not show again
+            const json_string = jsonText.toString('utf-8');
+
+            var result = JSON.parse(json_string, this._dateReviver);
+            var err = this._parseErrorMessage(result);
+            reject(err);
+          };
+          if (encoding && encoding.indexOf('gzip') >= 0) {
+            zlib.gunzip(body, (err, dezipped) => {
+              parseError(dezipped);
+            });
+          }
+          else {
+            parseError(body);
+
+          }
+        }
+        else if (response.statusCode === 200 || response.statusCode === 201) {
+          const parseResponse = jsonText => {
+            const json_string = jsonText.toString('utf-8');
+            var result = JSON.parse(json_string, this._dateReviver);
+            resolve(result);
+          };
+
+          if (encoding && encoding.indexOf('gzip') >= 0) {
+            zlib.gunzip(body, (err, dezipped) => {
+              parseResponse(dezipped);
+            });
+          }
+          else {
+            parseResponse(body);
+          }
+        }
+        else if (response.statusCode === 204 || response.statusCode === 1223) {
+          const uri = response.headers["OData-EntityId"];
+          if (uri) {
+            // create request - server sends new id
+            const regExp = /\(([^)]+)\)/;
+            const matches = regExp.exec(uri);
+            const newEntityId = matches[1];
+            resolve(newEntityId);
+          }
+          else {
+            // other type of request - no response
+            resolve();
+          }
+        }
+        else {
+          resolve();
+        }
+      });
+    })
   }
 
-  const { search } = url;
+  async _update(entitySetName, guid, data, headers) {
+    var query = entitySetName + "(" + guid + ")";
+    return this._sendPatchRequest(query, data, headers);
+  }
 
-  return search.split('?')[1];
+  async _sendPatchRequest(query, data, headers) {
+    //  get token
+    const JWToken = await ADAL.acquireToken();
+    const options = {
+      url: `${this.host + query}`,
+      headers: {
+        'Accept-Encoding': 'gzip, deflate',
+        'Content-Type': 'application/json; charset=utf-8',
+        Authorization: `Bearer ${JWToken}`,
+        'OData-MaxVersion': '4.0',
+        'OData-Version': '4.0',
+        Accept: 'application/json',
+        Prefer: 'odata.include-annotations="*"',
+        ...headers
+      },
+      body: JSON.stringify(data),
+      encoding: null,
+    };
+
+    return new Promise((resolve, reject) => {
+      Request.patch(options, (error, response, body) => {
+        const encoding = response.headers['content-encoding'];
+
+        if (error || response.statusCode != 204) {
+          const parseError = jsonText => {
+            const json_string = jsonText.toString('utf-8');
+            var result = JSON.parse(json_string, this._dateReviver);
+            var err = this._parseErrorMessage(result);
+            reject(err);
+          };
+          if (encoding && encoding.indexOf('gzip') >= 0) {
+            zlib.gunzip(body, (err, dezipped) => {
+              parseError(dezipped);
+            });
+          }
+          else {
+            parseError(body);
+
+          }
+        }
+        else resolve();
+      })
+    });
+  }
+
+  async _associate(relationshipName, entitySetName1, guid1, entitySetName2, guid2, headers) {
+    const query = entitySetName1 + "(" + guid1 + ")/" + relationshipName + "/$ref";
+    const data = {
+      "@odata.id": this.host + entitySetName2 + "(" + guid2 + ")"
+    };
+    return this.create(query, data, headers);
+  }
 }

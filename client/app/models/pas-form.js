@@ -220,4 +220,12 @@ export default class PasFormModel extends Model {
         .map((bbl) => bbl.save()),
     );
   }
+
+  async saveDirtyApplicants() {
+    return Promise.all(
+      this.applicants
+        .filter((applicant) => applicant.hasDirtyAttributes)
+        .map((applicant) => applicant.save()),
+    );
+  }
 }

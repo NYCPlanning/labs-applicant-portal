@@ -1,6 +1,9 @@
 import Model, { attr } from '@ember-data/model';
 
 export default class ApplicantModel extends Model {
+  @belongsTo('pas-form')
+  pasForm;
+
   // indicates which table to send to crm ("Applicant" or "Applicant Representative")
   @attr('string', {
     defaultValue: 'Applicant',

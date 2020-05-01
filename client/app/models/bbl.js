@@ -1,12 +1,15 @@
-import Model, { attr } from '@ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
 
 export default class BblModel extends Model {
-    @attr
-    dcpBblnumber;
+  @belongsTo('pas-form')
+  pasForm;
 
-    @attr
-    dcpDevelopmentsite;
+  @attr
+  dcpBblnumber;
 
-    @attr
-    dcpPartiallot;
+  @attr('boolean')
+  dcpDevelopmentsite;
+
+  @attr
+  dcpPartiallot;
 }

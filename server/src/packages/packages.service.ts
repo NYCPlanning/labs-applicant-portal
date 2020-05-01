@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CrmService } from '../crm/crm.service';
+import { pick } from 'underscore';
+import { PACKAGE_ATTRS } from './packages.controller';
 
 @Injectable()
 export class PackagesService {
@@ -40,5 +42,11 @@ export class PackagesService {
       ...projectPackageForm.dcp_package,
       dcp_pasform: projectPackageForm,
     };
+  }
+
+  async patchPackage(id, body) {
+    const allowedAttrs = pick(body, PACKAGE_ATTRS);
+
+    return this.crmService.update('dcp_packages', id, allowedAttrs);
   }
 }
