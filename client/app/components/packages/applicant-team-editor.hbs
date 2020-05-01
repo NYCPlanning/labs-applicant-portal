@@ -1,0 +1,49 @@
+<section {{did-insert this.addApplicantIfEmpty}}>
+  {{#each @applicants as |applicant index|}}
+    <Packages::ApplicantFieldset
+      @elementId={{concat 'applicant-fieldset-' index}}
+      @applicant={{applicant}}
+      @removeApplicant={{fn this.removeApplicant}}
+      data-test-applicant-fieldset={{index}}
+      data-test-applicant-type={{applicant.targetEntity}}
+    >
+      <button
+        class="trash-button text-red-dark"
+        type="button"
+        onClick={{fn this.removeApplicant applicant}}
+        data-test-remove-applicant-button
+      >
+        <FaIcon 
+          @icon="times"
+          @prefix="fas"
+        />
+        Remove Applicant
+      </button>
+    </Packages::ApplicantFieldset>
+  {{/each}}
+
+  {{!-- buttons for user to add new applicants --}}
+  <div class="fieldset-adder">
+    <p class="small-margin-bottom">
+      Add an Applicant Team Member:
+    </p>
+    <p class="button-group">
+      <button 
+        class="button secondary"
+        type="button"
+        {{on "click" (fn this.addApplicant "Applicant") }}
+        data-test-add-applicant-button
+      >
+        Add Applicant
+      </button>
+      <button 
+        class="button secondary"
+        type="button"
+        {{on "click" (fn this.addApplicant "Applicant Team Member") }}
+        data-test-add-applicant-team-member-button
+      >
+        Add Other Team Member
+      </button>
+    </p>
+  </div>
+</section>

@@ -1,0 +1,94 @@
+<fieldset class="fieldset relative" ...attributes>
+  <legend data-test-applicant-title="{{@applicant.targetEntity}}">
+    <strong>
+      {{@applicant.targetEntity}}
+    </strong>
+  </legend>
+
+  {{!-- if sent to CRM "Applicant Information" table, need to know "type" --}}
+  {{#if (eq @applicant.targetEntity "Applicant")}}
+    <div class="cell medium-6" data-test-applicant-type-radio-group>
+      <Input 
+        @type="radio" 
+        name={{concat 'applicant-type' @elementId}}
+        @value="Individual"
+        checked={{if (eq @applicant.applicantType "Individual") true}}
+        onClick={{fn this.updateAttr @applicant "applicantType" "Individual"}}
+        data-test-applicant-type-radio-individual
+      />
+      <label>Individual</label>
+      <Input 
+        @type="radio" 
+        name={{concat 'applicant-type' @elementId}} 
+        @value="Organization"
+        checked={{if (eq @applicant.applicantType "Organization") true}}
+        onClick={{fn this.updateAttr @applicant "applicantType" "Organization"}}
+        data-test-applicant-type-radio-organization
+      />
+      <label>Organization</label>
+    </div>
+  {{/if}}
+
+  {{!-- and if the applicant is on behalf of an organization, we need to know which organization --}}
+  {{#if (eq @applicant.applicantType "Organization")}}
+    <label>
+      Organization 
+      <Input 
+        type="text" 
+        @value={{@applicant.organization}}
+        data-test-applicant-organization
+      />
+    </label>
+    <hr/>
+  {{/if}}
+
+  <div class="grid-x grid-margin-x">
+    <div class="cell medium-6">
+      <label>First Name</label>
+      <Input 
+        type="text" 
+        @value={{@applicant.firstName}}
+      />
+    </div>
+    <div class="cell medium-6">
+      <label>Last Name</label>
+        <Input 
+          type="text" 
+          @value={{@applicant.lastName}}
+        />
+    </div>
+  </div>
+
+  {{!-- always allow input for Applicant Team Members --}}
+  {{#if (eq @applicant.targetEntity "Applicant Team Member")}}
+    <label>
+      Organization
+      <Input 
+        type="text" 
+        @value={{@applicant.organization}}
+      />
+    </label>
+  {{/if}}
+
+  <label>Email Address <Input type="email" @value={{@applicant.emailAddress}}/></label>
+  <label>Address <Input type="text" @value={{@applicant.address}}/></label>
+
+  <div class="grid-x grid-margin-x">
+    <div class="cell medium-auto">
+      <label>City <Input type="text" @value={{@applicant.city}}/></label>
+    </div>
+    <div class="cell auto medium-2">
+      <label>State <Input type="text" @value={{@applicant.state}}/></label>
+    </div>
+    <div class="cell auto medium-4">
+      <label>ZIP <Input type="text" @value={{@applicant.zip}}/></label>
+    </div>
+  </div>
+  
+  <label>Phone <Input type="text" @value={{@applicant.phone}}/></label>
+
+  <p class="text-right no-margin text-small">
+    {{yield}}
+  </p>
+
+</fieldset>
