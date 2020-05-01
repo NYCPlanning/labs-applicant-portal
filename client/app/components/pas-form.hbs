@@ -25,8 +25,9 @@
     <section class="form-section" id="#applicant-team">
       <h3>Applicant Team</h3>
 
-      {{!-- TODO: Add applicant-team-editor component --}}
-      <div class="bg-red-dim xlarge-padding medium-margin-bottom">applicant-team-editor component</div>
+      <Packages::ApplicantTeamEditor
+        @applicants={{@package.pasForm.applicants}}
+      />
     </section>
 
     <section class="form-section" id="#applicant-team">
