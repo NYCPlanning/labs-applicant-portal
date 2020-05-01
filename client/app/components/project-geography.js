@@ -41,6 +41,7 @@ export default class ProjectGeographyComponent extends Component {
   // Remove bbl object from list of bbls
   @action
   removeBbl(bblObjectToBeRemoved) {
+    this.store.deleteRecord(bblObjectToBeRemoved);
     this.args.bbls.removeObject(bblObjectToBeRemoved);
   }
 
