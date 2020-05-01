@@ -13,7 +13,7 @@ module('Integration | Component | pas-form', function(hooks) {
 
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
 
-    await render(hbs`<PasForm @package={{this.package}} />`);
+    await render(hbs`<Packages::PasForm::Edit @package={{this.package}} />`);
     assert.dom('[data-test-dcpurbanrenewalarea]').doesNotExist();
     await click('[data-test-dcpurbanrenewalarea-yes]');
     assert.dom('[data-test-dcpurbanrenewalarea]').exists();
@@ -24,7 +24,7 @@ module('Integration | Component | pas-form', function(hooks) {
 
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
 
-    await render(hbs`<PasForm @package={{this.package}} />`);
+    await render(hbs`<Packages::PasForm::Edit @package={{this.package}} />`);
     assert.dom('[data-test-dcppleaseexplaintypeiienvreview]').doesNotExist();
     await click('[data-test-dcplanduseactiontype2-yes]');
     assert.dom('[data-test-dcppleaseexplaintypeiienvreview]').exists();
@@ -35,7 +35,7 @@ module('Integration | Component | pas-form', function(hooks) {
 
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
 
-    await render(hbs`<PasForm @package={{this.package}} />`);
+    await render(hbs`<Packages::PasForm::Edit @package={{this.package}} />`);
     assert.dom('[data-test-dcpprojectareaindustrialbusinesszone]').doesNotExist();
     await click('[data-test-dcpprojectareaindustrialbusinesszone-yes]');
     assert.dom('[data-test-dcpprojectareaindustrialbusinesszone]').exists();
@@ -47,7 +47,7 @@ module('Integration | Component | pas-form', function(hooks) {
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
 
 
-    await render(hbs`<PasForm @package={{this.package}} />`);
+    await render(hbs`<Packages::PasForm::Edit @package={{this.package}} />`);
     assert.dom('[data-test-dcpisprojectarealandmark]').doesNotExist();
     await click('[data-test-dcpIsprojectarealandmark-yes]');
     assert.dom('[data-test-dcpisprojectarealandmark]').exists();
@@ -58,7 +58,7 @@ module('Integration | Component | pas-form', function(hooks) {
 
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
 
-    await render(hbs`<PasForm @package={{this.package}} />`);
+    await render(hbs`<Packages::PasForm::Edit @package={{this.package}} />`);
     assert.dom('[data-test-dcpproposeddevelopmentsiteotherexplanation]').doesNotExist();
     await click('[data-test-dcpproposeddevelopmentsiteinfoother]');
     assert.dom('[data-test-dcpproposeddevelopmentsiteotherexplanation]').exists();
@@ -69,7 +69,7 @@ module('Integration | Component | pas-form', function(hooks) {
 
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
 
-    await render(hbs`<PasForm @package={{this.package}} />`);
+    await render(hbs`<Packages::PasForm::Edit @package={{this.package}} />`);
     assert.dom('[data-test-dcpinclusionaryhousingdesignatedareaname]').doesNotExist();
     await click('[data-test-dcpisinclusionaryhousingdesignatedarea-yes]');
     assert.dom('[data-test-dcpinclusionaryhousingdesignatedareaname]').exists();
@@ -80,7 +80,7 @@ module('Integration | Component | pas-form', function(hooks) {
 
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
 
-    await render(hbs`<PasForm @package={{this.package}} />`);
+    await render(hbs`<Packages::PasForm::Edit @package={{this.package}} />`);
     assert.dom('[data-test-dcphousingunittype-city]').doesNotExist();
     assert.dom('[data-test-dcphousingunittype-state]').doesNotExist();
     assert.dom('[data-test-dcphousingunittype-federal]').doesNotExist();
