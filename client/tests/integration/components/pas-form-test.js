@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click } from '@ember/test-helpers';
+import { render, click, fillIn } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -90,5 +90,23 @@ module('Integration | Component | pas-form', function(hooks) {
     assert.dom('[data-test-dcphousingunittype-state]').exists();
     assert.dom('[data-test-dcphousingunittype-federal]').exists();
     assert.dom('[data-test-dcphousingunittype-other]').exists();
+  });
+
+  test('user can save pas form', async function(assert) {
+    const projectPackage = this.server.create('package');
+
+    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
+
+    // render form
+    await render(hbs`<PasForm @package={{this.package}} />`);
+    
+    // make it dirty
+    await fillIn('[data-test-dcprevisedprojectname]', 'Some Cool New Project Name');
+
+    await this.pauseTest();
+
+    // save it
+    // HOW TO VERIFY THIS BEHAVIOR!?
+    assert.ok(await click('[data-test-save-button'));
   });
 });
