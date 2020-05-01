@@ -35,16 +35,20 @@ export class BblsController {
   }
 
   @Post('/')
-  async create(@Body() body) {
+  create(@Body() body) {
     const allowedAttrs = pick(body, BBL_ATTRIBUTES);
 
-    const associatedPasForm = body.pas_form ? {
-      'dcp_dcp_projectbbl_dcp_pasform@odata.bind': [`/dcp_pasforms(${body.pas_form})`],
-    } : {};
+    if (body.pas_form) {
+      return this.crmService.create('dcp_projectbbls', {
+        ...allowedAttrs,
 
-    return this.crmService.create('dcp_projectbbls', {
-      ...allowedAttrs,
-      ...associatedPasForm,
-    });
+        // Dy365 syntax for associating a newly-created record
+        // with an existing record.
+        // see: https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/webapi/create-entity-web-api#associate-entity-records-on-create
+        'dcp_dcp_projectbbl_dcp_pasform@odata.bind': [`/dcp_pasforms(${body.pas_form})`],
+      });
+    } else {
+      return this.crmService.create('dcp_projectbbls', allowedAttrs);
+    }
   }
 }

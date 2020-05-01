@@ -30,7 +30,7 @@ export class ApplicantsController {
   constructor(private readonly crmService: CrmService) {}
 
   @Patch('/:id')
-  async patchApplicant(@Body() body, @Param('id') id) {
+  async update(@Body() body, @Param('id') id) {
     const allowedAttrs = pick(body, APPLICANT_ATTRIBUTES);
 
     await this.crmService.update('dcp_applicantinformations', id, allowedAttrs);
@@ -42,16 +42,20 @@ export class ApplicantsController {
   }
 
   @Post('/')
-  postApplicant(@Body() body) {
+  create(@Body() body) {
     const allowedAttrs = pick(body, APPLICANT_ATTRIBUTES);
 
-    const associatedPasForm = body.pas_form ? {
-      'dcp_dcp_applicantinformation_dcp_pasform@odata.bind': [`/dcp_pasforms(${body.pas_form})`],
-    } : {};
+    if (body.pas_form) {
+      return this.crmService.create('dcp_applicantinformations', {
+        ...allowedAttrs,
 
-    return this.crmService.create('dcp_applicantinformations', {
-      ...allowedAttrs,
-      ...associatedPasForm,
-    });
+        // Dy365 syntax for associating a newly-created record
+        // with an existing record.
+        // see: https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/webapi/create-entity-web-api#associate-entity-records-on-create
+        'dcp_dcp_applicantinformation_dcp_pasform@odata.bind': [`/dcp_pasforms(${body.pas_form})`],
+      });
+    } else {
+      return this.crmService.create('dcp_applicantinformations', allowedAttrs);
+    }
   }
 }

@@ -95,7 +95,7 @@ export class PasFormController {
   constructor(private readonly crmService: CrmService) {}
 
   @Patch('/:id')
-  async patchPasForm(@Body() body, @Param('id') id) {
+  async update(@Body() body, @Param('id') id) {
     const allowedAttrs = pick(body, PAS_FORM_ATTRIBUTES);
 
     await this.crmService.update('dcp_pasforms', id, allowedAttrs);

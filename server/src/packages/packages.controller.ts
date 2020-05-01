@@ -7,6 +7,7 @@ import { PAS_FORM_ATTRIBUTES } from './pas-form/pas-form.controller';
 import { APPLICANT_ATTRIBUTES } from './pas-form/applicants/applicants.controller';
 import { BBL_ATTRIBUTES } from './pas-form/bbls/bbls.controller';
 import { pick } from 'underscore';
+import { PROJECT_ATTRIBUTES } from '../projects/projects.controller';
 
 export const PACKAGE_ATTRS = [
   'statuscode',
@@ -19,8 +20,16 @@ export const PACKAGE_ATTRS = [
   attributes: [
     ...PACKAGE_ATTRS,
 
+    // entity relationships
     'pas-form',
+    'project',
   ],
+  project: {
+    ref: 'dcp_projectid',
+    attributes: [
+      ...PROJECT_ATTRIBUTES
+    ],
+  },
   'pas-form': {
     ref: 'dcp_pasformid',
     attributes: [
@@ -67,20 +76,20 @@ export const PACKAGE_ATTRS = [
 }))
 @UsePipes(JsonApiDeserializePipe)
 @UseGuards(AuthenticateGuard)
-@Controller()
+@Controller('packages')
 export class PackagesController {
   constructor(private readonly packagesService: PackagesService) {}
 
-  @Get('/packages/:id')
+  @Get('/:id')
   getPackage(@Param('id') id) {
     return this.packagesService.getPackage(id);
   }
 
-  @Patch('/packages/:id')
+  @Patch('/:id')
   async patchPackage(@Body() body, @Param('id') id) {
     const allowedAttrs = pick(body, PACKAGE_ATTRS);
 
-    await this.packagesService.patchPackage(id, allowedAttrs);
+    await this.packagesService.update(id, allowedAttrs);
 
     return {
       dcp_packageid: id,
