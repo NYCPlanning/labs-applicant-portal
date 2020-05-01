@@ -21,52 +21,52 @@ export default class PasFormModel extends Model {
 
 
   // Proposed Land Use Actions
-  @attr('string')
+  @attr('number')
   dcpPfchangeincitymap;
 
-  @attr('string')
+  @attr('number')
   dcpPfudaap;
 
-  @attr('string')
+  @attr('number')
   dcpPfsiteselectionpublicfacility;
 
-  @attr('string')
+  @attr('number')
   dcpPfura;
 
-  @attr('string')
+  @attr('number')
   dcpPfacquisitionofrealproperty;
 
-  @attr('string')
+  @attr('number')
   dcpPfhousingplanandproject;
 
-  @attr('string')
+  @attr('number')
   dcpPfdispositionofrealproperty;
 
-  @attr('string')
+  @attr('number')
   dcpPffranchise;
 
-  @attr('string')
+  @attr('number')
   dcpPfrevocableconsent;
 
-  @attr('string')
+  @attr('number')
   dcpPfconcession;
 
-  @attr('string')
+  @attr('number')
   dcpPflandfill;
 
-  @attr('string')
+  @attr('number')
   dcpPfzoningspecialpermit;
 
-  @attr('string')
+  @attr('number')
   dcpZoningspecialpermitpursuantto;
 
-  @attr('string')
+  @attr('number')
   dcpZoningspecialpermittomodify;
 
-  @attr('string')
+  @attr('number')
   dcpPfzoningauthorization;
 
-  @attr('string')
+  @attr('number')
   dcpZoningauthorizationpursuantto;
 
   @attr('string')

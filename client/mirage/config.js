@@ -38,6 +38,7 @@ export default function() {
   this.post('/bbls');
   this.patch('/bbls/:id');
 
+  this.patch('/pas-forms');
   this.post('/pas-forms');
   this.patch('/pas-forms/:id');
   this.post('/packages');

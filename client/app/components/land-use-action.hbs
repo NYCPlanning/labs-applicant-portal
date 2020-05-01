@@ -1,0 +1,17 @@
+<div class="large-margin-bottom">
+  <label data-test-land-use-action-picker>
+    Add a Proposed Action:
+    <PowerSelect
+      supportsDataTestProperties={{true}}
+      @placeholder="-- select an action --"
+      @searchEnabled={{false}}
+      @selected={{this.selectedLandUseAction}}
+      @options={{this.landUseActionTextOptions}}
+      @onchange={{fn (mut this.selectedLandUseAction)}}
+      @onclose={{fn this.setCount}}
+      as |landUseAction|
+    >
+      {{landUseAction}}
+    </PowerSelect>
+  </label>
+</div>
