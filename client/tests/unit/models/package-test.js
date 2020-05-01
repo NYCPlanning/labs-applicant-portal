@@ -17,7 +17,7 @@ module('Unit | Model | package', function(hooks) {
       }),
     });
 
-    bbl.dcpDevelopmentsite = 'test';
+    bbl.dcpDevelopmentsite = true;
 
     await model.saveDescendants();
 

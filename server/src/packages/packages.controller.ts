@@ -3,93 +3,37 @@ import { PackagesService } from './packages.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 import { JsonApiDeserializePipe } from '../json-api-deserialize.pipe';
 import { AuthenticateGuard } from '../authenticate.guard';
+import { PAS_FORM_ATTRIBUTES } from './pas-form/pas-form.controller';
+import { APPLICANT_ATTRIBUTES } from './pas-form/applicants/applicants.controller';
+import { BBL_ATTRIBUTES } from './pas-form/bbls/bbls.controller';
+import { pick } from 'underscore';
+import { PROJECT_ATTRIBUTES } from '../projects/projects.controller';
+
+export const PACKAGE_ATTRS = [
+  'statuscode',
+  'dcp_packagetype',
+  'dcp_visibility',
+];
 
 @UseInterceptors(new JsonApiSerializeInterceptor('packages', {
   id: 'dcp_packageid',
   attributes: [
-    'statuscode',
-    'dcp_packagetype',
-    'dcp_visibility',
+    ...PACKAGE_ATTRS,
+
+    // entity relationships
     'pas-form',
+    'project',
   ],
+  project: {
+    ref: 'dcp_projectid',
+    attributes: [
+      ...PROJECT_ATTRIBUTES
+    ],
+  },
   'pas-form': {
     ref: 'dcp_pasformid',
     attributes: [
-      // Project Information
-      'dcp_revisedprojectname',
-
-      // Project Geography
-      'dcp_descriptionofprojectareageography',
-
-      // Proposed Land Use Actions
-      'dcp_pfchangeincitymap',
-      'dcp_pfudaap',
-      'dcp_pfsiteselectionpublicfacility',
-      'dcp_pfura',
-      'dcp_pfacquisitionofrealproperty',
-      'dcp_pfhousingplanandproject',
-      'dcp_pfdispositionofrealproperty',
-      'dcp_pffranchise',
-      'dcp_pfrevocableconsent',
-      'dcp_pfconcession',
-      'dcp_pflandfill',
-      'dcp_pfzoningspecialpermit',
-      'dcp_zoningspecialpermitpursuantto',
-      'dcp_zoningspecialpermittomodify',
-      'dcp_pfzoningauthorization',
-      'dcp_zoningauthorizationpursuantto',
-      'dcp_zoningauthorizationtomodify',
-      'dcp_pfzoningcertification',
-      'dcp_zoningpursuantto',
-      'dcp_zoningtomodify',
-      'dcp_pfzoningmapamendment',
-      'dcp_existingmapamend',
-      'dcp_proposedmapamend',
-      'dcp_pfzoningtextamendment',
-      'dcp_affectedzrnumber',
-      'dcp_zoningresolutiontitle',
-      'dcp_previousulurpnumbers1',
-      'dcp_previousulurpnumbers2',
-
-      // Project Area
-      'dcp_proposedprojectorportionconstruction',
-      'dcp_urbanrenewalarea',
-      'dcp_urbanareaname',
-      'dcp_legalstreetfrontage',
-      'dcp_landuseactiontype2',
-      'dcp_pleaseexplaintypeiienvreview',
-      'dcp_projectareaindustrialbusinesszone',
-      'dcp_projectareaindutrialzonename',
-      'dcp_isprojectarealandmark',
-      'dcp_projectarealandmarkname',
-      'dcp_projectareacoastalzonelocatedin',
-      'dcp_projectareaischancefloodplain',
-      'dcp_restrictivedeclaration',
-      'dcp_cityregisterfilenumber',
-      'dcp_restrictivedeclarationrequired',
-
-      // Proposed Development Site
-      'dcp_estimatedcompletiondate',
-      'dcp_proposeddevelopmentsitenewconstruction',
-      'dcp_proposeddevelopmentsitedemolition',
-      'dcp_proposeddevelopmentsiteinfoalteration',
-      'dcp_proposeddevelopmentsiteinfoaddition',
-      'dcp_proposeddevelopmentsitechnageofuse',
-      'dcp_proposeddevelopmentsiteenlargement',
-      'dcp_proposeddevelopmentsiteinfoother',
-      'dcp_proposeddevelopmentsiteotherexplanation',
-      'dcp_isinclusionaryhousingdesignatedarea',
-      'dcp_inclusionaryhousingdesignatedareaname',
-      'dcp_discressionaryfundingforffordablehousing',
-      'dcp_housingunittype',
-
-      // Project Description
-      'dcp_projectdescriptionproposeddevelopment',
-      'dcp_projectdescriptionbackground',
-      'dcp_projectdescriptionproposedactions',
-      'dcp_projectdescriptionproposedarea',
-      'dcp_projectdescriptionsurroundingarea',
-      'dcp_projectattachmentsotherinformation',
+      ...PAS_FORM_ATTRIBUTES,
 
       // associations/relationships/navigation links/extensions
       'applicants',
@@ -98,22 +42,13 @@ import { AuthenticateGuard } from '../authenticate.guard';
     applicants: {
       ref: 'dcp_applicantinformationid',
       attributes: [
-        'dcp_firstname',
-        'dcp_lastname',
-        'dcp_organization',
-        'dcp_email',
-        'dcp_address',
-        'dcp_city',
-        'dcp_state',
-        'dcp_zipcode',
-        'dcp_phone',
+        ...APPLICANT_ATTRIBUTES
       ],
     },
     bbls: {
       ref: 'dcp_projectbblid',
       attributes: [
-        'dcp_partiallot',
-        'dcp_developmentsite',
+        ...BBL_ATTRIBUTES
       ],
     },
   },
@@ -141,17 +76,21 @@ import { AuthenticateGuard } from '../authenticate.guard';
 }))
 @UsePipes(JsonApiDeserializePipe)
 @UseGuards(AuthenticateGuard)
-@Controller()
+@Controller('packages')
 export class PackagesController {
   constructor(private readonly packagesService: PackagesService) {}
 
-  @Get('/packages/:id')
+  @Get('/:id')
   getPackage(@Param('id') id) {
     return this.packagesService.getPackage(id);
   }
 
-  @Patch('/packages/:id')
-  patchPackage(@Body() body, @Param('id') id) {
+  @Patch('/:id')
+  async patchPackage(@Body() body, @Param('id') id) {
+    const allowedAttrs = pick(body, PACKAGE_ATTRS);
+
+    await this.packagesService.update(id, allowedAttrs);
+
     return {
       dcp_packageid: id,
       ...body,
