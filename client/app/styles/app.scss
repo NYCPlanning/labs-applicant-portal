@@ -20,3 +20,29 @@
 @import 'modules/_login';
 @import 'modules/_m-search';
 @import 'modules/_pasform';
+
+
+.site-header {
+  @include breakpoint(large) {
+    position: sticky;
+    top: 0;
+  }
+}
+
+.form-section {
+  & + & {
+    border-top: $hr-border;
+    margin-top: $global-margin*3;
+    padding-top: $global-margin*3;
+  }
+}
+
+$sticky-sidebar-offset: 6rem + rem-calc(20);
+.sticky-sidebar {
+  @include breakpoint(large) {
+    position: sticky;
+    top: $sticky-sidebar-offset;
+    max-height: calc(100vh - #{$sticky-sidebar-offset});
+    overflow: auto;
+  }
+}

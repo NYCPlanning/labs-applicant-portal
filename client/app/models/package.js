@@ -4,7 +4,7 @@ export default class PackageModel extends Model {
   @belongsTo('project')
   project;
 
-  @belongsTo('pas-form')
+  @belongsTo('pas-form', { async: false })
   pasForm;
 
   @attr('string')

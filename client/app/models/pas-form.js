@@ -1,7 +1,7 @@
 import Model, { belongsTo, attr } from '@ember-data/model';
 
 export default class PasFormModel extends Model {
-  @belongsTo
+  @belongsTo('pas-form', { async: false })
   package;
 
 

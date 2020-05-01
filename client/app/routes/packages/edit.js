@@ -2,6 +2,6 @@ import Route from '@ember/routing/route';
 
 export default class PackagesEditRoute extends Route {
   model(params) {
-    return this.store.findRecord('package', params.id);
+    return this.store.findRecord('package', params.id, { include: 'pasForm' });
   }
 }
