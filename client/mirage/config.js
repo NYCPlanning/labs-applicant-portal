@@ -28,6 +28,10 @@ export default function() {
 
   this.get('/packages');
   this.get('/packages/:id');
+  this.get('/applicants');
+  this.get('/applicants/:id');
+  this.patch('/applicants/:id');
+  this.post('/applicants');
 
   this.get('/bbls');
   this.get('/bbls/:id');
