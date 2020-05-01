@@ -13,6 +13,7 @@ export const PACKAGE_ATTRS = [
   'statuscode',
   'dcp_packagetype',
   'dcp_visibility',
+  'versionnumber',
 ];
 
 @UseInterceptors(new JsonApiSerializeInterceptor('packages', {
