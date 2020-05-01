@@ -21,7 +21,7 @@
       name={{concat idx '-bbl-dev-site'}}
       id={{concat idx '-bbl-dev-site-yes'}}
       @value={{eq bbl.dcpDevelopmentsite true}}
-      @checked={{eq bbl.dcpDevelopmentsite true}}
+      checked={{eq bbl.dcpDevelopmentsite true}}
       onClick={{fn this.updateAttr bbl "dcpDevelopmentsite" true}}
       data-test-bbl-development-site-yes="{{bbl.dcpBblnumber}}"
     />
@@ -33,7 +33,7 @@
       name={{concat idx '-bbl-dev-site'}}
       id={{concat idx '-bbl-dev-site-no'}}
       @value={{eq bbl.dcpDevelopmentsite false}}
-      @checked={{eq bbl.dcpDevelopmentsite false}}
+      checked={{eq bbl.dcpDevelopmentsite false}}
       onClick={{fn this.updateAttr bbl "dcpDevelopmentsite" false}}
       data-test-bbl-development-site-no="{{bbl.dcpBblnumber}}"
     />
@@ -50,7 +50,7 @@
       name="bbl-partial-lot-yes"
       id="bbl-partial-lot-yes"
       @value={{eq bbl.dcpPartiallot true}}
-      @checked={{eq bbl.dcpPartiallot true}}
+      checked={{eq bbl.dcpPartiallot true}}
       onClick={{fn this.updateAttr bbl "dcpPartiallot" true}}
       data-test-bbl-partial-lot-yes="{{bbl.dcpBblnumber}}"
     />
@@ -62,7 +62,7 @@
       name="bbl-partial-lot-no"
       id="bbl-partial-lot-no"
       @value={{eq bbl.dcpPartiallot false}}
-      @checked={{eq bbl.dcpPartiallot false}}
+      checked={{eq bbl.dcpPartiallot false}}
       onClick={{fn this.updateAttr bbl "dcpPartiallot" false}}
       data-test-bbl-partial-lot-no="{{bbl.dcpBblnumber}}"
     />
