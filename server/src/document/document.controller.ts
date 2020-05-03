@@ -1,21 +1,19 @@
 import {
   Controller,
   Post,
-  Req,
-  Res,
   UseInterceptors,
   UploadedFile,
-  HttpStatus,
-  HttpException,
   Session,
+  Body,
+  UseGuards,
 } from '@nestjs/common';
 import { ConfigService } from '../config/config.service';
 import { CrmService } from '../crm/crm.service';
 import { DocumentService } from './document.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Request } from 'express';
+import { AuthenticateGuard } from '../authenticate.guard';
 
-@Controller('document')
+@Controller('documents')
 export class DocumentController {
   constructor(
     private readonly config: ConfigService,
@@ -34,19 +32,12 @@ export class DocumentController {
    */
   @Post('/')
   @UseInterceptors(FileInterceptor('file'))
-  async index(@UploadedFile() file, @Req() request: Request, @Res() response, @Session() session) {
-    const {
-      body: {
-        instanceId
-      },
-    } = request;
-
+  @UseGuards(AuthenticateGuard)
+  async create(@UploadedFile() file, @Body('instanceId') instanceId, @Session() session) {
     const headers = {
       // Document will be uploaded as this user
       MSCRMCallerID: this.config.get('CRM_SERVICE_CONTACT_ID'),
     };
-
-    let uploadDocResponse = {};
 
     const encodedBase64File = Buffer.from(file.buffer).toString('base64');
 
@@ -61,17 +52,13 @@ export class DocumentController {
 
     const folderName = `${packageName}_${packageGUID.replace(/\-/g,'').toUpperCase()}`;
 
-    uploadDocResponse = await this.documentService.uploadDocument('dcp_package',
-        packageGUID,
-        folderName,
-        file.originalname,
-        encodedBase64File,
-        true,
-        headers
-      );
-
-    response.status(200).send({"message": uploadDocResponse});
+    return this.documentService.uploadDocument('dcp_package',
+      packageGUID,
+      folderName,
+      file.originalname,
+      encodedBase64File,
+      true,
+      headers
+    );
   }
 }
-
-

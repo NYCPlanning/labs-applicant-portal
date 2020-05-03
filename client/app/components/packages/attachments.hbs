@@ -6,8 +6,9 @@
           Attachments
         </b>
       </legend>
+
       <ul class="no-bullet">  
-        {{#each this.fileManager.existingFiles as |file idx|}}
+        {{#each @fileManager.existingFiles as |file idx|}}
           <li
           class="text-justify"
           >
@@ -40,7 +41,7 @@
       </ul>
       <hr>
       <ul class="no-bullet">
-        {{#each this.fileManager.filesToDelete as |file idx|}}
+        {{#each @fileManager.filesToDelete as |file idx|}}
           <li
             class="text-justify"
           >
@@ -71,7 +72,7 @@
         {{/each}}
       </ul>
       <ul class="no-bullet">
-        {{#each this.fileManager.filesToUpload.files as |file idx|}}
+        {{#each @fileManager.filesToUpload.files as |file idx|}}
           <li
             class="text-justify"
           >
