@@ -2,6 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from './../src/app.module';
 import * as request from 'supertest';
 import * as nock from 'nock';
+import { doLogin } from './helpers/do-login';
+import { extractJWT } from './helpers/extract-jwt';
 
 describe('DocumentController (e2e)', () => {
   let app;
@@ -31,6 +33,17 @@ describe('DocumentController (e2e)', () => {
     .persist();
 
     const scope = nock('https://dcppfsuat2.crm9.dynamics.com');
+
+    // mock a dummy contact throughout to support doLogin()
+    scope
+      .get(uri => uri.includes('api/data/v9.1/contacts'))
+      .reply(200, {
+        value: [{
+          contactid: 'test',
+          emailaddress1: 'labs_dl@planning.nyc.gov',
+        }], '@odata.context': ''
+      })
+      .persist();
 
     scope
       .post(uri => uri.includes('api/data/v9.1/UploadDocument'))
@@ -65,8 +78,9 @@ describe('DocumentController (e2e)', () => {
       .persist();
   });
 
-  it('Client can POST to /document endpoint and upload a document', () => {
+  it('Client can POST to /document endpoint and upload a document', async () => {
     const server = app.getHttpServer();
+    const token = extractJWT(await doLogin(server, request));
 
     // mock a file that says "buffer"
     const file = Buffer.from([0x62, 0x75, 0x66, 0x66, 0x65, 0x72]);
@@ -77,10 +91,9 @@ describe('DocumentController (e2e)', () => {
       .attach('file', file, 'test.txt')
       .field('instanceId', 'dfa002f2-8fce-e911-a99c-001dd8308076') // corresponds to package w  dcp_name = 2020K0109 - draft LUA - 1
       .field('entityName', 'dcp_package')
+      .set('Cookie', token)
       .expect(200)
       .expect({ message: 'Uploaded document successfully.' });
-      // TODO: Restore use of cookie
-      // .set('Cookie', token)
   });
 
 });

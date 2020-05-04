@@ -8,13 +8,16 @@ import {
   HttpStatus,
   HttpException,
   Session,
+  UseGuards
 } from '@nestjs/common';
 import { ConfigService } from '../config/config.service';
 import { CrmService } from '../crm/crm.service';
 import { DocumentService } from './document.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Request } from 'express';
+import { AuthenticateGuard } from '../authenticate.guard';
 
+@UseGuards(AuthenticateGuard)
 @Controller('document')
 export class DocumentController {
   constructor(
@@ -37,7 +40,7 @@ export class DocumentController {
   async index(@UploadedFile() file, @Req() request: Request, @Res() response, @Session() session) {
     const {
       body: {
-        instanceId
+        instanceId: packageGUID,
       },
     } = request;
 
@@ -49,8 +52,6 @@ export class DocumentController {
     let uploadDocResponse = {};
 
     const encodedBase64File = Buffer.from(file.buffer).toString('base64');
-
-    const packageGUID = instanceId;
 
     const packageRecord = (await this.crmService.get(
       'dcp_packages',
