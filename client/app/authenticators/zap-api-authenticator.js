@@ -2,6 +2,7 @@ import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
 import fetch from 'fetch';
 import window from 'ember-window-mock';
 import { inject as service } from '@ember/service';
+import { InvalidError } from '@ember-data/adapter/error';
 import ENV from '../config/environment';
 
 // lifted from https://github.com/simplabs/ember-simple-auth/blob/master/addon/mixins/oauth2-implicit-grant-callback-route-mixin.js#L6
@@ -38,7 +39,11 @@ export default class ZAPAuthenticator extends BaseAuthenticator {
     const { access_token } = _parseResponse(window.location.hash);
 
     if (!access_token) {
-      throw 'No NYCID token present'; // eslint-disable-line
+      throw new InvalidError([{
+        response: {
+          code: 'NO_TOKEN_PRESENT',
+        },
+      }]);
     }
 
     // Pass the NYCIDToken to backend /login endpoint.

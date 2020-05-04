@@ -759,8 +759,10 @@
         </div>
       </div>
 
-      {{!-- TODO: Add attachments-editor component --}}
-      <div class="bg-red-dim xlarge-padding medium-margin-bottom">attachments-editor component</div>
+      <Packages::Attachments
+        @package={{@package}}
+        @fileManager={{@package.fileManager}}
+      />
     </section>
 
   </div>
