@@ -5,9 +5,11 @@ import { tracked } from '@glimmer/tracking';
 export default class PasFormComponent extends Component {
   @tracked package;
 
+  // TODO: consider decoupling the PAS Form from the Package
+  // for better modularity and avoiding "inappropriate intimacy"
   @action
   save(packageInstance) {
-    packageInstance.saveDescendants();  
+    packageInstance.saveDescendants();
   }
 
   @action

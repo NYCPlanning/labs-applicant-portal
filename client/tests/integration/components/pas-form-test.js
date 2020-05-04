@@ -1,6 +1,8 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, fillIn } from '@ember/test-helpers';
+import {
+  render, click, fillIn, settled,
+} from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -98,15 +100,15 @@ module('Integration | Component | pas-form', function(hooks) {
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
 
     // render form
-    await render(hbs`<PasForm @package={{this.package}} />`);
-    
-    // make it dirty
+    await render(hbs`<Packages::PasForm::Edit @package={{this.package}} />`);
+
+    // edit a field
     await fillIn('[data-test-dcprevisedprojectname]', 'Some Cool New Project Name');
 
-    await this.pauseTest();
-
     // save it
-    // HOW TO VERIFY THIS BEHAVIOR!?
-    assert.ok(await click('[data-test-save-button'));
+    await click('[data-test-save-button]');
+    await settled(); // async make sure save action finishes before assertion
+
+    assert.equal(this.server.db.pasForms[0].dcpRevisedprojectname, 'Some Cool New Project Name');
   });
 });
