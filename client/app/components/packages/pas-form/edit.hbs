@@ -780,12 +780,41 @@
         <button
           type="button"
           class="button expanded large secondary"
-          disabled
+          {{on "click" this.toggleModal}}
         >
-        {{!-- TODO: Make this button work with the action passed in @submit--}}
+          {{!-- TODO: Disable this button if model dirty/invaild --}}
           Submit
         </button>
       </p>
+      {{#if this.modalIsOpen}}
+        {{#ember-wormhole to="reveal-modal-container"}}
+          <RevealModal @toggle={{this.toggleModal}}>
+            <h6>Confirm Pre-Applicant Statement submission</h6>
+            <p class="header-large medium-margin-top small-margin-bottom">Are you sure?</p>
+            <p>Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including the signature form) have been uploaded. If City Planning does not receive enough accurate information to provide guidance, the lead planner will notify you and request that this form be resubmitted with needed materials, corrections, or clarifications.</p>
+            <hr>
+            <div class="grid-x grid-margin-x">
+              <div class="cell large-6">
+                <button
+                  type="button"
+                  class="button large secondary no-margin"
+                  {{on "click" this.toggleModal}}
+                >
+                  Continue Editing
+                </button>
+              </div>
+              <div class="cell large-6 text-right">
+                <button
+                  type="button"
+                  class="button large no-margin
+                ">
+                  Submit
+                </button>
+              </div>
+            </div>
+          </RevealModal>
+        {{/ember-wormhole}}
+      {{/if}}
       <nav>
         <ul class="no-bullet text-weight-bold">
           <li class="medium-margin-bottom">
