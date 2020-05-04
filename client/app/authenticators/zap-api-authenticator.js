@@ -38,7 +38,14 @@ export default class ZAPAuthenticator extends BaseAuthenticator {
     const { access_token } = _parseResponse(window.location.hash);
 
     if (!access_token) {
-      throw 'No NYCID token present'; // eslint-disable-line
+      throw { // eslint-disable-line
+        errors: [{
+          response: {
+            code: 'NO_TOKEN_PRESENT',
+          },
+          status: 401,
+        }],
+      };
     }
 
     // Pass the NYCIDToken to backend /login endpoint.

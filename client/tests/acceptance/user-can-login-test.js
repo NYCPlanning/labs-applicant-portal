@@ -82,4 +82,13 @@ module('Acceptance | user can login', function(hooks) {
     await visit('/');
     assert.equal(currentURL(), '/');
   });
+
+  test('User sees error message if no access token present', async function (assert) {
+    this.server.create('contact');
+
+    await visit('/login');
+
+    assert.dom('[data-test-error-response="code0"]')
+      .hasText('code: NO_TOKEN_PRESENT');
+  });
 });
