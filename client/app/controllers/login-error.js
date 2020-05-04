@@ -6,10 +6,6 @@ export default class LoginErrorController extends Controller {
     *                     about Contact not existing in CRM.
     */
   get contactNotAssigned() {
-    if (this.model.errors) {
-      return this.model.errors.some((error) => error.response.code === 'NO_CONTACT_FOUND');
-    }
-
-    return [];
+    return this.model.errors.some((error) => error.response.code === 'NO_CONTACT_FOUND');
   }
 }
