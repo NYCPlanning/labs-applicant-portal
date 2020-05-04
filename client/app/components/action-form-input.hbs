@@ -1,0 +1,11 @@
+<Input
+  class="action-form-input"
+  type={{@fieldType}}
+  maxlength="200"
+  placeholder=""
+  autocomplete="off"
+  @value={{this.newVal}}
+  @key-down={{fn (mut this.newVal)}}
+  @key-up={{fn this.updateAttr @landUseActionField this.newVal}}
+  data-test-input="{{@landUseActionField}}"
+/>

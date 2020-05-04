@@ -5,13 +5,76 @@
       supportsDataTestProperties={{true}}
       @placeholder="-- select an action --"
       @searchEnabled={{false}}
-      @selected={{this.selectedLandUseAction}}
-      @options={{this.landUseActionTextOptions}}
+      @options={{this.landUseActionOptions}}
       @onchange={{fn (mut this.selectedLandUseAction)}}
-      @onclose={{fn this.setCount}}
+      @onclose={{fn this.setSelectedActionsArray}}
       as |landUseAction|
     >
-      {{landUseAction}}
+      {{landUseAction.name}}
     </PowerSelect>
   </label>
 </div>
+{{#each this.landUseActionSelections as |landUseAction|}}
+  <fieldset class="fieldset">
+    <legend>
+      <strong>{{landUseAction.name}}</strong>
+    </legend>
+    <label class="action-form-label">
+    How many {{landUseAction.name}} actions?
+      <ActionFormInput @pasForm={{@pasForm}} @fieldType="number" @landUseActionField={{landUseAction.field}}/>
+    </label>
+    {{#if (or (eq landUseAction.name "Zoning Special Permit") (eq landUseAction.name "Zoning Certification") (eq landUseAction.name "Zoning Authorization"))}}
+      <label class="action-form-label">
+        Where in the Zoning Resolution can this action be found?
+        <ActionFormInput @pasForm={{@pasForm}} @fieldType="text" @landUseActionField={{landUseAction.attr1}}/>
+        <span class="help-text">Provide the Zoning Resolution section number. Ex. ZR Sec. 74-711</span>
+      </label>
+      <label class="action-form-label">
+        Which sections of the Zoning Resolution does this modify?
+        <ActionFormInput @pasForm={{@pasForm}} @fieldType="text" @landUseActionField={{landUseAction.attr2}}/>
+        <span class="help-text">Provide the Zoning Resolution section number(s). Ex. ZR Sec. 42-10 and 43-17</span>
+      </label>
+    {{/if}}
+    {{#if (eq landUseAction.name "Zoning Map Amendment")}}
+      <label class="action-form-label">
+        Existing Zoning Districts:
+        <ActionFormInput @pasForm={{@pasForm}} @fieldType="text" @landUseActionField={{landUseAction.attr1}}/>
+        <span class="help-text">ex. R7-1/C2-4</span>
+      </label>
+      <label>
+        Proposed Zoning Districts:
+        <ActionFormInput @pasForm={{@pasForm}} @fieldType="text" @landUseActionField={{landUseAction.attr2}}/>
+        <span class="help-text">ex. C4-5X</span>
+      </label>
+    {{/if}}
+    {{#if (eq landUseAction.name "Zoning Text Amendment")}}
+      <label class="action-form-label">
+        Affected ZR Section Number:
+        <ActionFormInput @pasForm={{@pasForm}} @fieldType="text" @landUseActionField={{landUseAction.attr1}}/>
+        <span class="help-text">Provide the Zoning Resolution section number. Ex. ZR Sec. 74-711</span>
+      </label>
+      <label class="action-form-label">
+        Affected ZR Section Title:
+        <ActionFormInput @pasForm={{@pasForm}} @fieldType="text" @landUseActionField={{landUseAction.attr2}}/>
+        <span class="help-text">Provide the Zoning Resolution section Title. Ex. EXAMPLE</span>
+      </label>
+    {{/if}}
+    {{#if (or (eq landUseAction.name "Modification") (eq landUseAction.name "Renewal"))}}
+      <label class="action-form-label">
+        Previous ULURP Numbers:
+        <ActionFormInput @pasForm={{@pasForm}} @fieldType="text" @landUseActionField={{landUseAction.attr1}}/>
+        <span class="help-text">ex. 200307ZRK</span>
+      </label>
+    {{/if}}
+  <div class="text-right">
+    <button 
+      type="button" 
+      class="text-red"
+      onClick={{fn this.removeSelectedAction landUseAction}}
+      data-test-delete-button="{{landUseAction.name}}"
+    >
+      {{fa-icon 'times'}} DELETE
+    </button>
+  </div>
+  </fieldset>
+{{/each}}
