@@ -773,6 +773,8 @@
         <button
           type="button"
           class="button expanded large"
+          onClick={{fn this.save @package}}
+          data-test-save-button
         >
           {{!-- TODO: Make this button work with the action passed in @save--}}
           Save
