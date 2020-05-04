@@ -35,7 +35,7 @@ export default class FileManager {
   }
 
   uploadFiles() {
-    return Promise.all(this.filesToUpload.files.map((file) => file.upload(`${ENV.host}/document`, {
+    return Promise.all(this.filesToUpload.files.map((file) => file.upload(`${ENV.host}/documents`, {
       fileKey: 'file',
       withCredentials: true,
       data: {
@@ -56,7 +56,7 @@ export default class FileManager {
     // POST request to a differently named endpoint, like
     // deleteDocument
     return Promise.all(this.filesToDelete.map((file) => fetch(
-      `${ENV.host}/document/${file.id}`, {
+      `${ENV.host}/documents/${file.id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

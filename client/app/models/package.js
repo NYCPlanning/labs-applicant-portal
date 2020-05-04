@@ -1,6 +1,17 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
+import { inject as service } from '@ember/service';
 
 export default class PackageModel extends Model {
+  ready() {
+    this.fileManager = this.fileManagement.findOrCreate(
+      this.id,
+      this.documents,
+    );
+  }
+
+  @service
+  fileManagement;
+
   @belongsTo('project', { async: false })
   project;
 
@@ -19,10 +30,11 @@ export default class PackageModel extends Model {
   @attr('number')
   versionnumber
 
-  @attr()
+  @attr({ defaultValue: () => [] })
   documents;
 
   async saveDescendants() {
+    await this.fileManager.uploadFiles();
     // call special save methods because it will issue a
     // patch requests to every associated record
     await this.pasForm?.saveDirtyApplicants();

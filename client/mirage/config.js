@@ -42,7 +42,7 @@ export default function() {
   this.post('/packages');
   this.post('/applicants');
 
-  this.post('/document', function(schema, request) {
+  this.post('/documents', function(schema, request) {
     // requestBody should be a FormData object
     const { requestBody } = request;
     const success = requestBody.get('instanceId') && requestBody.get('entityName') && requestBody.get('file');
@@ -54,7 +54,7 @@ export default function() {
   // TODO: If this is not possible, rework this to be a
   // POST request for a differently named endpoint, like
   // deleteDocument
-  this.del('/document/:id', function(schema, request) {
+  this.del('/documents/:id', function(schema, request) {
     const { params: { id } } = request;
     return id ? new Response(200) : new Response(400, {}, { errors: ['Bad Parameters'] });
   });

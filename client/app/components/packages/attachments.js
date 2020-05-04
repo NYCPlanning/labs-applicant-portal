@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 
 /**
@@ -9,17 +8,9 @@ import { action } from '@ember/object';
   * @param      {Package Model}  package
   */
 export default class PackagesAttachmentsComponent extends Component {
-  constructor() {
-    super(...arguments);
-
-    this.fileManager = this.fileManagement.findOrCreate(
-      this.args.package.id,
-      this.args.package.documents,
-    );
+  get fileManager() { // should be an instance of FileManager
+    return this.args.fileManager;
   }
-
-  @service
-  fileManagement;
 
   @action
   markFileForDeletion(file) {

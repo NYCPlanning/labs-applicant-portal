@@ -25,6 +25,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
     await render(hbs`<
       Packages::Attachments
       @package={{this.package}}
+      @fileManager={{this.package.fileManager}}
      />`);
 
     assert.dom('[data-test-document-name="0"]').hasText('PAS Form.pdf');
@@ -40,6 +41,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
     await render(hbs`<
       Packages::Attachments
       @package={{this.package}}
+      @fileManager={{this.package.fileManager}}
      />`);
 
     await assert.dom('[data-test-document-to-be-deleted-name]').doesNotExist();
@@ -87,6 +89,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
     await render(hbs`<
       Packages::Attachments
       @package={{this.package}}
+      @fileManager={{this.package.fileManager}}
     />`);
 
     await assert.dom('[data-test-document-to-be-uploaded-name]').doesNotExist();
@@ -118,6 +121,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
     await render(hbs`<
       Packages::Attachments
       @package={{this.package}}
+      @fileManager={{this.package.fileManager}}
     />`);
 
     await selectFiles('#FileUploader123 > input', file, file2);
@@ -127,6 +131,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
     await render(hbs`<
       Packages::Attachments
       @package={{this.package}}
+      @fileManager={{this.package.fileManager}}
     />`);
 
     await assert.dom('[data-test-document-to-be-uploaded-name]').exists({ count: 2 });
@@ -141,6 +146,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
     await render(hbs`<
       Packages::Attachments
       @package={{this.package}}
+      @fileManager={{this.package.fileManager}}
     />`);
 
     await click('[data-test-delete-file-button="0"]');
