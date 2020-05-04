@@ -2,13 +2,31 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from './../src/app.module';
 import * as request from 'supertest';
 import * as nock from 'nock';
+import * as mockedEnvPkg from 'mocked-env';
 import { doLogin } from './helpers/do-login';
 import { extractJWT } from './helpers/extract-jwt';
 
+const { 'default': mockedEnv } = mockedEnvPkg;
+
 describe('DocumentController (e2e)', () => {
   let app;
+  let restoreEnv;
 
   beforeAll(async () => {
+    // Mocks the local environment with dummy data so the app can boot
+    restoreEnv = mockedEnv({
+      CRM_HOST: 'https://dcppfsuat2.crm9.dynamics.com',
+      AUTHORITY_HOST_URL: 'https://login.microsoftonline.com',
+      CRM_URL_PATH: '/api/data/v9.1/',
+      CLIENT_ID: 'test',
+      CLIENT_SECRET: 'test',
+      TENANT_ID: 'test',
+      TOKEN_PATH: '/oauth2/token',
+
+      ZAP_TOKEN_SECRET: 'test',
+      NYCID_TOKEN_SECRET: 'test',
+    });
+
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     })
