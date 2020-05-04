@@ -787,7 +787,7 @@
         </button>
       </p>
       {{#if this.modalIsOpen}}
-        {{#ember-wormhole to="reveal-modal-container"}}
+        <EmberWormhole @to="reveal-modal-container">
           <RevealModal @toggle={{this.toggleModal}}>
             <h6>Confirm Pre-Applicant Statement submission</h6>
             <p class="header-large medium-margin-top small-margin-bottom">Are you sure?</p>
@@ -813,7 +813,7 @@
               </div>
             </div>
           </RevealModal>
-        {{/ember-wormhole}}
+        </EmberWormhole>
       {{/if}}
       <nav>
         <ul class="no-bullet text-weight-bold">
