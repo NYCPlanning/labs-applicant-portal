@@ -156,9 +156,6 @@ module('Integration | Component | packages/attachments', function(hooks) {
     const file2 = new File(['foo'], 'RWCDS.excel', { type: 'text/plain' });
 
     await selectFiles('#FileUploader123 > input', file, file2);
-
-    const fileManager = this.owner.lookup('service:fileManagement').fileManagers['123'];
-
     await assert.dom('[data-test-document-name]').doesNotExist();
     await assert.dom('[data-test-document-to-be-deleted-name]').exists({ count: 2 });
     await assert.dom('[data-test-document-to-be-deleted-name="0"]').hasText('PAS Form.pdf');
@@ -167,7 +164,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
     await assert.dom('[data-test-document-to-be-uploaded-name="0"]').hasText('Zoning Application.pdf');
     await assert.dom('[data-test-document-to-be-uploaded-name="1"]').hasText('RWCDS.excel');
 
-    await fileManager.save();
+    await this.package.fileManager.save();
 
     await assert.dom('[data-test-document-to-be-deleted-name]').doesNotExist();
     await assert.dom('[data-test-document-to-be-uploaded-name]').doesNotExist();

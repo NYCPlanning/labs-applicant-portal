@@ -1,16 +1,21 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
+import FileManager from '../services/file-manager';
 
 export default class PackageModel extends Model {
   ready() {
-    this.fileManager = this.fileManagement.findOrCreate(
+    const fileQueue = this.fileQueue.create(this.id);
+
+    this.fileManager = new FileManager(
       this.id,
       this.documents,
+      [],
+      fileQueue,
     );
   }
 
   @service
-  fileManagement;
+  fileQueue;
 
   @belongsTo('project', { async: false })
   project;
