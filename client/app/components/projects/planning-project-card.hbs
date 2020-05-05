@@ -23,12 +23,13 @@
   </p>
 
   {{#if this.showViewPas}}
-    <a
-      href="/pas.html"
+    <LinkTo 
+      @route="packages.show"
+      @model={{@project.pasPackages.firstObject.id}}
       class="button hollow tiny"
       data-test-view-pas
     >
       View Pre-Application Statement
-    </a>
+    </LinkTo>
   {{/if}}
 </li>
