@@ -45,15 +45,14 @@
       <h3>Proposed Land Use Actions</h3>
 
       <p>
-        What land use actions does the proposed project require? Identify all that apply, adding multiple of the same type when necessary, and fill in the appropriate related information.
+        What land use actions does the proposed project require? Identify all that apply and fill in the appropriate related information.
       </p>
 
       <p class="text-small">
         Note: This is preliminary information and may change following discussion with NYC Planning.
       </p>
 
-      {{!-- TODO: Add land-use-actions-editor component --}}
-      <div class="bg-red-dim xlarge-padding medium-margin-bottom">land-use-actions-editor component</div>
+      <LandUseAction @pasForm={{@package.pasForm}} />
     </section>
 
     <section class="form-section" id="#project-area">
