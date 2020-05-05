@@ -29,6 +29,11 @@
     data-test-project="edit-pas"
   >
     <FaIcon @icon="pen" @prefix="fas" />
-    Edit Pre-Application Statement ({{@project.pasPackages.firstObject.versionnumber}})
+    {{#let @project.pasPackages.firstObject.dcpPackageversion as |version|}}
+      Edit Pre-Application Statement
+      {{#if (gt version 1)}}
+        (Version {{version}})
+      {{/if}}
+    {{/let}}
   </LinkTo>
 </li>

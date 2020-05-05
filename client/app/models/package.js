@@ -33,7 +33,7 @@ export default class PackageModel extends Model {
   dcpVisibility;
 
   @attr('number')
-  versionnumber
+  dcpPackageversion
 
   @attr({ defaultValue: () => [] })
   documents;
