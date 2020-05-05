@@ -66,13 +66,13 @@ export default class PasFormModel extends Model {
   @attr('number')
   dcpPfzoningauthorization;
 
-  @attr('number')
+  @attr('string')
   dcpZoningauthorizationpursuantto;
 
   @attr('string')
   dcpZoningauthorizationtomodify;
 
-  @attr('string')
+  @attr('number')
   dcpPfzoningcertification;
 
   @attr('string')
@@ -81,7 +81,7 @@ export default class PasFormModel extends Model {
   @attr('string')
   dcpZoningtomodify;
 
-  @attr('string')
+  @attr('number')
   dcpPfzoningmapamendment;
 
   @attr('string')
@@ -90,7 +90,7 @@ export default class PasFormModel extends Model {
   @attr('string')
   dcpProposedmapamend;
 
-  @attr('string')
+  @attr('number')
   dcpPfzoningtextamendment;
 
   @attr('string')
@@ -107,92 +107,108 @@ export default class PasFormModel extends Model {
 
 
   // Project Area
+
+  // Options -- 717170000: Yes, 717170001: No,
+  // 717170002: Unsure at this time, Default: N/A
   @attr('string')
   dcpProposedprojectorportionconstruction;
 
+  // Options -- 717170000: Yes, 717170001: No,
+  // 717170002: Unsure at this time, Default: N/A
   @attr('string')
   dcpUrbanrenewalarea;
 
   @attr('string')
   dcpUrbanareaname;
 
+  // Options -- 717170000: Mapped and Build, 717170001: Private Road,
+  // 717170002: Record Street, 717170003: Corporation Counsel Opinion,
+  // 717170004: Mapped but not Build, Default: N/A"
   @attr('string')
   dcpLegalstreetfrontage;
 
+  // Options -- 717170000: Yes, 717170001: No,
+  // 717170002: Unsure at this time, Default: N/A
   @attr('string')
   dcpLanduseactiontype2;
 
   @attr('string')
   dcpPleaseexplaintypeiienvreview;
 
-  @attr('string')
+  @attr('boolean')
   dcpProjectareaindustrialbusinesszone;
 
   @attr('string')
   dcpProjectareaindutrialzonename;
 
-  @attr('string')
+  @attr('boolean')
   dcpIsprojectarealandmark;
 
-  @attr('string')
+  @attr('boolean')
   dcpProjectarealandmarkname;
 
-  @attr('string')
+  @attr('boolean')
   dcpProjectareacoastalzonelocatedin;
 
+  // Options -- 717170000: Yes, 717170001: No,
+  // 717170002: Unsure at this time, Default: N/A
   @attr('string')
   dcpProjectareaischancefloodplain;
 
-  @attr('string')
+  @attr('boolean')
   dcpRestrictivedeclaration;
 
   @attr('string')
   dcpCityregisterfilenumber;
 
+  // Options -- 717170000: No, 717170001: Yes,
+  // 717170002: Cannot Determine at this time, Default: N/A
   @attr('string')
   dcpRestrictivedeclarationrequired;
 
-
   // Proposed Development Site
-  @attr('string')
+  @attr('date')
   dcpEstimatedcompletiondate;
 
-  @attr('string')
+  @attr('boolean')
   dcpProposeddevelopmentsitenewconstruction;
 
-  @attr('string')
+  @attr('boolean')
   dcpProposeddevelopmentsitedemolition;
 
-  @attr('string')
+  @attr('boolean')
   dcpProposeddevelopmentsiteinfoalteration;
 
-  @attr('string')
+  @attr('boolean')
   dcpProposeddevelopmentsiteinfoaddition;
 
-  @attr('string')
+  @attr('boolean')
   dcpProposeddevelopmentsitechnageofuse;
 
-  @attr('string')
+  @attr('boolean')
   dcpProposeddevelopmentsiteenlargement;
 
-  @attr('string')
+  @attr('boolean')
   dcpProposeddevelopmentsiteinfoother;
 
   @attr('string')
   dcpProposeddevelopmentsiteotherexplanation;
 
-  @attr('string')
+  @attr('boolean')
   dcpIsinclusionaryhousingdesignatedarea;
 
   @attr('string')
   dcpInclusionaryhousingdesignatedareaname;
 
+  // Options -- 717170000: Yes, 717170001: No,
+  // 717170002: Unsure at this time, Default: N/A
   @attr('string')
   dcpDiscressionaryfundingforffordablehousing;
 
+  // Options -- 717170000: City, 717170001: State,
+  // 717170002: Federal, 717170003: Other, Default: N/A
   @attr('string')
   dcpHousingunittype;
-
 
   // Project Description
   @attr('string')
