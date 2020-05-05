@@ -31,12 +31,14 @@ export default function() {
   this.get('/applicants');
   this.get('/applicants/:id');
   this.patch('/applicants/:id');
+  this.del('/applicants/:id');
   this.post('/applicants');
 
   this.get('/bbls');
   this.get('/bbls/:id');
   this.post('/bbls');
   this.patch('/bbls/:id');
+  this.del('/bbls/:id');
 
   this.patch('/pas-forms');
   this.post('/pas-forms');
