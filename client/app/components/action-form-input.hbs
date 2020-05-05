@@ -8,4 +8,5 @@
   @key-down={{fn (mut this.newVal)}}
   @key-up={{fn this.updateAttr @landUseActionField this.newVal}}
   data-test-input="{{@landUseActionField}}"
+  {{did-insert (fn (mut this.newVal) (get @pasForm @landUseActionField))}}
 />

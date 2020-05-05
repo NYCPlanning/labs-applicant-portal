@@ -100,4 +100,24 @@ module('Integration | Component | land-use-action', function(hooks) {
     assert.equal(this.package.pasForm.dcpZoningspecialpermitpursuantto, '');
     assert.equal(this.package.pasForm.dcpZoningspecialpermittomodify, '');
   });
+
+  test('User can load PAS Form with existing Land Use Actions', async function(assert) {
+    const projectPackage = this.server.create('package', 1, 'applicant', 'withLandUseActions');
+
+    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
+
+    // Template block usage:
+    await render(hbs`
+      <LandUseAction @pasForm={{this.package.pasForm}}>
+      </LandUseAction>
+    `);
+
+    assert.dom('[data-test-input="dcpPfzoningcertification"]').hasValue('21');
+    assert.dom('[data-test-input="dcpZoningpursuantto"]').hasValue('some value');
+    assert.dom('[data-test-input="dcpZoningtomodify"]').hasValue('some other val');
+    assert.dom('[data-test-input="dcpPfzoningtextamendment"]').hasValue('2');
+    assert.dom('[data-test-input="dcpAffectedzrnumber"]').hasNoValue();
+    assert.dom('[data-test-input="dcpZoningresolutiontitle"]').hasNoValue();
+    assert.dom('[data-test-input="dcpPfchangeincitymap"]').hasValue('4');
+  });
 });
