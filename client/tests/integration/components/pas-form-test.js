@@ -5,6 +5,7 @@ import {
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import Service from '@ember/service';
 
 module('Integration | Component | pas-form', function(hooks) {
   setupRenderingTest(hooks);
@@ -125,6 +126,12 @@ module('Integration | Component | pas-form', function(hooks) {
 
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
 
+    class LocationStub extends Service {
+      transitionTo() {}
+    }
+
+    this.owner.register('service:router', LocationStub);
+
     // render form
     await render(hbs`
       <Packages::PasForm::Edit @package={{this.package}} />
@@ -141,5 +148,7 @@ module('Integration | Component | pas-form', function(hooks) {
     // modal should exist
     assert.dom('[data-test-reveal-modal]').exists();
     assert.dom('[data-test-confirm-submit-button]').exists();
+
+    await click('[data-test-confirm-submit-button]');
   });
 });
