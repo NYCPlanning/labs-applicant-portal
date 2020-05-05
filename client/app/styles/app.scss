@@ -40,6 +40,17 @@
   }
 }
 
+.section-header {
+  position: relative;
+}
+
+.section-anchor {
+  @include breakpoint(large) {
+    position: absolute;
+    top: -7rem;
+  }
+}
+
 $sticky-sidebar-offset: 6rem + rem-calc(20);
 .sticky-sidebar {
   @include breakpoint(large) {
