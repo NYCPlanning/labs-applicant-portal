@@ -20,7 +20,8 @@ export default class ApplicantTeamEditorComponent extends Component {
   @action
   removeApplicant(applicant) {
     // remove the applicant from the ember store
-    this.store.deleteRecord(applicant);
+    // this.store.deleteRecord(applicant);
+    applicant.destroyRecord();
 
     // remove the DOM node by removing the object from the array passed to the editor component
     this.args.applicants.removeObject(applicant);
