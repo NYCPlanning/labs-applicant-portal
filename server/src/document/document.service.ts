@@ -1,8 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { ConfigService } from '../config/config.service';
 import { CrmService } from '../crm/crm.service';
 import { ADAL } from '../_utils/adal';
 import * as Request from 'request';
+import { file } from '@babel/types';
 
 @Injectable()
 export class DocumentService {
@@ -233,22 +238,19 @@ async getParentSiteLocation() {
     entityRef[entityName+"id"] = entityID;
 
     const options = {
-        url: `${this.host}UploadDocument`,
+        url: `${this.host}EditDocumentProperties`,
         headers: {
             'Content-Type': 'application/json; charset=utf-8',
             Authorization: `Bearer ${JWToken}`,
             ...headers
         },
         body: JSON.stringify({
-          "Content": base64File,
           "Entity": {
             "@odata.type": "Microsoft.Dynamics.CRM.sharepointdocument",
             "locationid": docLocationID,
-            "title": fileName
+            "title": fileName,
           },
-          "OverwriteExisting": overwriteExisting,
           "ParentEntityReference": entityRef,
-          "FolderPath": ""
         })
     };
 
@@ -274,6 +276,48 @@ async getParentSiteLocation() {
             reject(body);
           }
         }
+      });
+    });
+  }
+
+  async deleteDocument(entityName, entityID, folderName, fileName, headers) {
+    const JWToken = await ADAL.acquireToken();
+
+    const { sharepointdocumentlocationid } = await this.findDocumentLocation(entityID, folderName);
+    console.log("doc loation id: ", sharepointdocumentlocationid)
+    if (!sharepointdocumentlocationid) {
+      const responseBody = {
+        "code": "DOCUMENT_LOC_NOT_FOUND",
+        "message": 'Document not found.',
+      }
+      
+      throw new HttpException(responseBody, HttpStatus.NOT_FOUND);
+    }
+
+    const entityRef = {
+      "@odata.type": "Microsoft.Dynamics.CRM." + entityName,
+    };
+    entityRef[entityName+"id"] = entityID;
+
+    const options = {
+        url: `${this.host}DeleteSharepointDocument`,
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            Authorization: `Bearer ${JWToken}`,
+            ...headers,
+        },
+        body: JSON.stringify({
+          DocumentIds: ['99f5bc3d-3d49-4ee9-a66b-57aff2ac0f78'],
+          SiteUrl: 'https://nyco365.sharepoint.com/sites/dcppfsuat2',
+          DocumentLocation: sharepointdocumentlocationid,
+          ReferencedEntity: entityID,
+        }),
+      };
+
+    return new Promise((resolve, reject) => {
+      Request.post(options, (error, response, body) => {
+        console.log("response: ", error);
+        console.log("body: ", body);
       });
     });
   }
