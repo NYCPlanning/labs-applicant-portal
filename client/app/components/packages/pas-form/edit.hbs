@@ -787,7 +787,7 @@
           type="button"
           class="button expanded large"
           onClick={{fn this.save @package}}
-          disabled={{not @package.pasForm.hasDirtyAttributes}}
+          disabled={{not this.isDirty}}
           data-test-save-button
         >
           {{!-- TODO: Make this button work with the action passed in @save--}}

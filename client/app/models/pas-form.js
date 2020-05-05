@@ -805,4 +805,16 @@ export default class PasFormModel extends Model {
         .map((applicant) => applicant.save()),
     );
   }
+
+  get isBblsDirty() {
+    const dirtyBbls = this.bbls.filter((bbl) => bbl.hasDirtyAttributes);
+
+    return dirtyBbls.length > 0;
+  }
+
+  get isApplicantsDirty() {
+    const dirtyApplicants = this.applicants.filter((applicant) => applicant.hasDirtyAttributes);
+
+    return dirtyApplicants.length > 0;
+  }
 }
