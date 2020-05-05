@@ -13,7 +13,7 @@ export default class ProjectModel extends Model {
   get pasPackages() {
     const [firstPackage] = this.packages
       .filter((projectPackage) => projectPackage.dcpPackagetype === 'PAS Package')
-      .sortBy('versionnumber')
+      .sortBy('dcpPackageversion')
       .reverse();
 
     if (firstPackage) {

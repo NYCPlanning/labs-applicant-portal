@@ -36,7 +36,7 @@ export const PROJECT_ATTRIBUTES = [
       'statuscode',
       'dcp_packagetype',
       'dcp_visibility',
-      'versionnumber',
+      'dcp_packageversion',
     ],
   },
 
