@@ -60,6 +60,12 @@ export class CrmService {
     return this._update(entity, guid, data, headers);
   }
 
+  async delete(entitySetName, guid, headers = {}) {
+    const query = entitySetName + "(" + guid + ")";
+
+    return this._sendDeleteRequest(query, headers);
+  }
+
   async associate(relationshipName, entitySetName1, guid1, entitySetName2, guid2, headers = {}) {
     return this._associate(relationshipName, entitySetName1, guid1, entitySetName2, guid2, headers);
   }
@@ -315,6 +321,50 @@ export class CrmService {
             const json_string = jsonText.toString('utf-8');
             var result = JSON.parse(json_string, this._dateReviver);
             var err = this._parseErrorMessage(result);
+            reject(err);
+          };
+          if (encoding && encoding.indexOf('gzip') >= 0) {
+            zlib.gunzip(body, (err, dezipped) => {
+              parseError(dezipped);
+            });
+          }
+          else {
+            parseError(body);
+
+          }
+        }
+        else resolve();
+      })
+    });
+  }
+
+  async _sendDeleteRequest(query, headers) {
+    // get token
+    const JWToken = await ADAL.acquireToken();
+    const options = {
+      url: `${this.host + query}`,
+      headers: {
+        'Accept-Encoding': 'gzip, deflate',
+        'Content-Type': 'application/json; charset=utf-8',
+        Authorization: `Bearer ${JWToken}`,
+        'OData-MaxVersion': '4.0',
+        'OData-Version': '4.0',
+        Accept: 'application/json',
+        Prefer: 'odata.include-annotations="*"',
+        ...headers
+      },
+      encoding: null,
+    };
+
+    return new Promise((resolve, reject) => {
+      Request.delete(options, (error, response, body) => {
+        const encoding = response.headers['content-encoding'];
+
+        if (error || (response.statusCode != 204 && response.statusCode != 1223)) {
+          const parseError = jsonText => {
+            const json_string = jsonText.toString('utf-8');
+            const result = JSON.parse(json_string, this._dateReviver);
+            const err = this._parseErrorMessage(result);
             reject(err);
           };
           if (encoding && encoding.indexOf('gzip') >= 0) {
