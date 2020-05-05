@@ -39,7 +39,7 @@ export default class PackageModel extends Model {
   documents;
 
   async saveDescendants() {
-    await this.fileManager.uploadFiles();
+    await this.fileManager.save();
     // call special save methods because it will issue a
     // patch requests to every associated record
     await this.pasForm?.saveDirtyApplicants();
