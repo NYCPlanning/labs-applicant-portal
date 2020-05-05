@@ -1,4 +1,4 @@
-import { Controller, Patch, Body, Param, Post, UseInterceptors, UseGuards, UsePipes } from '@nestjs/common';
+import { Controller, Patch, Body, Param, Post, UseInterceptors, UseGuards, UsePipes, Delete } from '@nestjs/common';
 import { pick } from 'underscore';
 import { CrmService } from '../../../crm/crm.service';
 import { JsonApiSerializeInterceptor } from '../../../json-api-serialize.interceptor';
@@ -57,5 +57,14 @@ export class ApplicantsController {
     } else {
       return this.crmService.create('dcp_applicantinformations', allowedAttrs);
     }
+  }
+
+  @Delete('/:id')
+  async delete(@Param('id') id) {
+    await this.crmService.delete('dcp_applicantinformations', id);
+
+    return {
+      id,
+    };
   }
 }
