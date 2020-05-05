@@ -1,4 +1,4 @@
-<h5>Add a Tax Lot by Searching a BBL or an Address</h5>
+<h5>Add a tax lot by searching a BBL or an address</h5>
 <LabsSearch
   @searchPlaceholder='Look up BBL (ex 1001440001)'
   data-test-input="bbl-search"
@@ -71,10 +71,10 @@
     </label>
   </fieldset>
     <div class="text-right">
-      <button 
-        type="button" 
+      <button
+        type="button"
         class="text-red"
-        data-test-button-remove-bbl="{{bbl.dcpBblnumber}}" 
+        data-test-button-remove-bbl="{{bbl.dcpBblnumber}}"
         onClick={{fn this.removeBbl bbl}}
       >
         {{fa-icon 'times'}} DELETE
