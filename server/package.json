@@ -32,9 +32,10 @@
     "jsonapi-serializer": "^3.6.6",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
+    "nock": "^12.0.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^6.5.4",
+    "rxjs": "6.5.4",
     "superagent": "^5.2.2",
     "underscore": "^1.10.2"
   },

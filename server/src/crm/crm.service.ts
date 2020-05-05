@@ -70,6 +70,18 @@ export class CrmService {
     return this._associate(relationshipName, entitySetName1, guid1, entitySetName2, guid2, headers);
   }
 
+  /**
+   * Makes a CRM Web API query using the passed in query in XML format
+   *
+   * @param      {string}  entity     the pluralized version of the entity
+   * @param      {string}  xmlQuery   query string to additionally filter, in XML
+   * @return     {string}
+   */
+  async getWithXMLQuery(entity: string, xmlQuery: string, ...options) {
+    const response = await this._get(`${entity}?fetchXml=${xmlQuery}`, ...options);
+    return response;
+  }
+
   // this provides the formatted values but doesn't do it for top level
   // TODO: where should this happen? 
   _fixLongODataAnnotations(dataObj) {

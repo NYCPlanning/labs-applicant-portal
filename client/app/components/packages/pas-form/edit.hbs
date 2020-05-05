@@ -759,8 +759,10 @@
         </div>
       </div>
 
-      {{!-- TODO: Add attachments-editor component --}}
-      <div class="bg-red-dim xlarge-padding medium-margin-bottom">attachments-editor component</div>
+      <Packages::Attachments
+        @package={{@package}}
+        @fileManager={{@package.fileManager}}
+      />
     </section>
 
   </div>
@@ -771,6 +773,8 @@
         <button
           type="button"
           class="button expanded large"
+          onClick={{fn this.save @package}}
+          data-test-save-button
         >
           {{!-- TODO: Make this button work with the action passed in @save--}}
           Save
