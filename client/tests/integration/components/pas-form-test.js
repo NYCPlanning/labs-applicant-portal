@@ -118,4 +118,27 @@ module('Integration | Component | pas-form', function(hooks) {
     // database record should have new updated value
     assert.equal(this.server.db.pasForms[0].dcpRevisedprojectname, 'Some Cool New Project Name');
   });
+
+  test('user sees a confirmation modal upon submit', async function(assert) {
+    const projectPackage = this.server.create('package');
+
+    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
+
+    // render form
+    await render(hbs`
+      <Packages::PasForm::Edit @package={{this.package}} />
+      <div id="reveal-modal-container"></div>
+      `);
+
+    // modal doesn't exist to start
+    assert.dom('[data-test-reveal-modal]').doesNotExist();
+    assert.dom('[data-test-confirm-submit-button]').doesNotExist();
+
+    // click submit
+    await click('[data-test-submit-button]');
+
+    // modal should exist
+    assert.dom('[data-test-reveal-modal]').exists();
+    assert.dom('[data-test-confirm-submit-button]').exists();
+  });
 });
