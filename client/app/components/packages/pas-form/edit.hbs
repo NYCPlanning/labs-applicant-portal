@@ -783,6 +783,7 @@
           type="button"
           class="button expanded large secondary"
           {{on "click" this.toggleModal}}
+          data-test-submit-button
         >
           {{!-- TODO: Disable this button if model dirty/invaild --}}
           Submit
@@ -808,8 +809,9 @@
               <div class="cell large-6 text-right">
                 <button
                   type="button"
-                  class="button large no-margin
-                ">
+                  class="button large no-margin"
+                  data-test-confirm-submit-button
+                >
                   Submit
                 </button>
               </div>
