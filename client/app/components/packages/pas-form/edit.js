@@ -7,6 +7,14 @@ export default class PasFormComponent extends Component {
 
   @tracked package;
 
+  get isDirty() {
+    const isPasFormDirty = this.args.package.pasForm.hasDirtyAttributes;
+
+    const { isBblsDirty, isApplicantsDirty } = this.args.package.pasForm;
+
+    return isPasFormDirty || isBblsDirty || isApplicantsDirty;
+  }
+
   // TODO: consider decoupling the PAS Form from the Package
   // for better modularity and avoiding "inappropriate intimacy"
   @action
