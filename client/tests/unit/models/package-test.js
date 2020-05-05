@@ -6,11 +6,12 @@ module('Unit | Model | package', function(hooks) {
   setupTest(hooks);
   setupMirage(hooks);
 
-  // Replace this with your real tests.
-  test('it exists', async function(assert) {
+  test('it exists and can save', async function(assert) {
     const store = this.owner.lookup('service:store');
     const bbl = store.createRecord('bbl');
-    const model = store.createRecord('package', {
+    const model = await store.createRecord('package', {
+      statuscode: 'Package Preparation',
+      dcpVisibility: 717170003,
       pasForm: store.createRecord('pas-form', {
         bbls: [bbl],
         applicants: [store.createRecord('applicant')],
@@ -22,5 +23,20 @@ module('Unit | Model | package', function(hooks) {
     await model.saveDescendants();
 
     assert.ok(model);
+  });
+
+  test('No file manager is created for non-applicant packages', async function(assert) {
+    const store = this.owner.lookup('service:store');
+    const bbl = store.createRecord('bbl');
+    const model = await store.createRecord('package', {
+      statuscode: 'Certified',
+      dcpVisibility: 717170003,
+      pasForm: store.createRecord('pas-form', {
+        bbls: [bbl],
+        applicants: [store.createRecord('applicant')],
+      }),
+    });
+
+    assert.notOk(model.fileManager);
   });
 });

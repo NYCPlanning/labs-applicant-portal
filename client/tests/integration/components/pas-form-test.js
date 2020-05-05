@@ -95,7 +95,7 @@ module('Integration | Component | pas-form', function(hooks) {
   });
 
   test('user can save pas form', async function(assert) {
-    const projectPackage = this.server.create('package');
+    const projectPackage = this.server.create('package', 'applicant');
 
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
 
