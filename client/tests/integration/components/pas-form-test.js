@@ -102,13 +102,20 @@ module('Integration | Component | pas-form', function(hooks) {
     // render form
     await render(hbs`<Packages::PasForm::Edit @package={{this.package}} />`);
 
-    // edit a field
+    // save button should start disabled
+    assert.dom('[data-test-save-button').hasProperty('disabled', true);
+
+    // edit a field to make it pasForm dirty
     await fillIn('[data-test-dcprevisedprojectname]', 'Some Cool New Project Name');
+
+    // save button should become active when dirty
+    assert.dom('[data-test-save-button').hasProperty('disabled', false);
 
     // save it
     await click('[data-test-save-button]');
     await settled(); // async make sure save action finishes before assertion
 
+    // database record should have new updated value
     assert.equal(this.server.db.pasForms[0].dcpRevisedprojectname, 'Some Cool New Project Name');
   });
 

@@ -56,8 +56,9 @@ export default class FileManager {
     // POST request to a differently named endpoint, like
     // deleteDocument
     return Promise.all(this.filesToDelete.map((file) => fetch(
-      `${ENV.host}/documents/${file.id}`, {
+      `${ENV.host}/documents?serverRelativeUrl=${file.serverRelativeUrl}`, {
         method: 'DELETE',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },

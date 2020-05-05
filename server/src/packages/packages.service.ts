@@ -24,8 +24,13 @@ export class PackagesService {
     // but it's slower.
 
     // Double network request approach
-    const { records: [{ _dcp_pasform_value, dcp_project }] } = await this.crmService.get('dcp_packages', `
-      $select=_dcp_pasform_value
+    const { records: [{
+      _dcp_pasform_value,
+      dcp_project,
+      dcp_packageid,
+      dcp_name,
+    }] } = await this.crmService.get('dcp_packages', `
+      $select=_dcp_pasform_value,dcp_packageid,dcp_name
       &$filter=dcp_packageid eq ${packageId}
       &$expand=dcp_project
     `);
@@ -39,10 +44,20 @@ export class PackagesService {
         dcp_dcp_projectbbl_dcp_pasform
     `);
 
+    const { value: documents } = await this.findPackageSharepointDocuments(
+      dcp_name,
+      dcp_packageid,
+    );
+
     return {
       ...projectPackageForm.dcp_package,
       dcp_pasform: projectPackageForm,
       project: dcp_project,
+      documents: documents.map(document => ({
+        name: document['Name'],
+        timeCreated: document['TimeCreated'],
+        serverRelativeUrl: document['ServerRelativeUrl'],
+      })),
     };
   }
 
@@ -50,5 +65,12 @@ export class PackagesService {
     const allowedAttrs = pick(body, PACKAGE_ATTRS);
 
     return this.crmService.update('dcp_packages', id, allowedAttrs);
+  }
+
+  async findPackageSharepointDocuments(packageName, id:string) {
+    const cleanedId = id.toUpperCase().replace(/-/g, '');
+    const folderIdentifier = `${packageName}_${cleanedId}`;
+
+    return this.crmService.getSharepointFolderFiles(`dcp_package/${folderIdentifier}`);
   }
 }

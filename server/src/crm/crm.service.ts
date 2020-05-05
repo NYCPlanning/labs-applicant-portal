@@ -60,6 +60,12 @@ export class CrmService {
     return this._update(entity, guid, data, headers);
   }
 
+  async delete(entitySetName, guid, headers = {}) {
+    const query = entitySetName + "(" + guid + ")";
+
+    return this._sendDeleteRequest(query, headers);
+  }
+
   async associate(relationshipName, entitySetName1, guid1, entitySetName2, guid2, headers = {}) {
     return this._associate(relationshipName, entitySetName1, guid1, entitySetName2, guid2, headers);
   }
@@ -332,11 +338,147 @@ export class CrmService {
     });
   }
 
+  async _sendDeleteRequest(query, headers) {
+    // get token
+    const JWToken = await ADAL.acquireToken();
+    const options = {
+      url: `${this.host + query}`,
+      headers: {
+        'Accept-Encoding': 'gzip, deflate',
+        'Content-Type': 'application/json; charset=utf-8',
+        Authorization: `Bearer ${JWToken}`,
+        'OData-MaxVersion': '4.0',
+        'OData-Version': '4.0',
+        Accept: 'application/json',
+        Prefer: 'odata.include-annotations="*"',
+        ...headers
+      },
+      encoding: null,
+    };
+
+    return new Promise((resolve, reject) => {
+      Request.delete(options, (error, response, body) => {
+        const encoding = response.headers['content-encoding'];
+
+        if (error || (response.statusCode != 204 && response.statusCode != 1223)) {
+          const parseError = jsonText => {
+            const json_string = jsonText.toString('utf-8');
+            const result = JSON.parse(json_string, this._dateReviver);
+            const err = this._parseErrorMessage(result);
+            reject(err);
+          };
+          if (encoding && encoding.indexOf('gzip') >= 0) {
+            zlib.gunzip(body, (err, dezipped) => {
+              parseError(dezipped);
+            });
+          }
+          else {
+            parseError(body);
+
+          }
+        }
+        else resolve();
+      })
+    });
+  }
+
   async _associate(relationshipName, entitySetName1, guid1, entitySetName2, guid2, headers) {
     const query = entitySetName1 + "(" + guid1 + ")/" + relationshipName + "/$ref";
     const data = {
       "@odata.id": this.host + entitySetName2 + "(" + guid2 + ")"
     };
     return this.create(query, data, headers);
+  }
+
+  async generateSharePointAccessToken(): Promise<any> {
+    const TENANT_ID = this.config.get('TENANT_ID');
+    const SHAREPOINT_CLIENT_ID = this.config.get('SHAREPOINT_CLIENT_ID');
+    const SHAREPOINT_CLIENT_SECRET = this.config.get('SHAREPOINT_CLIENT_SECRET');
+    const ADO_PRINCIPAL = this.config.get('ADO_PRINCIPAL');
+    const SHAREPOINT_TARGET_HOST = this.config.get('SHAREPOINT_TARGET_HOST');
+
+    const clientId = `${SHAREPOINT_CLIENT_ID}@${TENANT_ID}`;
+    const data = `
+      grant_type=client_credentials
+      &client_id=${clientId}
+      &client_secret=${SHAREPOINT_CLIENT_SECRET}
+      &resource=${ADO_PRINCIPAL}/${SHAREPOINT_TARGET_HOST}@${TENANT_ID}
+    `;
+
+    const options = {
+      url: `https://accounts.accesscontrol.windows.net/${TENANT_ID}/tokens/OAuth/2`,
+      headers: {
+        'Accept-Encoding': 'gzip, deflate',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'OData-MaxVersion': '4.0',
+        'OData-Version': '4.0',
+        Accept: 'application/json',
+        Prefer: 'return=representation',
+      },
+      body: data,
+      encoding: null,
+    };
+
+    return new Promise(resolve => {
+      Request.get(options, (error, response, body) => {
+        const stringifiedBody = body.toString('utf-8');
+        if (response.statusCode >= 400) {
+          console.log('error', stringifiedBody);
+        }
+
+        resolve(JSON.parse(stringifiedBody));
+      });
+    })
+  }
+
+  async getSharepointFolderFiles(folderIdentifier): Promise<any> {
+    const { access_token } = await this.generateSharePointAccessToken();
+    const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
+    const url = `https://nyco365.sharepoint.com/sites/${SHAREPOINT_CRM_SITE}/_api/web/GetFolderByServerRelativeUrl('/sites/${SHAREPOINT_CRM_SITE}/${folderIdentifier}')/Files`;
+  
+    const options = {
+      url,
+      headers: {
+        'Authorization': `Bearer ${access_token}`,
+        Accept: 'application/json',
+      },
+    };
+
+    return new Promise(resolve => {
+      Request.post(options, (error, response, body) => {
+        const stringifiedBody = body.toString('utf-8');
+        if (response.statusCode >= 400) {
+          console.log('error', stringifiedBody);
+        }
+
+        resolve(JSON.parse(stringifiedBody));
+      });
+    })
+  }
+
+  async deleteSharepointFile(serverRelativeUrl): Promise<any> {
+    const { access_token } = await this.generateSharePointAccessToken();
+    const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
+    const url = `https://nyco365.sharepoint.com/sites/${SHAREPOINT_CRM_SITE}/_api/web/GetFileByServerRelativeUrl('${serverRelativeUrl}')`;
+
+    const options = {
+      url,
+      headers: {
+        'Authorization': `Bearer ${access_token}`,
+        Accept: 'application/json',
+        'X-HTTP-Method': 'DELETE',
+      },
+    };
+
+    return new Promise(resolve => {
+      Request.del(options, (error, response, body) => {
+        const stringifiedBody = body.toString('utf-8');
+        if (response.statusCode >= 400) {
+          console.log('error', stringifiedBody);
+        }
+
+        resolve();
+      });
+    })
   }
 }

@@ -22,6 +22,8 @@
 @import 'modules/_m-search';
 @import 'modules/_pasform';
 
+@import "ember-power-select";
+
 
 .site-header {
   @include breakpoint(large) {
