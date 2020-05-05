@@ -390,16 +390,17 @@
           onClick={{fn this.updateAttr @package.pasForm "dcpRestrictivedeclaration" false}}
           data-test-dcprestrictivedeclaration-no
         /><label for="dcprestrictivedeclaration-no">No</label>
+        {{#if (eq @package.pasForm.dcpRestrictivedeclaration true)}}
+          <label>
+            <strong>City Register File Number</strong>
+            <Input
+              @type="text"
+              @value={{@package.pasForm.dcpCityregisterfilenumber}}
+              data-test-dcpcityregisterfilenumber
+            />
+          </label>
+        {{/if}}
       </fieldset>
-
-      <label>
-        <strong>City Register File Number</strong>
-        <Input
-          @type="text"
-          @value={{@package.pasForm.dcpCityregisterfilenumber}}
-          data-test-dcpcityregisterfilenumber
-        />
-      </label>
 
       <fieldset class="medium-margin-bottom">
         <legend>
