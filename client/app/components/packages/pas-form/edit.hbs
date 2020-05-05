@@ -9,8 +9,11 @@
       NYC Planning understands that some projects may not be fully formed at the submission of the PAS. Give as much detailed information as possible. Failure to provide detailed, relevant information will result in the PAS being rejected.
     </p>
 
-    <section class="form-section" id="project-info">
-      <h3>Project Information</h3>
+    <section class="form-section">
+      <h3 class="section-header">
+        <span id="project-info" class="section-anchor"></span>
+        Project Information
+      </h3>
 
       <label>
         <strong>Project Name</strong>
@@ -22,16 +25,22 @@
       </label>
     </section>
 
-    <section class="form-section" id="applicant-team">
-      <h3>Applicant Team</h3>
+    <section class="form-section">
+      <h3 class="section-header">
+        <span id="applicant-team" class="section-anchor"></span>
+        Applicant Team
+      </h3>
 
       <Packages::ApplicantTeamEditor
         @applicants={{@package.pasForm.applicants}}
       />
     </section>
 
-    <section class="form-section" id="applicant-team">
-      <h3>Project Geography</h3>
+    <section class="form-section">
+      <h3 class="section-header">
+        <span id="project-geography" class="section-anchor"></span>
+        Project Geography
+      </h3>
 
       <ProjectGeography @bbls={{@package.pasForm.bbls}} />
 
@@ -41,8 +50,11 @@
       </label>
     </section>
 
-    <section class="form-section" id="proposed-land-use-actions">
-      <h3>Proposed Land Use Actions</h3>
+    <section class="form-section">
+      <h3 class="section-header">
+        <span id="proposed-land-use-actions" class="section-anchor"></span>
+        Proposed Land Use Actions
+      </h3>
 
       <p>
         What land use actions does the proposed project require? Identify all that apply and fill in the appropriate related information.
@@ -55,8 +67,11 @@
       <LandUseAction @pasForm={{@package.pasForm}} />
     </section>
 
-    <section class="form-section" id="project-area">
-      <h3>Project Area</h3>
+    <section class="form-section">
+      <h3 class="section-header">
+        <span id="project-area" class="section-anchor"></span>
+        Project Area
+      </h3>
 
       <p>
         Project Area refers to all property that would be subject to the proposed actions.
@@ -433,11 +448,14 @@
           data-test-dcprestrictivedeclarationrequired-unsure
         /><label for="dcprestrictivedeclarationrequired-unsure">Unsure at this time</label>
       </fieldset>
-
     </section>
 
-    <section class="form-section" id="proposed-development-site">
-      <h3>Proposed Development Site</h3>
+    <section class="form-section">
+      <h3 class="section-header">
+        <span id="proposed-development-site" class="section-anchor"></span>
+        Proposed Development Site
+      </h3>
+
       <p>
         Development Site refers to all property to be developed as part of the applicant’s specific proposal which the land use actions would facilitate. Typically, the Development Site and the Project Area will comprise the same property(ies) unless the application is requesting a zoning map amendment covering an area greater than an applicant’s property to be developed or a large-scale special approval involving multiple tax lots. In these cases, the Development Site may be one or several tax lots within a broader Project Area.
       </p>
@@ -634,8 +652,11 @@
       </fieldset>
     </section>
 
-    <section class="form-section" id="project-description">
-      <h3>Project Description</h3>
+    <section class="form-section">
+      <h3 class="section-header">
+        <span id="project-description" class="section-anchor"></span>
+        Project Description
+      </h3>
 
       <label>
         <strong>Description of the proposed development being facilitated by the land use actions</strong>
@@ -695,8 +716,11 @@
       </p>
     </section>
 
-    <section class="form-section" id="attached-documents">
-      <h3>Attached Documents</h3>
+    <section class="form-section">
+      <h3 class="section-header">
+        <span id="attached-documents" class="section-anchor"></span>
+        Attached Documents
+      </h3>
 
       <p>
         Please attach the following required documents. (Additional materials that help to explain the proposed project may also be submitted.)
@@ -806,6 +830,7 @@
         </EmberWormhole>
       {{/if}}
       <nav>
+
         <ul class="no-bullet text-weight-bold">
           <li class="medium-margin-bottom">
             <a href="#project-info">
@@ -820,37 +845,37 @@
             </a>
           </li>
           <li class="medium-margin-bottom">
-            <a href="#">
+            <a href="#project-geography">
               <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
               Project Geography
             </a>
           </li>
           <li class="medium-margin-bottom">
-            <a href="#">
+            <a href="#proposed-land-use-actions">
               <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
               Proposed Land Use Actions
             </a>
           </li>
           <li class="medium-margin-bottom">
-            <a href="#">
+            <a href="#project-area">
               <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
               Project Area
             </a>
           </li>
           <li class="medium-margin-bottom">
-            <a href="#">
+            <a href="#proposed-development-site">
               <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
               Proposed Development Site
             </a>
           </li>
           <li class="medium-margin-bottom">
-            <a href="#">
+            <a href="#project-description">
               <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
               Project Description
             </a>
           </li>
           <li class="medium-margin-bottom">
-            <a href="#">
+            <a href="#attached-documents">
               <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
               Attached Documents
             </a>
