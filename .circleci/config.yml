@@ -30,6 +30,11 @@ jobs:
           name: run tests
           command: yarn test
 
+      # run tests!
+      - run:
+          name: run tests
+          command: yarn test:e2e
+
       # collect reports
       - store_test_results:
           path: /tmp/test-results
