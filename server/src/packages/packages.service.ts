@@ -56,6 +56,7 @@ export class PackagesService {
       documents: documents.map(document => ({
         name: document['Name'],
         timeCreated: document['TimeCreated'],
+        serverRelativeUrl: document['ServerRelativeUrl'],
       })),
     };
   }

@@ -6,6 +6,9 @@ import {
   Session,
   Body,
   UseGuards,
+  Delete,
+  Query,
+  HttpCode,
 } from '@nestjs/common';
 import { ConfigService } from '../config/config.service';
 import { CrmService } from '../crm/crm.service';
@@ -14,6 +17,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthenticateGuard } from '../authenticate.guard';
 
 @Controller('documents')
+@UseGuards(AuthenticateGuard)
 export class DocumentController {
   constructor(
     private readonly config: ConfigService,
@@ -32,7 +36,6 @@ export class DocumentController {
    */
   @Post('/')
   @UseInterceptors(FileInterceptor('file'))
-  @UseGuards(AuthenticateGuard)
   async create(@UploadedFile() file, @Body('instanceId') instanceId, @Session() session) {
     const headers = {
       // Document will be uploaded as this user
@@ -58,5 +61,11 @@ export class DocumentController {
       true,
       headers
     );
+  }
+
+  @Delete('/')
+  @HttpCode(204)
+  async destroy(@Query('serverRelativeUrl') serverRelativeUrl) {
+    return this.crmService.deleteSharepointFile(serverRelativeUrl);
   }
 }

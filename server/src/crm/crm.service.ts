@@ -420,7 +420,7 @@ export class CrmService {
     };
 
     return new Promise(resolve => {
-      Request.post(options, (error, response, body) => {
+      Request.get(options, (error, response, body) => {
         const stringifiedBody = body.toString('utf-8');
         if (response.statusCode >= 400) {
           console.log('error', stringifiedBody);
@@ -452,6 +452,32 @@ export class CrmService {
         }
 
         resolve(JSON.parse(stringifiedBody));
+      });
+    })
+  }
+
+  async deleteSharepointFile(serverRelativeUrl): Promise<any> {
+    const { access_token } = await this.generateSharePointAccessToken();
+    const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
+    const url = `https://nyco365.sharepoint.com/sites/${SHAREPOINT_CRM_SITE}/_api/web/GetFileByServerRelativeUrl('${serverRelativeUrl}')`;
+
+    const options = {
+      url,
+      headers: {
+        'Authorization': `Bearer ${access_token}`,
+        Accept: 'application/json',
+        'X-HTTP-Method': 'DELETE',
+      },
+    };
+
+    return new Promise(resolve => {
+      Request.del(options, (error, response, body) => {
+        const stringifiedBody = body.toString('utf-8');
+        if (response.statusCode >= 400) {
+          console.log('error', stringifiedBody);
+        }
+
+        resolve();
       });
     })
   }

@@ -57,9 +57,8 @@ export default function() {
   // TODO: If this is not possible, rework this to be a
   // POST request for a differently named endpoint, like
   // deleteDocument
-  this.del('/documents/:id', function(schema, request) {
-    const { params: { id } } = request;
-    return id ? new Response(200) : new Response(400, {}, { errors: ['Bad Parameters'] });
+  this.del('/documents', function() {
+    return new Response(204);
   });
   /*
     Shorthand cheatsheet:
