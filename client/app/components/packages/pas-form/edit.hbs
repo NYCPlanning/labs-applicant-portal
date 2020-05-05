@@ -820,6 +820,7 @@
                 <button
                   type="button"
                   class="button large no-margin"
+                  {{on "click" (fn this.submit @package)}}
                   data-test-confirm-submit-button
                 >
                   Submit
