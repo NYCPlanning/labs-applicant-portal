@@ -14,13 +14,16 @@ export const PACKAGE_ATTRS = [
   'dcp_packagetype',
   'dcp_visibility',
   'versionnumber',
-  'documents',
 ];
 
 @UseInterceptors(new JsonApiSerializeInterceptor('packages', {
   id: 'dcp_packageid',
   attributes: [
     ...PACKAGE_ATTRS,
+
+    // not a relationship proper, just an array of objects
+    // REDO: make this a rel
+    'documents',
 
     // entity relationships
     'pas-form',

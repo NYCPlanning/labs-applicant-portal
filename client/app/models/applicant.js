@@ -15,29 +15,29 @@ export default class ApplicantModel extends Model {
   applicantType;
 
   @attr('string')
-  firstName;
+  dcpFirstname;
 
   @attr('string')
-  lastName;
+  dcpLastname;
 
   @attr('string')
-  organization;
+  dcpOrganization;
 
   @attr('string')
-  emailAddress;
+  dcpEmail;
 
   @attr('string')
-  address;
+  dcpAddress;
 
   @attr('string')
-  city;
+  dcpCity;
+
+  @attr('number')
+  dcpState;
 
   @attr('string')
-  state;
+  dcpZipcode;
 
   @attr('string')
-  zip;
-
-  @attr('string')
-  phone;
+  dcpPhone;
 }
