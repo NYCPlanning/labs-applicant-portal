@@ -14,6 +14,7 @@ export const PACKAGE_ATTRS = [
   'dcp_packagetype',
   'dcp_visibility',
   'versionnumber',
+  'documents',
 ];
 
 @UseInterceptors(new JsonApiSerializeInterceptor('packages', {
