@@ -6,6 +6,6 @@ import Route from '@ember/routing/route';
 export default class ProjectsRoute extends Route {
   // where we define the model of this part of the application
   model(params) {
-    return this.store.query('project', params);
+    return this.store.query('project', { include: 'packages.pasForm', ...params });
   }
 }

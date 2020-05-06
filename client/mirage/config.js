@@ -1,6 +1,8 @@
+import { Response } from 'ember-cli-mirage';
 import ENV from '../config/environment';
 
 export default function() {
+  this.passthrough('https://search-api.planninglabs.nyc/**');
   // These comments are here to help you get started. Feel free to delete them.
 
   /*
@@ -19,11 +21,47 @@ export default function() {
   }
 
   this.get('/projects');
-  this.get('/users', (schema) => schema.users.first());
+  this.get('/contacts', (schema) => schema.contacts.first());
 
   this.get('/login', () => ({ ok: true }));
   this.get('/logout');
 
+  this.get('/packages');
+  this.get('/packages/:id');
+  this.get('/applicants');
+  this.get('/applicants/:id');
+  this.patch('/applicants/:id');
+  this.del('/applicants/:id');
+  this.post('/applicants');
+
+  this.get('/bbls');
+  this.get('/bbls/:id');
+  this.post('/bbls');
+  this.patch('/bbls/:id');
+  this.del('/bbls/:id');
+
+  this.patch('/pas-forms');
+  this.post('/pas-forms');
+  this.patch('/pas-forms/:id');
+  this.post('/packages');
+  this.patch('/packages/:id');
+  this.post('/applicants');
+
+  this.post('/documents', function(schema, request) {
+    // requestBody should be a FormData object
+    const { requestBody } = request;
+    const success = requestBody.get('instanceId') && requestBody.get('entityName') && requestBody.get('file');
+    return success ? new Response(200) : new Response(400, {}, { errors: ['Bad Parameters'] });
+  });
+
+  // Assumes that the backend delivers files each with
+  // a unique CRM or sharepoint based ID.
+  // TODO: If this is not possible, rework this to be a
+  // POST request for a differently named endpoint, like
+  // deleteDocument
+  this.del('/documents', function() {
+    return new Response(204);
+  });
   /*
     Shorthand cheatsheet:
 

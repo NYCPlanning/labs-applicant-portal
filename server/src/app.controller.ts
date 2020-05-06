@@ -3,19 +3,15 @@ import {
   Get, 
   Query,
   Res,
-  Session,
   HttpException,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthService } from './auth/auth.service';
-import { ContactService } from './contact/contact.service';
-import { Serializer } from 'jsonapi-serializer';
 
 @Controller()
 export class AppController {
   constructor(
     private readonly authService: AuthService,
-    private readonly contactService: ContactService
   ) {}
 
   @Get('/login')
@@ -39,34 +35,7 @@ export class AppController {
   @Get('/logout')
   async logout(@Res() res: Response) {
     res.clearCookie('token')
-      .send({ message: 'Login successful!' });
-  }
-
-  @Get('/users')
-  async getUser(@Session() session, @Res() res, @Query('me') me) {
-    const { contactId } = session;
-
-    if (!contactId) {
-      res.status(401).send({
-        errors: ['Authentication required for this route'],
-      });
-    } else {
-      const contact = await this.contactService.findOneById(contactId);
-
-      res.send(this.serialize(me ? contact : [contact]));
-    }
-  }
-
-  // Serializes an array of objects into a JSON:API document
-  serialize(records, opts?: object): Serializer {
-    const UserSerializer = new Serializer('users', {
-      attributes: ['contactid', 'emailaddress1'],
-      // TODO: annoying. the JWT/cookie is camelcase but CRM isn't.
-      id: 'contactid',
-      meta: { ...opts },
-    });
-
-    return UserSerializer.serialize(records);
+      .send({ message: 'Logout successful!' });
   }
 }
 

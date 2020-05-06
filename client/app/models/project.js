@@ -1,4 +1,4 @@
-import Model, { attr } from '@ember-data/model';
+import Model, { attr, hasMany } from '@ember-data/model';
 
 export default class ProjectModel extends Model {
   @attr dcpProjectname;
@@ -7,12 +7,13 @@ export default class ProjectModel extends Model {
 
   @attr dcpApplicantCustomerValue;
 
-  @attr({ defaultValue: () => [] }) dcpDcpProjectDcpPackageProject;
+  @hasMany('package', { async: false })
+  packages;
 
   get pasPackages() {
-    const [firstPackage] = this.dcpDcpProjectDcpPackageProject
-      .filter((projectPackage) => projectPackage['dcp-packagetype'] === 'PAS Package')
-      .sortBy('versionnumber')
+    const [firstPackage] = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === 'PAS Package')
+      .sortBy('dcpPackageversion')
       .reverse();
 
     if (firstPackage) {

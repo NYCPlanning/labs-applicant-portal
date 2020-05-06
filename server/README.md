@@ -49,15 +49,18 @@ $ npm run start:prod
 
 ## Test
 
+Make sure to first set your test.env file before running tests.
+TODO: Figure out mocked envs for testing.
+
 ```bash
 # unit tests
-$ npm run test
+$ yarn run test
 
 # e2e tests
-$ npm run test:e2e
+$ yarn run test:e2e --watch
 
 # test coverage
-$ npm run test:cov
+$ yarn run test:cov
 ```
 
 ## Support

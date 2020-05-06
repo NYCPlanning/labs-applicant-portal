@@ -16,7 +16,7 @@ module('Acceptance | user can login', function(hooks) {
   test('AccessToken is sent to server', async function(assert) {
     assert.expect(2);
 
-    this.server.create('user');
+    this.server.create('contact');
     this.server.get('/login', (schema, request) => {
       assert.equal(request.queryParams.accessToken, 'a-valid-jwt');
     });
@@ -30,7 +30,7 @@ module('Acceptance | user can login', function(hooks) {
   test('User can logout', async function (assert) {
     assert.expect(3);
 
-    this.server.create('user');
+    this.server.create('contact');
     this.server.get('/logout', () => assert.ok(true));
 
     window.location.hash = '#access_token=a-valid-jwt';
@@ -43,7 +43,7 @@ module('Acceptance | user can login', function(hooks) {
 
   test('User sees error message if no CRM contact is found for their email', async function (assert) {
     const accessToken = 'a-valid-jwt';
-    this.server.create('user');
+    this.server.create('contact');
     this.server.get('/login', () => new Response(401, { some: 'header' }, {
       errors: [{
         response: {
@@ -58,12 +58,13 @@ module('Acceptance | user can login', function(hooks) {
     await visit('/login');
 
     assert.ok(find('[data-test-applicant-error-message="contact-not-assigned"'));
-    assert.equal(find('[data-test-error-response="code0"]').textContent.trim(), 'code: NO_CONTACT_FOUND');
+    assert.dom('[data-test-error-response="code0"]')
+      .hasText('code: NO_CONTACT_FOUND', 'It displays the correct error code');
   });
 
   test('If user already logged in, revisiting index reroutes them to projects page', async function (assert) {
     // user logs in
-    this.server.create('user');
+    this.server.create('contact');
     this.server.get('/login', (schema, request) => {
       assert.equal(request.queryParams.accessToken, 'a-valid-jwt');
     });
@@ -80,5 +81,14 @@ module('Acceptance | user can login', function(hooks) {
     // because user is logged out, route should not redirect
     await visit('/');
     assert.equal(currentURL(), '/');
+  });
+
+  test('User sees error message if no access token present', async function (assert) {
+    this.server.create('contact');
+
+    await visit('/login');
+
+    assert.dom('[data-test-error-response="code0"]')
+      .hasText('code: NO_TOKEN_PRESENT');
   });
 });

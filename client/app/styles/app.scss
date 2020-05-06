@@ -18,3 +18,45 @@
 
 // Custom app components
 @import 'modules/_login';
+@import 'modules/_reveal-modal';
+@import 'modules/_m-search';
+@import 'modules/_pasform';
+
+@import "ember-power-select";
+
+
+.site-header {
+  @include breakpoint(large) {
+    position: sticky;
+    top: 0;
+  }
+}
+
+.form-section {
+  & + & {
+    border-top: $hr-border;
+    margin-top: $global-margin*3;
+    padding-top: $global-margin*3;
+  }
+}
+
+.section-header {
+  position: relative;
+}
+
+.section-anchor {
+  @include breakpoint(large) {
+    position: absolute;
+    top: -7rem;
+  }
+}
+
+$sticky-sidebar-offset: 6rem + rem-calc(20);
+.sticky-sidebar {
+  @include breakpoint(large) {
+    position: sticky;
+    top: $sticky-sidebar-offset;
+    max-height: calc(100vh - #{$sticky-sidebar-offset});
+    overflow: auto;
+  }
+}

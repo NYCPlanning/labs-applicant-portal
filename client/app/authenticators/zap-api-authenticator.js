@@ -2,6 +2,7 @@ import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
 import fetch from 'fetch';
 import window from 'ember-window-mock';
 import { inject as service } from '@ember/service';
+import { InvalidError } from '@ember-data/adapter/error';
 import ENV from '../config/environment';
 
 // lifted from https://github.com/simplabs/ember-simple-auth/blob/master/addon/mixins/oauth2-implicit-grant-callback-route-mixin.js#L6
@@ -27,8 +28,8 @@ export default class ZAPAuthenticator extends BaseAuthenticator {
   // Authentication is implicit with an httponly cookie holding
   // a ZAP Token. This request will fail if that cookie doesn't exist
   // https://github.com/simplabs/ember-simple-auth/blob/master/guides/managing-current-user.md#using-a-dedicated-endpoint
-  async _fetchUserObject() {
-    const { id, emailaddress1, contactid } = await this.store.queryRecord('user', { me: true });
+  async _fetchContact() {
+    const { id, emailaddress1, contactid } = await this.store.queryRecord('contact', { me: true });
 
     return { id, emailaddress1, contactid };
   }
@@ -38,7 +39,11 @@ export default class ZAPAuthenticator extends BaseAuthenticator {
     const { access_token } = _parseResponse(window.location.hash);
 
     if (!access_token) {
-      throw 'No NYCID token present'; // eslint-disable-line
+      throw new InvalidError([{
+        response: {
+          code: 'NO_TOKEN_PRESENT',
+        },
+      }]);
     }
 
     // Pass the NYCIDToken to backend /login endpoint.
@@ -58,7 +63,7 @@ export default class ZAPAuthenticator extends BaseAuthenticator {
     // the session data's "authenticated" property and marks
     // the session as authenticated.
     // See: https://ember-simple-auth.com/api/classes/SessionService.html
-    return this._fetchUserObject();
+    return this._fetchContact();
   }
 
   invalidate() {
@@ -69,6 +74,6 @@ export default class ZAPAuthenticator extends BaseAuthenticator {
   }
 
   restore() {
-    return this._fetchUserObject();
+    return this._fetchContact();
   }
 }
