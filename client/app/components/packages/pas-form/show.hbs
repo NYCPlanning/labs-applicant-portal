@@ -1,7 +1,6 @@
 <div class="grid-x grid-margin-x">
   <div class="cell large-8">
-
-    <section class="form-section" id="#project-info">
+    <section class="form-section" id="project-info">
       <h3>Project Information</h3>
 
       <p>
@@ -13,18 +12,63 @@
       </p>
     </section>
 
-    <section class="form-section" id="#applicant-team">
+    <section class="form-section" id="applicant-team">
       <h3>Applicant Team</h3>
+      {{#each @package.pasForm.applicants as |applicant|}}
+        <h4>
+          {{applicant.dcpFirstname}} {{applicant.dcpLastname}} 
+          <small>({{applicant.targetEntity}})</small>
+        </h4>
 
-      {{!-- TODO: List team members --}}
-      <div class="bg-red-dim xlarge-padding medium-margin-bottom">List team members</div>
+        {{#if applicant.dcpOrganization}}
+        <p>
+          <strong>
+            Organization
+          </strong>
+          <br>
+          {{applicant.dcpOrganization}}
+        </p>
+        {{/if}}
+
+        {{#if applicant.dcpEmail}}
+        <p>
+          <strong>
+            Email
+          </strong>
+          <br>
+          {{applicant.dcpEmail}}
+        </p>
+        {{/if}}
+
+        {{#if applicant.dcpAddress}}
+        <p>
+          <strong>
+            Address
+          </strong>
+          <br>
+          {{applicant.dcpAddress}} {{applicant.dcpCity}} {{applicant.dcpState}} {{applicant.dcpZipcode}}
+        </p>
+        {{/if}}
+
+        {{#if applicant.dcpPhone}}
+        <p>
+          <strong>
+            Phone
+          </strong>
+          <br>
+          {{applicant.dcpPhone}}
+        </p>
+        {{/if}}
+      {{/each}}
     </section>
 
-    <section class="form-section" id="#applicant-team">
+    <section class="form-section" id="project-geography">
       <h3>Project Geography</h3>
-
-      {{!-- TODO: List BBLs --}}
-      <div class="bg-red-dim xlarge-padding medium-margin-bottom">List BBLs</div>
+      {{#each @package.pasForm.bbls as |bbl|}}
+      <strong>{{bbl.dcpBblnumber}}</strong>
+      <p>Is this BBL part of the development site? {{bbl.dcpDevelopmentsite}}</p>
+      <p>Is this a partial lot? {{bbl.dcpPartiallot}}</p>
+      {{/each}}
 
       <p>
         <strong>
@@ -35,14 +79,131 @@
       </p>
     </section>
 
-    <section class="form-section" id="#proposed-land-use-actions">
+    <section class="form-section" id="proposed-land-use-actions">
       <h3>Proposed Land Use Actions</h3>
-
-      {{!-- TODO: List land use actions --}}
-      <div class="bg-red-dim xlarge-padding medium-margin-bottom">List land use actions</div>
+      {{#if @package.pasForm.dcpPfacquisitionofrealproperty}}
+      <p>
+        <strong>Acquisition of Real Property</strong>
+        {{@package.pasForm.dcpPfacquisitionofrealproperty}}
+      </p>
+      {{/if}}
+      {{#if @package.pasForm.dcpPfchangeincitymap}}
+      <p>
+        <strong>Change in CityMap</strong>
+        {{@package.pasForm.dcpPfchangeincitymap}}
+      </p>
+      {{/if}}
+      {{#if @package.pasForm.dcpPfconcession}}
+      <p>
+        <strong>Concession</strong>
+        {{@package.pasForm.dcpPfconcession}}
+      </p>
+      {{/if}}
+      {{#if @package.pasForm.dcpPfdispositionofrealproperty}}
+      <p>
+        <strong>Disposition of Real Property</strong>
+        {{@package.pasForm.dcpPfdispositionofrealproperty}}
+      </p>
+      {{/if}}
+      {{#if @package.pasForm.dcpPffranchise}}
+      <p>
+        <strong>Franchise</strong>
+        {{@package.pasForm.dcpPffranchise}}
+      </p>
+      {{/if}}
+      {{#if @package.pasForm.dcpPfhousingplanandproject}}
+      <p>
+        <strong>Housing Plan & Project</strong>
+        {{@package.pasForm.dcpPfhousingplanandproject}}
+      </p>
+      {{/if}}
+      {{#if @package.pasForm.dcpPflandfill}}
+      <p>
+        <strong>Landfill</strong>
+        {{@package.pasForm.dcpPflandfill}}
+      </p>
+      {{/if}}
+      {{#if @package.pasForm.dcpPfmodification}}
+      <p>
+        <strong>Modification</strong>
+        {{@package.pasForm.dcpPfmodification}}
+        {{@package.pasForm.dcpPreviousulurpnumbers1}}
+      </p>
+      {{/if}}
+      {{#if @package.pasForm.dcpPfrenewal}}
+      <p>
+        <strong>Renewal</strong>
+        {{@package.pasForm.dcpPfrenewal}}
+        {{@package.pasForm.dcpPreviousulurpnumbers2}}
+      </p>
+      {{/if}}
+      {{#if @package.pasForm.dcpPfrevocableconsent}}
+      <p>
+        <strong>Revocable Consent</strong>
+        {{@package.pasForm.dcpPfrevocableconsent}}
+      </p>
+      {{/if}}
+      {{#if @package.pasForm.dcpPfsiteselectionpublicfacility}}
+      <p>
+        <strong>Site Selection - Public Facility</strong>
+        {{@package.pasForm.dcpPfsiteselectionpublicfacility}}
+      </p>
+      {{/if}}
+      {{#if @package.pasForm.dcpPfudaap}}
+      <p>
+        <strong>UDAAP</strong>
+        {{@package.pasForm.dcpPfudaap}}
+      </p>
+      {{/if}}
+      {{#if @package.pasForm.dcpPfura}}
+      <p>
+        <strong>URA</strong>
+        {{@package.pasForm.dcpPfura}}
+      </p>
+      {{/if}}
+      {{#if @package.pasForm.dcpPfzoningauthorization}}
+      <p>
+        <strong>Zoning Authorization</strong>
+        {{@package.pasForm.dcpPfzoningauthorization}}
+        {{@package.pasForm.dcpZoningauthorizationpursuantto}}
+        {{@package.pasForm.dcpZoningauthorizationtomodify}}
+      </p>
+      {{/if}}
+      {{#if @package.pasForm.dcpPfzoningcertification}}
+      <p>
+        <strong>Zoning Certification</strong>
+        {{@package.pasForm.dcpPfzoningcertification}}
+        {{@package.pasForm.dcpZoningpursuantto}}
+        {{@package.pasForm.dcpZoningtomodify}}
+      </p>
+      {{/if}}
+      {{#if @package.pasForm.dcpPfzoningmapamendment}}
+      <p>
+        <strong>Zoning Map Amendment</strong>
+        {{@package.pasForm.dcpPfzoningmapamendment}}
+        {{@package.pasForm.dcpExistingmapamend}}
+        {{@package.pasForm.dcpProposedmapamend}}
+      </p>
+      {{/if}}
+      {{#if @package.pasForm.dcpPfzoningspecialpermit}}
+      <p>
+        <strong>Zoning Special Permit</strong>
+        {{@package.pasForm.dcpPfzoningspecialpermit}}
+        {{@package.pasForm.dcpZoningspecialpermitpursuantto}}
+        {{@package.pasForm.dcpZoningspecialpermittomodify}}
+      </p>
+      {{/if}}
+      {{#if @package.pasForm.dcpPfzoningtextamendment}}
+      <p>
+        <strong>Zoning Text Amendment</strong>
+        {{@package.pasForm.dcpPfzoningtextamendment}}
+        {{@package.pasForm.dcpAffectedzrnumber}}
+        {{@package.pasForm.dcpZoningresolutiontitle}}
+      </p>
+      {{/if}}
     </section>
 
-    <section class="form-section" id="#project-area">
+    <section class="form-section" id="project-area">
       <h3>Project Area</h3>
 
       <p>
@@ -190,7 +351,7 @@
       </p>
     </section>
 
-    <section class="form-section" id="#proposed-development-site">
+    <section class="form-section" id="proposed-development-site">
       <h3>Proposed Development Site</h3>
 
       <p>
@@ -260,7 +421,7 @@
       {{/if}}
     </section>
 
-    <section class="form-section" id="#project-description">
+    <section class="form-section" id="project-description">
       <h3>Project Description</h3>
 
       <p>
@@ -311,11 +472,11 @@
       </p>
     </section>
 
-    <section class="form-section" id="#attached-documents">
+    <section class="form-section" id="attached-documents">
       <h3>Attached Documents</h3>
-
-      {{!-- TODO: List attachments --}}
-      <div class="bg-red-dim xlarge-padding medium-margin-bottom">List attachments</div>
+      {{#each @package.documents as |document|}}
+      <p>{{document.name}}</p>
+      {{/each}}
     </section>
 
   </div>
