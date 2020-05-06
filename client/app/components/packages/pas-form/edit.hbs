@@ -19,7 +19,8 @@
         <strong>Project Name</strong>
         <Input
           @type="text"
-          @value={{@package.pasForm.dcpRevisedprojectname}}
+          @value={{if @package.pasForm.dcpRevisedprojectname @package.pasForm.dcpRevisedprojectname @package.project.dcpProjectname}}
+          @key-down={{fn (mut @package.pasForm.dcpRevisedprojectname)}}
           data-test-dcprevisedprojectname
         />
       </label>

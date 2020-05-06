@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import {
-  render, click, fillIn, settled,
+  render, click, fillIn, settled, triggerEvent,
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -96,9 +96,13 @@ module('Integration | Component | pas-form', function(hooks) {
   });
 
   test('user can save pas form', async function(assert) {
-    const projectPackage = this.server.create('package');
+    // although we cannot actually test that the value in the project name input box is equal to:
+    // pasForm.dcpRevisedprojectname when the revised name exists, and project.dcpProjectname when it does not exist
+    // the dcpProjectname is included in this test as documentation
+    const ourProject = this.server.create('project', { id: 1, dcpProjectname: 'Frozen Banana Castle' });
+    const projectPackage = this.server.create('package', { project: ourProject });
 
-    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
+    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form,project' });
 
     // render form
     await render(hbs`<Packages::PasForm::Edit @package={{this.package}} />`);
@@ -109,6 +113,7 @@ module('Integration | Component | pas-form', function(hooks) {
 
     // edit a field to make it pasForm dirty
     await fillIn('[data-test-dcprevisedprojectname]', 'Some Cool New Project Name');
+    await triggerEvent('[data-test-dcprevisedprojectname]', 'keydown');
 
     // save button should become active when dirty
     assert.dom('[data-test-save-button').hasProperty('disabled', false);
