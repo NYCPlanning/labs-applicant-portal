@@ -41,10 +41,15 @@ module('Integration | Component | project-geography', function(hooks) {
     await fillIn('.map-search-input', '1000120001');
     await triggerKeyEvent('.labs-geosearch', 'keypress', 13);
 
+    assert.dom(this.element).includesText('1 Bowling Green, Manhattan');
+
     assert.dom('[data-test-bbl-title="1000120001"]').exists();
 
+    // test that user can add more than one bbl
     await fillIn('.map-search-input', '1000030001');
     await triggerKeyEvent('.labs-geosearch', 'keypress', 13);
+
+    assert.dom(this.element).includesText('10 Battery Park, Manhattan');
 
     assert.dom('[data-test-bbl-title="1000030001"]').exists();
   });
