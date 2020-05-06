@@ -1,254 +1,368 @@
 <div class="grid-x grid-margin-x">
   <div class="cell large-8">
     <section class="form-section" id="project-info">
-      <h3>Project Information</h3>
+      <h3>
+        Project Information
+      </h3>
 
       <p>
         <strong>
           Project Name
         </strong>
-        <br>
+        <br />
         {{@package.pasForm.dcpRevisedprojectname}}
       </p>
     </section>
 
     <section class="form-section" id="applicant-team">
-      <h3>Applicant Team</h3>
+      <h3>
+        Applicant Team
+      </h3>
       {{#each @package.pasForm.applicants as |applicant|}}
         <h4>
-          {{applicant.dcpFirstname}} {{applicant.dcpLastname}} 
-          <small>({{applicant.targetEntity}})</small>
+          {{applicant.dcpFirstname}} {{applicant.dcpLastname}}
+          <small>
+            ({{applicant.targetEntity}})
+          </small>
         </h4>
 
         {{#if applicant.dcpOrganization}}
-        <p>
-          <strong>
-            Organization
-          </strong>
-          <br>
-          {{applicant.dcpOrganization}}
-        </p>
+          <p>
+            <strong>
+              Organization
+            </strong>
+            <br />
+            {{applicant.dcpOrganization}}
+          </p>
         {{/if}}
 
         {{#if applicant.dcpEmail}}
-        <p>
-          <strong>
-            Email
-          </strong>
-          <br>
-          {{applicant.dcpEmail}}
-        </p>
+          <p>
+            <strong>
+              Email
+            </strong>
+            <br />
+            {{applicant.dcpEmail}}
+          </p>
         {{/if}}
 
         {{#if applicant.dcpAddress}}
-        <p>
-          <strong>
-            Address
-          </strong>
-          <br>
-          {{applicant.dcpAddress}} {{applicant.dcpCity}} {{applicant.dcpState}} {{applicant.dcpZipcode}}
-        </p>
+          <p>
+            <strong>
+              Address
+            </strong>
+            <br />
+            {{applicant.dcpAddress}} {{applicant.dcpCity}} {{
+              applicant.dcpState
+            }} {{applicant.dcpZipcode}}
+          </p>
         {{/if}}
 
         {{#if applicant.dcpPhone}}
-        <p>
-          <strong>
-            Phone
-          </strong>
-          <br>
-          {{applicant.dcpPhone}}
-        </p>
+          <p>
+            <strong>
+              Phone
+            </strong>
+            <br />
+            {{applicant.dcpPhone}}
+          </p>
         {{/if}}
       {{/each}}
     </section>
 
     <section class="form-section" id="project-geography">
-      <h3>Project Geography</h3>
+      <h3>
+        Project Geography
+      </h3>
       {{#each @package.pasForm.bbls as |bbl|}}
-      <strong>{{bbl.dcpBblnumber}}</strong>
-      <p>Is this BBL part of the development site? {{bbl.dcpDevelopmentsite}}</p>
-      <p>Is this a partial lot? {{bbl.dcpPartiallot}}</p>
+        <strong>
+          {{bbl.dcpBblnumber}}
+        </strong>
+        <p>
+          Is this BBL part of the development site? {{bbl.dcpDevelopmentsite}}
+        </p>
+        <p>
+          Is this a partial lot? {{bbl.dcpPartiallot}}
+        </p>
       {{/each}}
 
       <p>
         <strong>
           Description of geography
         </strong>
-        <br>
+        <br />
         {{@package.pasForm.dcpDescriptionofprojectareageography}}
       </p>
     </section>
 
     <section class="form-section" id="proposed-land-use-actions">
-      <h3>Proposed Land Use Actions</h3>
+      <h3>
+        Proposed Land Use Actions
+      </h3>
       {{#if @package.pasForm.dcpPfacquisitionofrealproperty}}
-      <p>
-        <strong>Acquisition of Real Property</strong>
-        {{@package.pasForm.dcpPfacquisitionofrealproperty}}
-      </p>
+        <p>
+          <strong>
+            Acquisition of Real Property
+          </strong>
+          {{@package.pasForm.dcpPfacquisitionofrealproperty}}
+        </p>
       {{/if}}
       {{#if @package.pasForm.dcpPfchangeincitymap}}
-      <p>
-        <strong>Change in CityMap</strong>
-        {{@package.pasForm.dcpPfchangeincitymap}}
-      </p>
+        <p>
+          <strong>
+            Change in CityMap
+          </strong>
+          {{@package.pasForm.dcpPfchangeincitymap}}
+        </p>
       {{/if}}
       {{#if @package.pasForm.dcpPfconcession}}
-      <p>
-        <strong>Concession</strong>
-        {{@package.pasForm.dcpPfconcession}}
-      </p>
+        <p>
+          <strong>
+            Concession
+          </strong>
+          {{@package.pasForm.dcpPfconcession}}
+        </p>
       {{/if}}
       {{#if @package.pasForm.dcpPfdispositionofrealproperty}}
-      <p>
-        <strong>Disposition of Real Property</strong>
-        {{@package.pasForm.dcpPfdispositionofrealproperty}}
-      </p>
+        <p>
+          <strong>
+            Disposition of Real Property
+          </strong>
+          {{@package.pasForm.dcpPfdispositionofrealproperty}}
+        </p>
       {{/if}}
       {{#if @package.pasForm.dcpPffranchise}}
-      <p>
-        <strong>Franchise</strong>
-        {{@package.pasForm.dcpPffranchise}}
-      </p>
+        <p>
+          <strong>
+            Franchise
+          </strong>
+          {{@package.pasForm.dcpPffranchise}}
+        </p>
       {{/if}}
       {{#if @package.pasForm.dcpPfhousingplanandproject}}
-      <p>
-        <strong>Housing Plan & Project</strong>
-        {{@package.pasForm.dcpPfhousingplanandproject}}
-      </p>
+        <p>
+          <strong>
+            Housing Plan & Project
+          </strong>
+          {{@package.pasForm.dcpPfhousingplanandproject}}
+        </p>
       {{/if}}
       {{#if @package.pasForm.dcpPflandfill}}
-      <p>
-        <strong>Landfill</strong>
-        {{@package.pasForm.dcpPflandfill}}
-      </p>
+        <p>
+          <strong>
+            Landfill
+          </strong>
+          {{@package.pasForm.dcpPflandfill}}
+        </p>
       {{/if}}
       {{#if @package.pasForm.dcpPfmodification}}
-      <p>
-        <strong>Modification</strong>
-        {{@package.pasForm.dcpPfmodification}}
-        {{@package.pasForm.dcpPreviousulurpnumbers1}}
-      </p>
+        <p>
+          <strong>
+            Modification
+          </strong>
+          {{@package.pasForm.dcpPfmodification}}
+          {{@package.pasForm.dcpPreviousulurpnumbers1}}
+        </p>
       {{/if}}
       {{#if @package.pasForm.dcpPfrenewal}}
-      <p>
-        <strong>Renewal</strong>
-        {{@package.pasForm.dcpPfrenewal}}
-        {{@package.pasForm.dcpPreviousulurpnumbers2}}
-      </p>
+        <p>
+          <strong>
+            Renewal
+          </strong>
+          {{@package.pasForm.dcpPfrenewal}}
+          {{@package.pasForm.dcpPreviousulurpnumbers2}}
+        </p>
       {{/if}}
       {{#if @package.pasForm.dcpPfrevocableconsent}}
-      <p>
-        <strong>Revocable Consent</strong>
-        {{@package.pasForm.dcpPfrevocableconsent}}
-      </p>
+        <p>
+          <strong>
+            Revocable Consent
+          </strong>
+          {{@package.pasForm.dcpPfrevocableconsent}}
+        </p>
       {{/if}}
       {{#if @package.pasForm.dcpPfsiteselectionpublicfacility}}
-      <p>
-        <strong>Site Selection - Public Facility</strong>
-        {{@package.pasForm.dcpPfsiteselectionpublicfacility}}
-      </p>
+        <p>
+          <strong>
+            Site Selection - Public Facility
+          </strong>
+          {{@package.pasForm.dcpPfsiteselectionpublicfacility}}
+        </p>
       {{/if}}
       {{#if @package.pasForm.dcpPfudaap}}
-      <p>
-        <strong>UDAAP</strong>
-        {{@package.pasForm.dcpPfudaap}}
-      </p>
+        <p>
+          <strong>
+            UDAAP
+          </strong>
+          {{@package.pasForm.dcpPfudaap}}
+        </p>
       {{/if}}
       {{#if @package.pasForm.dcpPfura}}
-      <p>
-        <strong>URA</strong>
-        {{@package.pasForm.dcpPfura}}
-      </p>
+        <p>
+          <strong>
+            URA
+          </strong>
+          {{@package.pasForm.dcpPfura}}
+        </p>
       {{/if}}
       {{#if @package.pasForm.dcpPfzoningauthorization}}
-      <p>
-        <strong>Zoning Authorization</strong>
-        {{@package.pasForm.dcpPfzoningauthorization}}
-        {{@package.pasForm.dcpZoningauthorizationpursuantto}}
-        {{@package.pasForm.dcpZoningauthorizationtomodify}}
-      </p>
+        <p>
+          <strong>
+            Zoning Authorization
+          </strong>
+          {{@package.pasForm.dcpPfzoningauthorization}}
+          {{@package.pasForm.dcpZoningauthorizationpursuantto}}
+          {{@package.pasForm.dcpZoningauthorizationtomodify}}
+        </p>
       {{/if}}
       {{#if @package.pasForm.dcpPfzoningcertification}}
-      <p>
-        <strong>Zoning Certification</strong>
-        {{@package.pasForm.dcpPfzoningcertification}}
-        {{@package.pasForm.dcpZoningpursuantto}}
-        {{@package.pasForm.dcpZoningtomodify}}
-      </p>
+        <p>
+          <strong>
+            Zoning Certification
+          </strong>
+          {{@package.pasForm.dcpPfzoningcertification}}
+          {{@package.pasForm.dcpZoningpursuantto}}
+          {{@package.pasForm.dcpZoningtomodify}}
+        </p>
       {{/if}}
       {{#if @package.pasForm.dcpPfzoningmapamendment}}
-      <p>
-        <strong>Zoning Map Amendment</strong>
-        {{@package.pasForm.dcpPfzoningmapamendment}}
-        {{@package.pasForm.dcpExistingmapamend}}
-        {{@package.pasForm.dcpProposedmapamend}}
-      </p>
+        <p>
+          <strong>
+            Zoning Map Amendment
+          </strong>
+          {{@package.pasForm.dcpPfzoningmapamendment}}
+          {{@package.pasForm.dcpExistingmapamend}}
+          {{@package.pasForm.dcpProposedmapamend}}
+        </p>
       {{/if}}
       {{#if @package.pasForm.dcpPfzoningspecialpermit}}
-      <p>
-        <strong>Zoning Special Permit</strong>
-        {{@package.pasForm.dcpPfzoningspecialpermit}}
-        {{@package.pasForm.dcpZoningspecialpermitpursuantto}}
-        {{@package.pasForm.dcpZoningspecialpermittomodify}}
-      </p>
+        <p>
+          <strong>
+            Zoning Special Permit
+          </strong>
+          {{@package.pasForm.dcpPfzoningspecialpermit}}
+          {{@package.pasForm.dcpZoningspecialpermitpursuantto}}
+          {{@package.pasForm.dcpZoningspecialpermittomodify}}
+        </p>
       {{/if}}
       {{#if @package.pasForm.dcpPfzoningtextamendment}}
-      <p>
-        <strong>Zoning Text Amendment</strong>
-        {{@package.pasForm.dcpPfzoningtextamendment}}
-        {{@package.pasForm.dcpAffectedzrnumber}}
-        {{@package.pasForm.dcpZoningresolutiontitle}}
-      </p>
+        <p>
+          <strong>
+            Zoning Text Amendment
+          </strong>
+          {{@package.pasForm.dcpPfzoningtextamendment}}
+          {{@package.pasForm.dcpAffectedzrnumber}}
+          {{@package.pasForm.dcpZoningresolutiontitle}}
+        </p>
       {{/if}}
     </section>
 
     <section class="form-section" id="project-area">
-      <h3>Project Area</h3>
+      <h3>
+        Project Area
+      </h3>
 
       <p>
         <strong>
           Does the proposed Project, or portion thereof, require a NYC DEP Storm Water Construction Permit?
         </strong>
-        <br>
-        {{if (eq @package.pasForm.dcpProposedprojectorportionconstruction "717170000") "Yes"}}
-        {{if (eq @package.pasForm.dcpProposedprojectorportionconstruction "717170001") "No"}}
-        {{if (eq @package.pasForm.dcpProposedprojectorportionconstruction "717170002") "Unsure at this time"}}
+        <br />
+        {{
+          if
+          (eq
+            @package.pasForm.dcpProposedprojectorportionconstruction "717170000"
+          )
+          "Yes"
+        }}
+        {{
+          if
+          (eq
+            @package.pasForm.dcpProposedprojectorportionconstruction "717170001"
+          )
+          "No"
+        }}
+        {{
+          if
+          (eq
+            @package.pasForm.dcpProposedprojectorportionconstruction "717170002"
+          )
+          "Unsure at this time"
+        }}
       </p>
 
       <p>
         <strong>
-          Is the proposed Project Area located in a current or former <a href="#">Urban Renewal Area</a>?
-          {{!-- TODO: add link --}}
+          Is the proposed Project Area located in a current or former
+          <a href="#">
+            Urban Renewal Area
+          </a>
+          ?
+          {{! TODO: add link }}
         </strong>
-        <br>
+        <br />
         {{if (eq @package.pasForm.dcpUrbanrenewalarea "717170000") "Yes"}}
         {{if (eq @package.pasForm.dcpUrbanrenewalarea "717170001") "No"}}
-        {{if (eq @package.pasForm.dcpUrbanrenewalarea "717170002") "Unsure at this time"}}
+        {{
+          if
+          (eq @package.pasForm.dcpUrbanrenewalarea "717170002")
+          "Unsure at this time"
+        }}
       </p>
 
       <p>
         <strong>
-          What is the <a href="#">Legal Street Frontage Status in the Project Area</a>?
-          {{!-- TODO: add link --}}
+          What is the
+          <a href="#">
+            Legal Street Frontage Status in the Project Area
+          </a>
+          ?
+          {{! TODO: add link }}
         </strong>
-        <br>
-        {{if (eq @package.pasForm.dcpLegalstreetfrontage "717170000") "Mapped and Build"}}
-        {{if (eq @package.pasForm.dcpLegalstreetfrontage "717170001") "Private Road"}}
-        {{if (eq @package.pasForm.dcpLegalstreetfrontage "717170002") "Record Street"}}
-        {{if (eq @package.pasForm.dcpLegalstreetfrontage "717170003") "Corporation Counsel Opinion"}}
-        {{if (eq @package.pasForm.dcpLegalstreetfrontage "717170004") "Mapped but not Build"}}
+        <br />
+        {{
+          if
+          (eq @package.pasForm.dcpLegalstreetfrontage "717170000")
+          "Mapped and Build"
+        }}
+        {{
+          if
+          (eq @package.pasForm.dcpLegalstreetfrontage "717170001")
+          "Private Road"
+        }}
+        {{
+          if
+          (eq @package.pasForm.dcpLegalstreetfrontage "717170002")
+          "Record Street"
+        }}
+        {{
+          if
+          (eq @package.pasForm.dcpLegalstreetfrontage "717170003")
+          "Corporation Counsel Opinion"
+        }}
+        {{
+          if
+          (eq @package.pasForm.dcpLegalstreetfrontage "717170004")
+          "Mapped but not Build"
+        }}
       </p>
 
       <p>
         <strong>
-          Do all land use actions meet <a href="#">SEQRA or CEQR criteria</a> for Type II status?
-          {{!-- TODO: add link --}}
+          Do all land use actions meet
+          <a href="#">
+            SEQRA or CEQR criteria
+          </a>
+          for Type II status?
+          {{! TODO: add link }}
         </strong>
-        <br>
+        <br />
         {{if (eq @package.pasForm.dcpLanduseactiontype2 "717170000") "Yes"}}
         {{if (eq @package.pasForm.dcpLanduseactiontype2 "717170001") "No"}}
-        {{if (eq @package.pasForm.dcpLanduseactiontype2 "717170002") "Unsure at this time"}}
+        {{
+          if
+          (eq @package.pasForm.dcpLanduseactiontype2 "717170002")
+          "Unsure at this time"
+        }}
       </p>
 
       {{#if (eq @package.pasForm.dcpLanduseactiontype2 "717170000")}}
@@ -256,19 +370,31 @@
           <strong>
             Indicate which SEQRA or CEQR category each action fulfills
           </strong>
-          <br>
+          <br />
           {{@package.pasForm.dcpPleaseexplaintypeiienvreview}}
         </p>
       {{/if}}
 
       <p>
         <strong>
-          Is the proposed Project Area in an <a href="#">Industrial Business Zone</a>?
-          {{!-- TODO: add link --}}
+          Is the proposed Project Area in an
+          <a href="#">
+            Industrial Business Zone
+          </a>
+          ?
+          {{! TODO: add link }}
         </strong>
-        <br>
-        {{if (eq @package.pasForm.dcpProjectareaindustrialbusinesszone true) "Yes"}}
-        {{if (eq @package.pasForm.dcpProjectareaindustrialbusinesszone false) "No"}}
+        <br />
+        {{
+          if
+          (eq @package.pasForm.dcpProjectareaindustrialbusinesszone true)
+          "Yes"
+        }}
+        {{
+          if
+          (eq @package.pasForm.dcpProjectareaindustrialbusinesszone false)
+          "No"
+        }}
       </p>
 
       {{#if (eq @package.pasForm.dcpProjectareaindustrialbusinesszone true)}}
@@ -276,17 +402,21 @@
           <strong>
             Name of Industrial Business Zone
           </strong>
-          <br>
+          <br />
           {{@package.pasForm.dcpProjectareaindutrialzonename}}
         </p>
       {{/if}}
 
       <p>
         <strong>
-          Is the proposed Project Area within or adjacent to a designated (City or State) <a href="#">Landmark or Historic District</a>?
-          {{!-- TODO: add link --}}
+          Is the proposed Project Area within or adjacent to a designated (City or State)
+          <a href="#">
+            Landmark or Historic District
+          </a>
+          ?
+          {{! TODO: add link }}
         </strong>
-        <br>
+        <br />
         {{if (eq @package.pasForm.dcpIsprojectarealandmark true) "Yes"}}
         {{if (eq @package.pasForm.dcpIsprojectarealandmark false) "No"}}
       </p>
@@ -296,38 +426,66 @@
           <strong>
             Name of Landmark or Historic District
           </strong>
-          <br>
+          <br />
           {{@package.pasForm.dcpProjectarealandmarkname}}
         </p>
       {{/if}}
 
       <p>
         <strong>
-          Is the proposed Project Area located within the <a href="#">NYC Coastal Zone</a>?
-          {{!-- TODO: add link --}}
+          Is the proposed Project Area located within the
+          <a href="#">
+            NYC Coastal Zone
+          </a>
+          ?
+          {{! TODO: add link }}
         </strong>
-        <br>
-        {{if (eq @package.pasForm.dcpProjectareacoastalzonelocatedin true) "Yes"}}
-        {{if (eq @package.pasForm.dcpProjectareacoastalzonelocatedin false) "No"}}
+        <br />
+        {{
+          if (eq @package.pasForm.dcpProjectareacoastalzonelocatedin true) "Yes"
+        }}
+        {{
+          if (eq @package.pasForm.dcpProjectareacoastalzonelocatedin false) "No"
+        }}
       </p>
 
       <p>
         <strong>
-          Is the Project Area located within the <a href="#">1% annual chance floodplain</a>?
-          {{!-- TODO: add link --}}
+          Is the Project Area located within the
+          <a href="#">
+            1% annual chance floodplain
+          </a>
+          ?
+          {{! TODO: add link }}
         </strong>
-        <br>
-        {{if (eq @package.pasForm.dcpProjectareaischancefloodplain "717170000") "Yes"}}
-        {{if (eq @package.pasForm.dcpProjectareaischancefloodplain "717170001") "No"}}
-        {{if (eq @package.pasForm.dcpProjectareaischancefloodplain "717170002") "Unsure at this time"}}
+        <br />
+        {{
+          if
+          (eq @package.pasForm.dcpProjectareaischancefloodplain "717170000")
+          "Yes"
+        }}
+        {{
+          if
+          (eq @package.pasForm.dcpProjectareaischancefloodplain "717170001")
+          "No"
+        }}
+        {{
+          if
+          (eq @package.pasForm.dcpProjectareaischancefloodplain "717170002")
+          "Unsure at this time"
+        }}
       </p>
 
       <p>
         <strong>
-          Is a <a href="#">legal instrument</a> associated with a previous CPC or CPC Chair action recorded against the project site?
-          {{!-- TODO: add link --}}
+          Is a
+          <a href="#">
+            legal instrument
+          </a>
+          associated with a previous CPC or CPC Chair action recorded against the project site?
+          {{! TODO: add link }}
         </strong>
-        <br>
+        <br />
         {{if (eq @package.pasForm.dcpRestrictivedeclaration true) "Yes"}}
         {{if (eq @package.pasForm.dcpRestrictivedeclaration false) "No"}}
       </p>
@@ -336,7 +494,7 @@
         <strong>
           City Register File Number
         </strong>
-        <br>
+        <br />
         {{@package.pasForm.dcpCityregisterfilenumber}}
       </p>
 
@@ -344,21 +502,35 @@
         <strong>
           Will a new legal instrument or modification of a current legal instrument be necessary to approve/implement these actions?
         </strong>
-        <br>
-        {{if (eq @package.pasForm.dcpRestrictivedeclarationrequired "717170000") "Yes"}}
-        {{if (eq @package.pasForm.dcpRestrictivedeclarationrequired "717170001") "No"}}
-        {{if (eq @package.pasForm.dcpRestrictivedeclarationrequired "717170002") "Unsure at this time"}}
+        <br />
+        {{
+          if
+          (eq @package.pasForm.dcpRestrictivedeclarationrequired "717170000")
+          "Yes"
+        }}
+        {{
+          if
+          (eq @package.pasForm.dcpRestrictivedeclarationrequired "717170001")
+          "No"
+        }}
+        {{
+          if
+          (eq @package.pasForm.dcpRestrictivedeclarationrequired "717170002")
+          "Unsure at this time"
+        }}
       </p>
     </section>
 
     <section class="form-section" id="proposed-development-site">
-      <h3>Proposed Development Site</h3>
+      <h3>
+        Proposed Development Site
+      </h3>
 
       <p>
         <strong>
           In what year do you expect the development to complete?
         </strong>
-        <br>
+        <br />
         {{@package.pasForm.dcpEstimatedcompletiondate}}
       </p>
 
@@ -366,25 +538,61 @@
         <strong>
           What type of development is proposed?
         </strong>
-        <br>
-        {{if @package.pasForm.dcpProposeddevelopmentsitenewconstruction "Newly constructed buildings"}}
-        {{if @package.pasForm.dcpProposeddevelopmentsitedemolition "Demolition"}}
-        {{if @package.pasForm.dcpProposeddevelopmentsiteinfoalteration "Alteration"}}
-        {{if @package.pasForm.dcpProposeddevelopmentsiteinfoaddition "Addition"}}
-        {{if @package.pasForm.dcpProposeddevelopmentsitechnageofuse "Change of use"}}
-        {{if @package.pasForm.dcpProposeddevelopmentsiteenlargement "Enlargement"}}
+        <br />
+        {{
+          if
+          @package.pasForm.dcpProposeddevelopmentsitenewconstruction
+          "Newly constructed buildings"
+        }}
+        {{
+          if @package.pasForm.dcpProposeddevelopmentsitedemolition "Demolition"
+        }}
+        {{
+          if
+          @package.pasForm.dcpProposeddevelopmentsiteinfoalteration
+          "Alteration"
+        }}
+        {{
+          if @package.pasForm.dcpProposeddevelopmentsiteinfoaddition "Addition"
+        }}
+        {{
+          if
+          @package.pasForm.dcpProposeddevelopmentsitechnageofuse
+          "Change of use"
+        }}
+        {{
+          if
+          @package.pasForm.dcpProposeddevelopmentsiteenlargement
+          "Enlargement"
+        }}
         {{if @package.pasForm.dcpProposeddevelopmentsiteinfoother "Other: "}}
-        {{if @package.pasForm.dcpProposeddevelopmentsiteinfoother @package.pasForm.dcpProposeddevelopmentsiteotherexplanation}}
+        {{
+          if
+          @package.pasForm.dcpProposeddevelopmentsiteinfoother
+          @package.pasForm.dcpProposeddevelopmentsiteotherexplanation
+        }}
       </p>
 
       <p>
         <strong>
-          Is the Development Site in an <a href="#">Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area</a>?
-          {{!-- TODO: add link --}}
+          Is the Development Site in an
+          <a href="#">
+            Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area
+          </a>
+          ?
+          {{! TODO: add link }}
         </strong>
-        <br>
-        {{if (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea true) "Yes"}}
-        {{if (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea false) "No"}}
+        <br />
+        {{
+          if
+          (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea true)
+          "Yes"
+        }}
+        {{
+          if
+          (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea false)
+          "No"
+        }}
       </p>
 
       {{#if (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea true)}}
@@ -392,7 +600,7 @@
           <strong>
             Name of Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area
           </strong>
-          <br>
+          <br />
           {{@package.pasForm.dcpInclusionaryhousingdesignatedareaname}}
         </p>
       {{/if}}
@@ -401,34 +609,70 @@
         <strong>
           Does the proposed development involve discretionary funding for Affordable Housing Units?
         </strong>
-        <br>
-        {{if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing "717170000") "Yes"}}
-        {{if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing "717170001") "No"}}
-        {{if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing "717170002") "Unsure at this time"}}
+        <br />
+        {{
+          if
+          (eq
+            @package.pasForm.dcpDiscressionaryfundingforffordablehousing
+            "717170000"
+          )
+          "Yes"
+        }}
+        {{
+          if
+          (eq
+            @package.pasForm.dcpDiscressionaryfundingforffordablehousing
+            "717170001"
+          )
+          "No"
+        }}
+        {{
+          if
+          (eq
+            @package.pasForm.dcpDiscressionaryfundingforffordablehousing
+            "717170002"
+          )
+          "Unsure at this time"
+        }}
       </p>
 
-      {{#if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing "717170000")}}
+      {{#if
+        (eq
+          @package.pasForm.dcpDiscressionaryfundingforffordablehousing
+          "717170000"
+        )
+      }}
         <p>
           <strong>
             Funding source
           </strong>
-          <br>
+          <br />
           {{if (eq @package.pasForm.dcpHousingunittypeCity "717170000") "City"}}
-          {{if (eq @package.pasForm.dcpHousingunittypeCity "717170001") "State"}}
-          {{if (eq @package.pasForm.dcpHousingunittypeCity "717170002") "Federal"}}
-          {{if (eq @package.pasForm.dcpHousingunittypeCity "717170003") "Other"}}
+          {{
+            if (eq @package.pasForm.dcpHousingunittypeCity "717170001") "State"
+          }}
+          {{
+            if
+            (eq @package.pasForm.dcpHousingunittypeCity "717170002")
+            "Federal"
+          }}
+          {{
+            if (eq @package.pasForm.dcpHousingunittypeCity "717170003") "Other"
+          }}
         </p>
       {{/if}}
     </section>
 
     <section class="form-section" id="project-description">
-      <h3>Project Description</h3>
+      <h3>
+        Project Description
+      </h3>
 
       <p>
         <strong>
           Description of the proposed development being facilitated by the land use actions
         </strong>
-        <br>
+        <br />
         {{@package.pasForm.dcpProjectdescriptionproposeddevelopment}}
       </p>
 
@@ -436,7 +680,7 @@
         <strong>
           Why is this application being proposed? What is the legal, environmental, or land use background?
         </strong>
-        <br>
+        <br />
         {{@package.pasForm.dcpProjectdescriptionbackground}}
       </p>
 
@@ -444,7 +688,7 @@
         <strong>
           What is the land use rationale for all the proposed actions?
         </strong>
-        <br>
+        <br />
         {{@package.pasForm.dcpProjectdescriptionproposedactions}}
       </p>
 
@@ -459,7 +703,7 @@
         <strong>
           Description of land uses and built context in surrounding area (within 1000 ft)
         </strong>
-        <br>
+        <br />
         {{@package.pasForm.dcpProjectdescriptionsurroundingarea}}
       </p>
 
@@ -467,78 +711,110 @@
         <strong>
           Description of proposed CEQR scope
         </strong>
-        <br>
+        <br />
         {{@package.pasForm.dcpProjectattachmentsotherinformation}}
       </p>
     </section>
 
     <section class="form-section" id="attached-documents">
-      <h3>Attached Documents</h3>
+      <h3>
+        Attached Documents
+      </h3>
       {{#each @package.documents as |document|}}
-      <p>{{document.name}}</p>
+        <p>
+          {{document.name}}
+        </p>
       {{/each}}
     </section>
-
   </div>
   <div class="cell large-4">
-
     <div class="sticky-sidebar">
       <nav>
         <ul class="no-bullet text-weight-bold">
           <li class="medium-margin-bottom">
             <a href="#project-info">
-              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+              <FaIcon
+                @icon="chevron-circle-down"
+                @fixedWidth={{true}}
+                class="text-silver"
+              />
               Project Information
             </a>
           </li>
           <li class="medium-margin-bottom">
             <a href="#applicant-team">
-              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+              <FaIcon
+                @icon="chevron-circle-down"
+                @fixedWidth={{true}}
+                class="text-silver"
+              />
               Applicant Team
             </a>
           </li>
           <li class="medium-margin-bottom">
             <a href="#">
-              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+              <FaIcon
+                @icon="chevron-circle-down"
+                @fixedWidth={{true}}
+                class="text-silver"
+              />
               Project Geography
             </a>
           </li>
           <li class="medium-margin-bottom">
             <a href="#">
-              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+              <FaIcon
+                @icon="chevron-circle-down"
+                @fixedWidth={{true}}
+                class="text-silver"
+              />
               Proposed Land Use Actions
             </a>
           </li>
           <li class="medium-margin-bottom">
             <a href="#">
-              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+              <FaIcon
+                @icon="chevron-circle-down"
+                @fixedWidth={{true}}
+                class="text-silver"
+              />
               Project Area
             </a>
           </li>
           <li class="medium-margin-bottom">
             <a href="#">
-              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+              <FaIcon
+                @icon="chevron-circle-down"
+                @fixedWidth={{true}}
+                class="text-silver"
+              />
               Proposed Development Site
             </a>
           </li>
           <li class="medium-margin-bottom">
             <a href="#">
-              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+              <FaIcon
+                @icon="chevron-circle-down"
+                @fixedWidth={{true}}
+                class="text-silver"
+              />
               Project Description
             </a>
           </li>
           <li class="medium-margin-bottom">
             <a href="#">
-              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+              <FaIcon
+                @icon="chevron-circle-down"
+                @fixedWidth={{true}}
+                class="text-silver"
+              />
               Attached Documents
             </a>
           </li>
         </ul>
       </nav>
-    </div>{{!-- end .sticky-sidebar --}}
-
+    </div>{{! end .sticky-sidebar }}
   </div>
 </div>
-
 
 {{yield}}
