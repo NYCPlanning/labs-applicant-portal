@@ -15,7 +15,7 @@
   </label>
 </div>
 {{#each this.landUseActionSelections as |landUseAction|}}
-  <fieldset class="fieldset">
+  <fieldset class="fieldset relative">
     <legend>
       <strong>{{landUseAction.name}}</strong>
     </legend>
@@ -66,15 +66,15 @@
         <span class="help-text">ex. 200307ZRK</span>
       </label>
     {{/if}}
-  <div class="text-right">
-    <button 
-      type="button" 
-      class="text-red"
-      onClick={{fn this.removeSelectedAction landUseAction}}
+
+    <button
+      type="button"
+      class="delete-fieldset"
+      {{on "click" (fn this.removeSelectedAction landUseAction)}}
       data-test-delete-button="{{landUseAction.name}}"
     >
-      {{fa-icon 'times'}} DELETE
+      Delete Action
+      <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
     </button>
-  </div>
   </fieldset>
 {{/each}}

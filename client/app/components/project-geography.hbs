@@ -8,77 +8,77 @@
 </LabsSearch>
 
 {{#each @bbls as |bbl idx|}}
-  <fieldset class="fieldset">
+  <fieldset class="fieldset relative">
     <legend data-test-bbl-title="{{bbl.dcpBblnumber}}">
-    <strong>{{bbl.dcpBblnumber}}</strong>
-  </legend>
-  <fieldset>
-    <legend data-test-development-site-question="{{bbl.dcpBblnumber}}-{{bbl.dcpDevelopmentsite}}">
-      Is this BBL part of the development site?
+      <strong>{{bbl.dcpBblnumber}}</strong>
     </legend>
-    <Input
-      @type="radio"
-      name={{concat idx '-bbl-dev-site'}}
-      id={{concat idx '-bbl-dev-site-yes'}}
-      @value={{eq bbl.dcpDevelopmentsite true}}
-      checked={{eq bbl.dcpDevelopmentsite true}}
-      onClick={{fn this.updateAttr bbl "dcpDevelopmentsite" true}}
-      data-test-bbl-development-site-yes="{{bbl.dcpBblnumber}}"
-    />
-    <label for="{{concat idx '-bbl-dev-site-yes'}}">
-      Yes
-    </label>
-    <Input
-      @type="radio"
-      name={{concat idx '-bbl-dev-site'}}
-      id={{concat idx '-bbl-dev-site-no'}}
-      @value={{eq bbl.dcpDevelopmentsite false}}
-      checked={{eq bbl.dcpDevelopmentsite false}}
-      onClick={{fn this.updateAttr bbl "dcpDevelopmentsite" false}}
-      data-test-bbl-development-site-no="{{bbl.dcpBblnumber}}"
-    />
-    <label for="{{concat idx '-bbl-dev-site-no'}}">
-      No
-    </label>
-  </fieldset>
-  <fieldset>
-    <legend data-test-partial-lot-question="{{bbl.dcpBblnumber}}-{{bbl.dcpPartiallot}}">
-      Is this a partial lot?
-    </legend>
-    <Input
-      type="radio"
-      name="bbl-partial-lot-yes"
-      id="bbl-partial-lot-yes"
-      @value={{eq bbl.dcpPartiallot true}}
-      checked={{eq bbl.dcpPartiallot true}}
-      onClick={{fn this.updateAttr bbl "dcpPartiallot" true}}
-      data-test-bbl-partial-lot-yes="{{bbl.dcpBblnumber}}"
-    />
-    <label for="bbl-partial-lot-yes">
-      Yes
-    </label>
-    <Input
-      @type="radio"
-      name="bbl-partial-lot-no"
-      id="bbl-partial-lot-no"
-      @value={{eq bbl.dcpPartiallot false}}
-      checked={{eq bbl.dcpPartiallot false}}
-      onClick={{fn this.updateAttr bbl "dcpPartiallot" false}}
-      data-test-bbl-partial-lot-no="{{bbl.dcpBblnumber}}"
-    />
-    <label for="bbl-partial-lot-no">
-      No
-    </label>
-  </fieldset>
-    <div class="text-right">
-      <button
-        type="button"
-        class="text-red"
-        data-test-button-remove-bbl="{{bbl.dcpBblnumber}}"
-        onClick={{fn this.removeBbl bbl}}
-      >
-        {{fa-icon 'times'}} DELETE
-      </button>
-    </div>
+    <fieldset>
+      <legend data-test-development-site-question="{{bbl.dcpBblnumber}}-{{bbl.dcpDevelopmentsite}}">
+        Is this BBL part of the development site?
+      </legend>
+      <Input
+        @type="radio"
+        name={{concat idx '-bbl-dev-site'}}
+        id={{concat idx '-bbl-dev-site-yes'}}
+        @value={{eq bbl.dcpDevelopmentsite true}}
+        checked={{eq bbl.dcpDevelopmentsite true}}
+        {{on "click" (fn this.updateAttr bbl "dcpDevelopmentsite" true)}}
+        data-test-bbl-development-site-yes="{{bbl.dcpBblnumber}}"
+      />
+      <label for="{{concat idx '-bbl-dev-site-yes'}}">
+        Yes
+      </label>
+      <Input
+        @type="radio"
+        name={{concat idx '-bbl-dev-site'}}
+        id={{concat idx '-bbl-dev-site-no'}}
+        @value={{eq bbl.dcpDevelopmentsite false}}
+        checked={{eq bbl.dcpDevelopmentsite false}}
+        {{on "click" (fn this.updateAttr bbl "dcpDevelopmentsite" false)}}
+        data-test-bbl-development-site-no="{{bbl.dcpBblnumber}}"
+      />
+      <label for="{{concat idx '-bbl-dev-site-no'}}">
+        No
+      </label>
+    </fieldset>
+    <fieldset>
+      <legend data-test-partial-lot-question="{{bbl.dcpBblnumber}}-{{bbl.dcpPartiallot}}">
+        Is this a partial lot?
+      </legend>
+      <Input
+        type="radio"
+        name="bbl-partial-lot-yes"
+        id="bbl-partial-lot-yes"
+        @value={{eq bbl.dcpPartiallot true}}
+        checked={{eq bbl.dcpPartiallot true}}
+        {{on "click" (fn this.updateAttr bbl "dcpPartiallot" true)}}
+        data-test-bbl-partial-lot-yes="{{bbl.dcpBblnumber}}"
+      />
+      <label for="bbl-partial-lot-yes">
+        Yes
+      </label>
+      <Input
+        @type="radio"
+        name="bbl-partial-lot-no"
+        id="bbl-partial-lot-no"
+        @value={{eq bbl.dcpPartiallot false}}
+        checked={{eq bbl.dcpPartiallot false}}
+        {{on "click" (fn this.updateAttr bbl "dcpPartiallot" false)}}
+        data-test-bbl-partial-lot-no="{{bbl.dcpBblnumber}}"
+      />
+      <label for="bbl-partial-lot-no">
+        No
+      </label>
+    </fieldset>
+
+    <button
+      type="button"
+      class="delete-fieldset"
+      {{on "click" (fn this.removeBbl bbl)}}
+      data-test-button-remove-bbl="{{bbl.dcpBblnumber}}"
+    >
+      Delete BBL
+      <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
+    </button>
   </fieldset>
 {{/each}}

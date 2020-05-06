@@ -7,7 +7,7 @@
         </b>
       </legend>
 
-      <ul class="no-bullet">  
+      <ul class="no-bullet">
         {{#each @fileManager.existingFiles as |file idx|}}
           <li
           class="text-justify"
@@ -77,25 +77,30 @@
             class="text-justify"
           >
           <div class="grid-x">
-            <div class="cell small-8">
+            <div class="cell auto">
               <b
                 data-test-document-to-be-uploaded-name={{idx}}
               >
                 {{file.name}}
               </b>
             </div>
-            <div class="cell small-3 text-right">
+            <div class="cell shrink">
               <small>
                 TO BE ADDED
               </small>
             </div>
-            <div class="cell small-1 text-right">
+            <div class="cell shrink">
               <button
-                 {{on "click" (fn this.deselectFileForUpload file)}}
-                data-test-deselect-file-button={{idx}}
                 type="button"
+                class="text-red-dark"
+                {{on "click" (fn this.deselectFileForUpload file)}}
+                data-test-deselect-file-button={{idx}}
               >
-                <FaIcon @icon="times" @prefix="fas" class="text-red" />
+                <FaIcon
+                  @icon="times"
+                  @prefix="fas"
+                  @fixedWidth={{true}}
+                />
               </button>
             </div>
           </div>
