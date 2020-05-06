@@ -60,3 +60,14 @@ $sticky-sidebar-offset: 6rem + rem-calc(20);
     overflow: auto;
   }
 }
+
+.delete-fieldset {
+  position: absolute;
+  top: 0;
+  right: $global-margin;
+  background-color: $off-white;
+  color: $red-dark;
+  font-size: rem-calc(14);
+  padding: 0.4em;
+  padding-right: 0;
+}
