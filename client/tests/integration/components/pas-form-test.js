@@ -12,9 +12,10 @@ module('Integration | Component | pas-form', function(hooks) {
   setupMirage(hooks);
 
   test('Urban Renewal Area sub Q shows conditionally', async function(assert) {
-    const projectPackage = this.server.create('package');
+    const ourProject = this.server.create('project');
+    const projectPackage = this.server.create('package', { project: ourProject });
 
-    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
+    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form,project' });
 
     await render(hbs`<Packages::PasForm::Edit @package={{this.package}} />`);
     assert.dom('[data-test-dcpurbanrenewalarea]').doesNotExist();
@@ -23,9 +24,10 @@ module('Integration | Component | pas-form', function(hooks) {
   });
 
   test('SEQRA or CEQR sub Q shows conditionally', async function(assert) {
-    const projectPackage = this.server.create('package');
+    const ourProject = this.server.create('project');
+    const projectPackage = this.server.create('package', { project: ourProject });
 
-    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
+    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form,project' });
 
     await render(hbs`<Packages::PasForm::Edit @package={{this.package}} />`);
     assert.dom('[data-test-dcppleaseexplaintypeiienvreview]').doesNotExist();
@@ -34,9 +36,10 @@ module('Integration | Component | pas-form', function(hooks) {
   });
 
   test('Industrial Business Zone sub Q shows conditionally', async function(assert) {
-    const projectPackage = this.server.create('package');
+    const ourProject = this.server.create('project');
+    const projectPackage = this.server.create('package', { project: ourProject });
 
-    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
+    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form,project' });
 
     await render(hbs`<Packages::PasForm::Edit @package={{this.package}} />`);
     assert.dom('[data-test-dcpprojectareaindustrialbusinesszone]').doesNotExist();
@@ -45,9 +48,10 @@ module('Integration | Component | pas-form', function(hooks) {
   });
 
   test('Landmark or Historic District sub Q shows conditionally', async function(assert) {
-    const projectPackage = this.server.create('package');
+    const ourProject = this.server.create('project');
+    const projectPackage = this.server.create('package', { project: ourProject });
 
-    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
+    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form,project' });
 
 
     await render(hbs`<Packages::PasForm::Edit @package={{this.package}} />`);
@@ -57,9 +61,10 @@ module('Integration | Component | pas-form', function(hooks) {
   });
 
   test('Other Type sub Q shows conditionally', async function(assert) {
-    const projectPackage = this.server.create('package');
+    const ourProject = this.server.create('project');
+    const projectPackage = this.server.create('package', { project: ourProject });
 
-    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
+    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form,project' });
 
     await render(hbs`<Packages::PasForm::Edit @package={{this.package}} />`);
     assert.dom('[data-test-dcpproposeddevelopmentsiteotherexplanation]').doesNotExist();
@@ -68,9 +73,10 @@ module('Integration | Component | pas-form', function(hooks) {
   });
 
   test('MIH sub Q shows conditionally', async function(assert) {
-    const projectPackage = this.server.create('package');
+    const ourProject = this.server.create('project');
+    const projectPackage = this.server.create('package', { project: ourProject });
 
-    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
+    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form,project' });
 
     await render(hbs`<Packages::PasForm::Edit @package={{this.package}} />`);
     assert.dom('[data-test-dcpinclusionaryhousingdesignatedareaname]').doesNotExist();
@@ -79,9 +85,10 @@ module('Integration | Component | pas-form', function(hooks) {
   });
 
   test('Funding Source sub Q shows conditionally', async function(assert) {
-    const projectPackage = this.server.create('package');
+    const ourProject = this.server.create('project');
+    const projectPackage = this.server.create('package', { project: ourProject });
 
-    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
+    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form,project' });
 
     await render(hbs`<Packages::PasForm::Edit @package={{this.package}} />`);
     assert.dom('[data-test-dcphousingunittype-city]').doesNotExist();
@@ -96,19 +103,25 @@ module('Integration | Component | pas-form', function(hooks) {
   });
 
   test('user can save pas form', async function(assert) {
-    const projectPackage = this.server.create('package');
+    const ourProject = this.server.create('project', { dcpProjectname: 'Frozen Banana Castle' });
+    const projectPackage = this.server.create('package', { project: ourProject });
 
-    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
+    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form,project' });
 
     // render form
     await render(hbs`<Packages::PasForm::Edit @package={{this.package}} />`);
+
+    // should be pre-populated with project.dcpProjectname
+    assert.equal((this.element.querySelector('[data-test-project-name-input]')).value, 'Frozen Banana Castle');
 
     // save button should start disabled
     // TODO: fix this test.  The form starts dirty because we implicitly create a new applicant when the applicants array is empty
     // assert.dom('[data-test-save-button').hasProperty('disabled', true);
 
     // edit a field to make it pasForm dirty
-    await fillIn('[data-test-dcprevisedprojectname]', 'Some Cool New Project Name');
+    await fillIn('[data-test-project-name-input]', 'Some Cool New Project Name');
+
+    assert.equal((this.element.querySelector('[data-test-project-name-input]')).value, 'Some Cool New Project Name');
 
     // save button should become active when dirty
     assert.dom('[data-test-save-button').hasProperty('disabled', false);
@@ -122,9 +135,10 @@ module('Integration | Component | pas-form', function(hooks) {
   });
 
   test('user sees a confirmation modal upon submit', async function(assert) {
-    const projectPackage = this.server.create('package');
+    const ourProject = this.server.create('project');
+    const projectPackage = this.server.create('package', { project: ourProject });
 
-    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
+    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form,project' });
 
     class LocationStub extends Service {
       transitionTo() {}

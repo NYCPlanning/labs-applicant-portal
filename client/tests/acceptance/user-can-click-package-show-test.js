@@ -8,7 +8,10 @@ module('Acceptance | user can interact with packages', function(hooks) {
   setupMirage(hooks);
 
   test('User can visit view-only (show) package route', async function(assert) {
-    this.server.create('project', 1, 'applicant');
+    const ourProject = this.server.create('project');
+    const projectPackage = this.server.create('package', { project: ourProject });
+
+    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form,project' });
 
     await visit('/packages/1');
 
