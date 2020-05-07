@@ -789,6 +789,7 @@ export default class PasFormModel extends Model {
 
   @attr('string') dcpRepresentativeaddress3;
 
+  temporaryAddressLabel = '';
 
   async saveDirtyBbls() {
     return Promise.all(
