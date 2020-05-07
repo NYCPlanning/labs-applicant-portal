@@ -12,19 +12,28 @@
   </banner.title>
   <banner.nav>
     <ul class="menu vertical medium-horizontal">
-      <li>
-        {{#if this.session.isAuthenticated}}
-          <button {{on "click" this.doLogout}}
-            href="#"
-            type="button"
-            data-test-auth="logout"
-          >
-            Logout
-          </button>
-        {{else}}
+      {{#if this.session.isAuthenticated}}
+        <li class="auth--container">
+          <FaIcon @icon="user-circle" @prefix="fas" @size="2x" class="auth--icon" />
+          <div>
+            <span class="auth--name">
+              {{userEmail}}
+            </span>
+            <button
+              type="button"
+              class="auth--logout-button"
+              {{on "click" this.doLogout}}
+              data-test-auth="logout"
+            >
+              Sign Out
+            </button>
+          </div>
+        </li>
+      {{else}}
+        <li>
           <SignInButton />
-        {{/if}}
-      </li>
+        </li>
+      {{/if}}
     </ul>
   </banner.nav>
 </LabsUi::SiteHeader>

@@ -7,6 +7,7 @@
   color: #828892;
   font-size: 0.875rem;
   padding: 0 1.25rem;
+  min-height: rem-calc(75);
 }
 
 .auth--container .auth--icon {
@@ -19,7 +20,7 @@
   font-weight: normal;
 }
 
-.site-header .menu a.auth--logout-button {
+.site-header .menu .auth--logout-button {
   display: inline-block;
   padding: 0;
   color: #ae561f;
@@ -27,7 +28,7 @@
   font-size: 0.75rem;
 }
 
-.site-header .menu a.auth--logout-button:hover {
+.site-header .menu .auth--logout-button:hover {
   color:#8b4519;
   background-color:transparent
 }
