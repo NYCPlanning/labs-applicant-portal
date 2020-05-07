@@ -10,7 +10,16 @@
 {{#each @bbls as |bbl idx|}}
   <fieldset class="fieldset relative">
     <legend data-test-bbl-title="{{bbl.dcpBblnumber}}">
-      <strong>{{bbl.dcpBblnumber}}</strong>
+      <a
+        href="https://zola.planning.nyc.gov/bbl/{{bbl.dcpBblnumber}}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <strong>{{bbl.dcpBblnumber}}</strong>
+      </a>
+      {{#if bbl.temporaryAddressLabel}}
+        ({{bbl.temporaryAddressLabel}})
+      {{/if}}
     </legend>
     <fieldset>
       <legend data-test-development-site-question="{{bbl.dcpBblnumber}}-{{bbl.dcpDevelopmentsite}}">
