@@ -99,9 +99,9 @@ export default class LandUseActionComponent extends Component {
   @action
   addNewLandUseActionSelection() {
     // use unshiftObject to place new action at top of list
-    const existsSelection = this.selectedLandUseAction.field;
+    const selection = this.selectedLandUseAction.field;
 
-    if (existsSelection) {
+    if (selection) {
       this.newLandUseActionSelections.unshiftObject(this.selectedLandUseAction);
       this.selectedLandUseAction = {};
     }
