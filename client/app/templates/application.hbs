@@ -17,7 +17,7 @@
           <FaIcon @icon="user-circle" @prefix="fas" @size="2x" class="auth--icon" />
           <div>
             <span class="auth--name">
-              {{this.userEmail}}
+              {{this.session.data.authenticated.emailaddress1}}
             </span>
             <button
               type="button"
