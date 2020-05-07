@@ -7,10 +7,10 @@ export default class LandUseActionComponent extends Component {
   @tracked selectedLandUseAction = {};
 
   // actions selected by user in dropdown
-  @tracked landUseActionSelections = [];
+  @tracked newLandUseActionSelections = [];
 
   // lookup to match action titles to their associated attributes
-  @tracked landUseActionOptions = [
+  allLandUseActionOptions = [
     {
       name: 'Acquisition of Real Property', field: 'dcpPfacquisitionofrealproperty', attr1: '', attr2: '',
     },
@@ -67,18 +67,44 @@ export default class LandUseActionComponent extends Component {
     },
   ];
 
+  // Actions with partial or complete answers already saved
+  // to the PAS Form Entity in CRM
+  get existingLandUseActionSelections() {
+    const { pasForm } = this.args;
+    return this.allLandUseActionOptions.filter((option) => pasForm[option.field] || pasForm[option.attr1] || pasForm[option.attr2]);
+  }
+
+  // Actions selected by user in dropdown, or already
+  // existing in CRM
+  get landUseActionSelections() {
+    return [
+      ...this.existingLandUseActionSelections,
+      ...this.newLandUseActionSelections,
+    ];
+  }
+
+  get availableLandUseActionOptions() {
+    return this.allLandUseActionOptions.filter((option) => !this.landUseActionSelections.includes(option));
+  }
+
+  get sortedAvailableLandUseActionOptions() {
+    return this.availableLandUseActionOptions.sort((a, b) => ((a.name > b.name) ? 1 : -1));
+  }
+
   // when a user selects an option from the dropdown menu,
   // the option is removed from the landUseActionOptions
   // (and therefore removed from the dropdown).
-  // The selected option is added to the landUseActionSelections array
+  // The selected option is added to the newLandUseActionSelections array
   // (and therefore displays in the list of selected actions).
   @action
-  setSelectedActionsArray() {
-    this.landUseActionOptions.removeObject(this.selectedLandUseAction);
-    // sort options alphabetically
-    this.landUseActionOptions.sort((a, b) => ((a.name > b.name) ? 1 : -1));
+  addNewLandUseActionSelection() {
     // use unshiftObject to place new action at top of list
-    this.landUseActionSelections.unshiftObject(this.selectedLandUseAction);
+    const selection = this.selectedLandUseAction.field;
+
+    if (selection) {
+      this.newLandUseActionSelections.unshiftObject(this.selectedLandUseAction);
+      this.selectedLandUseAction = {};
+    }
   }
 
   // When a user deletes an action, the associated fields are reset as well.
@@ -86,12 +112,11 @@ export default class LandUseActionComponent extends Component {
   // (and therefore added back to the dropdown).
   @action
   removeSelectedAction(actionToRemove) {
-    this.landUseActionOptions.pushObject(actionToRemove);
-    // sort options alphabetically
-    this.landUseActionOptions.sort((a, b) => ((a.name > b.name) ? 1 : -1));
-    this.landUseActionSelections.removeObject(actionToRemove);
-    this.args.pasForm[actionToRemove.field] = 0;
-    this.args.pasForm[actionToRemove.attr1] = '';
-    this.args.pasForm[actionToRemove.attr2] = '';
+    const { pasForm } = this.args;
+
+    this.newLandUseActionSelections.removeObject(actionToRemove);
+    pasForm[actionToRemove.field] = 0;
+    pasForm[actionToRemove.attr1] = '';
+    pasForm[actionToRemove.attr2] = '';
   }
 }

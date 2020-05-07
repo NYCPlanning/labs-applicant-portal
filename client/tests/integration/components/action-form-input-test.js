@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, fillIn, triggerEvent } from '@ember/test-helpers';
+import { render, fillIn } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
@@ -23,7 +23,6 @@ module('Integration | Component | action-form-input', function(hooks) {
     assert.ok(!this.package.pasForm.dcpPfchangeincitymap);
 
     await fillIn('[data-test-input="dcpPfchangeincitymap"]', 4);
-    await triggerEvent('[data-test-input="dcpPfchangeincitymap"]', 'keyup');
 
     assert.equal(this.package.pasForm.dcpPfchangeincitymap, 4);
   });

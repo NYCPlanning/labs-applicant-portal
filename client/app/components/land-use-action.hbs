@@ -5,9 +5,9 @@
       supportsDataTestProperties={{true}}
       @placeholder="-- select an action --"
       @searchEnabled={{false}}
-      @options={{this.landUseActionOptions}}
+      @options={{this.sortedAvailableLandUseActionOptions}}
       @onchange={{fn (mut this.selectedLandUseAction)}}
-      @onclose={{fn this.setSelectedActionsArray}}
+      @onclose={{fn this.addNewLandUseActionSelection}}
       as |landUseAction|
     >
       {{landUseAction.name}}
