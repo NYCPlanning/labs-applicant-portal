@@ -27,6 +27,12 @@ export default Factory.extend({
     server.create('pas-form', { package: projectPackage });
   },
 
+  withLandUseActions: trait({
+    afterCreate(projectPackage, server) {
+      server.create('pas-form', 'withLandUseActions', { package: projectPackage });
+    },
+  }),
+
   applicant: trait({
     statuscode(i) {
       const statuses = [
