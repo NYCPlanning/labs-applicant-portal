@@ -4,9 +4,6 @@
   maxlength="200"
   placeholder=""
   autocomplete="off"
-  @value={{this.newVal}}
-  @key-down={{fn (mut this.newVal)}}
-  @key-up={{fn this.updateAttr @landUseActionField this.newVal}}
+  @value={{mut (get @pasForm @landUseActionField)}}
   data-test-input="{{@landUseActionField}}"
-  {{did-insert (fn (mut this.newVal) (get @pasForm @landUseActionField))}}
 />

@@ -3,7 +3,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import {
   render,
   fillIn,
-  triggerEvent,
   click,
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
@@ -14,8 +13,8 @@ module('Integration | Component | land-use-action', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('User can add an action and answer extra questions', async function(assert) {
-    const projectPackage = this.server.create('package');
+  test('User can edit an existing action, add a new action, and answer extra questions', async function(assert) {
+    const projectPackage = this.server.create('package', 1, 'applicant', 'withLandUseActions');
 
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
 
@@ -25,18 +24,14 @@ module('Integration | Component | land-use-action', function(hooks) {
       </LandUseAction>
     `);
 
-    // Check that we can add "Change in CityMap"
-    await selectChoose('[data-test-land-use-action-picker]', 'Change in CityMap');
-
+    // Check that we can edit "Change in CityMap"
     assert.dom(this.element).includesText('How many Change in CityMap actions?');
 
-    assert.ok(!this.package.pasForm.dcpPfchangeincitymap);
-
-    await fillIn('[data-test-input="dcpPfchangeincitymap"]', 4);
-
-    await triggerEvent('[data-test-input="dcpPfchangeincitymap"]', 'keyup');
-
     assert.equal(this.package.pasForm.dcpPfchangeincitymap, 4);
+
+    await fillIn('[data-test-input="dcpPfchangeincitymap"]', 2);
+
+    assert.equal(this.package.pasForm.dcpPfchangeincitymap, 2);
 
     // Check that we can add "Zoning Special Permit" and answer extra questions
     await selectChoose('[data-test-land-use-action-picker]', 'Zoning Special Permit');
@@ -50,17 +45,14 @@ module('Integration | Component | land-use-action', function(hooks) {
     assert.ok(!this.package.pasForm.dcpZoningspecialpermittomodify);
 
     await fillIn('[data-test-input="dcpPfzoningspecialpermit"]', 6);
-    await triggerEvent('[data-test-input="dcpPfzoningspecialpermit"]', 'keyup');
 
     assert.equal(this.package.pasForm.dcpPfzoningspecialpermit, 6);
 
     await fillIn('[data-test-input="dcpZoningspecialpermitpursuantto"]', 'Section 5B');
-    await triggerEvent('[data-test-input="dcpZoningspecialpermitpursuantto"]', 'keyup');
 
     assert.equal(this.package.pasForm.dcpZoningspecialpermitpursuantto, 'Section 5B');
 
     await fillIn('[data-test-input="dcpZoningspecialpermittomodify"]', 'Permit 7A');
-    await triggerEvent('[data-test-input="dcpZoningspecialpermittomodify"]', 'keyup');
 
     assert.equal(this.package.pasForm.dcpZoningspecialpermittomodify, 'Permit 7A');
   });
@@ -80,17 +72,14 @@ module('Integration | Component | land-use-action', function(hooks) {
     await selectChoose('[data-test-land-use-action-picker]', 'Zoning Special Permit');
 
     await fillIn('[data-test-input="dcpPfzoningspecialpermit"]', 6);
-    await triggerEvent('[data-test-input="dcpPfzoningspecialpermit"]', 'keyup');
 
     assert.equal(this.package.pasForm.dcpPfzoningspecialpermit, 6);
 
     await fillIn('[data-test-input="dcpZoningspecialpermitpursuantto"]', 'Section 5B');
-    await triggerEvent('[data-test-input="dcpZoningspecialpermitpursuantto"]', 'keyup');
 
     assert.equal(this.package.pasForm.dcpZoningspecialpermitpursuantto, 'Section 5B');
 
     await fillIn('[data-test-input="dcpZoningspecialpermittomodify"]', 'Permit 7A');
-    await triggerEvent('[data-test-input="dcpZoningspecialpermittomodify"]', 'keyup');
 
     assert.equal(this.package.pasForm.dcpZoningspecialpermittomodify, 'Permit 7A');
 
