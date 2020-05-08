@@ -98,6 +98,6 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
     await click('[data-test-applicant-type-radio-organization]');
 
     // should be reflected in the applicants array!
-    assert.equal(this.applicants[0].dcpType, 'Organization');
+    assert.equal(this.applicants[0].dcpType, 'Authorized Applicant Representative');
   });
 });

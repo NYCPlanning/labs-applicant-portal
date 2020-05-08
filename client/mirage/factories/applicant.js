@@ -11,18 +11,18 @@ export default Factory.extend({
   dcpPhone: '867-5309',
 
   individualApplicant: trait({
-    targetEntity: 'Applicant',
+    targetEntity: 'dcp_applicantinformation',
     dcpType: 'Individual',
     dcpOrganization: null,
   }),
   organizationApplicant: trait({
-    targetEntity: 'Applicant',
+    targetEntity: 'dcp_applicantinformation',
     dcpType: 'Organization',
     dcpOrganization: 'Planning Labs',
   }),
 
   applicantTeamMember: trait({
-    targetEntity: 'Applicant Team Member',
+    targetEntity: 'dcp_applicantrepresentativeinformation',
     dcpType: null,
     dcpOrganization: 'Vandelay Industries',
   }),

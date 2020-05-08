@@ -1,28 +1,28 @@
 <fieldset class="fieldset relative" ...attributes>
-  <legend data-test-applicant-title="{{@applicant.targetEntity}}">
+  <legend data-test-applicant-title="{{@applicant.friendlyEntityName}}">
     <strong>
-      {{@applicant.targetEntity}}
+      {{@applicant.friendlyEntityName}}
     </strong>
   </legend>
 
   {{!-- if sent to CRM "Applicant Information" table, need to know "type" --}}
-  {{#if (eq @applicant.targetEntity "Applicant")}}
+  {{#if (eq @applicant.friendlyEntityName "Applicant")}}
     <div class="cell medium-6" data-test-applicant-type-radio-group>
       <Input
         @type="radio"
         name={{concat 'applicant-type' @elementId}}
-        @value="Individual"
-        checked={{if (eq @applicant.dcpType "Individual") true}}
-        onClick={{fn this.updateAttr @applicant "dcpType" "Individual"}}
+        @value="Applicant"
+        checked={{if (eq @applicant.dcpType "Applicant") true}}
+        onClick={{fn this.updateAttr @applicant "dcpType" "Applicant"}}
         data-test-applicant-type-radio-individual
       />
       <label>Individual</label>
       <Input
         @type="radio"
         name={{concat 'applicant-type' @elementId}}
-        @value="Organization"
-        checked={{if (eq @applicant.dcpType "Organization") true}}
-        onClick={{fn this.updateAttr @applicant "dcpType" "Organization"}}
+        @value="Authorized Applicant Representative"
+        checked={{if (eq @applicant.dcpType "Authorized Applicant Representative") true}}
+        onClick={{fn this.updateAttr @applicant "dcpType" "Authorized Applicant Representative"}}
         data-test-applicant-type-radio-organization
       />
       <label>Organization</label>
@@ -60,7 +60,7 @@
   </div>
 
   {{!-- always allow input for Applicant Team Members --}}
-  {{#if (eq @applicant.targetEntity "Applicant Team Member")}}
+  {{#if (eq @applicant.friendlyEntityName "Applicant Team Member")}}
     <label>
       Organization
       <Input
@@ -93,7 +93,7 @@
     {{on "click" (fn @removeApplicant @applicant)}}
     data-test-remove-applicant-button
   >
-    Remove {{@applicant.targetEntity}}
+    Remove {{@applicant.friendlyEntityName}}
     <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
   </button>
 
