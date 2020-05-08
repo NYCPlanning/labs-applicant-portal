@@ -17,8 +17,7 @@ module('Integration | Component | validation-message', function(hooks) {
 
     await render(hbs`
       <ValidationMessage
-        @field='dcpSomeField'
-        @changeset={{this.changeset}}
+        @changesetError={{this.changeset.error.dcpSomeField}}
       />
     `);
 

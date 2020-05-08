@@ -51,13 +51,12 @@
           <label>
             <strong>Description of geography</strong>
             <Textarea
-              @value={{mut this.changeset.dcpDescriptionofprojectareageography}}
+              @value={{this.changeset.dcpDescriptionofprojectareageography}}
               maxlength="2000"
               rows="5"
             />
             <ValidationMessage
-              @changeset={{this.changeset}}
-              @field="dcpDescriptionofprojectareageography"
+              @changeset={{this.changeset.error.dcpDescriptionofprojectareageography}}
             />
           </label>
         </section>
@@ -160,13 +159,12 @@
                 What is the name of the Urban Renewal Area?
                 <Input
                   @type="text"
-                  @value={{mut this.changeset.dcpUrbanareaname}}
+                  @value={{this.changeset.dcpUrbanareaname}}
                   maxlength="250"
                   data-test-dcpurbanrenewalarea
                 />
                 <ValidationMessage
-                  @changeset={{this.changeset}}
-                  @field="dcpUrbanareaname"
+                  @changeset={{this.changeset.error.dcpUrbanareaname}}
                 />
               </label>
             {{/if}}
@@ -275,13 +273,12 @@
                 Indicate which SEQRA or CEQR category each action fulfills
                 <Input
                   @type="text"
-                  @value={{mut this.changeset.dcpPleaseexplaintypeiienvreview}}
+                  @value={{this.changeset.dcpPleaseexplaintypeiienvreview}}
                   maxlength="200"
                   data-test-dcppleaseexplaintypeiienvreview
                 />
                 <ValidationMessage
-                  @changeset={{this.changeset}}
-                  @field="dcpPleaseexplaintypeiienvreview"
+                  @changeset={{this.changeset.error.dcpPleaseexplaintypeiienvreview}}
                 />
               </label>
             {{/if}}
@@ -314,13 +311,12 @@
                 Name of Industrial Business Zone
                 <Input
                   @type="text"
-                  @value={{mut this.changeset.dcpProjectareaindutrialzonename}}
+                  @value={{this.changeset.dcpProjectareaindutrialzonename}}
                   maxlength="200"
                   data-test-dcpprojectareaindustrialbusinesszone
                 />
                 <ValidationMessage
-                  @changeset={{this.changeset}}
-                  @field="dcpProjectareaindutrialzonename"
+                  @changeset={{this.changeset.error.dcpProjectareaindutrialzonename}}
                 />
               </label>
             {{/if}}
@@ -353,13 +349,12 @@
                 Name of Landmark or Historic District
                 <Input
                   @type="text"
-                  @value={{mut this.changeset.dcpProjectarealandmarkname}}
+                  @value={{this.changeset.dcpProjectarealandmarkname}}
                   maxlength="250"
                   data-test-dcpisprojectarealandmark
                 />
                 <ValidationMessage
-                  @changeset={{this.changeset}}
-                  @field="dcpProjectarealandmarkname"
+                  @changeset={{this.changeset.error.dcpProjectarealandmarkname}}
                 />
               </label>
             {{/if}}
@@ -449,13 +444,12 @@
                 <strong>City Register File Number</strong>
                 <Input
                   @type="text"
-                  @value={{mut this.changeset.dcpCityregisterfilenumber}}
+                  @value={{this.changeset.dcpCityregisterfilenumber}}
                   maxlength="25"
                   data-test-dcpcityregisterfilenumber
                 />
                 <ValidationMessage
-                  @changeset={{this.changeset}}
-                  @field="dcpCityregisterfilenumber"
+                  @changeset={{this.changeset.error.dcpCityregisterfilenumber}}
                 />
               </label>
             {{/if}}
@@ -509,13 +503,12 @@
             <strong>In what year do you expect the development to complete?</strong>
             <Input
               @type="text"
-              @value={{mut this.changeset.dcpEstimatedcompletiondate}}
+              @value={{this.changeset.dcpEstimatedcompletiondate}}
               maxlength="4"
               data-test-dcpestimatedcompletiondate
             />
             <ValidationMessage
-              @changeset={{this.changeset}}
-              @field="dcpEstimatedcompletiondate"
+              @changeset={{this.changeset.error.dcpEstimatedcompletiondate}}
             />
             {{!-- QUESTION: Should this be a date picker? --}}
           </label>
@@ -711,84 +704,78 @@
           <label>
             <strong>Description of the proposed development being facilitated by the land use actions</strong>
             <Textarea
-              @value={{mut this.changeset.dcpProjectdescriptionproposeddevelopment}}
+              @value={{this.changeset.dcpProjectdescriptionproposeddevelopment}}
               rows="5"
               maxlength="3000"
               data-test-dcpprojectdescriptionproposeddevelopment
             />
             <ValidationMessage
-              @changeset={{this.changeset}}
-              @field="dcpProjectdescriptionproposeddevelopment"
+              @changeset={{this.changeset.error.dcpProjectdescriptionproposeddevelopment}}
             />
           </label>
 
           <label>
             <strong>Why is this application being proposed? What is the legal, environmental, or land use background?</strong>
             <Textarea
-              @value={{mut this.changeset.dcpProjectdescriptionbackground}}
+              @value={{this.changeset.dcpProjectdescriptionbackground}}
               rows="5"
               maxlength="2000"
               data-test-dcpprojectdescriptionbackground
             />
             <ValidationMessage
-              @changeset={{this.changeset}}
-              @field="dcpProjectdescriptionbackground"
+              @changeset={{this.changeset.error.dcpProjectdescriptionbackground}}
             />
           </label>
 
           <label>
             <strong>What is the land use rationale for all the proposed actions?</strong>
             <Textarea
-              @value={{mut this.changeset.dcpProjectdescriptionproposedactions}}
+              @value={{this.changeset.dcpProjectdescriptionproposedactions}}
               rows="5"
               maxlength="2000"
               data-test-dcpprojectdescriptionproposedactions
             />
             <ValidationMessage
-              @changeset={{this.changeset}}
-              @field="dcpProjectdescriptionproposedactions"
+              @changeset={{this.changeset.error.dcpProjectdescriptionproposedactions}}
             />
           </label>
 
           <label>
             <strong>Description of existing land uses and structures in the proposed Project Area and Development Site</strong>
             <Textarea
-              @value={{mut this.changeset.dcpProjectdescriptionproposedarea}}
+              @value={{this.changeset.dcpProjectdescriptionproposedarea}}
               rows="5"
               maxlength="3000"
               data-test-dcpprojectdescriptionproposedarea
             />
             <ValidationMessage
-              @changeset={{this.changeset}}
-              @field="dcpProjectdescriptionproposedarea"
+              @changeset={{this.changeset.error.dcpProjectdescriptionproposedarea}}
             />
           </label>
 
           <label>
             <strong>Description of land uses and built context in surrounding area (within 1000 ft)</strong>
             <Textarea
-              @value={{mut this.changeset.dcpProjectdescriptionsurroundingarea}}
+              @value={{this.changeset.dcpProjectdescriptionsurroundingarea}}
               rows="5"
               maxlength="3000"
               data-test-dcpprojectdescriptionsurroundingarea
             />
             <ValidationMessage
-              @changeset={{this.changeset}}
-              @field="dcpProjectdescriptionsurroundingarea"
+              @changeset={{this.changeset.error.dcpProjectdescriptionsurroundingarea}}
             />
           </label>
 
           <label>
             <strong>Description of proposed CEQR scope</strong>
             <Textarea
-              @value={{mut this.changeset.dcpProjectattachmentsotherinformation}}
+              @value={{this.changeset.dcpProjectattachmentsotherinformation}}
               rows="5"
               maxlength="3000"
               data-test-dcpprojectattachmentsotherinformation
             />
             <ValidationMessage
-              @changeset={{this.changeset}}
-              @field="dcpProjectattachmentsotherinformation"
+              @changeset={{this.changeset.error.dcpProjectattachmentsotherinformation}}
             />
           </label>
           <p class="help-text">
