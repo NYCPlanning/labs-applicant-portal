@@ -6,6 +6,7 @@ import SaveablePasForm from './saveable-pas-form';
 export default {
   ...SaveablePasForm,
   dcpRevisedprojectname: [
+    ...SaveablePasForm.dcpRevisedprojectname,
     validatePresence(true),
   ],
 };
