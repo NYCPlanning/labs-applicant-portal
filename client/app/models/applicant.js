@@ -12,7 +12,7 @@ export default class ApplicantModel extends Model {
 
   // doesn't exist on "Applicant Representative Information" CRM table
   @attr('string')
-  applicantType;
+  dcpType;
 
   @attr('string')
   dcpFirstname;

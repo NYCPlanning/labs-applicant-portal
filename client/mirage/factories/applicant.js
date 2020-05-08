@@ -12,18 +12,18 @@ export default Factory.extend({
 
   individualApplicant: trait({
     targetEntity: 'Applicant',
-    applicantType: 'Individual',
+    dcpType: 'Individual',
     dcpOrganization: null,
   }),
   organizationApplicant: trait({
     targetEntity: 'Applicant',
-    applicantType: 'Organization',
+    dcpType: 'Organization',
     dcpOrganization: 'Planning Labs',
   }),
 
   applicantTeamMember: trait({
     targetEntity: 'Applicant Team Member',
-    applicantType: null,
+    dcpType: null,
     dcpOrganization: 'Vandelay Industries',
   }),
 });

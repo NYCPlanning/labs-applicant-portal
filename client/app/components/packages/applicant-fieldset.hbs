@@ -12,8 +12,8 @@
         @type="radio"
         name={{concat 'applicant-type' @elementId}}
         @value="Individual"
-        checked={{if (eq @applicant.applicantType "Individual") true}}
-        onClick={{fn this.updateAttr @applicant "applicantType" "Individual"}}
+        checked={{if (eq @applicant.dcpType "Individual") true}}
+        onClick={{fn this.updateAttr @applicant "dcpType" "Individual"}}
         data-test-applicant-type-radio-individual
       />
       <label>Individual</label>
@@ -21,8 +21,8 @@
         @type="radio"
         name={{concat 'applicant-type' @elementId}}
         @value="Organization"
-        checked={{if (eq @applicant.applicantType "Organization") true}}
-        onClick={{fn this.updateAttr @applicant "applicantType" "Organization"}}
+        checked={{if (eq @applicant.dcpType "Organization") true}}
+        onClick={{fn this.updateAttr @applicant "dcpType" "Organization"}}
         data-test-applicant-type-radio-organization
       />
       <label>Organization</label>
@@ -30,7 +30,7 @@
   {{/if}}
 
   {{!-- and if the applicant is on behalf of an organization, we need to know which organization --}}
-  {{#if (eq @applicant.applicantType "Organization")}}
+  {{#if (eq @applicant.dcpType "Organization")}}
     <label>
       Organization
       <Input
