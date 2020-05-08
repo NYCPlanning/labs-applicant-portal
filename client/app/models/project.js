@@ -21,4 +21,8 @@ export default class ProjectModel extends Model {
     }
     return [];
   }
+
+  get pasFormRequiredFieldsFilled() {
+    return !!this.dcpProjectname;
+  }
 }

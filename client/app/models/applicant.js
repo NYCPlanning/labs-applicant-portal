@@ -40,4 +40,8 @@ export default class ApplicantModel extends Model {
 
   @attr('string')
   dcpPhone;
+
+  get pasFormRequiredFieldsFilled() {
+    return !!this.dcpFirstname && !!this.dcpLastname && !!this.dcpEmail;
+  }
 }

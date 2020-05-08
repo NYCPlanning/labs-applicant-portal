@@ -823,4 +823,30 @@ export default class PasFormModel extends Model {
 
     return dirtyApplicants.length > 0;
   }
+
+  get pasFormRequiredFieldsFilled() {
+    // certain fields are only considered "required" if conditions for other fields are met
+    // each field check will return `true` if:
+    // 1) it's NOT required and therefore should not prevent Submitting the PAS form
+    // 2) it IS required based on conditions of another field AND the required field is truthy
+    const fieldsPresentOrNotNeeded = (this.dcpUrbanrenewalarea === '717170000') ? !!this.dcpUrbanareaname : true
+      && (this.dcpLanduseactiontype2 === '717170000') ? !!this.dcpPleaseexplaintypeiienvreview : true
+      && (this.dcpProjectareaindustrialbusinesszone) ? !!this.dcpProjectareaindutrialzonename : true
+      && (this.dcpIsprojectarealandmark) ? !!this.dcpProjectarealandmarkname : true
+      && (this.dcpProposeddevelopmentsiteinfoother) ? !!this.dcpProposeddevelopmentsiteotherexplanation : true
+      && (this.dcpIsinclusionaryhousingdesignatedarea) ? !!this.dcpInclusionaryhousingdesignatedareaname : true
+      && (this.dcpDiscressionaryfundingforffordablehousing === '717170000') ? !!this.dcpHousingunittype : true
+      // land use action fields
+      && (this.dcpPfzoningauthorization > 0) ? !!this.dcpZoningauthorizationpursuantto : true
+      && (this.dcpPfzoningauthorization > 0) ? !!this.dcpZoningauthorizationtomodify : true
+      && (this.dcpPfzoningcertification > 0) ? !!this.dcpZoningpursuantto : true
+      && (this.dcpPfzoningcertification > 0) ? !!this.dcpZoningtomodify : true
+      && (this.dcpPfzoningmapamendment > 0) ? !!this.dcpExistingmapamend : true
+      && (this.dcpPfzoningmapamendment > 0) ? !!this.dcpProposedmapamend : true
+      && (this.dcpPfzoningspecialpermit > 0) ? !!this.dcpZoningspecialpermitpursuantto : true
+      && (this.dcpPfzoningspecialpermit > 0) ? !!this.dcpZoningspecialpermittomodify : true
+      && (this.cpPfzoningtextamendment > 0) ? !!this.dcpAffectedzrnumber : true
+      && (this.dcpPfzoningtextamendment > 0) ? !!this.dcpZoningresolutiontitle : true;
+    return fieldsPresentOrNotNeeded;
+  }
 }
