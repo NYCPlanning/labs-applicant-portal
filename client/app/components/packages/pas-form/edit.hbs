@@ -1,897 +1,979 @@
 <div class="grid-x grid-margin-x">
-  <div class="cell large-8">
-
-    <p>
-      The <strong>Pre-Application Statement</strong> requests pertinent information about a site and proposed project. By submitting the PAS, a prospective applicant acknowledges that they intend to file a land use application with NYC Planning. Submission allows staff to be assigned from appropriate divisions and project tracking to commence.
-    </p>
-
-    <p>
-      NYC Planning understands that some projects may not be fully formed at the submission of the PAS. Give as much detailed information as possible. Failure to provide detailed, relevant information will result in the PAS being rejected.
-    </p>
-
-    <section class="form-section">
-      <h3 class="section-header">
-        <span id="project-info" class="section-anchor"></span>
-        Project Information
-      </h3>
-
-      <label>
-        <strong>Project Name</strong>
-        <Input
-          @type="text"
-          @value={{@package.pasForm.dcpRevisedprojectname}}
-          data-test-dcprevisedprojectname
-        />
-      </label>
-    </section>
-
-    <section class="form-section">
-      <h3 class="section-header">
-        <span id="applicant-team" class="section-anchor"></span>
-        Applicant Team
-      </h3>
+  {{#with (changeset @package.pasForm this.pasFormValidations) as |pasFormChangeset|}}
+    <div class="cell large-8">
 
       <p>
-        Add all applicants and applicant representatives, including land use consultants and environmental consultants.
+        The <strong>Pre-Application Statement</strong> requests pertinent information about a site and proposed project. By submitting the PAS, a prospective applicant acknowledges that they intend to file a land use application with NYC Planning. Submission allows staff to be assigned from appropriate divisions and project tracking to commence.
       </p>
-
-      <Packages::ApplicantTeamEditor
-        @applicants={{@package.pasForm.applicants}}
-      />
-    </section>
-
-    <section class="form-section">
-      <h3 class="section-header">
-        <span id="project-geography" class="section-anchor"></span>
-        Project Geography
-      </h3>
-
-      <ProjectGeography @bbls={{@package.pasForm.bbls}} />
-
-      <label>
-        <strong>Description of geography</strong>
-        <Textarea @value={{@package.pasForm.dcpDescriptionofprojectareageography}} rows="5" />
-      </label>
-    </section>
-
-    <section class="form-section">
-      <h3 class="section-header">
-        <span id="proposed-land-use-actions" class="section-anchor"></span>
-        Proposed Land Use Actions
-      </h3>
 
       <p>
-        What land use actions does the proposed project require? Identify all that apply and fill in the appropriate related information.
+        NYC Planning understands that some projects may not be fully formed at the submission of the PAS. Give as much detailed information as possible. Failure to provide detailed, relevant information will result in the PAS being rejected.
       </p>
+        <section class="form-section">
+          <h3 class="section-header">
+            <span id="project-info" class="section-anchor"></span>
+            Project Information
+          </h3>
 
-      <p class="text-small">
-        Note: This is preliminary information and may change following discussion with NYC Planning.
-      </p>
-
-      <LandUseAction
-        @pasForm={{@package.pasForm}}
-      />
-    </section>
-
-    <section class="form-section">
-      <h3 class="section-header">
-        <span id="project-area" class="section-anchor"></span>
-        Project Area
-      </h3>
-
-      <p>
-        Project Area refers to all property that would be subject to the proposed actions.
-      </p>
-
-      <fieldset class="medium-margin-bottom">
-        <legend>
-          <strong>Does the proposed Project, or portion thereof, require a NYC DEP Storm Water Construction Permit?</strong>
-        </legend>
-        <Input
-          @type="radio"
-          @name="dcpproposedprojectorportionconstruction"
-          id="dcpproposedprojectorportionconstruction-yes"
-          @value='717170000'
-          checked={{if (eq @package.pasForm.dcpProposedprojectorportionconstruction "717170000") true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpProposedprojectorportionconstruction" "717170000"}}
-          data-test-dcpproposedprojectorportionconstruction-yes
-        /><label for="dcpproposedprojectorportionconstruction-yes">Yes</label>
-        <Input
-          @type="radio"
-          @name="dcpproposedprojectorportionconstruction"
-          id="dcpproposedprojectorportionconstruction-no"
-          @value='717170000'
-          checked={{if (eq @package.pasForm.dcpProposedprojectorportionconstruction "717170001") true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpProposedprojectorportionconstruction" "717170001"}}
-          data-test-dcpproposedprojectorportionconstruction-no
-        /><label for="dcpproposedprojectorportionconstruction-no">No</label>
-        <Input
-          @type="radio"
-          @name="dcpproposedprojectorportionconstruction"
-          id="dcpproposedprojectorportionconstruction-unsure"
-          @value='717170002'
-          checked={{if (eq @package.pasForm.dcpProposedprojectorportionconstruction "717170002") true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpProposedprojectorportionconstruction" "717170002"}}
-          data-test-dcpproposedprojectorportionconstruction-unsure
-        /><label for="dcpproposedprojectorportionconstruction-unsure">Unsure at this time</label>
-      </fieldset>
-
-      <fieldset class="medium-margin-bottom">
-        <legend>
-          <strong>Is the proposed Project Area located in a current or former <a href="https://www1.nyc.gov/site/hpd/services-and-information/urban-renewal.page">Urban Renewal Area</a>?</strong>
-        </legend>
-        <Input
-          @type="radio"
-          @name="dcpurbanrenewalarea"
-          id="dcpurbanrenewalarea-yes"
-          @value='717170000'
-          checked={{if (eq @package.pasForm.dcpUrbanrenewalarea "717170000") true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpUrbanrenewalarea" "717170000"}}
-          data-test-dcpurbanrenewalarea-yes
-        /><label for="dcpurbanrenewalarea-yes">Yes</label>
-        <Input
-          @type="radio"
-          @name="dcpurbanrenewalarea"
-          id="dcpurbanrenewalarea-no"
-          @value='717170001'
-          checked={{if (eq @package.pasForm.dcpUrbanrenewalarea "717170001") true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpUrbanrenewalarea" "717170001"}}
-          data-test-dcpurbanrenewalarea-no
-        /><label for="dcpurbanrenewalarea-no">No</label>
-        <Input
-          @type="radio"
-          @name="dcpurbanrenewalarea"
-          id="dcpurbanrenewalarea-unsure"
-          @value='717170002'
-          checked={{if (eq @package.pasForm.dcpUrbanrenewalarea "717170002") true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpUrbanrenewalarea" "717170002"}}
-          data-test-dcpurbanrenewalarea-unsure
-        /><label for="dcpurbanrenewalarea-unsure">Unsure at this time</label>
-        {{#if (eq @package.pasForm.dcpUrbanrenewalarea "717170000")}}
           <label>
-            What is the name of the Urban Renewal Area?
+            <strong>Project Name</strong>
             <Input
               @type="text"
-              @value={{@package.pasForm.dcpUrbanareaname}}
-              data-test-dcpurbanrenewalarea
+              @value={{mut pasFormChangeset.dcpRevisedprojectname}}
+              minLength="4"
+              maxlength="50"
+              data-test-dcprevisedprojectname
             />
           </label>
-        {{/if}}
-      </fieldset>
+          <ValidationMessage
+            @changeset={{pasFormChangeset}}
+            @field="dcpRevisedprojectname"
+          />
+        </section>
 
-      <fieldset class="medium-margin-bottom">
-        <legend>
-          <strong>What is the <a href="https://streets.planning.nyc.gov/about">Legal Street Frontage Status in the Project Area</a>?</strong>
-        </legend>
-        <span class="nowrap">
-          <Input
-            @type="radio"
-            @name="dcplegalstreetfrontage"
-            id="dcplegalstreetfrontage-mapped-and-build"
-            @value='717170000'
-            checked={{if (eq @package.pasForm.dcpLegalstreetfrontage "717170000") true}}
-            onClick={{fn this.updateAttr @package.pasForm "dcpLegalstreetfrontage" "717170000"}}
-            data-test-dcplegalstreetfrontage-mapped-and-build
-          /><label for="dcplegalstreetfrontage-mapped-and-build">Mapped and Build</label>
-        </span>
-        <span class="nowrap">
-          <Input
-            @type="radio"
-            @name="dcplegalstreetfrontage"
-            id="dcplegalstreetfrontage-private-road"
-            @value='717170001'
-            checked={{if (eq @package.pasForm.dcpLegalstreetfrontage "717170001") true}}
-            onClick={{fn this.updateAttr @package.pasForm "dcpLegalstreetfrontage" "717170001"}}
-            data-test-dcplegalstreetfrontage-private-road
-          /><label for="dcplegalstreetfrontage-private-road">Private Road</label>
-        </span>
-        <span class="nowrap">
-          <Input
-            @type="radio"
-            @name="dcplegalstreetfrontage"
-            id="dcplegalstreetfrontage-record-street"
-            @value='717170002'
-            checked={{if (eq @package.pasForm.dcpLegalstreetfrontage "717170002") true}}
-            onClick={{fn this.updateAttr @package.pasForm "dcpLegalstreetfrontage" "717170002"}}
-            data-test-dcplegalstreetfrontage-record-street
-          /><label for="dcplegalstreetfrontage-record-street">Record Street</label>
-        </span>
-        <span class="nowrap">
-          <Input
-            @type="radio"
-            @name="dcplegalstreetfrontage"
-            id="dcplegalstreetfrontage-corporation-counsel-opinion"
-            @value='717170003'
-            checked={{if (eq @package.pasForm.dcpLegalstreetfrontage "717170003") true}}
-            onClick={{fn this.updateAttr @package.pasForm "dcpLegalstreetfrontage" "717170003"}}
-            data-test-dcplegalstreetfrontage-corporation-counsel-opinion
-          /><label for="dcplegalstreetfrontage-corporation-counsel-opinion">Corporation Counsel Opinion</label>
-        </span>
-        <span class="nowrap">
-          <Input
-            @type="radio"
-            @name="dcplegalstreetfrontage"
-            id="dcplegalstreetfrontage-mapped-but-not-build"
-            @value='717170004'
-            checked={{if (eq @package.pasForm.dcpLegalstreetfrontage "717170004") true}}
-            onClick={{fn this.updateAttr @package.pasForm "dcpLegalstreetfrontage" "717170004"}}
-            data-test-dcplegalstreetfrontage-mapped-but-not-build
-          /><label for="dcplegalstreetfrontage-mapped-but-not-build">Mapped but not Build</label>
-        </span>
-      </fieldset>
+        <section class="form-section">
+          <h3 class="section-header">
+            <span id="applicant-team" class="section-anchor"></span>
+            Applicant Team
+          </h3>
 
-      <fieldset class="medium-margin-bottom">
-        <legend>
-          <strong>Do all land use actions meet <a href="https://govt.westlaw.com/nycrr/Document/I4ec3a767cd1711dda432a117e6e0f345?viewType=FullText&originationContext=documenttoc&transitionType=CategoryPageItem&contextData=(sc.Default)">SEQRA or CEQR criteria</a> for Type II status?</strong>
-        </legend>
-        <Input
-          @type="radio"
-          @name="dcplanduseactiontype2"
-          id="dcplanduseactiontype2-yes"
-          @value='717170000'
-          checked={{if (eq @package.pasForm.dcpLanduseactiontype2 "717170000") true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpLanduseactiontype2" "717170000"}}
-          data-test-dcplanduseactiontype2-yes
-        /><label for="dcplanduseactiontype2-yes">Yes</label>
-        <Input
-          @type="radio"
-          @name="dcplanduseactiontype2"
-          id="dcplanduseactiontype2-no"
-          @value='717170001'
-          checked={{if (eq @package.pasForm.dcpLanduseactiontype2 "717170001") true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpLanduseactiontype2" "717170001"}}
-          data-test-dcplanduseactiontype2-no
-        /><label for="dcplanduseactiontype2-no">No</label>
-        <Input
-          @type="radio"
-          @name="dcplanduseactiontype2"
-          id="dcplanduseactiontype2-unsure"
-          @value='717170002'
-          checked={{if (eq @package.pasForm.dcpLanduseactiontype2 "717170002") true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpLanduseactiontype2" "717170002"}}
-          data-test-dcplanduseactiontype2-unsure
-        /><label for="dcplanduseactiontype2-unsure">Unsure at this time</label>
-        {{#if (eq @package.pasForm.dcpLanduseactiontype2 "717170000")}}
+          <p>
+            Add all applicants and applicant representatives, including land use consultants and environmental consultants.
+          </p>
+
+          <Packages::ApplicantTeamEditor
+            @applicants={{@package.pasForm.applicants}}
+          />
+        </section>
+
+        <section class="form-section">
+          <h3 class="section-header">
+            <span id="project-geography" class="section-anchor"></span>
+            Project Geography
+          </h3>
+
+          <ProjectGeography @bbls={{@package.pasForm.bbls}} />
+
           <label>
-            Indicate which SEQRA or CEQR category each action fulfills
-            <Input
-              @type="text"
-              @value={{@package.pasForm.dcpPleaseexplaintypeiienvreview}}
-              data-test-dcppleaseexplaintypeiienvreview
+            <strong>Description of geography</strong>
+            <Textarea
+              @value={{mut pasFormChangeset.dcpDescriptionofprojectareageography}}
+              maxlength="2000"
+              rows="5"
+            />
+            <ValidationMessage
+              @changeset={{pasFormChangeset}}
+              @field="dcpDescriptionofprojectareageography"
             />
           </label>
-        {{/if}}
-      </fieldset>
+        </section>
 
-      <fieldset class="medium-margin-bottom">
-        <legend>
-          <strong>Is the proposed Project Area in an <a href="https://zola.planning.nyc.gov/">Industrial Business Zone</a>?</strong>
-        </legend>
-        <Input
-          @type="radio"
-          @name="dcpprojectareaindustrialbusinesszone"
-          id="dcpprojectareaindustrialbusinesszone-yes"
-          @value={{true}}
-          checked={{if (eq @package.pasForm.dcpProjectareaindustrialbusinesszone true) true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpProjectareaindustrialbusinesszone" true}}
-          data-test-dcpprojectareaindustrialbusinesszone-yes
-        /><label for="dcpprojectareaindustrialbusinesszone-yes">Yes</label>
-        <Input
-          @type="radio"
-          @name="dcpprojectareaindustrialbusinesszone"
-          id="dcpprojectareaindustrialbusinesszone-no"
-          @value={{false}}
-          checked={{if (eq @package.pasForm.dcpProjectareaindustrialbusinesszone false) true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpProjectareaindustrialbusinesszone" false}}
-          data-test-dcpprojectareaindustrialbusinesszone-no
-        /><label for="dcpprojectareaindustrialbusinesszone-no">No</label>
-        {{#if (eq @package.pasForm.dcpProjectareaindustrialbusinesszone true)}}
-          <label>
-            Name of Industrial Business Zone
-            <Input
-              @type="text"
-              @value={{@package.pasForm.dcpProjectareaindutrialzonename}}
-              data-test-dcpprojectareaindustrialbusinesszone
-            />
-          </label>
-        {{/if}}
-      </fieldset>
+        <section class="form-section">
+          <h3 class="section-header">
+            <span id="proposed-land-use-actions" class="section-anchor"></span>
+            Proposed Land Use Actions
+          </h3>
 
-      <fieldset class="medium-margin-bottom">
-        <legend>
-          <strong>Is the proposed Project Area within or adjacent to a designated (City or State) <a href="https://zola.planning.nyc.gov/">Landmark or Historic District</a>?</strong>
-        </legend>
-        <Input
-          @type="radio"
-          @name="dcpisprojectarealandmark"
-          id="dcpisprojectarealandmark-yes"
-          @value={{true}}
-          checked={{if (eq @package.pasForm.dcpIsprojectarealandmark true) true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpIsprojectarealandmark" true}}
-          data-test-dcpisprojectarealandmark-yes
-        /><label for="dcpisprojectarealandmark-yes">Yes</label>
-        <Input
-          @type="radio"
-          @name="dcpisprojectarealandmark"
-          id="dcpisprojectarealandmark-no"
-          @value={{false}}
-          checked={{if (eq @package.pasForm.dcpIsprojectarealandmark false) true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpIsprojectarealandmark" false}}
-          data-test-dcpisprojectarealandmark-no
-        /><label for="dcpisprojectarealandmark-no">No</label>
-        {{#if (eq @package.pasForm.dcpIsprojectarealandmark true)}}
-          <label>
-            Name of Landmark or Historic District
-            <Input
-              @type="text"
-              @value={{@package.pasForm.dcpProjectarealandmarkname}}
-              data-test-dcpisprojectarealandmark
-            />
-          </label>
-        {{/if}}
-      </fieldset>
+          <p>
+            What land use actions does the proposed project require? Identify all that apply and fill in the appropriate related information.
+          </p>
 
-      <fieldset class="medium-margin-bottom">
-        <legend>
-          <strong>Is the proposed Project Area located within the <a href="https://dcp.maps.arcgis.com/apps/View/index.html?appid=90e3a9f927c2471483631a20e8a41d8d">NYC Coastal Zone</a>?</strong>
-        </legend>
-        <Input
-          @type="radio"
-          @name="dcpprojectareacoastalzonelocatedin"
-          id="dcpprojectareacoastalzonelocatedin-yes"
-          @value={{true}}
-          checked={{if (eq @package.pasForm.dcpProjectareacoastalzonelocatedin true) true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpProjectareacoastalzonelocatedin" true}}
-          data-test-dcpprojectareacoastalzonelocatedin-yes
-        /><label for="dcpprojectareacoastalzonelocatedin-yes">Yes</label>
-        <Input
-          @type="radio"
-          @name="dcpprojectareacoastalzonelocatedin"
-          id="dcpprojectareacoastalzonelocatedin-no"
-          @value={{false}}
-          checked={{if (eq @package.pasForm.dcpProjectareacoastalzonelocatedin false) true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpProjectareacoastalzonelocatedin" false}}
-          data-test-dcpprojectareacoastalzonelocatedin-no
-        /><label for="dcpprojectareacoastalzonelocatedin-no">No</label>
-      </fieldset>
+          <p class="text-small">
+            Note: This is preliminary information and may change following discussion with NYC Planning.
+          </p>
 
-      <fieldset class="medium-margin-bottom">
-        <legend>
-          <strong>Is the Project Area located within the <a href="https://dcp.maps.arcgis.com/apps/webappviewer/index.html?id=1c37d271fba14163bbb520517153d6d5">1% annual chance floodplain</a>?</strong>
-        </legend>
-        <Input
-          @type="radio"
-          @name="dcpprojectareaischancefloodplain"
-          id="dcpprojectareaischancefloodplain-yes"
-          @value='717170000'
-          checked={{if (eq @package.pasForm.dcpProjectareaischancefloodplain "717170000") true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpProjectareaischancefloodplain" "717170000"}}
-          data-test-dcpprojectareaischancefloodplain-yes
-        /><label for="dcpprojectareaischancefloodplain-yes">Yes</label>
-        <Input
-          @type="radio"
-          @name="dcpprojectareaischancefloodplain"
-          id="dcpprojectareaischancefloodplain-no"
-          @value='717170001'
-          checked={{if (eq @package.pasForm.dcpProjectareaischancefloodplain "717170001") true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpProjectareaischancefloodplain" "717170001"}}
-          data-test-dcpprojectareaischancefloodplain-no
-        /><label for="dcpprojectareaischancefloodplain-no">No</label>
-        <Input
-          @type="radio"
-          @name="dcpprojectareaischancefloodplain"
-          id="dcpprojectareaischancefloodplain-unsure"
-          @value='717170002'
-          checked={{if (eq @package.pasForm.dcpProjectareaischancefloodplain "717170002") true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpProjectareaischancefloodplain" "717170002"}}
-          data-test-dcpprojectareaischancefloodplain-unsure
-        /><label for="dcpprojectareaischancefloodplain-unsure">Unsure at this time</label>
-      </fieldset>
+          <LandUseAction
+            @pasForm={{@package.pasForm}}
+          />
+        </section>
 
-      <fieldset class="medium-margin-bottom">
-        <legend>
-          <strong>Is a <a href="https://a836-acris.nyc.gov/CP/">legal instrument</a> associated with a previous CPC or CPC Chair action recorded against the project site?</strong>
-        </legend>
-        <Input
-          @type="radio"
-          @name="dcprestrictivedeclaration"
-          id="dcprestrictivedeclaration-yes"
-          @value={{true}}
-          checked={{if (eq @package.pasForm.dcpRestrictivedeclaration true) true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpRestrictivedeclaration" true}}
-          data-test-dcprestrictivedeclaration-yes
-        /><label for="dcprestrictivedeclaration-yes">Yes</label>
-        <Input
-          @type="radio"
-          @name="dcprestrictivedeclaration"
-          id="dcprestrictivedeclaration-no"
-          @value={{false}}
-          checked={{if (eq @package.pasForm.dcpRestrictivedeclaration false) true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpRestrictivedeclaration" false}}
-          data-test-dcprestrictivedeclaration-no
-        /><label for="dcprestrictivedeclaration-no">No</label>
-        {{#if (eq @package.pasForm.dcpRestrictivedeclaration true)}}
-          <label>
-            <strong>City Register File Number</strong>
-            <Input
-              @type="text"
-              @value={{@package.pasForm.dcpCityregisterfilenumber}}
-              data-test-dcpcityregisterfilenumber
-            />
-          </label>
-        {{/if}}
-      </fieldset>
+        <section class="form-section">
+          <h3 class="section-header">
+            <span id="project-area" class="section-anchor"></span>
+            Project Area
+          </h3>
 
-      <fieldset class="medium-margin-bottom">
-        <legend>
-          <strong>Will a new legal instrument or modification of a current legal instrument be necessary to approve/implement these actions?</strong>
-        </legend>
-        <Input
-          @type="radio"
-          @name="dcprestrictivedeclarationrequired"
-          id="dcprestrictivedeclarationrequired-yes"
-          @value='717170000'
-          checked={{if (eq @package.pasForm.dcpRestrictivedeclarationrequired "717170000") true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpRestrictivedeclarationrequired" "717170000"}}
-          data-test-dcprestrictivedeclarationrequired-yes
-        /><label for="dcprestrictivedeclarationrequired-yes">Yes</label>
-        <Input
-          @type="radio"
-          @name="dcprestrictivedeclarationrequired"
-          id="dcprestrictivedeclarationrequired-no"
-          @value='717170001'
-          checked={{if (eq @package.pasForm.dcpRestrictivedeclarationrequired "717170001") true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpRestrictivedeclarationrequired" "717170001"}}
-          data-test-dcprestrictivedeclarationrequired-no
-        /><label for="dcprestrictivedeclarationrequired-no">No</label>
-        <Input
-          @type="radio"
-          @name="dcprestrictivedeclarationrequired"
-          id="dcprestrictivedeclarationrequired-unsure"
-          @value='717170002'
-          checked={{if (eq @package.pasForm.dcpRestrictivedeclarationrequired "717170002") true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpRestrictivedeclarationrequired" "717170002"}}
-          data-test-dcprestrictivedeclarationrequired-unsure
-        /><label for="dcprestrictivedeclarationrequired-unsure">Unsure at this time</label>
-      </fieldset>
-    </section>
+          <p>
+            Project Area refers to all property that would be subject to the proposed actions.
+          </p>
 
-    <section class="form-section">
-      <h3 class="section-header">
-        <span id="proposed-development-site" class="section-anchor"></span>
-        Proposed Development Site
-      </h3>
-
-      <p>
-        Development Site refers to all property to be developed as part of the applicant’s specific proposal which the land use actions would facilitate. Typically, the Development Site and the Project Area will comprise the same property(ies) unless the application is requesting a zoning map amendment covering an area greater than an applicant’s property to be developed or a large-scale special approval involving multiple tax lots. In these cases, the Development Site may be one or several tax lots within a broader Project Area.
-      </p>
-
-      <label>
-        <strong>In what year do you expect the development to complete?</strong>
-        <Input
-          @type="text"
-          @value={{@package.pasForm.dcpEstimatedcompletiondate}}
-          data-test-dcpestimatedcompletiondate
-        />
-        {{!-- QUESTION: Should this be a date picker? --}}
-      </label>
-
-      <fieldset class="medium-margin-bottom">
-        <legend>
-          <strong>What type of development is proposed? (select all that apply)</strong>
-        </legend>
-        <ul class="no-bullet no-margin">
-          <li>
-            <Input
-              @type="checkbox"
-              @checked={{@package.pasForm.dcpProposeddevelopmentsitenewconstruction}}
-              id="dcpproposeddevelopmentsitenewconstruction"
-            /><label for="dcpproposeddevelopmentsitenewconstruction">Newly constructed buildings</label>
-          </li>
-          <li>
-            <Input
-              @type="checkbox"
-              @checked={{@package.pasForm.dcpProposeddevelopmentsitedemolition}}
-              id="dcpproposeddevelopmentsitedemolition"
-            /><label for="dcpproposeddevelopmentsitedemolition">Demolition</label>
-          </li>
-          <li>
-            <Input
-              @type="checkbox"
-              @checked={{@package.pasForm.dcpProposeddevelopmentsiteinfoalteration}}
-              id="dcpproposeddevelopmentsiteinfoalteration"
-            /><label for="dcpproposeddevelopmentsiteinfoalteration">Alteration</label>
-          </li>
-          <li>
-            <Input
-              @type="checkbox"
-              @checked={{@package.pasForm.dcpProposeddevelopmentsiteinfoaddition}}
-              id="dcpproposeddevelopmentsiteinfoaddition"
-            /><label for="dcpproposeddevelopmentsiteinfoaddition">Addition</label>
-          </li>
-          <li>
-            <Input
-              @type="checkbox"
-              @checked={{@package.pasForm.dcpProposeddevelopmentsitechnageofuse}}
-              id="dcpproposeddevelopmentsitechnageofuse"
-            /><label for="dcpproposeddevelopmentsitechnageofuse">Change of use</label>
-          </li>
-          <li>
-            <Input
-              @type="checkbox"
-              @checked={{@package.pasForm.dcpProposeddevelopmentsiteenlargement}}
-              id="dcpproposeddevelopmentsiteenlargement"
-            /><label for="dcpproposeddevelopmentsiteenlargement">Enlargement</label>
-          </li>
-          <li>
-            <Input
-              @type="checkbox"
-              @checked={{@package.pasForm.dcpProposeddevelopmentsiteinfoother}}
-              id="dcpproposeddevelopmentsiteinfoother"
-              data-test-dcpproposeddevelopmentsiteinfoother
-            /><label for="dcpproposeddevelopmentsiteinfoother">Other&hellip;</label>
-          </li>
-        </ul>
-        {{#if @package.pasForm.dcpProposeddevelopmentsiteinfoother}}
-          <label>
-            Explain:
-            <Input
-              @type="text"
-              @value={{@package.pasForm.dcpProposeddevelopmentsiteotherexplanation}}
-              data-test-dcpproposeddevelopmentsiteotherexplanation
-            />
-          </label>
-        {{/if}}
-      </fieldset>
-
-      <fieldset class="medium-margin-bottom">
-        <legend>
-          <strong>Is the Development Site in an <a href="https://zola.planning.nyc.gov/">Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area</a>?</strong>
-        </legend>
-        <Input
-          @type="radio"
-          @name="dcpisinclusionaryhousingdesignatedarea"
-          id="dcpisinclusionaryhousingdesignatedarea-yes"
-          @value={{true}}
-          checked={{if (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea true) true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpIsinclusionaryhousingdesignatedarea" true}}
-          data-test-dcpisinclusionaryhousingdesignatedarea-yes
-        /><label for="dcpisinclusionaryhousingdesignatedarea-yes">Yes</label>
-        <Input
-          @type="radio"
-          @name="dcpisinclusionaryhousingdesignatedarea"
-          id="dcpisinclusionaryhousingdesignatedarea-no"
-          @value={{false}}
-          checked={{if (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea false) true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpIsinclusionaryhousingdesignatedarea" false}}
-          data-test-dcpisinclusionaryhousingdesignatedarea-no
-        /><label for="dcpisinclusionaryhousingdesignatedarea-no">No</label>
-        <p class="help-text">
-          Refer to <a  href="https://zr.planning.nyc.gov/appendix-f-inclusionary-housing-designated-areas-and-mandatory-inclusionary-housing-areas">Appendix F</a> of the Zoning Resolution for full list of all inclusionary housing areas which are areas that incentivize or require affordable housing in certain areas.
-        </p>
-        {{#if (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea true)}}
-          <label>
-            Name of Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area
-            <Input
-              @type="text"
-              @value={{@package.pasForm.dcpInclusionaryhousingdesignatedareaname}}
-              data-test-dcpinclusionaryhousingdesignatedareaname
-            />
-          </label>
-        {{/if}}
-      </fieldset>
-
-      <fieldset class="medium-margin-bottom">
-        <legend>
-          <strong>Does the proposed development involve discretionary funding for Affordable Housing Units?</strong>
-        </legend>
-        <Input
-          @type="radio"
-          @name="dcpdiscressionaryfundingforffordablehousing"
-          id="dcpdiscressionaryfundingforffordablehousing-yes"
-          @value='717170000'
-          checked={{if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing "717170000") true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpDiscressionaryfundingforffordablehousing" "717170000"}}
-          data-test-dcpdiscressionaryfundingforffordablehousing-yes
-        /><label for="dcpdiscressionaryfundingforffordablehousing-yes">Yes</label>
-        <Input
-          @type="radio"
-          @name="dcpdiscressionaryfundingforffordablehousing"
-          id="dcpdiscressionaryfundingforffordablehousing-no"
-          @value='717170001'
-          checked={{if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing "717170001") true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpDiscressionaryfundingforffordablehousing" "717170001"}}
-          data-test-dcpdiscressionaryfundingforffordablehousing-no
-        /><label for="dcpdiscressionaryfundingforffordablehousing-no">No</label>
-        <Input
-          @type="radio"
-          @name="dcpdiscressionaryfundingforffordablehousing"
-          id="dcpdiscressionaryfundingforffordablehousing-unsure"
-          @value='717170002'
-          checked={{if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing "717170002") true}}
-          onClick={{fn this.updateAttr @package.pasForm "dcpDiscressionaryfundingforffordablehousing" "717170002"}}
-          data-test-dcpdiscressionaryfundingforffordablehousing-unsure
-        /><label for="dcpdiscressionaryfundingforffordablehousing-unsure">Unsure at this time</label>
-        {{#if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing "717170000")}}
           <fieldset class="medium-margin-bottom">
             <legend>
-              Funding source
+              <strong>Does the proposed Project, or portion thereof, require a NYC DEP Storm Water Construction Permit?</strong>
             </legend>
             <Input
               @type="radio"
-              @name="dcphousingunittype"
-              id="dcphousingunittype-city"
+              @name="dcpproposedprojectorportionconstruction"
+              id="dcpproposedprojectorportionconstruction-yes"
               @value='717170000'
-              checked={{if (eq @package.pasForm.dcpHousingunittypeCity "717170000") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpHousingunittypeCity" "717170000"}}
-              data-test-dcphousingunittype-city
-            /><label for="dcphousingunittype-city">City</label>
+              checked={{if (eq @package.pasForm.dcpProposedprojectorportionconstruction "717170000") true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpProposedprojectorportionconstruction" "717170000"}}
+              data-test-dcpproposedprojectorportionconstruction-yes
+            /><label for="dcpproposedprojectorportionconstruction-yes">Yes</label>
             <Input
               @type="radio"
-              @name="dcphousingunittype"
-              id="dcphousingunittype-state"
-              @value='717170001'
-              checked={{if (eq @package.pasForm.dcpHousingunittypeCity "717170001") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpHousingunittypeCity" "717170001"}}
-              data-test-dcphousingunittype-state
-            /><label for="dcphousingunittype-state">State</label>
+              @name="dcpproposedprojectorportionconstruction"
+              id="dcpproposedprojectorportionconstruction-no"
+              @value='717170000'
+              checked={{if (eq @package.pasForm.dcpProposedprojectorportionconstruction "717170001") true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpProposedprojectorportionconstruction" "717170001"}}
+              data-test-dcpproposedprojectorportionconstruction-no
+            /><label for="dcpproposedprojectorportionconstruction-no">No</label>
             <Input
               @type="radio"
-              @name="dcphousingunittype"
-              id="dcphousingunittype-federal"
+              @name="dcpproposedprojectorportionconstruction"
+              id="dcpproposedprojectorportionconstruction-unsure"
               @value='717170002'
-              checked={{if (eq @package.pasForm.dcpHousingunittypeCity "717170002") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpHousingunittypeCity" "717170002"}}
-              data-test-dcphousingunittype-federal
-            /><label for="dcphousingunittype-federal">Federal</label>
+              checked={{if (eq @package.pasForm.dcpProposedprojectorportionconstruction "717170002") true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpProposedprojectorportionconstruction" "717170002"}}
+              data-test-dcpproposedprojectorportionconstruction-unsure
+            /><label for="dcpproposedprojectorportionconstruction-unsure">Unsure at this time</label>
+          </fieldset>
+
+          <fieldset class="medium-margin-bottom">
+            <legend>
+              <strong>Is the proposed Project Area located in a current or former <a href="https://www1.nyc.gov/site/hpd/services-and-information/urban-renewal.page">Urban Renewal Area</a>?</strong>
+            </legend>
             <Input
               @type="radio"
-              @name="dcphousingunittype"
-              id="dcphousingunittype-other"
-              @value='717170003'
-              checked={{if (eq @package.pasForm.dcpHousingunittypeCity "717170003") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpHousingunittypeCity" "717170003"}}
-              data-test-dcphousingunittype-other
-            /><label for="dcphousingunittype-other">Other</label>
+              @name="dcpurbanrenewalarea"
+              id="dcpurbanrenewalarea-yes"
+              @value='717170000'
+              checked={{if (eq @package.pasForm.dcpUrbanrenewalarea "717170000") true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpUrbanrenewalarea" "717170000"}}
+              data-test-dcpurbanrenewalarea-yes
+            /><label for="dcpurbanrenewalarea-yes">Yes</label>
+            <Input
+              @type="radio"
+              @name="dcpurbanrenewalarea"
+              id="dcpurbanrenewalarea-no"
+              @value='717170001'
+              checked={{if (eq @package.pasForm.dcpUrbanrenewalarea "717170001") true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpUrbanrenewalarea" "717170001"}}
+              data-test-dcpurbanrenewalarea-no
+            /><label for="dcpurbanrenewalarea-no">No</label>
+            <Input
+              @type="radio"
+              @name="dcpurbanrenewalarea"
+              id="dcpurbanrenewalarea-unsure"
+              @value='717170002'
+              checked={{if (eq @package.pasForm.dcpUrbanrenewalarea "717170002") true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpUrbanrenewalarea" "717170002"}}
+              data-test-dcpurbanrenewalarea-unsure
+            /><label for="dcpurbanrenewalarea-unsure">Unsure at this time</label>
+            {{#if (eq @package.pasForm.dcpUrbanrenewalarea "717170000")}}
+              <label>
+                What is the name of the Urban Renewal Area?
+                <Input
+                  @type="text"
+                  @value={{mut pasFormChangeset.dcpUrbanareaname}}
+                  maxlength="250"
+                  data-test-dcpurbanrenewalarea
+                />
+                <ValidationMessage
+                  @changeset={{pasFormChangeset}}
+                  @field="dcpUrbanareaname"
+                />
+              </label>
+            {{/if}}
           </fieldset>
-        {{/if}}
-      </fieldset>
-    </section>
 
-    <section class="form-section">
-      <h3 class="section-header">
-        <span id="project-description" class="section-anchor"></span>
-        Project Description
-      </h3>
+          <fieldset class="medium-margin-bottom">
+            <legend>
+              <strong>What is the <a href="https://streets.planning.nyc.gov/about">Legal Street Frontage Status in the Project Area</a>?</strong>
+            </legend>
+            <span class="nowrap">
+              <Input
+                @type="radio"
+                @name="dcplegalstreetfrontage"
+                id="dcplegalstreetfrontage-mapped-and-build"
+                @value='717170000'
+                checked={{if (eq @package.pasForm.dcpLegalstreetfrontage "717170000") true}}
+                onClick={{fn this.updateAttr @package.pasForm "dcpLegalstreetfrontage" "717170000"}}
+                data-test-dcplegalstreetfrontage-mapped-and-build
+              /><label for="dcplegalstreetfrontage-mapped-and-build">Mapped and Build</label>
+            </span>
+            <span class="nowrap">
+              <Input
+                @type="radio"
+                @name="dcplegalstreetfrontage"
+                id="dcplegalstreetfrontage-private-road"
+                @value='717170001'
+                checked={{if (eq @package.pasForm.dcpLegalstreetfrontage "717170001") true}}
+                onClick={{fn this.updateAttr @package.pasForm "dcpLegalstreetfrontage" "717170001"}}
+                data-test-dcplegalstreetfrontage-private-road
+              /><label for="dcplegalstreetfrontage-private-road">Private Road</label>
+            </span>
+            <span class="nowrap">
+              <Input
+                @type="radio"
+                @name="dcplegalstreetfrontage"
+                id="dcplegalstreetfrontage-record-street"
+                @value='717170002'
+                checked={{if (eq @package.pasForm.dcpLegalstreetfrontage "717170002") true}}
+                onClick={{fn this.updateAttr @package.pasForm "dcpLegalstreetfrontage" "717170002"}}
+                data-test-dcplegalstreetfrontage-record-street
+              /><label for="dcplegalstreetfrontage-record-street">Record Street</label>
+            </span>
+            <span class="nowrap">
+              <Input
+                @type="radio"
+                @name="dcplegalstreetfrontage"
+                id="dcplegalstreetfrontage-corporation-counsel-opinion"
+                @value='717170003'
+                checked={{if (eq @package.pasForm.dcpLegalstreetfrontage "717170003") true}}
+                onClick={{fn this.updateAttr @package.pasForm "dcpLegalstreetfrontage" "717170003"}}
+                data-test-dcplegalstreetfrontage-corporation-counsel-opinion
+              /><label for="dcplegalstreetfrontage-corporation-counsel-opinion">Corporation Counsel Opinion</label>
+            </span>
+            <span class="nowrap">
+              <Input
+                @type="radio"
+                @name="dcplegalstreetfrontage"
+                id="dcplegalstreetfrontage-mapped-but-not-build"
+                @value='717170004'
+                checked={{if (eq @package.pasForm.dcpLegalstreetfrontage "717170004") true}}
+                onClick={{fn this.updateAttr @package.pasForm "dcpLegalstreetfrontage" "717170004"}}
+                data-test-dcplegalstreetfrontage-mapped-but-not-build
+              /><label for="dcplegalstreetfrontage-mapped-but-not-build">Mapped but not Build</label>
+            </span>
+          </fieldset>
 
-      <label>
-        <strong>Description of the proposed development being facilitated by the land use actions</strong>
-        <Textarea
-          @value={{@package.pasForm.dcpProjectdescriptionproposeddevelopment}}
-          rows="5"
-          data-test-dcpprojectdescriptionproposeddevelopment
-        />
-      </label>
+          <fieldset class="medium-margin-bottom">
+            <legend>
+              <strong>Do all land use actions meet&nbsp;
+                <a
+                  href="https://govt.westlaw.com/nycrr/Document/I4ec3a767cd1711dda432a117e6e0f345?viewType=FullText&originationContext=documenttoc&transitionType=CategoryPageItem&contextData=(sc.Default)">
+                  SEQRA or CEQR criteria&nbsp;
+                </a>
+                for Type II status?
+              </strong>
+            </legend>
+            <Input
+              @type="radio"
+              @name="dcplanduseactiontype2"
+              id="dcplanduseactiontype2-yes"
+              @value='717170000'
+              checked={{if (eq @package.pasForm.dcpLanduseactiontype2 "717170000") true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpLanduseactiontype2" "717170000"}}
+              data-test-dcplanduseactiontype2-yes
+            /><label for="dcplanduseactiontype2-yes">Yes</label>
+            <Input
+              @type="radio"
+              @name="dcplanduseactiontype2"
+              id="dcplanduseactiontype2-no"
+              @value='717170001'
+              checked={{if (eq @package.pasForm.dcpLanduseactiontype2 "717170001") true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpLanduseactiontype2" "717170001"}}
+              data-test-dcplanduseactiontype2-no
+            /><label for="dcplanduseactiontype2-no">No</label>
+            <Input
+              @type="radio"
+              @name="dcplanduseactiontype2"
+              id="dcplanduseactiontype2-unsure"
+              @value='717170002'
+              checked={{if (eq @package.pasForm.dcpLanduseactiontype2 "717170002") true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpLanduseactiontype2" "717170002"}}
+              data-test-dcplanduseactiontype2-unsure
+            /><label for="dcplanduseactiontype2-unsure">Unsure at this time</label>
+            {{#if (eq @package.pasForm.dcpLanduseactiontype2 "717170000")}}
+              <label>
+                Indicate which SEQRA or CEQR category each action fulfills
+                <Input
+                  @type="text"
+                  @value={{mut pasFormChangeset.dcpPleaseexplaintypeiienvreview}}
+                  maxlength="200"
+                  data-test-dcppleaseexplaintypeiienvreview
+                />
+                <ValidationMessage
+                  @changeset={{pasFormChangeset}}
+                  @field="dcpPleaseexplaintypeiienvreview"
+                />
+              </label>
+            {{/if}}
+          </fieldset>
 
-      <label>
-        <strong>Why is this application being proposed? What is the legal, environmental, or land use background?</strong>
-        <Textarea
-          @value={{@package.pasForm.dcpProjectdescriptionbackground}}
-          rows="5"
-          data-test-dcpprojectdescriptionbackground
-        />
-      </label>
+          <fieldset class="medium-margin-bottom">
+            <legend>
+              <strong>Is the proposed Project Area in an <a href="https://zola.planning.nyc.gov/">Industrial Business Zone</a>?</strong>
+            </legend>
+            <Input
+              @type="radio"
+              @name="dcpprojectareaindustrialbusinesszone"
+              id="dcpprojectareaindustrialbusinesszone-yes"
+              @value={{true}}
+              checked={{if (eq @package.pasForm.dcpProjectareaindustrialbusinesszone true) true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpProjectareaindustrialbusinesszone" true}}
+              data-test-dcpprojectareaindustrialbusinesszone-yes
+            /><label for="dcpprojectareaindustrialbusinesszone-yes">Yes</label>
+            <Input
+              @type="radio"
+              @name="dcpprojectareaindustrialbusinesszone"
+              id="dcpprojectareaindustrialbusinesszone-no"
+              @value={{false}}
+              checked={{if (eq @package.pasForm.dcpProjectareaindustrialbusinesszone false) true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpProjectareaindustrialbusinesszone" false}}
+              data-test-dcpprojectareaindustrialbusinesszone-no
+            /><label for="dcpprojectareaindustrialbusinesszone-no">No</label>
+            {{#if (eq @package.pasForm.dcpProjectareaindustrialbusinesszone true)}}
+              <label>
+                Name of Industrial Business Zone
+                <Input
+                  @type="text"
+                  @value={{mut pasFormChangeset.dcpProjectareaindutrialzonename}}
+                  maxlength="200"
+                  data-test-dcpprojectareaindustrialbusinesszone
+                />
+                <ValidationMessage
+                  @changeset={{pasFormChangeset}}
+                  @field="dcpProjectareaindutrialzonename"
+                />
+              </label>
+            {{/if}}
+          </fieldset>
 
-      <label>
-        <strong>What is the land use rationale for all the proposed actions?</strong>
-        <Textarea
-          @value={{@package.pasForm.dcpProjectdescriptionproposedactions}}
-          rows="5"
-          data-test-dcpprojectdescriptionproposedactions
-        />
-      </label>
+          <fieldset class="medium-margin-bottom">
+            <legend>
+              <strong>Is the proposed Project Area within or adjacent to a designated (City or State) <a href="https://zola.planning.nyc.gov/">Landmark or Historic District</a>?</strong>
+            </legend>
+            <Input
+              @type="radio"
+              @name="dcpisprojectarealandmark"
+              id="dcpisprojectarealandmark-yes"
+              @value={{true}}
+              checked={{if (eq @package.pasForm.dcpIsprojectarealandmark true) true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpIsprojectarealandmark" true}}
+              data-test-dcpisprojectarealandmark-yes
+            /><label for="dcpisprojectarealandmark-yes">Yes</label>
+            <Input
+              @type="radio"
+              @name="dcpisprojectarealandmark"
+              id="dcpisprojectarealandmark-no"
+              @value={{false}}
+              checked={{if (eq @package.pasForm.dcpIsprojectarealandmark false) true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpIsprojectarealandmark" false}}
+              data-test-dcpisprojectarealandmark-no
+            /><label for="dcpisprojectarealandmark-no">No</label>
+            {{#if (eq @package.pasForm.dcpIsprojectarealandmark true)}}
+              <label>
+                Name of Landmark or Historic District
+                <Input
+                  @type="text"
+                  @value={{mut pasFormChangeset.dcpProjectarealandmarkname}}
+                  maxlength="250"
+                  data-test-dcpisprojectarealandmark
+                />
+                <ValidationMessage
+                  @changeset={{pasFormChangeset}}
+                  @field="dcpProjectarealandmarkname"
+                />
+              </label>
+            {{/if}}
+          </fieldset>
 
-      <label>
-        <strong>Description of existing land uses and structures in the proposed Project Area and Development Site</strong>
-        <Textarea
-          @value={{@package.pasForm.dcpProjectdescriptionproposedarea}}
-          rows="5"
-          data-test-dcpprojectdescriptionproposedarea
-        />
-      </label>
+          <fieldset class="medium-margin-bottom">
+            <legend>
+              <strong>Is the proposed Project Area located within the <a href="https://dcp.maps.arcgis.com/apps/View/index.html?appid=90e3a9f927c2471483631a20e8a41d8d">NYC Coastal Zone</a>?</strong>
+            </legend>
+            <Input
+              @type="radio"
+              @name="dcpprojectareacoastalzonelocatedin"
+              id="dcpprojectareacoastalzonelocatedin-yes"
+              @value={{true}}
+              checked={{if (eq @package.pasForm.dcpProjectareacoastalzonelocatedin true) true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpProjectareacoastalzonelocatedin" true}}
+              data-test-dcpprojectareacoastalzonelocatedin-yes
+            /><label for="dcpprojectareacoastalzonelocatedin-yes">Yes</label>
+            <Input
+              @type="radio"
+              @name="dcpprojectareacoastalzonelocatedin"
+              id="dcpprojectareacoastalzonelocatedin-no"
+              @value={{false}}
+              checked={{if (eq @package.pasForm.dcpProjectareacoastalzonelocatedin false) true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpProjectareacoastalzonelocatedin" false}}
+              data-test-dcpprojectareacoastalzonelocatedin-no
+            /><label for="dcpprojectareacoastalzonelocatedin-no">No</label>
+          </fieldset>
 
-      <label>
-        <strong>Description of land uses and built context in surrounding area (within 1000 ft)</strong>
-        <Textarea
-          @value={{@package.pasForm.dcpProjectdescriptionsurroundingarea}}
-          rows="5"
-          data-test-dcpprojectdescriptionsurroundingarea
-        />
-      </label>
+          <fieldset class="medium-margin-bottom">
+            <legend>
+              <strong>Is the Project Area located within the <a href="https://dcp.maps.arcgis.com/apps/webappviewer/index.html?id=1c37d271fba14163bbb520517153d6d5">1% annual chance floodplain</a>?</strong>
+            </legend>
+            <Input
+              @type="radio"
+              @name="dcpprojectareaischancefloodplain"
+              id="dcpprojectareaischancefloodplain-yes"
+              @value='717170000'
+              checked={{if (eq @package.pasForm.dcpProjectareaischancefloodplain "717170000") true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpProjectareaischancefloodplain" "717170000"}}
+              data-test-dcpprojectareaischancefloodplain-yes
+            /><label for="dcpprojectareaischancefloodplain-yes">Yes</label>
+            <Input
+              @type="radio"
+              @name="dcpprojectareaischancefloodplain"
+              id="dcpprojectareaischancefloodplain-no"
+              @value='717170001'
+              checked={{if (eq @package.pasForm.dcpProjectareaischancefloodplain "717170001") true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpProjectareaischancefloodplain" "717170001"}}
+              data-test-dcpprojectareaischancefloodplain-no
+            /><label for="dcpprojectareaischancefloodplain-no">No</label>
+            <Input
+              @type="radio"
+              @name="dcpprojectareaischancefloodplain"
+              id="dcpprojectareaischancefloodplain-unsure"
+              @value='717170002'
+              checked={{if (eq @package.pasForm.dcpProjectareaischancefloodplain "717170002") true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpProjectareaischancefloodplain" "717170002"}}
+              data-test-dcpprojectareaischancefloodplain-unsure
+            /><label for="dcpprojectareaischancefloodplain-unsure">Unsure at this time</label>
+          </fieldset>
 
-      <label>
-        <strong>Description of proposed CEQR scope</strong>
-        <Textarea
-          @value={{@package.pasForm.dcpProjectattachmentsotherinformation}}
-          rows="5"
-          data-test-dcpprojectattachmentsotherinformation
-        />
-      </label>
-      <p class="help-text">
-        Include to expedite CEQR guidance: If proposed actions are not approved, what is the applicant’s as-of-right development (CEQR “no-action”) proposal? What would be expected to occur on non-applicant-controlled sites because of the Proposed Actions (CEQR “with-action”)?
-      </p>
-    </section>
+          <fieldset class="medium-margin-bottom">
+            <legend>
+              <strong>Is a <a href="https://a836-acris.nyc.gov/CP/">legal instrument</a> associated with a previous CPC or CPC Chair action recorded against the project site?</strong>
+            </legend>
+            <Input
+              @type="radio"
+              @name="dcprestrictivedeclaration"
+              id="dcprestrictivedeclaration-yes"
+              @value={{true}}
+              checked={{if (eq @package.pasForm.dcpRestrictivedeclaration true) true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpRestrictivedeclaration" true}}
+              data-test-dcprestrictivedeclaration-yes
+            /><label for="dcprestrictivedeclaration-yes">Yes</label>
+            <Input
+              @type="radio"
+              @name="dcprestrictivedeclaration"
+              id="dcprestrictivedeclaration-no"
+              @value={{false}}
+              checked={{if (eq @package.pasForm.dcpRestrictivedeclaration false) true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpRestrictivedeclaration" false}}
+              data-test-dcprestrictivedeclaration-no
+            /><label for="dcprestrictivedeclaration-no">No</label>
+            {{#if (eq @package.pasForm.dcpRestrictivedeclaration true)}}
+              <label>
+                <strong>City Register File Number</strong>
+                <Input
+                  @type="text"
+                  @value={{mut pasFormChangeset.dcpCityregisterfilenumber}}
+                  maxlength="25"
+                  data-test-dcpcityregisterfilenumber
+                />
+                <ValidationMessage
+                  @changeset={{pasFormChangeset}}
+                  @field="dcpCityregisterfilenumber"
+                />
+              </label>
+            {{/if}}
+          </fieldset>
 
-    <section class="form-section">
-      <h3 class="section-header">
-        <span id="attached-documents" class="section-anchor"></span>
-        Attached Documents
-      </h3>
+          <fieldset class="medium-margin-bottom">
+            <legend>
+              <strong>Will a new legal instrument or modification of a current legal instrument be necessary to approve/implement these actions?</strong>
+            </legend>
+            <Input
+              @type="radio"
+              @name="dcprestrictivedeclarationrequired"
+              id="dcprestrictivedeclarationrequired-yes"
+              @value='717170000'
+              checked={{if (eq @package.pasForm.dcpRestrictivedeclarationrequired "717170000") true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpRestrictivedeclarationrequired" "717170000"}}
+              data-test-dcprestrictivedeclarationrequired-yes
+            /><label for="dcprestrictivedeclarationrequired-yes">Yes</label>
+            <Input
+              @type="radio"
+              @name="dcprestrictivedeclarationrequired"
+              id="dcprestrictivedeclarationrequired-no"
+              @value='717170001'
+              checked={{if (eq @package.pasForm.dcpRestrictivedeclarationrequired "717170001") true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpRestrictivedeclarationrequired" "717170001"}}
+              data-test-dcprestrictivedeclarationrequired-no
+            /><label for="dcprestrictivedeclarationrequired-no">No</label>
+            <Input
+              @type="radio"
+              @name="dcprestrictivedeclarationrequired"
+              id="dcprestrictivedeclarationrequired-unsure"
+              @value='717170002'
+              checked={{if (eq @package.pasForm.dcpRestrictivedeclarationrequired "717170002") true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpRestrictivedeclarationrequired" "717170002"}}
+              data-test-dcprestrictivedeclarationrequired-unsure
+            /><label for="dcprestrictivedeclarationrequired-unsure">Unsure at this time</label>
+          </fieldset>
+        </section>
 
-      <p>
-        Please attach the following required documents. (Additional materials that help to explain the proposed project may also be submitted.)
-      </p>
+        <section class="form-section">
+          <h3 class="section-header">
+            <span id="proposed-development-site" class="section-anchor"></span>
+            Proposed Development Site
+          </h3>
 
-      <div class="grid-x grid-margin-x">
-        <div class="cell large-6">
-          <h5>Required for all projects:</h5>
-          <ul class="text-small">
-            <li class="small-margin-bottom">
-              <a href="http://gis.nyc.gov/taxmap/map.htm">Tax Map(s)</a> — if project area has more than one tax block submit a separate map for each tax block
-            </li>
-            <li class="small-margin-bottom">
-              <a href="https://www1.nyc.gov/site/planning/zoning/index- map.page">Official Zoning Map</a> — circle the project area
-            </li>
-            <li class="small-margin-bottom">
-              <a href="https://applicantmaps.planning.nyc.gov/">Land Use Map</a>
-            </li>
-            <li class="small-margin-bottom">
-              Site Plan — include building heights, unit counts and square footage calculations (GSF & ZSF) for proposed project (certain exceptions apply, consult the Lead Planner)
-            </li>
-            <li class="small-margin-bottom">
-              Photographs
-            </li>
-            <li class="small-margin-bottom">
-              Signature Form
-            </li>
-          </ul>
-        </div>
-        <div class="cell large-6">
-          <h5>For projects in the NYC Coastal Zone: </h5>
-          <ul class="text-small">
-            <li class="small-margin-bottom">
-              Map of <a href="https://dcp.maps.arcgis.com/apps/View/index.html?app id=90e3a9f927c2471483631a20e8a41d8d">project location within the NYC coastal zone</a> including Special Area Designations
-            </li>
-          </ul>
+          <p>
+            Development Site refers to all property to be developed as part of the applicant’s specific proposal which the land use actions would facilitate. Typically, the Development Site and the Project Area will comprise the same property(ies) unless the application is requesting a zoning map amendment covering an area greater than an applicant’s property to be developed or a large-scale special approval involving multiple tax lots. In these cases, the Development Site may be one or several tax lots within a broader Project Area.
+          </p>
 
-          <h5>
-            For <a href="https://streets.planning.nyc.gov/about">City Map changes</a>:
-          </h5>
-          <ul class="text-small">
-            <li class="small-margin-bottom">Most recent Borough President’s final Section Map or most recent approved and filed Alteration Map for the project area</li>
-            <li class="small-margin-bottom">Site survey — recommended but not required</li>
-          </ul>
-        </div>
-      </div>
+          <label>
+            <strong>In what year do you expect the development to complete?</strong>
+            <Input
+              @type="text"
+              @value={{mut pasFormChangeset.dcpEstimatedcompletiondate}}
+              minlength="4"
+              maxlength="4"
+              data-test-dcpestimatedcompletiondate
+            />
+            <ValidationMessage
+              @changeset={{pasFormChangeset}}
+              @field="dcpEstimatedcompletiondate"
+            />
+            {{!-- QUESTION: Should this be a date picker? --}}
+          </label>
 
-      <Packages::Attachments
-        @package={{@package}}
-        @fileManager={{@package.fileManager}}
-      />
-    </section>
+          <fieldset class="medium-margin-bottom">
+            <legend>
+              <strong>What type of development is proposed? (select all that apply)</strong>
+            </legend>
+            <ul class="no-bullet no-margin">
+              <li>
+                <Input
+                  @type="checkbox"
+                  @checked={{@package.pasForm.dcpProposeddevelopmentsitenewconstruction}}
+                  id="dcpproposeddevelopmentsitenewconstruction"
+                /><label for="dcpproposeddevelopmentsitenewconstruction">Newly constructed buildings</label>
+              </li>
+              <li>
+                <Input
+                  @type="checkbox"
+                  @checked={{@package.pasForm.dcpProposeddevelopmentsitedemolition}}
+                  id="dcpproposeddevelopmentsitedemolition"
+                /><label for="dcpproposeddevelopmentsitedemolition">Demolition</label>
+              </li>
+              <li>
+                <Input
+                  @type="checkbox"
+                  @checked={{@package.pasForm.dcpProposeddevelopmentsiteinfoalteration}}
+                  id="dcpproposeddevelopmentsiteinfoalteration"
+                /><label for="dcpproposeddevelopmentsiteinfoalteration">Alteration</label>
+              </li>
+              <li>
+                <Input
+                  @type="checkbox"
+                  @checked={{@package.pasForm.dcpProposeddevelopmentsiteinfoaddition}}
+                  id="dcpproposeddevelopmentsiteinfoaddition"
+                /><label for="dcpproposeddevelopmentsiteinfoaddition">Addition</label>
+              </li>
+              <li>
+                <Input
+                  @type="checkbox"
+                  @checked={{@package.pasForm.dcpProposeddevelopmentsitechnageofuse}}
+                  id="dcpproposeddevelopmentsitechnageofuse"
+                /><label for="dcpproposeddevelopmentsitechnageofuse">Change of use</label>
+              </li>
+              <li>
+                <Input
+                  @type="checkbox"
+                  @checked={{@package.pasForm.dcpProposeddevelopmentsiteenlargement}}
+                  id="dcpproposeddevelopmentsiteenlargement"
+                /><label for="dcpproposeddevelopmentsiteenlargement">Enlargement</label>
+              </li>
+              <li>
+                <Input
+                  @type="checkbox"
+                  @checked={{@package.pasForm.dcpProposeddevelopmentsiteinfoother}}
+                  id="dcpproposeddevelopmentsiteinfoother"
+                  data-test-dcpproposeddevelopmentsiteinfoother
+                /><label for="dcpproposeddevelopmentsiteinfoother">Other&hellip;</label>
+              </li>
+            </ul>
+            {{#if @package.pasForm.dcpProposeddevelopmentsiteinfoother}}
+              <label>
+                Explain:
+                <Input
+                  @type="text"
+                  @value={{@package.pasForm.dcpProposeddevelopmentsiteotherexplanation}}
+                  data-test-dcpproposeddevelopmentsiteotherexplanation
+                />
+              </label>
+            {{/if}}
+          </fieldset>
 
-  </div>
-  <div class="cell large-4">
+          <fieldset class="medium-margin-bottom">
+            <legend>
+              <strong>Is the Development Site in an <a href="https://zola.planning.nyc.gov/">Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area</a>?</strong>
+            </legend>
+            <Input
+              @type="radio"
+              @name="dcpisinclusionaryhousingdesignatedarea"
+              id="dcpisinclusionaryhousingdesignatedarea-yes"
+              @value={{true}}
+              checked={{if (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea true) true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpIsinclusionaryhousingdesignatedarea" true}}
+              data-test-dcpisinclusionaryhousingdesignatedarea-yes
+            /><label for="dcpisinclusionaryhousingdesignatedarea-yes">Yes</label>
+            <Input
+              @type="radio"
+              @name="dcpisinclusionaryhousingdesignatedarea"
+              id="dcpisinclusionaryhousingdesignatedarea-no"
+              @value={{false}}
+              checked={{if (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea false) true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpIsinclusionaryhousingdesignatedarea" false}}
+              data-test-dcpisinclusionaryhousingdesignatedarea-no
+            /><label for="dcpisinclusionaryhousingdesignatedarea-no">No</label>
+            <p class="help-text">
+              Refer to <a  href="https://zr.planning.nyc.gov/appendix-f-inclusionary-housing-designated-areas-and-mandatory-inclusionary-housing-areas">Appendix F</a> of the Zoning Resolution for full list of all inclusionary housing areas which are areas that incentivize or require affordable housing in certain areas.
+            </p>
+            {{#if (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea true)}}
+              <label>
+                Name of Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area
+                <Input
+                  @type="text"
+                  @value={{@package.pasForm.dcpInclusionaryhousingdesignatedareaname}}
+                  data-test-dcpinclusionaryhousingdesignatedareaname
+                />
+              </label>
+            {{/if}}
+          </fieldset>
 
-    <div class="sticky-sidebar">
-      <p>
-        <button
-          type="button"
-          class="button expanded large"
-          onClick={{fn this.save @package}}
-          disabled={{not this.isDirty}}
-          data-test-save-button
-        >
-          {{!-- TODO: Make this button work with the action passed in @save--}}
-          Save
-        </button>
-        <button
-          type="button"
-          class="button expanded large secondary"
-          {{on "click" this.toggleModal}}
-          data-test-submit-button
-        >
-          {{!-- TODO: Disable this button if model dirty/invaild --}}
-          Submit
-        </button>
-      </p>
-      {{#if this.modalIsOpen}}
-        <EmberWormhole @to="reveal-modal-container">
-          <RevealModal @toggle={{this.toggleModal}}>
-            <h6>Confirm Pre-Applicant Statement submission</h6>
-            <p class="header-large medium-margin-top small-margin-bottom">Are you sure?</p>
-            <p>Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including the signature form) have been uploaded. If City Planning does not receive enough accurate information to provide guidance, the lead planner will notify you and request that this form be resubmitted with needed materials, corrections, or clarifications.</p>
-            <hr>
-            <div class="grid-x grid-margin-x">
-              <div class="cell large-6">
-                <button
-                  type="button"
-                  class="button large secondary no-margin"
-                  {{on "click" this.toggleModal}}
-                >
-                  Continue Editing
-                </button>
-              </div>
-              <div class="cell large-6 text-right">
-                <button
-                  type="button"
-                  class="button large no-margin"
-                  {{on "click" (fn this.submit @package)}}
-                  data-test-confirm-submit-button
-                >
-                  Submit
-                </button>
-              </div>
+          <fieldset class="medium-margin-bottom">
+            <legend>
+              <strong>Does the proposed development involve discretionary funding for Affordable Housing Units?</strong>
+            </legend>
+            <Input
+              @type="radio"
+              @name="dcpdiscressionaryfundingforffordablehousing"
+              id="dcpdiscressionaryfundingforffordablehousing-yes"
+              @value='717170000'
+              checked={{if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing "717170000") true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpDiscressionaryfundingforffordablehousing" "717170000"}}
+              data-test-dcpdiscressionaryfundingforffordablehousing-yes
+            /><label for="dcpdiscressionaryfundingforffordablehousing-yes">Yes</label>
+            <Input
+              @type="radio"
+              @name="dcpdiscressionaryfundingforffordablehousing"
+              id="dcpdiscressionaryfundingforffordablehousing-no"
+              @value='717170001'
+              checked={{if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing "717170001") true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpDiscressionaryfundingforffordablehousing" "717170001"}}
+              data-test-dcpdiscressionaryfundingforffordablehousing-no
+            /><label for="dcpdiscressionaryfundingforffordablehousing-no">No</label>
+            <Input
+              @type="radio"
+              @name="dcpdiscressionaryfundingforffordablehousing"
+              id="dcpdiscressionaryfundingforffordablehousing-unsure"
+              @value='717170002'
+              checked={{if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing "717170002") true}}
+              onClick={{fn this.updateAttr @package.pasForm "dcpDiscressionaryfundingforffordablehousing" "717170002"}}
+              data-test-dcpdiscressionaryfundingforffordablehousing-unsure
+            /><label for="dcpdiscressionaryfundingforffordablehousing-unsure">Unsure at this time</label>
+            {{#if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing "717170000")}}
+              <fieldset class="medium-margin-bottom">
+                <legend>
+                  Funding source
+                </legend>
+                <Input
+                  @type="radio"
+                  @name="dcphousingunittype"
+                  id="dcphousingunittype-city"
+                  @value='717170000'
+                  checked={{if (eq @package.pasForm.dcpHousingunittypeCity "717170000") true}}
+                  onClick={{fn this.updateAttr @package.pasForm "dcpHousingunittypeCity" "717170000"}}
+                  data-test-dcphousingunittype-city
+                /><label for="dcphousingunittype-city">City</label>
+                <Input
+                  @type="radio"
+                  @name="dcphousingunittype"
+                  id="dcphousingunittype-state"
+                  @value='717170001'
+                  checked={{if (eq @package.pasForm.dcpHousingunittypeCity "717170001") true}}
+                  onClick={{fn this.updateAttr @package.pasForm "dcpHousingunittypeCity" "717170001"}}
+                  data-test-dcphousingunittype-state
+                /><label for="dcphousingunittype-state">State</label>
+                <Input
+                  @type="radio"
+                  @name="dcphousingunittype"
+                  id="dcphousingunittype-federal"
+                  @value='717170002'
+                  checked={{if (eq @package.pasForm.dcpHousingunittypeCity "717170002") true}}
+                  onClick={{fn this.updateAttr @package.pasForm "dcpHousingunittypeCity" "717170002"}}
+                  data-test-dcphousingunittype-federal
+                /><label for="dcphousingunittype-federal">Federal</label>
+                <Input
+                  @type="radio"
+                  @name="dcphousingunittype"
+                  id="dcphousingunittype-other"
+                  @value='717170003'
+                  checked={{if (eq @package.pasForm.dcpHousingunittypeCity "717170003") true}}
+                  onClick={{fn this.updateAttr @package.pasForm "dcpHousingunittypeCity" "717170003"}}
+                  data-test-dcphousingunittype-other
+                /><label for="dcphousingunittype-other">Other</label>
+              </fieldset>
+            {{/if}}
+          </fieldset>
+        </section>
+
+        <section class="form-section">
+          <h3 class="section-header">
+            <span id="project-description" class="section-anchor"></span>
+            Project Description
+          </h3>
+
+          <label>
+            <strong>Description of the proposed development being facilitated by the land use actions</strong>
+            <Textarea
+              @value={{mut pasFormChangeset.dcpProjectdescriptionproposeddevelopment}}
+              rows="5"
+              maxlength="3000"
+              data-test-dcpprojectdescriptionproposeddevelopment
+            />
+            <ValidationMessage
+              @changeset={{pasFormChangeset}}
+              @field="dcpProjectdescriptionproposeddevelopment"
+            />
+          </label>
+
+          <label>
+            <strong>Why is this application being proposed? What is the legal, environmental, or land use background?</strong>
+            <Textarea
+              @value={{mut pasFormChangeset.dcpProjectdescriptionbackground}}
+              rows="5"
+              maxlength="2000"
+              data-test-dcpprojectdescriptionbackground
+            />
+            <ValidationMessage
+              @changeset={{pasFormChangeset}}
+              @field="dcpProjectdescriptionbackground"
+            />
+          </label>
+
+          <label>
+            <strong>What is the land use rationale for all the proposed actions?</strong>
+            <Textarea
+              @value={{mut pasFormChangeset.dcpProjectdescriptionproposedactions}}
+              rows="5"
+              maxlength="2000"
+              data-test-dcpprojectdescriptionproposedactions
+            />
+            <ValidationMessage
+              @changeset={{pasFormChangeset}}
+              @field="dcpProjectdescriptionproposedactions"
+            />
+          </label>
+
+          <label>
+            <strong>Description of existing land uses and structures in the proposed Project Area and Development Site</strong>
+            <Textarea
+              @value={{mut pasFormChangeset.dcpProjectdescriptionproposedarea}}
+              rows="5"
+              maxlength="3000"
+              data-test-dcpprojectdescriptionproposedarea
+            />
+            <ValidationMessage
+              @changeset={{pasFormChangeset}}
+              @field="dcpProjectdescriptionproposedarea"
+            />
+          </label>
+
+          <label>
+            <strong>Description of land uses and built context in surrounding area (within 1000 ft)</strong>
+            <Textarea
+              @value={{mut pasFormChangeset.dcpProjectdescriptionsurroundingarea}}
+              rows="5"
+              maxlength="3000"
+              data-test-dcpprojectdescriptionsurroundingarea
+            />
+            <ValidationMessage
+              @changeset={{pasFormChangeset}}
+              @field="dcpProjectdescriptionsurroundingarea"
+            />
+          </label>
+
+          <label>
+            <strong>Description of proposed CEQR scope</strong>
+            <Textarea
+              @value={{mut pasFormChangeset.dcpProjectattachmentsotherinformation}}
+              rows="5"
+              maxlength="3000"
+              data-test-dcpprojectattachmentsotherinformation
+            />
+            <ValidationMessage
+              @changeset={{pasFormChangeset}}
+              @field="dcpProjectattachmentsotherinformation"
+            />
+          </label>
+          <p class="help-text">
+            Include to expedite CEQR guidance: If proposed actions are not approved, what is the applicant’s as-of-right development (CEQR “no-action”) proposal? What would be expected to occur on non-applicant-controlled sites because of the Proposed Actions (CEQR “with-action”)?
+          </p>
+        </section>
+
+        <section class="form-section">
+          <h3 class="section-header">
+            <span id="attached-documents" class="section-anchor"></span>
+            Attached Documents
+          </h3>
+
+          <p>
+            Please attach the following required documents. (Additional materials that help to explain the proposed project may also be submitted.)
+          </p>
+
+          <div class="grid-x grid-margin-x">
+            <div class="cell large-6">
+              <h5>Required for all projects:</h5>
+              <ul class="text-small">
+                <li class="small-margin-bottom">
+                  <a href="http://gis.nyc.gov/taxmap/map.htm">Tax Map(s)</a> — if project area has more than one tax block submit a separate map for each tax block
+                </li>
+                <li class="small-margin-bottom">
+                  <a href="https://www1.nyc.gov/site/planning/zoning/index- map.page">Official Zoning Map</a> — circle the project area
+                </li>
+                <li class="small-margin-bottom">
+                  <a href="https://applicantmaps.planning.nyc.gov/">Land Use Map</a>
+                </li>
+                <li class="small-margin-bottom">
+                  Site Plan — include building heights, unit counts and square footage calculations (GSF & ZSF) for proposed project (certain exceptions apply, consult the Lead Planner)
+                </li>
+                <li class="small-margin-bottom">
+                  Photographs
+                </li>
+                <li class="small-margin-bottom">
+                  Signature Form
+                </li>
+              </ul>
             </div>
-          </RevealModal>
-        </EmberWormhole>
-      {{/if}}
-      <nav>
+            <div class="cell large-6">
+              <h5>For projects in the NYC Coastal Zone: </h5>
+              <ul class="text-small">
+                <li class="small-margin-bottom">
+                  Map of <a href="https://dcp.maps.arcgis.com/apps/View/index.html?app id=90e3a9f927c2471483631a20e8a41d8d">project location within the NYC coastal zone</a> including Special Area Designations
+                </li>
+              </ul>
 
-        <ul class="no-bullet text-weight-bold">
-          <li class="medium-margin-bottom">
-            <a href="#project-info">
-              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-              Project Information
-            </a>
-          </li>
-          <li class="medium-margin-bottom">
-            <a href="#applicant-team">
-              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-              Applicant Team
-            </a>
-          </li>
-          <li class="medium-margin-bottom">
-            <a href="#project-geography">
-              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-              Project Geography
-            </a>
-          </li>
-          <li class="medium-margin-bottom">
-            <a href="#proposed-land-use-actions">
-              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-              Proposed Land Use Actions
-            </a>
-          </li>
-          <li class="medium-margin-bottom">
-            <a href="#project-area">
-              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-              Project Area
-            </a>
-          </li>
-          <li class="medium-margin-bottom">
-            <a href="#proposed-development-site">
-              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-              Proposed Development Site
-            </a>
-          </li>
-          <li class="medium-margin-bottom">
-            <a href="#project-description">
-              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-              Project Description
-            </a>
-          </li>
-          <li class="medium-margin-bottom">
-            <a href="#attached-documents">
-              <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-              Attached Documents
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>{{!-- end .sticky-sidebar --}}
+              <h5>
+                For <a href="https://streets.planning.nyc.gov/about">City Map changes</a>:
+              </h5>
+              <ul class="text-small">
+                <li class="small-margin-bottom">Most recent Borough President’s final Section Map or most recent approved and filed Alteration Map for the project area</li>
+                <li class="small-margin-bottom">Site survey — recommended but not required</li>
+              </ul>
+            </div>
+          </div>
 
-  </div>
+          <Packages::Attachments
+            @package={{@package}}
+            @fileManager={{@package.fileManager}}
+          />
+        </section>
+
+    </div>
+    <div class="cell large-4">
+
+      <div class="sticky-sidebar">
+        <p>
+          <button
+            type="button"
+            class="button expanded large"
+            onClick={{fn this.save @package pasFormChangeset}}
+            disabled={{not this.isDirty}}
+            data-test-save-button
+          >
+            {{!-- TODO: Make this button work with the action passed in @save--}}
+            Save
+          </button>
+          <button
+            type="button"
+            class="button expanded large secondary"
+            {{on "click" this.toggleModal}}
+            data-test-submit-button
+          >
+            {{!-- TODO: Disable this button if model dirty/invaild --}}
+            Submit
+          </button>
+        </p>
+        {{#if this.modalIsOpen}}
+          <EmberWormhole @to="reveal-modal-container">
+            <RevealModal @toggle={{this.toggleModal}}>
+              <h6>Confirm Pre-Applicant Statement submission</h6>
+              <p class="header-large medium-margin-top small-margin-bottom">Are you sure?</p>
+              <p>Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including the signature form) have been uploaded. If City Planning does not receive enough accurate information to provide guidance, the lead planner will notify you and request that this form be resubmitted with needed materials, corrections, or clarifications.</p>
+              <hr>
+              <div class="grid-x grid-margin-x">
+                <div class="cell large-6">
+                  <button
+                    type="button"
+                    class="button large secondary no-margin"
+                    {{on "click" this.toggleModal}}
+                  >
+                    Continue Editing
+                  </button>
+                </div>
+                <div class="cell large-6 text-right">
+                  <button
+                    type="button"
+                    class="button large no-margin"
+                    {{on "click" (fn this.submit @package)}}
+                    data-test-confirm-submit-button
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </RevealModal>
+          </EmberWormhole>
+        {{/if}}
+        <nav>
+
+          <ul class="no-bullet text-weight-bold">
+            <li class="medium-margin-bottom">
+              <a href="#project-info">
+                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+                Project Information
+              </a>
+            </li>
+            <li class="medium-margin-bottom">
+              <a href="#applicant-team">
+                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+                Applicant Team
+              </a>
+            </li>
+            <li class="medium-margin-bottom">
+              <a href="#project-geography">
+                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+                Project Geography
+              </a>
+            </li>
+            <li class="medium-margin-bottom">
+              <a href="#proposed-land-use-actions">
+                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+                Proposed Land Use Actions
+              </a>
+            </li>
+            <li class="medium-margin-bottom">
+              <a href="#project-area">
+                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+                Project Area
+              </a>
+            </li>
+            <li class="medium-margin-bottom">
+              <a href="#proposed-development-site">
+                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+                Proposed Development Site
+              </a>
+            </li>
+            <li class="medium-margin-bottom">
+              <a href="#project-description">
+                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+                Project Description
+              </a>
+            </li>
+            <li class="medium-margin-bottom">
+              <a href="#attached-documents">
+                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+                Attached Documents
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>{{!-- end .sticky-sidebar --}}
+
+    </div>
+  {{/with}}
 </div>
 
 

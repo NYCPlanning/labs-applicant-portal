@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
+import PasFormValidations from '../../../validations/pas-form';
 
 export default class PasFormComponent extends Component {
   @service router;
@@ -9,6 +10,8 @@ export default class PasFormComponent extends Component {
   @tracked modalIsOpen = false;
 
   @tracked package;
+
+  pasFormValidations = PasFormValidations;
 
   get isDirty() {
     const isPasFormDirty = this.args.package.pasForm.hasDirtyAttributes;
@@ -21,7 +24,8 @@ export default class PasFormComponent extends Component {
   // TODO: consider decoupling the PAS Form from the Package
   // for better modularity and avoiding "inappropriate intimacy"
   @action
-  save(projectPackage) {
+  save(projectPackage, pasFormChangeset) {
+    pasFormChangeset.save();
     projectPackage.saveDescendants();
   }
 

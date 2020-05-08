@@ -1,0 +1,8 @@
+{{#if (get (get @changeset "error") @field)}}
+  <span
+    class="text-red"
+    data-test-validation={{@field}}
+  >
+    {{get (get (get @changeset "error") @field) "validation"}}
+  </span>
+{{/if}}
