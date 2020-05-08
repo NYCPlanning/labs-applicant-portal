@@ -134,9 +134,42 @@ module('Integration | Component | pas-form', function(hooks) {
     assert.equal(this.server.db.pasForms[0].dcpRevisedprojectname, 'Some Cool New Project Name');
   });
 
-  test('user sees a confirmation modal upon submit', async function(assert) {
-    const ourProject = this.server.create('project');
-    const projectPackage = this.server.create('package', { project: ourProject });
+  test('submit disabled until no models are dirty and all required fields filled; user sees a confirmation modal upon submit', async function(assert) {
+    const ourPasForm = this.server.create('pas-form', {
+      dcpUrbanrenewalarea: '717170000',
+      dcpUrbanareaname: 'urban area name',
+      dcpLanduseactiontype2: true,
+      dcpPleaseexplaintypeiienvreview: 'explanation',
+      dcpProjectareaindustrialbusinesszone: true,
+      dcpProjectareaindutrialzonename: 'zone name',
+      dcpIsprojectarealandmark: true,
+      dcpProjectarealandmarkname: 'landmark name',
+      dcpProposeddevelopmentsiteinfoother: true,
+      dcpProposeddevelopmentsiteotherexplanation: 'exlananation',
+      dcpIsinclusionaryhousingdesignatedarea: true,
+      dcpInclusionaryhousingdesignatedareaname: 'area name',
+      dcpDiscressionaryfundingforffordablehousing: '717170000',
+      dcpHousingunittype: 4,
+      dcpPfzoningauthorization: 2,
+      dcpZoningauthorizationpursuantto: 'title 3',
+      dcpZoningauthorizationtomodify: 'title 3',
+      dcpPfzoningcertification: 2,
+      dcpZoningpursuantto: 'title 3',
+      dcpZoningtomodify: 'title 3',
+      dcpPfzoningmapamendment: 2,
+      dcpExistingmapamend: 'title 3',
+      dcpProposedmapamend: 'title 3',
+      dcpPfzoningspecialpermit: 2,
+      dcpZoningspecialpermitpursuantto: 'title 3',
+      dcpZoningspecialpermittomodify: 'title 3',
+      dcpPfzoningtextamendment: 2,
+      dcpAffectedzrnumber: 'title 3',
+      dcpZoningresolutiontitle: 'title 3',
+    });
+    const ourProject = this.server.create('project', {
+      dcpProjectname: 'our project name',
+    });
+    const projectPackage = this.server.create('package', { project: ourProject, pasForm: ourPasForm });
 
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form,project' });
 
@@ -150,7 +183,23 @@ module('Integration | Component | pas-form', function(hooks) {
     await render(hbs`
       <Packages::PasForm::Edit @package={{this.package}} />
       <div id="reveal-modal-container"></div>
-      `);
+    `);
+
+    // all required fields for submitting are filled except of the three applicant fields:
+    // dcpFirstname, dcpLastname, dcpEmail
+    assert.dom('[data-test-submit-button').hasProperty('disabled', true);
+
+    await fillIn('[data-test-first-name-input]', 'first name');
+    await fillIn('[data-test-last-name-input]', 'last name');
+    await fillIn('[data-test-email-input]', 'email@email.com');
+
+    assert.dom('[data-test-submit-button').hasProperty('disabled', true);
+
+    // in order to submit, there can be no dirty models
+    await click('[data-test-save-button]');
+    await settled(); // async make sure save action finishes before assertion
+
+    assert.dom('[data-test-submit-button').hasProperty('disabled', false);
 
     assert.equal(this.server.db.packages[0].statuscode, undefined);
 

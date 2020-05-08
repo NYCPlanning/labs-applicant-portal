@@ -18,6 +18,16 @@ export default class PasFormComponent extends Component {
     return isPasFormDirty || isBblsDirty || isApplicantsDirty;
   }
 
+  // Submit button disabled if false
+  get requiredFieldsFilledAndModelsNotDirty() {
+    const modelsDirty = this.isDirty;
+    const applicantsFieldsFilled = this.args.package.pasForm.applicants.every((field) => field.pasFormRequiredFieldsFilled);
+    const projectFieldsFilled = this.args.package.project.pasFormRequiredFieldsFilled;
+    const pasFormFieldsFilled = this.args.package.pasForm.pasFormRequiredFieldsFilled;
+
+    return !modelsDirty && applicantsFieldsFilled && projectFieldsFilled && pasFormFieldsFilled;
+  }
+
   // TODO: consider decoupling the PAS Form from the Package
   // for better modularity and avoiding "inappropriate intimacy"
   @action
