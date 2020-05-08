@@ -6,21 +6,22 @@ import { hbs } from 'ember-cli-htmlbars';
 module('Integration | Component | validation-message', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+  test('it displays a deeply nested error message', async function(assert) {
+    this.changeset = {
+      error: {
+        dcpSomeField: {
+          validation: 'Something went wrong',
+        },
+      },
+    };
 
-    await render(hbs`<ValidationMessage />`);
-
-    assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
     await render(hbs`
-      <ValidationMessage>
-        template block text
-      </ValidationMessage>
+      <ValidationMessage
+        @field='dcpSomeField'
+        @changeset={{this.changeset}}
+      />
     `);
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.dom().hasText('Something went wrong');
   });
 });
