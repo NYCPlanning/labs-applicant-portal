@@ -1,8 +1,8 @@
-{{#if (get (get @changeset "error") @field)}}
+{{#if (get @changeset (concat 'error.' @field))}}
   <span
     class="text-red"
     data-test-validation={{@field}}
   >
-    {{get (get (get @changeset "error") @field) "validation"}}
+    {{get @changeset (concat 'error.' @field '.validation')}}
   </span>
 {{/if}}

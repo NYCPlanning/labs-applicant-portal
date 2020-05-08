@@ -4860,7 +4860,7 @@ ember-ast-helpers@0.3.5:
     "@glimmer/compiler" "^0.27.0"
     "@glimmer/syntax" "^0.27.0"
 
-ember-auto-import@^1.2.19, ember-auto-import@^1.5.3:
+ember-auto-import@^1.2.19, ember-auto-import@^1.5.2, ember-auto-import@^1.5.3:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.5.3.tgz#b32936f874d1ed7057ad2ed3f6116357820be44b"
   integrity sha512-7JfdunM1BmLy/lyUXu7uEoi0Gi4+dxkGM23FgIEyW5g7z4MidhP53Fc61t49oPSnq7+J4lLpbH1f6C+mDMgb4A==
@@ -4918,6 +4918,27 @@ ember-basic-dropdown@^3.0.1:
     ember-maybe-in-element "^0.4.0"
     ember-truth-helpers "2.1.0"
 
+ember-changeset-validations@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/ember-changeset-validations/-/ember-changeset-validations-3.3.1.tgz#851974da2d4338391262ee34b51bda5ce0a4549b"
+  integrity sha512-4Sgckw+rEgRWSoYC3AMhmNlzw9WwRkJhsocSy62HolaCOHyhcWtOS+WbEpwFJEsj5mPBiRK1SgOyNI07kjUaow==
+  dependencies:
+    ember-changeset "^3.3.1"
+    ember-cli-babel "^7.8.0"
+    ember-cli-htmlbars "^4.0.5"
+    ember-get-config "^0.2.4"
+    ember-validators "^2.0.0"
+
+ember-changeset@^3.3.1, ember-changeset@^3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/ember-changeset/-/ember-changeset-3.3.4.tgz#af70f2b1f840f41b45a6d4af36bd314bb05e5347"
+  integrity sha512-dZUMMpXzojJIXcsunhTTds+kyaXMw7aIR1++MvonIBlk0KXRrrPbPe8Lx3pwOjQtXjIUqjvF3QCjmMQcZ8rUqQ==
+  dependencies:
+    "@glimmer/tracking" "^1.0.0"
+    ember-auto-import "^1.5.2"
+    ember-cli-babel "^7.19.0"
+    validated-changeset "~0.4.1"
+
 ember-cli-app-version@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/ember-cli-app-version/-/ember-cli-app-version-3.2.0.tgz#7b9ad0e1b63ae0518648356ee24c703e922bc26e"
@@ -4931,7 +4952,7 @@ ember-cli-babel-plugin-helpers@^1.0.0, ember-cli-babel-plugin-helpers@^1.1.0:
   resolved "https://registry.yarnpkg.com/ember-cli-babel-plugin-helpers/-/ember-cli-babel-plugin-helpers-1.1.0.tgz#de3baedd093163b6c2461f95964888c1676325ac"
   integrity sha512-Zr4my8Xn+CzO0gIuFNXji0eTRml5AxZUTDQz/wsNJ5AJAtyFWCY4QtKdoELNNbiCVGt1lq5yLiwTm4scGKu6xA==
 
-ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.10.0, ember-cli-babel@^6.12.0, ember-cli-babel@^6.16.0, ember-cli-babel@^6.3.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.8.1, ember-cli-babel@^6.8.2:
+ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.10.0, ember-cli-babel@^6.12.0, ember-cli-babel@^6.16.0, ember-cli-babel@^6.3.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.8.1, ember-cli-babel@^6.8.2, ember-cli-babel@^6.9.2:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.18.0.tgz#3f6435fd275172edeff2b634ee7b29ce74318957"
   integrity sha512-7ceC8joNYxY2wES16iIBlbPSxwKDBhYwC8drU3ZEvuPDMwVv1KzxCNu1fvxyFEBWhwaRNTUxSCsEVoTd9nosGA==
@@ -4950,7 +4971,7 @@ ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.10.0, ember-cli-babel@^6.12.0,
     ember-cli-version-checker "^2.1.2"
     semver "^5.5.0"
 
-ember-cli-babel@^7.1.0, ember-cli-babel@^7.1.3, ember-cli-babel@^7.10.0, ember-cli-babel@^7.11.0, ember-cli-babel@^7.12.0, ember-cli-babel@^7.13.0, ember-cli-babel@^7.13.2, ember-cli-babel@^7.18.0, ember-cli-babel@^7.2.0, ember-cli-babel@^7.4.1, ember-cli-babel@^7.5.0, ember-cli-babel@^7.7.3, ember-cli-babel@^7.9.0:
+ember-cli-babel@^7.1.0, ember-cli-babel@^7.1.3, ember-cli-babel@^7.10.0, ember-cli-babel@^7.11.0, ember-cli-babel@^7.12.0, ember-cli-babel@^7.13.0, ember-cli-babel@^7.13.2, ember-cli-babel@^7.18.0, ember-cli-babel@^7.19.0, ember-cli-babel@^7.2.0, ember-cli-babel@^7.4.1, ember-cli-babel@^7.5.0, ember-cli-babel@^7.7.3, ember-cli-babel@^7.8.0, ember-cli-babel@^7.9.0:
   version "7.19.0"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-7.19.0.tgz#e6eddea18a867231fcf90a80689e92b98be9a63b"
   integrity sha512-HiWKuoyy35vGEr+iCw6gUnQ3pS5qslyTlKEDW8cVoMbvZNGYBgRxHed5nklVUh+BS74AwR9lsp25BTAagYAP9Q==
@@ -5069,7 +5090,7 @@ ember-cli-htmlbars@^3.0.0, ember-cli-htmlbars@^3.0.1:
     json-stable-stringify "^1.0.1"
     strip-bom "^3.0.0"
 
-ember-cli-htmlbars@^4.2.0, ember-cli-htmlbars@^4.2.3:
+ember-cli-htmlbars@^4.0.5, ember-cli-htmlbars@^4.2.0, ember-cli-htmlbars@^4.2.3:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-4.3.1.tgz#4af8adc21ab3c4953f768956b7f7d207782cb175"
   integrity sha512-CW6AY/yzjeVqoRtItOKj3hcYzc5dWPRETmeCzr2Iqjt5vxiVtpl0z5VTqHqIlT5fsFx6sGWBQXNHIe+ivYsxXQ==
@@ -5656,6 +5677,13 @@ ember-qunit@^4.6.0:
     ember-cli-test-loader "^2.2.0"
     qunit "^2.9.3"
 
+ember-require-module@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/ember-require-module/-/ember-require-module-0.3.0.tgz#65aff7908b5b846467e4526594d33cfe0c23456b"
+  integrity sha512-rYN4YoWbR9VlJISSmx0ZcYZOgMcXZLGR7kdvp3zDerjIvYmHm/3p+K56fEAYmJILA6W4F+cBe41Tq2HuQAZizA==
+  dependencies:
+    ember-cli-babel "^6.9.2"
+
 ember-resolver@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/ember-resolver/-/ember-resolver-7.0.0.tgz#07ca86b3bae373395b44bba784b8c133f75d61c2"
@@ -5808,6 +5836,14 @@ ember-truth-helpers@2.1.0, ember-truth-helpers@^2.0.0, ember-truth-helpers@^2.1.
   integrity sha512-BQlU8aTNl1XHKTYZ243r66yqtR9JU7XKWQcmMA+vkqfkE/c9WWQ9hQZM8YABihCmbyxzzZsngvldokmeX5GhAw==
   dependencies:
     ember-cli-babel "^6.6.0"
+
+ember-validators@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ember-validators/-/ember-validators-2.0.0.tgz#4100e17feb9c3a6cf4072732010697bbd674f8cb"
+  integrity sha512-OhXGN2UbFQY+lhkWOdW347NZsIWGj/fpTJbOfNxjyMQW/c3fvPEIvrhlvWf1JwHGKQTJDHpMQJgA/Luq39GDgQ==
+  dependencies:
+    ember-cli-babel "^6.9.2"
+    ember-require-module "^0.3.0"
 
 ember-welcome-page@^4.0.0:
   version "4.0.0"
@@ -12353,6 +12389,11 @@ validate-npm-package-name@^3.0.0:
   integrity sha1-X6kS2B630MdK/BQN5zF/DKffQ34=
   dependencies:
     builtins "^1.0.3"
+
+validated-changeset@~0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/validated-changeset/-/validated-changeset-0.4.1.tgz#74208c439cb03b7ba69af6819c722768678fffeb"
+  integrity sha512-Q7pvZaWPdqn0Zo/Xpddp9zQ2abqXJLEyyiJbym+O2H2pH5KPOBTB/5UXBvkaQ7zvK6exWBjZnNzzoo1dBWeoAQ==
 
 vary@~1.1.2:
   version "1.1.2"
