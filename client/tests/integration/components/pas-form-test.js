@@ -152,6 +152,8 @@ module('Integration | Component | pas-form', function(hooks) {
       <div id="reveal-modal-container"></div>
       `);
 
+    assert.equal(this.server.db.packages[0].statuscode, undefined);
+
     // modal doesn't exist to start
     assert.dom('[data-test-reveal-modal]').doesNotExist();
     assert.dom('[data-test-confirm-submit-button]').doesNotExist();
@@ -164,5 +166,7 @@ module('Integration | Component | pas-form', function(hooks) {
     assert.dom('[data-test-confirm-submit-button]').exists();
 
     await click('[data-test-confirm-submit-button]');
+
+    assert.equal(this.server.db.packages[0].statuscode, 'Submitted');
   });
 });

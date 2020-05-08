@@ -27,7 +27,8 @@ export default class PasFormComponent extends Component {
 
   @action
   async submit(projectPackage) {
-    await projectPackage.saveDescendants();
+    projectPackage.statuscode = 'Submitted';
+    await projectPackage.save();
 
     this.router.transitionTo('packages.show', projectPackage.id);
   }
