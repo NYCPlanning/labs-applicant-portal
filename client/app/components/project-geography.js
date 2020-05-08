@@ -10,27 +10,23 @@ export default class ProjectGeographyComponent extends Component {
   // represents array of bbl models
   @tracked bbls;
 
-  // TODO: ISSUE #110
-  // Used to find corresponding addresses for list of bbls.
-  // Populated later with labs-search addon response.
-  // bblToAddressLookup = {};
-
   @action
   selectSearchResult(labsSearchResult) {
     // `labsSearchResult` is object with `label` (address) and `bbl` attributes.
     // labsSearchResult.bbl comes back as a number,
     // whereas dcpBblnumber in CRM is stored as a string.
+    const currentBbl = labsSearchResult.bbl.toString();
+
     const bblObjectToPush = this.store.createRecord('bbl', {
-      dcpBblnumber: labsSearchResult.bbl.toString(),
+      dcpBblnumber: currentBbl,
       dcpDevelopmentsite: null,
       dcpPartiallot: null,
     });
 
-    // TODO: ISSUE #110
-    // set local variables for displaying address next to bbl in list
-    // const currentAddress = labsSearchResult.label;
-    // const formattedAddress = currentAddress.replace(', New York, NY, USA', '');
-    // this.bblToAddressLookup[currentBbl] = formattedAddress;
+    // set local variables for displaying address next to bbl in bbls list
+    const currentAddress = labsSearchResult.label;
+    const formattedAddress = currentAddress.replace(', New York, NY, USA', '');
+    bblObjectToPush.temporaryAddressLabel = formattedAddress;
 
     // use unshiftObect to push to TOP of array
     // this sorting is so that when a user adds a new bbl, the bbl does not appear at the

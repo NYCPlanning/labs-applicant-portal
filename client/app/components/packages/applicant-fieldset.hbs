@@ -8,8 +8,8 @@
   {{!-- if sent to CRM "Applicant Information" table, need to know "type" --}}
   {{#if (eq @applicant.targetEntity "Applicant")}}
     <div class="cell medium-6" data-test-applicant-type-radio-group>
-      <Input 
-        @type="radio" 
+      <Input
+        @type="radio"
         name={{concat 'applicant-type' @elementId}}
         @value="Individual"
         checked={{if (eq @applicant.applicantType "Individual") true}}
@@ -17,9 +17,9 @@
         data-test-applicant-type-radio-individual
       />
       <label>Individual</label>
-      <Input 
-        @type="radio" 
-        name={{concat 'applicant-type' @elementId}} 
+      <Input
+        @type="radio"
+        name={{concat 'applicant-type' @elementId}}
         @value="Organization"
         checked={{if (eq @applicant.applicantType "Organization") true}}
         onClick={{fn this.updateAttr @applicant "applicantType" "Organization"}}
@@ -32,9 +32,9 @@
   {{!-- and if the applicant is on behalf of an organization, we need to know which organization --}}
   {{#if (eq @applicant.applicantType "Organization")}}
     <label>
-      Organization 
-      <Input 
-        type="text" 
+      Organization
+      <Input
+        type="text"
         @value={{@applicant.dcpOrganization}}
         data-test-applicant-organization
       />
@@ -45,15 +45,15 @@
   <div class="grid-x grid-margin-x">
     <div class="cell medium-6">
       <label>First Name</label>
-      <Input 
-        type="text" 
+      <Input
+        type="text"
         @value={{@applicant.dcpFirstname}}
       />
     </div>
     <div class="cell medium-6">
       <label>Last Name</label>
-        <Input 
-          type="text" 
+        <Input
+          type="text"
           @value={{@applicant.dcpLastname}}
         />
     </div>
@@ -63,8 +63,8 @@
   {{#if (eq @applicant.targetEntity "Applicant Team Member")}}
     <label>
       Organization
-      <Input 
-        type="text" 
+      <Input
+        type="text"
         @value={{@applicant.dcpOrganization}}
       />
     </label>
@@ -84,11 +84,17 @@
       <label>ZIP <Input type="text" @value={{@applicant.dcpZipcode}}/></label>
     </div>
   </div>
-  
+
   <label>Phone <Input type="text" @value={{@applicant.dcpPhone}}/></label>
 
-  <p class="text-right no-margin text-small">
-    {{yield}}
-  </p>
+  <button
+    type="button"
+    class="delete-fieldset"
+    {{on "click" (fn @removeApplicant @applicant)}}
+    data-test-remove-applicant-button
+  >
+    Remove {{@applicant.targetEntity}}
+    <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
+  </button>
 
 </fieldset>
