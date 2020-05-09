@@ -2,6 +2,7 @@ import {
   validateLength,
 } from 'ember-changeset-validations/validators';
 
+// These validate the fields for _saving_ to the server
 export default {
   dcpRevisedprojectname: [
     validateLength({
@@ -13,7 +14,6 @@ export default {
   dcpDescriptionofprojectareageography: [
     validateLength({
       max: 2000,
-      min: 5,
       message: 'Must be between {min} and {max} characters',
     }),
   ],

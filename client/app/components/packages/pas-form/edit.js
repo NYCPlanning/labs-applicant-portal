@@ -84,7 +84,7 @@ export default class PasFormComponent extends Component {
     await this.submittableChanges.save();
     await this.package.saveDescendants();
 
-    this.router.transitionTo('packages.show', this.pasForm.id);
+    this.router.transitionTo('packages.show', this.package.id);
   }
 
   @action

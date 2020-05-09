@@ -126,17 +126,17 @@ module('Integration | Component | pas-form', function(hooks) {
 
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
 
-    class LocationStub extends Service {
+    class RouterServiceStub extends Service {
       transitionTo() {}
     }
 
-    this.owner.register('service:router', LocationStub);
+    this.owner.register('service:router', RouterServiceStub);
 
     // render form
     await render(hbs`
       <Packages::PasForm::Edit @package={{this.package}} />
       <div id="reveal-modal-container"></div>
-      `);
+    `);
 
     // modal doesn't exist to start
     assert.dom('[data-test-reveal-modal]').doesNotExist();
@@ -150,5 +150,11 @@ module('Integration | Component | pas-form', function(hooks) {
     assert.dom('[data-test-confirm-submit-button]').exists();
 
     await click('[data-test-confirm-submit-button]');
+
+    // research: ember changeset validations save method triggers a
+    // promise that resolves _after_ mirage has been torn down by tests
+    await settled();
+
+    assert.ok(true);
   });
 });
