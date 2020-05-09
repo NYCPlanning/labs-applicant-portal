@@ -20,18 +20,14 @@ const PACKAGE_VISIBILITY_CODES = {
   LUP: 717170004,
 };
 
+// Note: It's better to create packages through a
+// project
 export default Factory.extend({
   dcpPackagetype: 'PAS Package',
 
   afterCreate(projectPackage, server) {
     server.create('pas-form', { package: projectPackage });
   },
-
-  withLandUseActions: trait({
-    afterCreate(projectPackage, server) {
-      server.create('pas-form', 'withLandUseActions', { package: projectPackage });
-    },
-  }),
 
   applicant: trait({
     statuscode(i) {
@@ -126,6 +122,19 @@ export default Factory.extend({
       ];
 
       return visibility[i % visibility.length];
+    },
+  }),
+
+  withLandUseActions: trait({
+    afterCreate(projectPackage, server) {
+      server.create('pas-form', 'withLandUseActions', { package: projectPackage });
+    },
+  }),
+
+
+  withRadioButtonAnswers: trait({
+    afterCreate(projectPackage, server) {
+      server.create('pas-form', 'withRadioButtonAnswers', { package: projectPackage });
     },
   }),
 

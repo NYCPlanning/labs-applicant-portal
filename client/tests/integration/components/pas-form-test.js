@@ -112,16 +112,16 @@ module('Integration | Component | pas-form', function(hooks) {
     await render(hbs`<Packages::PasForm::Edit @package={{this.package}} />`);
 
     // should be pre-populated with project.dcpProjectname
-    assert.equal((this.element.querySelector('[data-test-project-name-input]')).value, 'Frozen Banana Castle');
+    assert.equal((this.element.querySelector('[data-test-dcprevisedprojectname]')).value, 'Frozen Banana Castle');
 
     // save button should start disabled
     // TODO: fix this test.  The form starts dirty because we implicitly create a new applicant when the applicants array is empty
     // assert.dom('[data-test-save-button').hasProperty('disabled', true);
 
     // edit a field to make it pasForm dirty
-    await fillIn('[data-test-project-name-input]', 'Some Cool New Project Name');
+    await fillIn('[data-test-dcprevisedprojectname]', 'Some Cool New Project Name');
 
-    assert.equal((this.element.querySelector('[data-test-project-name-input]')).value, 'Some Cool New Project Name');
+    assert.equal((this.element.querySelector('[data-test-dcprevisedprojectname]')).value, 'Some Cool New Project Name');
 
     // save button should become active when dirty
     assert.dom('[data-test-save-button').hasProperty('disabled', false);
@@ -164,5 +164,25 @@ module('Integration | Component | pas-form', function(hooks) {
     assert.dom('[data-test-confirm-submit-button]').exists();
 
     await click('[data-test-confirm-submit-button]');
+  });
+
+
+  test('PAS Form radio button answers are restored on reload', async function(assert) {
+    const ourProject = this.server.create('project', { dcpProjectname: 'Frozen Banana Castle' });
+
+    const projectPackage = this.server.create('package', 'applicant', 'withRadioButtonAnswers', {
+      project: ourProject,
+    });
+
+    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id,
+      { include: 'pas-form,project' });
+
+    await render(hbs`
+      <Packages::PasForm::Edit
+        @package={{this.package}}
+      />
+    `);
+
+    assert.dom('input[type="radio"]:checked').exists({ count: 13 });
   });
 });

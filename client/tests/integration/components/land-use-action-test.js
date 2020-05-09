@@ -91,7 +91,7 @@ module('Integration | Component | land-use-action', function(hooks) {
   });
 
   test('User can load PAS Form with existing Land Use Actions', async function(assert) {
-    const projectPackage = this.server.create('package', 1, 'applicant', 'withLandUseActions');
+    const projectPackage = this.server.create('package', 'applicant', 'withLandUseActions');
 
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
 
