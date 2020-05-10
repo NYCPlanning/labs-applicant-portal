@@ -6,7 +6,6 @@ export default {
   dcpRevisedprojectname: [
     validateLength({
       max: 50,
-      min: 4,
       message: 'Name must be between {min} and {max} characters',
     }),
   ],
@@ -14,7 +13,8 @@ export default {
   dcpDescriptionofprojectareageography: [
     validateLength({
       max: 2000,
-      message: 'Description is too long (max {max} characters)',
+      min: 5,
+      message: 'Must be between {min} and {max} characters',
     }),
   ],
 
