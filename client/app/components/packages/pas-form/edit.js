@@ -28,6 +28,8 @@ export default class PasFormComponent extends Component {
     // we want to 2-way bind the same reference into the input
     // helpers, but emit upstream setter changes to both
     // changesets.
+    // REDO: This proxy is a little slow. we should find
+    // an alternative
     this.unifiedChanges = new Proxy(this.saveableChanges, {
       get(saveableChanges, prop) {
         return saveableChanges[prop];
@@ -90,11 +92,6 @@ export default class PasFormComponent extends Component {
     await this.package.saveDescendants();
 
     this.router.transitionTo('packages.show', this.package.id);
-  }
-
-  @action
-  updateAttr(obj, attr, newVal) {
-    obj[attr] = newVal;
   }
 
   @tracked modalIsOpen = false;
