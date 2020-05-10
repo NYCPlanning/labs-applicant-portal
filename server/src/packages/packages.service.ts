@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 import { CrmService } from '../crm/crm.service';
 import { pick } from 'underscore';
 import { PACKAGE_ATTRS } from './packages.controller';
@@ -24,16 +24,22 @@ export class PackagesService {
     // but it's slower.
 
     // Double network request approach
-    const { records: [{
-      _dcp_pasform_value,
-      dcp_project,
-      dcp_packageid,
-      dcp_name,
-    }] } = await this.crmService.get('dcp_packages', `
+    const { records: [firstPackage] } = await this.crmService.get('dcp_packages', `
       $select=_dcp_pasform_value,dcp_packageid,dcp_name
       &$filter=dcp_packageid eq ${packageId}
       &$expand=dcp_project
     `);
+
+    if (!firstPackage) {
+      return new HttpException('Package not found. Is it the right id?', HttpStatus.NOT_FOUND);
+    }
+
+    const {
+      _dcp_pasform_value,
+      dcp_project,
+      dcp_packageid,
+      dcp_name,
+    } = firstPackage;
 
     const { records: [projectPackageForm] } = await this.crmService.get('dcp_pasforms', `
       $filter=

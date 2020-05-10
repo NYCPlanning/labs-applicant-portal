@@ -7,6 +7,26 @@ export default {
   ...SaveablePasForm,
   dcpRevisedprojectname: [
     ...SaveablePasForm.dcpRevisedprojectname,
+  ],
+  dcpUrbanareaname: [
+    validatePresence(true),
+  ],
+  dcpPleaseexplaintypeiienvreview: [
+    validatePresence(true),
+  ],
+  dcpProjectareaindutrialzonename: [ // sic
+    validatePresence(true),
+  ],
+  dcpProjectarealandmarkname: [
+    validatePresence(true),
+  ],
+  dcpProposeddevelopmentsiteotherexplanation: [
+    validatePresence(true),
+  ],
+  dcpInclusionaryhousingdesignatedareaname: [
+    validatePresence(true),
+  ],
+  dcpHousingunittype: [
     validatePresence(true),
   ],
 };
