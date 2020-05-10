@@ -231,22 +231,21 @@
               >
                 {{radio.label}}
               </RadioButton>
-
-              {{#if this.unifiedChanges.dcpProjectareaindustrialbusinesszone}}
-                <label>
-                  Name of Industrial Business Zone
-                  <Input
-                    @type="text"
-                    @value={{this.unifiedChanges.dcpProjectareaindutrialzonename}}
-                    maxlength="200"
-                    data-test-dcpprojectareaindustrialbusinesszonename
-                  />
-                  <ValidationMessage
-                    @changesetError={{this.submittableChanges.error.dcpProjectareaindutrialzonename}}
-                  />
-                </label>
-              {{/if}}
             {{/each}}
+            {{#if this.unifiedChanges.dcpProjectareaindustrialbusinesszone}}
+              <label>
+                Name of Industrial Business Zone
+                <Input
+                  @type="text"
+                  @value={{this.unifiedChanges.dcpProjectareaindutrialzonename}}
+                  maxlength="200"
+                  data-test-dcpprojectareaindustrialbusinesszonename
+                />
+                <ValidationMessage
+                  @changesetError={{this.submittableChanges.error.dcpProjectareaindutrialzonename}}
+                />
+              </label>
+            {{/if}}
           </fieldset>
 
           <fieldset class="medium-margin-bottom">

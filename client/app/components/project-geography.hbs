@@ -7,7 +7,7 @@
   <small class="dark-gray">{{search.result.label}} <br> {{bbl-breakup search.result.bbl}}</small>
 </LabsSearch>
 
-{{#each @bbls as |bbl idx|}}
+{{#each @bbls as |bbl|}}
   <fieldset class="fieldset relative">
     <legend data-test-bbl-title="{{bbl.dcpBblnumber}}">
       <a
