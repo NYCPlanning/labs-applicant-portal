@@ -1,7 +1,5 @@
-import {
-  validatePresence,
-} from 'ember-changeset-validations/validators';
 import SaveablePasForm from './saveable-pas-form';
+import validatePresenceIf from '../validators/required-if-selected';
 
 export default {
   ...SaveablePasForm,
@@ -9,24 +7,10 @@ export default {
     ...SaveablePasForm.dcpRevisedprojectname,
   ],
   dcpUrbanareaname: [
-    validatePresence(true),
-  ],
-  dcpPleaseexplaintypeiienvreview: [
-    validatePresence(true),
-  ],
-  dcpProjectareaindutrialzonename: [ // sic
-    validatePresence(true),
-  ],
-  dcpProjectarealandmarkname: [
-    validatePresence(true),
-  ],
-  dcpProposeddevelopmentsiteotherexplanation: [
-    validatePresence(true),
-  ],
-  dcpInclusionaryhousingdesignatedareaname: [
-    validatePresence(true),
-  ],
-  dcpHousingunittype: [
-    validatePresence(true),
+    validatePresenceIf({
+      presence: true,
+      on: 'dcpUrbanrenewalarea',
+      withValue: 717170000,
+    }),
   ],
 };

@@ -42,6 +42,11 @@ export default class PasFormComponent extends Component {
         return true;
       },
     });
+
+    // validate initial model state because this does not
+    // happen when creating a new changset
+    this.saveableChanges.validate();
+    this.submittableChanges.validate();
   }
 
   @service router;
