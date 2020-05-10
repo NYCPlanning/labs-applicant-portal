@@ -4,40 +4,72 @@ import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { Changeset } from 'ember-changeset';
 import lookupValidator from 'ember-changeset-validations';
-import PasFormValidations from '../../../validations/pas-form';
+import SaveablePasFormValidations from '../../../validations/saveable-pas-form';
+import SubmittablePasFormValidations from '../../../validations/submittable-pas-form';
+
+// 1. attempting to extract changes, invalid or valid, breaks
+//   the save button disabled/enabled
+// 2. error messages don't appear or disappear when circumenvting the changeset
 
 export default class PasFormComponent extends Component {
   constructor(...args) {
     super(...args);
 
-    this.changeset = new Changeset(this.args.package.pasForm, lookupValidator(PasFormValidations));
+    this.saveableChanges = new Changeset(
+      this.pasForm,
+      lookupValidator(SaveablePasFormValidations),
+      SaveablePasFormValidations,
+    );
+
+    const submittableChangeset = new Changeset(
+      this.pasForm,
+      lookupValidator(SubmittablePasFormValidations),
+      SubmittablePasFormValidations,
+    );
+
+    this.submittableChanges = this.saveableChanges.merge(submittableChangeset);
   }
 
   @service router;
 
   @tracked modalIsOpen = false;
 
-  get isDirty() {
-    const { isDirty: isPasFormDirty } = this.changeset;
-    const { isBblsDirty, isApplicantsDirty } = this.args.package.pasForm;
+  get package() {
+    return this.args.package || {};
+  }
+
+  get pasForm() {
+    return this.package.pasForm || {};
+  }
+
+  get isSaveable() {
+    const { isDirty: isPasFormDirty } = this.saveableChanges;
+    const {
+      isBblsDirty,
+      isApplicantsDirty,
+    } = this.pasForm;
 
     return isPasFormDirty || isBblsDirty || isApplicantsDirty;
+  }
+
+  get isSubmittable() {
+    return this.submittableChanges.isValid;
   }
 
   // TODO: consider decoupling the PAS Form from the Package
   // for better modularity and avoiding "inappropriate intimacy"
   @action
-  async save(projectPackage) {
-    await this.changeset.save();
-    await projectPackage.saveDescendants();
+  async save() {
+    await this.saveableChanges.save();
+    await this.package.saveDescendants();
   }
 
   @action
-  async submit(projectPackage) {
-    projectPackage.statuscode = 'Submitted';
-    await projectPackage.save();
+  async submit() {
+    await this.submittableChanges.save();
+    await this.package.saveDescendants();
 
-    this.router.transitionTo('packages.show', projectPackage.id);
+    this.router.transitionTo('packages.show', this.pasForm.id);
   }
 
   @action
