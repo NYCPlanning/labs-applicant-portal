@@ -29,7 +29,7 @@ export default class PasFormComponent extends Component {
     // helpers, but emit upstream setter changes to both
     // changesets.
     // REDO: This proxy is a little slow. we should find
-    // an alternative
+    // an alternative It's also confusing.
     this.unifiedChanges = new Proxy(this.saveableChanges, {
       get(saveableChanges, prop) {
         return saveableChanges[prop];
@@ -47,8 +47,7 @@ export default class PasFormComponent extends Component {
 
     // validate initial model state because this does not
     // happen when creating a new changset
-    this.saveableChanges.validate();
-    this.submittableChanges.validate();
+    this.validate();
   }
 
   @service router;
@@ -95,6 +94,16 @@ export default class PasFormComponent extends Component {
   }
 
   @tracked modalIsOpen = false;
+
+  @action
+  async updateAttr(target, value) {
+    target = value;
+  }
+
+  @action
+  async validate() {
+    await this.unifiedChanges.validate();
+  }
 
   @action
   toggleModal() {

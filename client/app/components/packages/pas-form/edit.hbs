@@ -1,3 +1,5 @@
+{{log this.submittableChanges.error}}
+
 <div class="grid-x grid-margin-x">
 
     <div class="cell large-8">
@@ -105,7 +107,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.unifiedChanges.dcpProposedprojectorportionconstruction}}
-                @changed={{fn (mut this.unifiedChanges.dcpProposedprojectorportionconstruction) radio.code}}
+                @changed={{fn this.updateAttr radio.code}}
                  data-test-dcpproposedprojectorportionconstruction={{radio.label}}
               >
                 {{radio.label}}
@@ -126,7 +128,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.unifiedChanges.dcpUrbanrenewalarea}}
-                @changed={{fn (mut this.unifiedChanges.dcpUrbanrenewalarea) radio.code}}
+                @changed={{fn this.updateAttr radio.code}}
                  data-test-dcpurbanrenewalarea={{radio.label}}
               >
                 {{radio.label}}
@@ -165,7 +167,7 @@
                 <RadioButton
                   @value={{radio.code}}
                   @groupValue={{this.unifiedChanges.dcpLegalstreetfrontage}}
-                  @changed={{fn (mut this.unifiedChanges.dcpLegalstreetfrontage) radio.code}}
+                  @changed={{fn this.updateAttr radio.code}}
                   data-test-dcplegalstreetfrontage={{radio.label}}
                 >
                   {{radio.label}}
@@ -192,7 +194,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.unifiedChanges.dcpLanduseactiontype2}}
-                @changed={{fn (mut this.unifiedChanges.dcpLanduseactiontype2) radio.code}}
+                @changed={{fn this.updateAttr radio.code}}
                 data-test-dcplanduseactiontype2={{radio.label}}
               >
                 {{radio.label}}
@@ -226,7 +228,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.unifiedChanges.dcpProjectareaindustrialbusinesszone}}
-                @changed={{fn (mut this.unifiedChanges.dcpProjectareaindustrialbusinesszone) radio.code}}
+                @changed={{fn this.updateAttr radio.code}}
                 data-test-dcpprojectareaindustrialbusinesszone={{radio.label}}
               >
                 {{radio.label}}
@@ -259,7 +261,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.unifiedChanges.dcpIsprojectarealandmark}}
-                @changed={{fn (mut this.unifiedChanges.dcpIsprojectarealandmark) radio.code}}
+                @changed={{fn this.updateAttr radio.code}}
                 data-test-dcpisprojectarealandmark={{radio.label}}
               >
                 {{radio.label}}
@@ -293,7 +295,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.unifiedChanges.dcpProjectareacoastalzonelocatedin}}
-                @changed={{fn (mut this.unifiedChanges.dcpProjectareacoastalzonelocatedin) radio.code}}
+                @changed={{fn this.updateAttr radio.code}}
                 data-test-dcpprojectareacoastalzonelocatedin={{radio.label}}
               >
                 {{radio.label}}
@@ -313,7 +315,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.unifiedChanges.dcpProjectareaischancefloodplain}}
-                @changed={{fn (mut this.unifiedChanges.dcpProjectareaischancefloodplain) radio.code}}
+                @changed={{fn this.updateAttr radio.code}}
                 data-test-dcpprojectareaischancefloodplain={{radio.label}}
               >
                 {{radio.label}}
@@ -332,7 +334,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.unifiedChanges.dcpRestrictivedeclaration}}
-                @changed={{fn (mut this.unifiedChanges.dcpRestrictivedeclaration) radio.code}}
+                @changed={{fn this.updateAttr radio.code}}
                 data-test-dcprestrictivedeclaration={{radio.label}}
               >
                 {{radio.label}}
@@ -367,7 +369,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.unifiedChanges.dcpRestrictivedeclarationrequired}}
-                @changed={{fn (mut this.unifiedChanges.dcpRestrictivedeclarationrequired) radio.code}}
+                @changed={{fn this.updateAttr radio.code}}
                 data-test-dcprestrictivedeclarationrequired={{radio.label}}
               >
                 {{radio.label}}
@@ -479,7 +481,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.unifiedChanges.dcpIsinclusionaryhousingdesignatedarea}}
-                @changed={{fn (mut this.unifiedChanges.dcpIsinclusionaryhousingdesignatedarea) radio.code}}
+                @changed={{fn this.updateAttr radio.code}}
                 data-test-dcpisinclusionaryhousingdesignatedarea={{radio.label}}
               >
                 {{radio.label}}
@@ -512,7 +514,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.unifiedChanges.dcpDiscressionaryfundingforffordablehousing}}
-                @changed={{fn (mut this.unifiedChanges.dcpDiscressionaryfundingforffordablehousing) radio.code}}
+                @changed={{fn this.updateAttr radio.code}}
                 data-test-dcpdiscressionaryfundingforffordablehousing={{radio.label}}
               >
                 {{radio.label}}
@@ -532,8 +534,8 @@
                 }}
                   <RadioButton
                     @value={{radio.code}}
-                    @groupValue={{this.unifiedChanges.dcpHousingunittypeCity}}
-                    @changed={{fn (mut this.unifiedChanges.dcpHousingunittypeCity) radio.code}}
+                    @groupValue={{this.unifiedChanges.dcpHousingunittype}}
+                    @changed={{fn this.updateAttr radio.code}}
                     data-test-dcphousingunittype={{radio.label}}
                   >
                     {{radio.label}}
