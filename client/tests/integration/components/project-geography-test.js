@@ -204,4 +204,18 @@ module('Integration | Component | project-geography', function(hooks) {
     assert.dom('[data-test-partial-lot-question="1000120001-true"]').doesNotExist();
     assert.dom('[data-test-partial-lot-question="1000120001-false"]').exists();
   });
+
+  test('user can create bbls and it serializes to validated bbl', async function (assert) {
+    this.bbls = [];
+
+    await render(hbs`
+      <ProjectGeography
+        @bbls={{this.bbls}} />
+    `);
+
+    await fillIn('.map-search-input', '1000120001');
+    await triggerKeyEvent('.labs-geosearch', 'keypress', 13);
+
+    assert.equal(this.bbls[0].dcpUserinputborough, 717170001);
+  });
 });
