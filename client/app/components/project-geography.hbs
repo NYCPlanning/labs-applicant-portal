@@ -28,7 +28,6 @@
       <RadioButton
         @value={{true}}
         @groupValue={{bbl.dcpDevelopmentsite}}
-        @radioId={{concat 'bbl-development-site-yes-' bbl.dcpBblnumber}}
         @changed={{fn (mut bbl.dcpDevelopmentsite) true}}
         data-test-bbl-development-site-yes={{bbl.dcpBblnumber}}
       >
@@ -37,7 +36,6 @@
       <RadioButton
         @value={{false}}
         @groupValue={{bbl.dcpDevelopmentsite}}
-        @radioId={{concat 'bbl-development-site-no-' bbl.dcpBblnumber}}
         @changed={{fn (mut bbl.dcpDevelopmentsite) false}}
         data-test-bbl-development-site-no={{bbl.dcpBblnumber}}
       >
@@ -52,7 +50,6 @@
       <RadioButton
         @value={{true}}
         @groupValue={{bbl.dcpPartiallot}}
-        @radioId={{concat 'bbl-partial-lot-yes-' bbl.dcpBblnumber}}
         @changed={{fn (mut bbl.dcpPartiallot) true}}
         data-test-bbl-partial-lot-yes={{bbl.dcpBblnumber}}
       >
@@ -61,7 +58,6 @@
       <RadioButton
         @value={{false}}
         @groupValue={{bbl.dcpPartiallot}}
-        @radioId={{concat 'bbl-partial-lot-no-' bbl.dcpBblnumber}}
         @changed={{fn (mut bbl.dcpPartiallot) false}}
         data-test-bbl-partial-lot-no={{bbl.dcpBblnumber}}
       >
