@@ -11,19 +11,19 @@
         submitting the PAS, a prospective applicant acknowledges that they intend to file a land use application with NYC
         Planning. Submission allows staff to be assigned from appropriate divisions and project tracking to commence.
       </p>
-    
+
       <p>
         NYC Planning understands that some projects may not be fully formed at the submission of the PAS. Give as much
         detailed information as possible. Failure to provide detailed, relevant information will result in the PAS being
         rejected.
       </p>
-    
+
       <section class="form-section">
         <h3 class="section-header">
           <span id="project-info" class="section-anchor"></span>
           Project Information
         </h3>
-    
+
         <label>
           <strong>Project Name</strong>
           <Input
@@ -32,7 +32,7 @@
           />
         </label>
       </section>
-    
+
       <section class="form-section">
         <h3 class="section-header">
           <span id="applicant-team" class="section-anchor"></span>
@@ -110,7 +110,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.saveableChanges.dcpProposedprojectorportionconstruction}}
-                 data-test-dcpproposedprojectorportionconstruction={{radio.label}}
+                data-test-dcpproposedprojectorportionconstruction={{radio.label}}
               >
                 {{radio.label}}
               </RadioButton>
@@ -136,7 +136,7 @@
                 {{radio.label}}
               </RadioButton>
             {{/each}}
-  
+
             {{#if (eq this.saveableChanges.dcpUrbanrenewalarea 717170000)}}
               <label>
                 What is the name of the Urban Renewal Area?
