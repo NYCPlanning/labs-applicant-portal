@@ -28,6 +28,7 @@ module.exports = {
     'import/prefer-default-export': 1,
     'import/extensions': 0,
     'import/no-named-as-default-member': 1,
+    'import/named': 0,
     'array-callback-return': 1,
     'consistent-return': 1,
     'default-case': 1,

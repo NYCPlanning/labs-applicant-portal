@@ -4,7 +4,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 
-module('Acceptance | user can interact with packages', function(hooks) {
+module('Acceptance | user can click package edit', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
