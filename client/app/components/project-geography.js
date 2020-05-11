@@ -41,10 +41,4 @@ export default class ProjectGeographyComponent extends Component {
     bblObjectToBeRemoved.destroyRecord();
     this.args.bbls.removeObject(bblObjectToBeRemoved);
   }
-
-  // Update attributes when user selects radio buttons
-  @action
-  updateAttr(currentObject, attr, newVal) {
-    currentObject[attr] = newVal;
-  }
 }

@@ -13,42 +13,42 @@ export default {
       withValue: 717170000,
     }),
   ],
-  dcp_pleaseexplaintypeiienvreview: [
+  dcpPleaseexplaintypeiienvreview: [
     validatePresenceIf({
       presence: true,
       on: 'dcpLanduseactiontype2',
       withValue: 717170000,
     }),
   ],
-  dcp_projectareaindutrialzonename: [
+  dcpProjectareaindutrialzonename: [
     validatePresenceIf({
       presence: true,
       on: 'dcpProjectareaindustrialbusinesszone',
       withValue: true,
     }),
   ],
-  dcp_projectarealandmarkname: [
+  dcpProjectarealandmarkname: [
     validatePresenceIf({
       presence: true,
       on: 'dcpIsprojectarealandmark',
       withValue: true,
     }),
   ],
-  dcp_proposeddevelopmentsiteotherexplanation: [
+  dcpProposeddevelopmentsiteotherexplanation: [
     validatePresenceIf({
       presence: true,
       on: 'dcpProposeddevelopmentsiteinfoother',
       withValue: true,
     }),
   ],
-  dcp_inclusionaryhousingdesignatedareaname: [
+  dcpInclusionaryhousingdesignatedareaname: [
     validatePresenceIf({
       presence: true,
       on: 'dcpIsinclusionaryhousingdesignatedarea',
       withValue: true,
     }),
   ],
-  dcp_housingunittype: [
+  dcpHousingunittype: [
     validatePresenceIf({
       presence: true,
       on: 'dcpDiscressionaryfundingforffordablehousing',

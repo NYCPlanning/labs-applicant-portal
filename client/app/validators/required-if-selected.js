@@ -7,7 +7,8 @@ export default function validatePresenceIf(options) {
 
   return (...args) => {
     const [,,, changes, content] = args;
-    const hasMatchingWith = (changes[on] || content[on]) === withValue;
+    const target = Object.prototype.hasOwnProperty.call(changes, on) ? changes[on] : content[on];
+    const hasMatchingWith = target === withValue;
 
     if (hasMatchingWith) {
       return validatePresence(options)(...args);
