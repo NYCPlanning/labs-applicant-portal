@@ -21,7 +21,10 @@
     
         <label>
           <strong>Project Name</strong>
-          <Input @type="text" @value={{@package.pasForm.dcpRevisedprojectname}} data-test-project-name-input />
+          <Input
+            @type="text"
+            @value={{this.unifiedChanges.dcpRevisedprojectname}} data-test-dcprevisedprojectname
+          />
         </label>
       </section>
     
@@ -36,7 +39,7 @@
           </p>
 
           <Packages::ApplicantTeamEditor
-            @applicants={{@package.pasForm.applicants}}
+            @applicants={{this.pasForm.applicants}}
           />
         </section>
 
@@ -46,17 +49,17 @@
             Project Geography
           </h3>
 
-          <ProjectGeography @bbls={{@package.pasForm.bbls}} />
+          <ProjectGeography @bbls={{this.pasForm.bbls}} />
 
           <label>
             <strong>Description of geography</strong>
             <Textarea
-              @value={{this.changeset.dcpDescriptionofprojectareageography}}
+              @value={{this.unifiedChanges.dcpDescriptionofprojectareageography}}
               maxlength="2000"
               rows="5"
             />
             <ValidationMessage
-              @changeset={{this.changeset.error.dcpDescriptionofprojectareageography}}
+              @changesetError={{this.submittableChanges.error.dcpDescriptionofprojectareageography}}
             />
           </label>
         </section>
@@ -76,7 +79,7 @@
           </p>
 
           <LandUseAction
-            @pasForm={{@package.pasForm}}
+            @pasForm={{this.pasForm}}
           />
         </section>
 
@@ -94,77 +97,54 @@
             <legend>
               <strong>Does the proposed Project, or portion thereof, require a NYC DEP Storm Water Construction Permit?</strong>
             </legend>
-            <Input
-              @type="radio"
-              @name="dcpproposedprojectorportionconstruction"
-              id="dcpproposedprojectorportionconstruction-yes"
-              @value='717170000'
-              checked={{if (eq @package.pasForm.dcpProposedprojectorportionconstruction "717170000") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpProposedprojectorportionconstruction" "717170000"}}
-              data-test-dcpproposedprojectorportionconstruction-yes
-            /><label for="dcpproposedprojectorportionconstruction-yes">Yes</label>
-            <Input
-              @type="radio"
-              @name="dcpproposedprojectorportionconstruction"
-              id="dcpproposedprojectorportionconstruction-no"
-              @value='717170000'
-              checked={{if (eq @package.pasForm.dcpProposedprojectorportionconstruction "717170001") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpProposedprojectorportionconstruction" "717170001"}}
-              data-test-dcpproposedprojectorportionconstruction-no
-            /><label for="dcpproposedprojectorportionconstruction-no">No</label>
-            <Input
-              @type="radio"
-              @name="dcpproposedprojectorportionconstruction"
-              id="dcpproposedprojectorportionconstruction-unsure"
-              @value='717170002'
-              checked={{if (eq @package.pasForm.dcpProposedprojectorportionconstruction "717170002") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpProposedprojectorportionconstruction" "717170002"}}
-              data-test-dcpproposedprojectorportionconstruction-unsure
-            /><label for="dcpproposedprojectorportionconstruction-unsure">Unsure at this time</label>
+            {{#each (array
+              (hash code=717170000 label='Yes')
+              (hash code=717170001 label='No')
+              (hash code=717170002 label='Unsure at this time')) as |radio|
+            }}
+              <RadioButton
+                @value={{radio.code}}
+                @groupValue={{this.unifiedChanges.dcpProposedprojectorportionconstruction}}
+                @changed={{fn (mut this.unifiedChanges.dcpProposedprojectorportionconstruction) radio.code}}
+                 data-test-dcpproposedprojectorportionconstruction={{radio.label}}
+              >
+                {{radio.label}}
+              </RadioButton>
+            {{/each}}
           </fieldset>
 
           <fieldset class="medium-margin-bottom">
             <legend>
               <strong>Is the proposed Project Area located in a current or former <a href="https://www1.nyc.gov/site/hpd/services-and-information/urban-renewal.page">Urban Renewal Area</a>?</strong>
             </legend>
-            <Input
-              @type="radio"
-              @name="dcpurbanrenewalarea"
-              id="dcpurbanrenewalarea-yes"
-              @value='717170000'
-              checked={{if (eq @package.pasForm.dcpUrbanrenewalarea "717170000") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpUrbanrenewalarea" "717170000"}}
-              data-test-dcpurbanrenewalarea-yes
-            /><label for="dcpurbanrenewalarea-yes">Yes</label>
-            <Input
-              @type="radio"
-              @name="dcpurbanrenewalarea"
-              id="dcpurbanrenewalarea-no"
-              @value='717170001'
-              checked={{if (eq @package.pasForm.dcpUrbanrenewalarea "717170001") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpUrbanrenewalarea" "717170001"}}
-              data-test-dcpurbanrenewalarea-no
-            /><label for="dcpurbanrenewalarea-no">No</label>
-            <Input
-              @type="radio"
-              @name="dcpurbanrenewalarea"
-              id="dcpurbanrenewalarea-unsure"
-              @value='717170002'
-              checked={{if (eq @package.pasForm.dcpUrbanrenewalarea "717170002") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpUrbanrenewalarea" "717170002"}}
-              data-test-dcpurbanrenewalarea-unsure
-            /><label for="dcpurbanrenewalarea-unsure">Unsure at this time</label>
-            {{#if (eq @package.pasForm.dcpUrbanrenewalarea "717170000")}}
+
+            {{#each (array
+              (hash code=717170000 label='Yes')
+              (hash code=717170001 label='No')
+              (hash code=717170002 label='Unsure at this time')) as |radio|
+            }}
+              <RadioButton
+                @value={{radio.code}}
+                @groupValue={{this.unifiedChanges.dcpUrbanrenewalarea}}
+                @changed={{fn (mut this.unifiedChanges.dcpUrbanrenewalarea) radio.code}}
+                 data-test-dcpurbanrenewalarea={{radio.label}}
+              >
+                {{radio.label}}
+              </RadioButton>
+            {{/each}}
+  
+            {{#if (eq this.unifiedChanges.dcpUrbanrenewalarea 717170000)}}
               <label>
                 What is the name of the Urban Renewal Area?
                 <Input
                   @type="text"
-                  @value={{this.changeset.dcpUrbanareaname}}
+                  @value={{this.unifiedChanges.dcpUrbanareaname}}
                   maxlength="250"
-                  data-test-dcpurbanrenewalarea
+                  data-test-dcpurbanrenewalareaname
                 />
+
                 <ValidationMessage
-                  @changeset={{this.changeset.error.dcpUrbanareaname}}
+                  @changesetError={{this.submittableChanges.error.dcpUrbanareaname}}
                 />
               </label>
             {{/if}}
@@ -174,61 +154,24 @@
             <legend>
               <strong>What is the <a href="https://streets.planning.nyc.gov/about">Legal Street Frontage Status in the Project Area</a>?</strong>
             </legend>
-            <span class="nowrap">
-              <Input
-                @type="radio"
-                @name="dcplegalstreetfrontage"
-                id="dcplegalstreetfrontage-mapped-and-build"
-                @value='717170000'
-                checked={{if (eq @package.pasForm.dcpLegalstreetfrontage "717170000") true}}
-                onClick={{fn this.updateAttr @package.pasForm "dcpLegalstreetfrontage" "717170000"}}
-                data-test-dcplegalstreetfrontage-mapped-and-build
-              /><label for="dcplegalstreetfrontage-mapped-and-build">Mapped and Build</label>
-            </span>
-            <span class="nowrap">
-              <Input
-                @type="radio"
-                @name="dcplegalstreetfrontage"
-                id="dcplegalstreetfrontage-private-road"
-                @value='717170001'
-                checked={{if (eq @package.pasForm.dcpLegalstreetfrontage "717170001") true}}
-                onClick={{fn this.updateAttr @package.pasForm "dcpLegalstreetfrontage" "717170001"}}
-                data-test-dcplegalstreetfrontage-private-road
-              /><label for="dcplegalstreetfrontage-private-road">Private Road</label>
-            </span>
-            <span class="nowrap">
-              <Input
-                @type="radio"
-                @name="dcplegalstreetfrontage"
-                id="dcplegalstreetfrontage-record-street"
-                @value='717170002'
-                checked={{if (eq @package.pasForm.dcpLegalstreetfrontage "717170002") true}}
-                onClick={{fn this.updateAttr @package.pasForm "dcpLegalstreetfrontage" "717170002"}}
-                data-test-dcplegalstreetfrontage-record-street
-              /><label for="dcplegalstreetfrontage-record-street">Record Street</label>
-            </span>
-            <span class="nowrap">
-              <Input
-                @type="radio"
-                @name="dcplegalstreetfrontage"
-                id="dcplegalstreetfrontage-corporation-counsel-opinion"
-                @value='717170003'
-                checked={{if (eq @package.pasForm.dcpLegalstreetfrontage "717170003") true}}
-                onClick={{fn this.updateAttr @package.pasForm "dcpLegalstreetfrontage" "717170003"}}
-                data-test-dcplegalstreetfrontage-corporation-counsel-opinion
-              /><label for="dcplegalstreetfrontage-corporation-counsel-opinion">Corporation Counsel Opinion</label>
-            </span>
-            <span class="nowrap">
-              <Input
-                @type="radio"
-                @name="dcplegalstreetfrontage"
-                id="dcplegalstreetfrontage-mapped-but-not-build"
-                @value='717170004'
-                checked={{if (eq @package.pasForm.dcpLegalstreetfrontage "717170004") true}}
-                onClick={{fn this.updateAttr @package.pasForm "dcpLegalstreetfrontage" "717170004"}}
-                data-test-dcplegalstreetfrontage-mapped-but-not-build
-              /><label for="dcplegalstreetfrontage-mapped-but-not-build">Mapped but not Build</label>
-            </span>
+            {{#each (array
+                (hash code=717170000 label='Mapped and Build')
+                (hash code=717170001 label='Private Road')
+                (hash code=717170002 label='Record Street')
+                (hash code=717170003 label='Corporation Counsel Opinion')
+                (hash code=717170004 label='Mapped but not Build')) as |radio|
+            }}
+              <span class="nowrap">
+                <RadioButton
+                  @value={{radio.code}}
+                  @groupValue={{this.unifiedChanges.dcpLegalstreetfrontage}}
+                  @changed={{fn (mut this.unifiedChanges.dcpLegalstreetfrontage) radio.code}}
+                  data-test-dcplegalstreetfrontage={{radio.label}}
+                >
+                  {{radio.label}}
+                </RadioButton>
+              </span>
+            {{/each}}
           </fieldset>
 
           <fieldset class="medium-margin-bottom">
@@ -241,44 +184,32 @@
                 for Type II status?
               </strong>
             </legend>
-            <Input
-              @type="radio"
-              @name="dcplanduseactiontype2"
-              id="dcplanduseactiontype2-yes"
-              @value='717170000'
-              checked={{if (eq @package.pasForm.dcpLanduseactiontype2 "717170000") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpLanduseactiontype2" "717170000"}}
-              data-test-dcplanduseactiontype2-yes
-            /><label for="dcplanduseactiontype2-yes">Yes</label>
-            <Input
-              @type="radio"
-              @name="dcplanduseactiontype2"
-              id="dcplanduseactiontype2-no"
-              @value='717170001'
-              checked={{if (eq @package.pasForm.dcpLanduseactiontype2 "717170001") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpLanduseactiontype2" "717170001"}}
-              data-test-dcplanduseactiontype2-no
-            /><label for="dcplanduseactiontype2-no">No</label>
-            <Input
-              @type="radio"
-              @name="dcplanduseactiontype2"
-              id="dcplanduseactiontype2-unsure"
-              @value='717170002'
-              checked={{if (eq @package.pasForm.dcpLanduseactiontype2 "717170002") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpLanduseactiontype2" "717170002"}}
-              data-test-dcplanduseactiontype2-unsure
-            /><label for="dcplanduseactiontype2-unsure">Unsure at this time</label>
-            {{#if (eq @package.pasForm.dcpLanduseactiontype2 "717170000")}}
+            {{#each (array
+              (hash code=717170000 label='Yes')
+              (hash code=717170001 label='No')
+              (hash code=717170002 label='Unsure at this time')) as |radio|
+            }}
+              <RadioButton
+                @value={{radio.code}}
+                @groupValue={{this.unifiedChanges.dcpLanduseactiontype2}}
+                @changed={{fn (mut this.unifiedChanges.dcpLanduseactiontype2) radio.code}}
+                data-test-dcplanduseactiontype2={{radio.label}}
+              >
+                {{radio.label}}
+              </RadioButton>
+            {{/each}}
+
+            {{#if (eq this.unifiedChanges.dcpLanduseactiontype2 717170000)}}
               <label>
                 Indicate which SEQRA or CEQR category each action fulfills
                 <Input
                   @type="text"
-                  @value={{this.changeset.dcpPleaseexplaintypeiienvreview}}
+                  @value={{this.unifiedChanges.dcpPleaseexplaintypeiienvreview}}
                   maxlength="200"
                   data-test-dcppleaseexplaintypeiienvreview
                 />
                 <ValidationMessage
-                  @changeset={{this.changeset.error.dcpPleaseexplaintypeiienvreview}}
+                  @changesetError={{this.submittableChanges.error.dcpPleaseexplaintypeiienvreview}}
                 />
               </label>
             {{/if}}
@@ -288,73 +219,65 @@
             <legend>
               <strong>Is the proposed Project Area in an <a href="https://zola.planning.nyc.gov/">Industrial Business Zone</a>?</strong>
             </legend>
-            <Input
-              @type="radio"
-              @name="dcpprojectareaindustrialbusinesszone"
-              id="dcpprojectareaindustrialbusinesszone-yes"
-              @value={{true}}
-              checked={{if (eq @package.pasForm.dcpProjectareaindustrialbusinesszone true) true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpProjectareaindustrialbusinesszone" true}}
-              data-test-dcpprojectareaindustrialbusinesszone-yes
-            /><label for="dcpprojectareaindustrialbusinesszone-yes">Yes</label>
-            <Input
-              @type="radio"
-              @name="dcpprojectareaindustrialbusinesszone"
-              id="dcpprojectareaindustrialbusinesszone-no"
-              @value={{false}}
-              checked={{if (eq @package.pasForm.dcpProjectareaindustrialbusinesszone false) true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpProjectareaindustrialbusinesszone" false}}
-              data-test-dcpprojectareaindustrialbusinesszone-no
-            /><label for="dcpprojectareaindustrialbusinesszone-no">No</label>
-            {{#if (eq @package.pasForm.dcpProjectareaindustrialbusinesszone true)}}
-              <label>
-                Name of Industrial Business Zone
-                <Input
-                  @type="text"
-                  @value={{this.changeset.dcpProjectareaindutrialzonename}}
-                  maxlength="200"
-                  data-test-dcpprojectareaindustrialbusinesszone
-                />
-                <ValidationMessage
-                  @changeset={{this.changeset.error.dcpProjectareaindutrialzonename}}
-                />
-              </label>
-            {{/if}}
+            {{#each (array
+              (hash code=true label='Yes')
+              (hash code=false label='No')) as |radio|
+            }}
+              <RadioButton
+                @value={{radio.code}}
+                @groupValue={{this.unifiedChanges.dcpProjectareaindustrialbusinesszone}}
+                @changed={{fn (mut this.unifiedChanges.dcpProjectareaindustrialbusinesszone) radio.code}}
+                data-test-dcpprojectareaindustrialbusinesszone={{radio.label}}
+              >
+                {{radio.label}}
+              </RadioButton>
+
+              {{#if this.unifiedChanges.dcpProjectareaindustrialbusinesszone}}
+                <label>
+                  Name of Industrial Business Zone
+                  <Input
+                    @type="text"
+                    @value={{this.unifiedChanges.dcpProjectareaindutrialzonename}}
+                    maxlength="200"
+                    data-test-dcpprojectareaindustrialbusinesszonename
+                  />
+                  <ValidationMessage
+                    @changesetError={{this.submittableChanges.error.dcpProjectareaindutrialzonename}}
+                  />
+                </label>
+              {{/if}}
+            {{/each}}
           </fieldset>
 
           <fieldset class="medium-margin-bottom">
             <legend>
               <strong>Is the proposed Project Area within or adjacent to a designated (City or State) <a href="https://zola.planning.nyc.gov/">Landmark or Historic District</a>?</strong>
             </legend>
-            <Input
-              @type="radio"
-              @name="dcpisprojectarealandmark"
-              id="dcpisprojectarealandmark-yes"
-              @value={{true}}
-              checked={{if (eq @package.pasForm.dcpIsprojectarealandmark true) true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpIsprojectarealandmark" true}}
-              data-test-dcpisprojectarealandmark-yes
-            /><label for="dcpisprojectarealandmark-yes">Yes</label>
-            <Input
-              @type="radio"
-              @name="dcpisprojectarealandmark"
-              id="dcpisprojectarealandmark-no"
-              @value={{false}}
-              checked={{if (eq @package.pasForm.dcpIsprojectarealandmark false) true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpIsprojectarealandmark" false}}
-              data-test-dcpisprojectarealandmark-no
-            /><label for="dcpisprojectarealandmark-no">No</label>
-            {{#if (eq @package.pasForm.dcpIsprojectarealandmark true)}}
+            {{#each (array
+              (hash code=true label='Yes')
+              (hash code=false label='No')) as |radio|
+            }}
+              <RadioButton
+                @value={{radio.code}}
+                @groupValue={{this.unifiedChanges.dcpIsprojectarealandmark}}
+                @changed={{fn (mut this.unifiedChanges.dcpIsprojectarealandmark) radio.code}}
+                data-test-dcpisprojectarealandmark={{radio.label}}
+              >
+                {{radio.label}}
+              </RadioButton>
+            {{/each}}
+
+            {{#if this.unifiedChanges.dcpIsprojectarealandmark}}
               <label>
                 Name of Landmark or Historic District
                 <Input
                   @type="text"
-                  @value={{this.changeset.dcpProjectarealandmarkname}}
+                  @value={{this.unifiedChanges.dcpProjectarealandmarkname}}
                   maxlength="250"
-                  data-test-dcpisprojectarealandmark
+                  data-test-dcpisprojectarealandmarkname
                 />
                 <ValidationMessage
-                  @changeset={{this.changeset.error.dcpProjectarealandmarkname}}
+                  @changesetError={{this.submittableChanges.error.dcpProjectarealandmarkname}}
                 />
               </label>
             {{/if}}
@@ -364,92 +287,70 @@
             <legend>
               <strong>Is the proposed Project Area located within the <a href="https://dcp.maps.arcgis.com/apps/View/index.html?appid=90e3a9f927c2471483631a20e8a41d8d">NYC Coastal Zone</a>?</strong>
             </legend>
-            <Input
-              @type="radio"
-              @name="dcpprojectareacoastalzonelocatedin"
-              id="dcpprojectareacoastalzonelocatedin-yes"
-              @value={{true}}
-              checked={{if (eq @package.pasForm.dcpProjectareacoastalzonelocatedin true) true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpProjectareacoastalzonelocatedin" true}}
-              data-test-dcpprojectareacoastalzonelocatedin-yes
-            /><label for="dcpprojectareacoastalzonelocatedin-yes">Yes</label>
-            <Input
-              @type="radio"
-              @name="dcpprojectareacoastalzonelocatedin"
-              id="dcpprojectareacoastalzonelocatedin-no"
-              @value={{false}}
-              checked={{if (eq @package.pasForm.dcpProjectareacoastalzonelocatedin false) true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpProjectareacoastalzonelocatedin" false}}
-              data-test-dcpprojectareacoastalzonelocatedin-no
-            /><label for="dcpprojectareacoastalzonelocatedin-no">No</label>
+            {{#each (array
+              (hash code=true label='Yes')
+              (hash code=false label='No')) as |radio|
+            }}
+              <RadioButton
+                @value={{radio.code}}
+                @groupValue={{this.unifiedChanges.dcpProjectareacoastalzonelocatedin}}
+                @changed={{fn (mut this.unifiedChanges.dcpProjectareacoastalzonelocatedin) radio.code}}
+                data-test-dcpprojectareacoastalzonelocatedin={{radio.label}}
+              >
+                {{radio.label}}
+              </RadioButton>
+            {{/each}}
           </fieldset>
 
           <fieldset class="medium-margin-bottom">
             <legend>
               <strong>Is the Project Area located within the <a href="https://dcp.maps.arcgis.com/apps/webappviewer/index.html?id=1c37d271fba14163bbb520517153d6d5">1% annual chance floodplain</a>?</strong>
             </legend>
-            <Input
-              @type="radio"
-              @name="dcpprojectareaischancefloodplain"
-              id="dcpprojectareaischancefloodplain-yes"
-              @value='717170000'
-              checked={{if (eq @package.pasForm.dcpProjectareaischancefloodplain "717170000") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpProjectareaischancefloodplain" "717170000"}}
-              data-test-dcpprojectareaischancefloodplain-yes
-            /><label for="dcpprojectareaischancefloodplain-yes">Yes</label>
-            <Input
-              @type="radio"
-              @name="dcpprojectareaischancefloodplain"
-              id="dcpprojectareaischancefloodplain-no"
-              @value='717170001'
-              checked={{if (eq @package.pasForm.dcpProjectareaischancefloodplain "717170001") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpProjectareaischancefloodplain" "717170001"}}
-              data-test-dcpprojectareaischancefloodplain-no
-            /><label for="dcpprojectareaischancefloodplain-no">No</label>
-            <Input
-              @type="radio"
-              @name="dcpprojectareaischancefloodplain"
-              id="dcpprojectareaischancefloodplain-unsure"
-              @value='717170002'
-              checked={{if (eq @package.pasForm.dcpProjectareaischancefloodplain "717170002") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpProjectareaischancefloodplain" "717170002"}}
-              data-test-dcpprojectareaischancefloodplain-unsure
-            /><label for="dcpprojectareaischancefloodplain-unsure">Unsure at this time</label>
+            {{#each (array
+              (hash code=717170000 label='Yes')
+              (hash code=717170001 label='No')
+              (hash code=717170002 label='Unsure at this time')) as |radio|
+            }}
+              <RadioButton
+                @value={{radio.code}}
+                @groupValue={{this.unifiedChanges.dcpProjectareaischancefloodplain}}
+                @changed={{fn (mut this.unifiedChanges.dcpProjectareaischancefloodplain) radio.code}}
+                data-test-dcpprojectareaischancefloodplain={{radio.label}}
+              >
+                {{radio.label}}
+              </RadioButton>
+            {{/each}}
           </fieldset>
 
           <fieldset class="medium-margin-bottom">
             <legend>
               <strong>Is a <a href="https://a836-acris.nyc.gov/CP/">legal instrument</a> associated with a previous CPC or CPC Chair action recorded against the project site?</strong>
             </legend>
-            <Input
-              @type="radio"
-              @name="dcprestrictivedeclaration"
-              id="dcprestrictivedeclaration-yes"
-              @value={{true}}
-              checked={{if (eq @package.pasForm.dcpRestrictivedeclaration true) true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpRestrictivedeclaration" true}}
-              data-test-dcprestrictivedeclaration-yes
-            /><label for="dcprestrictivedeclaration-yes">Yes</label>
-            <Input
-              @type="radio"
-              @name="dcprestrictivedeclaration"
-              id="dcprestrictivedeclaration-no"
-              @value={{false}}
-              checked={{if (eq @package.pasForm.dcpRestrictivedeclaration false) true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpRestrictivedeclaration" false}}
-              data-test-dcprestrictivedeclaration-no
-            /><label for="dcprestrictivedeclaration-no">No</label>
-            {{#if (eq @package.pasForm.dcpRestrictivedeclaration true)}}
+            {{#each (array
+              (hash code=true label='Yes')
+              (hash code=false label='No')) as |radio|
+            }}
+              <RadioButton
+                @value={{radio.code}}
+                @groupValue={{this.unifiedChanges.dcpRestrictivedeclaration}}
+                @changed={{fn (mut this.unifiedChanges.dcpRestrictivedeclaration) radio.code}}
+                data-test-dcprestrictivedeclaration={{radio.label}}
+              >
+                {{radio.label}}
+              </RadioButton>
+            {{/each}}
+
+            {{#if this.unifiedChanges.dcpRestrictivedeclaration}}
               <label>
                 <strong>City Register File Number</strong>
                 <Input
                   @type="text"
-                  @value={{this.changeset.dcpCityregisterfilenumber}}
+                  @value={{this.unifiedChanges.dcpCityregisterfilenumber}}
                   maxlength="25"
                   data-test-dcpcityregisterfilenumber
                 />
                 <ValidationMessage
-                  @changeset={{this.changeset.error.dcpCityregisterfilenumber}}
+                  @changesetError={{this.submittableChanges.error.dcpCityregisterfilenumber}}
                 />
               </label>
             {{/if}}
@@ -459,33 +360,20 @@
             <legend>
               <strong>Will a new legal instrument or modification of a current legal instrument be necessary to approve/implement these actions?</strong>
             </legend>
-            <Input
-              @type="radio"
-              @name="dcprestrictivedeclarationrequired"
-              id="dcprestrictivedeclarationrequired-yes"
-              @value='717170000'
-              checked={{if (eq @package.pasForm.dcpRestrictivedeclarationrequired "717170000") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpRestrictivedeclarationrequired" "717170000"}}
-              data-test-dcprestrictivedeclarationrequired-yes
-            /><label for="dcprestrictivedeclarationrequired-yes">Yes</label>
-            <Input
-              @type="radio"
-              @name="dcprestrictivedeclarationrequired"
-              id="dcprestrictivedeclarationrequired-no"
-              @value='717170001'
-              checked={{if (eq @package.pasForm.dcpRestrictivedeclarationrequired "717170001") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpRestrictivedeclarationrequired" "717170001"}}
-              data-test-dcprestrictivedeclarationrequired-no
-            /><label for="dcprestrictivedeclarationrequired-no">No</label>
-            <Input
-              @type="radio"
-              @name="dcprestrictivedeclarationrequired"
-              id="dcprestrictivedeclarationrequired-unsure"
-              @value='717170002'
-              checked={{if (eq @package.pasForm.dcpRestrictivedeclarationrequired "717170002") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpRestrictivedeclarationrequired" "717170002"}}
-              data-test-dcprestrictivedeclarationrequired-unsure
-            /><label for="dcprestrictivedeclarationrequired-unsure">Unsure at this time</label>
+            {{#each (array
+              (hash code=717170000 label='Yes')
+              (hash code=717170001 label='No')
+              (hash code=717170002 label='Unsure at this time')) as |radio|
+            }}
+              <RadioButton
+                @value={{radio.code}}
+                @groupValue={{this.unifiedChanges.dcpRestrictivedeclarationrequired}}
+                @changed={{fn (mut this.unifiedChanges.dcpRestrictivedeclarationrequired) radio.code}}
+                data-test-dcprestrictivedeclarationrequired={{radio.label}}
+              >
+                {{radio.label}}
+              </RadioButton>
+            {{/each}}
           </fieldset>
         </section>
 
@@ -503,12 +391,12 @@
             <strong>In what year do you expect the development to complete?</strong>
             <Input
               @type="text"
-              @value={{this.changeset.dcpEstimatedcompletiondate}}
+              @value={{this.unifiedChanges.dcpEstimatedcompletiondate}}
               maxlength="4"
               data-test-dcpestimatedcompletiondate
             />
             <ValidationMessage
-              @changeset={{this.changeset.error.dcpEstimatedcompletiondate}}
+              @changesetError={{this.submittableChanges.error.dcpEstimatedcompletiondate}}
             />
             {{!-- QUESTION: Should this be a date picker? --}}
           </label>
@@ -521,60 +409,60 @@
               <li>
                 <Input
                   @type="checkbox"
-                  @checked={{@package.pasForm.dcpProposeddevelopmentsitenewconstruction}}
+                  @checked={{this.unifiedChanges.dcpProposeddevelopmentsitenewconstruction}}
                   id="dcpproposeddevelopmentsitenewconstruction"
                 /><label for="dcpproposeddevelopmentsitenewconstruction">Newly constructed buildings</label>
               </li>
               <li>
                 <Input
                   @type="checkbox"
-                  @checked={{@package.pasForm.dcpProposeddevelopmentsitedemolition}}
+                  @checked={{this.unifiedChanges.dcpProposeddevelopmentsitedemolition}}
                   id="dcpproposeddevelopmentsitedemolition"
                 /><label for="dcpproposeddevelopmentsitedemolition">Demolition</label>
               </li>
               <li>
                 <Input
                   @type="checkbox"
-                  @checked={{@package.pasForm.dcpProposeddevelopmentsiteinfoalteration}}
+                  @checked={{this.unifiedChanges.dcpProposeddevelopmentsiteinfoalteration}}
                   id="dcpproposeddevelopmentsiteinfoalteration"
                 /><label for="dcpproposeddevelopmentsiteinfoalteration">Alteration</label>
               </li>
               <li>
                 <Input
                   @type="checkbox"
-                  @checked={{@package.pasForm.dcpProposeddevelopmentsiteinfoaddition}}
+                  @checked={{this.unifiedChanges.dcpProposeddevelopmentsiteinfoaddition}}
                   id="dcpproposeddevelopmentsiteinfoaddition"
                 /><label for="dcpproposeddevelopmentsiteinfoaddition">Addition</label>
               </li>
               <li>
                 <Input
                   @type="checkbox"
-                  @checked={{@package.pasForm.dcpProposeddevelopmentsitechnageofuse}}
+                  @checked={{this.unifiedChanges.dcpProposeddevelopmentsitechnageofuse}}
                   id="dcpproposeddevelopmentsitechnageofuse"
                 /><label for="dcpproposeddevelopmentsitechnageofuse">Change of use</label>
               </li>
               <li>
                 <Input
                   @type="checkbox"
-                  @checked={{@package.pasForm.dcpProposeddevelopmentsiteenlargement}}
+                  @checked={{this.unifiedChanges.dcpProposeddevelopmentsiteenlargement}}
                   id="dcpproposeddevelopmentsiteenlargement"
                 /><label for="dcpproposeddevelopmentsiteenlargement">Enlargement</label>
               </li>
               <li>
                 <Input
                   @type="checkbox"
-                  @checked={{@package.pasForm.dcpProposeddevelopmentsiteinfoother}}
+                  @checked={{this.unifiedChanges.dcpProposeddevelopmentsiteinfoother}}
                   id="dcpproposeddevelopmentsiteinfoother"
                   data-test-dcpproposeddevelopmentsiteinfoother
                 /><label for="dcpproposeddevelopmentsiteinfoother">Other&hellip;</label>
               </li>
             </ul>
-            {{#if @package.pasForm.dcpProposeddevelopmentsiteinfoother}}
+            {{#if this.unifiedChanges.dcpProposeddevelopmentsiteinfoother}}
               <label>
                 Explain:
                 <Input
                   @type="text"
-                  @value={{@package.pasForm.dcpProposeddevelopmentsiteotherexplanation}}
+                  @value={{this.unifiedChanges.dcpProposeddevelopmentsiteotherexplanation}}
                   data-test-dcpproposeddevelopmentsiteotherexplanation
                 />
               </label>
@@ -585,33 +473,29 @@
             <legend>
               <strong>Is the Development Site in an <a href="https://zola.planning.nyc.gov/">Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area</a>?</strong>
             </legend>
-            <Input
-              @type="radio"
-              @name="dcpisinclusionaryhousingdesignatedarea"
-              id="dcpisinclusionaryhousingdesignatedarea-yes"
-              @value={{true}}
-              checked={{if (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea true) true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpIsinclusionaryhousingdesignatedarea" true}}
-              data-test-dcpisinclusionaryhousingdesignatedarea-yes
-            /><label for="dcpisinclusionaryhousingdesignatedarea-yes">Yes</label>
-            <Input
-              @type="radio"
-              @name="dcpisinclusionaryhousingdesignatedarea"
-              id="dcpisinclusionaryhousingdesignatedarea-no"
-              @value={{false}}
-              checked={{if (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea false) true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpIsinclusionaryhousingdesignatedarea" false}}
-              data-test-dcpisinclusionaryhousingdesignatedarea-no
-            /><label for="dcpisinclusionaryhousingdesignatedarea-no">No</label>
+            {{#each (array
+              (hash code=true label='Yes')
+              (hash code=false label='No')) as |radio|
+            }}
+              <RadioButton
+                @value={{radio.code}}
+                @groupValue={{this.unifiedChanges.dcpIsinclusionaryhousingdesignatedarea}}
+                @changed={{fn (mut this.unifiedChanges.dcpIsinclusionaryhousingdesignatedarea) radio.code}}
+                data-test-dcpisinclusionaryhousingdesignatedarea={{radio.label}}
+              >
+                {{radio.label}}
+              </RadioButton>
+            {{/each}}
+
             <p class="help-text">
               Refer to <a  href="https://zr.planning.nyc.gov/appendix-f-inclusionary-housing-designated-areas-and-mandatory-inclusionary-housing-areas">Appendix F</a> of the Zoning Resolution for full list of all inclusionary housing areas which are areas that incentivize or require affordable housing in certain areas.
             </p>
-            {{#if (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea true)}}
+            {{#if this.unifiedChanges.dcpIsinclusionaryhousingdesignatedarea}}
               <label>
                 Name of Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area
                 <Input
                   @type="text"
-                  @value={{@package.pasForm.dcpInclusionaryhousingdesignatedareaname}}
+                  @value={{this.unifiedChanges.dcpInclusionaryhousingdesignatedareaname}}
                   data-test-dcpinclusionaryhousingdesignatedareaname
                 />
               </label>
@@ -622,74 +506,40 @@
             <legend>
               <strong>Does the proposed development involve discretionary funding for Affordable Housing Units?</strong>
             </legend>
-            <Input
-              @type="radio"
-              @name="dcpdiscressionaryfundingforffordablehousing"
-              id="dcpdiscressionaryfundingforffordablehousing-yes"
-              @value='717170000'
-              checked={{if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing "717170000") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpDiscressionaryfundingforffordablehousing" "717170000"}}
-              data-test-dcpdiscressionaryfundingforffordablehousing-yes
-            /><label for="dcpdiscressionaryfundingforffordablehousing-yes">Yes</label>
-            <Input
-              @type="radio"
-              @name="dcpdiscressionaryfundingforffordablehousing"
-              id="dcpdiscressionaryfundingforffordablehousing-no"
-              @value='717170001'
-              checked={{if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing "717170001") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpDiscressionaryfundingforffordablehousing" "717170001"}}
-              data-test-dcpdiscressionaryfundingforffordablehousing-no
-            /><label for="dcpdiscressionaryfundingforffordablehousing-no">No</label>
-            <Input
-              @type="radio"
-              @name="dcpdiscressionaryfundingforffordablehousing"
-              id="dcpdiscressionaryfundingforffordablehousing-unsure"
-              @value='717170002'
-              checked={{if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing "717170002") true}}
-              onClick={{fn this.updateAttr @package.pasForm "dcpDiscressionaryfundingforffordablehousing" "717170002"}}
-              data-test-dcpdiscressionaryfundingforffordablehousing-unsure
-            /><label for="dcpdiscressionaryfundingforffordablehousing-unsure">Unsure at this time</label>
-            {{#if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing "717170000")}}
+            {{#each (array
+              (hash code=717170000 label='Yes')
+              (hash code=717170001 label='No')) as |radio|
+            }}
+              <RadioButton
+                @value={{radio.code}}
+                @groupValue={{this.unifiedChanges.dcpDiscressionaryfundingforffordablehousing}}
+                @changed={{fn (mut this.unifiedChanges.dcpDiscressionaryfundingforffordablehousing) radio.code}}
+                data-test-dcpdiscressionaryfundingforffordablehousing={{radio.label}}
+              >
+                {{radio.label}}
+              </RadioButton>
+            {{/each}}
+
+            {{#if (eq this.unifiedChanges.dcpDiscressionaryfundingforffordablehousing 717170000)}}
               <fieldset class="medium-margin-bottom">
                 <legend>
                   Funding source
                 </legend>
-                <Input
-                  @type="radio"
-                  @name="dcphousingunittype"
-                  id="dcphousingunittype-city"
-                  @value='717170000'
-                  checked={{if (eq @package.pasForm.dcpHousingunittypeCity "717170000") true}}
-                  onClick={{fn this.updateAttr @package.pasForm "dcpHousingunittypeCity" "717170000"}}
-                  data-test-dcphousingunittype-city
-                /><label for="dcphousingunittype-city">City</label>
-                <Input
-                  @type="radio"
-                  @name="dcphousingunittype"
-                  id="dcphousingunittype-state"
-                  @value='717170001'
-                  checked={{if (eq @package.pasForm.dcpHousingunittypeCity "717170001") true}}
-                  onClick={{fn this.updateAttr @package.pasForm "dcpHousingunittypeCity" "717170001"}}
-                  data-test-dcphousingunittype-state
-                /><label for="dcphousingunittype-state">State</label>
-                <Input
-                  @type="radio"
-                  @name="dcphousingunittype"
-                  id="dcphousingunittype-federal"
-                  @value='717170002'
-                  checked={{if (eq @package.pasForm.dcpHousingunittypeCity "717170002") true}}
-                  onClick={{fn this.updateAttr @package.pasForm "dcpHousingunittypeCity" "717170002"}}
-                  data-test-dcphousingunittype-federal
-                /><label for="dcphousingunittype-federal">Federal</label>
-                <Input
-                  @type="radio"
-                  @name="dcphousingunittype"
-                  id="dcphousingunittype-other"
-                  @value='717170003'
-                  checked={{if (eq @package.pasForm.dcpHousingunittypeCity "717170003") true}}
-                  onClick={{fn this.updateAttr @package.pasForm "dcpHousingunittypeCity" "717170003"}}
-                  data-test-dcphousingunittype-other
-                /><label for="dcphousingunittype-other">Other</label>
+                {{#each (array
+                    (hash code=717170000 label='City')
+                    (hash code=717170001 label='State')
+                    (hash code=717170002 label='Federal')
+                    (hash code=717170003 label='Other')) as |radio|
+                }}
+                  <RadioButton
+                    @value={{radio.code}}
+                    @groupValue={{this.unifiedChanges.dcpHousingunittypeCity}}
+                    @changed={{fn (mut this.unifiedChanges.dcpHousingunittypeCity) radio.code}}
+                    data-test-dcphousingunittype={{radio.label}}
+                  >
+                    {{radio.label}}
+                  </RadioButton>
+                {{/each}}
               </fieldset>
             {{/if}}
           </fieldset>
@@ -704,78 +554,78 @@
           <label>
             <strong>Description of the proposed development being facilitated by the land use actions</strong>
             <Textarea
-              @value={{this.changeset.dcpProjectdescriptionproposeddevelopment}}
+              @value={{this.unifiedChanges.dcpProjectdescriptionproposeddevelopment}}
               rows="5"
               maxlength="3000"
               data-test-dcpprojectdescriptionproposeddevelopment
             />
             <ValidationMessage
-              @changeset={{this.changeset.error.dcpProjectdescriptionproposeddevelopment}}
+              @changesetError={{this.submittableChanges.error.dcpProjectdescriptionproposeddevelopment}}
             />
           </label>
 
           <label>
             <strong>Why is this application being proposed? What is the legal, environmental, or land use background?</strong>
             <Textarea
-              @value={{this.changeset.dcpProjectdescriptionbackground}}
+              @value={{this.unifiedChanges.dcpProjectdescriptionbackground}}
               rows="5"
               maxlength="2000"
               data-test-dcpprojectdescriptionbackground
             />
             <ValidationMessage
-              @changeset={{this.changeset.error.dcpProjectdescriptionbackground}}
+              @changesetError={{this.submittableChanges.error.dcpProjectdescriptionbackground}}
             />
           </label>
 
           <label>
             <strong>What is the land use rationale for all the proposed actions?</strong>
             <Textarea
-              @value={{this.changeset.dcpProjectdescriptionproposedactions}}
+              @value={{this.unifiedChanges.dcpProjectdescriptionproposedactions}}
               rows="5"
               maxlength="2000"
               data-test-dcpprojectdescriptionproposedactions
             />
             <ValidationMessage
-              @changeset={{this.changeset.error.dcpProjectdescriptionproposedactions}}
+              @changesetError={{this.submittableChanges.error.dcpProjectdescriptionproposedactions}}
             />
           </label>
 
           <label>
             <strong>Description of existing land uses and structures in the proposed Project Area and Development Site</strong>
             <Textarea
-              @value={{this.changeset.dcpProjectdescriptionproposedarea}}
+              @value={{this.unifiedChanges.dcpProjectdescriptionproposedarea}}
               rows="5"
               maxlength="3000"
               data-test-dcpprojectdescriptionproposedarea
             />
             <ValidationMessage
-              @changeset={{this.changeset.error.dcpProjectdescriptionproposedarea}}
+              @changesetError={{this.submittableChanges.error.dcpProjectdescriptionproposedarea}}
             />
           </label>
 
           <label>
             <strong>Description of land uses and built context in surrounding area (within 1000 ft)</strong>
             <Textarea
-              @value={{this.changeset.dcpProjectdescriptionsurroundingarea}}
+              @value={{this.unifiedChanges.dcpProjectdescriptionsurroundingarea}}
               rows="5"
               maxlength="3000"
               data-test-dcpprojectdescriptionsurroundingarea
             />
             <ValidationMessage
-              @changeset={{this.changeset.error.dcpProjectdescriptionsurroundingarea}}
+              @changesetError={{this.submittableChanges.error.dcpProjectdescriptionsurroundingarea}}
             />
           </label>
 
           <label>
             <strong>Description of proposed CEQR scope</strong>
             <Textarea
-              @value={{this.changeset.dcpProjectattachmentsotherinformation}}
+              @value={{this.unifiedChanges.dcpProjectattachmentsotherinformation}}
               rows="5"
               maxlength="3000"
               data-test-dcpprojectattachmentsotherinformation
             />
             <ValidationMessage
-              @changeset={{this.changeset.error.dcpProjectattachmentsotherinformation}}
+              @changesetError={{this.submittableChanges.error.dcpProjectattachmentsotherinformation}}
             />
           </label>
           <p class="help-text">
@@ -849,8 +699,8 @@
           <button
             type="button"
             class="button expanded large"
-            onClick={{fn this.save @package this.changeset}}
-            disabled={{not this.isDirty}}
+            disabled={{not this.isSaveable}}
+            {{on "click" this.save}}
             data-test-save-button
           >
             {{!-- TODO: Make this button work with the action passed in @save--}}
@@ -859,6 +709,7 @@
           <button
             type="button"
             class="button expanded large secondary"
+            disabled={{not this.isSubmittable}}
             {{on "click" this.toggleModal}}
             data-test-submit-button
           >
@@ -898,7 +749,6 @@
           </EmberWormhole>
         {{/if}}
         <nav>
-
           <ul class="no-bullet text-weight-bold">
             <li class="medium-margin-bottom">
               <a href="#project-info">
@@ -951,9 +801,7 @@
           </ul>
         </nav>
       </div>{{!-- end .sticky-sidebar --}}
-
     </div>
 </div>
-
 
 {{yield}}

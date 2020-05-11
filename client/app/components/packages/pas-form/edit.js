@@ -4,46 +4,97 @@ import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { Changeset } from 'ember-changeset';
 import lookupValidator from 'ember-changeset-validations';
-import PasFormValidations from '../../../validations/pas-form';
+import SaveablePasFormValidations from '../../../validations/saveable-pas-form';
+import SubmittablePasFormValidations from '../../../validations/submittable-pas-form';
 
 export default class PasFormComponent extends Component {
   constructor(...args) {
     super(...args);
 
-    this.changeset = new Changeset(this.args.package.pasForm, lookupValidator(PasFormValidations));
+    this.saveableChanges = new Changeset(
+      this.pasForm,
+      lookupValidator(SaveablePasFormValidations),
+      SaveablePasFormValidations,
+    );
+
+    this.submittableChanges = new Changeset(
+      this.pasForm,
+      lookupValidator(SubmittablePasFormValidations),
+      SubmittablePasFormValidations,
+    );
+
+    // Proxy object used here to unify the interface across
+    // both changeset validations. this is used here because
+    // we want to 2-way bind the same reference into the input
+    // helpers, but emit upstream setter changes to both
+    // changesets.
+    // REDO: This proxy is a little slow. we should find
+    // an alternative
+    this.unifiedChanges = new Proxy(this.saveableChanges, {
+      get(saveableChanges, prop) {
+        return saveableChanges[prop];
+      },
+
+      // arrow function here to keep the scope of constructor
+      set: (saveableChanges, prop, value) => {
+        saveableChanges[prop] = value;
+
+        this.submittableChanges[prop] = value;
+
+        return true;
+      },
+    });
+
+    // validate initial model state because this does not
+    // happen when creating a new changset
+    this.saveableChanges.validate();
+    this.submittableChanges.validate();
   }
 
   @service router;
 
-  @tracked modalIsOpen = false;
+  get package() {
+    return this.args.package || {};
+  }
 
-  get isDirty() {
-    const { isDirty: isPasFormDirty } = this.changeset;
-    const { isBblsDirty, isApplicantsDirty } = this.args.package.pasForm;
+  get pasForm() {
+    return this.package.pasForm || {};
+  }
 
-    return isPasFormDirty || isBblsDirty || isApplicantsDirty;
+  get isSaveable() {
+    const {
+      isDirty: isPasFormDirty,
+      isValid: isPasFormValid,
+    } = this.saveableChanges;
+    const {
+      isBblsDirty,
+      isApplicantsDirty,
+    } = this.pasForm;
+
+    return (isPasFormDirty && isPasFormValid) || isBblsDirty || isApplicantsDirty;
+  }
+
+  get isSubmittable() {
+    return this.submittableChanges.isValid;
   }
 
   // TODO: consider decoupling the PAS Form from the Package
   // for better modularity and avoiding "inappropriate intimacy"
   @action
-  async save(projectPackage) {
-    await this.changeset.save();
-    await projectPackage.saveDescendants();
+  async save() {
+    await this.saveableChanges.save();
+    await this.package.saveDescendants();
   }
 
   @action
-  async submit(projectPackage) {
-    projectPackage.statuscode = 'Submitted';
-    await projectPackage.save();
+  async submit() {
+    await this.submittableChanges.save();
+    await this.package.saveDescendants();
 
-    this.router.transitionTo('packages.show', projectPackage.id);
+    this.router.transitionTo('packages.show', this.package.id);
   }
 
-  @action
-  updateAttr(obj, attr, newVal) {
-    obj[attr] = newVal;
-  }
+  @tracked modalIsOpen = false;
 
   @action
   toggleModal() {
