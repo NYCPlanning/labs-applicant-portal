@@ -12,12 +12,12 @@ export default Factory.extend({
 
   individualApplicant: trait({
     targetEntity: 'dcp_applicantinformation',
-    dcpType: 'Individual',
+    dcpType: 717170000,
     dcpOrganization: null,
   }),
   organizationApplicant: trait({
     targetEntity: 'dcp_applicantinformation',
-    dcpType: 'Organization',
+    dcpType: 717170001,
     dcpOrganization: 'Planning Labs',
   }),
 

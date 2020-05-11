@@ -6,7 +6,10 @@ export default class ApplicantModel extends Model {
 
   // only exists on dcp_applicantinformation CRM entity
   // either 'Applicant' or 'Authorized Applicant Representative'
-  @attr('string')
+  // either 717170000 or 717170001
+  @attr('number', {
+    defaultValue: 717170000,
+  })
   dcpType;
 
   @attr('string')

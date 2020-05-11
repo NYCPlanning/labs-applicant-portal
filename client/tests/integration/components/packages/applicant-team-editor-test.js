@@ -56,11 +56,11 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
 
     // can add an applicant
     await click('[data-test-add-applicant-button]');
-    assert.dom('[data-test-applicant-type="Applicant"').exists();
+    assert.dom('[data-test-applicant-type="Applicant"]').exists();
 
     // can add an applicant team member
     await click('[data-test-add-applicant-team-member-button]');
-    assert.dom('[data-test-applicant-type="Applicant Team Member"').exists();
+    assert.dom('[data-test-applicant-type="Applicant Team Member"]').exists();
   });
 
   test('user can remove applicants', async function(assert) {
@@ -98,6 +98,6 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
     await click('[data-test-applicant-type-radio-organization]');
 
     // should be reflected in the applicants array!
-    assert.equal(this.applicants[0].dcpType, 'Authorized Applicant Representative');
+    assert.equal(this.applicants[0].dcpType, 717170001);
   });
 });

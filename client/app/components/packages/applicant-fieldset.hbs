@@ -8,24 +8,20 @@
   {{!-- if sent to CRM "Applicant Information" table, need to know "type" --}}
   {{#if (eq @applicant.friendlyEntityName "Applicant")}}
     <div class="cell medium-6" data-test-applicant-type-radio-group>
-      <Input
-        @type="radio"
-        name={{concat 'applicant-type' @elementId}}
-        @value="Applicant"
-        checked={{if (eq @applicant.dcpType "Applicant") true}}
-        onClick={{fn this.updateAttr @applicant "dcpType" "Applicant"}}
-        data-test-applicant-type-radio-individual
-      />
-      <label>Individual</label>
-      <Input
-        @type="radio"
-        name={{concat 'applicant-type' @elementId}}
-        @value="Authorized Applicant Representative"
-        checked={{if (eq @applicant.dcpType "Authorized Applicant Representative") true}}
-        onClick={{fn this.updateAttr @applicant "dcpType" "Authorized Applicant Representative"}}
-        data-test-applicant-type-radio-organization
-      />
-      <label>Organization</label>
+      <RadioButton
+        @value={{717170000}}
+        @groupValue={{@applicant.dcpType}}
+          data-test-applicant-type-radio-individual
+      >
+        Individual
+      </RadioButton>
+      <RadioButton
+        @value={{717170001}}
+        @groupValue={{@applicant.dcpType}}
+          data-test-applicant-type-radio-organization
+      >
+        Organization
+      </RadioButton>
     </div>
   {{/if}}
 
