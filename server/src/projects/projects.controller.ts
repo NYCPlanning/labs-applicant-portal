@@ -34,6 +34,7 @@ export const PROJECT_ATTRIBUTES = [
     ref: 'dcp_packageid',
     attributes: [
       'statuscode',
+      'statecode',
       'dcp_packagetype',
       'dcp_visibility',
       'dcp_packageversion',

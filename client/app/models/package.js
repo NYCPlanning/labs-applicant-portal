@@ -23,8 +23,11 @@ export default class PackageModel extends Model {
   @belongsTo('pas-form', { async: false })
   pasForm;
 
-  @attr('string')
+  @attr('number')
   statuscode;
+
+  @attr('number')
+  statecode;
 
   @attr('string')
   dcpPackagetype;
@@ -46,5 +49,12 @@ export default class PackageModel extends Model {
     await this.pasForm?.saveDirtyBbls();
     await this.pasForm?.save();
     await this.save();
+  }
+
+  async submit() {
+    this.statuscode = 717170008;
+    this.statecode = 1;
+
+    await this.saveDescendants();
   }
 }

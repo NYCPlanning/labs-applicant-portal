@@ -75,7 +75,9 @@ export default class PasFormComponent extends Component {
   @action
   async submit() {
     await this.submittableChanges.save();
-    await this.package.saveDescendants();
+
+    // these next things should be passed as a callback action
+    await this.package.submit();
 
     this.router.transitionTo('packages.show', this.package.id);
   }
