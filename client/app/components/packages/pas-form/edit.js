@@ -23,31 +23,18 @@ export default class PasFormComponent extends Component {
       SubmittablePasFormValidations,
     );
 
-    // Proxy object used here to unify the interface across
-    // both changeset validations. this is used here because
-    // we want to 2-way bind the same reference into the input
-    // helpers, but emit upstream setter changes to both
-    // changesets.
-    // REDO: This proxy is a little slow. we should find
-    // an alternative It's also confusing.
-    this.unifiedChanges = new Proxy(this.saveableChanges, {
-      get(saveableChanges, prop) {
-        return saveableChanges[prop];
-      },
-
-      // arrow function here to keep the scope of constructor
-      set: (saveableChanges, prop, value) => {
-        saveableChanges[prop] = value;
-
-        this.submittableChanges[prop] = value;
-
-        return true;
-      },
+    this.saveableChanges.on('beforeValidation', (key) => {
+      this.submittableChanges[key] = this.saveableChanges[key];
     });
 
-    // validate initial model state because this does not
-    // happen when creating a new changset
-    this.validate();
+    this.saveableChanges.on('afterValidation', () => {
+      this.submittableChanges.validate();
+    });
+
+    // ember changeset does not validate when a changeset is initiated.
+    // this handles that validation.
+    this.saveableChanges.validate();
+    this.submittableChanges.validate();
   }
 
   @service router;
@@ -93,17 +80,12 @@ export default class PasFormComponent extends Component {
     this.router.transitionTo('packages.show', this.package.id);
   }
 
+  @action
+  validate() {
+    this.saveableChanges.validate();
+  }
+
   @tracked modalIsOpen = false;
-
-  @action
-  async updateAttr(target, value) {
-    target = value;
-  }
-
-  @action
-  async validate() {
-    await this.unifiedChanges.validate();
-  }
 
   @action
   toggleModal() {

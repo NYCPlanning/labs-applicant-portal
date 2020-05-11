@@ -42,3 +42,40 @@ test('it validates when withValue is not present', function (assert) {
 
   assert.equal(result, true);
 });
+
+test('it validates when withValue is falsey', function (assert) {
+  const args = [
+    'someKey',
+    '',
+    undefined,
+    {},
+    { dependentKey: true },
+  ];
+
+  const result = validateRequiredIfSelected({
+    presence: true,
+    on: 'dependentKey',
+    withValue: false,
+    message: 'someKey must be filled in.',
+  })(...args);
+
+  assert.equal(result, true);
+});
+
+test('it validates when key not in content but in changes', function (assert) {
+  const args = [
+    'someKey',
+    '',
+    undefined,
+    { dependentKey: true },
+    {},
+  ];
+
+  const result = validateRequiredIfSelected({
+    presence: true,
+    on: 'dependentKey',
+    withValue: false,
+  })(...args);
+
+  assert.equal(result, true);
+});
