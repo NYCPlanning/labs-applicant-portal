@@ -11,14 +11,16 @@
       <RadioButton
         @value={{717170000}}
         @groupValue={{@applicant.dcpType}}
-          data-test-applicant-type-radio-individual
+        @radioId={{concat 'individual-' @index}}
+        data-test-applicant-type-radio-individual
       >
         Individual
       </RadioButton>
       <RadioButton
         @value={{717170001}}
         @groupValue={{@applicant.dcpType}}
-          data-test-applicant-type-radio-organization
+        @radioId={{concat 'organization-' @index}}
+        data-test-applicant-type-radio-organization
       >
         Organization
       </RadioButton>
