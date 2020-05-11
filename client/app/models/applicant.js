@@ -46,8 +46,8 @@ export default class ApplicantModel extends Model {
   get friendlyEntityName() {
     if (this.targetEntity === 'dcp_applicantinformation') {
       return 'Applicant';
-    } if (this.targetEntity === 'dcp_applicantrepresentativeinformation') {
-      return 'Applicant Team Member';
-    } throw new Error('Invalid applicant targetEntity');
+    }
+
+    return 'Applicant Team Member';
   }
 }
