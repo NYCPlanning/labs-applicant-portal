@@ -5,7 +5,7 @@
       @applicant={{applicant}}
       @removeApplicant={{fn this.removeApplicant}}
       data-test-applicant-fieldset={{index}}
-      data-test-applicant-type={{applicant.targetEntity}}
+      data-test-applicant-type={{applicant.friendlyEntityName}}
     />
   {{/each}}
 
@@ -18,7 +18,7 @@
       <button
         class="button secondary"
         type="button"
-        {{on "click" (fn this.addApplicant "Applicant") }}
+        {{on "click" (fn this.addApplicant "dcp_applicantinformation") }}
         data-test-add-applicant-button
       >
         Add Applicant
@@ -26,7 +26,7 @@
       <button
         class="button secondary"
         type="button"
-        {{on "click" (fn this.addApplicant "Applicant Team Member") }}
+        {{on "click" (fn this.addApplicant "dcp_applicantrepresentativeinformation") }}
         data-test-add-applicant-team-member-button
       >
         Add Other Team Member

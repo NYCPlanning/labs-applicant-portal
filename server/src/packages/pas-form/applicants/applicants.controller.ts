@@ -15,6 +15,7 @@ export const APPLICANT_ATTRIBUTES = [
   'dcp_state',
   'dcp_zipcode',
   'dcp_phone',
+  'dcp_type',
 ];
 
 @UseInterceptors(new JsonApiSerializeInterceptor('applicants', {

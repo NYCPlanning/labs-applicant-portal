@@ -1,36 +1,32 @@
 <fieldset class="fieldset relative" ...attributes>
-  <legend data-test-applicant-title="{{@applicant.targetEntity}}">
+  <legend data-test-applicant-title="{{@applicant.friendlyEntityName}}">
     <strong>
-      {{@applicant.targetEntity}}
+      {{@applicant.friendlyEntityName}}
     </strong>
   </legend>
 
   {{!-- if sent to CRM "Applicant Information" table, need to know "type" --}}
-  {{#if (eq @applicant.targetEntity "Applicant")}}
+  {{#if (eq @applicant.friendlyEntityName "Applicant")}}
     <div class="cell medium-6" data-test-applicant-type-radio-group>
-      <Input
-        @type="radio"
-        name={{concat 'applicant-type' @elementId}}
-        @value="Individual"
-        checked={{if (eq @applicant.applicantType "Individual") true}}
-        onClick={{fn this.updateAttr @applicant "applicantType" "Individual"}}
-        data-test-applicant-type-radio-individual
-      />
-      <label>Individual</label>
-      <Input
-        @type="radio"
-        name={{concat 'applicant-type' @elementId}}
-        @value="Organization"
-        checked={{if (eq @applicant.applicantType "Organization") true}}
-        onClick={{fn this.updateAttr @applicant "applicantType" "Organization"}}
-        data-test-applicant-type-radio-organization
-      />
-      <label>Organization</label>
+      <RadioButton
+        @value={{717170000}}
+        @groupValue={{@applicant.dcpType}}
+          data-test-applicant-type-radio-individual
+      >
+        Individual
+      </RadioButton>
+      <RadioButton
+        @value={{717170001}}
+        @groupValue={{@applicant.dcpType}}
+          data-test-applicant-type-radio-organization
+      >
+        Organization
+      </RadioButton>
     </div>
   {{/if}}
 
   {{!-- and if the applicant is on behalf of an organization, we need to know which organization --}}
-  {{#if (eq @applicant.applicantType "Organization")}}
+  {{#if (eq @applicant.dcpType "Organization")}}
     <label>
       Organization
       <Input
@@ -60,7 +56,7 @@
   </div>
 
   {{!-- always allow input for Applicant Team Members --}}
-  {{#if (eq @applicant.targetEntity "Applicant Team Member")}}
+  {{#if (eq @applicant.friendlyEntityName "Applicant Team Member")}}
     <label>
       Organization
       <Input
@@ -93,7 +89,7 @@
     {{on "click" (fn @removeApplicant @applicant)}}
     data-test-remove-applicant-button
   >
-    Remove {{@applicant.targetEntity}}
+    Remove {{@applicant.friendlyEntityName}}
     <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
   </button>
 
