@@ -1,6 +1,6 @@
 import { helper } from '@ember/component/helper';
 
-export default helper(function bblBreakup(bbl) {
+export function bblBreakup(bbl) {
   // for labs-search component, bbl comes back as number
   const bblString = bbl.toString();
   // borough is first number
@@ -9,5 +9,12 @@ export default helper(function bblBreakup(bbl) {
   const block = bblString.substr(1, 5);
   // lot is numbers 7-10
   const lot = bblString.substr(6, 9);
+
+  return { borough, block, lot };
+}
+
+export default helper((bbl) => {
+  const { borough, block, lot } = bblBreakup(bbl);
+
   return `Borough ${borough}, Block ${block}, Lot ${lot}`;
 });

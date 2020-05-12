@@ -30,7 +30,7 @@ export default class ApplicantTeamEditorComponent extends Component {
   @action
   addApplicantIfEmpty() {
     if (!this.args.applicants.length) {
-      this.addApplicant('Applicant');
+      this.addApplicant();
     }
   }
 }

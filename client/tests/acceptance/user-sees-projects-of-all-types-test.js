@@ -2,10 +2,17 @@ import { module, test } from 'qunit';
 import { visit, find, findAll } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { authenticateSession } from 'ember-simple-auth/test-support';
 
 module('Acceptance | user sees projects of all types', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
+
+  hooks.beforeEach(() => {
+    authenticateSession({
+      emailaddress1: 'me@me.com',
+    });
+  });
 
   test('Shows correct # of projects by type', async function(assert) {
     this.server.createList('project', 4, 'applicant');

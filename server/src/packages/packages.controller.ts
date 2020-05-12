@@ -11,6 +11,7 @@ import { PROJECT_ATTRIBUTES } from '../projects/projects.controller';
 
 export const PACKAGE_ATTRS = [
   'statuscode',
+  'statecode',
   'dcp_packagetype',
   'dcp_visibility',
   'dcp_packageversion',

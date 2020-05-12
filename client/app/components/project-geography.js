@@ -2,6 +2,19 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
+import { bblBreakup } from '../helpers/bbl-breakup';
+import { PROJECT_BBL_BOROUGHS } from '../models/bbl';
+
+// zap search provides bbls as 1-5-4 digits. the first part of the bbl,
+// the borough, is represented as a number. this object maps those
+// numbers to their respective CRM code.
+const NUMERIC_BOROUGH_MAPPING = {
+  1: PROJECT_BBL_BOROUGHS.MANHATTAN.code,
+  2: PROJECT_BBL_BOROUGHS.BRONX.code,
+  3: PROJECT_BBL_BOROUGHS.BROOKLYN.code,
+  4: PROJECT_BBL_BOROUGHS.QUEENS.code,
+  5: PROJECT_BBL_BOROUGHS.STATEN_ISLAND.code,
+};
 
 export default class ProjectGeographyComponent extends Component {
   @service
@@ -17,10 +30,16 @@ export default class ProjectGeographyComponent extends Component {
     // whereas dcpBblnumber in CRM is stored as a string.
     const currentBbl = labsSearchResult.bbl.toString();
 
+    const { borough, block, lot } = bblBreakup(currentBbl);
+
     const bblObjectToPush = this.store.createRecord('bbl', {
       dcpBblnumber: currentBbl,
       dcpDevelopmentsite: null,
       dcpPartiallot: null,
+
+      dcpUserinputborough: NUMERIC_BOROUGH_MAPPING[borough],
+      dcpUserinputblock: block,
+      dcpUserinputlot: lot,
     });
 
     // set local variables for displaying address next to bbl in bbls list
@@ -40,11 +59,5 @@ export default class ProjectGeographyComponent extends Component {
     // this.store.deleteRecord(bblObjectToBeRemoved);
     bblObjectToBeRemoved.destroyRecord();
     this.args.bbls.removeObject(bblObjectToBeRemoved);
-  }
-
-  // Update attributes when user selects radio buttons
-  @action
-  updateAttr(currentObject, attr, newVal) {
-    currentObject[attr] = newVal;
   }
 }

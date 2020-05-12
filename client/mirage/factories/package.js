@@ -1,24 +1,5 @@
 import { Factory, trait } from 'ember-cli-mirage';
-
-const PACKAGE_STATUS_CODES = {
-  PACKAGE_PREPARATION: 'Package Preparation',
-  CERTIFIED: 'Certified',
-  FINAL_APPROVAL: 'Final Approval',
-  REVIEWED_NO_REVISIONS_REQUIRED: 'Reviewed - No Revisions Required',
-  REVIEWED_REVISIONS_REQUIRED: 'Reviewed - Revisions Required',
-  WITHDRAWN: 'Withdrawn',
-  SUBMITTED: 'Submitted',
-  UNDER_REVIEW: 'Under Review',
-  MISTAKE: 'Mistake',
-};
-
-const PACKAGE_VISIBILITY_CODES = {
-  INTERNAL_DCP_ONLY: 717170000,
-  CPC_ONLY: 717170001,
-  APPLICANT_ONLY: 717170002,
-  GENERAL_PUBLIC: 717170003,
-  LUP: 717170004,
-};
+import { PACKAGE_STATUS_CODES, PACKAGE_VISIBILITY_CODES } from '../../models/package';
 
 export default Factory.extend({
   dcpPackagetype: 'PAS Package',
@@ -36,7 +17,7 @@ export default Factory.extend({
   applicant: trait({
     statuscode(i) {
       const statuses = [
-        PACKAGE_STATUS_CODES.PACKAGE_PREPARATION,
+        PACKAGE_STATUS_CODES.PACKAGE_PREPARATION.code,
       ];
 
       return statuses[i % statuses.length];
@@ -44,8 +25,8 @@ export default Factory.extend({
 
     dcpVisibility(i) {
       const visibility = [
-        PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY,
-        PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC,
+        PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY.code,
+        PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC.code,
       ];
 
       return visibility[i % visibility.length];
@@ -58,13 +39,13 @@ export default Factory.extend({
   planning: trait({
     statuscode(i) {
       const statuses = [
-        PACKAGE_STATUS_CODES.CERTIFIED,
-        PACKAGE_STATUS_CODES.FINAL_APPROVAL,
-        PACKAGE_STATUS_CODES.REVIEWED_NO_REVISIONS_REQUIRED,
-        PACKAGE_STATUS_CODES.REVIEWED_REVISIONS_REQUIRED,
-        PACKAGE_STATUS_CODES.WITHDRAWN,
-        PACKAGE_STATUS_CODES.SUBMITTED,
-        PACKAGE_STATUS_CODES.UNDER_REVIEW,
+        PACKAGE_STATUS_CODES.CERTIFIED.code,
+        PACKAGE_STATUS_CODES.FINAL_APPROVAL.code,
+        PACKAGE_STATUS_CODES.REVIEWED_NO_REVISIONS_REQUIRED.code,
+        PACKAGE_STATUS_CODES.REVIEWED_REVISIONS_REQUIRED.code,
+        PACKAGE_STATUS_CODES.WITHDRAWN.code,
+        PACKAGE_STATUS_CODES.SUBMITTED.code,
+        PACKAGE_STATUS_CODES.UNDER_REVIEW.code,
       ];
 
       return statuses[i % statuses.length];
@@ -72,11 +53,11 @@ export default Factory.extend({
 
     dcpVisibility(i) {
       const visibility = [
-        PACKAGE_VISIBILITY_CODES.INTERNAL_DCP_ONLY,
-        PACKAGE_VISIBILITY_CODES.CPC_ONLY,
-        PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY,
-        PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC,
-        PACKAGE_VISIBILITY_CODES.LUP,
+        PACKAGE_VISIBILITY_CODES.INTERNAL_DCP_ONLY.code,
+        PACKAGE_VISIBILITY_CODES.CPC_ONLY.code,
+        PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY.code,
+        PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC.code,
+        PACKAGE_VISIBILITY_CODES.LUP.code,
       ];
 
       return visibility[i % visibility.length];
@@ -86,10 +67,10 @@ export default Factory.extend({
   planningWithViewPASButton: trait({
     statuscode(i) {
       const statuses = [
-        PACKAGE_STATUS_CODES.REVIEWED_NO_REVISIONS_REQUIRED,
-        PACKAGE_STATUS_CODES.REVIEWED_REVISIONS_REQUIRED,
-        PACKAGE_STATUS_CODES.SUBMITTED,
-        PACKAGE_STATUS_CODES.UNDER_REVIEW,
+        PACKAGE_STATUS_CODES.REVIEWED_NO_REVISIONS_REQUIRED.code,
+        PACKAGE_STATUS_CODES.REVIEWED_REVISIONS_REQUIRED.code,
+        PACKAGE_STATUS_CODES.SUBMITTED.code,
+        PACKAGE_STATUS_CODES.UNDER_REVIEW.code,
       ];
 
       return statuses[i % statuses.length];
@@ -97,8 +78,8 @@ export default Factory.extend({
 
     dcpVisibility(i) {
       const visibility = [
-        PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY,
-        PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC,
+        PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY.code,
+        PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC.code,
       ];
 
       return visibility[i % visibility.length];
@@ -108,9 +89,9 @@ export default Factory.extend({
   planningNoViewPASButton: trait({
     statuscode(i) {
       const statuses = [
-        PACKAGE_STATUS_CODES.CERTIFIED,
-        PACKAGE_STATUS_CODES.FINAL_APPROVAL,
-        PACKAGE_STATUS_CODES.WITHDRAWN,
+        PACKAGE_STATUS_CODES.CERTIFIED.code,
+        PACKAGE_STATUS_CODES.FINAL_APPROVAL.code,
+        PACKAGE_STATUS_CODES.WITHDRAWN.code,
       ];
 
       return statuses[i % statuses.length];
@@ -118,11 +99,11 @@ export default Factory.extend({
 
     dcpVisibility(i) {
       const visibility = [
-        PACKAGE_VISIBILITY_CODES.INTERNAL_DCP_ONLY,
-        PACKAGE_VISIBILITY_CODES.CPC_ONLY,
-        PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY,
-        PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC,
-        PACKAGE_VISIBILITY_CODES.LUP,
+        PACKAGE_VISIBILITY_CODES.INTERNAL_DCP_ONLY.code,
+        PACKAGE_VISIBILITY_CODES.CPC_ONLY.code,
+        PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY.code,
+        PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC.code,
+        PACKAGE_VISIBILITY_CODES.LUP.code,
       ];
 
       return visibility[i % visibility.length];

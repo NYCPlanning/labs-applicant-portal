@@ -10,7 +10,9 @@ module('Unit | Model | package', function(hooks) {
   test('it exists', async function(assert) {
     const store = this.owner.lookup('service:store');
     const bbl = store.createRecord('bbl');
+    const ourProject = store.createRecord('project');
     const model = store.createRecord('package', {
+      project: ourProject,
       pasForm: store.createRecord('pas-form', {
         bbls: [bbl],
         applicants: [store.createRecord('applicant')],

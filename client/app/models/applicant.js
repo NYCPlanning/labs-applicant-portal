@@ -4,15 +4,13 @@ export default class ApplicantModel extends Model {
   @belongsTo('pas-form')
   pasForm;
 
-  // indicates which table to send to crm ("Applicant" or "Applicant Representative")
-  @attr('string', {
-    defaultValue: 'Applicant',
+  // only exists on dcp_applicantinformation CRM entity
+  // either 'Applicant' or 'Authorized Applicant Representative'
+  // either 717170000 or 717170001
+  @attr('number', {
+    defaultValue: 717170000,
   })
-  targetEntity;
-
-  // doesn't exist on "Applicant Representative Information" CRM table
-  @attr('string')
-  applicantType;
+  dcpType;
 
   @attr('string')
   dcpFirstname;
@@ -40,4 +38,19 @@ export default class ApplicantModel extends Model {
 
   @attr('string')
   dcpPhone;
+
+  // indicates which table to send to crm ('Applicant' or 'Applicant Representative')
+  @attr('string', {
+    defaultValue: 'dcp_applicantinformation',
+  })
+  targetEntity;
+
+  // derive a friendlier name for the entities to use in the UI
+  get friendlyEntityName() {
+    if (this.targetEntity === 'dcp_applicantinformation') {
+      return 'Applicant';
+    }
+
+    return 'Applicant Team Member';
+  }
 }

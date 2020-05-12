@@ -9,6 +9,9 @@ export const BBL_ATTRIBUTES = [
   'dcp_partiallot',
   'dcp_developmentsite',
   'dcp_bblnumber',
+  'dcp_userinputborough',
+  'dcp_userinputblock',
+  'dcp_userinputlot',
 ];
 
 @UseInterceptors(new JsonApiSerializeInterceptor('bbls', {

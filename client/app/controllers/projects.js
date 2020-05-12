@@ -1,23 +1,6 @@
 import Controller from '@ember/controller';
 import { sort } from '@ember/object/computed';
-
-// TODO: Get theses codes from a Constants service
-const PACKAGE_STATUS_CODES = {
-  PACKAGE_PREPARATION: 'Package Preparation',
-  CERTIFIED: 'Certified',
-  FINAL_APPROVAL: 'Final Approval',
-  REVIEWED_NO_REVISIONS_REQUIRED: 'Reviewed - No Revisions Required',
-  REVIEWED_REVISIONS_REQUIRED: 'Reviewed - Revisions Required',
-  WITHDRAWN: 'Withdrawn',
-  SUBMITTED: 'Submitted',
-  UNDER_REVIEW: 'Under Review',
-  MISTAKE: 'Mistake',
-};
-
-const PACKAGE_VISIBILITY_CODES = {
-  APPLICANT_ONLY: 717170002,
-  GENERAL_PUBLIC: 717170003,
-};
+import { PACKAGE_STATUS_CODES, PACKAGE_VISIBILITY_CODES } from '../models/package';
 
 export default class ProjectsController extends Controller {
   queryParams = ['email'];
@@ -27,10 +10,10 @@ export default class ProjectsController extends Controller {
   get applicantProjects () {
     return this.model.filter((project) => project.pasPackages.some((projectPackage) => {
       if (
-        projectPackage.statuscode === PACKAGE_STATUS_CODES.PACKAGE_PREPARATION
+        projectPackage.statuscode === PACKAGE_STATUS_CODES.PACKAGE_PREPARATION.code
         && [
-          PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY,
-          PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC,
+          PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY.code,
+          PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC.code,
         ].includes(projectPackage.dcpVisibility)
       ) {
         return true;
@@ -48,10 +31,10 @@ export default class ProjectsController extends Controller {
       if (project.pasPackages.length === 0) return true;
       return project.pasPackages.some((projectPackage) => {
         if (
-          projectPackage.statuscode === PACKAGE_STATUS_CODES.PACKAGE_PREPARATION
+          projectPackage.statuscode === PACKAGE_STATUS_CODES.PACKAGE_PREPARATION.code
           && [
-            PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY,
-            PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC,
+            PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY.code,
+            PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC.code,
           ].includes(projectPackage.dcpVisibility)
         ) {
           return false;

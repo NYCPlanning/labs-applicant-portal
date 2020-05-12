@@ -46,9 +46,9 @@ export class ProjectsService {
     }
   }
 
+  // REDO: let's find a different approach
   private overwriteCodesWithLabels(projects) {
     return overwriteCodesWithLabels(projects, [
-      'statuscode',
       '_dcp_applicant_customer_value',
       'dcp_packagetype',
     ]);
