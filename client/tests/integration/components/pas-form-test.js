@@ -123,9 +123,17 @@ module('Integration | Component | pas-form', function(hooks) {
 
     this.package = await this.owner.lookup('service:store')
       .findRecord('package', projectPackage.id, { include: 'pas-form,project' });
+    this.save = () => { this.package.saveDescendants(); };
+    this.submit = () => { this.package.submit(); };
 
     // render form
-    await render(hbs`<Packages::PasForm::Edit @package={{this.package}} />`);
+    await render(hbs`
+      <Packages::PasForm::Edit
+        @package={{this.package}}
+        @onSave={{fn this.save}}
+        @onSubmit={{fn this.submit}}
+      />
+    `);
 
     // save button should start disabled
     // TODO: fix this test.  The form starts dirty because we implicitly create a new applicant when the applicants array is empty
@@ -152,6 +160,8 @@ module('Integration | Component | pas-form', function(hooks) {
 
     this.package = await this.owner.lookup('service:store')
       .findRecord('package', projectPackage.id, { include: 'pas-form,project' });
+    this.save = () => { this.package.saveDescendants(); };
+    this.submit = () => { this.package.submit(); };
 
     class RouterServiceStub extends Service {
       transitionTo() {}
@@ -161,7 +171,11 @@ module('Integration | Component | pas-form', function(hooks) {
 
     // render form
     await render(hbs`
-      <Packages::PasForm::Edit @package={{this.package}} />
+      <Packages::PasForm::Edit
+        @package={{this.package}}
+        @onSave={{fn this.save}}
+        @onSubmit={{fn this.submit}}
+      />
       <div id="reveal-modal-container"></div>
     `);
 

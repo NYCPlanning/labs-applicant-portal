@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { inject as service } from '@ember/service';
 import { Changeset } from 'ember-changeset';
 import lookupValidator from 'ember-changeset-validations';
 import SaveablePasFormValidations from '../../../validations/saveable-pas-form';
@@ -35,9 +34,10 @@ export default class PasFormComponent extends Component {
     // this handles that validation.
     this.saveableChanges.validate();
     this.submittableChanges.validate();
-  }
 
-  @service router;
+    console.assert(!!this.args.onSave, 'You didnt pass a callback'); // eslint-disable-line
+    console.assert(!!this.args.onSubmit, 'You didnt pass a callback'); // eslint-disable-line
+  }
 
   get package() {
     return this.args.package || {};
@@ -64,22 +64,18 @@ export default class PasFormComponent extends Component {
     return this.submittableChanges.isValid;
   }
 
-  // TODO: consider decoupling the PAS Form from the Package
-  // for better modularity and avoiding "inappropriate intimacy"
   @action
   async save() {
     await this.saveableChanges.save();
-    await this.package.saveDescendants();
+
+    this.args.onSave();
   }
 
   @action
   async submit() {
     await this.submittableChanges.save();
 
-    // these next things should be passed as a callback action
-    await this.package.submit();
-
-    this.router.transitionTo('packages.show', this.package.id);
+    this.args.onSubmit();
   }
 
   @action
