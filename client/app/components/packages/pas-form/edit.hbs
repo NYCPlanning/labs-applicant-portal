@@ -698,11 +698,15 @@
             type="button"
             class="button expanded large"
             disabled={{not this.isSaveable}}
-            {{on "click" this.save}}
+            {{on "click" (perform this.save)}}
             data-test-save-button
           >
             {{!-- TODO: Make this button work with the action passed in @save--}}
-            Save
+            {{#if this.save.isRunning}}
+              <FaIcon @icon="spinner" @spin="true" size="5x" class="light-gray" />
+            {{else}}
+              Save
+            {{/if}}
           </button>
           <button
             type="button"
@@ -711,8 +715,11 @@
             {{on "click" this.toggleModal}}
             data-test-submit-button
           >
-            {{!-- TODO: Disable this button if model dirty/invaild --}}
-            Submit
+            {{#if this.submit.isRunning}}
+              <FaIcon @icon="spinner" @spin="true" size="5x" class="light-gray" />
+            {{else}}
+              Submit
+            {{/if}}
           </button>
         </p>
         {{#if this.modalIsOpen}}
@@ -727,6 +734,7 @@
                   <button
                     type="button"
                     class="button large secondary no-margin"
+                    disabled={{this.submit.isRunning}}
                     {{on "click" this.toggleModal}}
                   >
                     Continue Editing
@@ -735,11 +743,16 @@
                 <div class="cell large-6 text-right">
                   <button
                     type="button"
-                    class="button large no-margin"
-                    {{on "click" (fn this.submit)}}
+                    class="button expanded large no-margin"
+                    disabled={{this.submit.isRunning}}
+                    {{on "click" (perform this.submit)}}
                     data-test-confirm-submit-button
                   >
-                    Submit
+                    {{#if this.submit.isRunning}}
+                      <FaIcon @icon="spinner" @spin="true" size="5x" class="light-gray" />
+                    {{else}}
+                      Submit
+                    {{/if}}
                   </button>
                 </div>
               </div>
