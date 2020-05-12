@@ -15,7 +15,9 @@
           <div class="grid-x">
             <div class="cell small-8">
               <a
-                href="#"
+                href={{concat (get-env-variable 'host') '/documents' file.serverRelativeUrl}}
+                target="_blank"
+                rel="noopener noreferrer"
                 data-test-document-name={{idx}}
               >
                 {{file.name}}

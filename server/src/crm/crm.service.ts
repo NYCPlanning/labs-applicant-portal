@@ -456,6 +456,25 @@ export class CrmService {
     })
   }
 
+  async getSharepointFile(serverRelativeUrl): Promise<any> {
+    const { access_token } = await this.generateSharePointAccessToken();
+    const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
+
+    // see https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/dn775742(v=office.15)
+    const url = `https://nyco365.sharepoint.com/sites/${SHAREPOINT_CRM_SITE}/_api/web/GetFileByServerRelativeUrl('/${serverRelativeUrl}')/$value?binaryStringResponseBody=true`;
+
+    const options = {
+      url,
+      headers: {
+        'Authorization': `Bearer ${access_token}`,
+      },
+    };
+
+    // this returns a pipeable stream
+    return Request.get(options)
+      .on('error', (e) => console.log(e));
+  }
+
   async deleteSharepointFile(serverRelativeUrl): Promise<any> {
     const { access_token } = await this.generateSharePointAccessToken();
     const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
