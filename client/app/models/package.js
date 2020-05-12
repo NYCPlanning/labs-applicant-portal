@@ -59,6 +59,17 @@ export const PACKAGE_VISIBILITY_CODES = {
   },
 };
 
+export const PACKAGE_STATE_CODES = {
+  ACTIVE: {
+    code: 0,
+    label: 'Active',
+  },
+  INACTIVE: {
+    code: 1,
+    label: 'Inactive',
+  },
+};
+
 export default class PackageModel extends Model {
   ready() {
     const fileQueue = this.fileQueue.create(this.id);
@@ -109,8 +120,8 @@ export default class PackageModel extends Model {
   }
 
   async submit() {
-    this.statuscode = PACKAGE_STATUS_CODES.FINAL_APPROVAL.code;
-    this.statecode = 1;
+    this.statuscode = PACKAGE_STATUS_CODES.SUBMITTED.code;
+    this.statecode = PACKAGE_STATE_CODES.INACTIVE.code;
 
     await this.saveDescendants();
   }
