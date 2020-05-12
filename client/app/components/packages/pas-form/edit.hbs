@@ -130,7 +130,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.saveableChanges.dcpUrbanrenewalarea}}
-                @changed={{fn this.validate}}
+                @changed={{this.validate}}
                  data-test-dcpurbanrenewalarea={{radio.label}}
               >
                 {{radio.label}}
@@ -195,7 +195,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.saveableChanges.dcpLanduseactiontype2}}
-                @changed={{fn this.validate}}
+                @changed={{this.validate}}
                 data-test-dcplanduseactiontype2={{radio.label}}
               >
                 {{radio.label}}
@@ -229,7 +229,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.saveableChanges.dcpProjectareaindustrialbusinesszone}}
-                @changed={{fn this.validate}}
+                @changed={{this.validate}}
                 data-test-dcpprojectareaindustrialbusinesszone={{radio.label}}
               >
                 {{radio.label}}
@@ -274,7 +274,7 @@
                 <Input
                   @type="text"
                   @value={{this.saveableChanges.dcpProjectarealandmarkname}}
-                  @changed={{fn this.validate}}
+                  @changed={{this.validate}}
                   maxlength="250"
                   data-test-dcpisprojectarealandmarkname
                 />
@@ -333,7 +333,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.saveableChanges.dcpRestrictivedeclaration}}
-                @changed={{fn this.validate}}
+                @changed={{this.validate}}
                 data-test-dcprestrictivedeclaration={{radio.label}}
               >
                 {{radio.label}}
@@ -479,7 +479,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.saveableChanges.dcpIsinclusionaryhousingdesignatedarea}}
-                @changed={{fn this.validate}}
+                @changed={{this.validate}}
                 data-test-dcpisinclusionaryhousingdesignatedarea={{radio.label}}
               >
                 {{radio.label}}
@@ -512,7 +512,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.saveableChanges.dcpDiscressionaryfundingforffordablehousing}}
-                @changed={{fn this.validate}}
+                @changed={{this.validate}}
                 data-test-dcpdiscressionaryfundingforffordablehousing={{radio.label}}
               >
                 {{radio.label}}
