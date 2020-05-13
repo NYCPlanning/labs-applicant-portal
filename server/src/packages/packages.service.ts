@@ -50,10 +50,20 @@ export class PackagesService {
         dcp_dcp_projectbbl_dcp_pasform
     `);
 
-    const { value: documents } = await this.findPackageSharepointDocuments(
-      dcp_name,
-      dcp_packageid,
-    );
+    // drive-by redefine because the sharepoint lookup
+    // is failing for some reason and we don't want it
+    // to take the entire system down with it.
+    let documents = [];
+
+    try {
+      const { value } = await this.findPackageSharepointDocuments(
+        dcp_name,
+        dcp_packageid,
+      );
+      documents = value;
+    } catch (e) {
+      console.log('Sharepoint request failed:', e);
+    }
 
     return {
       ...projectPackageForm.dcp_package,
