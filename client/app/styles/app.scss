@@ -19,7 +19,7 @@
 // Custom app components
 @import 'modules/_login';
 @import 'modules/_reveal-modal';
-@import 'modules/_m-search';
+@import 'modules/_geosearch';
 @import 'modules/_pasform';
 
 @import "ember-power-select";
@@ -32,10 +32,12 @@
   }
 }
 
-.form-section {
+.site-main {
   position: relative;
   z-index: 1;
+}
 
+.form-section {
   & + & {
     border-top: $hr-border;
     margin-top: $global-margin*3;
