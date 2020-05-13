@@ -130,7 +130,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.saveableChanges.dcpUrbanrenewalarea}}
-                @changed={{fn this.validate}}
+                @changed={{this.validate}}
                  data-test-dcpurbanrenewalarea={{radio.label}}
               >
                 {{radio.label}}
@@ -195,7 +195,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.saveableChanges.dcpLanduseactiontype2}}
-                @changed={{fn this.validate}}
+                @changed={{this.validate}}
                 data-test-dcplanduseactiontype2={{radio.label}}
               >
                 {{radio.label}}
@@ -229,7 +229,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.saveableChanges.dcpProjectareaindustrialbusinesszone}}
-                @changed={{fn this.validate}}
+                @changed={{this.validate}}
                 data-test-dcpprojectareaindustrialbusinesszone={{radio.label}}
               >
                 {{radio.label}}
@@ -274,7 +274,7 @@
                 <Input
                   @type="text"
                   @value={{this.saveableChanges.dcpProjectarealandmarkname}}
-                  @changed={{fn this.validate}}
+                  @changed={{this.validate}}
                   maxlength="250"
                   data-test-dcpisprojectarealandmarkname
                 />
@@ -333,7 +333,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.saveableChanges.dcpRestrictivedeclaration}}
-                @changed={{fn this.validate}}
+                @changed={{this.validate}}
                 data-test-dcprestrictivedeclaration={{radio.label}}
               >
                 {{radio.label}}
@@ -479,7 +479,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.saveableChanges.dcpIsinclusionaryhousingdesignatedarea}}
-                @changed={{fn this.validate}}
+                @changed={{this.validate}}
                 data-test-dcpisinclusionaryhousingdesignatedarea={{radio.label}}
               >
                 {{radio.label}}
@@ -512,7 +512,7 @@
               <RadioButton
                 @value={{radio.code}}
                 @groupValue={{this.saveableChanges.dcpDiscressionaryfundingforffordablehousing}}
-                @changed={{fn this.validate}}
+                @changed={{this.validate}}
                 data-test-dcpdiscressionaryfundingforffordablehousing={{radio.label}}
               >
                 {{radio.label}}
@@ -698,11 +698,15 @@
             type="button"
             class="button expanded large"
             disabled={{not this.isSaveable}}
-            {{on "click" this.save}}
+            {{on "click" (perform this.save)}}
             data-test-save-button
           >
             {{!-- TODO: Make this button work with the action passed in @save--}}
-            Save
+            {{#if this.save.isRunning}}
+              <FaIcon @icon="spinner" @spin="true" size="5x" class="light-gray" />
+            {{else}}
+              Save
+            {{/if}}
           </button>
           <button
             type="button"
@@ -711,8 +715,11 @@
             {{on "click" this.toggleModal}}
             data-test-submit-button
           >
-            {{!-- TODO: Disable this button if model dirty/invaild --}}
-            Submit
+            {{#if this.submit.isRunning}}
+              <FaIcon @icon="spinner" @spin="true" size="5x" class="light-gray" />
+            {{else}}
+              Submit
+            {{/if}}
           </button>
         </p>
         {{#if this.modalIsOpen}}
@@ -727,6 +734,7 @@
                   <button
                     type="button"
                     class="button large secondary no-margin"
+                    disabled={{this.submit.isRunning}}
                     {{on "click" this.toggleModal}}
                   >
                     Continue Editing
@@ -735,11 +743,16 @@
                 <div class="cell large-6 text-right">
                   <button
                     type="button"
-                    class="button large no-margin"
-                    {{on "click" (fn this.submit)}}
+                    class="button expanded large no-margin"
+                    disabled={{this.submit.isRunning}}
+                    {{on "click" (perform this.submit)}}
                     data-test-confirm-submit-button
                   >
-                    Submit
+                    {{#if this.submit.isRunning}}
+                      <FaIcon @icon="spinner" @spin="true" size="5x" class="light-gray" />
+                    {{else}}
+                      Submit
+                    {{/if}}
                   </button>
                 </div>
               </div>

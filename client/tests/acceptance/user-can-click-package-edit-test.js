@@ -4,6 +4,7 @@ import {
   click,
   currentURL,
   settled,
+  waitFor,
 } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -34,11 +35,17 @@ module('Acceptance | user can click package edit', function(hooks) {
     await visit('/projects');
     await click('[data-test-project="edit-pas"]');
     await click('[data-test-save-button]');
+
+    await waitFor('[data-test-submit-button]:not([disabled])');
     await click('[data-test-submit-button]');
     await click('[data-test-confirm-submit-button]');
 
     // for some reason promises aren't being captured so we await for settled state
     await settled();
+
+    // use waitFor as a way to "wait" for the transition
+    // within the pas-form/edit Component submit() task
+    await waitFor('[data-test-show-dcprevisedprojectname]');
 
     assert.equal(currentURL(), '/packages/1');
   });
