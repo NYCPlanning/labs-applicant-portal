@@ -97,6 +97,9 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
     // switch from Individual to Organization applicant type
     await click('[data-test-applicant-type-radio-organization]');
 
+    // organization input should appear after user toggles to "Organization"
+    assert.dom('[data-test-applicant-organization]').hasText('Organization');
+
     // should be reflected in the applicants array!
     assert.equal(this.applicants[0].dcpType, 717170001);
   });
