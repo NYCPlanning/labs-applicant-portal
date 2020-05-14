@@ -57,8 +57,16 @@ export default class PasFormComponent extends Component {
       isBblsDirty,
       isApplicantsDirty,
     } = this.pasForm;
+    const {
+      isDirty: isAttachmentsDirty,
+    } = this.package.fileManager;
 
-    return !this.isUpdatingDb && ((isPasFormDirty && isPasFormValid) || isBblsDirty || isApplicantsDirty);
+    return !this.isUpdatingDb && ((isPasFormDirty
+      && isPasFormValid)
+      || isBblsDirty
+      || isApplicantsDirty
+      || isAttachmentsDirty
+    );
   }
 
   get isSubmittable() {
