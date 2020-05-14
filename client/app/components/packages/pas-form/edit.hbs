@@ -693,35 +693,21 @@
     <div class="cell large-4">
 
       <div class="sticky-sidebar">
-        <p>
-          <button
-            type="button"
-            class="button expanded large"
-            disabled={{not this.isSaveable}}
-            {{on "click" (perform this.save)}}
-            data-test-save-button
-          >
-            {{!-- TODO: Make this button work with the action passed in @save--}}
-            {{#if this.save.isRunning}}
-              <FaIcon @icon="spinner" @spin="true" size="5x" class="light-gray" />
-            {{else}}
-              Save
-            {{/if}}
-          </button>
-          <button
-            type="button"
-            class="button expanded large secondary"
-            disabled={{not this.isSubmittable}}
-            {{on "click" this.toggleModal}}
-            data-test-submit-button
-          >
-            {{#if this.submit.isRunning}}
-              <FaIcon @icon="spinner" @spin="true" size="5x" class="light-gray" />
-            {{else}}
-              Submit
-            {{/if}}
-          </button>
-        </p>
+        <Packages::SaveButton
+          @onClick={{perform this.save}}
+          @isEnabled={{this.isSaveable}}
+          @isRunning={{this.save.isRunning}}
+          @isSaved={{and (not this.isSaveable) (not this.save.isRunning)}}
+          data-test-save-button
+        />
+        <Packages::SaveButton
+          @onClick={{this.toggleModal}}
+          @isEnabled={{this.isSubmittable}}
+          @isRunning={{this.submit.isRunning}}
+          @isSubmit={{true}}
+          class="secondary"
+          data-test-submit-button
+        />
         {{#if this.modalIsOpen}}
           <EmberWormhole @to="reveal-modal-container">
             <RevealModal @toggle={{this.toggleModal}}>
@@ -741,19 +727,14 @@
                   </button>
                 </div>
                 <div class="cell large-6 text-right">
-                  <button
-                    type="button"
-                    class="button expanded large no-margin"
-                    disabled={{this.submit.isRunning}}
-                    {{on "click" (perform this.submit)}}
+                  <Packages::SaveButton
+                    @onClick={{perform this.submit}}
+                    @isEnabled={{not this.submit.isRunning}}
+                    @isRunning={{this.submit.isRunning}}
+                    @isSubmit={{true}}
+                    class="no-margin"
                     data-test-confirm-submit-button
-                  >
-                    {{#if this.submit.isRunning}}
-                      <FaIcon @icon="spinner" @spin="true" size="5x" class="light-gray" />
-                    {{else}}
-                      Submit
-                    {{/if}}
-                  </button>
+                  />
                 </div>
               </div>
             </RevealModal>
