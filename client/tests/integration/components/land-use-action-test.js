@@ -47,6 +47,8 @@ module('Integration | Component | land-use-action', function(hooks) {
     await fillIn('[data-test-input="dcpPfzoningspecialpermit"]', 6);
 
     assert.equal(this.package.pasForm.dcpPfzoningspecialpermit, 6);
+    // make sure that changing one count field input did not affect the other
+    assert.equal(this.package.pasForm.dcpPfchangeincitymap, 2);
 
     await fillIn('[data-test-input="dcpZoningspecialpermitpursuantto"]', 'Section 5B');
 
@@ -108,5 +110,38 @@ module('Integration | Component | land-use-action', function(hooks) {
     assert.dom('[data-test-input="dcpAffectedzrnumber"]').hasNoValue();
     assert.dom('[data-test-input="dcpZoningresolutiontitle"]').hasNoValue();
     assert.dom('[data-test-input="dcpPfchangeincitymap"]').hasValue('4');
+  });
+
+  test('Issue #235 Bug: Updating action inputs does not cause actions to show up twice', async function(assert) {
+    const projectPackage = this.server.create('package', 1, 'applicant', 'withLandUseActions');
+
+    this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
+
+    // Template block usage:
+    await render(hbs`
+      <LandUseAction @pasForm={{this.package.pasForm}}>
+      </LandUseAction>
+    `);
+
+    await selectChoose('[data-test-land-use-action-picker]', 'Zoning Special Permit');
+
+    // check that only one input exists
+    assert.dom('[data-test-input="dcpZoningspecialpermitpursuantto"]').exists({ count: 1 });
+
+    await fillIn('[data-test-input="dcpZoningspecialpermitpursuantto"]', 'Section 5B');
+
+    // check that setting field on the model did NOT add another instance of the action to the UI
+    assert.dom('[data-test-input="dcpZoningspecialpermitpursuantto"]').exists({ count: 1 });
+
+    // user removes text
+    await fillIn('[data-test-input="dcpZoningspecialpermitpursuantto"]', '');
+
+    assert.dom('[data-test-input="dcpPfzoningspecialpermit"]').exists({ count: 1 });
+
+    // check that only one input exists
+    await fillIn('[data-test-input="dcpPfzoningspecialpermit"]', 6);
+
+    // check that setting field on the model did NOT add another instance of the action to the UI
+    assert.dom('[data-test-input="dcpPfzoningspecialpermit"]').exists({ count: 1 });
   });
 });

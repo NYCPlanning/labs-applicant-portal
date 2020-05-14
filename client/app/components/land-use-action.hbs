@@ -23,7 +23,7 @@
     </legend>
     <label class="action-form-label">
     How many {{landUseAction.name}} actions?
-      <ActionFormInput @pasForm={{@pasForm}} @fieldType="number" @landUseActionField={{landUseAction.field}}/>
+      <ActionFormInput @pasForm={{@pasForm}} @fieldType="number" @landUseActionField={{landUseAction.countField}}/>
     </label>
     {{#if (or (eq landUseAction.name "Zoning Special Permit") (eq landUseAction.name "Zoning Certification") (eq landUseAction.name "Zoning Authorization"))}}
       <label class="action-form-label">
