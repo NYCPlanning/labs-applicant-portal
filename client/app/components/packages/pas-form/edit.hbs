@@ -694,14 +694,14 @@
 
       <div class="sticky-sidebar">
         <Packages::SaveButton
-          @clickEvent={{perform this.save}}
+          @onClick={{perform this.save}}
           @isEnabled={{this.isSaveable}}
           @isRunning={{this.save.isRunning}}
           @isSaved={{and (not this.isSaveable) (not this.save.isRunning)}}
           data-test-save-button
         />
         <Packages::SaveButton
-          @clickEvent={{this.toggleModal}}
+          @onClick={{this.toggleModal}}
           @isEnabled={{this.isSubmittable}}
           @isRunning={{this.submit.isRunning}}
           @isSubmit={{true}}
@@ -728,7 +728,7 @@
                 </div>
                 <div class="cell large-6 text-right">
                   <Packages::SaveButton
-                    @clickEvent={{perform this.submit}}
+                    @onClick={{perform this.submit}}
                     @isEnabled={{not this.submit.isRunning}}
                     @isRunning={{this.submit.isRunning}}
                     @isSubmit={{true}}

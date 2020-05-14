@@ -2,7 +2,7 @@
   type="button"
   class="button expanded large {{if @isSaved 'button--saved'}}"
   disabled={{not @isEnabled}}
-  {{on "click" @clickEvent}}
+  {{on "click" @onClick}}
   ...attributes
 >
   {{#if @isRunning}}
