@@ -9,7 +9,7 @@
         There was a problem saving your information.
     </h5>
       {{#each @pasForm.adapterError.errors as |error|}}
-        <p class="font-mono text-red-dark bg-red-white small-padding text-small" data-test-error-message>{{error.message}}</p>
+        <p class="font-mono text-red-dark bg-red-white small-padding text-small" data-test-error-message>{{error.details}}</p>
       {{/each}}
       <p class="text-red-dark text-small">
         Please try again. If the problem persists, please contact City Planning at <a href="mailto:ZAP_feedback_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a> or <a href="tel:212-720-3300" class="nowrap">212-720-3300</a>.

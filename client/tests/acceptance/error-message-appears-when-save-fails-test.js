@@ -27,7 +27,7 @@ module('Acceptance | error message appears when save fails', function(hooks) {
       pasForm: this.server.create('pas-form'),
     });
 
-    this.server.patch('/pas-forms/:id', { errors: [{ message: 'server problem' }] }, 500); // force mirage to error
+    this.server.patch('/pas-forms/:id', { errors: [{ detail: 'server problem' }] }, 500); // force mirage to error
 
     await visit('/packages/1/edit');
 
@@ -64,7 +64,7 @@ module('Acceptance | error message appears when save fails', function(hooks) {
       }),
     });
 
-    this.server.patch('/pas-forms/:id', { errors: [{ message: 'server problem' }] }, 500); // force mirage to error
+    this.server.patch('/pas-forms/:id', { errors: [{ detail: 'server problem' }] }, 500); // force mirage to error
 
     await visit('/packages/1/edit');
 
@@ -72,7 +72,6 @@ module('Acceptance | error message appears when save fails', function(hooks) {
 
     await click('[data-test-submit-button]');
     await click('[data-test-confirm-submit-button]');
-    await settled(); // async make sure submit action finishes
 
     await waitFor('[data-test-error-message]');
 
