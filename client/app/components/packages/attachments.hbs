@@ -115,6 +115,7 @@
           @name={{@package.id}}
           @accept='*/*'
           @multiple={{true}}
+          @onfileadd={{this.trackFileForUpload}}
           class="button secondary expanded"
         >
           <FaIcon @icon="upload" @prefix="fas" />

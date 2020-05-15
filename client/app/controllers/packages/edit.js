@@ -5,6 +5,7 @@ export default class PackagesEditController extends Controller {
   @action
   async savePackage() {
     await this.model.saveDescendants();
+    await this.model.fileManager.save();
   }
 
   @action
