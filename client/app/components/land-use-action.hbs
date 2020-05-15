@@ -8,18 +8,17 @@
       @placeholder="-- select an action --"
       @searchEnabled={{false}}
       @options={{this.availableActions}}
-      @onchange={{fn (mut this.selectedAction)}}
-      @onclose={{fn this.addSelectedAction}}
+      @onchange={{fn this.addSelectedAction}}
       as |landUseAction|
     >
       {{landUseAction.name}}
     </PowerSelect>
   </label>
 </div>
-{{#if this.selectedActions}}
+{{#if this.sortedSelectedActions}}
   <h5>Land Use Actions Included in This Project</h5>
 {{/if}}
-{{#each this.selectedActions as |landUseAction|}}
+{{#each this.sortedSelectedActions as |landUseAction|}}
   <fieldset class="fieldset relative">
     <legend>
       <strong data-test-action-name="{{landUseAction.name}}">{{landUseAction.name}}</strong>

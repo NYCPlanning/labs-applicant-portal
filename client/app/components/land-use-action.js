@@ -61,9 +61,6 @@ export const allLandUseActionOptions = [
 ];
 
 export default class LandUseActionComponent extends Component {
-  // local variable that records singular action result of dropdown selection
-  @tracked selectedAction = {};
-
   // actions added by user in current session (pushed each time user selects from dropdown)
   @tracked actionsAddedByUser = [];
 
@@ -75,18 +72,47 @@ export default class LandUseActionComponent extends Component {
     return allLandUseActionOptions.filter((option) => pasForm[option.countField] || pasForm[option.attr1] || pasForm[option.attr2] || newActions.includes(option));
   }
 
+  // sorting: actions from db all on bottom in alphabetical order
+  // sorting: new actions all on top, most recently added first
+  get sortedSelectedActions() {
+    const newActions = this.actionsAddedByUser;
+
+    return this.selectedActions.sort(function (a, b) {
+      const includesA = newActions.includes(a);
+      const includesB = newActions.includes(b);
+
+      // if actions are both new -- sort most recently added on top
+      if (includesA && includesB) {
+        return newActions.indexOf(a) - newActions.indexOf(b);
+      }
+
+      // if actions are both from db -- sort alphabetically
+      if (!includesA && !includesB) {
+        return (a.name > b.name) ? 1 : -1;
+      }
+
+      // if top action is new and bottom action is from db -- don't reorder
+      if (includesA && !includesB) {
+        return -1;
+      }
+
+      // if top action is from db and bottom action is new -- reorder
+      if (!includesA && includesB) {
+        return 1;
+      }
+    });
+  }
+
   // actions that appear in dropdown sorted alphabetically
   get availableActions() {
-    const availableLandUseActions = allLandUseActionOptions.filter((option) => !this.selectedActions.includes(option));
-    return availableLandUseActions.sort((a, b) => ((a.name > b.name) ? 1 : -1));
+    return allLandUseActionOptions.filter((option) => !this.selectedActions.includes(option))
+      .sort((a, b) => ((a.name > b.name) ? 1 : -1));
   }
 
   @action
-  addSelectedAction() {
-    this.args.pasForm[this.selectedAction.countField] = 1;
-    this.actionsAddedByUser.unshiftObject(this.selectedAction);
-
-    this.selectedAction = {};
+  addSelectedAction(selectedAction) {
+    this.args.pasForm[selectedAction.countField] = 1;
+    this.actionsAddedByUser.unshiftObject(selectedAction);
   }
 
   @action
