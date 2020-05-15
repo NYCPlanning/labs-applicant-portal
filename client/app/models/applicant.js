@@ -51,6 +51,6 @@ export default class ApplicantModel extends Model {
       return 'Applicant';
     }
 
-    return 'Applicant Team Member';
+    return 'Other Team Member';
   }
 }

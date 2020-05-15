@@ -12,25 +12,31 @@
   {{!-- buttons for user to add new applicants --}}
   <div class="fieldset-adder">
     <h5 class="small-margin-bottom">
-      Add an Applicant Team Member:
+      Add a team member:
     </h5>
-    <p class="button-group">
-      <button
-        class="button secondary"
-        type="button"
-        {{on "click" (fn this.addApplicant "dcp_applicantinformation") }}
-        data-test-add-applicant-button
-      >
-        Add Applicant
-      </button>
-      <button
-        class="button secondary"
-        type="button"
-        {{on "click" (fn this.addApplicant "dcp_applicantrepresentativeinformation") }}
-        data-test-add-applicant-team-member-button
-      >
-        Add Other Team Member
-      </button>
-    </p>
+    <div class="grid-x">
+      <div class="cell large-6 small-padding-right">
+        <button
+          class="button expanded secondary no-margin"
+          type="button"
+          {{on "click" (fn this.addApplicant "dcp_applicantinformation") }}
+          data-test-add-applicant-button
+        >
+          <strong>Add an applicant</strong>
+          <span class="display-block">(individual or organization)</span>
+        </button>
+      </div>
+      <div class="cell large-6 small-padding-left">
+        <button
+          class="button expanded secondary no-margin"
+          type="button"
+          {{on "click" (fn this.addApplicant "dcp_applicantrepresentativeinformation") }}
+          data-test-add-applicant-team-member-button
+        >
+          <strong>Add other team member</strong>
+          <span class="display-block">(land use/environmental consultant)</span>
+        </button>
+      </div>
+    </div>
   </div>
 </div>
