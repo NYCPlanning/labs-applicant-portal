@@ -711,6 +711,8 @@
           @isSaved={{and (not this.isSaveable) (not this.save.isRunning)}}
           data-test-save-button
         />
+        {{!-- Error Handling --}}
+        <Packages::PasFormError @pasForm={{this.pasForm}}/>
         <Packages::SaveButton
           @onClick={{this.toggleModal}}
           @isEnabled={{this.isSubmittable}}
@@ -730,7 +732,7 @@
                 <div class="cell large-6">
                   <button
                     type="button"
-                    class="button large secondary no-margin"
+                    class="button large secondary"
                     disabled={{this.submit.isRunning}}
                     {{on "click" this.toggleModal}}
                   >
@@ -748,9 +750,12 @@
                   />
                 </div>
               </div>
+              {{!-- Error Handling --}}
+              <Packages::PasFormError @pasForm={{this.pasForm}}/>
             </RevealModal>
           </EmberWormhole>
         {{/if}}
+
         <nav>
           <ul class="no-bullet text-weight-bold">
             <li class="medium-margin-bottom">
