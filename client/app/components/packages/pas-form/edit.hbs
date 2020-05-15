@@ -728,18 +728,18 @@
               <p class="header-large medium-margin-top small-margin-bottom">Are you sure?</p>
               <p>Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including the signature form) have been uploaded. If City Planning does not receive enough accurate information to provide guidance, the lead planner will notify you and request that this form be resubmitted with needed materials, corrections, or clarifications.</p>
               <hr>
-              <div class="grid-x grid-margin-x">
-                <div class="cell large-6">
+              <div class="grid-x">
+                <div class="cell large-6 small-padding-right">
                   <button
                     type="button"
-                    class="button large secondary"
+                    class="button expanded large secondary"
                     disabled={{this.submit.isRunning}}
                     {{on "click" this.toggleModal}}
                   >
                     Continue Editing
                   </button>
                 </div>
-                <div class="cell large-6 text-right">
+                <div class="cell large-6 small-padding-left">
                   <Packages::SaveButton
                     @onClick={{perform this.submit}}
                     @isEnabled={{not this.submit.isRunning}}
