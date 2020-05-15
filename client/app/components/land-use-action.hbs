@@ -16,6 +16,9 @@
     </PowerSelect>
   </label>
 </div>
+{{#if this.landUseActionSelections}}
+  <h5>Land Use Actions Included in This Project</h5>
+{{/if}}
 {{#each this.landUseActionSelections as |landUseAction|}}
   <fieldset class="fieldset relative">
     <legend>
