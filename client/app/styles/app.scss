@@ -19,7 +19,7 @@
 // Custom app components
 @import 'modules/_login';
 @import 'modules/_reveal-modal';
-@import 'modules/_m-search';
+@import 'modules/_geosearch';
 @import 'modules/_pasform';
 
 @import "ember-power-select";
@@ -30,6 +30,11 @@
     position: sticky;
     top: 0;
   }
+}
+
+.site-main {
+  position: relative;
+  z-index: 1;
 }
 
 .form-section {
@@ -70,4 +75,9 @@ $sticky-sidebar-offset: 6rem + rem-calc(20);
   font-size: rem-calc(14);
   padding: 0.4em;
   padding-right: 0;
+}
+
+.button.button--saved {
+  opacity: 1 !important;
+  background-color: $green-muted !important;
 }

@@ -3,6 +3,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { Changeset } from 'ember-changeset';
 import lookupValidator from 'ember-changeset-validations';
+import { task } from 'ember-concurrency';
 import SaveablePasFormValidations from '../../../validations/saveable-pas-form';
 import SubmittablePasFormValidations from '../../../validations/submittable-pas-form';
 
@@ -56,27 +57,41 @@ export default class PasFormComponent extends Component {
       isBblsDirty,
       isApplicantsDirty,
     } = this.pasForm;
+    const {
+      isDirty: isAttachmentsDirty,
+    } = this.package.fileManager;
 
-    return (isPasFormDirty && isPasFormValid) || isBblsDirty || isApplicantsDirty;
+    return !this.isUpdatingDb && ((isPasFormDirty
+      && isPasFormValid)
+      || isBblsDirty
+      || isApplicantsDirty
+      || isAttachmentsDirty
+    );
   }
 
   get isSubmittable() {
-    return this.submittableChanges.isValid;
+    return !this.isUpdatingDb && this.submittableChanges.isValid;
   }
 
-  @action
-  async save() {
-    await this.saveableChanges.save();
-
-    this.args.onSave();
+  get isUpdatingDb() {
+    return this.save.isRunning || this.submit.isRunning;
   }
 
-  @action
-  async submit() {
-    await this.submittableChanges.save();
+  @task(function* () {
+    yield this.saveableChanges.execute();
+    yield this.saveableChanges.rollback();
 
-    this.args.onSubmit();
-  }
+    yield this.args.onSave();
+  })
+  save;
+
+  @task(function* () {
+    yield this.submittableChanges.execute();
+    yield this.submittableChanges.rollback();
+
+    yield this.args.onSubmit();
+  })
+  submit;
 
   @action
   validate() {
@@ -87,6 +102,8 @@ export default class PasFormComponent extends Component {
 
   @action
   toggleModal() {
-    this.modalIsOpen = !this.modalIsOpen;
+    if (!this.save.isRunning) {
+      this.modalIsOpen = !this.modalIsOpen;
+    }
   }
 }

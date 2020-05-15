@@ -9,6 +9,9 @@ import {
   Delete,
   Query,
   HttpCode,
+  Param,
+  Get,
+  Res,
 } from '@nestjs/common';
 import { ConfigService } from '../config/config.service';
 import { CrmService } from '../crm/crm.service';
@@ -67,5 +70,16 @@ export class DocumentController {
   @HttpCode(204)
   async destroy(@Query('serverRelativeUrl') serverRelativeUrl) {
     return this.crmService.deleteSharepointFile(serverRelativeUrl);
+  }
+
+  // "path" refers to the "relative server path", the path
+  // to the file itself on the sharepoint host. for example,
+  // /sites/dcpuat2/.../filename.png
+  @Get('/*')
+  async read(@Param() path, @Res() res) {
+    const pathSegment = path[0];
+    const stream = await this.crmService.getSharepointFile(pathSegment);
+
+    stream.pipe(res);
   }
 }

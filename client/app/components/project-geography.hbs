@@ -1,11 +1,28 @@
-<h5>Add a tax lot by searching a BBL or an address</h5>
-<LabsSearch
-  @searchPlaceholder='Look up BBL (ex 1001440001)'
-  data-test-input="bbl-search"
-  @onSelect={{fn this.selectSearchResult}} as |search|
->
-  <small class="dark-gray">{{search.result.label}} <br> {{bbl-breakup search.result.bbl}}</small>
-</LabsSearch>
+<div class="fieldset-adder">
+  <h5 class="small-margin-bottom">
+    Add tax lots by searching for an address or BBL:
+  </h5>
+
+  <p class="help-text">
+    NYC Planning's <a href="https://lotselector.planning.nyc.gov/" target="_blank" rel="noopener noreferrer">Tax Lot Selector &nbsp;<FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}}/></a> is a helpful tool for identifying and selecting tax lot BBL numbers within a project area. If your project is very large, you can download the BBLs from the Tax Lot Selector app using the "Paperless Filing" option and upload that file to this form as an attachment.
+  </p>
+
+  <LabsSearch
+    @searchPlaceholder='Enter an address or BBL (ex 1001440001)'
+    data-test-input="bbl-search"
+    @onSelect={{fn this.selectSearchResult}} as |search|
+  >
+    <span class="text-black">
+      {{search.result.label}}
+      <small class="display-block text-dark-gray">{{bbl-breakup search.result.bbl}}</small>
+    </span>
+  </LabsSearch>
+</div>
+
+{{#if @bbls}}
+  <br>
+  <h5>Tax Lots Included in This Project</h5>
+{{/if}}
 
 {{#each @bbls as |bbl|}}
   <fieldset class="fieldset relative">
@@ -45,7 +62,7 @@
     </fieldset>
     <fieldset>
       <legend data-test-partial-lot-question="{{bbl.dcpBblnumber}}-{{bbl.dcpPartiallot}}">
-        Is this a partial lot?
+        Is only a portion of this lot included in the project area?
       </legend>
       <RadioButton
         @value={{true}}

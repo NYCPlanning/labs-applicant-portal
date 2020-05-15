@@ -3,13 +3,14 @@ import { action } from '@ember/object';
 
 export default class PackagesEditController extends Controller {
   @action
-  savePackage() {
-    this.model.saveDescendants();
+  async savePackage() {
+    await this.model.saveDescendants();
+    await this.model.fileManager.save();
   }
 
   @action
-  submitPackage() {
-    this.model.submit();
+  async submitPackage() {
+    await this.model.submit();
 
     this.transitionToRoute('packages.show', this.model.id);
   }

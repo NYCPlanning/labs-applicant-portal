@@ -1,6 +1,8 @@
-<div class="large-margin-bottom">
-  <label data-test-land-use-action-picker>
+<div class="fieldset-adder">
+  <h5 class="small-margin-bottom">
     Add a Proposed Action:
+  </h5>
+  <label data-test-land-use-action-picker>
     <PowerSelect
       supportsDataTestProperties={{true}}
       @placeholder="-- select an action --"
@@ -14,6 +16,9 @@
     </PowerSelect>
   </label>
 </div>
+{{#if this.landUseActionSelections}}
+  <h5>Land Use Actions Included in This Project</h5>
+{{/if}}
 {{#each this.landUseActionSelections as |landUseAction|}}
   <fieldset class="fieldset relative">
     <legend>
@@ -21,7 +26,7 @@
     </legend>
     <label class="action-form-label">
     How many {{landUseAction.name}} actions?
-      <ActionFormInput @pasForm={{@pasForm}} @fieldType="number" @landUseActionField={{landUseAction.field}}/>
+      <ActionFormInput @pasForm={{@pasForm}} @fieldType="number" @landUseActionField={{landUseAction.countField}}/>
     </label>
     {{#if (or (eq landUseAction.name "Zoning Special Permit") (eq landUseAction.name "Zoning Certification") (eq landUseAction.name "Zoning Authorization"))}}
       <label class="action-form-label">

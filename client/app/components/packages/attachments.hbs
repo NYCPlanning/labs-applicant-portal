@@ -15,7 +15,9 @@
           <div class="grid-x">
             <div class="cell small-8">
               <a
-                href="#"
+                href={{concat (get-env-variable 'host') '/documents' file.serverRelativeUrl}}
+                target="_blank"
+                rel="noopener noreferrer"
                 data-test-document-name={{idx}}
               >
                 {{file.name}}
@@ -113,6 +115,7 @@
           @name={{@package.id}}
           @accept='*/*'
           @multiple={{true}}
+          @onfileadd={{this.trackFileForUpload}}
           class="button secondary expanded"
         >
           <FaIcon @icon="upload" @prefix="fas" />

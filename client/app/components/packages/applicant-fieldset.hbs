@@ -26,13 +26,12 @@
   {{/if}}
 
   {{!-- and if the applicant is on behalf of an organization, we need to know which organization --}}
-  {{#if (eq @applicant.dcpType "Organization")}}
-    <label>
+  {{#if (eq @applicant.dcpType 717170001)}}
+    <label data-test-applicant-organization>
       Organization
       <Input
         type="text"
         @value={{@applicant.dcpOrganization}}
-        data-test-applicant-organization
       />
     </label>
     <hr/>

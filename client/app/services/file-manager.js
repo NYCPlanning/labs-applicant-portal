@@ -1,12 +1,13 @@
 import ENV from 'client/config/environment';
 import fetch from 'fetch';
+import { tracked } from '@glimmer/tracking';
 
 // This class supports the FileManagement service
 // TODO: We need to handle rehydrating the existingFiles.
 // After the app calls fileManager.save(), the Package
 // model should have new associated documents.
 // We need to re-request the package with associated documents
-// and rehydrate existhingFiles.
+// and rehydrate existingFiles.
 export default class FileManager {
   constructor(
     packageId,
@@ -20,6 +21,24 @@ export default class FileManager {
     this.filesToUpload = filesToUpload; // EmberFileUpload QUEUE Object
   }
 
+  @tracked filesToDelete;
+
+  // This is not ideal, but we need to manually track
+  // number of uploaded files because we can't open
+  //  up ember-file-upload's fileQueue object and
+  // designate the `files` array as @tracked.
+  // i.e. we can't designate at this.fileToUpload as
+  // @tracked. The isDirty() getter is flakey if
+  // depending on this.fileToUpload
+  @tracked numFilesToUpload = 0;
+
+  get isDirty() {
+    const hasUpload = this.numFilesToUpload > 0;
+    const hasDelete = this.filesToDelete.length > 0;
+
+    return hasUpload || hasDelete;
+  }
+
   markFileForDeletion(existingFile) {
     this.filesToDelete.addObject(existingFile);
     this.existingFiles.removeObject(existingFile);
@@ -30,8 +49,13 @@ export default class FileManager {
     this.filesToDelete.removeObject(deleteFile);
   }
 
+  trackFileForUpload() {
+    this.numFilesToUpload += 1;
+  }
+
   deselectFileForUpload(fileToUpload) {
     this.filesToUpload.remove(fileToUpload);
+    this.numFilesToUpload -= 1;
   }
 
   uploadFiles() {
@@ -73,5 +97,7 @@ export default class FileManager {
     await this.deleteFiles();
 
     this.filesToDelete.clear();
+
+    this.numFilesToUpload = 0;
   }
 }
