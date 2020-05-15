@@ -2,6 +2,7 @@
   class="action-form-input"
   type={{@fieldType}}
   maxlength="200"
+  @min="1"
   placeholder=""
   autocomplete="off"
   @value={{mut (get @pasForm @landUseActionField)}}
