@@ -61,64 +61,40 @@ export const allLandUseActionOptions = [
 ];
 
 export default class LandUseActionComponent extends Component {
-  // local variable that records results of dropdown selection
-  @tracked selectedLandUseAction = {};
+  // local variable that records singular action result of dropdown selection
+  @tracked selectedAction = {};
 
-  // actions selected by user in dropdown
-  @tracked newLandUseActionSelections = [];
+  // actions added by user in current session (pushed each time user selects from dropdown)
+  @tracked actionsAddedByUser = [];
 
-  // Actions with partial or complete answers already saved
-  // to the PAS Form Entity in CRM
-  get existingLandUseActionSelections() {
+  // Actions with partial or complete answers already saved to the PAS Form Entity in CRM
+  // OR actions that exist in the actionsAddedByUser array
+  get selectedActions() {
     const { pasForm } = this.args;
-    return allLandUseActionOptions.filter((option) => pasForm[option.countField] || pasForm[option.attr1] || pasForm[option.attr2]);
+    const newActions = this.actionsAddedByUser;
+    return allLandUseActionOptions.filter((option) => pasForm[option.countField] || pasForm[option.attr1] || pasForm[option.attr2] || newActions.includes(option));
   }
 
-  // Actions selected by user in dropdown ("new"), or already
-  // existing in CRM ("existing")
-  get landUseActionSelections() {
-    const { pasForm } = this.args;
-    // Filter the "new" actions array so that the action does not exist on BOTH the "exisiting" and "new" arrays,
-    // when user enters a value in the action inputs (and therefore updates the model)
-    const filteredNewActions = this.newLandUseActionSelections.filter((action) => !pasForm[action.countField] && !pasForm[action.attr1] && !pasForm[action.attr2]);
-    return [
-      ...this.existingLandUseActionSelections,
-      ...filteredNewActions,
-    ];
+  // actions that appear in dropdown sorted alphabetically
+  get availableActions() {
+    const availableLandUseActions = allLandUseActionOptions.filter((option) => !this.selectedActions.includes(option));
+    return availableLandUseActions.sort((a, b) => ((a.name > b.name) ? 1 : -1));
   }
 
-  get availableLandUseActionOptions() {
-    return allLandUseActionOptions.filter((option) => !this.landUseActionSelections.includes(option));
-  }
-
-  get sortedAvailableLandUseActionOptions() {
-    return this.availableLandUseActionOptions.sort((a, b) => ((a.name > b.name) ? 1 : -1));
-  }
-
-  // when a user selects an option from the dropdown menu,
-  // the option is filtered out of the availableLandUseActionOptions
-  // (and therefore removed from the dropdown).
-  // The selected option is added to the newLandUseActionSelections array
-  // (and therefore displays in the list of selected actions).
   @action
-  addNewLandUseActionSelection() {
-    const selection = this.selectedLandUseAction.countField;
+  addSelectedAction() {
+    this.args.pasForm[this.selectedAction.countField] = 1;
+    this.actionsAddedByUser.unshiftObject(this.selectedAction);
 
-    if (selection) {
-      this.newLandUseActionSelections.pushObject(this.selectedLandUseAction);
-      this.selectedLandUseAction = {};
-    }
+    this.selectedAction = {};
   }
 
-  // When a user deletes an action, the associated fields are reset as well.
-  // Because the action is removed from landUseActionSelections, it is no
-  // longer filtered out of availableLandUseActionOptions array
-  // (and therefore exists in the dropdown).
   @action
   removeSelectedAction(actionToRemove) {
     const { pasForm } = this.args;
 
-    this.landUseActionSelections.removeObject(actionToRemove);
+    this.actionsAddedByUser.removeObject(actionToRemove);
+    // reset all model attributes
     pasForm[actionToRemove.countField] = 0;
     pasForm[actionToRemove.attr1] = '';
     pasForm[actionToRemove.attr2] = '';
