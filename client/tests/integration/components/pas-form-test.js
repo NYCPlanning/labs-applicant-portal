@@ -123,7 +123,7 @@ module('Integration | Component | pas-form', function(hooks) {
 
     this.package = await this.owner.lookup('service:store')
       .findRecord('package', projectPackage.id, { include: 'pas-form,project' });
-    this.save = () => { this.package.saveDescendants(); };
+    this.save = () => { this.package.save(); };
     this.submit = () => { this.package.submit(); };
 
     // render form
@@ -160,7 +160,7 @@ module('Integration | Component | pas-form', function(hooks) {
 
     this.package = await this.owner.lookup('service:store')
       .findRecord('package', projectPackage.id, { include: 'pas-form,project' });
-    this.save = () => { this.package.saveDescendants(); };
+    this.save = () => { this.package.save(); };
     this.submit = () => { this.package.submit(); };
 
     class RouterServiceStub extends Service {

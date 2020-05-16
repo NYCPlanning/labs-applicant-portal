@@ -79,30 +79,24 @@ export default class PasFormComponent extends Component {
 
   @task(function* () {
     try {
-      // in case there are errors on saving/patching,
-      // this should occur BEFORE the changeset executions & rollbacks
-      yield this.args.onSave();
-
       yield this.saveableChanges.execute();
+      yield this.args.onSave();
       yield this.saveableChanges.rollback();
     } catch (adapterError) {
       console.log('Save error:', adapterError);
     }
-  })
+  }).withTestWaiter()
   save;
 
   @task(function* () {
     try {
-      // in case there are errors on saving/patching,
-      // this should occur BEFORE the changeset executions & rollbacks
-      yield this.args.onSubmit();
-
       yield this.submittableChanges.execute();
-      yield this.submittableChanges.rollback();
+      yield this.args.onSubmit();
+      yield this.saveableChanges.rollback();
     } catch (adapterError) {
       console.log('Submit error:', adapterError);
     }
-  })
+  }).withTestWaiter()
   submit;
 
   @action

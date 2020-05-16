@@ -4,8 +4,7 @@ import { action } from '@ember/object';
 export default class PackagesEditController extends Controller {
   @action
   async savePackage() {
-    await this.model.saveDescendants();
-    await this.model.fileManager.save();
+    await this.model.save();
   }
 
   @action
