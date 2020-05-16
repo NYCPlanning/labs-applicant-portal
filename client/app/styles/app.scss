@@ -3,6 +3,7 @@
 
 // Labs UI variables
 @import 'nyc-planning-variables';
+$small-font-size: 81.25%; // TODO: update Style Guide so that <small> matches .text-small
 
 // Foundation mixins
 @import 'foundation-sites/scss/foundation';

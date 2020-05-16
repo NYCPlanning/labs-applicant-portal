@@ -34,7 +34,7 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
     ];
 
     await render(hbs`
-      <Packages::ApplicantTeamEditor 
+      <Packages::ApplicantTeamEditor
         @applicants={{this.applicants}}
       />
     `);
@@ -49,7 +49,7 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
     this.applicants = [];
 
     await render(hbs`
-      <Packages::ApplicantTeamEditor 
+      <Packages::ApplicantTeamEditor
         @applicants={{this.applicants}}
       />
     `);
@@ -60,7 +60,7 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
 
     // can add an applicant team member
     await click('[data-test-add-applicant-team-member-button]');
-    assert.dom('[data-test-applicant-type="Applicant Team Member"]').exists();
+    assert.dom('[data-test-applicant-type="Other Team Member"]').exists();
   });
 
   test('user can remove applicants', async function(assert) {
@@ -71,7 +71,7 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
     ];
 
     await render(hbs`
-      <Packages::ApplicantTeamEditor 
+      <Packages::ApplicantTeamEditor
         @applicants={{this.applicants}}
       />
     `);
@@ -89,7 +89,7 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
     ];
 
     await render(hbs`
-      <Packages::ApplicantTeamEditor 
+      <Packages::ApplicantTeamEditor
         @applicants={{this.applicants}}
       />
     `);

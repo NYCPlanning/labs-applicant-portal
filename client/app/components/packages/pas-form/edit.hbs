@@ -40,7 +40,7 @@
         </h3>
 
           <p>
-            Add all applicants and applicant representatives, including land use consultants and environmental consultants.
+            Add all applicants (either individuals or organizations) and other team members (including land use consultants and environmental consultants, agency staff, etc.).
           </p>
 
           <Packages::ApplicantTeamEditor
@@ -54,13 +54,22 @@
             Project Geography
           </h3>
 
+          <p>
+            Please identify the tax lots that are included in the proposed project area and/or development site.
+            If the project geography is irregular, especially large, or does not consist of tax lots, please describe it below.
+          </p>
+
+          <p class="text-small">
+            NYC Planning's <a href="https://lotselector.planning.nyc.gov/" target="_blank" rel="noopener noreferrer">Tax Lot Selector<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a> is a helpful tool for identifying and selecting tax lot BBL numbers within a project area. If your project is very large, you can download the BBLs from the Tax Lot Selector app using the "Paperless Filing" option and upload that file to this form as an attachment.
+          </p>
+
           <ProjectGeography @bbls={{this.pasForm.bbls}} />
 
           <label>
             <strong>Description of geography</strong>
-            <p class="help-text">
+            <small class="help-text display-block">
               Fill in if the project area and/or development site is irregular, especially large, or does not consist of tax lots.
-            </p>
+            </small>
             <Textarea
               @value={{this.saveableChanges.dcpDescriptionofprojectareageography}}
               maxlength="2000"
@@ -122,7 +131,7 @@
 
           <fieldset class="medium-margin-bottom">
             <legend>
-              <strong>Is the proposed Project Area located in a current or former <a href="https://www1.nyc.gov/site/hpd/services-and-information/urban-renewal.page" target="_blank" rel="noopener noreferrer">Urban Renewal Area &nbsp;<FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}}/></a>?</strong>
+              <strong>Is the proposed Project Area located in a current or former <a href="https://www1.nyc.gov/site/hpd/services-and-information/urban-renewal.page" target="_blank" rel="noopener noreferrer">Urban Renewal Area<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?</strong>
             </legend>
 
             {{#each (array
@@ -159,7 +168,7 @@
 
           <fieldset class="medium-margin-bottom">
             <legend>
-              <strong>What is the <a href="https://streets.planning.nyc.gov/about" target="_blank" rel="noopener noreferrer">Legal Street Frontage Status in the Project Area &nbsp;<FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}}/></a>?</strong>
+              <strong>What is the <a href="https://streets.planning.nyc.gov/about" target="_blank" rel="noopener noreferrer">Legal Street Frontage Status in the Project Area<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?</strong>
             </legend>
             {{#each (array
                 (hash code=717170000 label='Mapped and Build')
@@ -187,7 +196,7 @@
                   href="https://govt.westlaw.com/nycrr/Document/I4ec3a767cd1711dda432a117e6e0f345?viewType=FullText&originationContext=documenttoc&transitionType=CategoryPageItem&contextData=(sc.Default)"
                   target="_blank"
                   rel="noopener noreferrer">
-                  SEQRA or CEQR criteria&nbsp;<FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}}/>
+                  SEQRA or CEQR criteria<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup>
                 </a>
                 for Type II status?
               </strong>
@@ -225,7 +234,7 @@
 
           <fieldset class="medium-margin-bottom">
             <legend>
-              <strong>Is the proposed Project Area in an <a href="https://zola.planning.nyc.gov/" target="_blank" rel="noopener noreferrer">Industrial Business Zone&nbsp;<FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}}/></a>?</strong>
+              <strong>Is the proposed Project Area in an <a href="https://zola.planning.nyc.gov/" target="_blank" rel="noopener noreferrer">Industrial Business Zone<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?</strong>
             </legend>
             {{#each (array
               (hash code=true label='Yes')
@@ -258,7 +267,7 @@
 
           <fieldset class="medium-margin-bottom">
             <legend>
-              <strong>Is the proposed Project Area within or adjacent to a designated (City or State) <a href="https://zola.planning.nyc.gov/"  target="_blank" rel="noopener noreferrer">Landmark or Historic District&nbsp;<FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}}/></a>?</strong>
+              <strong>Is the proposed Project Area within or adjacent to a designated (City or State) <a href="https://zola.planning.nyc.gov/"  target="_blank" rel="noopener noreferrer">Landmark or Historic District<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?</strong>
             </legend>
             {{#each (array
               (hash code=true label='Yes')
@@ -292,7 +301,7 @@
 
           <fieldset class="medium-margin-bottom">
             <legend>
-              <strong>Is the proposed Project Area located within the <a href="https://dcp.maps.arcgis.com/apps/View/index.html?appid=90e3a9f927c2471483631a20e8a41d8d"  target="_blank" rel="noopener noreferrer">NYC Coastal Zone&nbsp;<FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}}/></a>?</strong>
+              <strong>Is the proposed Project Area located within the <a href="https://dcp.maps.arcgis.com/apps/View/index.html?appid=90e3a9f927c2471483631a20e8a41d8d"  target="_blank" rel="noopener noreferrer">NYC Coastal Zone<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?</strong>
             </legend>
             {{#each (array
               (hash code=true label='Yes')
@@ -310,7 +319,7 @@
 
           <fieldset class="medium-margin-bottom">
             <legend>
-              <strong>Is the Project Area located within the <a href="https://dcp.maps.arcgis.com/apps/webappviewer/index.html?id=1c37d271fba14163bbb520517153d6d5"  target="_blank" rel="noopener noreferrer">1% annual chance floodplain&nbsp;<FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}}/></a>?</strong>
+              <strong>Is the Project Area located within the <a href="https://dcp.maps.arcgis.com/apps/webappviewer/index.html?id=1c37d271fba14163bbb520517153d6d5"  target="_blank" rel="noopener noreferrer">1% annual chance floodplain<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?</strong>
             </legend>
             {{#each (array
               (hash code=717170000 label='Yes')
@@ -329,7 +338,7 @@
 
           <fieldset class="medium-margin-bottom">
             <legend>
-              <strong>Is a <a href="https://a836-acris.nyc.gov/CP/"  target="_blank" rel="noopener noreferrer">legal instrument&nbsp;<FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}}/></a> associated with a previous CPC or CPC Chair action recorded against the project site?</strong>
+              <strong>Is a <a href="https://a836-acris.nyc.gov/CP/"  target="_blank" rel="noopener noreferrer">legal instrument<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a> associated with a previous CPC or CPC Chair action recorded against the project site?</strong>
             </legend>
             {{#each (array
               (hash code=true label='Yes')
@@ -348,9 +357,9 @@
             {{#if this.saveableChanges.dcpRestrictivedeclaration}}
               <label>
                 <strong>City Register file number or other identifier</strong>
-                <p class="help-text">
+                <small class="help-text display-block">
                   Feel free to attach a copy of the legal instrument in the Attachments section.
-                </p>
+                </small>
                 <Input
                   @type="text"
                   @value={{this.saveableChanges.dcpCityregisterfilenumber}}
@@ -390,8 +399,8 @@
             Proposed Development Site
           </h3>
 
-          <p>
-            Development Site refers to all property to be developed as part of the applicant’s specific proposal which the land use actions would facilitate. Typically, the Development Site and the Project Area will comprise the same property(ies) unless the application is requesting a zoning map amendment covering an area greater than an applicant’s property to be developed or a large-scale special approval involving multiple tax lots. In these cases, the Development Site may be one or several tax lots within a broader Project Area.
+          <p class="text-small">
+            <b>Development Site</b> refers to all property to be developed as part of the applicant’s specific proposal which the land use actions would facilitate. Typically, the Development Site and the Project Area will comprise the same property(ies) unless the application is requesting a zoning map amendment covering an area greater than an applicant’s property to be developed or a large-scale special approval involving multiple tax lots. In these cases, the Development Site may be one or several tax lots within a broader Project Area.
           </p>
 
           <label>
@@ -410,7 +419,10 @@
 
           <fieldset class="medium-margin-bottom">
             <legend>
-              <strong>What type of development is proposed? (select all that apply)</strong>
+              <strong>
+                What type of development is proposed?
+                <small class="text-weight-normal">(select all that apply)</small>
+              </strong>
             </legend>
             <ul class="no-bullet no-margin">
               <li>
@@ -478,11 +490,13 @@
 
           <fieldset class="medium-margin-bottom">
             <legend>
-              <strong>Is the Development Site in an <a href="https://zola.planning.nyc.gov/"  target="_blank" rel="noopener noreferrer">Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area&nbsp;<FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}}/></a>?</strong>
+              <strong>Is the Development Site in an <a href="https://zola.planning.nyc.gov/"  target="_blank" rel="noopener noreferrer">Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?</strong>
             </legend>
-            <p class="help-text">
-              Refer to <a href="https://zr.planning.nyc.gov/appendix-f-inclusionary-housing-designated-areas-and-mandatory-inclusionary-housing-areas" target="_blank" rel="noopener noreferrer">Appendix F&nbsp;<FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}}/></a> of the Zoning Resolution for full list of all inclusionary housing areas which are areas that incentivize or require affordable housing in certain areas.
+
+            <p class="text-small">
+              Refer to <a href="https://zr.planning.nyc.gov/appendix-f-inclusionary-housing-designated-areas-and-mandatory-inclusionary-housing-areas" target="_blank" rel="noopener noreferrer">Appendix F<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a> of the Zoning Resolution for full list of all inclusionary housing areas which are areas that incentivize or require affordable housing in certain areas.
             </p>
+
             {{#each (array
               (hash code=true label='Yes')
               (hash code=false label='No')) as |radio|
@@ -556,7 +570,8 @@
             <span id="project-description" class="section-anchor"></span>
             Project Description
           </h3>
-          <p class="help-text">
+
+          <p class="text-small">
             For complex proposals, feel free to upload a draft document (in the Attachments section) explaining this information instead of filling out the form inputs.
           </p>
 
@@ -627,9 +642,9 @@
 
           <label>
             <strong>Description of proposed CEQR scope</strong>
-            <p class="help-text">
+            <small class="help-text display-block">
               Include to expedite CEQR guidance: If proposed actions are not approved, what is the applicant’s as-of-right development (CEQR “no-action”) proposal? What would be expected to occur on non-applicant-controlled sites because of the Proposed Actions (CEQR “with-action”)?
-            </p>
+            </small>
             <Textarea
               @value={{this.saveableChanges.dcpProjectattachmentsotherinformation}}
               rows="5"
@@ -657,13 +672,13 @@
               <h5>Required for all projects:</h5>
               <ul class="text-small">
                 <li class="small-margin-bottom">
-                  <a href="http://gis.nyc.gov/taxmap/map.htm" target="_blank" rel="noopener noreferrer">Tax Map(s)&nbsp;<FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}}/></a> — if project area has more than one tax block submit a separate map for each tax block
+                  <a href="http://gis.nyc.gov/taxmap/map.htm" target="_blank" rel="noopener noreferrer">Tax Map(s)<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a> — if project area has more than one tax block submit a separate map for each tax block
                 </li>
                 <li class="small-margin-bottom">
-                  <a href="https://www1.nyc.gov/site/planning/zoning/index- map.page" target="_blank" rel="noopener noreferrer">Official Zoning Map&nbsp;<FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}}/></a> — circle the project area
+                  <a href="https://www1.nyc.gov/site/planning/zoning/index- map.page" target="_blank" rel="noopener noreferrer">Official Zoning Map<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a> — circle the project area
                 </li>
                 <li class="small-margin-bottom">
-                  <a href="https://applicantmaps.planning.nyc.gov/" target="_blank" rel="noopener noreferrer">Land Use Map&nbsp;<FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}}/></a>
+                  <a href="https://applicantmaps.planning.nyc.gov/" target="_blank" rel="noopener noreferrer">Land Use Map<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>
                 </li>
                 <li class="small-margin-bottom">
                   Illustrative Site Plan or Drawings — include any project details relevant to activities or findings (certain exceptions apply, consult the Lead Planner)
@@ -672,7 +687,7 @@
                   Photographs
                 </li>
                 <li class="small-margin-bottom">
-                  <a href="https://www1.nyc.gov/assets/planning/download/pdf/applicants/applicant-portal/dcp-signature-form.pdf" target="_blank" rel="noopener noreferrer">Signature Form &nbsp;<FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}}/></a>
+                  <a href="https://www1.nyc.gov/assets/planning/download/pdf/applicants/applicant-portal/dcp-signature-form.pdf" target="_blank" rel="noopener noreferrer">Signature Form<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>
                 </li>
               </ul>
             </div>
@@ -680,12 +695,12 @@
               <h5>For projects in the NYC Coastal Zone: </h5>
               <ul class="text-small">
                 <li class="small-margin-bottom">
-                  Map of <a href="https://dcp.maps.arcgis.com/apps/View/index.html?app id=90e3a9f927c2471483631a20e8a41d8d" target="_blank" rel="noopener noreferrer">project location within the NYC coastal zone &nbsp;<FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}}/></a> including Special Area Designations
+                  Map of <a href="https://dcp.maps.arcgis.com/apps/View/index.html?app id=90e3a9f927c2471483631a20e8a41d8d" target="_blank" rel="noopener noreferrer">project location within the NYC coastal zone<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a> including Special Area Designations
                 </li>
               </ul>
 
               <h5>
-                For <a href="https://streets.planning.nyc.gov/about" target="_blank" rel="noopener noreferrer">City Map changes &nbsp;<FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}}/></a>:
+                For <a href="https://streets.planning.nyc.gov/about" target="_blank" rel="noopener noreferrer">City Map changes<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>:
               </h5>
               <ul class="text-small">
                 <li class="small-margin-bottom">Most recent Borough President’s final Section Map or most recent approved and filed Alteration Map for the project area</li>
