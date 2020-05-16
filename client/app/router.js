@@ -13,8 +13,8 @@ Router.map(function() { // eslint-disable-line
   this.route('login');
   this.route('logout');
 
-  this.route('packages', function () {
-    this.route('edit', { path: ':id/edit' });
-    this.route('show', { path: ':id' });
+  this.route('packages', { path: 'packages/:id' }, function () {
+    this.route('edit');
+    this.route('show', { path: '/' });
   });
 });
