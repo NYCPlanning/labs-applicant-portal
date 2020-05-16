@@ -77,6 +77,8 @@ export default class PasFormComponent extends Component {
     return this.save.isRunning || this.submit.isRunning;
   }
 
+  // https://github.com/validated-changeset/validated-changeset/blob/master/src/index.ts#L332
+  // save and submit echo the way validated changset saves models underneath
   @task(function* () {
     try {
       yield this.saveableChanges.execute();

@@ -500,7 +500,7 @@ export default class PasFormModel extends Model {
 
   @attr('boolean') dcpDesignaton;
 
-  @attr('date') dcpEstimatedcompletiondate;
+  @attr('year') dcpEstimatedcompletiondate;
 
   @attr('date') dcpGrandtotalnumberofdwellingunitsDate;
 
