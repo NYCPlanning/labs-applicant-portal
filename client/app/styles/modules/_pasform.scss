@@ -1,4 +1,4 @@
-/* Module: PasForm */
+/* Module: Forms */
 
 .fieldset-adder {
   @extend .callout;
@@ -13,4 +13,8 @@
 
 .action-form-label {
   margin: 0 0 1rem
+}
+
+textarea {
+  resize: vertical;
 }
