@@ -11,16 +11,18 @@ export default class PasFormComponent extends Component {
   constructor(...args) {
     super(...args);
 
+    const saveabilityValidations = this.args.saveabilityValidations || SaveablePasFormValidations;
     this.saveableChanges = new Changeset(
       this.pasForm,
-      lookupValidator(SaveablePasFormValidations),
-      SaveablePasFormValidations,
+      lookupValidator(saveabilityValidations),
+      saveabilityValidations,
     );
 
+    const submittabilityValidations = this.args.submittabilityValidations || SubmittablePasFormValidations;
     this.submittableChanges = new Changeset(
       this.pasForm,
-      lookupValidator(SubmittablePasFormValidations),
-      SubmittablePasFormValidations,
+      lookupValidator(submittabilityValidations),
+      submittabilityValidations,
     );
 
     this.saveableChanges.on('beforeValidation', (key) => {
@@ -48,58 +50,26 @@ export default class PasFormComponent extends Component {
     return this.package.pasForm || {};
   }
 
-  get isSaveable() {
-    const {
-      isDirty: isPasFormDirty,
-      isValid: isPasFormValid,
-    } = this.saveableChanges;
-    const {
-      isBblsDirty,
-      isApplicantsDirty,
-    } = this.pasForm;
-    const {
-      isDirty: isAttachmentsDirty,
-    } = this.package.fileManager;
-
-    return !this.isUpdatingDb && ((isPasFormDirty
-      && isPasFormValid)
-      || isBblsDirty
-      || isApplicantsDirty
-      || isAttachmentsDirty
-    );
+  @action
+  async save() {
+    await this.saveChangeset.perform(this.args.onSave, this.saveableChanges);
   }
 
-  get isSubmittable() {
-    return !this.isUpdatingDb && this.submittableChanges.isValid;
+  @action
+  async submit() {
+    await this.saveChangeset.perform(this.args.onSubmit, this.submittableChanges);
   }
 
-  get isUpdatingDb() {
-    return this.save.isRunning || this.submit.isRunning;
-  }
-
-  // https://github.com/validated-changeset/validated-changeset/blob/master/src/index.ts#L332
-  // save and submit echo the way validated changset saves models underneath
-  @task(function* () {
+  @task(function* (callback, changeset) {
     try {
-      yield this.saveableChanges.execute();
-      yield this.args.onSave();
-      yield this.saveableChanges.rollback();
-    } catch (adapterError) {
-      console.log('Save error:', adapterError);
+      yield changeset.execute();
+      yield callback();
+      yield changeset.rollback();
+    } catch (error) {
+      console.log('Save error:', error);
     }
   }).withTestWaiter()
-  save;
-
-  @task(function* () {
-    try {
-      yield this.submittableChanges.execute();
-      yield this.args.onSubmit();
-      yield this.saveableChanges.rollback();
-    } catch (adapterError) {
-      console.log('Submit error:', adapterError);
-    }
-  }).withTestWaiter()
-  submit;
+  saveChangeset;
 
   @action
   validate() {

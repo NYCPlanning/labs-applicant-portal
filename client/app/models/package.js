@@ -125,4 +125,12 @@ export default class PackageModel extends Model {
 
     await this.save();
   }
+
+  get isDirty() {
+    return this.hasDirtyAttributes
+      || this.fileManager.isDirty
+      || this.pasForm.hasDirtyAttributes
+      || this.pasForm.isBblsDirty
+      || this.pasForm.isApplicantsDirty;
+  }
 }
