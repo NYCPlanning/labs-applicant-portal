@@ -245,4 +245,37 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     assert.ok(true);
   });
+
+  test('Urban Renewal Area sub Q, after set to no, does not block submit', async function (assert) {
+    this.server.create('package', 1, {
+      pasForm: this.server.create('pas-form', {
+        dcpUrbanrenewalarea: null,
+        dcpUrbanareaname: '',
+      }),
+      project: this.server.create('project'),
+    });
+
+    await visit('/packages/1/edit');
+
+    assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
+    assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
+
+    await click('[data-test-dcpurbanrenewalarea="Yes"]');
+
+    assert.dom('[data-test-dcpurbanrenewalareaname-validation]').exists();
+    assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
+    assert.dom('[data-test-submit-button]').hasAttribute('disabled');
+
+    await fillIn('[data-test-dcpurbanrenewalareaname]', 'abc');
+
+    assert.dom('[data-test-dcpurbanrenewalareaname-validation]').doesNotExist();
+    assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
+    assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
+
+    await fillIn('[data-test-dcpurbanrenewalareaname]', '');
+
+    assert.dom('[data-test-dcpurbanrenewalareaname-validation]').exists('it revalidates');
+    assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
+    assert.dom('[data-test-submit-button]').hasAttribute('disabled');
+  });
 });
