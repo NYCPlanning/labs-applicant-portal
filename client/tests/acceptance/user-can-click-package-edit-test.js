@@ -146,9 +146,9 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/1/edit');
 
-    assert.dom('[data-test-dcpprojectareaindustrialbusinesszonename]').doesNotExist();
+    assert.dom('[data-test-dcpprojectareaindutrialzonename]').doesNotExist();
     await click('[data-test-dcpprojectareaindustrialbusinesszone="Yes"]');
-    assert.dom('[data-test-dcpprojectareaindustrialbusinesszonename]').exists();
+    assert.dom('[data-test-dcpprojectareaindutrialzonename]').exists();
   });
 
   test('Landmark or Historic District sub Q shows conditionally', async function (assert) {
@@ -156,9 +156,9 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/1/edit');
 
-    assert.dom('[data-test-dcpisprojectarealandmarkname]').doesNotExist();
+    assert.dom('[data-test-dcpProjectarealandmarkname]').doesNotExist();
     await click('[data-test-dcpIsprojectarealandmark="Yes"]');
-    assert.dom('[data-test-dcpisprojectarealandmarkname]').exists();
+    assert.dom('[data-test-dcpProjectarealandmarkname]').exists();
   });
 
   test('Other Type sub Q shows conditionally', async function (assert) {
@@ -263,19 +263,19 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await click('[data-test-dcpurbanrenewalarea="Yes"]');
 
-    assert.dom('[data-test-dcpurbanrenewalareaname-validation]').exists();
+    assert.dom('[data-test-validation-message="dcpUrbanareaname"]').exists();
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-submit-button]').hasAttribute('disabled');
 
     await fillIn('[data-test-dcpurbanrenewalareaname]', 'abc');
 
-    assert.dom('[data-test-dcpurbanrenewalareaname-validation]').doesNotExist();
+    assert.dom('[data-test-validation-message="dcpUrbanareaname"]').doesNotExist();
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
 
     await fillIn('[data-test-dcpurbanrenewalareaname]', '');
 
-    assert.dom('[data-test-dcpurbanrenewalareaname-validation]').exists('it revalidates');
+    assert.dom('[data-test-validation-message="dcpUrbanareaname"]').exists('it revalidates');
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-submit-button]').hasAttribute('disabled');
   });
@@ -314,5 +314,71 @@ module('Acceptance | user can click package edit', function(hooks) {
     await click('[data-test-project="edit-pas"]');
 
     assert.dom('[data-test-section="attachments"').hasTextContaining('PAS Form.pdf');
+  });
+
+  test('Certain fields display both Saveable and Submittable validation errors', async function (assert) {
+    this.server.create('package', 1, {
+      pasForm: this.server.create('pas-form'),
+      project: this.server.create('project'),
+    });
+
+    await visit('/packages/1/edit');
+
+    assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
+    assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
+
+    // name of the Urban Renewal Area
+    await click('[data-test-dcpurbanrenewalarea="Yes"]');
+
+    assert.dom('[data-test-validation-message="dcpUrbanareaname"]').hasText('This field is required');
+
+    await fillIn('[data-test-dcpurbanrenewalareaname]', 'abc');
+
+    assert.dom('[data-test-validation-message="dcpUrbanareaname"]').doesNotExist();
+
+    const longText = 'Some long text'.repeat(20);
+
+    await fillIn('[data-test-dcpurbanrenewalareaname]', longText);
+
+    assert.dom('[data-test-validation-message="dcpUrbanareaname"]').hasText('Name is too long (max 250 characters)');
+
+    // SEQRA or CEQR criteria for Type II status
+    await click('[data-test-dcplanduseactiontype2="Yes"]');
+
+    assert.dom('[data-test-validation-message="dcpPleaseexplaintypeiienvreview"]').hasText('This field is required');
+
+    await fillIn('[data-test-dcppleaseexplaintypeiienvreview]', 'abc');
+
+    assert.dom('[data-test-validation-message="dcpPleaseexplaintypeiienvreview"]').doesNotExist();
+
+    await fillIn('[data-test-dcppleaseexplaintypeiienvreview]', longText);
+
+    assert.dom('[data-test-validation-message="dcpPleaseexplaintypeiienvreview"]').hasText('Text is too long (max 200 characters)');
+
+    // Industrial Business Zone
+    await click('[data-test-dcpProjectareaindustrialbusinesszone="Yes"]');
+
+    assert.dom('[data-test-validation-message="dcpProjectareaindutrialzonename"]').hasText('This field is required');
+
+    await fillIn('[data-test-dcpprojectareaindutrialzonename]', 'abc');
+
+    assert.dom('[data-test-validation-message="dcpProjectareaindutrialzonename"]').doesNotExist();
+
+    await fillIn('[data-test-dcpprojectareaindutrialzonename]', longText);
+
+    assert.dom('[data-test-validation-message="dcpProjectareaindutrialzonename"]').hasText('Name is too long (max 250 characters)');
+
+    // Landmark name
+    await click('[data-test-dcpIsprojectarealandmark="Yes"]');
+
+    assert.dom('[data-test-validation-message="dcpProjectarealandmarkname"]').hasText('This field is required');
+
+    await fillIn('[data-test-dcpprojectarealandmarkname]', 'abc');
+
+    assert.dom('[data-test-validation-message="dcpProjectarealandmarkname"]').doesNotExist();
+
+    await fillIn('[data-test-dcpprojectarealandmarkname]', longText);
+
+    assert.dom('[data-test-validation-message="dcpProjectarealandmarkname"]').hasText('Name is too long (max 250 characters)');
   });
 });

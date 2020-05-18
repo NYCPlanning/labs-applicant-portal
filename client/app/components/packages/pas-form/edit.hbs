@@ -182,7 +182,7 @@
                 />
                 <ValidationMessage
                   @changesetError={{saveable-form.submittableChanges.error.dcpUrbanareaname}}
-                  data-test-dcpurbanrenewalareaname-validation
+                  data-test-validation-message="dcpUrbanareaname"
                 />
               </label>
             {{/if}}
@@ -253,10 +253,8 @@
                   @maxlength="200"
                 />
                 <ValidationMessage
-                  @changesetError={{saveable-form.saveableChanges.error.dcpPleaseexplaintypeiienvreview}}
-                />
-                <ValidationMessage
                   @changesetError={{saveable-form.submittableChanges.error.dcpPleaseexplaintypeiienvreview}}
+                  data-test-validation-message="dcpPleaseexplaintypeiienvreview"
                 />
               </label>
             {{/if}}
@@ -264,7 +262,16 @@
 
           <fieldset class="medium-margin-bottom">
             <legend>
-              <strong>Is the proposed Project Area in an <a href="https://zola.planning.nyc.gov/" target="_blank" rel="noopener noreferrer">Industrial Business Zone<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?</strong>
+              <strong>
+                Is the proposed Project Area in an&nbsp;
+                <a href="https://zola.planning.nyc.gov/" target="_blank" rel="noopener noreferrer">
+                  Industrial Business Zone
+                  <sup>
+                    <FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} />
+                  </sup>
+                </a>
+                ?
+              </strong>
             </legend>
             {{#each (array
               (hash code=true label='Yes')
@@ -284,17 +291,15 @@
                 <Input
                   @type="text"
                   @value={{saveable-form.saveableChanges.dcpProjectareaindutrialzonename}}
-                  data-test-dcpprojectareaindustrialbusinesszonename
+                  data-test-dcpprojectareaindutrialzonename
                 />
                 <CharacterCounter
                   @string={{saveable-form.saveableChanges.dcpProjectareaindutrialzonename}}
                   @maxlength="200"
                 />
                 <ValidationMessage
-                  @changesetError={{saveable-form.saveableChanges.error.dcpProjectareaindutrialzonename}}
-                />
-                <ValidationMessage
                   @changesetError={{saveable-form.submittableChanges.error.dcpProjectareaindutrialzonename}}
+                  data-test-validation-message="dcpProjectareaindutrialzonename"
                 />
               </label>
             {{/if}}
@@ -323,17 +328,15 @@
                 <Input
                   @type="text"
                   @value={{saveable-form.saveableChanges.dcpProjectarealandmarkname}}
-                  data-test-dcpisprojectarealandmarkname
+                  data-test-dcpprojectarealandmarkname
                 />
                 <CharacterCounter
                   @string={{saveable-form.saveableChanges.dcpProjectarealandmarkname}}
                   @maxlength="250"
                 />
                 <ValidationMessage
-                  @changesetError={{saveable-form.saveableChanges.error.dcpProjectarealandmarkname}}
-                />
-                <ValidationMessage
                   @changesetError={{saveable-form.submittableChanges.error.dcpProjectarealandmarkname}}
+                  data-test-validation-message="dcpProjectarealandmarkname"
                 />
               </label>
             {{/if}}

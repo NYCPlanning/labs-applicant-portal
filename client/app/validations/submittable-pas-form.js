@@ -8,6 +8,7 @@ export default {
     ...SaveablePasForm.dcpRevisedprojectname,
   ],
   dcpUrbanareaname: [
+    ...SaveablePasForm.dcpUrbanareaname,
     validatePresenceIf({
       presence: true,
       on: 'dcpUrbanrenewalarea',
@@ -16,6 +17,7 @@ export default {
     }),
   ],
   dcpPleaseexplaintypeiienvreview: [
+    ...SaveablePasForm.dcpPleaseexplaintypeiienvreview,
     validatePresenceIf({
       presence: true,
       on: 'dcpLanduseactiontype2',
@@ -24,6 +26,7 @@ export default {
     }),
   ],
   dcpProjectareaindutrialzonename: [
+    ...SaveablePasForm.dcpProjectareaindutrialzonename,
     validatePresenceIf({
       presence: true,
       on: 'dcpProjectareaindustrialbusinesszone',
@@ -32,6 +35,7 @@ export default {
     }),
   ],
   dcpProjectarealandmarkname: [
+    ...SaveablePasForm.dcpProjectarealandmarkname,
     validatePresenceIf({
       presence: true,
       on: 'dcpIsprojectarealandmark',
