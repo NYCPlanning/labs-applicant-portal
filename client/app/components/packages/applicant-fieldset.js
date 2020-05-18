@@ -14,7 +14,8 @@ export default class ApplicantFieldset extends Component {
       (accumulator, option) => ({
         [option.code]: option,
         ...accumulator,
-      }), { });
+      }), { },
+    );
   }
 
   // TODO: Refactor this to engage with Changeset, when changesets are
