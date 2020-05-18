@@ -1,10 +1,8 @@
-{{!-- template-lint-disable no-log --}}
-
 <SaveableForm
   @model={{this.pasForm}}
   @validators={{array this.saveablePasFormValidations this.submittablePasFormValidations}}
-  @onSave={{@onSave}}
-  @onSubmit={{@onSubmit}}
+  @onSave={{this.savePackage}}
+  @onSubmit={{this.submitPackage}}
   as |saveable-form|
 >
 

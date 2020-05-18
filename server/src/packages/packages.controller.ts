@@ -54,7 +54,10 @@ export const PACKAGE_ATTRS = [
     bbls: {
       ref: 'dcp_projectbblid',
       attributes: [
-        ...BBL_ATTRIBUTES
+        ...BBL_ATTRIBUTES,
+
+        // rels
+        'project',
       ],
     },
   },
@@ -74,7 +77,10 @@ export const PACKAGE_ATTRS = [
         'pas-form': {
           ...pasForm,
           applicants: pasForm.dcp_dcp_applicantinformation_dcp_pasform,
-          bbls: pasForm.dcp_dcp_projectbbl_dcp_pasform,
+          bbls: pasForm.dcp_dcp_projectbbl_dcp_pasform.map(bbl => ({
+            ...bbl,
+            project: projectPackage.project,
+          })),
         },
       }
     }

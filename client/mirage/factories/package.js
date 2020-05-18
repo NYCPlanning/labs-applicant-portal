@@ -5,7 +5,10 @@ export default Factory.extend({
   dcpPackagetype: 'PAS Package',
 
   afterCreate(projectPackage, server) {
-    server.create('pas-form', { package: projectPackage });
+    // add a pasForm if it doesn't already exist
+    // not sure which tests depend on this assumption
+    // so adding logic for it here
+    if (!projectPackage.pasForm) server.create('pas-form', { package: projectPackage });
   },
 
   withLandUseActions: trait({
