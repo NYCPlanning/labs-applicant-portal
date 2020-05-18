@@ -19,7 +19,7 @@ import { JsonApiDeserializePipe } from '../../../json-api-deserialize.pipe';
 // dcp_applicantinformation and dcp_applicantrepinformation
 // TODO: This controller exposes these two entites as one "applicant" resource
 // and handles routes applicant resources from and to the appropriate CRM entity
-// the frontend uses a custom attribute, "targetEntity",
+// the frontend uses a custom attribute, "targetEntity"
 // to track the ultimate CRM entity destination (and source when getting existing)
 
 export const APPLICANT_REPRESENTATIVE_ATTRIBUTES = [
@@ -32,6 +32,7 @@ export const APPLICANT_REPRESENTATIVE_ATTRIBUTES = [
   'dcp_state',
   'dcp_zipcode',
   'dcp_phone',
+  'target_entity',
 ];
 
 export const APPLICANT_ATTRIBUTES = [
@@ -53,14 +54,33 @@ export class ApplicantsController {
 
   @Patch('/:id')
   async update(@Body() body, @Param('id') id) {
-    const allowedAttrs = pick(body, APPLICANT_ATTRIBUTES);
+    // access target entity from frontend so we know how to handle in CRM
+    const { target_entity } = body;
+    let allowedAttrs;
 
-    await this.crmService.update('dcp_applicantinformations', id, allowedAttrs);
+    if (target_entity === 'dcp_applicantinformation') {
+      allowedAttrs = pick(body, APPLICANT_ATTRIBUTES);
 
-    return {
-      dcp_applicantinformationid: id,
-      ...body,
-    };
+      await this.crmService.update('dcp_applicantinformations', id, allowedAttrs);
+      
+      return {
+        dcp_applicantinformationid: id,
+        ...body,
+      };
+
+    } else if (target_entity === 'dcp_applicantrepresentativeinformation') {
+      allowedAttrs = pick(body, APPLICANT_REPRESENTATIVE_ATTRIBUTES);
+      console.log('id: ', id);
+      const representativeId = id.replace('representative-', '');
+      console.log('stripped id: ', representativeId);
+      await this.crmService.update('dcp_applicantrepresentativeinformations', representativeId, allowedAttrs);
+
+      return {
+        dcp_applicantrepresentativeinformationid: id,
+        ...body,
+      };
+    }
+    console.log('PATCH, ', body, id);
   }
 
   @Post('/')
@@ -109,6 +129,8 @@ export class ApplicantsController {
 
   @Delete('/:id')
   async delete(@Param('id') id) {
+    // TODO: conditionally determine which crm entity to delete
+    // don't have the body, use try catch
     await this.crmService.delete('dcp_applicantinformations', id);
 
     return {

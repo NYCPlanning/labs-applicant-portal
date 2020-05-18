@@ -73,7 +73,22 @@ export const PACKAGE_ATTRS = [
         ...projectPackage,
         'pas-form': {
           ...pasForm,
-          applicants: pasForm.dcp_dcp_applicantinformation_dcp_pasform,
+          applicants: [
+            ...pasForm.dcp_dcp_applicantinformation_dcp_pasform,
+            ...pasForm.dcp_dcp_applicantrepinformation_dcp_pasform.map((applicant) => {
+              // map this array to handle the slight differences in schemas between these two entities
+              // that we treat as one applicants array on the frontend
+
+              // define target_entity for the frontend (defaults to dcp_applicantinformation)
+              applicant['target_entity'] = 'dcp_applicantrepresentativeinformation'
+
+              return {
+              ...applicant,
+              // FIXME: this is ensuring the Ember Data relationships work (with a unique ref)
+              // but this is hacky because dcp_applicantinformationid doesn't exist on this entity
+              dcp_applicantinformationid: `representative-${applicant.dcp_applicantrepresentativeinformationid}`
+            }}),
+          ],
           bbls: pasForm.dcp_dcp_projectbbl_dcp_pasform,
         },
       }
