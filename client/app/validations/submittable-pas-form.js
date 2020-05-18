@@ -11,6 +11,7 @@ export default {
       presence: true,
       on: 'dcpUrbanrenewalarea',
       withValue: 717170000,
+      message: 'This field is required',
     }),
   ],
   dcpPleaseexplaintypeiienvreview: [
@@ -18,6 +19,7 @@ export default {
       presence: true,
       on: 'dcpLanduseactiontype2',
       withValue: 717170000,
+      message: 'This field is required',
     }),
   ],
   dcpProjectareaindutrialzonename: [
@@ -25,6 +27,7 @@ export default {
       presence: true,
       on: 'dcpProjectareaindustrialbusinesszone',
       withValue: true,
+      message: 'This field is required',
     }),
   ],
   dcpProjectarealandmarkname: [
@@ -32,6 +35,7 @@ export default {
       presence: true,
       on: 'dcpIsprojectarealandmark',
       withValue: true,
+      message: 'This field is required',
     }),
   ],
   dcpProposeddevelopmentsiteotherexplanation: [
@@ -39,6 +43,7 @@ export default {
       presence: true,
       on: 'dcpProposeddevelopmentsiteinfoother',
       withValue: true,
+      message: 'This field is required',
     }),
   ],
   dcpInclusionaryhousingdesignatedareaname: [
@@ -46,6 +51,7 @@ export default {
       presence: true,
       on: 'dcpIsinclusionaryhousingdesignatedarea',
       withValue: true,
+      message: 'This field is required',
     }),
   ],
   dcpHousingunittype: [
@@ -53,6 +59,7 @@ export default {
       presence: true,
       on: 'dcpDiscressionaryfundingforffordablehousing',
       withValue: 717170000,
+      message: 'This field is required',
     }),
   ],
 };

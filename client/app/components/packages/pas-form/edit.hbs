@@ -30,6 +30,9 @@
             @type="text"
             @value={{this.saveableChanges.dcpRevisedprojectname}} data-test-dcprevisedprojectname
           />
+          <ValidationMessage
+            @changesetError={{this.saveableChanges.error.dcpRevisedprojectname}}
+          />
         </label>
       </section>
 
@@ -72,7 +75,6 @@
             </small>
             <Textarea
               @value={{this.saveableChanges.dcpDescriptionofprojectareageography}}
-              maxlength="2000"
               rows="5"
             />
             <ValidationMessage
@@ -155,10 +157,12 @@
                 <Input
                   @type="text"
                   @value={{this.saveableChanges.dcpUrbanareaname}}
-                  maxlength="250"
                   data-test-dcpurbanrenewalareaname
                 />
 
+                <ValidationMessage
+                  @changesetError={{this.saveableChanges.error.dcpUrbanareaname}}
+                />
                 <ValidationMessage
                   @changesetError={{this.submittableChanges.error.dcpUrbanareaname}}
                   data-test-dcpurbanrenewalareaname-validation
@@ -223,8 +227,10 @@
                 <Input
                   @type="text"
                   @value={{this.saveableChanges.dcpPleaseexplaintypeiienvreview}}
-                  maxlength="200"
                   data-test-dcppleaseexplaintypeiienvreview
+                />
+                <ValidationMessage
+                  @changesetError={{this.saveableChanges.error.dcpPleaseexplaintypeiienvreview}}
                 />
                 <ValidationMessage
                   @changesetError={{this.submittableChanges.error.dcpPleaseexplaintypeiienvreview}}
@@ -256,8 +262,10 @@
                 <Input
                   @type="text"
                   @value={{this.saveableChanges.dcpProjectareaindutrialzonename}}
-                  maxlength="200"
                   data-test-dcpprojectareaindustrialbusinesszonename
+                />
+                <ValidationMessage
+                  @changesetError={{this.saveableChanges.error.dcpProjectareaindutrialzonename}}
                 />
                 <ValidationMessage
                   @changesetError={{this.submittableChanges.error.dcpProjectareaindutrialzonename}}
@@ -290,8 +298,10 @@
                   @type="text"
                   @value={{this.saveableChanges.dcpProjectarealandmarkname}}
                   @changed={{this.validate}}
-                  maxlength="250"
                   data-test-dcpisprojectarealandmarkname
+                />
+                <ValidationMessage
+                  @changesetError={{this.saveableChanges.error.dcpProjectarealandmarkname}}
                 />
                 <ValidationMessage
                   @changesetError={{this.submittableChanges.error.dcpProjectarealandmarkname}}
@@ -364,11 +374,10 @@
                 <Input
                   @type="text"
                   @value={{this.saveableChanges.dcpCityregisterfilenumber}}
-                  maxlength="25"
                   data-test-dcpcityregisterfilenumber
                 />
                 <ValidationMessage
-                  @changesetError={{this.submittableChanges.error.dcpCityregisterfilenumber}}
+                  @changesetError={{this.saveableChanges.error.dcpCityregisterfilenumber}}
                 />
               </label>
             {{/if}}
@@ -409,11 +418,10 @@
             <Input
               @type="text"
               @value={{this.saveableChanges.dcpEstimatedcompletiondate}}
-              maxlength="4"
               data-test-dcpestimatedcompletiondate
             />
             <ValidationMessage
-              @changesetError={{this.submittableChanges.error.dcpEstimatedcompletiondate}}
+              @changesetError={{this.saveableChanges.error.dcpEstimatedcompletiondate}}
             />
             {{!-- QUESTION: Should this be a date picker? --}}
           </label>
@@ -485,6 +493,9 @@
                   @value={{this.saveableChanges.dcpProposeddevelopmentsiteotherexplanation}}
                   data-test-dcpproposeddevelopmentsiteotherexplanation
                 />
+                <ValidationMessage
+                  @changesetError={{this.submittableChanges.error.dcpProposeddevelopmentsiteotherexplanation}}
+                />
               </label>
             {{/if}}
           </fieldset>
@@ -519,6 +530,9 @@
                   @type="text"
                   @value={{this.saveableChanges.dcpInclusionaryhousingdesignatedareaname}}
                   data-test-dcpinclusionaryhousingdesignatedareaname
+                />
+                <ValidationMessage
+                  @changesetError={{this.submittableChanges.error.dcpInclusionaryhousingdesignatedareaname}}
                 />
               </label>
             {{/if}}
@@ -562,6 +576,9 @@
                   </RadioButton>
                 {{/each}}
               </fieldset>
+              <ValidationMessage
+                @changesetError={{this.submittableChanges.error.dcpHousingunittype}}
+              />
             {{/if}}
           </fieldset>
         </section>
@@ -581,7 +598,6 @@
             <Textarea
               @value={{this.saveableChanges.dcpProjectdescriptionproposeddevelopment}}
               rows="5"
-              maxlength="3000"
               data-test-dcpprojectdescriptionproposeddevelopment
             />
             <ValidationMessage
@@ -594,7 +610,6 @@
             <Textarea
               @value={{this.saveableChanges.dcpProjectdescriptionbackground}}
               rows="5"
-              maxlength="2000"
               data-test-dcpprojectdescriptionbackground
             />
             <ValidationMessage
@@ -607,7 +622,6 @@
             <Textarea
               @value={{this.saveableChanges.dcpProjectdescriptionproposedactions}}
               rows="5"
-              maxlength="2000"
               data-test-dcpprojectdescriptionproposedactions
             />
             <ValidationMessage
@@ -620,7 +634,6 @@
             <Textarea
               @value={{this.saveableChanges.dcpProjectdescriptionproposedarea}}
               rows="5"
-              maxlength="3000"
               data-test-dcpprojectdescriptionproposedarea
             />
             <ValidationMessage
@@ -633,7 +646,6 @@
             <Textarea
               @value={{this.saveableChanges.dcpProjectdescriptionsurroundingarea}}
               rows="5"
-              maxlength="3000"
               data-test-dcpprojectdescriptionsurroundingarea
             />
             <ValidationMessage
@@ -649,7 +661,6 @@
             <Textarea
               @value={{this.saveableChanges.dcpProjectattachmentsotherinformation}}
               rows="5"
-              maxlength="3000"
               data-test-dcpprojectattachmentsotherinformation
             />
             <ValidationMessage
