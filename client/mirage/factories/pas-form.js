@@ -6,9 +6,9 @@ export default Factory.extend({
     dcpPfzoningcertification: 21,
     dcpZoningpursuantto: 'some value',
     dcpZoningtomodify: 'some other val',
-    dcpPfzoningtextamendment: 2,
+    dcpPfzoningtextamendment: 1,
     dcpAffectedzrnumber: '',
     dcpZoningresolutiontitle: '',
-    dcpPfchangeincitymap: 4,
+    dcpPfchangeincitymap: 1,
   }),
 });

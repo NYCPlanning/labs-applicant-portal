@@ -1,10 +1,11 @@
-/* Module: PasForm */
+/* Module: Forms */
 
 .fieldset-adder {
   @extend .callout;
   background-color: transparent;
   border-width: 2px;
   border-style: dashed;
+  margin: $global-margin*1.5 0;
 }
 
 .action-form-input {
@@ -13,4 +14,8 @@
 
 .action-form-label {
   margin: 0 0 1rem
+}
+
+textarea {
+  resize: vertical;
 }

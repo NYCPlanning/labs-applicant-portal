@@ -21,7 +21,7 @@ module('Unit | Model | package', function(hooks) {
 
     bbl.dcpDevelopmentsite = true;
 
-    await model.saveDescendants();
+    await model.save();
 
     assert.ok(model);
   });

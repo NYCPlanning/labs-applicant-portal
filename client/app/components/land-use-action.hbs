@@ -7,28 +7,31 @@
       supportsDataTestProperties={{true}}
       @placeholder="-- select an action --"
       @searchEnabled={{false}}
-      @options={{this.sortedAvailableLandUseActionOptions}}
-      @onchange={{fn (mut this.selectedLandUseAction)}}
-      @onclose={{fn this.addNewLandUseActionSelection}}
+      @options={{this.availableActions}}
+      @onchange={{fn this.addSelectedAction}}
       as |landUseAction|
     >
       {{landUseAction.name}}
     </PowerSelect>
   </label>
 </div>
-{{#if this.landUseActionSelections}}
+{{#if this.sortedSelectedActions}}
   <h5>Land Use Actions Included in This Project</h5>
 {{/if}}
-{{#each this.landUseActionSelections as |landUseAction|}}
+{{#each this.sortedSelectedActions as |landUseAction|}}
   <fieldset class="fieldset relative">
     <legend>
-      <strong>{{landUseAction.name}}</strong>
+      <strong data-test-action-name="{{landUseAction.name}}">{{landUseAction.name}}</strong>
     </legend>
-    <label class="action-form-label">
-    How many {{landUseAction.name}} actions?
-      <ActionFormInput @pasForm={{@pasForm}} @fieldType="number" @landUseActionField={{landUseAction.countField}}/>
-    </label>
     {{#if (or (eq landUseAction.name "Zoning Special Permit") (eq landUseAction.name "Zoning Certification") (eq landUseAction.name "Zoning Authorization"))}}
+      <div class="grid-x grid-margin-x">
+        <div class="shrink cell">
+          <label for="middle-label" class="middle">How many {{landUseAction.name}} actions?</label>
+        </div>
+        <div class="auto cell">
+          <ActionFormInput @pasForm={{@pasForm}} @fieldType="number" @landUseActionField={{landUseAction.countField}}/>
+        </div>
+      </div>
       <label class="action-form-label">
         Where in the Zoning Resolution can this action be found?
         <ActionFormInput @pasForm={{@pasForm}} @fieldType="text" @landUseActionField={{landUseAction.attr1}}/>

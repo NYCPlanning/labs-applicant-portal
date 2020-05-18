@@ -35,6 +35,7 @@
       />
     </label>
     <hr/>
+    <h5>Applicant Representative</h5>
   {{/if}}
 
   <div class="grid-x grid-margin-x">
@@ -54,8 +55,8 @@
     </div>
   </div>
 
-  {{!-- always allow input for Applicant Team Members --}}
-  {{#if (eq @applicant.friendlyEntityName "Applicant Team Member")}}
+  {{!-- always allow input for Other Team Members --}}
+  {{#if (eq @applicant.friendlyEntityName "Other Team Member")}}
     <label>
       Organization
       <Input
@@ -73,7 +74,20 @@
       <label>City <Input type="text" @value={{@applicant.dcpCity}}/></label>
     </div>
     <div class="cell auto medium-2">
-      <label>State <Input type="text" @value={{@applicant.dcpState}}/></label>
+      <label data-test-applicant-state-dropdown>
+        State
+        <PowerSelect
+          supportsDataTestProperties={{true}}
+          @selected={{get this.stateLabelLookup @applicant.dcpState}}
+          @placeholder="state"
+          @searchEnabled={{true}}
+          @searchField="label"
+          @options={{this.stateOptions}}
+          @onchange={{fn this.updateAttrWithOption @applicant 'dcpState'}}
+        as |state|>
+          {{state.label}}
+        </PowerSelect>
+      </label>
     </div>
     <div class="cell auto medium-4">
       <label>ZIP <Input type="text" @value={{@applicant.dcpZipcode}}/></label>

@@ -500,7 +500,7 @@ export default class PasFormModel extends Model {
 
   @attr('boolean') dcpDesignaton;
 
-  @attr('date') dcpEstimatedcompletiondate;
+  @attr('year') dcpEstimatedcompletiondate;
 
   @attr('date') dcpGrandtotalnumberofdwellingunitsDate;
 
@@ -795,6 +795,12 @@ export default class PasFormModel extends Model {
   @attr('string') dcpRepresentativeaddress3;
 
   temporaryAddressLabel = '';
+
+  async save() {
+    await this.saveDirtyApplicants();
+    await this.saveDirtyBbls();
+    await super.save();
+  }
 
   async saveDirtyBbls() {
     return Promise.all(

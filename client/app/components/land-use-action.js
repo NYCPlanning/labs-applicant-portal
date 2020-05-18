@@ -61,64 +61,66 @@ export const allLandUseActionOptions = [
 ];
 
 export default class LandUseActionComponent extends Component {
-  // local variable that records results of dropdown selection
-  @tracked selectedLandUseAction = {};
+  // actions added by user in current session (pushed each time user selects from dropdown)
+  @tracked actionsAddedByUser = [];
 
-  // actions selected by user in dropdown
-  @tracked newLandUseActionSelections = [];
-
-  // Actions with partial or complete answers already saved
-  // to the PAS Form Entity in CRM
-  get existingLandUseActionSelections() {
+  // Actions with partial or complete answers already saved to the PAS Form Entity in CRM
+  // OR actions that exist in the actionsAddedByUser array
+  get selectedActions() {
     const { pasForm } = this.args;
-    return allLandUseActionOptions.filter((option) => pasForm[option.countField] || pasForm[option.attr1] || pasForm[option.attr2]);
+    const newActions = this.actionsAddedByUser;
+    return allLandUseActionOptions.filter((option) => pasForm[option.countField] || pasForm[option.attr1] || pasForm[option.attr2] || newActions.includes(option));
   }
 
-  // Actions selected by user in dropdown ("new"), or already
-  // existing in CRM ("existing")
-  get landUseActionSelections() {
-    const { pasForm } = this.args;
-    // Filter the "new" actions array so that the action does not exist on BOTH the "exisiting" and "new" arrays,
-    // when user enters a value in the action inputs (and therefore updates the model)
-    const filteredNewActions = this.newLandUseActionSelections.filter((action) => !pasForm[action.countField] && !pasForm[action.attr1] && !pasForm[action.attr2]);
-    return [
-      ...this.existingLandUseActionSelections,
-      ...filteredNewActions,
-    ];
+  // sorting: actions from db all on bottom in alphabetical order
+  // sorting: new actions all on top, most recently added first
+  get sortedSelectedActions() {
+    const newActions = this.actionsAddedByUser;
+
+    return this.selectedActions.sort(function (a, b) {
+      const includesA = newActions.includes(a);
+      const includesB = newActions.includes(b);
+
+      // if actions are both new -- sort most recently added on top
+      if (includesA && includesB) {
+        return newActions.indexOf(a) - newActions.indexOf(b);
+      }
+
+      // if actions are both from db -- sort alphabetically
+      if (!includesA && !includesB) {
+        return (a.name > b.name) ? 1 : -1;
+      }
+
+      // if top action is new and bottom action is from db -- don't reorder
+      if (includesA && !includesB) {
+        return -1;
+      }
+
+      // if top action is from db and bottom action is new -- reorder
+      if (!includesA && includesB) {
+        return 1;
+      }
+    });
   }
 
-  get availableLandUseActionOptions() {
-    return allLandUseActionOptions.filter((option) => !this.landUseActionSelections.includes(option));
+  // actions that appear in dropdown sorted alphabetically
+  get availableActions() {
+    return allLandUseActionOptions.filter((option) => !this.selectedActions.includes(option))
+      .sort((a, b) => ((a.name > b.name) ? 1 : -1));
   }
 
-  get sortedAvailableLandUseActionOptions() {
-    return this.availableLandUseActionOptions.sort((a, b) => ((a.name > b.name) ? 1 : -1));
-  }
-
-  // when a user selects an option from the dropdown menu,
-  // the option is filtered out of the availableLandUseActionOptions
-  // (and therefore removed from the dropdown).
-  // The selected option is added to the newLandUseActionSelections array
-  // (and therefore displays in the list of selected actions).
   @action
-  addNewLandUseActionSelection() {
-    const selection = this.selectedLandUseAction.countField;
-
-    if (selection) {
-      this.newLandUseActionSelections.pushObject(this.selectedLandUseAction);
-      this.selectedLandUseAction = {};
-    }
+  addSelectedAction(selectedAction) {
+    this.args.pasForm[selectedAction.countField] = 1;
+    this.actionsAddedByUser.unshiftObject(selectedAction);
   }
 
-  // When a user deletes an action, the associated fields are reset as well.
-  // Because the action is removed from landUseActionSelections, it is no
-  // longer filtered out of availableLandUseActionOptions array
-  // (and therefore exists in the dropdown).
   @action
   removeSelectedAction(actionToRemove) {
     const { pasForm } = this.args;
 
-    this.landUseActionSelections.removeObject(actionToRemove);
+    this.actionsAddedByUser.removeObject(actionToRemove);
+    // reset all model attributes
     pasForm[actionToRemove.countField] = 0;
     pasForm[actionToRemove.attr1] = '';
     pasForm[actionToRemove.attr2] = '';

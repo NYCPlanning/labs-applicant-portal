@@ -109,20 +109,28 @@ export default class PackageModel extends Model {
   @attr({ defaultValue: () => [] })
   documents;
 
-  async saveDescendants() {
+  setAttrsForSubmission() {
+    this.statuscode = PACKAGE_STATUS_CODES.SUBMITTED.code;
+    this.statecode = PACKAGE_STATE_CODES.INACTIVE.code;
+  }
+
+  async save() {
     await this.fileManager.save();
-    // call special save methods because it will issue a
-    // patch requests to every associated record
-    await this.pasForm?.saveDirtyApplicants();
-    await this.pasForm?.saveDirtyBbls();
-    await this.pasForm?.save();
-    await this.save();
+    await this.pasForm.save();
+    await super.save();
   }
 
   async submit() {
-    this.statuscode = PACKAGE_STATUS_CODES.SUBMITTED.code;
-    this.statecode = PACKAGE_STATE_CODES.INACTIVE.code;
+    this.setAttrsForSubmission();
 
-    await this.saveDescendants();
+    await this.save();
+  }
+
+  get isDirty() {
+    return this.hasDirtyAttributes
+      || this.fileManager.isDirty
+      || this.pasForm.hasDirtyAttributes
+      || this.pasForm.isBblsDirty
+      || this.pasForm.isApplicantsDirty;
   }
 }

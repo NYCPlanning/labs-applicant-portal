@@ -3,6 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { render, click } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import { selectChoose } from 'ember-power-select/test-support';
 
 
 module('Integration | Component | packages/applicant-team-editor', function(hooks) {
@@ -34,7 +35,7 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
     ];
 
     await render(hbs`
-      <Packages::ApplicantTeamEditor 
+      <Packages::ApplicantTeamEditor
         @applicants={{this.applicants}}
       />
     `);
@@ -49,7 +50,7 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
     this.applicants = [];
 
     await render(hbs`
-      <Packages::ApplicantTeamEditor 
+      <Packages::ApplicantTeamEditor
         @applicants={{this.applicants}}
       />
     `);
@@ -60,7 +61,7 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
 
     // can add an applicant team member
     await click('[data-test-add-applicant-team-member-button]');
-    assert.dom('[data-test-applicant-type="Applicant Team Member"]').exists();
+    assert.dom('[data-test-applicant-type="Other Team Member"]').exists();
   });
 
   test('user can remove applicants', async function(assert) {
@@ -71,7 +72,7 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
     ];
 
     await render(hbs`
-      <Packages::ApplicantTeamEditor 
+      <Packages::ApplicantTeamEditor
         @applicants={{this.applicants}}
       />
     `);
@@ -89,7 +90,7 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
     ];
 
     await render(hbs`
-      <Packages::ApplicantTeamEditor 
+      <Packages::ApplicantTeamEditor
         @applicants={{this.applicants}}
       />
     `);
@@ -102,5 +103,23 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
 
     // should be reflected in the applicants array!
     assert.equal(this.applicants[0].dcpType, 717170001);
+  });
+
+  test('user can select a state for an applicant team member', async function(assert) {
+    this.server.create('applicant', 'individualApplicant');
+
+    this.applicants = [
+      await this.owner.lookup('service:store').findRecord('applicant', 1),
+    ];
+
+    await render(hbs`
+      <Packages::ApplicantTeamEditor 
+        @applicants={{this.applicants}}
+      />
+    `);
+
+    await selectChoose('[data-test-applicant-state-dropdown]', 'OR');
+
+    assert.equal(this.applicants[0].dcpState, 717170037);
   });
 });
