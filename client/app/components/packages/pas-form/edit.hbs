@@ -82,6 +82,10 @@
               @value={{saveable-form.saveableChanges.dcpDescriptionofprojectareageography}}
               rows="5"
             />
+            <CharacterCounter
+              @string={{this.saveableChanges.dcpDescriptionofprojectareageography}}
+              @maxlength="2000"
+            />
             <ValidationMessage
               @changesetError={{saveable-form.submittableChanges.error.dcpDescriptionofprojectareageography}}
             />
