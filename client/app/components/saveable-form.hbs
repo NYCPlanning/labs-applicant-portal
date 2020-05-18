@@ -1,0 +1,22 @@
+{{!-- template-lint-disable no-log --}}
+
+{{#each-in this.submittableChanges.error as |key value|}}
+  {{log key value.validation value.value}}
+{{/each-in}}
+
+{{yield (hash
+  saveableChanges=this.saveableChanges
+  submittableChanges=this.submittableChanges
+  radio=(component 'radio-button'
+    changed=this.validate
+  )
+
+  saveButton=(component 'packages/save-button'
+    onClick=this.save
+  )
+
+  submitButton=(component 'packages/save-button'
+    onClick=this.submit
+    isSubmit=true
+  )
+)}}
