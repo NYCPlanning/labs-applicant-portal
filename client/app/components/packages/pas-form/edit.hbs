@@ -720,22 +720,20 @@
 
       <div class="sticky-sidebar">
         <Packages::SaveButton
-          @onClick={{perform this.save}}
-          @isEnabled={{this.isSaveable}}
-          @isRunning={{this.save.isRunning}}
-          @isSaved={{and (not this.isSaveable) (not this.save.isRunning)}}
+          @onClick={{this.save}}
+          @isEnabled={{or @package.isDirty (and this.saveableChanges.isDirty this.saveableChanges.isValid)}}
           data-test-save-button
         />
         {{!-- Error Handling --}}
         <Packages::PasFormError @pasForm={{this.pasForm}}/>
         <Packages::SaveButton
           @onClick={{this.toggleModal}}
-          @isEnabled={{this.isSubmittable}}
-          @isRunning={{this.submit.isRunning}}
+          @isEnabled={{this.submittableChanges.isValid}}
           @isSubmit={{true}}
           class="secondary"
           data-test-submit-button
         />
+
         {{#if this.modalIsOpen}}
           <EmberWormhole @to="reveal-modal-container">
             <RevealModal @toggle={{this.toggleModal}}>
@@ -748,7 +746,7 @@
                   <button
                     type="button"
                     class="button expanded large secondary"
-                    disabled={{this.submit.isRunning}}
+                    disabled={{this.saveChangeset.isRunning}}
                     {{on "click" this.toggleModal}}
                   >
                     Continue Editing
@@ -756,9 +754,8 @@
                 </div>
                 <div class="cell large-6 small-padding-left">
                   <Packages::SaveButton
-                    @onClick={{perform this.submit}}
-                    @isEnabled={{not this.submit.isRunning}}
-                    @isRunning={{this.submit.isRunning}}
+                    @onClick={{this.submit}}
+                    @isEnabled={{this.submittableChanges.isValid}}
                     @isSubmit={{true}}
                     class="no-margin"
                     data-test-confirm-submit-button

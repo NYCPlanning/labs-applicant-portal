@@ -13,4 +13,15 @@ module('Unit | Model | project', function(hooks) {
 
     assert.ok(model);
   });
+
+  test('pasPackages works when no packages available', function(assert) {
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('project', {
+      packages: [],
+    });
+
+    assert.equal(model.pasPackages.length, 0);
+
+    assert.ok(model);
+  });
 });

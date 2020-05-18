@@ -1,14 +1,14 @@
 <button
   type="button"
-  class="button expanded large {{if @isSaved 'button--saved'}}"
-  disabled={{not @isEnabled}}
-  {{on "click" @onClick}}
+  class="button expanded large {{if this.didSave 'button--saved'}}"
+  disabled={{not this.isEnabled}}
+  {{on "click" (perform this.clickTask)}}
   ...attributes
 >
-  {{#if @isRunning}}
+  {{#if this.clickTask.isRunning}}
     <FaIcon @icon="spinner" @spin={{true}} @pulse={{true}} class="small-margin-right" />
     {{if @isSubmit 'Submitting' 'Saving'}}
-  {{else if @isSaved}}
+  {{else if this.didSave}}
     <FaIcon @icon="check" class="small-margin-right" />
     {{if @isSubmit 'Submitted' 'Saved'}}
   {{else}}
