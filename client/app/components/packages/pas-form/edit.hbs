@@ -82,6 +82,10 @@
               @value={{saveable-form.saveableChanges.dcpDescriptionofprojectareageography}}
               rows="5"
             />
+            <CharacterCounter
+              @string={{saveable-form.saveableChanges.dcpDescriptionofprojectareageography}}
+              @maxlength="2000"
+            />
             <ValidationMessage
               @changesetError={{saveable-form.submittableChanges.error.dcpDescriptionofprojectareageography}}
             />
@@ -163,7 +167,10 @@
                   @value={{saveable-form.saveableChanges.dcpUrbanareaname}}
                   data-test-dcpurbanrenewalareaname
                 />
-
+                <CharacterCounter
+                  @string={{saveable-form.saveableChanges.dcpUrbanareaname}}
+                  @maxlength="250"
+                />
                 <ValidationMessage
                   @changesetError={{saveable-form.submittableChanges.error.dcpUrbanareaname}}
                   data-test-dcpurbanrenewalareaname-validation
@@ -229,6 +236,10 @@
                   @value={{saveable-form.saveableChanges.dcpPleaseexplaintypeiienvreview}}
                   data-test-dcppleaseexplaintypeiienvreview
                 />
+                <CharacterCounter
+                  @string={{saveable-form.saveableChanges.dcpPleaseexplaintypeiienvreview}}
+                  @maxlength="200"
+                />
                 <ValidationMessage
                   @changesetError={{saveable-form.saveableChanges.error.dcpPleaseexplaintypeiienvreview}}
                 />
@@ -262,6 +273,10 @@
                   @type="text"
                   @value={{saveable-form.saveableChanges.dcpProjectareaindutrialzonename}}
                   data-test-dcpprojectareaindustrialbusinesszonename
+                />
+                <CharacterCounter
+                  @string={{saveable-form.saveableChanges.dcpProjectareaindutrialzonename}}
+                  @maxlength="200"
                 />
                 <ValidationMessage
                   @changesetError={{saveable-form.saveableChanges.error.dcpProjectareaindutrialzonename}}
@@ -297,6 +312,10 @@
                   @type="text"
                   @value={{saveable-form.saveableChanges.dcpProjectarealandmarkname}}
                   data-test-dcpisprojectarealandmarkname
+                />
+                <CharacterCounter
+                  @string={{saveable-form.saveableChanges.dcpProjectarealandmarkname}}
+                  @maxlength="250"
                 />
                 <ValidationMessage
                   @changesetError={{saveable-form.saveableChanges.error.dcpProjectarealandmarkname}}
@@ -372,6 +391,10 @@
                   @type="text"
                   @value={{saveable-form.saveableChanges.dcpCityregisterfilenumber}}
                   data-test-dcpcityregisterfilenumber
+                />
+                <CharacterCounter
+                  @string={{saveable-form.saveableChanges.dcpCityregisterfilenumber}}
+                  @maxlength="25"
                 />
                 <ValidationMessage
                   @changesetError={{saveable-form.saveableChanges.error.dcpCityregisterfilenumber}}
@@ -595,6 +618,10 @@
               rows="5"
               data-test-dcpprojectdescriptionproposeddevelopment
             />
+            <CharacterCounter
+              @string={{saveable-form.saveableChanges.dcpProjectdescriptionproposeddevelopment}}
+              @maxlength="3000"
+            />
             <ValidationMessage
               @changesetError={{saveable-form.submittableChanges.error.dcpProjectdescriptionproposeddevelopment}}
             />
@@ -606,6 +633,10 @@
               @value={{saveable-form.saveableChanges.dcpProjectdescriptionbackground}}
               rows="5"
               data-test-dcpprojectdescriptionbackground
+            />
+            <CharacterCounter
+              @string={{saveable-form.saveableChanges.dcpProjectdescriptionbackground}}
+              @maxlength="2000"
             />
             <ValidationMessage
               @changesetError={{saveable-form.submittableChanges.error.dcpProjectdescriptionbackground}}
@@ -619,6 +650,10 @@
               rows="5"
               data-test-dcpprojectdescriptionproposedactions
             />
+            <CharacterCounter
+              @string={{saveable-form.saveableChanges.dcpProjectdescriptionproposedactions}}
+              @maxlength="2000"
+            />
             <ValidationMessage
               @changesetError={{saveable-form.submittableChanges.error.dcpProjectdescriptionproposedactions}}
             />
@@ -631,6 +666,10 @@
               rows="5"
               data-test-dcpprojectdescriptionproposedarea
             />
+            <CharacterCounter
+              @string={{saveable-form.saveableChanges.dcpProjectdescriptionproposedarea}}
+              @maxlength="3000"
+            />
             <ValidationMessage
               @changesetError={{saveable-form.submittableChanges.error.dcpProjectdescriptionproposedarea}}
             />
@@ -642,6 +681,10 @@
               @value={{saveable-form.saveableChanges.dcpProjectdescriptionsurroundingarea}}
               rows="5"
               data-test-dcpprojectdescriptionsurroundingarea
+            />
+            <CharacterCounter
+              @string={{saveable-form.saveableChanges.dcpProjectdescriptionsurroundingarea}}
+              @maxlength="3000"
             />
             <ValidationMessage
               @changesetError={{saveable-form.submittableChanges.error.dcpProjectdescriptionsurroundingarea}}
@@ -657,6 +700,10 @@
               @value={{saveable-form.saveableChanges.dcpProjectattachmentsotherinformation}}
               rows="5"
               data-test-dcpprojectattachmentsotherinformation
+            />
+            <CharacterCounter
+              @string={{saveable-form.saveableChanges.dcpProjectattachmentsotherinformation}}
+              @maxlength="3000"
             />
             <ValidationMessage
               @changesetError={{saveable-form.submittableChanges.error.dcpProjectattachmentsotherinformation}}
