@@ -50,18 +50,12 @@ export default class ProjectsController extends Controller {
   // and secondly by their house number. (Currently, the sort is alphabetical
   // even across the house number, so "123" < "8" === true)
   @sort('applicantProjects', function(projectA, projectB) {
-    if (projectA.dcpProjectname < projectB.dcpProjectname) {
-      return -1;
-    }
-    return 1;
+    return projectA.dcpProjectname.localeCompare(projectB.dcpProjectname);
   })
   sortedApplicantProjects;
 
   @sort('planningProjects', function(projectA, projectB) {
-    if (projectA.dcpProjectname < projectB.dcpProjectname) {
-      return -1;
-    }
-    return 1;
+    return projectA.dcpProjectname.localeCompare(projectB.dcpProjectname);
   })
   sortedPlanningProjects;
 }
