@@ -22,7 +22,7 @@ export default Factory.extend({
   }),
 
   applicantTeamMember: trait({
-    targetEntity: 'dcp_applicantrepresentativeinformation',
+    targetEntity: 'dcp_applicantrepinformation',
     dcpType: null,
     dcpOrganization: 'Vandelay Industries',
   }),

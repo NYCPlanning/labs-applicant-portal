@@ -16,13 +16,13 @@ import { AuthenticateGuard } from '../../../authenticate.guard';
 import { JsonApiDeserializePipe } from '../../../json-api-deserialize.pipe';
 
 // CRM has two entities that encompass the applicant team, 
-// dcp_applicantinformation and dcp_applicantrepresentativeinformation
+// dcp_applicantinformation and dcp_applicantrepinformation
 // TODO: This controller exposes these two entites as one "applicant" resource
 // and handles routes applicant resources from and to the appropriate CRM entity
 // the frontend provides (and needs) a custom property "targetEntity"
 // to track the ultimate CRM entity destination (and source when getting existing)
 
-export const APPLICANT_ATTRIBUTES = [
+export const APPLICANT_REPRESENTATIVE_ATTRIBUTES = [
   'dcp_firstname',
   'dcp_lastname',
   'dcp_organization',
@@ -32,9 +32,13 @@ export const APPLICANT_ATTRIBUTES = [
   'dcp_state',
   'dcp_zipcode',
   'dcp_phone',
-  'dcp_type', // only on dcp_applicantinformation entity, not applicantrepresentative
-  'targetEntity', // custom attribute to route to/from correct crm entity
 ];
+
+export const APPLICANT_ATTRIBUTES = [
+  ...APPLICANT_REPRESENTATIVE_ATTRIBUTES,
+  'dcp_type',
+];
+
 
 @UseInterceptors(
   new JsonApiSerializeInterceptor('applicants', {
@@ -62,21 +66,32 @@ export class ApplicantsController {
 
   @Post('/')
   create(@Body() body) {
-    const allowedAttrs = pick(body, APPLICANT_ATTRIBUTES);
+    const { target_entity } = body;
+  
+    let allowedAttrs;
+
+    // determine the appropraite attributes based on the entity type
+    if (target_entity === 'dcp_applicantinformation') {
+      allowedAttrs = pick(body, APPLICANT_ATTRIBUTES);
+    } else if (target_entity === 'dcp_applicantrepinformation') {
+      allowedAttrs = pick(body, APPLICANT_REPRESENTATIVE_ATTRIBUTES);
+    }
 
     if (body.pas_form) {
-      return this.crmService.create('dcp_applicantinformations', {
+      let applicantBody = {
         ...allowedAttrs,
+      }
+      const objKey = `dcp_${target_entity}_dcp_pasform@odata.bind` 
+      // Dy365 syntax for associating a newly-created record
+      // with an existing record.
+      // see: https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/webapi/create-entity-web-api#associate-entity-records-on-create
+      applicantBody[objKey] = [`/dcp_pasforms(${body.pas_form})`]
 
-        // Dy365 syntax for associating a newly-created record
-        // with an existing record.
-        // see: https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/webapi/create-entity-web-api#associate-entity-records-on-create
-        'dcp_dcp_applicantinformation_dcp_pasform@odata.bind': [
-          `/dcp_pasforms(${body.pas_form})`,
-        ],
-      });
+      console.log(applicantBody);
+      
+      return this.crmService.create(`${target_entity}s`, applicantBody);
     } else {
-      return this.crmService.create('dcp_applicantinformations', allowedAttrs);
+      return this.crmService.create(`${target_entity}s`, allowedAttrs);
     }
   }
 
@@ -89,3 +104,5 @@ export class ApplicantsController {
     };
   }
 }
+
+
