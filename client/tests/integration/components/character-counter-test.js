@@ -6,21 +6,36 @@ import { hbs } from 'ember-cli-htmlbars';
 module('Integration | Component | character-counter', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
-
-    await render(hbs`<CharacterCounter />`);
-
-    assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
+  test('Character counter is hidden if under 80% of maxlength', async function(assert) {
     await render(hbs`
-      <CharacterCounter>
-        template block text
-      </CharacterCounter>
+      <CharacterCounter
+        @string="abcd"
+        @maxlength="20"
+      />
     `);
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.dom('[data-character-counter]').doesNotExist();
+  });
+
+  test('Character counter displays as invalid when over maxlength', async function(assert) {
+    await render(hbs`
+      <CharacterCounter
+        @string="abcdefghijklmnopqrstuvwxyz"
+        @maxlength="20"
+      />
+    `);
+
+    assert.dom('[data-character-counter].invalid').exists();
+  });
+
+  test('Character counter displays as warning when over 80% of maxlength', async function(assert) {
+    await render(hbs`
+      <CharacterCounter
+        @string="abcdefghijklmnopqr"
+        @maxlength="20"
+      />
+    `);
+
+    assert.dom('[data-character-counter].warning').exists();
   });
 });

@@ -7,11 +7,11 @@ export default class CharacterCounterComponent extends Component {
 
   get warningClass() {
     if (this.stringLength > this.args.maxlength) {
-      return "invalid"
-    };
-    if ((this.stringLength / this.args.maxlength) > 0.9) {
-      return "warning"
-    };
-    return
+      return 'invalid';
+    }
+    if ((this.stringLength / this.args.maxlength) > 0.8) {
+      return 'warning';
+    }
+    return null;
   }
 }
