@@ -1,23 +1,18 @@
 import {
-  validatePresence,
+  validateNumber,
 } from 'ember-changeset-validations/validators';
 
-export default function validatePresenceIf(options) {
+export default function validateNumberIf(options) {
   const { withValue, on } = options;
 
   return (...args) => {
     const [,,, changes, content] = args;
     const target = Object.prototype.hasOwnProperty.call(changes, on) ? changes[on] : content[on];
-    let hasMatchingWith;
 
-    if (typeof withValue === 'function') {
-      hasMatchingWith = withValue(target);
-    } else {
-      hasMatchingWith = target === withValue;
-    }
+    const hasMatchingWith = withValue(target);
 
     if (hasMatchingWith) {
-      return validatePresence(options)(...args);
+      return validateNumber(options)(...args);
     }
 
     return true;
