@@ -45,12 +45,7 @@ export default class PasFormModel extends Model {
 
   @attr('number') dcpProjectblock;
 
-  @attr({
-    defaultValue(pasForm) {
-      return pasForm.package.project.dcpProjectname;
-    },
-  })
-  dcpRevisedprojectname;
+  @attr('string') dcpRevisedprojectname;
 
   @attr('boolean') dcpExistingbuildingoccupied;
 

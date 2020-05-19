@@ -60,8 +60,10 @@ export const PACKAGE_ATTRS = [
     },
   },
 
-  // remap verbose navigation link names to
-  // more concise names
+  // Transform here should only be used for remapping
+  // navigation links into cleaner names as well as
+  // handling special virtual properties that do not
+  // come from CRM 
   transform(projectPackage) {
     const { dcp_pasform: pasForm } = projectPackage;
 
