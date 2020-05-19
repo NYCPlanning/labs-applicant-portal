@@ -48,7 +48,8 @@ export const PACKAGE_ATTRS = [
     applicants: {
       ref: 'dcp_applicantinformationid',
       attributes: [
-        ...APPLICANT_ATTRIBUTES
+        ...APPLICANT_ATTRIBUTES,
+        'target_entity', // custom attribute to handle the two applicant crm entities
       ],
     },
     bbls: {

@@ -36,7 +36,6 @@ export const APPLICANT_REPRESENTATIVE_ATTRIBUTES = [
   'dcp_state',
   'dcp_zipcode',
   'dcp_phone',
-  'target_entity',
 ];
 
 export const APPLICANT_ATTRIBUTES = [
@@ -63,8 +62,7 @@ export class ApplicantsController {
     let allowedAttrs;
 
     if (target_entity === 'dcp_applicantinformation') {
-      // we can't send target_entity to CRM because it doesn't exist there
-      allowedAttrs = pick(body, APPLICANT_ATTRIBUTES.filter(attribute => attribute !== 'target_entity'));
+      allowedAttrs = pick(body, APPLICANT_ATTRIBUTES);
 
       await this.crmService.update(
         'dcp_applicantinformations',
@@ -72,7 +70,7 @@ export class ApplicantsController {
         allowedAttrs,
       );
     } else if (target_entity === 'dcp_applicantrepresentativeinformation') {
-      allowedAttrs = pick(body, APPLICANT_REPRESENTATIVE_ATTRIBUTES.filter(attribute => attribute !== 'target_entity'));
+      allowedAttrs = pick(body, APPLICANT_REPRESENTATIVE_ATTRIBUTES);
 
       // strip the hacky prepended "representative-" to use the exact CRM id
       const representativeId = id.replace('representative-', '');
@@ -97,9 +95,9 @@ export class ApplicantsController {
 
     let allowedAttrs;
 
-    // determine the appropraite attributes based on the entity type
+    // determine the appropriate attributes based on the entity type
     if (target_entity === 'dcp_applicantinformation') {
-      allowedAttrs = pick(body, APPLICANT_ATTRIBUTES.filter(attribute => attribute !== 'target_entity'));
+      allowedAttrs = pick(body, APPLICANT_ATTRIBUTES);
 
       if (body.pas_form) {
         return this.crmService.create('dcp_applicantinformations', {
@@ -118,7 +116,7 @@ export class ApplicantsController {
         );
       }
     } else if (target_entity === 'dcp_applicantrepresentativeinformation') {
-      allowedAttrs = pick(body, APPLICANT_REPRESENTATIVE_ATTRIBUTES.filter(attribute => attribute !== 'target_entity'));
+      allowedAttrs = pick(body, APPLICANT_REPRESENTATIVE_ATTRIBUTES);
 
       if (body.pas_form) {
         return this.crmService.create(
@@ -153,7 +151,7 @@ export class ApplicantsController {
 
       await this.crmService.delete('dcp_applicantrepresentativeinformations', representativeId);
     } else {
-      // anything that doesn't have representative in the ID is an applicant information entity
+      // anything that doesn't have "representative" in the ID is an applicant information entity
       await this.crmService.delete('dcp_applicantinformations', id);
     }
 
