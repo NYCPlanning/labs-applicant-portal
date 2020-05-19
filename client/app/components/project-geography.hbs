@@ -22,16 +22,18 @@
 {{#each @bbls as |bbl|}}
   <fieldset class="fieldset relative">
     <legend data-test-bbl-title="{{bbl.dcpBblnumber}}">
+      <strong>{{bbl.dcpBblnumber}}</strong>
+      {{#if bbl.temporaryAddressLabel}}
+        ({{bbl.temporaryAddressLabel}})
+      {{/if}}
       <a
         href="https://zola.planning.nyc.gov/bbl/{{bbl.dcpBblnumber}}"
         target="_blank"
         rel="noopener noreferrer"
       >
-        <strong>{{bbl.dcpBblnumber}}</strong>
+        View in ZoLa<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup>
       </a>
-      {{#if bbl.temporaryAddressLabel}}
-        ({{bbl.temporaryAddressLabel}})
-      {{/if}}
+
     </legend>
     <fieldset>
       <legend data-test-development-site-question="{{bbl.dcpBblnumber}}-{{bbl.dcpDevelopmentsite}}">
