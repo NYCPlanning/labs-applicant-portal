@@ -6,6 +6,7 @@ import {
   settled,
   waitFor,
   fillIn,
+  triggerKeyEvent,
 } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -277,5 +278,19 @@ module('Acceptance | user can click package edit', function(hooks) {
     assert.dom('[data-test-dcpurbanrenewalareaname-validation]').exists('it revalidates');
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-submit-button]').hasAttribute('disabled');
+  });
+
+  test('It sends an associated project to the server, and associates the correct project', async function (assert) {
+    this.server.create('package', 1, {
+      pasForm: this.server.create('pas-form'),
+      project: this.server.create('project', { id: '42' }),
+    });
+
+    await visit('/packages/1/edit');
+    await fillIn('[data-test-section="project-geography"] .map-search-input', '1000120001');
+    await triggerKeyEvent('[data-test-section="project-geography"] .labs-geosearch', 'keypress', 13);
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.bbls.firstObject.projectId, '42');
   });
 });

@@ -1,4 +1,4 @@
-import { Controller, Patch, Body, Param, Post, UseInterceptors, UseGuards, UsePipes, Delete } from '@nestjs/common';
+import { Controller, Patch, Body, Param, Post, UseInterceptors, UseGuards, UsePipes, Delete, HttpException, HttpStatus } from '@nestjs/common';
 import { pick } from 'underscore';
 import { CrmService } from '../../../crm/crm.service';
 import { JsonApiSerializeInterceptor } from '../../../json-api-serialize.interceptor';
@@ -42,18 +42,20 @@ export class BblsController {
   create(@Body() body) {
     const allowedAttrs = pick(body, BBL_ATTRIBUTES);
 
-    if (body.pas_form) {
-      return this.crmService.create('dcp_projectbbls', {
-        ...allowedAttrs,
+    if (!body.pas_form || !body.project) throw new HttpException(
+      'Missing pas_form or project ids',
+      HttpStatus.UNPROCESSABLE_ENTITY,
+    );
 
-        // Dy365 syntax for associating a newly-created record
-        // with an existing record.
-        // see: https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/webapi/create-entity-web-api#associate-entity-records-on-create
-        'dcp_dcp_projectbbl_dcp_pasform@odata.bind': [`/dcp_pasforms(${body.pas_form})`],
-      });
-    } else {
-      return this.crmService.create('dcp_projectbbls', allowedAttrs);
-    }
+    return this.crmService.create('dcp_projectbbls', {
+      ...allowedAttrs,
+
+      // Dy365 syntax for associating a newly-created record
+      // with an existing record.
+      // see: https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/webapi/create-entity-web-api#associate-entity-records-on-create
+      ...(body.pas_form ? { 'dcp_dcp_projectbbl_dcp_pasform@odata.bind': [`/dcp_pasforms(${body.pas_form})`] } : {}),
+      ...(body.project ? { 'dcp_project@odata.bind': `/dcp_projects(${body.project})` } : {}),
+    });
   }
 
   @Delete('/:id')
