@@ -71,7 +71,7 @@ export const PACKAGE_STATE_CODES = {
 };
 
 export default class PackageModel extends Model {
-  ready() {
+  createFileQueue() {
     const fileQueue = this.fileQueue.create(this.id);
 
     this.fileManager = new FileManager(

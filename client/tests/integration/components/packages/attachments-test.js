@@ -21,6 +21,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
 
     const store = this.owner.lookup('service:store');
     this.package = await store.findRecord('package', '123');
+    this.package.createFileQueue();
 
     await render(hbs`<
       Packages::Attachments
@@ -37,6 +38,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
 
     const store = this.owner.lookup('service:store');
     this.package = await store.findRecord('package', '123');
+    this.package.createFileQueue();
 
     await render(hbs`<
       Packages::Attachments
@@ -82,6 +84,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
 
     const store = this.owner.lookup('service:store');
     this.package = await store.findRecord('package', '123');
+    this.package.createFileQueue();
 
     const file = new File(['foo'], 'PAS Form.pdf', { type: 'text/plain' });
     const file2 = new File(['foo'], 'Action Changes.excel', { type: 'text/plain' });
@@ -114,6 +117,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
 
     const store = this.owner.lookup('service:store');
     this.package = await store.findRecord('package', '123');
+    this.package.createFileQueue();
 
     const file = new File(['foo'], 'PAS Form.pdf', { type: 'text/plain' });
     const file2 = new File(['foo'], 'Action Changes.excel', { type: 'text/plain' });
@@ -142,6 +146,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
 
     const store = this.owner.lookup('service:store');
     this.package = await store.findRecord('package', '123');
+    this.package.createFileQueue();
 
     await render(hbs`<
       Packages::Attachments

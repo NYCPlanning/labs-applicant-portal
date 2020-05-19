@@ -293,4 +293,26 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     assert.equal(this.server.db.bbls.firstObject.projectId, '42');
   });
+
+  test('Docs appear in attachments section when visiting from another route', async function(assert) {
+    this.server.create('package', 'applicant', 'withExistingDocuments', {
+      id: '1',
+      project: this.server.create('project'),
+    });
+
+    // simulate a "sparse fieldset"
+    this.server.get('/projects', function (schema) {
+      const projects = schema.projects.all();
+      const json = this.serialize(projects);
+
+      json.included[0].attributes.documents = [];
+
+      return json;
+    });
+
+    await visit('/projects');
+    await click('[data-test-project="edit-pas"]');
+
+    assert.dom('[data-test-section="attachments"').hasTextContaining('PAS Form.pdf');
+  });
 });
