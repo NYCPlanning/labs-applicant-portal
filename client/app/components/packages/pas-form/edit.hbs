@@ -69,7 +69,12 @@
             NYC Planning's <a href="https://lotselector.planning.nyc.gov/" target="_blank" rel="noopener noreferrer">Tax Lot Selector<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a> is a helpful tool for identifying and selecting tax lot BBL numbers within a project area. If your project is very large, you can download the BBLs from the Tax Lot Selector app using the "Paperless Filing" option and upload that file to this form as an attachment.
           </p>
 
-          <ProjectGeography @bbls={{this.pasForm.bbls}} />
+          <div data-test-section="project-geography">
+            <ProjectGeography
+              @bbls={{this.pasForm.bbls}}
+              @project={{this.package.project}}
+            />
+          </div>
 
           <label>
             <strong>Description of geography</strong>
