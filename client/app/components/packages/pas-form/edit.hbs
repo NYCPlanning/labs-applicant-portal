@@ -220,6 +220,9 @@
             {{#if (eq this.saveableChanges.dcpLanduseactiontype2 717170000)}}
               <label>
                 Indicate which SEQRA or CEQR category each action fulfills
+                <small class="help-text display-block">
+                  Ex: 617.5(c)(9)
+                </small>
                 <Input
                   @type="text"
                   @value={{this.saveableChanges.dcpPleaseexplaintypeiienvreview}}
@@ -691,6 +694,14 @@
                   <a href="https://www1.nyc.gov/assets/planning/download/pdf/applicants/applicant-portal/dcp-signature-form.pdf" target="_blank" rel="noopener noreferrer">Signature Form<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>
                 </li>
               </ul>
+
+              <h5>
+                For <a href="https://streets.planning.nyc.gov/about" target="_blank" rel="noopener noreferrer">City Map changes<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>:
+              </h5>
+              <ul class="text-small">
+                <li class="small-margin-bottom">Most recent Borough President’s final Section Map or most recent approved and filed Alteration Map for the project area</li>
+                <li class="small-margin-bottom">Site survey — recommended but not required</li>
+              </ul>
             </div>
             <div class="cell large-6">
               <h5>For projects in the NYC Coastal Zone: </h5>
@@ -700,12 +711,12 @@
                 </li>
               </ul>
 
-              <h5>
-                For <a href="https://streets.planning.nyc.gov/about" target="_blank" rel="noopener noreferrer">City Map changes<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>:
-              </h5>
+              <h5>For Staten Island or Bronx projects in South Richmond, Special Hillsides Preservation, or Special Natural Resources Districts: </h5>
               <ul class="text-small">
-                <li class="small-margin-bottom">Most recent Borough President’s final Section Map or most recent approved and filed Alteration Map for the project area</li>
-                <li class="small-margin-bottom">Site survey — recommended but not required</li>
+                <li class="small-margin-bottom">Site Survey — Existing conditions (required if there have been changes to previous submissions)</li>
+                <li class="small-margin-bottom">Site Plan — Proposed conditions</li>
+                <li class="small-margin-bottom">Zoning Calculations: Tree Calculations</li>
+                <li class="small-margin-bottom">Zoning Calculations: Average Percent (%) of Slope (Special Hillsides Preservation and Special Natural Resources Districts)</li>
               </ul>
             </div>
           </div>
