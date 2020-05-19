@@ -233,27 +233,9 @@
           Does the proposed Project, or portion thereof, require a NYC DEP Storm Water Construction Permit?
         </strong>
         <br />
-        {{
-          if
-          (eq
-            @package.pasForm.dcpProposedprojectorportionconstruction "717170000"
-          )
-          "Yes"
-        }}
-        {{
-          if
-          (eq
-            @package.pasForm.dcpProposedprojectorportionconstruction "717170001"
-          )
-          "No"
-        }}
-        {{
-          if
-          (eq
-            @package.pasForm.dcpProposedprojectorportionconstruction "717170002"
-          )
-          "Unsure at this time"
-        }}
+        {{if (eq @package.pasForm.dcpProposedprojectorportionconstruction 717170000) "Yes"}}
+        {{if (eq @package.pasForm.dcpProposedprojectorportionconstruction 717170001) "No" }}
+        {{if (eq @package.pasForm.dcpProposedprojectorportionconstruction 717170002) "Unsure at this time"}}
       </p>
 
       <p>
@@ -266,13 +248,9 @@
           {{! TODO: add link }}
         </strong>
         <br />
-        {{if (eq @package.pasForm.dcpUrbanrenewalarea "717170000") "Yes"}}
-        {{if (eq @package.pasForm.dcpUrbanrenewalarea "717170001") "No"}}
-        {{
-          if
-          (eq @package.pasForm.dcpUrbanrenewalarea "717170002")
-          "Unsure at this time"
-        }}
+        {{if (eq @package.pasForm.dcpUrbanrenewalarea 717170000) "Yes"}}
+        {{if (eq @package.pasForm.dcpUrbanrenewalarea 717170001) "No"}}
+        {{if (eq @package.pasForm.dcpUrbanrenewalarea 717170002) "Unsure at this time"}}
       </p>
 
       <p>
@@ -285,31 +263,11 @@
           {{! TODO: add link }}
         </strong>
         <br />
-        {{
-          if
-          (eq @package.pasForm.dcpLegalstreetfrontage "717170000")
-          "Mapped and Build"
-        }}
-        {{
-          if
-          (eq @package.pasForm.dcpLegalstreetfrontage "717170001")
-          "Private Road"
-        }}
-        {{
-          if
-          (eq @package.pasForm.dcpLegalstreetfrontage "717170002")
-          "Record Street"
-        }}
-        {{
-          if
-          (eq @package.pasForm.dcpLegalstreetfrontage "717170003")
-          "Corporation Counsel Opinion"
-        }}
-        {{
-          if
-          (eq @package.pasForm.dcpLegalstreetfrontage "717170004")
-          "Mapped but not Build"
-        }}
+        {{if (eq @package.pasForm.dcpLegalstreetfrontage 717170000) "Mapped and Build"}}
+        {{if (eq @package.pasForm.dcpLegalstreetfrontage 717170001) "Private Road"}}
+        {{if (eq @package.pasForm.dcpLegalstreetfrontage 717170002) "Record Street"}}
+        {{if (eq @package.pasForm.dcpLegalstreetfrontage 717170003) "Corporation Counsel Opinion"}}
+        {{if (eq @package.pasForm.dcpLegalstreetfrontage 717170004) "Mapped but not Build"}}
       </p>
 
       <p>
@@ -322,16 +280,12 @@
           {{! TODO: add link }}
         </strong>
         <br />
-        {{if (eq @package.pasForm.dcpLanduseactiontype2 "717170000") "Yes"}}
-        {{if (eq @package.pasForm.dcpLanduseactiontype2 "717170001") "No"}}
-        {{
-          if
-          (eq @package.pasForm.dcpLanduseactiontype2 "717170002")
-          "Unsure at this time"
-        }}
+        {{if (eq @package.pasForm.dcpLanduseactiontype2 717170000) "Yes"}}
+        {{if (eq @package.pasForm.dcpLanduseactiontype2 717170001) "No"}}
+        {{if (eq @package.pasForm.dcpLanduseactiontype2 717170002) "Unsure at this time"}}
       </p>
 
-      {{#if (eq @package.pasForm.dcpLanduseactiontype2 "717170000")}}
+      {{#if (eq @package.pasForm.dcpLanduseactiontype2 717170000)}}
         <p>
           <strong>
             Indicate which SEQRA or CEQR category each action fulfills
@@ -351,16 +305,8 @@
           {{! TODO: add link }}
         </strong>
         <br />
-        {{
-          if
-          (eq @package.pasForm.dcpProjectareaindustrialbusinesszone true)
-          "Yes"
-        }}
-        {{
-          if
-          (eq @package.pasForm.dcpProjectareaindustrialbusinesszone false)
-          "No"
-        }}
+        {{if (eq @package.pasForm.dcpProjectareaindustrialbusinesszone true) "Yes"}}
+        {{if (eq @package.pasForm.dcpProjectareaindustrialbusinesszone false) "No"}}
       </p>
 
       {{#if (eq @package.pasForm.dcpProjectareaindustrialbusinesszone true)}}
@@ -407,12 +353,8 @@
           {{! TODO: add link }}
         </strong>
         <br />
-        {{
-          if (eq @package.pasForm.dcpProjectareacoastalzonelocatedin true) "Yes"
-        }}
-        {{
-          if (eq @package.pasForm.dcpProjectareacoastalzonelocatedin false) "No"
-        }}
+        {{if (eq @package.pasForm.dcpProjectareacoastalzonelocatedin true) "Yes"}}
+        {{if (eq @package.pasForm.dcpProjectareacoastalzonelocatedin false) "No"}}
       </p>
 
       <p>
@@ -425,21 +367,9 @@
           {{! TODO: add link }}
         </strong>
         <br />
-        {{
-          if
-          (eq @package.pasForm.dcpProjectareaischancefloodplain "717170000")
-          "Yes"
-        }}
-        {{
-          if
-          (eq @package.pasForm.dcpProjectareaischancefloodplain "717170001")
-          "No"
-        }}
-        {{
-          if
-          (eq @package.pasForm.dcpProjectareaischancefloodplain "717170002")
-          "Unsure at this time"
-        }}
+        {{if (eq @package.pasForm.dcpProjectareaischancefloodplain 717170000) "Yes"}}
+        {{if (eq @package.pasForm.dcpProjectareaischancefloodplain 717170001) "No"}}
+        {{if (eq @package.pasForm.dcpProjectareaischancefloodplain 717170002) "Unsure at this time"}}
       </p>
 
       <p>
@@ -469,21 +399,9 @@
           Will a new legal instrument or modification of a current legal instrument be necessary to approve/implement these actions?
         </strong>
         <br />
-        {{
-          if
-          (eq @package.pasForm.dcpRestrictivedeclarationrequired "717170000")
-          "Yes"
-        }}
-        {{
-          if
-          (eq @package.pasForm.dcpRestrictivedeclarationrequired "717170001")
-          "No"
-        }}
-        {{
-          if
-          (eq @package.pasForm.dcpRestrictivedeclarationrequired "717170002")
-          "Unsure at this time"
-        }}
+        {{if (eq @package.pasForm.dcpRestrictivedeclarationrequired 717170000) "Yes"}}
+        {{if (eq @package.pasForm.dcpRestrictivedeclarationrequired 717170001) "No"}}
+        {{if (eq @package.pasForm.dcpRestrictivedeclarationrequired 717170002) "Unsure at this time"}}
       </p>
     </section>
 
@@ -506,38 +424,15 @@
           What type of development is proposed?
         </strong>
         <br />
-        {{
-          if
-          @package.pasForm.dcpProposeddevelopmentsitenewconstruction
-          "Newly constructed buildings"
-        }}
-        {{
-          if @package.pasForm.dcpProposeddevelopmentsitedemolition "Demolition"
-        }}
-        {{
-          if
-          @package.pasForm.dcpProposeddevelopmentsiteinfoalteration
-          "Alteration"
-        }}
-        {{
-          if @package.pasForm.dcpProposeddevelopmentsiteinfoaddition "Addition"
-        }}
-        {{
-          if
-          @package.pasForm.dcpProposeddevelopmentsitechnageofuse
-          "Change of use"
-        }}
-        {{
-          if
-          @package.pasForm.dcpProposeddevelopmentsiteenlargement
-          "Enlargement"
-        }}
-        {{if @package.pasForm.dcpProposeddevelopmentsiteinfoother "Other: "}}
-        {{
-          if
-          @package.pasForm.dcpProposeddevelopmentsiteinfoother
-          @package.pasForm.dcpProposeddevelopmentsiteotherexplanation
-        }}
+        {{if @package.pasForm.dcpProposeddevelopmentsitenewconstruction "Newly constructed buildings"}}
+        {{if @package.pasForm.dcpProposeddevelopmentsitedemolition "Demolition" }}
+        {{if @package.pasForm.dcpProposeddevelopmentsiteinfoalteration "Alteration"}}
+        {{if @package.pasForm.dcpProposeddevelopmentsiteinfoaddition "Addition" }}
+        {{if @package.pasForm.dcpProposeddevelopmentsitechnageofuse "Change of use"}}
+        {{if @package.pasForm.dcpProposeddevelopmentsiteenlargement "Enlargement"}}
+        {{#if @package.pasForm.dcpProposeddevelopmentsiteinfoother}}
+          Other:{{@package.pasForm.dcpProposeddevelopmentsiteotherexplanation}}
+        {{/if}}
       </p>
 
       <p>
@@ -550,16 +445,8 @@
           {{! TODO: add link }}
         </strong>
         <br />
-        {{
-          if
-          (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea true)
-          "Yes"
-        }}
-        {{
-          if
-          (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea false)
-          "No"
-        }}
+        {{if (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea true) "Yes"}}
+        {{if (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea false) "No"}}
       </p>
 
       {{#if (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea true)}}
@@ -577,55 +464,21 @@
           Does the proposed development involve discretionary funding for Affordable Housing Units?
         </strong>
         <br />
-        {{
-          if
-          (eq
-            @package.pasForm.dcpDiscressionaryfundingforffordablehousing
-            "717170000"
-          )
-          "Yes"
-        }}
-        {{
-          if
-          (eq
-            @package.pasForm.dcpDiscressionaryfundingforffordablehousing
-            "717170001"
-          )
-          "No"
-        }}
-        {{
-          if
-          (eq
-            @package.pasForm.dcpDiscressionaryfundingforffordablehousing
-            "717170002"
-          )
-          "Unsure at this time"
-        }}
+        {{if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing 717170000) "Yes"}}
+        {{if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing 717170001) "No"}}
+        {{if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing 717170002) "Unsure at this time"}}
       </p>
 
-      {{#if
-        (eq
-          @package.pasForm.dcpDiscressionaryfundingforffordablehousing
-          "717170000"
-        )
-      }}
+      {{#if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing 717170000)}}
         <p>
           <strong>
             Funding source
           </strong>
           <br />
-          {{if (eq @package.pasForm.dcpHousingunittypeCity "717170000") "City"}}
-          {{
-            if (eq @package.pasForm.dcpHousingunittypeCity "717170001") "State"
-          }}
-          {{
-            if
-            (eq @package.pasForm.dcpHousingunittypeCity "717170002")
-            "Federal"
-          }}
-          {{
-            if (eq @package.pasForm.dcpHousingunittypeCity "717170003") "Other"
-          }}
+          {{if (eq @package.pasForm.dcpHousingunittypeCity 717170000) "City"}}
+          {{if (eq @package.pasForm.dcpHousingunittypeCity 717170001) "State"}}
+          {{if (eq @package.pasForm.dcpHousingunittypeCity 717170002) "Federal"}}
+          {{if (eq @package.pasForm.dcpHousingunittypeCity 717170003) "Other"}}
         </p>
       {{/if}}
     </section>
