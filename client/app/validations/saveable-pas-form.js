@@ -214,7 +214,7 @@ export default {
     }),
   ],
 
-  dcpPzoningspecialpermit: [
+  dcpPfzoningspecialpermit: [
     validateLength({
       max: 10,
       message: 'Text is too long (max 10 characters)',
