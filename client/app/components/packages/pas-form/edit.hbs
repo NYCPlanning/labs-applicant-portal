@@ -1,7 +1,12 @@
 {{!-- template-lint-disable no-log --}}
-{{#each-in this.submittableChanges.error as |key value|}}
-  {{log key value.validation value.value}}
-{{/each-in}}
+
+<SaveableForm
+  @model={{this.pasForm}}
+  @validators={{array this.saveablePasFormValidations this.submittablePasFormValidations}}
+  @onSave={{@onSave}}
+  @onSubmit={{@onSubmit}}
+  as |saveable-form|
+>
 
 <div class="grid-x grid-margin-x">
 
@@ -28,7 +33,10 @@
           <strong>Project Name</strong>
           <Input
             @type="text"
-            @value={{this.saveableChanges.dcpRevisedprojectname}} data-test-dcprevisedprojectname
+            @value={{saveable-form.saveableChanges.dcpRevisedprojectname}} data-test-dcprevisedprojectname
+          />
+          <ValidationMessage
+            @changesetError={{saveable-form.saveableChanges.error.dcpRevisedprojectname}}
           />
         </label>
       </section>
@@ -71,12 +79,15 @@
               Fill in if the project area and/or development site is irregular, especially large, or does not consist of tax lots.
             </small>
             <Textarea
-              @value={{this.saveableChanges.dcpDescriptionofprojectareageography}}
-              maxlength="2000"
+              @value={{saveable-form.saveableChanges.dcpDescriptionofprojectareageography}}
               rows="5"
             />
+            <CharacterCounter
+              @string={{saveable-form.saveableChanges.dcpDescriptionofprojectareageography}}
+              @maxlength="2000"
+            />
             <ValidationMessage
-              @changesetError={{this.submittableChanges.error.dcpDescriptionofprojectareageography}}
+              @changesetError={{saveable-form.submittableChanges.error.dcpDescriptionofprojectareageography}}
             />
           </label>
         </section>
@@ -94,9 +105,9 @@
           <p class="text-small">
             Note: This is preliminary information and may change following discussion with NYC Planning.
           </p>
-
           <LandUseAction
-            @pasForm={{this.saveableChanges}}
+            @pasForm={{saveable-form.saveableChanges}}
+            @submittableChanges={{saveable-form.submittableChanges}}
           />
         </section>
 
@@ -119,13 +130,13 @@
               (hash code=717170001 label='No')
               (hash code=717170002 label='Unsure at this time')) as |radio|
             }}
-              <RadioButton
+              <saveable-form.radio
                 @value={{radio.code}}
-                @groupValue={{this.saveableChanges.dcpProposedprojectorportionconstruction}}
+                @groupValue={{saveable-form.saveableChanges.dcpProposedprojectorportionconstruction}}
                 data-test-dcpproposedprojectorportionconstruction={{radio.label}}
               >
                 {{radio.label}}
-              </RadioButton>
+              </saveable-form.radio>
             {{/each}}
           </fieldset>
 
@@ -139,28 +150,30 @@
               (hash code=717170001 label='No')
               (hash code=717170002 label='Unsure at this time')) as |radio|
             }}
-              <RadioButton
+              <saveable-form.radio
                 @value={{radio.code}}
-                @groupValue={{this.saveableChanges.dcpUrbanrenewalarea}}
-                @changed={{this.validate}}
+                @groupValue={{saveable-form.saveableChanges.dcpUrbanrenewalarea}}
                  data-test-dcpurbanrenewalarea={{radio.label}}
               >
                 {{radio.label}}
-              </RadioButton>
+              </saveable-form.radio>
             {{/each}}
 
-            {{#if (eq this.saveableChanges.dcpUrbanrenewalarea 717170000)}}
+            {{#if (eq saveable-form.saveableChanges.dcpUrbanrenewalarea 717170000)}}
               <label>
                 What is the name of the Urban Renewal Area?
                 <Input
                   @type="text"
-                  @value={{this.saveableChanges.dcpUrbanareaname}}
-                  maxlength="250"
+                  @value={{saveable-form.saveableChanges.dcpUrbanareaname}}
                   data-test-dcpurbanrenewalareaname
                 />
-
+                <CharacterCounter
+                  @string={{saveable-form.saveableChanges.dcpUrbanareaname}}
+                  @maxlength="250"
+                />
                 <ValidationMessage
-                  @changesetError={{this.submittableChanges.error.dcpUrbanareaname}}
+                  @changesetError={{saveable-form.submittableChanges.error.dcpUrbanareaname}}
+                  data-test-dcpurbanrenewalareaname-validation
                 />
               </label>
             {{/if}}
@@ -178,13 +191,13 @@
                 (hash code=717170004 label='Mapped but not Build')) as |radio|
             }}
               <span class="nowrap">
-                <RadioButton
+                <saveable-form.radio
                   @value={{radio.code}}
-                  @groupValue={{this.saveableChanges.dcpLegalstreetfrontage}}
+                  @groupValue={{saveable-form.saveableChanges.dcpLegalstreetfrontage}}
                   data-test-dcplegalstreetfrontage={{radio.label}}
                 >
                   {{radio.label}}
-                </RadioButton>
+                </saveable-form.radio>
               </span>
             {{/each}}
           </fieldset>
@@ -206,27 +219,35 @@
               (hash code=717170001 label='No')
               (hash code=717170002 label='Unsure at this time')) as |radio|
             }}
-              <RadioButton
+              <saveable-form.radio
                 @value={{radio.code}}
-                @groupValue={{this.saveableChanges.dcpLanduseactiontype2}}
-                @changed={{this.validate}}
+                @groupValue={{saveable-form.saveableChanges.dcpLanduseactiontype2}}
                 data-test-dcplanduseactiontype2={{radio.label}}
               >
                 {{radio.label}}
-              </RadioButton>
+              </saveable-form.radio>
             {{/each}}
 
-            {{#if (eq this.saveableChanges.dcpLanduseactiontype2 717170000)}}
+            {{#if (eq saveable-form.saveableChanges.dcpLanduseactiontype2 717170000)}}
               <label>
                 Indicate which SEQRA or CEQR category each action fulfills
+                <small class="help-text display-block">
+                  Ex: 617.5(c)(9)
+                </small>
                 <Input
                   @type="text"
-                  @value={{this.saveableChanges.dcpPleaseexplaintypeiienvreview}}
-                  maxlength="200"
+                  @value={{saveable-form.saveableChanges.dcpPleaseexplaintypeiienvreview}}
                   data-test-dcppleaseexplaintypeiienvreview
                 />
+                <CharacterCounter
+                  @string={{saveable-form.saveableChanges.dcpPleaseexplaintypeiienvreview}}
+                  @maxlength="200"
+                />
                 <ValidationMessage
-                  @changesetError={{this.submittableChanges.error.dcpPleaseexplaintypeiienvreview}}
+                  @changesetError={{saveable-form.saveableChanges.error.dcpPleaseexplaintypeiienvreview}}
+                />
+                <ValidationMessage
+                  @changesetError={{saveable-form.submittableChanges.error.dcpPleaseexplaintypeiienvreview}}
                 />
               </label>
             {{/if}}
@@ -240,26 +261,31 @@
               (hash code=true label='Yes')
               (hash code=false label='No')) as |radio|
             }}
-              <RadioButton
+              <saveable-form.radio
                 @value={{radio.code}}
-                @groupValue={{this.saveableChanges.dcpProjectareaindustrialbusinesszone}}
-                @changed={{this.validate}}
+                @groupValue={{saveable-form.saveableChanges.dcpProjectareaindustrialbusinesszone}}
                 data-test-dcpprojectareaindustrialbusinesszone={{radio.label}}
               >
                 {{radio.label}}
-              </RadioButton>
+              </saveable-form.radio>
             {{/each}}
-            {{#if this.saveableChanges.dcpProjectareaindustrialbusinesszone}}
+            {{#if saveable-form.saveableChanges.dcpProjectareaindustrialbusinesszone}}
               <label>
                 Name of Industrial Business Zone
                 <Input
                   @type="text"
-                  @value={{this.saveableChanges.dcpProjectareaindutrialzonename}}
-                  maxlength="200"
+                  @value={{saveable-form.saveableChanges.dcpProjectareaindutrialzonename}}
                   data-test-dcpprojectareaindustrialbusinesszonename
                 />
+                <CharacterCounter
+                  @string={{saveable-form.saveableChanges.dcpProjectareaindutrialzonename}}
+                  @maxlength="200"
+                />
                 <ValidationMessage
-                  @changesetError={{this.submittableChanges.error.dcpProjectareaindutrialzonename}}
+                  @changesetError={{saveable-form.saveableChanges.error.dcpProjectareaindutrialzonename}}
+                />
+                <ValidationMessage
+                  @changesetError={{saveable-form.submittableChanges.error.dcpProjectareaindutrialzonename}}
                 />
               </label>
             {{/if}}
@@ -273,27 +299,32 @@
               (hash code=true label='Yes')
               (hash code=false label='No')) as |radio|
             }}
-              <RadioButton
+              <saveable-form.radio
                 @value={{radio.code}}
-                @groupValue={{this.saveableChanges.dcpIsprojectarealandmark}}
+                @groupValue={{saveable-form.saveableChanges.dcpIsprojectarealandmark}}
                 data-test-dcpisprojectarealandmark={{radio.label}}
               >
                 {{radio.label}}
-              </RadioButton>
+              </saveable-form.radio>
             {{/each}}
 
-            {{#if this.saveableChanges.dcpIsprojectarealandmark}}
+            {{#if saveable-form.saveableChanges.dcpIsprojectarealandmark}}
               <label>
                 Name of Landmark or Historic District
                 <Input
                   @type="text"
-                  @value={{this.saveableChanges.dcpProjectarealandmarkname}}
-                  @changed={{this.validate}}
-                  maxlength="250"
+                  @value={{saveable-form.saveableChanges.dcpProjectarealandmarkname}}
                   data-test-dcpisprojectarealandmarkname
                 />
+                <CharacterCounter
+                  @string={{saveable-form.saveableChanges.dcpProjectarealandmarkname}}
+                  @maxlength="250"
+                />
                 <ValidationMessage
-                  @changesetError={{this.submittableChanges.error.dcpProjectarealandmarkname}}
+                  @changesetError={{saveable-form.saveableChanges.error.dcpProjectarealandmarkname}}
+                />
+                <ValidationMessage
+                  @changesetError={{saveable-form.submittableChanges.error.dcpProjectarealandmarkname}}
                 />
               </label>
             {{/if}}
@@ -307,13 +338,13 @@
               (hash code=true label='Yes')
               (hash code=false label='No')) as |radio|
             }}
-              <RadioButton
+              <saveable-form.radio
                 @value={{radio.code}}
-                @groupValue={{this.saveableChanges.dcpProjectareacoastalzonelocatedin}}
+                @groupValue={{saveable-form.saveableChanges.dcpProjectareacoastalzonelocatedin}}
                 data-test-dcpprojectareacoastalzonelocatedin={{radio.label}}
               >
                 {{radio.label}}
-              </RadioButton>
+              </saveable-form.radio>
             {{/each}}
           </fieldset>
 
@@ -326,13 +357,13 @@
               (hash code=717170001 label='No')
               (hash code=717170002 label='Unsure at this time')) as |radio|
             }}
-              <RadioButton
+              <saveable-form.radio
                 @value={{radio.code}}
-                @groupValue={{this.saveableChanges.dcpProjectareaischancefloodplain}}
+                @groupValue={{saveable-form.saveableChanges.dcpProjectareaischancefloodplain}}
                 data-test-dcpprojectareaischancefloodplain={{radio.label}}
               >
                 {{radio.label}}
-              </RadioButton>
+              </saveable-form.radio>
             {{/each}}
           </fieldset>
 
@@ -344,17 +375,16 @@
               (hash code=true label='Yes')
               (hash code=false label='No')) as |radio|
             }}
-              <RadioButton
+              <saveable-form.radio
                 @value={{radio.code}}
-                @groupValue={{this.saveableChanges.dcpRestrictivedeclaration}}
-                @changed={{this.validate}}
+                @groupValue={{saveable-form.saveableChanges.dcpRestrictivedeclaration}}
                 data-test-dcprestrictivedeclaration={{radio.label}}
               >
                 {{radio.label}}
-              </RadioButton>
+              </saveable-form.radio>
             {{/each}}
 
-            {{#if this.saveableChanges.dcpRestrictivedeclaration}}
+            {{#if saveable-form.saveableChanges.dcpRestrictivedeclaration}}
               <label>
                 <strong>City Register file number or other identifier</strong>
                 <small class="help-text display-block">
@@ -362,12 +392,15 @@
                 </small>
                 <Input
                   @type="text"
-                  @value={{this.saveableChanges.dcpCityregisterfilenumber}}
-                  maxlength="25"
+                  @value={{saveable-form.saveableChanges.dcpCityregisterfilenumber}}
                   data-test-dcpcityregisterfilenumber
                 />
+                <CharacterCounter
+                  @string={{saveable-form.saveableChanges.dcpCityregisterfilenumber}}
+                  @maxlength="25"
+                />
                 <ValidationMessage
-                  @changesetError={{this.submittableChanges.error.dcpCityregisterfilenumber}}
+                  @changesetError={{saveable-form.saveableChanges.error.dcpCityregisterfilenumber}}
                 />
               </label>
             {{/if}}
@@ -382,13 +415,13 @@
               (hash code=717170001 label='No')
               (hash code=717170002 label='Unsure at this time')) as |radio|
             }}
-              <RadioButton
+              <saveable-form.radio
                 @value={{radio.code}}
-                @groupValue={{this.saveableChanges.dcpRestrictivedeclarationrequired}}
+                @groupValue={{saveable-form.saveableChanges.dcpRestrictivedeclarationrequired}}
                 data-test-dcprestrictivedeclarationrequired={{radio.label}}
               >
                 {{radio.label}}
-              </RadioButton>
+              </saveable-form.radio>
             {{/each}}
           </fieldset>
         </section>
@@ -407,12 +440,11 @@
             <strong>In what year do you expect the development to complete?</strong>
             <Input
               @type="text"
-              @value={{this.saveableChanges.dcpEstimatedcompletiondate}}
-              maxlength="4"
+              @value={{saveable-form.saveableChanges.dcpEstimatedcompletiondate}}
               data-test-dcpestimatedcompletiondate
             />
             <ValidationMessage
-              @changesetError={{this.submittableChanges.error.dcpEstimatedcompletiondate}}
+              @changesetError={{saveable-form.saveableChanges.error.dcpEstimatedcompletiondate}}
             />
             {{!-- QUESTION: Should this be a date picker? --}}
           </label>
@@ -428,61 +460,64 @@
               <li>
                 <Input
                   @type="checkbox"
-                  @checked={{this.saveableChanges.dcpProposeddevelopmentsitenewconstruction}}
+                  @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsitenewconstruction}}
                   id="dcpproposeddevelopmentsitenewconstruction"
                 /><label for="dcpproposeddevelopmentsitenewconstruction">Newly constructed buildings</label>
               </li>
               <li>
                 <Input
                   @type="checkbox"
-                  @checked={{this.saveableChanges.dcpProposeddevelopmentsitedemolition}}
+                  @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsitedemolition}}
                   id="dcpproposeddevelopmentsitedemolition"
                 /><label for="dcpproposeddevelopmentsitedemolition">Demolition</label>
               </li>
               <li>
                 <Input
                   @type="checkbox"
-                  @checked={{this.saveableChanges.dcpProposeddevelopmentsiteinfoalteration}}
+                  @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsiteinfoalteration}}
                   id="dcpproposeddevelopmentsiteinfoalteration"
                 /><label for="dcpproposeddevelopmentsiteinfoalteration">Alteration</label>
               </li>
               <li>
                 <Input
                   @type="checkbox"
-                  @checked={{this.saveableChanges.dcpProposeddevelopmentsiteinfoaddition}}
+                  @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsiteinfoaddition}}
                   id="dcpproposeddevelopmentsiteinfoaddition"
                 /><label for="dcpproposeddevelopmentsiteinfoaddition">Addition</label>
               </li>
               <li>
                 <Input
                   @type="checkbox"
-                  @checked={{this.saveableChanges.dcpProposeddevelopmentsitechnageofuse}}
+                  @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsitechnageofuse}}
                   id="dcpproposeddevelopmentsitechnageofuse"
                 /><label for="dcpproposeddevelopmentsitechnageofuse">Change of use</label>
               </li>
               <li>
                 <Input
                   @type="checkbox"
-                  @checked={{this.saveableChanges.dcpProposeddevelopmentsiteenlargement}}
+                  @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsiteenlargement}}
                   id="dcpproposeddevelopmentsiteenlargement"
                 /><label for="dcpproposeddevelopmentsiteenlargement">Enlargement</label>
               </li>
               <li>
                 <Input
                   @type="checkbox"
-                  @checked={{this.saveableChanges.dcpProposeddevelopmentsiteinfoother}}
+                  @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsiteinfoother}}
                   id="dcpproposeddevelopmentsiteinfoother"
                   data-test-dcpproposeddevelopmentsiteinfoother
                 /><label for="dcpproposeddevelopmentsiteinfoother">Other&hellip;</label>
               </li>
             </ul>
-            {{#if this.saveableChanges.dcpProposeddevelopmentsiteinfoother}}
+            {{#if saveable-form.saveableChanges.dcpProposeddevelopmentsiteinfoother}}
               <label>
                 Explain:
                 <Input
                   @type="text"
-                  @value={{this.saveableChanges.dcpProposeddevelopmentsiteotherexplanation}}
+                  @value={{saveable-form.saveableChanges.dcpProposeddevelopmentsiteotherexplanation}}
                   data-test-dcpproposeddevelopmentsiteotherexplanation
+                />
+                <ValidationMessage
+                  @changesetError={{saveable-form.submittableChanges.error.dcpProposeddevelopmentsiteotherexplanation}}
                 />
               </label>
             {{/if}}
@@ -501,23 +536,25 @@
               (hash code=true label='Yes')
               (hash code=false label='No')) as |radio|
             }}
-              <RadioButton
+              <saveable-form.radio
                 @value={{radio.code}}
-                @groupValue={{this.saveableChanges.dcpIsinclusionaryhousingdesignatedarea}}
-                @changed={{this.validate}}
+                @groupValue={{saveable-form.saveableChanges.dcpIsinclusionaryhousingdesignatedarea}}
                 data-test-dcpisinclusionaryhousingdesignatedarea={{radio.label}}
               >
                 {{radio.label}}
-              </RadioButton>
+              </saveable-form.radio>
             {{/each}}
 
-            {{#if this.saveableChanges.dcpIsinclusionaryhousingdesignatedarea}}
+            {{#if saveable-form.saveableChanges.dcpIsinclusionaryhousingdesignatedarea}}
               <label>
                 Name of Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area
                 <Input
                   @type="text"
-                  @value={{this.saveableChanges.dcpInclusionaryhousingdesignatedareaname}}
+                  @value={{saveable-form.saveableChanges.dcpInclusionaryhousingdesignatedareaname}}
                   data-test-dcpinclusionaryhousingdesignatedareaname
+                />
+                <ValidationMessage
+                  @changesetError={{saveable-form.submittableChanges.error.dcpInclusionaryhousingdesignatedareaname}}
                 />
               </label>
             {{/if}}
@@ -531,17 +568,16 @@
               (hash code=717170000 label='Yes')
               (hash code=717170001 label='No')) as |radio|
             }}
-              <RadioButton
+              <saveable-form.radio
                 @value={{radio.code}}
-                @groupValue={{this.saveableChanges.dcpDiscressionaryfundingforffordablehousing}}
-                @changed={{this.validate}}
+                @groupValue={{saveable-form.saveableChanges.dcpDiscressionaryfundingforffordablehousing}}
                 data-test-dcpdiscressionaryfundingforffordablehousing={{radio.label}}
               >
                 {{radio.label}}
-              </RadioButton>
+              </saveable-form.radio>
             {{/each}}
 
-            {{#if (eq this.saveableChanges.dcpDiscressionaryfundingforffordablehousing 717170000)}}
+            {{#if (eq saveable-form.saveableChanges.dcpDiscressionaryfundingforffordablehousing 717170000)}}
               <fieldset class="medium-margin-bottom">
                 <legend>
                   Funding source
@@ -552,15 +588,18 @@
                     (hash code=717170002 label='Federal')
                     (hash code=717170003 label='Other')) as |radio|
                 }}
-                  <RadioButton
+                  <saveable-form.radio
                     @value={{radio.code}}
-                    @groupValue={{this.saveableChanges.dcpHousingunittype}}
+                    @groupValue={{saveable-form.saveableChanges.dcpHousingunittype}}
                     data-test-dcphousingunittype={{radio.label}}
                   >
                     {{radio.label}}
-                  </RadioButton>
+                  </saveable-form.radio>
                 {{/each}}
               </fieldset>
+              <ValidationMessage
+                @changesetError={{saveable-form.submittableChanges.error.dcpHousingunittype}}
+              />
             {{/if}}
           </fieldset>
         </section>
@@ -578,65 +617,80 @@
           <label>
             <strong>Description of the proposed development being facilitated by the land use actions</strong>
             <Textarea
-              @value={{this.saveableChanges.dcpProjectdescriptionproposeddevelopment}}
+              @value={{saveable-form.saveableChanges.dcpProjectdescriptionproposeddevelopment}}
               rows="5"
-              maxlength="3000"
               data-test-dcpprojectdescriptionproposeddevelopment
             />
+            <CharacterCounter
+              @string={{saveable-form.saveableChanges.dcpProjectdescriptionproposeddevelopment}}
+              @maxlength="3000"
+            />
             <ValidationMessage
-              @changesetError={{this.submittableChanges.error.dcpProjectdescriptionproposeddevelopment}}
+              @changesetError={{saveable-form.submittableChanges.error.dcpProjectdescriptionproposeddevelopment}}
             />
           </label>
 
           <label>
             <strong>Why is this application being proposed? What is the legal, environmental, or land use background?</strong>
             <Textarea
-              @value={{this.saveableChanges.dcpProjectdescriptionbackground}}
+              @value={{saveable-form.saveableChanges.dcpProjectdescriptionbackground}}
               rows="5"
-              maxlength="2000"
               data-test-dcpprojectdescriptionbackground
             />
+            <CharacterCounter
+              @string={{saveable-form.saveableChanges.dcpProjectdescriptionbackground}}
+              @maxlength="2000"
+            />
             <ValidationMessage
-              @changesetError={{this.submittableChanges.error.dcpProjectdescriptionbackground}}
+              @changesetError={{saveable-form.submittableChanges.error.dcpProjectdescriptionbackground}}
             />
           </label>
 
           <label>
             <strong>What is the land use rationale for all the proposed actions?</strong>
             <Textarea
-              @value={{this.saveableChanges.dcpProjectdescriptionproposedactions}}
+              @value={{saveable-form.saveableChanges.dcpProjectdescriptionproposedactions}}
               rows="5"
-              maxlength="2000"
               data-test-dcpprojectdescriptionproposedactions
             />
+            <CharacterCounter
+              @string={{saveable-form.saveableChanges.dcpProjectdescriptionproposedactions}}
+              @maxlength="2000"
+            />
             <ValidationMessage
-              @changesetError={{this.submittableChanges.error.dcpProjectdescriptionproposedactions}}
+              @changesetError={{saveable-form.submittableChanges.error.dcpProjectdescriptionproposedactions}}
             />
           </label>
 
           <label>
             <strong>Description of existing land uses and structures in the proposed Project Area and Development Site</strong>
             <Textarea
-              @value={{this.saveableChanges.dcpProjectdescriptionproposedarea}}
+              @value={{saveable-form.saveableChanges.dcpProjectdescriptionproposedarea}}
               rows="5"
-              maxlength="3000"
               data-test-dcpprojectdescriptionproposedarea
             />
+            <CharacterCounter
+              @string={{saveable-form.saveableChanges.dcpProjectdescriptionproposedarea}}
+              @maxlength="3000"
+            />
             <ValidationMessage
-              @changesetError={{this.submittableChanges.error.dcpProjectdescriptionproposedarea}}
+              @changesetError={{saveable-form.submittableChanges.error.dcpProjectdescriptionproposedarea}}
             />
           </label>
 
           <label>
             <strong>Description of land uses and built context in surrounding area (within 1000 ft)</strong>
             <Textarea
-              @value={{this.saveableChanges.dcpProjectdescriptionsurroundingarea}}
+              @value={{saveable-form.saveableChanges.dcpProjectdescriptionsurroundingarea}}
               rows="5"
-              maxlength="3000"
               data-test-dcpprojectdescriptionsurroundingarea
             />
+            <CharacterCounter
+              @string={{saveable-form.saveableChanges.dcpProjectdescriptionsurroundingarea}}
+              @maxlength="3000"
+            />
             <ValidationMessage
-              @changesetError={{this.submittableChanges.error.dcpProjectdescriptionsurroundingarea}}
+              @changesetError={{saveable-form.submittableChanges.error.dcpProjectdescriptionsurroundingarea}}
             />
           </label>
 
@@ -646,13 +700,16 @@
               Include to expedite CEQR guidance: If proposed actions are not approved, what is the applicant’s as-of-right development (CEQR “no-action”) proposal? What would be expected to occur on non-applicant-controlled sites because of the Proposed Actions (CEQR “with-action”)?
             </small>
             <Textarea
-              @value={{this.saveableChanges.dcpProjectattachmentsotherinformation}}
+              @value={{saveable-form.saveableChanges.dcpProjectattachmentsotherinformation}}
               rows="5"
-              maxlength="3000"
               data-test-dcpprojectattachmentsotherinformation
             />
+            <CharacterCounter
+              @string={{saveable-form.saveableChanges.dcpProjectattachmentsotherinformation}}
+              @maxlength="3000"
+            />
             <ValidationMessage
-              @changesetError={{this.submittableChanges.error.dcpProjectattachmentsotherinformation}}
+              @changesetError={{saveable-form.submittableChanges.error.dcpProjectattachmentsotherinformation}}
             />
           </label>
         </section>
@@ -690,6 +747,14 @@
                   <a href="https://www1.nyc.gov/assets/planning/download/pdf/applicants/applicant-portal/dcp-signature-form.pdf" target="_blank" rel="noopener noreferrer">Signature Form<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>
                 </li>
               </ul>
+
+              <h5>
+                For <a href="https://streets.planning.nyc.gov/about" target="_blank" rel="noopener noreferrer">City Map changes<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>:
+              </h5>
+              <ul class="text-small">
+                <li class="small-margin-bottom">Most recent Borough President’s final Section Map or most recent approved and filed Alteration Map for the project area</li>
+                <li class="small-margin-bottom">Site survey — recommended but not required</li>
+              </ul>
             </div>
             <div class="cell large-6">
               <h5>For projects in the NYC Coastal Zone: </h5>
@@ -699,12 +764,12 @@
                 </li>
               </ul>
 
-              <h5>
-                For <a href="https://streets.planning.nyc.gov/about" target="_blank" rel="noopener noreferrer">City Map changes<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>:
-              </h5>
+              <h5>For Staten Island or Bronx projects in South Richmond, Special Hillsides Preservation, or Special Natural Resources Districts: </h5>
               <ul class="text-small">
-                <li class="small-margin-bottom">Most recent Borough President’s final Section Map or most recent approved and filed Alteration Map for the project area</li>
-                <li class="small-margin-bottom">Site survey — recommended but not required</li>
+                <li class="small-margin-bottom">Site Survey — Existing conditions (required if there have been changes to previous submissions)</li>
+                <li class="small-margin-bottom">Site Plan — Proposed conditions</li>
+                <li class="small-margin-bottom">Zoning Calculations: Tree Calculations</li>
+                <li class="small-margin-bottom">Zoning Calculations: Average Percent (%) of Slope (Special Hillsides Preservation and Special Natural Resources Districts)</li>
               </ul>
             </div>
           </div>
@@ -719,17 +784,15 @@
     <div class="cell large-4">
 
       <div class="sticky-sidebar">
-        <Packages::SaveButton
-          @onClick={{this.save}}
-          @isEnabled={{or @package.isDirty (and this.saveableChanges.isDirty this.saveableChanges.isValid)}}
+        <saveable-form.saveButton
+          @isEnabled={{or @package.isDirty (and saveable-form.saveableChanges.isDirty saveable-form.saveableChanges.isValid)}}
           data-test-save-button
         />
         {{!-- Error Handling --}}
-        <Packages::PasFormError @pasForm={{this.pasForm}}/>
-        <Packages::SaveButton
+        <Packages::PasFormError @pasForm={{this.pasForm}} />
+        <saveable-form.submitButton
           @onClick={{this.toggleModal}}
-          @isEnabled={{this.submittableChanges.isValid}}
-          @isSubmit={{true}}
+          @isEnabled={{saveable-form.submittableChanges.isValid}}
           class="secondary"
           data-test-submit-button
         />
@@ -746,17 +809,15 @@
                   <button
                     type="button"
                     class="button expanded large secondary"
-                    disabled={{this.saveChangeset.isRunning}}
+                    disabled={{saveable-form.saveChangeset.isRunning}}
                     {{on "click" this.toggleModal}}
                   >
                     Continue Editing
                   </button>
                 </div>
                 <div class="cell large-6 small-padding-left">
-                  <Packages::SaveButton
-                    @onClick={{this.submit}}
-                    @isEnabled={{this.submittableChanges.isValid}}
-                    @isSubmit={{true}}
+                  <saveable-form.submitButton
+                    @isEnabled={{saveable-form.submittableChanges.isValid}}
                     class="no-margin"
                     data-test-confirm-submit-button
                   />
@@ -824,4 +885,4 @@
     </div>
 </div>
 
-{{yield}}
+</SaveableForm>

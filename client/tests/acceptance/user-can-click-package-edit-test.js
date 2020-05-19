@@ -5,6 +5,7 @@ import {
   currentURL,
   settled,
   waitFor,
+  fillIn,
 } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -117,5 +118,164 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await assert.dom('[data-test-document-to-be-deleted-name]').doesNotExist();
     await assert.dom('[data-test-document-to-be-uploaded-name]').doesNotExist();
+  });
+
+  test('Urban Renewal Area sub Q shows conditionally', async function (assert) {
+    this.server.create('project', 1, 'applicant');
+
+    await visit('/packages/1/edit');
+    assert.dom('[data-test-dcpurbanrenewalareaname]').doesNotExist();
+
+    await click('[data-test-dcpurbanrenewalarea="Yes"]');
+    assert.dom('[data-test-dcpurbanrenewalareaname]').exists();
+  });
+
+  test('SEQRA or CEQR sub Q shows conditionally', async function (assert) {
+    this.server.create('project', 1, 'applicant');
+
+    await visit('/packages/1/edit');
+
+    assert.dom('[data-test-dcppleaseexplaintypeiienvreview]').doesNotExist();
+    await click('[data-test-dcplanduseactiontype2="Yes"]');
+    assert.dom('[data-test-dcppleaseexplaintypeiienvreview]').exists();
+  });
+
+  test('Industrial Business Zone sub Q shows conditionally', async function (assert) {
+    this.server.create('project', 1, 'applicant');
+
+    await visit('/packages/1/edit');
+
+    assert.dom('[data-test-dcpprojectareaindustrialbusinesszonename]').doesNotExist();
+    await click('[data-test-dcpprojectareaindustrialbusinesszone="Yes"]');
+    assert.dom('[data-test-dcpprojectareaindustrialbusinesszonename]').exists();
+  });
+
+  test('Landmark or Historic District sub Q shows conditionally', async function (assert) {
+    this.server.create('project', 1, 'applicant');
+
+    await visit('/packages/1/edit');
+
+    assert.dom('[data-test-dcpisprojectarealandmarkname]').doesNotExist();
+    await click('[data-test-dcpIsprojectarealandmark="Yes"]');
+    assert.dom('[data-test-dcpisprojectarealandmarkname]').exists();
+  });
+
+  test('Other Type sub Q shows conditionally', async function (assert) {
+    this.server.create('project', 1, 'applicant');
+
+    await visit('/packages/1/edit');
+
+    assert.dom('[data-test-dcpproposeddevelopmentsiteotherexplanation]').doesNotExist();
+    await click('[data-test-dcpproposeddevelopmentsiteinfoother]');
+    assert.dom('[data-test-dcpproposeddevelopmentsiteotherexplanation]').exists();
+  });
+
+  test('MIH sub Q shows conditionally', async function (assert) {
+    this.server.create('project', 1, 'applicant');
+
+    await visit('/packages/1/edit');
+
+    assert.dom('[data-test-dcpinclusionaryhousingdesignatedareaname]').doesNotExist();
+    await click('[data-test-dcpisinclusionaryhousingdesignatedarea="Yes"]');
+    assert.dom('[data-test-dcpinclusionaryhousingdesignatedareaname]').exists();
+  });
+
+  test('Funding Source sub Q shows conditionally', async function (assert) {
+    this.server.create('project', 1, 'applicant');
+
+    await visit('/packages/1/edit');
+
+    assert.dom('[data-test-dcphousingunittype="City"]').doesNotExist();
+    assert.dom('[data-test-dcphousingunittype="State"]').doesNotExist();
+    assert.dom('[data-test-dcphousingunittype="Federal"]').doesNotExist();
+    assert.dom('[data-test-dcphousingunittype="Other"]').doesNotExist();
+
+    await click('[data-test-dcpdiscressionaryfundingforffordablehousing="Yes"]');
+    assert.dom('[data-test-dcphousingunittype="City"]').exists();
+    assert.dom('[data-test-dcphousingunittype="State"]').exists();
+    assert.dom('[data-test-dcphousingunittype="Federal"]').exists();
+    assert.dom('[data-test-dcphousingunittype="Other"]').exists();
+  });
+
+  test('user can save pas form', async function (assert) {
+    this.server.create('project', 1, 'applicant');
+
+    await visit('/packages/1/edit');
+
+    // save button should start disabled
+    // TODO: fix this test.  The form starts dirty because we implicitly create a new applicant when the applicants array is empty
+    // assert.dom('[data-test-save-button').hasProperty('disabled', true);
+
+    // edit a field to make it pasForm dirty
+    await fillIn('[data-test-dcprevisedprojectname]', 'Some Cool New Project Name');
+
+    // save button should become active when dirty
+    assert.dom('[data-test-save-button').hasProperty('disabled', false);
+
+    // save it
+    await click('[data-test-save-button]');
+    await settled(); // async make sure save action finishes before assertion
+
+    // database record should have new updated value
+    assert.equal(this.server.db.pasForms[0].dcpRevisedprojectname, 'Some Cool New Project Name');
+  });
+
+  test('user sees a confirmation modal upon submit', async function (assert) {
+    this.server.create('project', 1, 'applicant');
+
+    // render form
+    await visit('/packages/1/edit');
+
+    // modal doesn't exist to start
+    assert.dom('[data-test-reveal-modal]').doesNotExist();
+    assert.dom('[data-test-confirm-submit-button]').doesNotExist();
+
+    // click submit
+    await click('[data-test-submit-button]');
+
+    // modal should exist
+    assert.dom('[data-test-reveal-modal]').exists();
+    assert.dom('[data-test-confirm-submit-button]').exists();
+
+    await click('[data-test-confirm-submit-button]');
+
+    // research: ember changeset validations save method triggers a
+    // promise that resolves _after_ mirage has been torn down by tests
+    await settled();
+
+    assert.ok(true);
+  });
+
+  test('Urban Renewal Area sub Q, after set to no, does not block submit', async function (assert) {
+    this.server.create('package', 1, {
+      pasForm: this.server.create('pas-form', {
+        dcpUrbanrenewalarea: null,
+        dcpUrbanareaname: '',
+      }),
+      project: this.server.create('project'),
+    });
+
+    await visit('/packages/1/edit');
+
+    assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
+    assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
+
+    await click('[data-test-dcpurbanrenewalarea="Yes"]');
+
+    assert.dom('[data-test-dcpurbanrenewalareaname-validation]').exists();
+    assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
+    assert.dom('[data-test-submit-button]').hasAttribute('disabled');
+
+    await fillIn('[data-test-dcpurbanrenewalareaname]', 'abc');
+
+    assert.dom('[data-test-dcpurbanrenewalareaname-validation]').doesNotExist();
+    assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
+    assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
+
+    await fillIn('[data-test-dcpurbanrenewalareaname]', '');
+
+    assert.dom('[data-test-dcpurbanrenewalareaname-validation]').exists('it revalidates');
+    assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
+    assert.dom('[data-test-submit-button]').hasAttribute('disabled');
   });
 });

@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 // lookup to match action titles to their associated attributes
-export const allLandUseActionOptions = [
+export const All_LAND_USE_ACTION_OPTIONS = [
   {
     name: 'Acquisition of Real Property', countField: 'dcpPfacquisitionofrealproperty', attr1: '', attr2: '',
   },
@@ -69,7 +69,11 @@ export default class LandUseActionComponent extends Component {
   get selectedActions() {
     const { pasForm } = this.args;
     const newActions = this.actionsAddedByUser;
-    return allLandUseActionOptions.filter((option) => pasForm[option.countField] || pasForm[option.attr1] || pasForm[option.attr2] || newActions.includes(option));
+    return All_LAND_USE_ACTION_OPTIONS
+      .filter((option) => pasForm[option.countField]
+      || pasForm[option.attr1]
+      || pasForm[option.attr2]
+      || newActions.includes(option));
   }
 
   // sorting: actions from db all on bottom in alphabetical order
@@ -105,7 +109,8 @@ export default class LandUseActionComponent extends Component {
 
   // actions that appear in dropdown sorted alphabetically
   get availableActions() {
-    return allLandUseActionOptions.filter((option) => !this.selectedActions.includes(option))
+    return All_LAND_USE_ACTION_OPTIONS
+      .filter((option) => !this.selectedActions.includes(option))
       .sort((a, b) => ((a.name > b.name) ? 1 : -1));
   }
 
@@ -121,7 +126,7 @@ export default class LandUseActionComponent extends Component {
 
     this.actionsAddedByUser.removeObject(actionToRemove);
     // reset all model attributes
-    pasForm[actionToRemove.countField] = 0;
+    pasForm[actionToRemove.countField] = null;
     pasForm[actionToRemove.attr1] = '';
     pasForm[actionToRemove.attr2] = '';
   }

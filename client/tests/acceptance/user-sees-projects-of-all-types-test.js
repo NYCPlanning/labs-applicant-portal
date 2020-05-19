@@ -58,12 +58,16 @@ module('Acceptance | user sees projects of all types', function(hooks) {
     this.server.create('project', 'applicant', {
       dcpProjectname: 'Title Is B',
     });
+    this.server.create('project', 'applicant', {
+      dcpProjectname: 'Title Is b', // check lower case
+    });
 
     await visit('/projects');
 
     assert.ok(findAll("[data-test-type='to-do']")[0].textContent.includes('Title Is A'));
-    assert.ok(findAll("[data-test-type='to-do']")[1].textContent.includes('Title Is B'));
-    assert.ok(findAll("[data-test-type='to-do']")[2].textContent.includes('Title Is C'));
+    assert.ok(findAll("[data-test-type='to-do']")[1].textContent.includes('Title Is b'));
+    assert.ok(findAll("[data-test-type='to-do']")[2].textContent.includes('Title Is B'));
+    assert.ok(findAll("[data-test-type='to-do']")[3].textContent.includes('Title Is C'));
   });
 
   test('Page should honor creeper mode query param', async function(assert) {
