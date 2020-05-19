@@ -15,12 +15,16 @@ import { JsonApiSerializeInterceptor } from '../../../json-api-serialize.interce
 import { AuthenticateGuard } from '../../../authenticate.guard';
 import { JsonApiDeserializePipe } from '../../../json-api-deserialize.pipe';
 
-// CRM has two entities that encompass the applicant team,
-// dcp_applicantinformation and dcp_applicantrepinformation
-// TODO: This controller exposes these two entites as one "applicant" resource
-// and handles routes applicant resources from and to the appropriate CRM entity
-// the frontend uses a custom attribute, "targetEntity"
-// to track the ultimate CRM entity destination (and source when getting existing)
+/**
+* CRM has two entities for applicants (dcp_applicantinformation and dcp_applicantrepresentativeinformation)
+* On the frontend, we treat applicants as one array (with a target_entity attr to track)/
+* In this controller we manage the logic to split them appropriately when interacting with CRM
+* and making sure we're routing to the correct entity -- this causes some duplication in code
+* and might be simplified by making a 1-to-1 between entity-controller-emberModel.
+* the main hack is when we get existing applicant representatives, we prepend "representative-"
+* to make sure there are unique IDs, and so we are able to delete the correct CRM record in our
+* delete method in this controller (which doesn't have access to body.target_entity!)
+**/
 
 export const APPLICANT_REPRESENTATIVE_ATTRIBUTES = [
   'dcp_firstname',
@@ -59,28 +63,32 @@ export class ApplicantsController {
     let allowedAttrs;
 
     if (target_entity === 'dcp_applicantinformation') {
-      allowedAttrs = pick(body, APPLICANT_ATTRIBUTES);
+      // we can't send target_entity to CRM because it doesn't exist there
+      allowedAttrs = pick(body, APPLICANT_ATTRIBUTES.filter(attribute => attribute !== 'target_entity'));
 
-      await this.crmService.update('dcp_applicantinformations', id, allowedAttrs);
-      
-      return {
-        dcp_applicantinformationid: id,
-        ...body,
-      };
-
+      await this.crmService.update(
+        'dcp_applicantinformations',
+        id,
+        allowedAttrs,
+      );
     } else if (target_entity === 'dcp_applicantrepresentativeinformation') {
-      allowedAttrs = pick(body, APPLICANT_REPRESENTATIVE_ATTRIBUTES);
-      console.log('id: ', id);
-      const representativeId = id.replace('representative-', '');
-      console.log('stripped id: ', representativeId);
-      await this.crmService.update('dcp_applicantrepresentativeinformations', representativeId, allowedAttrs);
+      allowedAttrs = pick(body, APPLICANT_REPRESENTATIVE_ATTRIBUTES.filter(attribute => attribute !== 'target_entity'));
 
-      return {
-        dcp_applicantrepresentativeinformationid: id,
-        ...body,
-      };
+      // strip the hacky prepended "representative-" to use the exact CRM id
+      const representativeId = id.replace('representative-', '');
+
+      await this.crmService.update(
+        'dcp_applicantrepresentativeinformations',
+        representativeId,
+        allowedAttrs,
+      )
     }
-    console.log('PATCH, ', body, id);
+
+    // regardless of which entity, return same response back to requesting client
+    return {
+      dcp_applicantinformationid: id,
+      allowedAttrs,
+    };
   }
 
   @Post('/')
@@ -91,7 +99,8 @@ export class ApplicantsController {
 
     // determine the appropraite attributes based on the entity type
     if (target_entity === 'dcp_applicantinformation') {
-      allowedAttrs = pick(body, APPLICANT_ATTRIBUTES);
+      allowedAttrs = pick(body, APPLICANT_ATTRIBUTES.filter(attribute => attribute !== 'target_entity'));
+
       if (body.pas_form) {
         return this.crmService.create('dcp_applicantinformations', {
           ...allowedAttrs,
@@ -103,10 +112,14 @@ export class ApplicantsController {
           ],
         });
       } else {
-        return this.crmService.create(`dcp_applicantinformations`, allowedAttrs);
+        return this.crmService.create(
+          `dcp_applicantinformations`,
+          allowedAttrs,
+        );
       }
     } else if (target_entity === 'dcp_applicantrepresentativeinformation') {
-      allowedAttrs = pick(body, APPLICANT_REPRESENTATIVE_ATTRIBUTES);
+      allowedAttrs = pick(body, APPLICANT_REPRESENTATIVE_ATTRIBUTES.filter(attribute => attribute !== 'target_entity'));
+
       if (body.pas_form) {
         return this.crmService.create(
           'dcp_applicantrepresentativeinformations',
@@ -115,12 +128,14 @@ export class ApplicantsController {
             // Dy365 syntax for associating a newly-created record
             // with an existing record.
             // see: https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/webapi/create-entity-web-api#associate-entity-records-on-create
-            'dcp_dcp_applicantrepinformation_dcp_pasform@odata.bind': [`/dcp_pasforms(${body.pas_form})`],
+            'dcp_dcp_applicantrepinformation_dcp_pasform@odata.bind': [
+              `/dcp_pasforms(${body.pas_form})`,
+            ],
           },
         );
       } else {
         return this.crmService.create(
-          `dcp_applicantrepinformations`,
+          `dcp_applicantrepresentativeinformations`,
           allowedAttrs,
         );
       }
@@ -129,10 +144,21 @@ export class ApplicantsController {
 
   @Delete('/:id')
   async delete(@Param('id') id) {
-    // TODO: conditionally determine which crm entity to delete
-    // don't have the body, use try catch
-    await this.crmService.delete('dcp_applicantinformations', id);
 
+    if (id.includes('representative')) {
+      // FIXME: this is a hack from the package controller json api interceptor
+      // since in this method we don't have access to body.target_entity.
+      // here we strip the string we prepend in package.controller.ts to use the proper system id
+      const representativeId = id.replace('representative-', '');
+
+      await this.crmService.delete('dcp_applicantrepresentativeinformations', representativeId);
+    } else {
+      // anything that doesn't have representative in the ID is an applicant information entity
+      await this.crmService.delete('dcp_applicantinformations', id);
+    }
+
+    // regardless of which entity, we return the client the same ID
+    // it sent to the server
     return {
       id,
     };
