@@ -21,6 +21,8 @@ export default class FileManager {
     this.filesToUpload = filesToUpload; // EmberFileUpload QUEUE Object
   }
 
+  @tracked existingFiles;
+
   @tracked filesToDelete;
 
   // This is not ideal, but we need to manually track

@@ -72,14 +72,18 @@ export const PACKAGE_STATE_CODES = {
 
 export default class PackageModel extends Model {
   createFileQueue() {
-    const fileQueue = this.fileQueue.create(this.id);
+    if (this.fileManager) {
+      this.fileManager.existingFiles = this.documents;
+    } else {
+      const fileQueue = this.fileQueue.create(this.id);
 
-    this.fileManager = new FileManager(
-      this.id,
-      this.documents,
-      [],
-      fileQueue,
-    );
+      this.fileManager = new FileManager(
+        this.id,
+        this.documents,
+        [],
+        fileQueue,
+      );
+    }
   }
 
   @service
