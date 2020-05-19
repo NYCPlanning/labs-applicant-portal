@@ -54,7 +54,7 @@ export const PACKAGE_ATTRS = [
     bbls: {
       ref: 'dcp_projectbblid',
       attributes: [
-        ...BBL_ATTRIBUTES
+        ...BBL_ATTRIBUTES,
       ],
     },
   },
@@ -99,7 +99,7 @@ export class PackagesController {
 
     return {
       dcp_packageid: id,
-      ...body,
+      ...allowedAttrs,
     };
   }
 }

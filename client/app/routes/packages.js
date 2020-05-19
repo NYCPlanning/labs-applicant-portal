@@ -7,7 +7,7 @@ export default class PackagesRoute extends Route.extend(AuthenticatedRouteMixin)
   model(params) {
     return this.store.findRecord('package', params.id, {
       reload: true,
-      include: 'pasForm,project',
+      include: 'pas-form.bbls,project',
     });
   }
 }

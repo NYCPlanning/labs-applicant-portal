@@ -31,6 +31,9 @@ export default class BblModel extends Model {
   @belongsTo('pas-form')
   pasForm;
 
+  @belongsTo('project')
+  project;
+
   @attr
   dcpBblnumber;
 
