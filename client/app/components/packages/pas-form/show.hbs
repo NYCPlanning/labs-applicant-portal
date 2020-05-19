@@ -1,13 +1,17 @@
 <div class="grid-x grid-margin-x">
   <div class="cell large-8">
-    <section class="form-section" id="project-info">
-      <h3>
-        Project Information
-      </h3>
 
-      <p
-        data-test-show-dcprevisedprojectname
-      >
+    <h1>
+      Pre-Application Statement
+    </h1>
+
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="project-info" class="section-anchor"></span>
+        Project Information
+      </h2>
+
+      <p data-test-show-dcprevisedprojectname>
         <strong>
           Project Name
         </strong>
@@ -16,10 +20,12 @@
       </p>
     </section>
 
-    <section class="form-section" id="applicant-team">
-      <h3>
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="applicant-team" class="section-anchor"></span>
         Applicant Team
-      </h3>
+      </h2>
+
       {{#each @package.pasForm.applicants as |applicant|}}
         <h4>
           {{applicant.dcpFirstname}} {{applicant.dcpLastname}}
@@ -72,10 +78,12 @@
       {{/each}}
     </section>
 
-    <section class="form-section" id="project-geography">
-      <h3>
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="project-geography" class="section-anchor"></span>
         Project Geography
-      </h3>
+      </h2>
+
       {{#each @package.pasForm.bbls as |bbl|}}
         <strong>
           {{bbl.dcpBblnumber}}
@@ -97,10 +105,12 @@
       </p>
     </section>
 
-    <section class="form-section" id="proposed-land-use-actions">
-      <h3>
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="proposed-land-use-actions" class="section-anchor"></span>
         Proposed Land Use Actions
-      </h3>
+      </h2>
+
       {{#if @package.pasForm.dcpPfacquisitionofrealproperty}}
         <p>
           <strong>
@@ -259,10 +269,11 @@
       {{/if}}
     </section>
 
-    <section class="form-section" id="project-area">
-      <h3>
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="project-area" class="section-anchor"></span>
         Project Area
-      </h3>
+      </h2>
 
       <p>
         <strong>
@@ -523,10 +534,11 @@
       </p>
     </section>
 
-    <section class="form-section" id="proposed-development-site">
-      <h3>
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="proposed-development-site" class="section-anchor"></span>
         Proposed Development Site
-      </h3>
+      </h2>
 
       <p>
         <strong>
@@ -665,11 +677,11 @@
       {{/if}}
     </section>
 
-    <section class="form-section" id="project-description">
-      <h3>
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="project-description" class="section-anchor"></span>
         Project Description
-      </h3>
-
+      </h2>
       <p>
         <strong>
           Description of the proposed development being facilitated by the land use actions
@@ -719,17 +731,21 @@
     </section>
 
     <section class="form-section" id="attached-documents">
-      <h3>
+      <h2 class="section-header">
+        <span id="attached-documents" class="section-anchor"></span>
         Attached Documents
-      </h3>
+      </h2>
+
       {{#each @package.documents as |document|}}
         <p>
           {{document.name}}
         </p>
       {{/each}}
     </section>
-  </div>
+
+  </div>{{! end left/main column }}
   <div class="cell large-4">
+
     <div class="sticky-sidebar">
       <nav>
         <ul class="no-bullet text-weight-bold">
@@ -816,7 +832,8 @@
         </ul>
       </nav>
     </div>{{! end .sticky-sidebar }}
-  </div>
+
+  </div>{{! end right/sidebar column }}
 </div>
 
 {{yield}}
