@@ -30,8 +30,8 @@ export default class ProjectsController extends Controller {
       // if pasPackages is empty, some() automatically returnse false, but we want to return true.
       if (project.pasPackages.length === 0) return true;
       return project.pasPackages.some((projectPackage) => {
-        if (
-          projectPackage.statuscode === PACKAGE_STATUS_CODES.PACKAGE_PREPARATION.code
+        if ((projectPackage.statuscode === PACKAGE_STATUS_CODES.PACKAGE_PREPARATION.code
+          || projectPackage.statuscode === PACKAGE_STATUS_CODES.FINAL_APPROVAL.code)
           && [
             PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY.code,
             PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC.code,
