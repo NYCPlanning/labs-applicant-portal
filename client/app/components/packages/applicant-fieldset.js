@@ -1,10 +1,10 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { STATE_OPTION_SET } from '../../models/applicant';
+import { STATE_OPTIONSET } from '../../models/applicant';
 
 export default class ApplicantFieldset extends Component {
   get stateOptions() {
-    return Object.values(STATE_OPTION_SET);
+    return Object.values(STATE_OPTIONSET);
   }
 
   // TODO: Use a global helper instead after writing
