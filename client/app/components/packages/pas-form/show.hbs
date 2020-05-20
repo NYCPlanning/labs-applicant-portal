@@ -82,142 +82,172 @@
         Proposed Land Use Actions
       </h2>
 
-      <ul>
+      <ul class="no-bullet">
         {{#if @package.pasForm.dcpPfacquisitionofrealproperty}}
-          <li class="medium-margin-bottom">
+          <li class="ruled-adjacent">
             <strong>Acquisition of Real Property</strong>
             {{@package.pasForm.dcpPfacquisitionofrealproperty}}
           </li>
         {{/if}}
         {{#if @package.pasForm.dcpPfchangeincitymap}}
-          <li>
+          <li class="ruled-adjacent">
             <strong>Change in CityMap</strong>
             ({{@package.pasForm.dcpPfchangeincitymap}})
           </li>
         {{/if}}
         {{#if @package.pasForm.dcpPfconcession}}
-          <li>
+          <li class="ruled-adjacent">
             <strong>Concession</strong>
             ({{@package.pasForm.dcpPfconcession}})
           </li>
         {{/if}}
         {{#if @package.pasForm.dcpPfdispositionofrealproperty}}
-          <li>
+          <li class="ruled-adjacent">
             <strong>Disposition of Real Property</strong>
             ({{@package.pasForm.dcpPfdispositionofrealproperty}})
           </li>
         {{/if}}
         {{#if @package.pasForm.dcpPffranchise}}
-          <li>
+          <li class="ruled-adjacent">
             <strong>Franchise</strong>
             ({{@package.pasForm.dcpPffranchise}})
           </li>
         {{/if}}
         {{#if @package.pasForm.dcpPfhousingplanandproject}}
-          <li>
+          <li class="ruled-adjacent">
             <strong>Housing Plan & Project</strong>
             ({{@package.pasForm.dcpPfhousingplanandproject}})
           </li>
         {{/if}}
         {{#if @package.pasForm.dcpPflandfill}}
-          <li>
+          <li class="ruled-adjacent">
             <strong>Landfill</strong>
             ({{@package.pasForm.dcpPflandfill}})
           </li>
         {{/if}}
         {{#if @package.pasForm.dcpPfmodification}}
-          <li>
+          <li class="ruled-adjacent">
             <strong>Modification</strong>
             ({{@package.pasForm.dcpPfmodification}}, {{@package.pasForm.dcpPreviousulurpnumbers1}})
           </li>
         {{/if}}
         {{#if @package.pasForm.dcpPfrenewal}}
-          <li>
+          <li class="ruled-adjacent">
             <strong>Renewal</strong>
             ({{@package.pasForm.dcpPfrenewal}}, {{@package.pasForm.dcpPreviousulurpnumbers2}})
           </li>
         {{/if}}
         {{#if @package.pasForm.dcpPfrevocableconsent}}
-          <li>
+          <li class="ruled-adjacent">
             <strong>Revocable Consent</strong>
             ({{@package.pasForm.dcpPfrevocableconsent}})
           </li>
         {{/if}}
         {{#if @package.pasForm.dcpPfsiteselectionpublicfacility}}
-          <li>
+          <li class="ruled-adjacent">
             <strong>Site Selection - Public Facility</strong>
             ({{@package.pasForm.dcpPfsiteselectionpublicfacility}})
           </li>
         {{/if}}
         {{#if @package.pasForm.dcpPfudaap}}
-          <li>
+          <li class="ruled-adjacent">
             <strong>UDAAP</strong>
             ({{@package.pasForm.dcpPfudaap}})
           </li>
         {{/if}}
         {{#if @package.pasForm.dcpPfura}}
-          <li>
+          <li class="ruled-adjacent">
             <strong>URA</strong>
             ({{@package.pasForm.dcpPfura}})
           </li>
         {{/if}}
         {{#if @package.pasForm.dcpPfzoningauthorization}}
-          <li>
+          <li class="ruled-adjacent">
             <strong>Zoning Authorization</strong>
             ({{@package.pasForm.dcpPfzoningauthorization}})
             {{#if @package.pasForm.dcpZoningauthorizationpursuantto}}
-              <span class="text-silver">|</span> {{@package.pasForm.dcpZoningauthorizationpursuantto}}
+              <small class="display-block">
+                <strong>Found in ZR Section:</strong>
+                {{@package.pasForm.dcpZoningauthorizationpursuantto}}
+              </small>
             {{/if}}
             {{#if @package.pasForm.dcpZoningauthorizationtomodify}}
-              <span class="text-silver">|</span>{{@package.pasForm.dcpZoningauthorizationtomodify}}
+              <small class="display-block">
+                <strong>Modifies ZR Section:</strong>
+                {{@package.pasForm.dcpZoningauthorizationtomodify}}
+              </small>
             {{/if}}
           </li>
         {{/if}}
         {{#if @package.pasForm.dcpPfzoningcertification}}
-          <li>
+          <li class="ruled-adjacent">
             <strong>Zoning Certification</strong>
             ({{@package.pasForm.dcpPfzoningcertification}})
             {{#if @package.pasForm.dcpZoningpursuantto}}
-              <span class="text-silver">|</span> {{@package.pasForm.dcpZoningpursuantto}}
+              <small class="display-block">
+                <strong>Found in ZR Section:</strong>
+                {{@package.pasForm.dcpZoningpursuantto}}
+              </small>
             {{/if}}
             {{#if @package.pasForm.dcpZoningtomodify}}
-              <span class="text-silver">|</span>{{@package.pasForm.dcpZoningtomodify}}
+              <small class="display-block">
+                <strong>Modifies ZR Section:</strong>
+                {{@package.pasForm.dcpZoningtomodify}}
+              </small>
             {{/if}}
           </li>
         {{/if}}
         {{#if @package.pasForm.dcpPfzoningmapamendment}}
-          <li>
+          <li class="ruled-adjacent">
             <strong>Zoning Map Amendment</strong>
             ({{@package.pasForm.dcpPfzoningmapamendment}})
             {{#if @package.pasForm.dcpExistingmapamend}}
-              <span class="text-silver">|</span> {{@package.pasForm.dcpExistingmapamend}}
+              <small class="display-block">
+                <strong>Existing Zoning Districts:</strong>
+                {{@package.pasForm.dcpExistingmapamend}}
+              </small>
             {{/if}}
             {{#if @package.pasForm.dcpProposedmapamend}}
-              <span class="text-silver">|</span>{{@package.pasForm.dcpProposedmapamend}}
+              <small class="display-block">
+                <strong>Proposed Zoning Districts:</strong>
+                {{@package.pasForm.dcpProposedmapamend}}
+              </small>
             {{/if}}
           </li>
         {{/if}}
         {{#if @package.pasForm.dcpPfzoningspecialpermit}}
-          <li>
+          <li class="ruled-adjacent">
             <strong>Zoning Special Permit</strong>
             ({{@package.pasForm.dcpPfzoningspecialpermit}})
             {{#if @package.pasForm.dcpZoningspecialpermitpursuantto}}
-              <span class="text-silver">|</span> {{@package.pasForm.dcpZoningspecialpermitpursuantto}}
+              <small class="display-block">
+                <strong>Found in ZR Section:</strong>
+                {{@package.pasForm.dcpZoningspecialpermitpursuantto}}
+              </small>
             {{/if}}
             {{#if @package.pasForm.dcpZoningspecialpermittomodify}}
-              <span class="text-silver">|</span>{{@package.pasForm.dcpZoningspecialpermittomodify}}
+              <small class="display-block">
+                <strong>Modifies ZR Section:</strong>
+                {{@package.pasForm.dcpZoningspecialpermittomodify}}
+              </small>
             {{/if}}
           </li>
         {{/if}}
         {{#if @package.pasForm.dcpPfzoningtextamendment}}
-          <li>
+          <li class="ruled-adjacent">
             <strong>Zoning Text Amendment</strong>
             ({{@package.pasForm.dcpPfzoningtextamendment}})
             {{#if @package.pasForm.dcpAffectedzrnumber}}
-              <span class="text-silver">|</span> {{@package.pasForm.dcpAffectedzrnumber}}
+              <small class="display-block">
+                <strong>Affected ZR Section:</strong>
+                {{@package.pasForm.dcpAffectedzrnumber}}
+              </small>
             {{/if}}
             {{#if @package.pasForm.dcpZoningresolutiontitle}}
-              <span class="text-silver">|</span>{{@package.pasForm.dcpZoningresolutiontitle}}
+              <small class="display-block">
+                <strong>Affected ZR Section Title:</strong>
+                {{@package.pasForm.dcpZoningresolutiontitle}}
+              </small>
             {{/if}}
           </li>
         {{/if}}
@@ -288,7 +318,7 @@
         </span>
       </p>
 
-      {{#if (eq @package.pasForm.dcpLanduseactiontype2 717170000)}}
+      {{#if @package.pasForm.dcpPleaseexplaintypeiienvreview}}
         <p class="grid-x ruled-adjacent tight">
           <strong class="cell auto large-padding-right">
             SEQRA or CEQR category each action fulfills:
@@ -313,7 +343,7 @@
         </span>
       </p>
 
-      {{#if (eq @package.pasForm.dcpProjectareaindustrialbusinesszone true)}}
+      {{#if @package.pasForm.dcpProjectareaindutrialzonename}}
         <p class="grid-x ruled-adjacent tight">
           <strong class="cell auto large-padding-right">
             Name of Industrial Business Zone:
@@ -338,7 +368,7 @@
         </span>
       </p>
 
-      {{#if (eq @package.pasForm.dcpIsprojectarealandmark true)}}
+      {{#if @package.pasForm.dcpProjectarealandmarkname}}
         <p class="grid-x ruled-adjacent tight">
           <strong class="cell auto large-padding-right">
             Name of Landmark or Historic District:
@@ -393,7 +423,7 @@
         </span>
       </p>
 
-      {{#if (eq @package.pasForm.dcpRestrictivedeclaration true)}}
+      {{#if @package.pasForm.dcpCityregisterfilenumber}}
         <p class="grid-x ruled-adjacent tight">
           <strong class="cell auto large-padding-right">
             City Register File Number:
@@ -462,7 +492,7 @@
         </span>
       </p>
 
-      {{#if (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea true)}}
+      {{#if @package.pasForm.dcpInclusionaryhousingdesignatedareaname}}
         <p class="grid-x ruled-adjacent tight">
           <strong class="cell auto large-padding-right">
             Name of Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area
@@ -484,7 +514,7 @@
         </span>
       </p>
 
-      {{#if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing 717170000)}}
+      {{#if @package.pasForm.dcpHousingunittypeCity}}
         <p class="grid-x ruled-adjacent tight">
           <strong class="cell auto large-padding-right">
             Funding source
