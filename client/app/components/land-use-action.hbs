@@ -29,17 +29,17 @@
           <div class="shrink cell">
             <label for="middle-label" class="middle">How many {{landUseAction.name}} actions?</label>
           </div>
-        </div>
-        <div class="auto cell">
-          <ActionFormInput 
-            @pasForm={{@pasForm}}
-            @fieldType="number"
-            @length="10"
-            @landUseActionField={{landUseAction.countField}}
-          />
-          <ValidationMessage
-            @changesetError={{get @submittableChanges.error landUseAction.countField}}
-          />
+          <div class="auto cell">
+            <ActionFormInput 
+              @pasForm={{@pasForm}}
+              @fieldType="number"
+              @length="10"
+              @landUseActionField={{landUseAction.countField}}
+            />
+            <ValidationMessage
+              @changesetError={{get @submittableChanges.error landUseAction.countField}}
+            />
+          </div>
         </div>
         <label class="action-form-label">
           Where in the Zoning Resolution can this action be found?
