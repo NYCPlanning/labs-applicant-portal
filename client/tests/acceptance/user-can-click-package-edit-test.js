@@ -125,10 +125,10 @@ module('Acceptance | user can click package edit', function(hooks) {
     this.server.create('project', 1, 'applicant');
 
     await visit('/packages/1/edit');
-    assert.dom('[data-test-dcpurbanareaname]').doesNotExist();
+    assert.dom('[data-test-input="dcpUrbanareaname"]').doesNotExist();
 
     await click('[data-test-radio="dcpUrbanrenewalarea"][data-test-radio-option="Yes"]');
-    assert.dom('[data-test-dcpurbanareaname]').exists();
+    assert.dom('[data-test-input="dcpUrbanareaname"]').exists();
   });
 
   test('SEQRA or CEQR sub Q shows conditionally', async function (assert) {
@@ -267,13 +267,13 @@ module('Acceptance | user can click package edit', function(hooks) {
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-submit-button]').hasAttribute('disabled');
 
-    await fillIn('[data-test-dcpurbanareaname]', 'abc');
+    await fillIn('[data-test-input="dcpUrbanareaname"]', 'abc');
 
     assert.dom('[data-test-validation-message="dcpUrbanareaname"]').doesNotExist();
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
 
-    await fillIn('[data-test-dcpurbanareaname]', '');
+    await fillIn('[data-test-input="dcpUrbanareaname"]', '');
 
     assert.dom('[data-test-validation-message="dcpUrbanareaname"]').exists('it revalidates');
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
@@ -332,13 +332,13 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     assert.dom('[data-test-validation-message="dcpUrbanareaname"]').hasText('This field is required');
 
-    await fillIn('[data-test-dcpurbanareaname]', 'abc');
+    await fillIn('[data-test-input="dcpUrbanareaname"]', 'abc');
 
     assert.dom('[data-test-validation-message="dcpUrbanareaname"]').doesNotExist();
 
     const longText = 'Some long text'.repeat(20);
 
-    await fillIn('[data-test-dcpurbanareaname]', longText);
+    await fillIn('[data-test-input="dcpUrbanareaname"]', longText);
 
     assert.dom('[data-test-validation-message="dcpUrbanareaname"]').hasText('Name is too long (max 250 characters)');
 
