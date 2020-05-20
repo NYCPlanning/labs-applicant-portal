@@ -146,9 +146,9 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/1/edit');
 
-    assert.dom('[data-test-dcpprojectareaindutrialzonename]').doesNotExist();
+    assert.dom('[data-test-input="dcpProjectareaindutrialzonename"]').doesNotExist();
     await click('[data-test-radio="dcpProjectareaindustrialbusinesszone"][data-test-radio-option="Yes"]');
-    assert.dom('[data-test-dcpprojectareaindutrialzonename]').exists();
+    assert.dom('[data-test-input="dcpProjectareaindutrialzonename"]').exists();
   });
 
   test('Landmark or Historic District sub Q shows conditionally', async function (assert) {
@@ -360,11 +360,11 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     assert.dom('[data-test-validation-message="dcpProjectareaindutrialzonename"]').hasText('This field is required');
 
-    await fillIn('[data-test-dcpprojectareaindutrialzonename]', 'abc');
+    await fillIn('[data-test-input="dcpProjectareaindutrialzonename"]', 'abc');
 
     assert.dom('[data-test-validation-message="dcpProjectareaindutrialzonename"]').doesNotExist();
 
-    await fillIn('[data-test-dcpprojectareaindutrialzonename]', longText);
+    await fillIn('[data-test-input="dcpProjectareaindutrialzonename"]', longText);
 
     assert.dom('[data-test-validation-message="dcpProjectareaindutrialzonename"]').hasText('Name is too long (max 250 characters)');
 
