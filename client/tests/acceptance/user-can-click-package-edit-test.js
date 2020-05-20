@@ -177,7 +177,7 @@ module('Acceptance | user can click package edit', function(hooks) {
     await visit('/packages/1/edit');
 
     assert.dom('[data-test-dcpinclusionaryhousingdesignatedareaname]').doesNotExist();
-    await click('[data-test-dcpisinclusionaryhousingdesignatedarea="Yes"]');
+    await click('[data-test-radio="dcpIsinclusionaryhousingdesignatedarea"][data-test-radio-option="Yes"]');
     assert.dom('[data-test-dcpinclusionaryhousingdesignatedareaname]').exists();
   });
 
