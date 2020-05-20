@@ -136,9 +136,9 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/1/edit');
 
-    assert.dom('[data-test-dcppleaseexplaintypeiienvreview]').doesNotExist();
+    assert.dom('[data-test-input="dcpPleaseexplaintypeiienvreview"]').doesNotExist();
     await click('[data-test-radio="dcpLanduseactiontype2"][data-test-radio-option="Yes"]');
-    assert.dom('[data-test-dcppleaseexplaintypeiienvreview]').exists();
+    assert.dom('[data-test-input="dcpPleaseexplaintypeiienvreview"]').exists();
   });
 
   test('Industrial Business Zone sub Q shows conditionally', async function (assert) {
@@ -347,11 +347,11 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     assert.dom('[data-test-validation-message="dcpPleaseexplaintypeiienvreview"]').hasText('This field is required');
 
-    await fillIn('[data-test-dcppleaseexplaintypeiienvreview]', 'abc');
+    await fillIn('[data-test-input="dcpPleaseexplaintypeiienvreview"]', 'abc');
 
     assert.dom('[data-test-validation-message="dcpPleaseexplaintypeiienvreview"]').doesNotExist();
 
-    await fillIn('[data-test-dcppleaseexplaintypeiienvreview]', longText);
+    await fillIn('[data-test-input="dcpPleaseexplaintypeiienvreview"]', longText);
 
     assert.dom('[data-test-validation-message="dcpPleaseexplaintypeiienvreview"]').hasText('Text is too long (max 200 characters)');
 
