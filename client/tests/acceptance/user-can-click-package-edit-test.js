@@ -137,7 +137,7 @@ module('Acceptance | user can click package edit', function(hooks) {
     await visit('/packages/1/edit');
 
     assert.dom('[data-test-dcppleaseexplaintypeiienvreview]').doesNotExist();
-    await click('[data-test-dcplanduseactiontype2="Yes"]');
+    await click('[data-test-radio="dcpLanduseactiontype2"][data-test-radio-option="Yes"]');
     assert.dom('[data-test-dcppleaseexplaintypeiienvreview]').exists();
   });
 
@@ -343,7 +343,7 @@ module('Acceptance | user can click package edit', function(hooks) {
     assert.dom('[data-test-validation-message="dcpUrbanareaname"]').hasText('Name is too long (max 250 characters)');
 
     // SEQRA or CEQR criteria for Type II status
-    await click('[data-test-dcplanduseactiontype2="Yes"]');
+    await click('[data-test-radio="dcpLanduseactiontype2"][data-test-radio-option="Yes"]');
 
     assert.dom('[data-test-validation-message="dcpPleaseexplaintypeiienvreview"]').hasText('This field is required');
 
