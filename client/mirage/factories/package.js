@@ -1,5 +1,5 @@
 import { Factory, trait } from 'ember-cli-mirage';
-import { PACKAGE_STATUS_CODES, PACKAGE_VISIBILITY_CODES } from '../../models/package';
+import { PACKAGE_STATUS_OPTIONSET, PACKAGE_VISIBILITY_CODES } from '../../models/package';
 
 export default Factory.extend({
   dcpPackagetype: 'PAS Package',
@@ -20,7 +20,7 @@ export default Factory.extend({
   applicant: trait({
     statuscode(i) {
       const statuses = [
-        PACKAGE_STATUS_CODES.PACKAGE_PREPARATION.code,
+        PACKAGE_STATUS_OPTIONSET.PACKAGE_PREPARATION.code,
       ];
 
       return statuses[i % statuses.length];
@@ -42,13 +42,13 @@ export default Factory.extend({
   planning: trait({
     statuscode(i) {
       const statuses = [
-        PACKAGE_STATUS_CODES.CERTIFIED.code,
-        PACKAGE_STATUS_CODES.FINAL_APPROVAL.code,
-        PACKAGE_STATUS_CODES.REVIEWED_NO_REVISIONS_REQUIRED.code,
-        PACKAGE_STATUS_CODES.REVIEWED_REVISIONS_REQUIRED.code,
-        PACKAGE_STATUS_CODES.WITHDRAWN.code,
-        PACKAGE_STATUS_CODES.SUBMITTED.code,
-        PACKAGE_STATUS_CODES.UNDER_REVIEW.code,
+        PACKAGE_STATUS_OPTIONSET.CERTIFIED.code,
+        PACKAGE_STATUS_OPTIONSET.FINAL_APPROVAL.code,
+        PACKAGE_STATUS_OPTIONSET.REVIEWED_NO_REVISIONS_REQUIRED.code,
+        PACKAGE_STATUS_OPTIONSET.REVIEWED_REVISIONS_REQUIRED.code,
+        PACKAGE_STATUS_OPTIONSET.WITHDRAWN.code,
+        PACKAGE_STATUS_OPTIONSET.SUBMITTED.code,
+        PACKAGE_STATUS_OPTIONSET.UNDER_REVIEW.code,
       ];
 
       return statuses[i % statuses.length];
@@ -70,10 +70,10 @@ export default Factory.extend({
   planningWithViewPASButton: trait({
     statuscode(i) {
       const statuses = [
-        PACKAGE_STATUS_CODES.REVIEWED_NO_REVISIONS_REQUIRED.code,
-        PACKAGE_STATUS_CODES.REVIEWED_REVISIONS_REQUIRED.code,
-        PACKAGE_STATUS_CODES.SUBMITTED.code,
-        PACKAGE_STATUS_CODES.UNDER_REVIEW.code,
+        PACKAGE_STATUS_OPTIONSET.REVIEWED_NO_REVISIONS_REQUIRED.code,
+        PACKAGE_STATUS_OPTIONSET.REVIEWED_REVISIONS_REQUIRED.code,
+        PACKAGE_STATUS_OPTIONSET.SUBMITTED.code,
+        PACKAGE_STATUS_OPTIONSET.UNDER_REVIEW.code,
       ];
 
       return statuses[i % statuses.length];
@@ -92,9 +92,9 @@ export default Factory.extend({
   planningNoViewPASButton: trait({
     statuscode(i) {
       const statuses = [
-        PACKAGE_STATUS_CODES.CERTIFIED.code,
-        PACKAGE_STATUS_CODES.FINAL_APPROVAL.code,
-        PACKAGE_STATUS_CODES.WITHDRAWN.code,
+        PACKAGE_STATUS_OPTIONSET.CERTIFIED.code,
+        PACKAGE_STATUS_OPTIONSET.FINAL_APPROVAL.code,
+        PACKAGE_STATUS_OPTIONSET.WITHDRAWN.code,
       ];
 
       return statuses[i % statuses.length];

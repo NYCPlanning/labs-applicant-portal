@@ -2,7 +2,7 @@ import Model, { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import FileManager from '../services/file-manager';
 
-export const PACKAGE_STATUS_CODES = {
+export const PACKAGE_STATUS_OPTIONSET = {
   PACKAGE_PREPARATION: {
     code: 1,
     label: 'Package Preparation',
@@ -110,7 +110,7 @@ export default class PackageModel extends Model {
   documents;
 
   setAttrsForSubmission() {
-    this.statuscode = PACKAGE_STATUS_CODES.SUBMITTED.code;
+    this.statuscode = PACKAGE_STATUS_OPTIONSET.SUBMITTED.code;
     this.statecode = PACKAGE_STATE_CODES.INACTIVE.code;
   }
 
