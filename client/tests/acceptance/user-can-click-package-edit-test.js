@@ -167,7 +167,7 @@ module('Acceptance | user can click package edit', function(hooks) {
     await visit('/packages/1/edit');
 
     assert.dom('[data-test-dcpproposeddevelopmentsiteotherexplanation]').doesNotExist();
-    await click('[data-test-dcpproposeddevelopmentsiteinfoother]');
+    await click('[data-test-checkbox="dcpProposeddevelopmentsiteinfoother"]');
     assert.dom('[data-test-dcpproposeddevelopmentsiteotherexplanation]').exists();
   });
 
