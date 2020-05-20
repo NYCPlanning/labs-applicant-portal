@@ -191,7 +191,7 @@ module('Acceptance | user can click package edit', function(hooks) {
     assert.dom('[data-test-dcphousingunittype="Federal"]').doesNotExist();
     assert.dom('[data-test-dcphousingunittype="Other"]').doesNotExist();
 
-    await click('[data-test-dcpdiscressionaryfundingforffordablehousing="Yes"]');
+    await click('[data-test-radio="dcpDiscressionaryfundingforffordablehousing"][data-test-radio-option="Yes"]');
     assert.dom('[data-test-dcphousingunittype="City"]').exists();
     assert.dom('[data-test-dcphousingunittype="State"]').exists();
     assert.dom('[data-test-dcphousingunittype="Federal"]').exists();
