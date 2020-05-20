@@ -127,7 +127,7 @@ module('Acceptance | user can click package edit', function(hooks) {
     await visit('/packages/1/edit');
     assert.dom('[data-test-dcpurbanareaname]').doesNotExist();
 
-    await click('[data-test-dcpurbanrenewalarea="Yes"]');
+    await click('[data-test-radio="dcpUrbanrenewalarea"][data-test-radio-option="Yes"]');
     assert.dom('[data-test-dcpurbanareaname]').exists();
   });
 
@@ -261,7 +261,7 @@ module('Acceptance | user can click package edit', function(hooks) {
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
 
-    await click('[data-test-dcpurbanrenewalarea="Yes"]');
+    await click('[data-test-radio="dcpUrbanrenewalarea"][data-test-radio-option="Yes"]');
 
     assert.dom('[data-test-validation-message="dcpUrbanareaname"]').exists();
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
@@ -328,7 +328,7 @@ module('Acceptance | user can click package edit', function(hooks) {
     assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
 
     // name of the Urban Renewal Area
-    await click('[data-test-dcpurbanrenewalarea="Yes"]');
+    await click('[data-test-radio="dcpUrbanrenewalarea"][data-test-radio-option="Yes"]');
 
     assert.dom('[data-test-validation-message="dcpUrbanareaname"]').hasText('This field is required');
 
