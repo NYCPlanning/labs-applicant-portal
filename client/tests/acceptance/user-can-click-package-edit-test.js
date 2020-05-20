@@ -166,9 +166,9 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/1/edit');
 
-    assert.dom('[data-test-dcpproposeddevelopmentsiteotherexplanation]').doesNotExist();
+    assert.dom('[data-test-input="dcpProposeddevelopmentsiteotherexplanation"]').doesNotExist();
     await click('[data-test-checkbox="dcpProposeddevelopmentsiteinfoother"]');
-    assert.dom('[data-test-dcpproposeddevelopmentsiteotherexplanation]').exists();
+    assert.dom('[data-test-input="dcpProposeddevelopmentsiteotherexplanation"]').exists();
   });
 
   test('MIH sub Q shows conditionally', async function (assert) {
