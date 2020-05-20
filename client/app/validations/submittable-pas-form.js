@@ -8,6 +8,7 @@ export default {
     ...SaveablePasForm.dcpRevisedprojectname,
   ],
   dcpUrbanareaname: [
+    ...SaveablePasForm.dcpUrbanareaname,
     validatePresenceIf({
       presence: true,
       on: 'dcpUrbanrenewalarea',
@@ -16,6 +17,7 @@ export default {
     }),
   ],
   dcpPleaseexplaintypeiienvreview: [
+    ...SaveablePasForm.dcpPleaseexplaintypeiienvreview,
     validatePresenceIf({
       presence: true,
       on: 'dcpLanduseactiontype2',
@@ -24,6 +26,7 @@ export default {
     }),
   ],
   dcpProjectareaindutrialzonename: [
+    ...SaveablePasForm.dcpProjectareaindutrialzonename,
     validatePresenceIf({
       presence: true,
       on: 'dcpProjectareaindustrialbusinesszone',
@@ -32,6 +35,7 @@ export default {
     }),
   ],
   dcpProjectarealandmarkname: [
+    ...SaveablePasForm.dcpProjectarealandmarkname,
     validatePresenceIf({
       presence: true,
       on: 'dcpIsprojectarealandmark',
@@ -64,6 +68,7 @@ export default {
     }),
   ],
   dcpZoningauthorizationpursuantto: [
+    ...SaveablePasForm.dcpZoningauthorizationpursuantto,
     validatePresenceIf({
       presence: true,
       on: 'dcpPfzoningauthorization',
@@ -72,6 +77,7 @@ export default {
     }),
   ],
   dcpZoningauthorizationtomodify: [
+    ...SaveablePasForm.dcpZoningauthorizationtomodify,
     validatePresenceIf({
       presence: true,
       on: 'dcpPfzoningauthorization',
@@ -80,6 +86,7 @@ export default {
     }),
   ],
   dcpZoningtomodify: [
+    ...SaveablePasForm.dcpZoningtomodify,
     validatePresenceIf({
       presence: true,
       on: 'dcpPfzoningcertification',
@@ -88,6 +95,7 @@ export default {
     }),
   ],
   dcpZoningpursuantto: [
+    ...SaveablePasForm.dcpZoningpursuantto,
     validatePresenceIf({
       presence: true,
       on: 'dcpPfzoningcertification',
@@ -96,6 +104,7 @@ export default {
     }),
   ],
   dcpExistingmapamend: [
+    ...SaveablePasForm.dcpExistingmapamend,
     validatePresenceIf({
       presence: true,
       on: 'dcpPfzoningmapamendment',
@@ -104,6 +113,7 @@ export default {
     }),
   ],
   dcpProposedmapamend: [
+    ...SaveablePasForm.dcpProposedmapamend,
     validatePresenceIf({
       presence: true,
       on: 'dcpPfzoningmapamendment',
@@ -112,6 +122,7 @@ export default {
     }),
   ],
   dcpZoningspecialpermitpursuantto: [
+    ...SaveablePasForm.dcpZoningspecialpermitpursuantto,
     validatePresenceIf({
       presence: true,
       on: 'dcpPfzoningspecialpermit',
@@ -120,6 +131,7 @@ export default {
     }),
   ],
   dcpZoningspecialpermittomodify: [
+    ...SaveablePasForm.dcpZoningspecialpermittomodify,
     validatePresenceIf({
       presence: true,
       on: 'dcpPfzoningspecialpermit',
@@ -128,6 +140,7 @@ export default {
     }),
   ],
   dcpAffectedzrnumber: [
+    ...SaveablePasForm.dcpAffectedzrnumber,
     validatePresenceIf({
       presence: true,
       on: 'dcpPfzoningtextamendment',
@@ -136,6 +149,7 @@ export default {
     }),
   ],
   dcpZoningresolutiontitle: [
+    ...SaveablePasForm.dcpZoningresolutiontitle,
     validatePresenceIf({
       presence: true,
       on: 'dcpPfzoningtextamendment',
@@ -144,6 +158,7 @@ export default {
     }),
   ],
   dcpPreviousulurpnumbers1: [
+    ...SaveablePasForm.dcpPreviousulurpnumbers1,
     validatePresenceIf({
       presence: true,
       on: 'dcpPfmodification',
@@ -152,6 +167,7 @@ export default {
     }),
   ],
   dcpPreviousulurpnumbers2: [
+    ...SaveablePasForm.dcpPreviousulurpnumbers2,
     validatePresenceIf({
       presence: true,
       on: 'dcpPfrenewal',
@@ -160,6 +176,7 @@ export default {
     }),
   ],
   dcpPfzoningauthorization: [
+    ...SaveablePasForm.dcpPfzoningauthorization,
     validateNumberIf({
       on: 'dcpPfzoningauthorization',
       withValue: (target) => target !== null && target !== undefined,
@@ -168,6 +185,7 @@ export default {
     }),
   ],
   dcpPfzoningcertification: [
+    ...SaveablePasForm.dcpPfzoningcertification,
     validateNumberIf({
       on: 'dcpPfzoningcertification',
       withValue: (target) => target !== null && target !== undefined,
@@ -176,6 +194,7 @@ export default {
     }),
   ],
   dcpPfzoningspecialpermit: [
+    ...SaveablePasForm.dcpPfzoningspecialpermit,
     validateNumberIf({
       on: 'dcpPfzoningspecialpermit',
       withValue: (target) => target !== null && target !== undefined,

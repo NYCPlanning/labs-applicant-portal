@@ -68,7 +68,12 @@ export class PackagesService {
 
     return {
       ...projectPackageForm.dcp_package,
-      dcp_pasform: projectPackageForm,
+      dcp_pasform: {
+        ...projectPackageForm,
+
+        // handling for setting the default value of the dcp_revisedprojectname.
+        dcp_revisedprojectname: projectPackageForm.dcp_revisedprojectname || dcp_project.dcp_projectname,
+      },
       project: dcp_project,
       documents: documents.map(document => ({
         name: document['Name'],
