@@ -48,7 +48,7 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     // use waitFor as a way to "wait" for the transition
     // within the pas-form/edit Component submit() task
-    await waitFor('[data-test-show-dcprevisedprojectname]');
+    await waitFor('[data-test-show="dcpRevisedprojectname"]');
 
     assert.equal(currentURL(), '/packages/1');
   });
@@ -208,7 +208,7 @@ module('Acceptance | user can click package edit', function(hooks) {
     // assert.dom('[data-test-save-button').hasProperty('disabled', true);
 
     // edit a field to make it pasForm dirty
-    await fillIn('[data-test-dcprevisedprojectname]', 'Some Cool New Project Name');
+    await fillIn('[data-test-input="dcpRevisedprojectname"]', 'Some Cool New Project Name');
 
     // save button should become active when dirty
     assert.dom('[data-test-save-button').hasProperty('disabled', false);
