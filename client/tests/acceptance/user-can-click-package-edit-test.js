@@ -156,9 +156,9 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/1/edit');
 
-    assert.dom('[data-test-dcpProjectarealandmarkname]').doesNotExist();
+    assert.dom('[data-test-input="dcpProjectarealandmarkname"]').doesNotExist();
     await click('[data-test-radio="dcpIsprojectarealandmark"][data-test-radio-option="Yes"]');
-    assert.dom('[data-test-dcpProjectarealandmarkname]').exists();
+    assert.dom('[data-test-input="dcpProjectarealandmarkname"]').exists();
   });
 
   test('Other Type sub Q shows conditionally', async function (assert) {
@@ -373,11 +373,11 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     assert.dom('[data-test-validation-message="dcpProjectarealandmarkname"]').hasText('This field is required');
 
-    await fillIn('[data-test-dcpprojectarealandmarkname]', 'abc');
+    await fillIn('[data-test-input="dcpProjectarealandmarkname"]', 'abc');
 
     assert.dom('[data-test-validation-message="dcpProjectarealandmarkname"]').doesNotExist();
 
-    await fillIn('[data-test-dcpprojectarealandmarkname]', longText);
+    await fillIn('[data-test-input="dcpProjectarealandmarkname"]', longText);
 
     assert.dom('[data-test-validation-message="dcpProjectarealandmarkname"]').hasText('Name is too long (max 250 characters)');
   });
