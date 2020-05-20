@@ -467,15 +467,9 @@
           Proposed development type
         </strong>
         <span class="cell large-3">
-          {{if @package.pasForm.dcpProposeddevelopmentsitenewconstruction "Newly constructed buildings"}}
-          {{if @package.pasForm.dcpProposeddevelopmentsitedemolition "Demolition" }}
-          {{if @package.pasForm.dcpProposeddevelopmentsiteinfoalteration "Alteration"}}
-          {{if @package.pasForm.dcpProposeddevelopmentsiteinfoaddition "Addition" }}
-          {{if @package.pasForm.dcpProposeddevelopmentsitechnageofuse "Change of use"}}
-          {{if @package.pasForm.dcpProposeddevelopmentsiteenlargement "Enlargement"}}
-          {{#if @package.pasForm.dcpProposeddevelopmentsiteinfoother}}
-            Other: {{@package.pasForm.dcpProposeddevelopmentsiteotherexplanation}}
-          {{/if}}
+          {{#each proposedDevelopmentTypes as |item index|}}
+            {{item}}{{unless (eq item proposedDevelopmentTypes.lastObject) ', '}}
+          {{/each}}
         </span>
       </p>
 
