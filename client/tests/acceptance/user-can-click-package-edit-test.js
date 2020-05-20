@@ -176,9 +176,9 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/1/edit');
 
-    assert.dom('[data-test-dcpinclusionaryhousingdesignatedareaname]').doesNotExist();
+    assert.dom('[data-test-input="dcpInclusionaryhousingdesignatedareaname"]').doesNotExist();
     await click('[data-test-radio="dcpIsinclusionaryhousingdesignatedarea"][data-test-radio-option="Yes"]');
-    assert.dom('[data-test-dcpinclusionaryhousingdesignatedareaname]').exists();
+    assert.dom('[data-test-input="dcpInclusionaryhousingdesignatedareaname"]').exists();
   });
 
   test('Funding Source sub Q shows conditionally', async function (assert) {
