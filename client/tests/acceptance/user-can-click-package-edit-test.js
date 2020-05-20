@@ -186,16 +186,16 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/1/edit');
 
-    assert.dom('[data-test-dcphousingunittype="City"]').doesNotExist();
-    assert.dom('[data-test-dcphousingunittype="State"]').doesNotExist();
-    assert.dom('[data-test-dcphousingunittype="Federal"]').doesNotExist();
-    assert.dom('[data-test-dcphousingunittype="Other"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="City"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="State"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="Federal"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="Other"]').doesNotExist();
 
     await click('[data-test-radio="dcpDiscressionaryfundingforffordablehousing"][data-test-radio-option="Yes"]');
-    assert.dom('[data-test-dcphousingunittype="City"]').exists();
-    assert.dom('[data-test-dcphousingunittype="State"]').exists();
-    assert.dom('[data-test-dcphousingunittype="Federal"]').exists();
-    assert.dom('[data-test-dcphousingunittype="Other"]').exists();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="City"]').exists();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="State"]').exists();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="Federal"]').exists();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="Other"]').exists();
   });
 
   test('user can save pas form', async function (assert) {
