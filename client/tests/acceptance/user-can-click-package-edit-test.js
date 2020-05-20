@@ -147,7 +147,7 @@ module('Acceptance | user can click package edit', function(hooks) {
     await visit('/packages/1/edit');
 
     assert.dom('[data-test-dcpprojectareaindutrialzonename]').doesNotExist();
-    await click('[data-test-dcpprojectareaindustrialbusinesszone="Yes"]');
+    await click('[data-test-radio="dcpProjectareaindustrialbusinesszone"][data-test-radio-option="Yes"]');
     assert.dom('[data-test-dcpprojectareaindutrialzonename]').exists();
   });
 
@@ -356,7 +356,7 @@ module('Acceptance | user can click package edit', function(hooks) {
     assert.dom('[data-test-validation-message="dcpPleaseexplaintypeiienvreview"]').hasText('Text is too long (max 200 characters)');
 
     // Industrial Business Zone
-    await click('[data-test-dcpProjectareaindustrialbusinesszone="Yes"]');
+    await click('[data-test-radio="dcpProjectareaindustrialbusinesszone"][data-test-radio-option="Yes"]');
 
     assert.dom('[data-test-validation-message="dcpProjectareaindutrialzonename"]').hasText('This field is required');
 
