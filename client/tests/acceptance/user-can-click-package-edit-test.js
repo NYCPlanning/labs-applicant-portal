@@ -157,7 +157,7 @@ module('Acceptance | user can click package edit', function(hooks) {
     await visit('/packages/1/edit');
 
     assert.dom('[data-test-dcpProjectarealandmarkname]').doesNotExist();
-    await click('[data-test-dcpIsprojectarealandmark="Yes"]');
+    await click('[data-test-radio="dcpIsprojectarealandmark"][data-test-radio-option="Yes"]');
     assert.dom('[data-test-dcpProjectarealandmarkname]').exists();
   });
 
@@ -369,7 +369,7 @@ module('Acceptance | user can click package edit', function(hooks) {
     assert.dom('[data-test-validation-message="dcpProjectareaindutrialzonename"]').hasText('Name is too long (max 250 characters)');
 
     // Landmark name
-    await click('[data-test-dcpIsprojectarealandmark="Yes"]');
+    await click('[data-test-radio="dcpIsprojectarealandmark"][data-test-radio-option="Yes"]');
 
     assert.dom('[data-test-validation-message="dcpProjectarealandmarkname"]').hasText('This field is required');
 
