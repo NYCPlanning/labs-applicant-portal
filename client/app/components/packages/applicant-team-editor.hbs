@@ -1,4 +1,4 @@
-<div {{did-insert this.addApplicantIfEmpty}}>
+<div>
   {{#each @applicants as |applicant index|}}
     <Packages::ApplicantFieldset
       @elementId={{concat 'applicant-fieldset-' index}}
