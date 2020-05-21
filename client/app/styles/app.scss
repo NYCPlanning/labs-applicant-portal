@@ -18,10 +18,11 @@ $small-font-size: 81.25%; // TODO: update Style Guide so that <small> matches .t
 @import 'labs-ui/all-modules'; // or a subset
 
 // Custom app components
-@import 'modules/_login';
-@import 'modules/_reveal-modal';
 @import 'modules/_geosearch';
+@import 'modules/_login';
 @import 'modules/_pasform';
+@import 'modules/_reveal-modal';
+@import 'modules/_transitions';
 
 @import "ember-power-select";
 

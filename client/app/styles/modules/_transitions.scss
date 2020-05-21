@@ -1,0 +1,61 @@
+/* Module: Transitions */
+
+// Scale and fade in
+.scale-enter {
+  opacity: 0;
+  transform: scale(1.25);
+}
+.scale-enter.scale-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.3s ease-in;
+}
+.scale-leave {
+  opacity: 1;
+  transform: scale(1);
+}
+.scale-leave.scale-leave-active {
+  opacity: 0;
+  transform: scale(1.25);
+  transition: all 0.3s ease-in;
+}
+
+// Slide in/out from the top
+.slide-top-enter {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+.slide-top-enter.slide-top-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.3s ease-in;
+}
+.slide-top-leave {
+  opacity: 1;
+  transform: translateY(-100%);
+}
+.slide-top-leave.scale-leave-active {
+  opacity: 0;
+  transform: translateY(0);
+  transition: all 0.3s ease-in;
+}
+
+// Slide in/out form the bottom
+.slide-bottom-enter {
+  opacity: 0;
+  transform: translateY(100%);
+}
+.slide-bottom-enter.slide-bottom-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.3s ease-in;
+}
+.slide-bottom-leave {
+  opacity: 1;
+  transform: translateY(100%);
+}
+.slide-bottom-leave.scale-leave-active {
+  opacity: 0;
+  transform: translateY(0);
+  transition: all 0.3s ease-in;
+}
