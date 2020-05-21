@@ -1,5 +1,5 @@
 import { Factory, trait } from 'ember-cli-mirage';
-import { PACKAGE_STATUS_OPTIONSET, PACKAGE_VISIBILITY_CODES } from '../../models/package';
+import { PACKAGE_STATUS_OPTIONSET, PACKAGE_VISIBILITY_OPTIONSET } from '../../models/package';
 
 export default Factory.extend({
   dcpPackagetype: 'PAS Package',
@@ -28,8 +28,8 @@ export default Factory.extend({
 
     dcpVisibility(i) {
       const visibility = [
-        PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY.code,
-        PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC.code,
+        PACKAGE_VISIBILITY_OPTIONSET.APPLICANT_ONLY.code,
+        PACKAGE_VISIBILITY_OPTIONSET.GENERAL_PUBLIC.code,
       ];
 
       return visibility[i % visibility.length];
@@ -56,11 +56,11 @@ export default Factory.extend({
 
     dcpVisibility(i) {
       const visibility = [
-        PACKAGE_VISIBILITY_CODES.INTERNAL_DCP_ONLY.code,
-        PACKAGE_VISIBILITY_CODES.CPC_ONLY.code,
-        PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY.code,
-        PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC.code,
-        PACKAGE_VISIBILITY_CODES.LUP.code,
+        PACKAGE_VISIBILITY_OPTIONSET.INTERNAL_DCP_ONLY.code,
+        PACKAGE_VISIBILITY_OPTIONSET.CPC_ONLY.code,
+        PACKAGE_VISIBILITY_OPTIONSET.APPLICANT_ONLY.code,
+        PACKAGE_VISIBILITY_OPTIONSET.GENERAL_PUBLIC.code,
+        PACKAGE_VISIBILITY_OPTIONSET.LUP.code,
       ];
 
       return visibility[i % visibility.length];
@@ -81,8 +81,8 @@ export default Factory.extend({
 
     dcpVisibility(i) {
       const visibility = [
-        PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY.code,
-        PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC.code,
+        PACKAGE_VISIBILITY_OPTIONSET.APPLICANT_ONLY.code,
+        PACKAGE_VISIBILITY_OPTIONSET.GENERAL_PUBLIC.code,
       ];
 
       return visibility[i % visibility.length];
@@ -102,11 +102,11 @@ export default Factory.extend({
 
     dcpVisibility(i) {
       const visibility = [
-        PACKAGE_VISIBILITY_CODES.INTERNAL_DCP_ONLY.code,
-        PACKAGE_VISIBILITY_CODES.CPC_ONLY.code,
-        PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY.code,
-        PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC.code,
-        PACKAGE_VISIBILITY_CODES.LUP.code,
+        PACKAGE_VISIBILITY_OPTIONSET.INTERNAL_DCP_ONLY.code,
+        PACKAGE_VISIBILITY_OPTIONSET.CPC_ONLY.code,
+        PACKAGE_VISIBILITY_OPTIONSET.APPLICANT_ONLY.code,
+        PACKAGE_VISIBILITY_OPTIONSET.GENERAL_PUBLIC.code,
+        PACKAGE_VISIBILITY_OPTIONSET.LUP.code,
       ];
 
       return visibility[i % visibility.length];

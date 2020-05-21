@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { PACKAGE_STATUS_OPTIONSET, PACKAGE_VISIBILITY_CODES } from '../../models/package';
+import { PACKAGE_STATUS_OPTIONSET, PACKAGE_VISIBILITY_OPTIONSET } from '../../models/package';
 
 /**
   * Generates a  project card listed under "Planning is working on it..."
@@ -19,8 +19,8 @@ export default class ProjectsPlanningProjectCardComponent extends Component {
           PACKAGE_STATUS_OPTIONSET.REVIEWED_REVISIONS_REQUIRED.code,
         ].includes(projectPackage.statuscode)
         && [
-          PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY.code,
-          PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC.code,
+          PACKAGE_VISIBILITY_OPTIONSET.APPLICANT_ONLY.code,
+          PACKAGE_VISIBILITY_OPTIONSET.GENERAL_PUBLIC.code,
         ].includes(projectPackage.dcpVisibility)
       ) {
         return true;

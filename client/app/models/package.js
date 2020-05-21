@@ -41,7 +41,7 @@ export const PACKAGE_STATUS_OPTIONSET = {
   },
 };
 
-export const PACKAGE_VISIBILITY_CODES = {
+export const PACKAGE_VISIBILITY_OPTIONSET = {
   INTERNAL_DCP_ONLY: {
     code: 717170000,
   },
