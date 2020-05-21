@@ -469,7 +469,7 @@
         <span class="cell large-3">
           {{#each this.proposedDevelopmentTypes as |item|}}
             <span data-test-show={{item.type}}>
-              {{item.label }}{{unless (eq item this.proposedDevelopmentTypes.lastObject) ', '}}
+              {{item.label }}{{if (eq item.type this.proposedDevelopmentTypes.lastObject.type) '' ', '}}
             </span>
           {{/each}}
         </span>
