@@ -6,21 +6,25 @@ import { hbs } from 'ember-cli-htmlbars';
 module('Integration | Component | packages/pas-form/show', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+  test('it creates a proposedDevelopmentTypes array', async function(assert) {
+    // Set some types as true and some as false
+    this.set('package', {
+      pasForm: {
+        dcpProposeddevelopmentsitenewconstruction: true,
+        dcpProposeddevelopmentsitedemolition: true,
+        dcpProposeddevelopmentsiteinfoalteration: false,
+        dcpProposeddevelopmentsiteinfoaddition: false,
+      },
+    });
 
-    await render(hbs`<Packages::PasForm::Show />`);
+    await render(hbs`<Packages::PasForm::Show @package={{this.package}} />`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    // Make sure the true types render
+    assert.dom('[data-test-show="dcpProposeddevelopmentsitenewconstruction"]').exists();
+    assert.dom('[data-test-show="dcpProposeddevelopmentsitedemolition"]').exists();
 
-    // Template block usage:
-    await render(hbs`
-      <Packages::PasForm::Show>
-        template block text
-      </Packages::PasForm::Show>
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    // Make sure the false types do not render
+    assert.dom('[data-test-show="dcpProposeddevelopmentsiteinfoalteration"]').doesNotExist();
+    assert.dom('[data-test-show="dcpProposeddevelopmentsiteinfoaddition"]').doesNotExist();
   });
 });

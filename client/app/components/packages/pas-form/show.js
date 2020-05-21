@@ -2,17 +2,52 @@ import Component from '@glimmer/component';
 
 export default class PackagesPasFormShowComponent extends Component {
   get proposedDevelopmentTypes() {
-    return [
-      ...(this.args.package.pasForm.dcpProposeddevelopmentsitenewconstruction ? ['Newly constructed buildings'] : []),
-      ...(this.args.package.pasForm.dcpProposeddevelopmentsitedemolition ? ['Demolition'] : []),
-      ...(this.args.package.pasForm.dcpProposeddevelopmentsiteinfoalteration ? ['Alteration'] : []),
-      ...(this.args.package.pasForm.dcpProposeddevelopmentsiteinfoaddition ? ['Addition'] : []),
-      ...(this.args.package.pasForm.dcpProposeddevelopmentsitechnageofuse ? ['Change of use'] : []),
-      ...(this.args.package.pasForm.dcpProposeddevelopmentsiteenlargement ? ['Enlargement'] : []),
-      ...(this.args.package.pasForm.dcpProposeddevelopmentsiteinfoother
-        ? [`Other ${this.args.package.pasForm.dcpProposeddevelopmentsiteotherexplanation}`]
-        : []
-      ),
-    ];
+    const { pasForm } = this.args.package;
+    const arr = [];
+
+    if (pasForm.dcpProposeddevelopmentsitenewconstruction) {
+      arr.push({
+        type: 'dcpProposeddevelopmentsitenewconstruction',
+        label: 'Newly constructed buildings',
+      });
+    }
+    if (pasForm.dcpProposeddevelopmentsitedemolition) {
+      arr.push({
+        type: 'dcpProposeddevelopmentsitedemolition',
+        label: 'Demolition',
+      });
+    }
+    if (pasForm.dcpProposeddevelopmentsiteinfoalteration) {
+      arr.push({
+        type: 'dcpProposeddevelopmentsiteinfoalteration',
+        label: 'Alteration',
+      });
+    }
+    if (pasForm.dcpProposeddevelopmentsiteinfoaddition) {
+      arr.push({
+        type: 'dcpProposeddevelopmentsiteinfoaddition',
+        label: 'Addition',
+      });
+    }
+    if (pasForm.dcpProposeddevelopmentsitechnageofuse) {
+      arr.push({
+        type: 'dcpProposeddevelopmentsitechnageofuse',
+        label: 'Change of use',
+      });
+    }
+    if (pasForm.dcpProposeddevelopmentsiteenlargement) {
+      arr.push({
+        type: 'dcpProposeddevelopmentsiteenlargement',
+        label: 'Enlargement',
+      });
+    }
+    if (pasForm.dcpProposeddevelopmentsiteinfoother) {
+      arr.push({
+        type: 'dcpProposeddevelopmentsiteinfoother',
+        label: `Other ${pasForm.dcpProposeddevelopmentsiteotherexplanation}`,
+      });
+    }
+
+    return arr;
   }
 }

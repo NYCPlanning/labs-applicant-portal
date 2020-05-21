@@ -467,8 +467,10 @@
           Proposed development type
         </strong>
         <span class="cell large-3">
-          {{#each proposedDevelopmentTypes as |item index|}}
-            {{item}}{{unless (eq item proposedDevelopmentTypes.lastObject) ', '}}
+          {{#each this.proposedDevelopmentTypes as |item|}}
+            <span data-test-show={{item.type}}>
+              {{item.label }}{{unless (eq item this.proposedDevelopmentTypes.lastObject) ', '}}
+            </span>
           {{/each}}
         </span>
       </p>
