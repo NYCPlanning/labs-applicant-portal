@@ -24,6 +24,7 @@ $small-font-size: 81.25%; // TODO: update Style Guide so that <small> matches .t
 @import 'modules/_pasform';
 
 @import "ember-power-select";
+@import 'modules/_powerselect-overrides';
 
 
 .site-header {
