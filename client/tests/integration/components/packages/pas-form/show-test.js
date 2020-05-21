@@ -6,25 +6,48 @@ import { hbs } from 'ember-cli-htmlbars';
 module('Integration | Component | packages/pas-form/show', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it creates a proposedDevelopmentTypes array', async function(assert) {
-    // Set some types as true and some as false
-    this.set('package', {
+  test('All types get rendered from proposedDevelopmentTypes array', async function(assert) {
+    this.set('packageHasAllTypes', {
       pasForm: {
         dcpProposeddevelopmentsitenewconstruction: true,
         dcpProposeddevelopmentsitedemolition: true,
-        dcpProposeddevelopmentsiteinfoalteration: false,
+        dcpProposeddevelopmentsiteinfoalteration: true,
+        dcpProposeddevelopmentsiteinfoaddition: true,
+        dcpProposeddevelopmentsitechnageofuse: true,
+        dcpProposeddevelopmentsiteenlargement: true,
+        dcpProposeddevelopmentsiteinfoother: true,
+      },
+    });
+
+    await render(hbs`<Packages::PasForm::Show @package={{this.packageHasAllTypes}} />`);
+
+    assert.dom('[data-test-show="dcpProposeddevelopmentsitenewconstruction"]').exists();
+    assert.dom('[data-test-show="dcpProposeddevelopmentsitedemolition"]').exists();
+    assert.dom('[data-test-show="dcpProposeddevelopmentsiteinfoalteration"]').exists();
+    assert.dom('[data-test-show="dcpProposeddevelopmentsiteinfoaddition"]').exists();
+    assert.dom('[data-test-show="dcpProposeddevelopmentsitechnageofuse"]').exists();
+    assert.dom('[data-test-show="dcpProposeddevelopmentsiteenlargement"]').exists();
+    assert.dom('[data-test-show="dcpProposeddevelopmentsiteinfoother"]').exists();
+  });
+
+  test('Falsy types do not get rendered from proposedDevelopmentTypes array', async function(assert) {
+    this.set('packageHasSomeTypes', {
+      pasForm: {
+        dcpProposeddevelopmentsitenewconstruction: true,
+        dcpProposeddevelopmentsitedemolition: true,
+        dcpProposeddevelopmentsiteinfoalteration: true,
         dcpProposeddevelopmentsiteinfoaddition: false,
       },
     });
 
-    await render(hbs`<Packages::PasForm::Show @package={{this.package}} />`);
+    await render(hbs`<Packages::PasForm::Show @package={{this.packageHasSomeTypes}} />`);
 
-    // Make sure the true types render
     assert.dom('[data-test-show="dcpProposeddevelopmentsitenewconstruction"]').exists();
     assert.dom('[data-test-show="dcpProposeddevelopmentsitedemolition"]').exists();
-
-    // Make sure the false types do not render
-    assert.dom('[data-test-show="dcpProposeddevelopmentsiteinfoalteration"]').doesNotExist();
+    assert.dom('[data-test-show="dcpProposeddevelopmentsiteinfoalteration"]').exists();
     assert.dom('[data-test-show="dcpProposeddevelopmentsiteinfoaddition"]').doesNotExist();
+    assert.dom('[data-test-show="dcpProposeddevelopmentsitechnageofuse"]').doesNotExist();
+    assert.dom('[data-test-show="dcpProposeddevelopmentsiteenlargement"]').doesNotExist();
+    assert.dom('[data-test-show="dcpProposeddevelopmentsiteinfoother"]').doesNotExist();
   });
 });
