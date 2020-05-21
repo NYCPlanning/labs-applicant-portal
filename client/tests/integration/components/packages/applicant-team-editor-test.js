@@ -55,13 +55,12 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
   test('user can remove applicants', async function(assert) {
     // create an applicant model
     let applicant = this.server.create('applicant', 'organizationApplicant');
+    // get the reference to the model instance
+    applicant = await this.owner.lookup('service:store').findRecord('applicant', applicant.id);
 
     this.applicants = [
-      await this.owner.lookup('service:store').findRecord('applicant', applicant.id),
+      applicant,
     ];
-
-    // get the reference to the model instance
-    applicant = await this.owner.lookup('service:store').findRecord('applicant', applicant.id),
 
     await render(hbs`
       <Packages::ApplicantTeamEditor
@@ -69,16 +68,16 @@ module('Integration | Component | packages/applicant-team-editor', function(hook
       />
     `);
 
-    
-    assert.equal(applicant.hasDirtyAttributes, false);
-    assert.equal(applicant.isDeleted, false);
+
+    await assert.equal(applicant.hasDirtyAttributes, false);
+    await assert.equal(applicant.isDeleted, false);
 
     // remove the applicant
     await click('[data-test-remove-applicant-button');
 
     // should trigger dirty state, be queued for deletion when user saves
-    assert.equal(applicant.hasDirtyAttributes, true);
-    assert.equal(applicant.isDeleted, true);
+    await assert.equal(applicant.hasDirtyAttributes, true);
+    await assert.equal(applicant.isDeleted, true);
 
     // FIXME: user shouldn't see the fieldset
     assert.dom('[data-test-applicant-fieldset="0"]').doesNotExist();

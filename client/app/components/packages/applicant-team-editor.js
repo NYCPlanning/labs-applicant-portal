@@ -6,6 +6,10 @@ export default class ApplicantTeamEditorComponent extends Component {
   @service
   store;
 
+  get displayApplicants() {
+    return this.args.applicants.filter((applicant) => !applicant.isDeleted);
+  }
+
   // allow a user to add a new applicant fieldset
   @action
   addApplicant(targetEntity) {
@@ -20,13 +24,5 @@ export default class ApplicantTeamEditorComponent extends Component {
   @action
   removeApplicant(applicant) {
     applicant.deleteRecord();
-
-    // FIXME: this updates the applicants array to update the UI
-    // but if we do this save buttton becomes disabled and user can't save
-    // because the way we compute pasForm.isApplicantsDirty is iterating through applicants array
-    // and checking each applicant model for dirtiness -- if we remove this applicant here,
-    // then it won't be included in the iteration and won't appear as dirty
-
-    // this.args.applicants.popObject(applicant);
   }
 }
