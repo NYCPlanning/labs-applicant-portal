@@ -94,3 +94,25 @@ $sticky-sidebar-offset: 6rem + rem-calc(20);
     &.warning { color: $gold; }
   }
 }
+
+.ruled-adjacent {
+  margin-bottom: $global-margin;
+
+  & + & {
+    border-top: 1px solid $white-smoke;
+    padding-top: $global-margin;
+  }
+
+  &.tight {
+    margin-bottom: $global-margin/2;
+
+    & + & {
+      padding-top: $global-margin/2;
+    }
+  }
+}
+
+.ruled-top {
+  border-top: 1px solid $white-smoke;
+  padding-top: $global-margin;
+}
