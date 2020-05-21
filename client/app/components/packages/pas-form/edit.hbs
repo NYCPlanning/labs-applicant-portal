@@ -37,7 +37,8 @@
           <strong>Project Name</strong>
           <Input
             @type="text"
-            @value={{saveable-form.saveableChanges.dcpRevisedprojectname}} data-test-dcprevisedprojectname
+            @value={{saveable-form.saveableChanges.dcpRevisedprojectname}}
+            data-test-input="dcpRevisedprojectname"
           />
           <ValidationMessage
             @changesetError={{saveable-form.saveableChanges.error.dcpRevisedprojectname}}
@@ -90,6 +91,7 @@
             <Textarea
               @value={{saveable-form.saveableChanges.dcpDescriptionofprojectareageography}}
               rows="5"
+              data-test-textarea="dcpDescriptionofprojectareageography"
             />
             <CharacterCounter
               @string={{saveable-form.saveableChanges.dcpDescriptionofprojectareageography}}
@@ -142,7 +144,8 @@
               <saveable-form.radio
                 @value={{radio.code}}
                 @groupValue={{saveable-form.saveableChanges.dcpProposedprojectorportionconstruction}}
-                data-test-dcpproposedprojectorportionconstruction={{radio.label}}
+                data-test-radio="dcpProposedprojectorportionconstruction"
+                data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
               </saveable-form.radio>
@@ -162,7 +165,8 @@
               <saveable-form.radio
                 @value={{radio.code}}
                 @groupValue={{saveable-form.saveableChanges.dcpUrbanrenewalarea}}
-                 data-test-dcpurbanrenewalarea={{radio.label}}
+                 data-test-radio="dcpUrbanrenewalarea"
+                 data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
               </saveable-form.radio>
@@ -174,7 +178,7 @@
                 <Input
                   @type="text"
                   @value={{saveable-form.saveableChanges.dcpUrbanareaname}}
-                  data-test-dcpurbanareaname
+                  data-test-input="dcpUrbanareaname"
                 />
                 <CharacterCounter
                   @string={{saveable-form.saveableChanges.dcpUrbanareaname}}
@@ -193,17 +197,18 @@
               <strong>What is the <a href="https://streets.planning.nyc.gov/about" target="_blank" rel="noopener noreferrer">Legal Street Frontage Status in the Project Area<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?</strong>
             </legend>
             {{#each (array
-                (hash code=717170000 label='Mapped and Build')
+                (hash code=717170000 label='Mapped and Built')
                 (hash code=717170001 label='Private Road')
                 (hash code=717170002 label='Record Street')
                 (hash code=717170003 label='Corporation Counsel Opinion')
-                (hash code=717170004 label='Mapped but not Build')) as |radio|
+                (hash code=717170004 label='Mapped but not Built')) as |radio|
             }}
               <span class="nowrap">
                 <saveable-form.radio
                   @value={{radio.code}}
                   @groupValue={{saveable-form.saveableChanges.dcpLegalstreetfrontage}}
-                  data-test-dcplegalstreetfrontage={{radio.label}}
+                  data-test-radio="dcpLegalstreetfrontage"
+                  data-test-radio-option={{radio.label}}
                 >
                   {{radio.label}}
                 </saveable-form.radio>
@@ -231,7 +236,8 @@
               <saveable-form.radio
                 @value={{radio.code}}
                 @groupValue={{saveable-form.saveableChanges.dcpLanduseactiontype2}}
-                data-test-dcplanduseactiontype2={{radio.label}}
+                data-test-radio="dcpLanduseactiontype2"
+                data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
               </saveable-form.radio>
@@ -246,7 +252,7 @@
                 <Input
                   @type="text"
                   @value={{saveable-form.saveableChanges.dcpPleaseexplaintypeiienvreview}}
-                  data-test-dcppleaseexplaintypeiienvreview
+                  data-test-input="dcpPleaseexplaintypeiienvreview"
                 />
                 <CharacterCounter
                   @string={{saveable-form.saveableChanges.dcpPleaseexplaintypeiienvreview}}
@@ -280,7 +286,8 @@
               <saveable-form.radio
                 @value={{radio.code}}
                 @groupValue={{saveable-form.saveableChanges.dcpProjectareaindustrialbusinesszone}}
-                data-test-dcpprojectareaindustrialbusinesszone={{radio.label}}
+                data-test-radio="dcpProjectareaindustrialbusinesszone"
+                data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
               </saveable-form.radio>
@@ -291,7 +298,7 @@
                 <Input
                   @type="text"
                   @value={{saveable-form.saveableChanges.dcpProjectareaindutrialzonename}}
-                  data-test-dcpprojectareaindutrialzonename
+                  data-test-input="dcpProjectareaindutrialzonename"
                 />
                 <CharacterCounter
                   @string={{saveable-form.saveableChanges.dcpProjectareaindutrialzonename}}
@@ -316,7 +323,8 @@
               <saveable-form.radio
                 @value={{radio.code}}
                 @groupValue={{saveable-form.saveableChanges.dcpIsprojectarealandmark}}
-                data-test-dcpisprojectarealandmark={{radio.label}}
+                data-test-radio="dcpIsprojectarealandmark"
+                data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
               </saveable-form.radio>
@@ -328,7 +336,7 @@
                 <Input
                   @type="text"
                   @value={{saveable-form.saveableChanges.dcpProjectarealandmarkname}}
-                  data-test-dcpprojectarealandmarkname
+                  data-test-input="dcpProjectarealandmarkname"
                 />
                 <CharacterCounter
                   @string={{saveable-form.saveableChanges.dcpProjectarealandmarkname}}
@@ -353,7 +361,8 @@
               <saveable-form.radio
                 @value={{radio.code}}
                 @groupValue={{saveable-form.saveableChanges.dcpProjectareacoastalzonelocatedin}}
-                data-test-dcpprojectareacoastalzonelocatedin={{radio.label}}
+                data-test-radio="dcpProjectareacoastalzonelocatedin"
+                data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
               </saveable-form.radio>
@@ -372,7 +381,8 @@
               <saveable-form.radio
                 @value={{radio.code}}
                 @groupValue={{saveable-form.saveableChanges.dcpProjectareaischancefloodplain}}
-                data-test-dcpprojectareaischancefloodplain={{radio.label}}
+                data-test-radio="dcpProjectareaischancefloodplain"
+                data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
               </saveable-form.radio>
@@ -390,7 +400,8 @@
               <saveable-form.radio
                 @value={{radio.code}}
                 @groupValue={{saveable-form.saveableChanges.dcpRestrictivedeclaration}}
-                data-test-dcprestrictivedeclaration={{radio.label}}
+                data-test-radio="dcpRestrictivedeclaration"
+                data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
               </saveable-form.radio>
@@ -405,7 +416,7 @@
                 <Input
                   @type="text"
                   @value={{saveable-form.saveableChanges.dcpCityregisterfilenumber}}
-                  data-test-dcpcityregisterfilenumber
+                  data-test-input="dcpCityregisterfilenumber"
                 />
                 <CharacterCounter
                   @string={{saveable-form.saveableChanges.dcpCityregisterfilenumber}}
@@ -430,7 +441,8 @@
               <saveable-form.radio
                 @value={{radio.code}}
                 @groupValue={{saveable-form.saveableChanges.dcpRestrictivedeclarationrequired}}
-                data-test-dcprestrictivedeclarationrequired={{radio.label}}
+                data-test-radio="dcpRestrictivedeclarationrequired"
+                data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
               </saveable-form.radio>
@@ -453,7 +465,7 @@
             <Input
               @type="text"
               @value={{saveable-form.saveableChanges.dcpEstimatedcompletiondate}}
-              data-test-dcpestimatedcompletiondate
+              data-test-input="dcpEstimatedcompletiondate"
             />
             <ValidationMessage
               @changesetError={{saveable-form.saveableChanges.error.dcpEstimatedcompletiondate}}
@@ -474,6 +486,7 @@
                   @type="checkbox"
                   @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsitenewconstruction}}
                   id="dcpproposeddevelopmentsitenewconstruction"
+                  data-test-checkbox="dcpProposeddevelopmentsitenewconstruction"
                 /><label for="dcpproposeddevelopmentsitenewconstruction">Newly constructed buildings</label>
               </li>
               <li>
@@ -481,6 +494,7 @@
                   @type="checkbox"
                   @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsitedemolition}}
                   id="dcpproposeddevelopmentsitedemolition"
+                  data-test-checkbox="dcpProposeddevelopmentsitedemolition"
                 /><label for="dcpproposeddevelopmentsitedemolition">Demolition</label>
               </li>
               <li>
@@ -488,6 +502,7 @@
                   @type="checkbox"
                   @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsiteinfoalteration}}
                   id="dcpproposeddevelopmentsiteinfoalteration"
+                  data-test-checkbox="dcpProposeddevelopmentsiteinfoalteration"
                 /><label for="dcpproposeddevelopmentsiteinfoalteration">Alteration</label>
               </li>
               <li>
@@ -495,6 +510,7 @@
                   @type="checkbox"
                   @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsiteinfoaddition}}
                   id="dcpproposeddevelopmentsiteinfoaddition"
+                  data-test-checkbox="dcpProposeddevelopmentsiteinfoaddition"
                 /><label for="dcpproposeddevelopmentsiteinfoaddition">Addition</label>
               </li>
               <li>
@@ -502,6 +518,7 @@
                   @type="checkbox"
                   @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsitechnageofuse}}
                   id="dcpproposeddevelopmentsitechnageofuse"
+                  data-test-checkbox="dcpProposeddevelopmentsitechnageofuse"
                 /><label for="dcpproposeddevelopmentsitechnageofuse">Change of use</label>
               </li>
               <li>
@@ -509,6 +526,7 @@
                   @type="checkbox"
                   @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsiteenlargement}}
                   id="dcpproposeddevelopmentsiteenlargement"
+                  data-test-checkbox="dcpProposeddevelopmentsiteenlargement"
                 /><label for="dcpproposeddevelopmentsiteenlargement">Enlargement</label>
               </li>
               <li>
@@ -516,7 +534,7 @@
                   @type="checkbox"
                   @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsiteinfoother}}
                   id="dcpproposeddevelopmentsiteinfoother"
-                  data-test-dcpproposeddevelopmentsiteinfoother
+                  data-test-checkbox="dcpProposeddevelopmentsiteinfoother"
                 /><label for="dcpproposeddevelopmentsiteinfoother">Other&hellip;</label>
               </li>
             </ul>
@@ -526,7 +544,7 @@
                 <Input
                   @type="text"
                   @value={{saveable-form.saveableChanges.dcpProposeddevelopmentsiteotherexplanation}}
-                  data-test-dcpproposeddevelopmentsiteotherexplanation
+                  data-test-input="dcpProposeddevelopmentsiteotherexplanation"
                 />
                 <ValidationMessage
                   @changesetError={{saveable-form.submittableChanges.error.dcpProposeddevelopmentsiteotherexplanation}}
@@ -551,7 +569,8 @@
               <saveable-form.radio
                 @value={{radio.code}}
                 @groupValue={{saveable-form.saveableChanges.dcpIsinclusionaryhousingdesignatedarea}}
-                data-test-dcpisinclusionaryhousingdesignatedarea={{radio.label}}
+                data-test-radio="dcpIsinclusionaryhousingdesignatedarea"
+                data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
               </saveable-form.radio>
@@ -563,7 +582,7 @@
                 <Input
                   @type="text"
                   @value={{saveable-form.saveableChanges.dcpInclusionaryhousingdesignatedareaname}}
-                  data-test-dcpinclusionaryhousingdesignatedareaname
+                  data-test-input="dcpInclusionaryhousingdesignatedareaname"
                 />
                 <ValidationMessage
                   @changesetError={{saveable-form.submittableChanges.error.dcpInclusionaryhousingdesignatedareaname}}
@@ -583,7 +602,8 @@
               <saveable-form.radio
                 @value={{radio.code}}
                 @groupValue={{saveable-form.saveableChanges.dcpDiscressionaryfundingforffordablehousing}}
-                data-test-dcpdiscressionaryfundingforffordablehousing={{radio.label}}
+                data-test-radio="dcpDiscressionaryfundingforffordablehousing"
+                data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
               </saveable-form.radio>
@@ -603,7 +623,8 @@
                   <saveable-form.radio
                     @value={{radio.code}}
                     @groupValue={{saveable-form.saveableChanges.dcpHousingunittype}}
-                    data-test-dcphousingunittype={{radio.label}}
+                    data-test-radio="dcpHousingunittype"
+                    data-test-radio-option={{radio.label}}
                   >
                     {{radio.label}}
                   </saveable-form.radio>
@@ -631,7 +652,7 @@
             <Textarea
               @value={{saveable-form.saveableChanges.dcpProjectdescriptionproposeddevelopment}}
               rows="5"
-              data-test-dcpprojectdescriptionproposeddevelopment
+              data-test-textarea="dcpProjectdescriptionproposeddevelopment"
             />
             <CharacterCounter
               @string={{saveable-form.saveableChanges.dcpProjectdescriptionproposeddevelopment}}
@@ -647,7 +668,7 @@
             <Textarea
               @value={{saveable-form.saveableChanges.dcpProjectdescriptionbackground}}
               rows="5"
-              data-test-dcpprojectdescriptionbackground
+              data-test-textarea="dcpProjectdescriptionbackground"
             />
             <CharacterCounter
               @string={{saveable-form.saveableChanges.dcpProjectdescriptionbackground}}
@@ -663,7 +684,7 @@
             <Textarea
               @value={{saveable-form.saveableChanges.dcpProjectdescriptionproposedactions}}
               rows="5"
-              data-test-dcpprojectdescriptionproposedactions
+              data-test-textarea="dcpProjectdescriptionproposedactions"
             />
             <CharacterCounter
               @string={{saveable-form.saveableChanges.dcpProjectdescriptionproposedactions}}
@@ -679,7 +700,7 @@
             <Textarea
               @value={{saveable-form.saveableChanges.dcpProjectdescriptionproposedarea}}
               rows="5"
-              data-test-dcpprojectdescriptionproposedarea
+              data-test-textarea="dcpProjectdescriptionproposedarea"
             />
             <CharacterCounter
               @string={{saveable-form.saveableChanges.dcpProjectdescriptionproposedarea}}
@@ -695,7 +716,7 @@
             <Textarea
               @value={{saveable-form.saveableChanges.dcpProjectdescriptionsurroundingarea}}
               rows="5"
-              data-test-dcpprojectdescriptionsurroundingarea
+              data-test-textarea="dcpProjectdescriptionsurroundingarea"
             />
             <CharacterCounter
               @string={{saveable-form.saveableChanges.dcpProjectdescriptionsurroundingarea}}
@@ -714,7 +735,7 @@
             <Textarea
               @value={{saveable-form.saveableChanges.dcpProjectattachmentsotherinformation}}
               rows="5"
-              data-test-dcpprojectattachmentsotherinformation
+              data-test-textarea="dcpProjectattachmentsotherinformation"
             />
             <CharacterCounter
               @string={{saveable-form.saveableChanges.dcpProjectattachmentsotherinformation}}

@@ -33,7 +33,7 @@ module('Acceptance | error message appears when save fails', function(hooks) {
 
     assert.dom('[data-test-error-message]').doesNotExist();
 
-    await fillIn('[data-test-dcprevisedprojectname]', 'Some Cool New Project Name');
+    await fillIn('[data-test-input="dcpRevisedprojectname"]', 'Some Cool New Project Name');
 
     // save it
     await click('[data-test-save-button]');
