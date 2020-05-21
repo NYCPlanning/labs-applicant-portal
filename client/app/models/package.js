@@ -59,7 +59,7 @@ export const PACKAGE_VISIBILITY_CODES = {
   },
 };
 
-export const PACKAGE_STATE_CODES = {
+export const PACKAGE_STATE_OPTIONSET = {
   ACTIVE: {
     code: 0,
     label: 'Active',
@@ -111,7 +111,7 @@ export default class PackageModel extends Model {
 
   setAttrsForSubmission() {
     this.statuscode = PACKAGE_STATUS_OPTIONSET.SUBMITTED.code;
-    this.statecode = PACKAGE_STATE_CODES.INACTIVE.code;
+    this.statecode = PACKAGE_STATE_OPTIONSET.INACTIVE.code;
   }
 
   async save() {
