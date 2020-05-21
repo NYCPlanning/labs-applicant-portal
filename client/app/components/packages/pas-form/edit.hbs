@@ -167,6 +167,7 @@
               <saveable-form.radio
                 @value={{radio.code}}
                 @groupValue={{saveable-form.saveableChanges.dcpUrbanrenewalarea}}
+                @changed={{fn (mut saveable-form.saveableChanges.dcpUrbanareaname) ""}}
                  data-test-radio="dcpUrbanrenewalarea"
                  data-test-radio-option={{radio.label}}
               >
@@ -238,6 +239,7 @@
               <saveable-form.radio
                 @value={{radio.code}}
                 @groupValue={{saveable-form.saveableChanges.dcpLanduseactiontype2}}
+                @changed={{fn (mut saveable-form.saveableChanges.dcpPleaseexplaintypeiienvreview) ""}}
                 data-test-radio="dcpLanduseactiontype2"
                 data-test-radio-option={{radio.label}}
               >
@@ -288,6 +290,7 @@
               <saveable-form.radio
                 @value={{radio.code}}
                 @groupValue={{saveable-form.saveableChanges.dcpProjectareaindustrialbusinesszone}}
+                @changed={{fn (mut saveable-form.saveableChanges.dcpProjectareaindutrialzonename) ""}}
                 data-test-radio="dcpProjectareaindustrialbusinesszone"
                 data-test-radio-option={{radio.label}}
               >
@@ -325,6 +328,7 @@
               <saveable-form.radio
                 @value={{radio.code}}
                 @groupValue={{saveable-form.saveableChanges.dcpIsprojectarealandmark}}
+                @changed={{fn (mut saveable-form.saveableChanges.dcpProjectarealandmarkname) ""}}
                 data-test-radio="dcpIsprojectarealandmark"
                 data-test-radio-option={{radio.label}}
               >
@@ -402,6 +406,7 @@
               <saveable-form.radio
                 @value={{radio.code}}
                 @groupValue={{saveable-form.saveableChanges.dcpRestrictivedeclaration}}
+                @changed={{fn (mut saveable-form.saveableChanges.dcpCityregisterfilenumber) null}}
                 data-test-radio="dcpRestrictivedeclaration"
                 data-test-radio-option={{radio.label}}
               >
@@ -536,6 +541,7 @@
               <li>
                 <Input
                   @type="checkbox"
+                  {{on "click" (fn (mut saveable-form.saveableChanges.dcpProposeddevelopmentsiteotherexplanation) "")}}
                   @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsiteinfoother}}
                   id="dcpproposeddevelopmentsiteinfoother"
                   data-test-checkbox="dcpProposeddevelopmentsiteinfoother"
@@ -573,6 +579,7 @@
               <saveable-form.radio
                 @value={{radio.code}}
                 @groupValue={{saveable-form.saveableChanges.dcpIsinclusionaryhousingdesignatedarea}}
+                @changed={{fn (mut saveable-form.saveableChanges.dcpInclusionaryhousingdesignatedareaname) ""}}
                 data-test-radio="dcpIsinclusionaryhousingdesignatedarea"
                 data-test-radio-option={{radio.label}}
               >
@@ -606,6 +613,7 @@
               <saveable-form.radio
                 @value={{radio.code}}
                 @groupValue={{saveable-form.saveableChanges.dcpDiscressionaryfundingforffordablehousing}}
+                @changed={{fn (mut saveable-form.saveableChanges.dcpHousingunittype) ""}}
                 data-test-radio="dcpDiscressionaryfundingforffordablehousing"
                 data-test-radio-option={{radio.label}}
               >
