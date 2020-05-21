@@ -44,18 +44,23 @@ export const PACKAGE_STATUS_OPTIONSET = {
 export const PACKAGE_VISIBILITY_OPTIONSET = {
   INTERNAL_DCP_ONLY: {
     code: 717170000,
+    label: 'Internal DCP Only',
   },
   CPC_ONLY: {
     code: 717170001,
+    label: 'CPC Only',
   },
   APPLICANT_ONLY: {
     code: 717170002,
+    label: 'Applicant Only',
   },
   GENERAL_PUBLIC: {
     code: 717170003,
+    label: 'General Public',
   },
   LUP: {
     code: 717170004,
+    label: 'LUP',
   },
 };
 
