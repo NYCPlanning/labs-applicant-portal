@@ -48,7 +48,7 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     // use waitFor as a way to "wait" for the transition
     // within the pas-form/edit Component submit() task
-    await waitFor('[data-test-show-dcprevisedprojectname]');
+    await waitFor('[data-test-show="dcpRevisedprojectname"]');
 
     assert.equal(currentURL(), '/packages/1');
   });
@@ -125,10 +125,10 @@ module('Acceptance | user can click package edit', function(hooks) {
     this.server.create('project', 1, 'applicant');
 
     await visit('/packages/1/edit');
-    assert.dom('[data-test-dcpurbanareaname]').doesNotExist();
+    assert.dom('[data-test-input="dcpUrbanareaname"]').doesNotExist();
 
-    await click('[data-test-dcpurbanrenewalarea="Yes"]');
-    assert.dom('[data-test-dcpurbanareaname]').exists();
+    await click('[data-test-radio="dcpUrbanrenewalarea"][data-test-radio-option="Yes"]');
+    assert.dom('[data-test-input="dcpUrbanareaname"]').exists();
   });
 
   test('SEQRA or CEQR sub Q shows conditionally', async function (assert) {
@@ -136,9 +136,9 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/1/edit');
 
-    assert.dom('[data-test-dcppleaseexplaintypeiienvreview]').doesNotExist();
-    await click('[data-test-dcplanduseactiontype2="Yes"]');
-    assert.dom('[data-test-dcppleaseexplaintypeiienvreview]').exists();
+    assert.dom('[data-test-input="dcpPleaseexplaintypeiienvreview"]').doesNotExist();
+    await click('[data-test-radio="dcpLanduseactiontype2"][data-test-radio-option="Yes"]');
+    assert.dom('[data-test-input="dcpPleaseexplaintypeiienvreview"]').exists();
   });
 
   test('Industrial Business Zone sub Q shows conditionally', async function (assert) {
@@ -146,9 +146,9 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/1/edit');
 
-    assert.dom('[data-test-dcpprojectareaindutrialzonename]').doesNotExist();
-    await click('[data-test-dcpprojectareaindustrialbusinesszone="Yes"]');
-    assert.dom('[data-test-dcpprojectareaindutrialzonename]').exists();
+    assert.dom('[data-test-input="dcpProjectareaindutrialzonename"]').doesNotExist();
+    await click('[data-test-radio="dcpProjectareaindustrialbusinesszone"][data-test-radio-option="Yes"]');
+    assert.dom('[data-test-input="dcpProjectareaindutrialzonename"]').exists();
   });
 
   test('Landmark or Historic District sub Q shows conditionally', async function (assert) {
@@ -156,9 +156,9 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/1/edit');
 
-    assert.dom('[data-test-dcpProjectarealandmarkname]').doesNotExist();
-    await click('[data-test-dcpIsprojectarealandmark="Yes"]');
-    assert.dom('[data-test-dcpProjectarealandmarkname]').exists();
+    assert.dom('[data-test-input="dcpProjectarealandmarkname"]').doesNotExist();
+    await click('[data-test-radio="dcpIsprojectarealandmark"][data-test-radio-option="Yes"]');
+    assert.dom('[data-test-input="dcpProjectarealandmarkname"]').exists();
   });
 
   test('Other Type sub Q shows conditionally', async function (assert) {
@@ -166,9 +166,9 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/1/edit');
 
-    assert.dom('[data-test-dcpproposeddevelopmentsiteotherexplanation]').doesNotExist();
-    await click('[data-test-dcpproposeddevelopmentsiteinfoother]');
-    assert.dom('[data-test-dcpproposeddevelopmentsiteotherexplanation]').exists();
+    assert.dom('[data-test-input="dcpProposeddevelopmentsiteotherexplanation"]').doesNotExist();
+    await click('[data-test-checkbox="dcpProposeddevelopmentsiteinfoother"]');
+    assert.dom('[data-test-input="dcpProposeddevelopmentsiteotherexplanation"]').exists();
   });
 
   test('MIH sub Q shows conditionally', async function (assert) {
@@ -176,9 +176,9 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/1/edit');
 
-    assert.dom('[data-test-dcpinclusionaryhousingdesignatedareaname]').doesNotExist();
-    await click('[data-test-dcpisinclusionaryhousingdesignatedarea="Yes"]');
-    assert.dom('[data-test-dcpinclusionaryhousingdesignatedareaname]').exists();
+    assert.dom('[data-test-input="dcpInclusionaryhousingdesignatedareaname"]').doesNotExist();
+    await click('[data-test-radio="dcpIsinclusionaryhousingdesignatedarea"][data-test-radio-option="Yes"]');
+    assert.dom('[data-test-input="dcpInclusionaryhousingdesignatedareaname"]').exists();
   });
 
   test('Funding Source sub Q shows conditionally', async function (assert) {
@@ -186,16 +186,16 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/1/edit');
 
-    assert.dom('[data-test-dcphousingunittype="City"]').doesNotExist();
-    assert.dom('[data-test-dcphousingunittype="State"]').doesNotExist();
-    assert.dom('[data-test-dcphousingunittype="Federal"]').doesNotExist();
-    assert.dom('[data-test-dcphousingunittype="Other"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="City"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="State"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="Federal"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="Other"]').doesNotExist();
 
-    await click('[data-test-dcpdiscressionaryfundingforffordablehousing="Yes"]');
-    assert.dom('[data-test-dcphousingunittype="City"]').exists();
-    assert.dom('[data-test-dcphousingunittype="State"]').exists();
-    assert.dom('[data-test-dcphousingunittype="Federal"]').exists();
-    assert.dom('[data-test-dcphousingunittype="Other"]').exists();
+    await click('[data-test-radio="dcpDiscressionaryfundingforffordablehousing"][data-test-radio-option="Yes"]');
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="City"]').exists();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="State"]').exists();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="Federal"]').exists();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="Other"]').exists();
   });
 
   test('user can save pas form', async function (assert) {
@@ -208,7 +208,7 @@ module('Acceptance | user can click package edit', function(hooks) {
     // assert.dom('[data-test-save-button').hasProperty('disabled', true);
 
     // edit a field to make it pasForm dirty
-    await fillIn('[data-test-dcprevisedprojectname]', 'Some Cool New Project Name');
+    await fillIn('[data-test-input="dcpRevisedprojectname"]', 'Some Cool New Project Name');
 
     // save button should become active when dirty
     assert.dom('[data-test-save-button').hasProperty('disabled', false);
@@ -261,19 +261,19 @@ module('Acceptance | user can click package edit', function(hooks) {
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
 
-    await click('[data-test-dcpurbanrenewalarea="Yes"]');
+    await click('[data-test-radio="dcpUrbanrenewalarea"][data-test-radio-option="Yes"]');
 
     assert.dom('[data-test-validation-message="dcpUrbanareaname"]').exists();
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-submit-button]').hasAttribute('disabled');
 
-    await fillIn('[data-test-dcpurbanareaname]', 'abc');
+    await fillIn('[data-test-input="dcpUrbanareaname"]', 'abc');
 
     assert.dom('[data-test-validation-message="dcpUrbanareaname"]').doesNotExist();
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
 
-    await fillIn('[data-test-dcpurbanareaname]', '');
+    await fillIn('[data-test-input="dcpUrbanareaname"]', '');
 
     assert.dom('[data-test-validation-message="dcpUrbanareaname"]').exists('it revalidates');
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
@@ -328,56 +328,56 @@ module('Acceptance | user can click package edit', function(hooks) {
     assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
 
     // name of the Urban Renewal Area
-    await click('[data-test-dcpurbanrenewalarea="Yes"]');
+    await click('[data-test-radio="dcpUrbanrenewalarea"][data-test-radio-option="Yes"]');
 
     assert.dom('[data-test-validation-message="dcpUrbanareaname"]').hasText('This field is required');
 
-    await fillIn('[data-test-dcpurbanareaname]', 'abc');
+    await fillIn('[data-test-input="dcpUrbanareaname"]', 'abc');
 
     assert.dom('[data-test-validation-message="dcpUrbanareaname"]').doesNotExist();
 
     const longText = 'Some long text'.repeat(20);
 
-    await fillIn('[data-test-dcpurbanareaname]', longText);
+    await fillIn('[data-test-input="dcpUrbanareaname"]', longText);
 
     assert.dom('[data-test-validation-message="dcpUrbanareaname"]').hasText('Name is too long (max 250 characters)');
 
     // SEQRA or CEQR criteria for Type II status
-    await click('[data-test-dcplanduseactiontype2="Yes"]');
+    await click('[data-test-radio="dcpLanduseactiontype2"][data-test-radio-option="Yes"]');
 
     assert.dom('[data-test-validation-message="dcpPleaseexplaintypeiienvreview"]').hasText('This field is required');
 
-    await fillIn('[data-test-dcppleaseexplaintypeiienvreview]', 'abc');
+    await fillIn('[data-test-input="dcpPleaseexplaintypeiienvreview"]', 'abc');
 
     assert.dom('[data-test-validation-message="dcpPleaseexplaintypeiienvreview"]').doesNotExist();
 
-    await fillIn('[data-test-dcppleaseexplaintypeiienvreview]', longText);
+    await fillIn('[data-test-input="dcpPleaseexplaintypeiienvreview"]', longText);
 
     assert.dom('[data-test-validation-message="dcpPleaseexplaintypeiienvreview"]').hasText('Text is too long (max 200 characters)');
 
     // Industrial Business Zone
-    await click('[data-test-dcpProjectareaindustrialbusinesszone="Yes"]');
+    await click('[data-test-radio="dcpProjectareaindustrialbusinesszone"][data-test-radio-option="Yes"]');
 
     assert.dom('[data-test-validation-message="dcpProjectareaindutrialzonename"]').hasText('This field is required');
 
-    await fillIn('[data-test-dcpprojectareaindutrialzonename]', 'abc');
+    await fillIn('[data-test-input="dcpProjectareaindutrialzonename"]', 'abc');
 
     assert.dom('[data-test-validation-message="dcpProjectareaindutrialzonename"]').doesNotExist();
 
-    await fillIn('[data-test-dcpprojectareaindutrialzonename]', longText);
+    await fillIn('[data-test-input="dcpProjectareaindutrialzonename"]', longText);
 
     assert.dom('[data-test-validation-message="dcpProjectareaindutrialzonename"]').hasText('Name is too long (max 250 characters)');
 
     // Landmark name
-    await click('[data-test-dcpIsprojectarealandmark="Yes"]');
+    await click('[data-test-radio="dcpIsprojectarealandmark"][data-test-radio-option="Yes"]');
 
     assert.dom('[data-test-validation-message="dcpProjectarealandmarkname"]').hasText('This field is required');
 
-    await fillIn('[data-test-dcpprojectarealandmarkname]', 'abc');
+    await fillIn('[data-test-input="dcpProjectarealandmarkname"]', 'abc');
 
     assert.dom('[data-test-validation-message="dcpProjectarealandmarkname"]').doesNotExist();
 
-    await fillIn('[data-test-dcpprojectarealandmarkname]', longText);
+    await fillIn('[data-test-input="dcpProjectarealandmarkname"]', longText);
 
     assert.dom('[data-test-validation-message="dcpProjectarealandmarkname"]').hasText('Name is too long (max 250 characters)');
   });
