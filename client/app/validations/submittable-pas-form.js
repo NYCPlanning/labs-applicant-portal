@@ -1,3 +1,6 @@
+import {
+  validatePresence,
+} from 'ember-changeset-validations/validators';
 import SaveablePasForm from './saveable-pas-form';
 import validatePresenceIf from '../validators/required-if-selected';
 import validateNumberIf from '../validators/validate-number-if';
@@ -6,6 +9,10 @@ export default {
   ...SaveablePasForm,
   dcpRevisedprojectname: [
     ...SaveablePasForm.dcpRevisedprojectname,
+    validatePresence({
+      presence: true,
+      message: 'This field is required',
+    }),
   ],
   dcpUrbanareaname: [
     ...SaveablePasForm.dcpUrbanareaname,
@@ -181,7 +188,7 @@ export default {
       on: 'dcpPfzoningauthorization',
       withValue: (target) => target !== null && target !== undefined,
       gte: 1,
-      message: 'Number of actions must be greater than 0.',
+      message: 'Number of actions must be greater than 0',
     }),
   ],
   dcpPfzoningcertification: [
@@ -190,7 +197,7 @@ export default {
       on: 'dcpPfzoningcertification',
       withValue: (target) => target !== null && target !== undefined,
       gte: 1,
-      message: 'Number of actions must be greater than 0.',
+      message: 'Number of actions must be greater than 0',
     }),
   ],
   dcpPfzoningspecialpermit: [
@@ -199,7 +206,7 @@ export default {
       on: 'dcpPfzoningspecialpermit',
       withValue: (target) => target !== null && target !== undefined,
       gte: 1,
-      message: 'Number of actions must be greater than 0.',
+      message: 'Number of actions must be greater than 0',
     }),
   ],
 };

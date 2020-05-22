@@ -41,7 +41,8 @@
             data-test-input="dcpRevisedprojectname"
           />
           <ValidationMessage
-            @changesetError={{saveable-form.saveableChanges.error.dcpRevisedprojectname}}
+            @changesetError={{saveable-form.submittableChanges.error.dcpRevisedprojectname}}
+            data-test-validation-message="dcpRevisedprojectname"
           />
         </label>
       </section>
@@ -99,6 +100,7 @@
             />
             <ValidationMessage
               @changesetError={{saveable-form.submittableChanges.error.dcpDescriptionofprojectareageography}}
+              data-test-validation-message="dcpDescriptionofprojectgeography"
             />
           </label>
         </section>
@@ -424,6 +426,7 @@
                 />
                 <ValidationMessage
                   @changesetError={{saveable-form.saveableChanges.error.dcpCityregisterfilenumber}}
+                  data-test-validation-message="dcpCityregisterfilenumber"
                 />
               </label>
             {{/if}}
@@ -469,6 +472,7 @@
             />
             <ValidationMessage
               @changesetError={{saveable-form.saveableChanges.error.dcpEstimatedcompletiondate}}
+              data-test-validation-message="dcpEstimatedcompletiondate"
             />
             {{!-- QUESTION: Should this be a date picker? --}}
           </label>
@@ -632,6 +636,7 @@
               </fieldset>
               <ValidationMessage
                 @changesetError={{saveable-form.submittableChanges.error.dcpHousingunittype}}
+                data-test-validation-message="dcpHousingunittype"
               />
             {{/if}}
           </fieldset>
@@ -660,6 +665,7 @@
             />
             <ValidationMessage
               @changesetError={{saveable-form.submittableChanges.error.dcpProjectdescriptionproposeddevelopment}}
+              data-test-validation-message="dcpProjectdescriptionproposeddevelopment"
             />
           </label>
 
@@ -676,6 +682,7 @@
             />
             <ValidationMessage
               @changesetError={{saveable-form.submittableChanges.error.dcpProjectdescriptionbackground}}
+              data-test-validation-message="dcpProjectdescriptionbackground"
             />
           </label>
 
@@ -692,6 +699,7 @@
             />
             <ValidationMessage
               @changesetError={{saveable-form.submittableChanges.error.dcpProjectdescriptionproposedactions}}
+              data-test-validation-message="dcpProjectdescriptionproposedactions"
             />
           </label>
 
@@ -708,6 +716,7 @@
             />
             <ValidationMessage
               @changesetError={{saveable-form.submittableChanges.error.dcpProjectdescriptionproposedarea}}
+              data-test-validation-message="dcpProjectdescriptionproposedarea"
             />
           </label>
 
@@ -724,6 +733,7 @@
             />
             <ValidationMessage
               @changesetError={{saveable-form.submittableChanges.error.dcpProjectdescriptionsurroundingarea}}
+              data-test-validation-message="dcpProjectdescriptionsurroundingarea"
             />
           </label>
 
@@ -739,10 +749,11 @@
             />
             <CharacterCounter
               @string={{saveable-form.saveableChanges.dcpProjectattachmentsotherinformation}}
-              @maxlength="3000"
+              @maxlength="2000"
             />
             <ValidationMessage
               @changesetError={{saveable-form.submittableChanges.error.dcpProjectattachmentsotherinformation}}
+              data-test-validation-message="dcpProjectattachmentsotherinformation"
             />
           </label>
         </section>
