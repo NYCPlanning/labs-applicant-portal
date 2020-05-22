@@ -63,15 +63,6 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/2/edit');
 
-    // ! We remove the pregenerated applicant here to disable the "save" button.
-    // Clicking "Save" to disable the Save button causes a race condition:
-    // The automated clicks act so fast that the file is marked for deletion
-    // BEFORE the full Save operation completes,
-    // causing the file marked for deletion to be immediately cleared.
-    // TODO: Perhaps rework frontend using a Task group to prevent
-    // this race condition.
-    await click('[data-test-remove-applicant-button]');
-
     assert.dom('[data-test-save-button]').isDisabled();
 
     await click('[data-test-delete-file-button="0"]');
@@ -86,10 +77,6 @@ module('Acceptance | user can click package edit', function(hooks) {
     });
 
     await visit('/packages/2/edit');
-
-    // See note in previous test about why this click to remove applicant
-    // is performed.
-    await click('[data-test-remove-applicant-button]');
 
     assert.dom('[data-test-save-button]').isDisabled();
 

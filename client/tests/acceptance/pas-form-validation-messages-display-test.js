@@ -28,8 +28,6 @@ module('Acceptance | pas form validation messages display', function(hooks) {
     await visit('/packages/1/edit');
 
     assert.dom('[data-test-submit-button]').hasAttribute('disabled');
-    assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
-    await click('[data-test-save-button]');
     assert.dom('[data-test-save-button]').hasAttribute('disabled');
 
     // dcpRevisedprojectname (length limits and presence required)
