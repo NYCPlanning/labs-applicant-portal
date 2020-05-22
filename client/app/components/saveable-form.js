@@ -13,13 +13,13 @@ export default class SaveableFormComponent extends Component {
       submittabilityValidations = {},
     ] = this.args.validators || [];
 
-    this.saveableChanges = new Changeset(
+    this.saveableChanges = Changeset(
       this.args.model,
       lookupValidator(saveabilityValidations),
       saveabilityValidations,
     );
 
-    this.submittableChanges = new Changeset(
+    this.submittableChanges = Changeset(
       this.args.model,
       lookupValidator(submittabilityValidations),
       submittabilityValidations,
