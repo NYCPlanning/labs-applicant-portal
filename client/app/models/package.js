@@ -2,7 +2,7 @@ import Model, { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import FileManager from '../services/file-manager';
 
-export const PACKAGE_STATUS_CODES = {
+export const PACKAGE_STATUS_OPTIONSET = {
   PACKAGE_PREPARATION: {
     code: 1,
     label: 'Package Preparation',
@@ -41,25 +41,30 @@ export const PACKAGE_STATUS_CODES = {
   },
 };
 
-export const PACKAGE_VISIBILITY_CODES = {
+export const PACKAGE_VISIBILITY_OPTIONSET = {
   INTERNAL_DCP_ONLY: {
     code: 717170000,
+    label: 'Internal DCP Only',
   },
   CPC_ONLY: {
     code: 717170001,
+    label: 'CPC Only',
   },
   APPLICANT_ONLY: {
     code: 717170002,
+    label: 'Applicant Only',
   },
   GENERAL_PUBLIC: {
     code: 717170003,
+    label: 'General Public',
   },
   LUP: {
     code: 717170004,
+    label: 'LUP',
   },
 };
 
-export const PACKAGE_STATE_CODES = {
+export const PACKAGE_STATE_OPTIONSET = {
   ACTIVE: {
     code: 0,
     label: 'Active',
@@ -110,8 +115,8 @@ export default class PackageModel extends Model {
   documents;
 
   setAttrsForSubmission() {
-    this.statuscode = PACKAGE_STATUS_CODES.SUBMITTED.code;
-    this.statecode = PACKAGE_STATE_CODES.INACTIVE.code;
+    this.statuscode = PACKAGE_STATUS_OPTIONSET.SUBMITTED.code;
+    this.statecode = PACKAGE_STATE_OPTIONSET.INACTIVE.code;
   }
 
   async save() {
