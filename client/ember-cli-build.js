@@ -4,10 +4,11 @@ module.exports = function(defaults) {
   const app = new EmberApp(defaults, {
     sassOptions: {
       includePaths: [
-        'node_modules/',
         'node_modules/foundation-sites/scss',
         'node_modules/nyc-planning-style-guide/dist/assets/scss',
       ],
+      onlyIncluded: true,
+      sourceMap: false,
     },
   });
 
