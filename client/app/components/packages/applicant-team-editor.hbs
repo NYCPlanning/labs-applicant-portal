@@ -1,13 +1,17 @@
 <div>
-  {{#each this.displayApplicants as |applicant index|}}
-    <Packages::ApplicantFieldset
-      @elementId={{concat 'applicant-fieldset-' index}}
-      @applicant={{applicant}}
-      @removeApplicant={{fn this.removeApplicant}}
-      data-test-applicant-fieldset={{index}}
-      data-test-applicant-type={{applicant.friendlyEntityName}}
-    />
-  {{/each}}
+  <ul class="no-bullet">
+    {{#each this.displayApplicants as |applicant index|}}
+      <li {{animate-with 'scale-fade-in' 'scale-fade-in-active'}}>
+        <Packages::ApplicantFieldset
+          @elementId={{concat 'applicant-fieldset-' index}}
+          @applicant={{applicant}}
+          @removeApplicant={{fn this.removeApplicant}}
+          data-test-applicant-fieldset={{index}}
+          data-test-applicant-type={{applicant.friendlyEntityName}}
+        />
+      </li>
+    {{/each}}
+  </ul>
 
   {{!-- buttons for user to add new applicants --}}
   <div class="fieldset-adder">
