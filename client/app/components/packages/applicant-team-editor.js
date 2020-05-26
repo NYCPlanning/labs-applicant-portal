@@ -6,6 +6,10 @@ export default class ApplicantTeamEditorComponent extends Component {
   @service
   store;
 
+  get displayApplicants() {
+    return this.args.applicants.filter((applicant) => !applicant.isDeleted);
+  }
+
   // allow a user to add a new applicant fieldset
   @action
   addApplicant(targetEntity) {
@@ -19,18 +23,6 @@ export default class ApplicantTeamEditorComponent extends Component {
   // allow a user to remove an applicant fieldset
   @action
   removeApplicant(applicant) {
-    // remove the applicant from the ember store
-    // this.store.deleteRecord(applicant);
-    applicant.destroyRecord();
-
-    // remove the DOM node by removing the object from the array passed to the editor component
-    this.args.applicants.removeObject(applicant);
-  }
-
-  @action
-  addApplicantIfEmpty() {
-    if (!this.args.applicants.length) {
-      this.addApplicant();
-    }
+    applicant.deleteRecord();
   }
 }

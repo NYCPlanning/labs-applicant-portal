@@ -8,7 +8,7 @@ export default {
     validateLength({
       min: 0,
       max: 50,
-      message: 'Name must be between {min} and {max} characters',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
@@ -16,7 +16,7 @@ export default {
     validateLength({
       min: 0,
       max: 2000,
-      message: 'Must be between {min} and {max} characters',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
@@ -24,7 +24,7 @@ export default {
     validateLength({
       min: 0,
       max: 250,
-      message: 'Name is too long (max {max} characters)',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
@@ -40,7 +40,7 @@ export default {
     validateLength({
       min: 0,
       max: 250,
-      message: 'Name is too long (max {max} characters)',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
@@ -48,7 +48,7 @@ export default {
     validateLength({
       min: 0,
       max: 250,
-      message: 'Name is too long (max {max} characters)',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
@@ -56,7 +56,7 @@ export default {
     validateLength({
       min: 0,
       max: 25,
-      message: 'File Number is too long (max {max} characters)',
+      message: 'Number is too long (max {max} characters)',
     }),
   ],
 
@@ -96,7 +96,7 @@ export default {
     validateLength({
       min: 0,
       max: 3000,
-      message: 'Text is too long (max 3000 characters)',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
@@ -104,7 +104,7 @@ export default {
     validateLength({
       min: 0,
       max: 3000,
-      message: 'Text is too long (max 3000 characters)',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
@@ -112,112 +112,112 @@ export default {
     validateLength({
       min: 0,
       max: 2000,
-      message: 'Text is too long (max 2000 characters)',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
   dcpZoningauthorizationpursuantto: [
     validateLength({
       max: 250,
-      message: 'Text is too long (max 250 characters)',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
   dcpZoningauthorizationtomodify: [
     validateLength({
       max: 250,
-      message: 'Text is too long (max 250 characters)',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
   dcpZoningtomodify: [
     validateLength({
       max: 250,
-      message: 'Text is too long (max 250 characters)',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
   dcpZoningpursuantto: [
     validateLength({
       max: 250,
-      message: 'Text is too long (max 250 characters)',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
   dcpExistingmapamend: [
     validateLength({
       max: 250,
-      message: 'Text is too long (max 250 characters)',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
   dcpProposedmapamend: [
     validateLength({
       max: 250,
-      message: 'Text is too long (max 250 characters)',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
   dcpZoningspecialpermitpursuantto: [
     validateLength({
       max: 250,
-      message: 'Text is too long (max 250 characters)',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
   dcpZoningspecialpermittomodify: [
     validateLength({
       max: 250,
-      message: 'Text is too long (max 250 characters)',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
   dcpAffectedzrnumber: [
     validateLength({
       max: 250,
-      message: 'Text is too long (max 250 characters)',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
   dcpZoningresolutiontitle: [
     validateLength({
       max: 250,
-      message: 'Text is too long (max 250 characters)',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
   dcpPreviousulurpnumbers1: [
     validateLength({
       max: 100,
-      message: 'Text is too long (max 250 characters)',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
   dcpPreviousulurpnumbers2: [
     validateLength({
       max: 100,
-      message: 'Text is too long (max 250 characters)',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
   dcpPfzoningauthorization: [
     validateLength({
       max: 10,
-      message: 'Text is too long (max 10 characters)',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
   dcpPfzoningcertification: [
     validateLength({
       max: 10,
-      message: 'Text is too long (max 10 characters)',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 
   dcpPfzoningspecialpermit: [
     validateLength({
       max: 10,
-      message: 'Text is too long (max 10 characters)',
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 };

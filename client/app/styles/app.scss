@@ -1,15 +1,32 @@
 // Foundation utilities
-@import 'foundation-sites/scss/util/util';
+@import 'util/util';
 
 // Labs UI variables
 @import 'nyc-planning-variables';
 $small-font-size: 81.25%; // TODO: update Style Guide so that <small> matches .text-small
 
 // Foundation mixins
-@import 'foundation-sites/scss/foundation';
+@import 'foundation';
 
 // Foundation components
-@include foundation-everything; // or a subset
+// @include foundation-everything; // or a subset
+@include foundation-global-styles;
+@include foundation-forms;
+@include foundation-typography;
+@include foundation-xy-grid-classes;
+@include foundation-button;
+@include foundation-button-group;
+@include foundation-close-button;
+@include foundation-label;
+@include foundation-badge;
+@include foundation-breadcrumbs;
+@include foundation-callout;
+@include foundation-responsive-embed;
+@include foundation-menu;
+@include foundation-reveal;
+@include foundation-float-classes;
+@include foundation-visibility-classes;
+
 
 // Style Guide components
 @import 'modules/nyc-planning-all-modules'; // or a subset
@@ -24,6 +41,7 @@ $small-font-size: 81.25%; // TODO: update Style Guide so that <small> matches .t
 @import 'modules/_pasform';
 
 @import "ember-power-select";
+@import 'modules/_powerselect-overrides';
 
 
 .site-header {

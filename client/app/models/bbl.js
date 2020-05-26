@@ -1,6 +1,6 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 
-export const PROJECT_BBL_BOROUGHS = {
+export const BOROUGHS_OPTIONSET = {
   BRONX: {
     code: 717170000,
     label: 'Bronx',

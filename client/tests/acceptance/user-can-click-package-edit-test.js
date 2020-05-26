@@ -37,6 +37,7 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/projects');
     await click('[data-test-project="edit-pas"]');
+    await fillIn('[data-test-input="dcpRevisedprojectname"]', 'my project name');
     await click('[data-test-save-button]');
 
     await waitFor('[data-test-submit-button]:not([disabled])');
@@ -62,15 +63,6 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/2/edit');
 
-    // ! We remove the pregenerated applicant here to disable the "save" button.
-    // Clicking "Save" to disable the Save button causes a race condition:
-    // The automated clicks act so fast that the file is marked for deletion
-    // BEFORE the full Save operation completes,
-    // causing the file marked for deletion to be immediately cleared.
-    // TODO: Perhaps rework frontend using a Task group to prevent
-    // this race condition.
-    await click('[data-test-remove-applicant-button]');
-
     assert.dom('[data-test-save-button]').isDisabled();
 
     await click('[data-test-delete-file-button="0"]');
@@ -85,10 +77,6 @@ module('Acceptance | user can click package edit', function(hooks) {
     });
 
     await visit('/packages/2/edit');
-
-    // See note in previous test about why this click to remove applicant
-    // is performed.
-    await click('[data-test-remove-applicant-button]');
 
     assert.dom('[data-test-save-button]').isDisabled();
 
@@ -227,6 +215,8 @@ module('Acceptance | user can click package edit', function(hooks) {
     // render form
     await visit('/packages/1/edit');
 
+    await fillIn('[data-test-input="dcpRevisedprojectname"]', 'my project name');
+
     // modal doesn't exist to start
     assert.dom('[data-test-reveal-modal]').doesNotExist();
     assert.dom('[data-test-confirm-submit-button]').doesNotExist();
@@ -257,6 +247,8 @@ module('Acceptance | user can click package edit', function(hooks) {
     });
 
     await visit('/packages/1/edit');
+
+    await fillIn('[data-test-input="dcpRevisedprojectname"]', 'my project name');
 
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
@@ -314,71 +306,5 @@ module('Acceptance | user can click package edit', function(hooks) {
     await click('[data-test-project="edit-pas"]');
 
     assert.dom('[data-test-section="attachments"').hasTextContaining('PAS Form.pdf');
-  });
-
-  test('Certain fields display both Saveable and Submittable validation errors', async function (assert) {
-    this.server.create('package', 1, {
-      pasForm: this.server.create('pas-form'),
-      project: this.server.create('project'),
-    });
-
-    await visit('/packages/1/edit');
-
-    assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
-    assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
-
-    // name of the Urban Renewal Area
-    await click('[data-test-radio="dcpUrbanrenewalarea"][data-test-radio-option="Yes"]');
-
-    assert.dom('[data-test-validation-message="dcpUrbanareaname"]').hasText('This field is required');
-
-    await fillIn('[data-test-input="dcpUrbanareaname"]', 'abc');
-
-    assert.dom('[data-test-validation-message="dcpUrbanareaname"]').doesNotExist();
-
-    const longText = 'Some long text'.repeat(20);
-
-    await fillIn('[data-test-input="dcpUrbanareaname"]', longText);
-
-    assert.dom('[data-test-validation-message="dcpUrbanareaname"]').hasText('Name is too long (max 250 characters)');
-
-    // SEQRA or CEQR criteria for Type II status
-    await click('[data-test-radio="dcpLanduseactiontype2"][data-test-radio-option="Yes"]');
-
-    assert.dom('[data-test-validation-message="dcpPleaseexplaintypeiienvreview"]').hasText('This field is required');
-
-    await fillIn('[data-test-input="dcpPleaseexplaintypeiienvreview"]', 'abc');
-
-    assert.dom('[data-test-validation-message="dcpPleaseexplaintypeiienvreview"]').doesNotExist();
-
-    await fillIn('[data-test-input="dcpPleaseexplaintypeiienvreview"]', longText);
-
-    assert.dom('[data-test-validation-message="dcpPleaseexplaintypeiienvreview"]').hasText('Text is too long (max 200 characters)');
-
-    // Industrial Business Zone
-    await click('[data-test-radio="dcpProjectareaindustrialbusinesszone"][data-test-radio-option="Yes"]');
-
-    assert.dom('[data-test-validation-message="dcpProjectareaindutrialzonename"]').hasText('This field is required');
-
-    await fillIn('[data-test-input="dcpProjectareaindutrialzonename"]', 'abc');
-
-    assert.dom('[data-test-validation-message="dcpProjectareaindutrialzonename"]').doesNotExist();
-
-    await fillIn('[data-test-input="dcpProjectareaindutrialzonename"]', longText);
-
-    assert.dom('[data-test-validation-message="dcpProjectareaindutrialzonename"]').hasText('Name is too long (max 250 characters)');
-
-    // Landmark name
-    await click('[data-test-radio="dcpIsprojectarealandmark"][data-test-radio-option="Yes"]');
-
-    assert.dom('[data-test-validation-message="dcpProjectarealandmarkname"]').hasText('This field is required');
-
-    await fillIn('[data-test-input="dcpProjectarealandmarkname"]', 'abc');
-
-    assert.dom('[data-test-validation-message="dcpProjectarealandmarkname"]').doesNotExist();
-
-    await fillIn('[data-test-input="dcpProjectarealandmarkname"]', longText);
-
-    assert.dom('[data-test-validation-message="dcpProjectarealandmarkname"]').hasText('Name is too long (max 250 characters)');
   });
 });

@@ -78,14 +78,14 @@
         State
         <PowerSelect
           supportsDataTestProperties={{true}}
-          @selected={{get this.stateLabelLookup @applicant.dcpState}}
+          @selected={{@applicant.dcpState}}
           @placeholder="state"
           @searchEnabled={{true}}
           @searchField="label"
           @options={{this.stateOptions}}
-          @onchange={{fn this.updateAttrWithOption @applicant 'dcpState'}}
-        as |state|>
-          {{state.label}}
+          @onchange={{fn this.updateAttr @applicant 'dcpState'}}
+        as |stateCode|>
+          {{optionset 'applicant' 'state' 'label' stateCode}}
         </PowerSelect>
       </label>
     </div>
