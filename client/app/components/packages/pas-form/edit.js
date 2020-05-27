@@ -31,6 +31,8 @@ export default class PasFormComponent extends Component {
   @action
   async savePackage() {
     await this.args.package.save();
+    console.log('heya', this.args.refreshModel);
+    await this.args.refreshModel();
   }
 
   @action

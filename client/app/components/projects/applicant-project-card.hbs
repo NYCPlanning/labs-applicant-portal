@@ -16,12 +16,14 @@
 
     <small class="text-weight-normal">{{@project.id}}</small>
   </h3>
+  {{log "project.id" @project.id}}
 
   <p class="tiny-margin-bottom">
     <span class="text-dark-gray">Primary Applicant:</span>
     {{@project.dcpApplicantCustomerValue}}
   </p>
 
+{{log @project.pasPackages}}
   <LinkTo
     @route='packages.edit'
     @model={{@project.pasPackages.firstObject.id}}

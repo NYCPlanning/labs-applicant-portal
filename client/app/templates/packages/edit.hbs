@@ -1,5 +1,8 @@
 <Packages::PasForm::Edit
   @package={{@model}}
+  @refreshModel={{this.refreshModelFromEditController}}
 />
+
+{{log "refreshModel" this.refreshModelFromEditController}}
 
 {{outlet}}

@@ -22,6 +22,7 @@
     {{@project.dcpApplicantCustomerValue}}
   </p>
 
+{{log "peach package id" @project.pasPackages.firstObject.id}}
   {{#if this.showViewPas}}
     <LinkTo 
       @route="packages.show"
