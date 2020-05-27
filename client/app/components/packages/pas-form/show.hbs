@@ -466,12 +466,13 @@
         <strong class="cell auto large-padding-right">
           Proposed development type
         </strong>
-        <span class="cell large-3">
-          {{#each this.proposedDevelopmentTypes as |item|}}
-            <span data-test-show={{item.type}}>
-              {{item.label }}{{if (eq item.type this.proposedDevelopmentTypes.lastObject.type) '' ', '}}
-            </span>
-          {{/each}}
+        <span
+          class="cell large-3"
+          data-test-proposedDevelopmentTypes
+        >
+          <ProposedDevelopmentTypesList
+            @pasForm={{@package.pasForm}}
+          />
         </span>
       </p>
 

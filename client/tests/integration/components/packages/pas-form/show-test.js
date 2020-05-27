@@ -6,7 +6,7 @@ import { hbs } from 'ember-cli-htmlbars';
 module('Integration | Component | packages/pas-form/show', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('All types get rendered from proposedDevelopmentTypes array', async function(assert) {
+  test('Displays all proposed development types', async function(assert) {
     this.set('packageHasAllTypes', {
       pasForm: {
         dcpProposeddevelopmentsitenewconstruction: true,
@@ -16,21 +16,16 @@ module('Integration | Component | packages/pas-form/show', function(hooks) {
         dcpProposeddevelopmentsitechnageofuse: true,
         dcpProposeddevelopmentsiteenlargement: true,
         dcpProposeddevelopmentsiteinfoother: true,
+        dcpProposeddevelopmentsiteotherexplanation: 'Esta bien',
       },
     });
 
     await render(hbs`<Packages::PasForm::Show @package={{this.packageHasAllTypes}} />`);
 
-    assert.dom('[data-test-show="dcpProposeddevelopmentsitenewconstruction"]').exists();
-    assert.dom('[data-test-show="dcpProposeddevelopmentsitedemolition"]').exists();
-    assert.dom('[data-test-show="dcpProposeddevelopmentsiteinfoalteration"]').exists();
-    assert.dom('[data-test-show="dcpProposeddevelopmentsiteinfoaddition"]').exists();
-    assert.dom('[data-test-show="dcpProposeddevelopmentsitechnageofuse"]').exists();
-    assert.dom('[data-test-show="dcpProposeddevelopmentsiteenlargement"]').exists();
-    assert.dom('[data-test-show="dcpProposeddevelopmentsiteinfoother"]').exists();
+    assert.dom('[data-test-proposedDevelopmentTypes]').hasText('Newly constructed buildings, Demolition, Alteration, Addition, Change of use, Enlargement, Other (Esta bien)');
   });
 
-  test('Falsy types do not get rendered from proposedDevelopmentTypes array', async function(assert) {
+  test('Does not display Falsy proposed development types', async function(assert) {
     this.set('packageHasSomeTypes', {
       pasForm: {
         dcpProposeddevelopmentsitenewconstruction: true,
@@ -42,12 +37,6 @@ module('Integration | Component | packages/pas-form/show', function(hooks) {
 
     await render(hbs`<Packages::PasForm::Show @package={{this.packageHasSomeTypes}} />`);
 
-    assert.dom('[data-test-show="dcpProposeddevelopmentsitenewconstruction"]').exists();
-    assert.dom('[data-test-show="dcpProposeddevelopmentsitedemolition"]').exists();
-    assert.dom('[data-test-show="dcpProposeddevelopmentsiteinfoalteration"]').exists();
-    assert.dom('[data-test-show="dcpProposeddevelopmentsiteinfoaddition"]').doesNotExist();
-    assert.dom('[data-test-show="dcpProposeddevelopmentsitechnageofuse"]').doesNotExist();
-    assert.dom('[data-test-show="dcpProposeddevelopmentsiteenlargement"]').doesNotExist();
-    assert.dom('[data-test-show="dcpProposeddevelopmentsiteinfoother"]').doesNotExist();
+    assert.dom('[data-test-proposedDevelopmentTypes]').hasText('Newly constructed buildings, Demolition, Alteration');
   });
 });
