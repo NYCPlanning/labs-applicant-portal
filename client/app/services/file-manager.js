@@ -3,11 +3,6 @@ import fetch from 'fetch';
 import { tracked } from '@glimmer/tracking';
 
 // This class supports the FileManagement service
-// TODO: We need to handle rehydrating the existingFiles.
-// After the app calls fileManager.save(), the Package
-// model should have new associated documents.
-// We need to re-request the package with associated documents
-// and rehydrate existingFiles.
 export default class FileManager {
   constructor(
     packageId,
@@ -20,6 +15,8 @@ export default class FileManager {
     this.filesToDelete = filesToDelete || [];
     this.filesToUpload = filesToUpload; // EmberFileUpload QUEUE Object
   }
+
+  @tracked existingFiles;
 
   @tracked filesToDelete;
 

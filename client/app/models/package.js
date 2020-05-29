@@ -87,6 +87,10 @@ export default class PackageModel extends Model {
     );
   }
 
+  refreshExistingDocuments() {
+    this.fileManager.existingFiles = this.documents;
+  }
+
   @service
   fileQueue;
 

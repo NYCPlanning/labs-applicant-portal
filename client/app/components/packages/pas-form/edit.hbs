@@ -860,7 +860,7 @@
           data-test-save-button
         />
         {{!-- Error Handling --}}
-        <Packages::PasFormError @pasForm={{this.pasForm}} />
+        <Packages::PasFormError @package={{@package}} />
         <saveable-form.submitButton
           @onClick={{this.toggleModal}}
           @isEnabled={{saveable-form.submittableChanges.isValid}}
@@ -895,7 +895,7 @@
                 </div>
               </div>
               {{!-- Error Handling --}}
-              <Packages::PasFormError @pasForm={{this.pasForm}}/>
+              <Packages::PasFormError @package={{@package}}/>
             </RevealModal>
           </EmberWormhole>
         {{/if}}
