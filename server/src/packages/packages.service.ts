@@ -46,6 +46,7 @@ export class PackagesService {
         dcp_pasformid eq ${_dcp_pasform_value}
       &$expand=
         dcp_dcp_applicantinformation_dcp_pasform,
+        dcp_dcp_applicantrepinformation_dcp_pasform,
         dcp_package,
         dcp_dcp_projectbbl_dcp_pasform($filter=statecode eq 0)
     `);
@@ -67,7 +68,12 @@ export class PackagesService {
 
     return {
       ...projectPackageForm.dcp_package,
-      dcp_pasform: projectPackageForm,
+      dcp_pasform: {
+        ...projectPackageForm,
+
+        // handling for setting the default value of the dcp_revisedprojectname.
+        dcp_revisedprojectname: projectPackageForm.dcp_revisedprojectname || dcp_project.dcp_projectname,
+      },
       project: dcp_project,
       documents: documents.map(document => ({
         name: document['Name'],

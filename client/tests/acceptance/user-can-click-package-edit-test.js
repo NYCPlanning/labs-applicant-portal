@@ -6,6 +6,7 @@ import {
   settled,
   waitFor,
   fillIn,
+  triggerKeyEvent,
 } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -36,6 +37,7 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/projects');
     await click('[data-test-project="edit-pas"]');
+    await fillIn('[data-test-input="dcpRevisedprojectname"]', 'my project name');
     await click('[data-test-save-button]');
 
     await waitFor('[data-test-submit-button]:not([disabled])');
@@ -47,7 +49,7 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     // use waitFor as a way to "wait" for the transition
     // within the pas-form/edit Component submit() task
-    await waitFor('[data-test-show-dcprevisedprojectname]');
+    await waitFor('[data-test-show="dcpRevisedprojectname"]');
 
     assert.equal(currentURL(), '/packages/1');
   });
@@ -60,15 +62,6 @@ module('Acceptance | user can click package edit', function(hooks) {
     });
 
     await visit('/packages/2/edit');
-
-    // ! We remove the pregenerated applicant here to disable the "save" button.
-    // Clicking "Save" to disable the Save button causes a race condition:
-    // The automated clicks act so fast that the file is marked for deletion
-    // BEFORE the full Save operation completes,
-    // causing the file marked for deletion to be immediately cleared.
-    // TODO: Perhaps rework frontend using a Task group to prevent
-    // this race condition.
-    await click('[data-test-remove-applicant-button]');
 
     assert.dom('[data-test-save-button]').isDisabled();
 
@@ -84,10 +77,6 @@ module('Acceptance | user can click package edit', function(hooks) {
     });
 
     await visit('/packages/2/edit');
-
-    // See note in previous test about why this click to remove applicant
-    // is performed.
-    await click('[data-test-remove-applicant-button]');
 
     assert.dom('[data-test-save-button]').isDisabled();
 
@@ -124,10 +113,10 @@ module('Acceptance | user can click package edit', function(hooks) {
     this.server.create('project', 1, 'applicant');
 
     await visit('/packages/1/edit');
-    assert.dom('[data-test-dcpurbanrenewalareaname]').doesNotExist();
+    assert.dom('[data-test-input="dcpUrbanareaname"]').doesNotExist();
 
-    await click('[data-test-dcpurbanrenewalarea="Yes"]');
-    assert.dom('[data-test-dcpurbanrenewalareaname]').exists();
+    await click('[data-test-radio="dcpUrbanrenewalarea"][data-test-radio-option="Yes"]');
+    assert.dom('[data-test-input="dcpUrbanareaname"]').exists();
   });
 
   test('SEQRA or CEQR sub Q shows conditionally', async function (assert) {
@@ -135,9 +124,9 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/1/edit');
 
-    assert.dom('[data-test-dcppleaseexplaintypeiienvreview]').doesNotExist();
-    await click('[data-test-dcplanduseactiontype2="Yes"]');
-    assert.dom('[data-test-dcppleaseexplaintypeiienvreview]').exists();
+    assert.dom('[data-test-input="dcpPleaseexplaintypeiienvreview"]').doesNotExist();
+    await click('[data-test-radio="dcpLanduseactiontype2"][data-test-radio-option="Yes"]');
+    assert.dom('[data-test-input="dcpPleaseexplaintypeiienvreview"]').exists();
   });
 
   test('Industrial Business Zone sub Q shows conditionally', async function (assert) {
@@ -145,9 +134,9 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/1/edit');
 
-    assert.dom('[data-test-dcpprojectareaindustrialbusinesszonename]').doesNotExist();
-    await click('[data-test-dcpprojectareaindustrialbusinesszone="Yes"]');
-    assert.dom('[data-test-dcpprojectareaindustrialbusinesszonename]').exists();
+    assert.dom('[data-test-input="dcpProjectareaindutrialzonename"]').doesNotExist();
+    await click('[data-test-radio="dcpProjectareaindustrialbusinesszone"][data-test-radio-option="Yes"]');
+    assert.dom('[data-test-input="dcpProjectareaindutrialzonename"]').exists();
   });
 
   test('Landmark or Historic District sub Q shows conditionally', async function (assert) {
@@ -155,9 +144,9 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/1/edit');
 
-    assert.dom('[data-test-dcpisprojectarealandmarkname]').doesNotExist();
-    await click('[data-test-dcpIsprojectarealandmark="Yes"]');
-    assert.dom('[data-test-dcpisprojectarealandmarkname]').exists();
+    assert.dom('[data-test-input="dcpProjectarealandmarkname"]').doesNotExist();
+    await click('[data-test-radio="dcpIsprojectarealandmark"][data-test-radio-option="Yes"]');
+    assert.dom('[data-test-input="dcpProjectarealandmarkname"]').exists();
   });
 
   test('Other Type sub Q shows conditionally', async function (assert) {
@@ -165,9 +154,9 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/1/edit');
 
-    assert.dom('[data-test-dcpproposeddevelopmentsiteotherexplanation]').doesNotExist();
-    await click('[data-test-dcpproposeddevelopmentsiteinfoother]');
-    assert.dom('[data-test-dcpproposeddevelopmentsiteotherexplanation]').exists();
+    assert.dom('[data-test-input="dcpProposeddevelopmentsiteotherexplanation"]').doesNotExist();
+    await click('[data-test-checkbox="dcpProposeddevelopmentsiteinfoother"]');
+    assert.dom('[data-test-input="dcpProposeddevelopmentsiteotherexplanation"]').exists();
   });
 
   test('MIH sub Q shows conditionally', async function (assert) {
@@ -175,9 +164,9 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/1/edit');
 
-    assert.dom('[data-test-dcpinclusionaryhousingdesignatedareaname]').doesNotExist();
-    await click('[data-test-dcpisinclusionaryhousingdesignatedarea="Yes"]');
-    assert.dom('[data-test-dcpinclusionaryhousingdesignatedareaname]').exists();
+    assert.dom('[data-test-input="dcpInclusionaryhousingdesignatedareaname"]').doesNotExist();
+    await click('[data-test-radio="dcpIsinclusionaryhousingdesignatedarea"][data-test-radio-option="Yes"]');
+    assert.dom('[data-test-input="dcpInclusionaryhousingdesignatedareaname"]').exists();
   });
 
   test('Funding Source sub Q shows conditionally', async function (assert) {
@@ -185,16 +174,16 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/1/edit');
 
-    assert.dom('[data-test-dcphousingunittype="City"]').doesNotExist();
-    assert.dom('[data-test-dcphousingunittype="State"]').doesNotExist();
-    assert.dom('[data-test-dcphousingunittype="Federal"]').doesNotExist();
-    assert.dom('[data-test-dcphousingunittype="Other"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="City"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="State"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="Federal"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="Other"]').doesNotExist();
 
-    await click('[data-test-dcpdiscressionaryfundingforffordablehousing="Yes"]');
-    assert.dom('[data-test-dcphousingunittype="City"]').exists();
-    assert.dom('[data-test-dcphousingunittype="State"]').exists();
-    assert.dom('[data-test-dcphousingunittype="Federal"]').exists();
-    assert.dom('[data-test-dcphousingunittype="Other"]').exists();
+    await click('[data-test-radio="dcpDiscressionaryfundingforffordablehousing"][data-test-radio-option="Yes"]');
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="City"]').exists();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="State"]').exists();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="Federal"]').exists();
+    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="Other"]').exists();
   });
 
   test('user can save pas form', async function (assert) {
@@ -207,7 +196,7 @@ module('Acceptance | user can click package edit', function(hooks) {
     // assert.dom('[data-test-save-button').hasProperty('disabled', true);
 
     // edit a field to make it pasForm dirty
-    await fillIn('[data-test-dcprevisedprojectname]', 'Some Cool New Project Name');
+    await fillIn('[data-test-input="dcpRevisedprojectname"]', 'Some Cool New Project Name');
 
     // save button should become active when dirty
     assert.dom('[data-test-save-button').hasProperty('disabled', false);
@@ -225,6 +214,8 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     // render form
     await visit('/packages/1/edit');
+
+    await fillIn('[data-test-input="dcpRevisedprojectname"]', 'my project name');
 
     // modal doesn't exist to start
     assert.dom('[data-test-reveal-modal]').doesNotExist();
@@ -257,25 +248,111 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     await visit('/packages/1/edit');
 
+    await fillIn('[data-test-input="dcpRevisedprojectname"]', 'my project name');
+
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
 
-    await click('[data-test-dcpurbanrenewalarea="Yes"]');
+    await click('[data-test-radio="dcpUrbanrenewalarea"][data-test-radio-option="Yes"]');
 
-    assert.dom('[data-test-dcpurbanrenewalareaname-validation]').exists();
+    assert.dom('[data-test-validation-message="dcpUrbanareaname"]').exists();
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-submit-button]').hasAttribute('disabled');
 
-    await fillIn('[data-test-dcpurbanrenewalareaname]', 'abc');
+    await fillIn('[data-test-input="dcpUrbanareaname"]', 'abc');
 
-    assert.dom('[data-test-dcpurbanrenewalareaname-validation]').doesNotExist();
+    assert.dom('[data-test-validation-message="dcpUrbanareaname"]').doesNotExist();
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
 
-    await fillIn('[data-test-dcpurbanrenewalareaname]', '');
+    await fillIn('[data-test-input="dcpUrbanareaname"]', '');
 
-    assert.dom('[data-test-dcpurbanrenewalareaname-validation]').exists('it revalidates');
+    assert.dom('[data-test-validation-message="dcpUrbanareaname"]').exists('it revalidates');
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-submit-button]').hasAttribute('disabled');
+  });
+
+  test('It sends an associated project to the server, and associates the correct project', async function (assert) {
+    this.server.create('package', 1, {
+      pasForm: this.server.create('pas-form'),
+      project: this.server.create('project', { id: '42' }),
+    });
+
+    await visit('/packages/1/edit');
+    await fillIn('[data-test-section="project-geography"] .map-search-input', '1000120001');
+    await triggerKeyEvent('[data-test-section="project-geography"] .labs-geosearch', 'keypress', 13);
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.bbls.firstObject.projectId, '42');
+  });
+
+  test('Docs appear in attachments section when visiting from another route', async function(assert) {
+    this.server.create('package', 'applicant', 'withExistingDocuments', {
+      id: '1',
+      project: this.server.create('project'),
+    });
+
+    // simulate a "sparse fieldset"
+    this.server.get('/projects', function (schema) {
+      const projects = schema.projects.all();
+      const json = this.serialize(projects);
+
+      json.included[0].attributes.documents = [];
+
+      return json;
+    });
+
+    await visit('/projects');
+    await click('[data-test-project="edit-pas"]');
+
+    assert.dom('[data-test-section="attachments"').hasTextContaining('PAS Form.pdf');
+  });
+
+  test('For input dependent on radio button/checkbox -- when user fills out input, then clicks radio button/checkbox that hides input, text is not saved to model', async function(assert) {
+    this.server.create('package', 1, {
+      pasForm: this.server.create('pas-form'),
+      project: this.server.create('project'),
+    });
+
+    await visit('/packages/1/edit');
+
+    // dcpInclusionaryhousingdesignatedareaname (radio button) -----------------------------------------
+    // user selects "Yes" radio button and fills out input, then saves
+    await click('[data-test-radio="dcpIsinclusionaryhousingdesignatedarea"][data-test-radio-option="Yes"]');
+    await fillIn('[data-test-input="dcpInclusionaryhousingdesignatedareaname"]', 'bananas');
+    await click('[data-test-save-button]');
+    await settled();
+    assert.equal(this.server.db.pasForms[0].dcpInclusionaryhousingdesignatedareaname, 'bananas');
+    // user selects "No" radio button and fills out input, then saves
+    await click('[data-test-radio="dcpIsinclusionaryhousingdesignatedarea"][data-test-radio-option="No"]');
+    await click('[data-test-save-button]');
+    await settled();
+    // clicking on the radio button should set the value to an empty string
+    assert.equal(this.server.db.pasForms[0].dcpInclusionaryhousingdesignatedareaname, '');
+    // user re-selects "Yes" radio button and re-fills out input, then saves
+    await click('[data-test-radio="dcpIsinclusionaryhousingdesignatedarea"][data-test-radio-option="Yes"]');
+    await fillIn('[data-test-input="dcpInclusionaryhousingdesignatedareaname"]', 'peaches');
+    await click('[data-test-save-button]');
+    await settled();
+    assert.equal(this.server.db.pasForms[0].dcpInclusionaryhousingdesignatedareaname, 'peaches');
+
+    // dcpProposeddevelopmentsiteotherexplanation (checkbox) -----------------------------------------
+    // user selects checkbox and fills out input, then saves
+    await click('[data-test-checkbox="dcpProposeddevelopmentsiteinfoother"]');
+    await fillIn('[data-test-input="dcpProposeddevelopmentsiteotherexplanation"]', 'pecan pie');
+    await click('[data-test-save-button]');
+    await settled();
+    assert.equal(this.server.db.pasForms[0].dcpProposeddevelopmentsiteotherexplanation, 'pecan pie');
+    await click('[data-test-checkbox="dcpProposeddevelopmentsiteinfoother"]');
+    await click('[data-test-save-button]');
+    await settled();
+    // clicking the checkbox should set the value to an empty string
+    assert.equal(this.server.db.pasForms[0].dcpProposeddevelopmentsiteotherexplanation, '');
+    // user re-selects checkbox and re-fills out input, then saves
+    await click('[data-test-checkbox="dcpProposeddevelopmentsiteinfoother"]');
+    await fillIn('[data-test-input="dcpProposeddevelopmentsiteotherexplanation"]', 'strawberry rhubarb');
+    await click('[data-test-save-button]');
+    await settled();
+    assert.equal(this.server.db.pasForms[0].dcpProposeddevelopmentsiteotherexplanation, 'strawberry rhubarb');
   });
 });

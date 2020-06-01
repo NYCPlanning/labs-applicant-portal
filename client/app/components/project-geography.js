@@ -1,27 +1,23 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { bblBreakup } from '../helpers/bbl-breakup';
-import { PROJECT_BBL_BOROUGHS } from '../models/bbl';
+import { BOROUGHS_OPTIONSET } from '../models/bbl';
 
 // zap search provides bbls as 1-5-4 digits. the first part of the bbl,
 // the borough, is represented as a number. this object maps those
 // numbers to their respective CRM code.
 const NUMERIC_BOROUGH_MAPPING = {
-  1: PROJECT_BBL_BOROUGHS.MANHATTAN.code,
-  2: PROJECT_BBL_BOROUGHS.BRONX.code,
-  3: PROJECT_BBL_BOROUGHS.BROOKLYN.code,
-  4: PROJECT_BBL_BOROUGHS.QUEENS.code,
-  5: PROJECT_BBL_BOROUGHS.STATEN_ISLAND.code,
+  1: BOROUGHS_OPTIONSET.MANHATTAN.code,
+  2: BOROUGHS_OPTIONSET.BRONX.code,
+  3: BOROUGHS_OPTIONSET.BROOKLYN.code,
+  4: BOROUGHS_OPTIONSET.QUEENS.code,
+  5: BOROUGHS_OPTIONSET.STATEN_ISLAND.code,
 };
 
 export default class ProjectGeographyComponent extends Component {
   @service
   store;
-
-  // represents array of bbl models
-  @tracked bbls;
 
   @action
   selectSearchResult(labsSearchResult) {
@@ -40,6 +36,8 @@ export default class ProjectGeographyComponent extends Component {
       dcpUserinputborough: NUMERIC_BOROUGH_MAPPING[borough],
       dcpUserinputblock: block,
       dcpUserinputlot: lot,
+
+      project: this.args.project,
     });
 
     // set local variables for displaying address next to bbl in bbls list

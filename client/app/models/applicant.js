@@ -1,6 +1,6 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 
-export const STATE_OPTION_SET = {
+export const STATE_OPTIONSET = {
   AK: {
     code: 717170000,
     label: 'AK',

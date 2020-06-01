@@ -434,8 +434,12 @@ export class CrmService {
   async getSharepointFolderFiles(folderIdentifier): Promise<any> {
     const { access_token } = await this.generateSharePointAccessToken();
     const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
-    const url = `https://nyco365.sharepoint.com/sites/${SHAREPOINT_CRM_SITE}/_api/web/GetFolderByServerRelativeUrl('/sites/${SHAREPOINT_CRM_SITE}/${folderIdentifier}')/Files`;
-  
+
+    // Escape apostrophes by duplicating any apostrophes.
+    // See https://sharepoint.stackexchange.com/a/165224
+    const formattedFolderIdentifier = folderIdentifier.replace("'", "''");
+    const url = encodeURI(`https://nyco365.sharepoint.com/sites/${SHAREPOINT_CRM_SITE}/_api/web/GetFolderByServerRelativeUrl('/sites/${SHAREPOINT_CRM_SITE}/${formattedFolderIdentifier}')/Files`);
+    
     const options = {
       url,
       headers: {

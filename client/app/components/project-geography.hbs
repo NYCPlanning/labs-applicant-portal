@@ -15,12 +15,13 @@
 </div>
 
 {{#if @bbls}}
-  <br>
-  <h5>Tax Lots Included in This Project</h5>
+  <h5 {{animate-with 'slide-in-top' 'slide-in-top-active'}}>
+    Tax Lots Included in This Project
+  </h5>
 {{/if}}
 
 {{#each @bbls as |bbl|}}
-  <fieldset class="fieldset relative">
+  <fieldset class="fieldset relative" {{animate-with 'scale-fade-in' 'scale-fade-in-active'}}>
     <legend data-test-bbl-title="{{bbl.dcpBblnumber}}">
       <strong>{{bbl.dcpBblnumber}}</strong>
       {{#if bbl.temporaryAddressLabel}}

@@ -4,10 +4,15 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 export default class PackagesRoute extends Route.extend(AuthenticatedRouteMixin) {
   authenticationRoute = '/';
 
-  model(params) {
-    return this.store.findRecord('package', params.id, {
+  async model(params) {
+    const projectPackage = await this.store.findRecord('package', params.id, {
       reload: true,
-      include: 'pasForm,project',
+      include: 'pas-form.bbls,project',
     });
+
+    // manually generate a file factory
+    projectPackage.createFileQueue();
+
+    return projectPackage;
   }
 }

@@ -16,10 +16,12 @@
   </label>
 </div>
 {{#if this.sortedSelectedActions}}
-  <h5>Land Use Actions Included in This Project</h5>
+  <h5 {{animate-with 'slide-in-top' 'slide-in-top-active'}}>
+    Land Use Actions Included in This Project
+  </h5>
 {{/if}}
 {{#each this.sortedSelectedActions as |landUseAction|}}
-  <fieldset class="fieldset relative">
+  <fieldset class="fieldset relative" {{animate-with 'scale-fade-in' 'scale-fade-in-active'}}>
     <legend>
       <strong data-test-action-name="{{landUseAction.name}}">{{landUseAction.name}}</strong>
     </legend>
@@ -30,49 +32,121 @@
             <label for="middle-label" class="middle">How many {{landUseAction.name}} actions?</label>
           </div>
           <div class="auto cell">
-            <ActionFormInput @pasForm={{@pasForm}} @fieldType="number" @landUseActionField={{landUseAction.countField}}/>
+            <ActionFormInput
+              @pasForm={{@pasForm}}
+              @fieldType="number"
+              @length="10"
+              @landUseActionField={{landUseAction.countField}}
+            />
+            <ValidationMessage
+              @changesetError={{get @submittableChanges.error landUseAction.countField}}
+              data-test-validation-message="{{landUseAction.countField}}"
+            />
           </div>
         </div>
         <label class="action-form-label">
           Where in the Zoning Resolution can this action be found?
-          <ActionFormInput @pasForm={{@pasForm}} @fieldType="text" @landUseActionField={{landUseAction.attr1}}/>
-          <span class="help-text">Provide all known Zoning Resolution section numbers or indicate if unsure at this time. Ex. ZR Sec. 74-711 and 74-715</span>
+          <ActionFormInput
+            @pasForm={{@pasForm}}
+            @fieldType="text"
+            @length="250"
+            @landUseActionField={{landUseAction.attr1}}
+          />
+          <ValidationMessage
+            @changesetError={{get @submittableChanges.error landUseAction.attr1}}
+            data-test-validation-message="{{landUseAction.attr1}}"
+          />
+          <span class="help-text">Provide the Zoning Resolution section number. Ex. ZR Sec. 74-711</span>
         </label>
         <label class="action-form-label">
           Which sections of the Zoning Resolution does this modify?
-          <ActionFormInput @pasForm={{@pasForm}} @fieldType="text" @landUseActionField={{landUseAction.attr2}}/>
-          <span class="help-text">Provide all known Zoning Resolution section numbers or indicate if unsure at this time. Ex. ZR Sec. 42-10 and 43-17</span>
+          <ActionFormInput
+            @pasForm={{@pasForm}}
+            @fieldType="text"
+            @length="250"
+            @landUseActionField={{landUseAction.attr2}}
+          />
+          <ValidationMessage
+            @changesetError={{get @submittableChanges.error landUseAction.attr2}}
+            data-test-validation-message="{{landUseAction.attr2}}"
+          />
+          <span class="help-text">Provide the Zoning Resolution section number(s). Ex. ZR Sec. 42-10 and 43-17</span>
         </label>
       {{/if}}
       {{#if (eq landUseAction.name "Zoning Map Amendment")}}
         <label class="action-form-label">
           Existing Zoning Districts:
-          <ActionFormInput @pasForm={{@pasForm}} @fieldType="text" @landUseActionField={{landUseAction.attr1}}/>
-          <span class="help-text">Provide all known zoning districts. Ex. R7-1/C2-4</span>
+          <ActionFormInput
+            @pasForm={{@pasForm}}
+            @fieldType="text"
+            @length="250"
+            @landUseActionField={{landUseAction.attr1}}
+          />
+          <ValidationMessage
+            @changesetError={{get @submittableChanges.error landUseAction.attr1}}
+            data-test-validation-message="{{landUseAction.attr1}}"
+          />
+          <span class="help-text">ex. R7-1/C2-4</span>
         </label>
         <label>
           Proposed Zoning Districts:
-          <ActionFormInput @pasForm={{@pasForm}} @fieldType="text" @landUseActionField={{landUseAction.attr2}}/>
-          <span class="help-text">Provide all known zoning districts. Ex. C4-5X</span>
+          <ActionFormInput
+            @pasForm={{@pasForm}}
+            @fieldType="text"
+            @length="250"
+            @landUseActionField={{landUseAction.attr2}}
+          />
+          <ValidationMessage
+            @changesetError={{get @submittableChanges.error landUseAction.attr2}}
+            data-test-validation-message="{{landUseAction.attr2}}"
+          />
+          <span class="help-text">ex. C4-5X</span>
         </label>
       {{/if}}
       {{#if (eq landUseAction.name "Zoning Text Amendment")}}
         <label class="action-form-label">
           Affected ZR Section Number:
-          <ActionFormInput @pasForm={{@pasForm}} @fieldType="text" @landUseActionField={{landUseAction.attr1}}/>
+          <ActionFormInput
+            @pasForm={{@pasForm}}
+            @fieldType="text"
+            @length="250"
+            @landUseActionField={{landUseAction.attr1}}
+          />
+          <ValidationMessage
+            @changesetError={{get @submittableChanges.error landUseAction.attr1}}
+            data-test-validation-message="{{landUseAction.attr1}}"
+          />
           <span class="help-text">Provide the Zoning Resolution section number. Ex. ZR Sec. 74-711</span>
         </label>
         <label class="action-form-label">
           Affected ZR Section Title:
-          <ActionFormInput @pasForm={{@pasForm}} @fieldType="text" @landUseActionField={{landUseAction.attr2}}/>
-          <span class="help-text">Provide the Zoning Resolution section Title. Ex. "Landmark preservation in all districts"</span>
+          <ActionFormInput
+            @pasForm={{@pasForm}}
+            @fieldType="text"
+            @length="250"
+            @landUseActionField={{landUseAction.attr2}}
+          />
+          <ValidationMessage
+            @changesetError={{get @submittableChanges.error landUseAction.attr2}}
+            data-test-validation-message="{{landUseAction.attr2}}"
+          />
+          <span class="help-text">Provide the Zoning Resolution section Title. Ex. EXAMPLE</span>
         </label>
       {{/if}}
       {{#if (or (eq landUseAction.name "Modification") (eq landUseAction.name "Renewal"))}}
         <label class="action-form-label">
           Previous ULURP Numbers:
-          <ActionFormInput @pasForm={{@pasForm}} @fieldType="text" @landUseActionField={{landUseAction.attr1}}/>
-          <span class="help-text">Ex. 200307ZRK</span>
+          <ActionFormInput
+            @pasForm={{@pasForm}}
+            @fieldType="text"
+            @length="100"
+            @landUseActionField={{landUseAction.attr1}}
+          />
+          <ValidationMessage
+            @changesetError={{get @submittableChanges.error landUseAction.attr1}}
+            data-test-validation-message="{{landUseAction.attr1}}"
+          />
+          <span class="help-text">ex. 200307ZRK</span>
         </label>
       {{/if}}
     {{else}}

@@ -21,6 +21,9 @@ module('Unit | Model | package', function(hooks) {
 
     bbl.dcpDevelopmentsite = true;
 
+    // TODO: manually called. refactor this away.
+    model.createFileQueue();
+
     await model.save();
 
     assert.ok(model);

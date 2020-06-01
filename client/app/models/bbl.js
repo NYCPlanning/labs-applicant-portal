@@ -1,6 +1,6 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 
-export const PROJECT_BBL_BOROUGHS = {
+export const BOROUGHS_OPTIONSET = {
   BRONX: {
     code: 717170000,
     label: 'Bronx',
@@ -30,6 +30,9 @@ export const PROJECT_BBL_BOROUGHS = {
 export default class BblModel extends Model {
   @belongsTo('pas-form')
   pasForm;
+
+  @belongsTo('project')
+  project;
 
   @attr
   dcpBblnumber;
