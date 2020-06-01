@@ -355,4 +355,22 @@ module('Acceptance | user can click package edit', function(hooks) {
     await settled();
     assert.equal(this.server.db.pasForms[0].dcpProposeddevelopmentsiteotherexplanation, 'strawberry rhubarb');
   });
+
+  test('User can save applicant information', async function(assert) {
+    this.server.create('project', 1, 'applicant');
+
+    await visit('/packages/1/edit');
+
+    // can add an applicant
+    await click('[data-test-add-applicant-button]');
+    await fillIn('[data-test-input="dcpFirstname"]', 'first name');
+
+    await click('[data-test-save-button]');
+
+    console.log('hello', this.server.db.applicants[0].dcpFirstname);
+
+    await this.pauseTest();
+
+    assert.equal(this.server.db.applicants[0].dcpFirstname, 'first name');
+  });
 });
