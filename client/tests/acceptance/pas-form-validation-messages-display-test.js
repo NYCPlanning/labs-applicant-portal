@@ -41,12 +41,12 @@ module('Acceptance | pas form validation messages display', function(hooks) {
     // save button SHOULD be disabled because dcpRevisedprojectname has incorrect length
     assert.dom('[data-test-save-button]').hasAttribute('disabled');
 
-    // dcpDescriptionofprojectgeography (length limits)
-    assert.dom('[data-test-validation-message="dcpDescriptionofprojectgeography"]').doesNotExist();
+    // dcpDescriptionofprojectareageography (length limits)
+    assert.dom('[data-test-validation-message="dcpDescriptionofprojectareageography"]').doesNotExist();
     await fillIn('[data-test-textarea="dcpDescriptionofprojectareageography"]', exceedMaximum(2000, 'String'));
-    assert.dom('[data-test-validation-message="dcpDescriptionofprojectgeography"]').exists();
+    assert.dom('[data-test-validation-message="dcpDescriptionofprojectareageography"]').exists();
     await fillIn('[data-test-textarea="dcpDescriptionofprojectareageography"]', 'my short description');
-    assert.dom('[data-test-validation-message="dcpDescriptionofprojectgeography"]').doesNotExist();
+    assert.dom('[data-test-validation-message="dcpDescriptionofprojectareageography"]').doesNotExist();
 
     // dcpUrbanareaname (length limits and presence required in certain conditions)
     assert.dom('[data-test-validation-message="dcpUrbanareaname"]').doesNotExist();
