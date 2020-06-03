@@ -71,8 +71,11 @@
         Addresses
       </h3>
       <ul class="no-bullet">
-        {{#each @package.pasForm.projectAddresses as |address|}}
-          <li class="ruled-adjacent tight">
+        {{#each @package.pasForm.projectAddresses as |address idx|}}
+          <li
+            class="ruled-adjacent tight"
+            data-test-projectAddress={{idx}}
+          >
             <strong>
               {{address.dcpConcatenatedaddressvalidated}}
             </strong>
