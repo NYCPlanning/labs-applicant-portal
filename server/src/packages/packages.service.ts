@@ -48,7 +48,8 @@ export class PackagesService {
         dcp_dcp_applicantinformation_dcp_pasform,
         dcp_dcp_applicantrepinformation_dcp_pasform,
         dcp_package,
-        dcp_dcp_projectbbl_dcp_pasform($filter=statecode eq 0)
+        dcp_dcp_projectbbl_dcp_pasform($filter=statecode eq 0),
+        dcp_dcp_projectaddress_dcp_pasform
     `);
 
     // drive-by redefine because the sharepoint lookup
