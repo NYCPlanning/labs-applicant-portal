@@ -9,7 +9,7 @@
 
       <ul class="no-bullet">
         {{#each @fileManager.existingFiles as |file idx|}}
-          <li {{animate-with 'slide-in-bottom' 'slide-in-bottom-active'}}>
+          <li class="slide-in-bottom">
             <div class="grid-x">
               <div class="cell auto">
                 <a
@@ -42,7 +42,7 @@
       </ul>
       <hr>
       {{#if (or @fileManager.filesToDelete @fileManager.filesToUpload.files)}}
-        <h6 class="medium-margin-bottom" {{animate-with 'slide-in-top' 'slide-in-top-active'}}>
+        <h6 class="medium-margin-bottom slide-in-top">
           To be
           {{if @fileManager.filesToUpload.files 'uploaded'}}
           {{if (and @fileManager.filesToDelete @fileManager.filesToUpload.files) '/'}}
@@ -52,7 +52,7 @@
       {{/if}}
       <ul class="no-bullet">
         {{#each @fileManager.filesToDelete as |file idx|}}
-          <li {{animate-with 'slide-in-top' 'slide-in-top-active'}}>
+          <li class="slide-in-top">
             <div class="grid-x">
               <div class="cell auto">
                 <b
@@ -81,7 +81,7 @@
       </ul>
       <ul class="no-bullet">
         {{#each @fileManager.filesToUpload.files as |file idx|}}
-          <li {{animate-with 'slide-in-top' 'slide-in-top-active'}}>
+          <li class="slide-in-top">
             <div class="grid-x">
               <div class="cell auto">
                 <b
