@@ -7,7 +7,7 @@ export default class PackagesRoute extends Route.extend(AuthenticatedRouteMixin)
   async model(params) {
     const projectPackage = await this.store.findRecord('package', params.id, {
       reload: true,
-      include: 'pas-form.bbls,project',
+      include: 'pas-form.bbls,pas-form.project-addresses,project',
     });
 
     // manually generate a file factory

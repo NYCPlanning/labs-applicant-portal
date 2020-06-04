@@ -6,6 +6,25 @@ import { hbs } from 'ember-cli-htmlbars';
 module('Integration | Component | packages/pas-form/show', function(hooks) {
   setupRenderingTest(hooks);
 
+  test('Displays Project Addresses', async function(assert) {
+    this.set('packagePasForm', {
+      pasForm: {
+        projectAddresses: [
+          {
+            dcpConcatenatedaddressvalidated: '77 Frederick Douglas',
+          },
+          {
+            dcpConcatenatedaddressvalidated: '3 Adam Clayton Powell Jr.',
+          },
+        ],
+      },
+    });
+
+    await render(hbs`<Packages::PasForm::Show @package={{this.packagePasForm}} />`);
+
+    assert.dom('[data-test-projectAddress="0"]').hasText('77 Frederick Douglas');
+  });
+
   test('Displays all proposed development types', async function(assert) {
     this.set('packageHasAllTypes', {
       pasForm: {

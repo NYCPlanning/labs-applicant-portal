@@ -49,7 +49,9 @@
         <span id="project-geography" class="section-anchor"></span>
         Project Geography
       </h2>
-
+      <h3>
+        BBLs
+      </h3>
       <ul class="no-bullet">
         {{#each @package.pasForm.bbls as |bbl|}}
           <li class="ruled-adjacent tight">
@@ -62,6 +64,21 @@
             {{#if bbl.dcpPartiallot}}
               <span class="text-silver">|</span> partial lot
             {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+      <h3>
+        Addresses
+      </h3>
+      <ul class="no-bullet">
+        {{#each @package.pasForm.projectAddresses as |address idx|}}
+          <li
+            class="ruled-adjacent tight"
+            data-test-projectAddress={{idx}}
+          >
+            <strong>
+              {{address.dcpConcatenatedaddressvalidated}}
+            </strong>
           </li>
         {{/each}}
       </ul>
