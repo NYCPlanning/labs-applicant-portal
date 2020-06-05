@@ -9,7 +9,7 @@ import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { selectChoose } from 'ember-power-select/test-support';
 
-module('Integration | Component | land-use-action', function(hooks) {
+module('Integration | Component | land-use-action-editor', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -20,8 +20,8 @@ module('Integration | Component | land-use-action', function(hooks) {
 
     // Template block usage:
     await render(hbs`
-      <LandUseAction @pasForm={{this.package.pasForm}}>
-      </LandUseAction>
+      <LandUseActionEditor @pasForm={{this.package.pasForm}}>
+      </LandUseActionEditor>
     `);
 
     assert.equal(this.package.pasForm.dcpPfzoningspecialpermit, undefined);
@@ -66,8 +66,8 @@ module('Integration | Component | land-use-action', function(hooks) {
 
     // Template block usage:
     await render(hbs`
-      <LandUseAction @pasForm={{this.package.pasForm}}>
-      </LandUseAction>
+      <LandUseActionEditor @pasForm={{this.package.pasForm}}>
+      </LandUseActionEditor>
     `);
 
     // Check that user can delete action loaded from db, "Change in CityMap"
@@ -106,8 +106,8 @@ module('Integration | Component | land-use-action', function(hooks) {
 
     // Template block usage:
     await render(hbs`
-      <LandUseAction @pasForm={{this.package.pasForm}}>
-      </LandUseAction>
+      <LandUseActionEditor @pasForm={{this.package.pasForm}}>
+      </LandUseActionEditor>
     `);
 
     assert.dom('[data-test-action-name="Change in CityMap"]').exists({ count: 1 });
@@ -128,8 +128,8 @@ module('Integration | Component | land-use-action', function(hooks) {
 
     // Template block usage:
     await render(hbs`
-      <LandUseAction @pasForm={{this.package.pasForm}}>
-      </LandUseAction>
+      <LandUseActionEditor @pasForm={{this.package.pasForm}}>
+      </LandUseActionEditor>
     `);
 
     await selectChoose('[data-test-land-use-action-picker]', 'Zoning Special Permit');
@@ -161,8 +161,8 @@ module('Integration | Component | land-use-action', function(hooks) {
 
     // Template block usage:
     await render(hbs`
-      <LandUseAction @pasForm={{this.package.pasForm}}>
-      </LandUseAction>
+      <LandUseActionEditor @pasForm={{this.package.pasForm}}>
+      </LandUseActionEditor>
     `);
 
     // selectedActions should be sorted:

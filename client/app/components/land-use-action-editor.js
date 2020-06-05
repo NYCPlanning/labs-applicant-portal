@@ -114,7 +114,7 @@ export const All_LAND_USE_ACTION_OPTIONS = [
   },
 ];
 
-export default class LandUseActionComponent extends Component {
+export default class LandUseActionEditorComponent extends Component {
   // actions added by user in current session (pushed each time user selects from dropdown)
   @tracked actionsAddedByUser = [];
 

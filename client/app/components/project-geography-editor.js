@@ -15,7 +15,7 @@ const NUMERIC_BOROUGH_MAPPING = {
   5: BOROUGHS_OPTIONSET.STATEN_ISLAND.code,
 };
 
-export default class ProjectGeographyComponent extends Component {
+export default class ProjectGeographyEditorComponent extends Component {
   @service
   store;
 

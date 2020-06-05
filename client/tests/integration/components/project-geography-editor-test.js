@@ -9,7 +9,7 @@ import {
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Integration | Component | project-geography', function(hooks) {
+module('Integration | Component | project-geography-editor', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -33,7 +33,7 @@ module('Integration | Component | project-geography', function(hooks) {
     ];
 
     await render(hbs`
-      <ProjectGeography
+      <ProjectGeographyEditor
         @bbls={{this.bbls}} />
     `);
 
@@ -75,7 +75,7 @@ module('Integration | Component | project-geography', function(hooks) {
     ];
 
     await render(hbs`
-      <ProjectGeography
+      <ProjectGeographyEditor
         @bbls={{this.bbls}} />
     `);
 
@@ -118,7 +118,7 @@ module('Integration | Component | project-geography', function(hooks) {
     ];
 
     await render(hbs`
-      <ProjectGeography
+      <ProjectGeographyEditor
         @bbls={{this.bbls}} />
     `);
 
@@ -172,7 +172,7 @@ module('Integration | Component | project-geography', function(hooks) {
     ];
 
     await render(hbs`
-      <ProjectGeography
+      <ProjectGeographyEditor
         @bbls={{this.bbls}} />
     `);
 
@@ -209,7 +209,7 @@ module('Integration | Component | project-geography', function(hooks) {
     this.bbls = [];
 
     await render(hbs`
-      <ProjectGeography
+      <ProjectGeographyEditor
         @bbls={{this.bbls}} />
     `);
 

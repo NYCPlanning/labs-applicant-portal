@@ -74,7 +74,7 @@
           </p>
 
           <div data-test-section="project-geography">
-            <ProjectGeography
+            <ProjectGeographyEditor
               @bbls={{this.pasForm.bbls}}
               @project={{this.package.project}}
             />
@@ -106,7 +106,7 @@
           <p class="text-small">
             Note: This is preliminary information and may change following discussion with NYC Planning.
           </p>
-          <LandUseAction
+          <LandUseActionEditor
             @pasForm={{saveable-form.saveableChanges}}
             @submittableChanges={{saveable-form.submittableChanges}}
           />
