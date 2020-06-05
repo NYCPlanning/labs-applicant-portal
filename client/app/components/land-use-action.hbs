@@ -16,12 +16,12 @@
   </label>
 </div>
 {{#if this.sortedSelectedActions}}
-  <h5 {{animate-with 'slide-in-top' 'slide-in-top-active'}}>
+  <h5 class="slide-in-top">
     Land Use Actions Included in This Project
   </h5>
 {{/if}}
 {{#each this.sortedSelectedActions as |landUseAction|}}
-  <fieldset class="fieldset relative" {{animate-with 'scale-fade-in' 'scale-fade-in-active'}}>
+  <fieldset class="fieldset relative scale-fade-in">
     <legend>
       <strong data-test-action-name="{{landUseAction.name}}">{{landUseAction.name}}</strong>
     </legend>

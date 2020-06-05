@@ -1,7 +1,7 @@
 <div>
   <ul class="no-bullet">
     {{#each this.displayApplicants as |applicant index|}}
-      <li {{animate-with 'scale-fade-in' 'scale-fade-in-active'}}>
+      <li class="scale-fade-in">
         <Packages::ApplicantFieldset
           @elementId={{concat 'applicant-fieldset-' index}}
           @applicant={{applicant}}
