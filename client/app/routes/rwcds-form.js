@@ -7,7 +7,7 @@ export default class RwcdsFormRoute extends Route.extend(AuthenticatedRouteMixin
   async model(params) {
     const rwcdsFormPackage = await this.store.findRecord('package', params.id, {
       reload: true,
-      include: 'rwcds-form,project',
+      include: 'rwcds-form,project,rwcds-form.affectedZoningResolutions',
     });
 
     // manually generate a file factory
