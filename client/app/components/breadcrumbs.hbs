@@ -9,7 +9,12 @@
       {{@package.project.dcpProjectname}}
     </li>
     <li class="disabled">
-      Pre-Application Statement
+      {{#if (eq @package.dcpPackagetype '717170000')}}
+        Pre-Application Statement
+      {{/if}}
+      {{#if (eq @package.dcpPackagetype '717170004')}}
+        Reasonable Worst Case Development Scenario
+      {{/if}}
     </li>
     <li>
       <span class="show-for-sr">Current: </span> {{this.router.currentRoute.localName}}

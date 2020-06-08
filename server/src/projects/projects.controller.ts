@@ -17,6 +17,7 @@ import { AuthenticateGuard } from '../authenticate.guard';
 export const PROJECT_ATTRS = [
   'dcp_projectname',
   'dcp_name',
+  'dcp_borough',
   'statecode',
   'statuscode',
   'dcp_visibility',
