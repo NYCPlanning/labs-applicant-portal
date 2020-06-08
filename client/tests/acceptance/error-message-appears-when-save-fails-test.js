@@ -30,7 +30,7 @@ module('Acceptance | error message appears when save fails', function(hooks) {
 
     this.server.patch('/pas-forms/:id', { errors: [{ detail: 'server problem with pasForm' }] }, 500); // force mirage to error
 
-    await visit('/packages/1/edit');
+    await visit('/pas-form/1/edit');
 
     assert.dom('[data-test-error-message]').doesNotExist();
 
@@ -60,7 +60,7 @@ module('Acceptance | error message appears when save fails', function(hooks) {
 
     this.server.patch('/packages/:id', { errors: [{ detail: 'server problem with package' }] }, 500); // force mirage to error
 
-    await visit('/packages/2/edit');
+    await visit('/pas-form/2/edit');
 
     assert.dom('[data-test-error-message]').doesNotExist();
 
@@ -99,7 +99,7 @@ module('Acceptance | error message appears when save fails', function(hooks) {
 
     this.server.patch('/pas-forms/:id', { errors: [{ detail: 'server problem with pasForm' }] }, 500); // force mirage to error
 
-    await visit('/packages/1/edit');
+    await visit('/pas-form/1/edit');
 
     assert.dom('[data-test-error-message]').doesNotExist();
 
@@ -112,6 +112,6 @@ module('Acceptance | error message appears when save fails', function(hooks) {
     assert.dom('[data-test-error-message]').includesText('server problem with pasForm');
 
     // make sure route did not transition
-    assert.equal(currentURL(), '/packages/1/edit');
+    assert.equal(currentURL(), '/pas-form/1/edit');
   });
 });
