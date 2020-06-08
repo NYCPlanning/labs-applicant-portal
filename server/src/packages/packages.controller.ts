@@ -54,6 +54,47 @@ export const PASFORM_PROJECTADDRESS_ATTRS = [
   'statecode',
 ]
 
+export const RWCDSFORM_ATTRS = [
+  'dcp_describethewithactionscenario',
+  'dcp_isplannigondevelopingaffordablehousing',
+  'dcp_includezoningtextamendment',
+  'dcp_existingconditions',
+  'processid',
+  'statecode',
+  'importsequencenumber',
+  'versionnumber',
+  'dcp_rationalbehindthebuildyear',
+  'createdon',
+  'modifiedon',
+  'dcp_isapplicantseekingaction',
+  'dcp_whichactionsfromotheragenciesaresought',
+  'dcp_proposedprojectdevelopmentdescription',
+  'dcp_version',
+  'dcp_projectsitedescription',
+  'dcp_sitehistory',
+  'dcp_purposeandneedfortheproposedaction',
+  'dcp_describethenoactionscenario',
+  'dcp_applicant',
+  'dcp_hasprojectchangedsincesubmissionofthepas',
+  'traversedpath',
+  'statuscode',
+  'dcp_borough',
+  'dcp_projectname',
+  'dcp_rwcdsexplanation',
+  'dcp_communitydistrict',
+  'dcp_howdidyoudeterminethenoactionscenario',
+  'dcp_name',
+  'dcp_isrwcdsscenario',
+  'timezoneruleversionnumber',
+  'dcp_howdidyoudeterminethiswithactionscena',
+  'dcp_buildyear',
+  'dcp_developmentsiteassumptions',
+  'dcp_constructionphasing',
+  'dcp_date',
+  'overriddencreatedon',
+  'utcconversiontimezonecode',
+]
+
 @UseInterceptors(new JsonApiSerializeInterceptor('packages', {
   id: 'dcp_packageid',
   attributes: [
@@ -65,6 +106,7 @@ export const PASFORM_PROJECTADDRESS_ATTRS = [
 
     // entity relationships
     'pas-form',
+    'rwcds-form',
     'project',
   ],
   project: {
@@ -103,19 +145,28 @@ export const PASFORM_PROJECTADDRESS_ATTRS = [
       ],
     },
   },
+  'rwcds-form': {
+    ref: 'dcp_rwcdsformid',
+    attributes: [
+      ...RWCDSFORM_ATTRS,
+    ],
+  },
 
   // Transform here should only be used for remapping
   // navigation links into cleaner names as well as
   // handling special virtual properties that do not
   // come from CRM 
   transform(projectPackage) {
-    const { dcp_pasform: pasForm } = projectPackage;
+    // TODO: Consider creating separate endpoints for each
+    // form, or some other solution, to avoid the
+    // forking logic within the package controller/service
+    // that handles the indiosyncracies of each form.
+    const {
+      dcp_pasform: pasForm,
+      dcp_rwcdsform: rwcdsForm
+    } = projectPackage;
 
-    if (!pasForm) {
-      return {
-        ...projectPackage,
-      };
-    } else {
+    if (pasForm) {
       return {
         ...projectPackage,
         'pas-form': {
@@ -140,6 +191,17 @@ export const PASFORM_PROJECTADDRESS_ATTRS = [
           bbls: pasForm.dcp_dcp_projectbbl_dcp_pasform,
         },
       }
+    } else if (rwcdsForm) {
+      return {
+        ...projectPackage,
+        'rwcds-form': {
+          ...rwcdsForm,
+        }
+      }
+    } else {
+      return {
+        ...projectPackage,
+      };
     }
   },
 }))
