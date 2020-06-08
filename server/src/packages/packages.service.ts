@@ -3,6 +3,69 @@ import { CrmService } from '../crm/crm.service';
 import { pick } from 'underscore';
 import { PACKAGE_ATTRS } from './packages.controller';
 
+const PACKAGE_TYPE_CODES = {
+  INFORMATION_MEETING: {
+    code: 717170014,
+    label: 'Information Meeting',
+  },
+  PAS_PACKAGE: {
+    code: 717170000,
+    label: 'PAS Package',
+  },
+  DRAFT_LU_PACKAGE: {
+    code: 717170001,
+    label: 'Draft LU Package',
+  },
+  FILED_LU_PACKAGE: {
+    code: 717170011,
+    label: 'Filed LU Package',
+  },
+  DRAFT_EAS: {
+    code: 717170002,
+    label: 'Draft EAS',
+  },
+  FILED_EAS: {
+    code: 717170012,
+    label: 'Filed EAS',
+  },
+  EIS: {
+    code: 717170003,
+    label: 'EIS',
+  },
+  PDEIS: {
+    code: 717170013,
+    label: 'PDEIS',
+  },
+  RWCDS: {
+    code: 717170004,
+    label: 'RWCDS',
+  },
+  LEGAL: {
+    code: 717170005,
+    label: 'Legal',
+  },
+  WRP_PACKAGE: {
+    code: 717170006,
+    label: 'WRP Package',
+  },
+  TECHNICAL_MEMO: {
+    code: 717170007,
+    label: 'Technical Memo',
+  },
+  DRAFT_SCOPE_OF_WORK: {
+    code: 717170008,
+    label: 'Draft Scope of Work',
+  },
+  FINAL_SCOPE_OF_WORK: {
+    code: 717170009,
+    label: 'Final Scope of Work',
+  },
+  WORKING_PACKAGE: {
+    code: 717170010,
+    label: 'Working Package',
+  },
+}
+
 @Injectable()
 export class PackagesService {
   constructor(private readonly crmService: CrmService) {}
@@ -25,7 +88,7 @@ export class PackagesService {
 
     // Double network request approach
     const { records: [firstPackage] } = await this.crmService.get('dcp_packages', `
-      $select=_dcp_pasform_value,dcp_packageid,dcp_name
+      $select=_dcp_rwcdsform_value,_dcp_pasform_value,dcp_packagetype,dcp_packageid,dcp_name
       &$filter=dcp_packageid eq ${packageId}
       &$expand=dcp_project
     `);
@@ -35,53 +98,92 @@ export class PackagesService {
     }
 
     const {
-      _dcp_pasform_value,
+      dcp_packagetype,
       dcp_project,
       dcp_packageid,
       dcp_name,
+      _dcp_pasform_value,
+      _dcp_rwcdsform_value,
     } = firstPackage;
 
-    const { records: [projectPackageForm] } = await this.crmService.get('dcp_pasforms', `
+    if (dcp_packagetype === PACKAGE_TYPE_CODES['PAS_PACKAGE'].code) {
+      const { records: [pasForm] } = await this.crmService.get(`dcp_pasforms`, `
       $filter=
         dcp_pasformid eq ${_dcp_pasform_value}
-      &$expand=
-        dcp_dcp_applicantinformation_dcp_pasform,
+      &$expand=dcp_dcp_applicantinformation_dcp_pasform,
         dcp_dcp_applicantrepinformation_dcp_pasform,
         dcp_package,
         dcp_dcp_projectbbl_dcp_pasform($filter=statecode eq 0),
         dcp_dcp_projectaddress_dcp_pasform
+      `);
+
+       // drive-by redefine because the sharepoint lookup
+      // is failing for some reason and we don't want it
+      // to take the entire system down with it.
+      let documents = [];
+
+      try {
+        const { value } = await this.findPackageSharepointDocuments(
+          dcp_name,
+          dcp_packageid,
+        );
+        documents = value;
+      } catch (e) {
+        console.log('Sharepoint request failed:', e);
+      }
+
+      return {
+        ...pasForm.dcp_package,
+        dcp_pasform: {
+          ...pasForm,
+
+          dcp_revisedprojectname: pasForm.dcp_revisedprojectname
+          || dcp_project.dcp_projectname,
+        },
+        project: dcp_project,
+        documents: documents.map(document => ({
+          name: document['Name'],
+          timeCreated: document['TimeCreated'],
+          serverRelativeUrl: document['ServerRelativeUrl'],
+        })),
+      };
+    } else if (dcp_packagetype === PACKAGE_TYPE_CODES['RWCDS'].code) {
+      const { records: [rwcdsForm] } = await this.crmService.get(`dcp_rwcdsforms`, `
+      $filter=
+        dcp_rwcdsformid eq ${_dcp_rwcdsform_value}
+      &$expand=dcp_package
     `);
 
-    // drive-by redefine because the sharepoint lookup
-    // is failing for some reason and we don't want it
-    // to take the entire system down with it.
-    let documents = [];
+      let documents = [];
 
-    try {
-      const { value } = await this.findPackageSharepointDocuments(
-        dcp_name,
-        dcp_packageid,
-      );
-      documents = value;
-    } catch (e) {
-      console.log('Sharepoint request failed:', e);
+      try {
+        const { value } = await this.findPackageSharepointDocuments(
+          dcp_name,
+          dcp_packageid,
+        );
+        documents = value;
+      } catch (e) {
+        console.log('Sharepoint request failed:', e);
+      }
+
+      return {
+        ...rwcdsForm.dcp_package,
+        dcp_rwcdsform: {
+          ...rwcdsForm,
+        },
+        project: dcp_project,
+        documents: documents.map(document => ({
+          name: document['Name'],
+          timeCreated: document['TimeCreated'],
+          serverRelativeUrl: document['ServerRelativeUrl'],
+        })),
+      };
+    } else {
+      throw new HttpException({
+        "code": "INVALID_PACKAGE_TYPE",
+        "message": 'Requested package has invalid type.',
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-    return {
-      ...projectPackageForm.dcp_package,
-      dcp_pasform: {
-        ...projectPackageForm,
-
-        // handling for setting the default value of the dcp_revisedprojectname.
-        dcp_revisedprojectname: projectPackageForm.dcp_revisedprojectname || dcp_project.dcp_projectname,
-      },
-      project: dcp_project,
-      documents: documents.map(document => ({
-        name: document['Name'],
-        timeCreated: document['TimeCreated'],
-        serverRelativeUrl: document['ServerRelativeUrl'],
-      })),
-    };
   }
 
   async update(id, body) {
