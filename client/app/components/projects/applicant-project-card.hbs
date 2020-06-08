@@ -22,18 +22,36 @@
     {{@project.dcpApplicantCustomerValue}}
   </p>
 
-  <LinkTo
-    @route='pas-form.edit'
-    @model={{@project.pasPackages.firstObject.id}}
-    class="button small"
-    data-test-project="edit-pas"
-  >
-    <FaIcon @icon="pen" @prefix="fas" />
-    {{#let @project.pasPackages.firstObject.dcpPackageversion as |version|}}
-      Edit Pre-Application Statement
-      {{#if (gt version 1)}}
-        (Version {{version}})
-      {{/if}}
-    {{/let}}
-  </LinkTo>
+  {{#if @project.pasPackages}}
+    <LinkTo
+      @route='pas-form.edit'
+      @model={{@project.pasPackages.firstObject.id}}
+      class="button small"
+      data-test-project="edit-pas"
+    >
+      <FaIcon @icon="pen" @prefix="fas" />
+      {{#let @project.pasPackages.firstObject.dcpPackageversion as |version|}}
+        Edit Pre-Application Statement
+        {{#if (gt version 1)}}
+          (Version {{version}})
+        {{/if}}
+      {{/let}}
+    </LinkTo>
+  {{/if}}
+  {{#if @project.rwcdsPackages}}
+    <LinkTo
+      @route='rwcds-form.edit'
+      @model={{@project.rwcdsPackages.firstObject.id}}
+      class="button small"
+      data-test-project="edit-rwcds"
+    >
+      <FaIcon @icon="pen" @prefix="fas" />
+      {{#let @project.rwcdsPackages.firstObject.dcpPackageversion as |version|}}
+        Edit RWCDS
+        {{#if (gt version 1)}}
+          (Version {{version}})
+        {{/if}}
+      {{/let}}
+    </LinkTo>
+  {{/if}}
 </li>

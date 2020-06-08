@@ -8,28 +8,8 @@ export default class ProjectsController extends Controller {
   // TODO: organize this business logic as computed properties on the projects model
   // projects for applicant to do
   get applicantProjects () {
-    return this.model.filter((project) => project.pasPackages.some((projectPackage) => {
-      if (
-        projectPackage.statuscode === PACKAGE_STATUS_OPTIONSET.PACKAGE_PREPARATION.code
-        && [
-          PACKAGE_VISIBILITY_OPTIONSET.APPLICANT_ONLY.code,
-          PACKAGE_VISIBILITY_OPTIONSET.GENERAL_PUBLIC.code,
-        ].includes(projectPackage.dcpVisibility)
-      ) {
-        return true;
-      }
-      return false;
-    }));
-  }
-
-  // projects for nyc planning to do.
-  // These are all other returned projects that are not in applicantProjects.
-  // (I.e. this list includes projects with no packages).
-  get planningProjects () {
-    return this.model.filter((project) => {
-      // if pasPackages is empty, some() automatically returnse false, but we want to return true.
-      if (project.pasPackages.length === 0) return true;
-      return project.pasPackages.some((projectPackage) => {
+    return [
+      ...this.model.filter((project) => project.pasPackages.some((projectPackage) => {
         if (
           projectPackage.statuscode === PACKAGE_STATUS_OPTIONSET.PACKAGE_PREPARATION.code
           && [
@@ -37,11 +17,32 @@ export default class ProjectsController extends Controller {
             PACKAGE_VISIBILITY_OPTIONSET.GENERAL_PUBLIC.code,
           ].includes(projectPackage.dcpVisibility)
         ) {
-          return false;
+          return true;
         }
-        return true;
-      });
-    });
+        return false;
+      })),
+      ...this.model.filter((project) => project.rwcdsPackages.some((projectPackage) => {
+        if (
+          projectPackage.statuscode === PACKAGE_STATUS_OPTIONSET.PACKAGE_PREPARATION.code
+          && [
+            PACKAGE_VISIBILITY_OPTIONSET.APPLICANT_ONLY.code,
+            PACKAGE_VISIBILITY_OPTIONSET.GENERAL_PUBLIC.code,
+          ].includes(projectPackage.dcpVisibility)
+        ) {
+          return true;
+        }
+        return false;
+      })),
+    ];
+  }
+
+  // projects for nyc planning to do.
+  // These are all other returned projects that are not in applicantProjects.
+  // (I.e. this list includes projects with no packages).
+  get planningProjects () {
+    return this.model.filter((project) => {
+      return !this.applicantProjects.includes(project);
+    })
   }
 
   // TODO: Possibly improve this sort to consider the house numbers
