@@ -13,7 +13,12 @@ Router.map(function() { // eslint-disable-line
   this.route('login');
   this.route('logout');
 
-  this.route('packages', { path: 'packages/:id' }, function () {
+  this.route('pas-form', { path: 'pas-form/:id' }, function () {
+    this.route('edit');
+    this.route('show', { path: '/' });
+  });
+
+  this.route('rwcds-form', { path: 'rwcds/:id' }, function () {
     this.route('edit');
     this.route('show', { path: '/' });
   });

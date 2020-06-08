@@ -25,7 +25,7 @@ module('Acceptance | pas form validation messages display', function(hooks) {
       pasForm: this.server.create('pas-form'),
     });
 
-    await visit('/packages/1/edit');
+    await visit('/pas-form/1/edit');
 
     assert.dom('[data-test-submit-button]').hasAttribute('disabled');
     assert.dom('[data-test-save-button]').hasAttribute('disabled');

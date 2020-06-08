@@ -20,8 +20,8 @@ module('Acceptance | user can interact with packages', function(hooks) {
 
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form,project' });
 
-    await visit('/packages/1');
+    await visit('/pas-form/1');
 
-    assert.equal(currentURL(), '/packages/1');
+    assert.equal(currentURL(), '/pas-form/1');
   });
 });

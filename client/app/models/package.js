@@ -100,6 +100,9 @@ export default class PackageModel extends Model {
   @belongsTo('pas-form', { async: false })
   pasForm;
 
+  @belongsTo('rwcds-form', { async: false })
+  rwcdsForm;
+
   @attr('number')
   statuscode;
 

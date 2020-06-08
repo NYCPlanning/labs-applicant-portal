@@ -29,7 +29,7 @@ module('Acceptance | user can click package edit', function(hooks) {
     await visit('/projects');
     await click('[data-test-project="edit-pas"]');
 
-    assert.equal(currentURL(), '/packages/1/edit');
+    assert.equal(currentURL(), '/pas-form/1/edit');
   });
 
   test('User can visit save and submit package', async function (assert) {
@@ -51,7 +51,7 @@ module('Acceptance | user can click package edit', function(hooks) {
     // within the pas-form/edit Component submit() task
     await waitFor('[data-test-show="dcpRevisedprojectname"]');
 
-    assert.equal(currentURL(), '/packages/1');
+    assert.equal(currentURL(), '/pas-form/1');
   });
 
   test('Save button is enabled when file marked for deletion', async function (assert) {
@@ -61,7 +61,7 @@ module('Acceptance | user can click package edit', function(hooks) {
       project,
     });
 
-    await visit('/packages/2/edit');
+    await visit('/pas-form/2/edit');
 
     assert.dom('[data-test-save-button]').isDisabled();
 
@@ -76,7 +76,7 @@ module('Acceptance | user can click package edit', function(hooks) {
       project,
     });
 
-    await visit('/packages/2/edit');
+    await visit('/pas-form/2/edit');
 
     assert.dom('[data-test-save-button]').isDisabled();
 
@@ -93,7 +93,7 @@ module('Acceptance | user can click package edit', function(hooks) {
       project,
     });
 
-    await visit('/packages/2/edit');
+    await visit('/pas-form/2/edit');
 
     const file = new File(['foo'], 'Zoning Application.pdf', { type: 'text/plain' });
     await selectFiles('#FileUploader2 > input', file);
@@ -112,7 +112,7 @@ module('Acceptance | user can click package edit', function(hooks) {
   test('Urban Renewal Area sub Q shows conditionally', async function (assert) {
     this.server.create('project', 1, 'applicant');
 
-    await visit('/packages/1/edit');
+    await visit('/pas-form/1/edit');
     assert.dom('[data-test-input="dcpUrbanareaname"]').doesNotExist();
 
     await click('[data-test-radio="dcpUrbanrenewalarea"][data-test-radio-option="Yes"]');
@@ -122,7 +122,7 @@ module('Acceptance | user can click package edit', function(hooks) {
   test('SEQRA or CEQR sub Q shows conditionally', async function (assert) {
     this.server.create('project', 1, 'applicant');
 
-    await visit('/packages/1/edit');
+    await visit('/pas-form/1/edit');
 
     assert.dom('[data-test-input="dcpPleaseexplaintypeiienvreview"]').doesNotExist();
     await click('[data-test-radio="dcpLanduseactiontype2"][data-test-radio-option="Yes"]');
@@ -132,7 +132,7 @@ module('Acceptance | user can click package edit', function(hooks) {
   test('Industrial Business Zone sub Q shows conditionally', async function (assert) {
     this.server.create('project', 1, 'applicant');
 
-    await visit('/packages/1/edit');
+    await visit('/pas-form/1/edit');
 
     assert.dom('[data-test-input="dcpProjectareaindutrialzonename"]').doesNotExist();
     await click('[data-test-radio="dcpProjectareaindustrialbusinesszone"][data-test-radio-option="Yes"]');
@@ -142,7 +142,7 @@ module('Acceptance | user can click package edit', function(hooks) {
   test('Landmark or Historic District sub Q shows conditionally', async function (assert) {
     this.server.create('project', 1, 'applicant');
 
-    await visit('/packages/1/edit');
+    await visit('/pas-form/1/edit');
 
     assert.dom('[data-test-input="dcpProjectarealandmarkname"]').doesNotExist();
     await click('[data-test-radio="dcpIsprojectarealandmark"][data-test-radio-option="Yes"]');
@@ -152,7 +152,7 @@ module('Acceptance | user can click package edit', function(hooks) {
   test('Other Type sub Q shows conditionally', async function (assert) {
     this.server.create('project', 1, 'applicant');
 
-    await visit('/packages/1/edit');
+    await visit('/pas-form/1/edit');
 
     assert.dom('[data-test-input="dcpProposeddevelopmentsiteotherexplanation"]').doesNotExist();
     await click('[data-test-checkbox="dcpProposeddevelopmentsiteinfoother"]');
@@ -162,7 +162,7 @@ module('Acceptance | user can click package edit', function(hooks) {
   test('MIH sub Q shows conditionally', async function (assert) {
     this.server.create('project', 1, 'applicant');
 
-    await visit('/packages/1/edit');
+    await visit('/pas-form/1/edit');
 
     assert.dom('[data-test-input="dcpInclusionaryhousingdesignatedareaname"]').doesNotExist();
     await click('[data-test-radio="dcpIsinclusionaryhousingdesignatedarea"][data-test-radio-option="Yes"]');
@@ -172,7 +172,7 @@ module('Acceptance | user can click package edit', function(hooks) {
   test('Funding Source sub Q shows conditionally', async function (assert) {
     this.server.create('project', 1, 'applicant');
 
-    await visit('/packages/1/edit');
+    await visit('/pas-form/1/edit');
 
     assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="City"]').doesNotExist();
     assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="State"]').doesNotExist();
@@ -189,7 +189,7 @@ module('Acceptance | user can click package edit', function(hooks) {
   test('user can save pas form', async function (assert) {
     this.server.create('project', 1, 'applicant');
 
-    await visit('/packages/1/edit');
+    await visit('/pas-form/1/edit');
 
     // save button should start disabled
     // TODO: fix this test.  The form starts dirty because we implicitly create a new applicant when the applicants array is empty
@@ -213,7 +213,7 @@ module('Acceptance | user can click package edit', function(hooks) {
     this.server.create('project', 1, 'applicant');
 
     // render form
-    await visit('/packages/1/edit');
+    await visit('/pas-form/1/edit');
 
     await fillIn('[data-test-input="dcpRevisedprojectname"]', 'my project name');
 
@@ -246,7 +246,7 @@ module('Acceptance | user can click package edit', function(hooks) {
       project: this.server.create('project'),
     });
 
-    await visit('/packages/1/edit');
+    await visit('/pas-form/1/edit');
 
     await fillIn('[data-test-input="dcpRevisedprojectname"]', 'my project name');
 
@@ -278,7 +278,7 @@ module('Acceptance | user can click package edit', function(hooks) {
       project: this.server.create('project', { id: '42' }),
     });
 
-    await visit('/packages/1/edit');
+    await visit('/pas-form/1/edit');
     await fillIn('[data-test-section="project-geography"] .map-search-input', '1000120001');
     await triggerKeyEvent('[data-test-section="project-geography"] .labs-geosearch', 'keypress', 13);
     await click('[data-test-save-button]');
@@ -314,7 +314,7 @@ module('Acceptance | user can click package edit', function(hooks) {
       project: this.server.create('project'),
     });
 
-    await visit('/packages/1/edit');
+    await visit('/pas-form/1/edit');
 
     // dcpInclusionaryhousingdesignatedareaname (radio button) -----------------------------------------
     // user selects "Yes" radio button and fills out input, then saves
