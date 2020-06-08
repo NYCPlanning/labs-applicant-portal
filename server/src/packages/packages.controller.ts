@@ -3,11 +3,11 @@ import { PackagesService } from './packages.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 import { JsonApiDeserializePipe } from '../json-api-deserialize.pipe';
 import { AuthenticateGuard } from '../authenticate.guard';
-import { PAS_FORM_ATTRIBUTES } from './pas-form/pas-form.controller';
-import { APPLICANT_ATTRIBUTES } from './pas-form/applicants/applicants.controller';
-import { BBL_ATTRIBUTES } from './pas-form/bbls/bbls.controller';
+import { PAS_FORM_ATTRS } from './pas-form/pas-form.controller';
+import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.controller';
+import { BBL_ATTRS } from './pas-form/bbls/bbls.controller';
 import { pick } from 'underscore';
-import { PROJECT_ATTRIBUTES } from '../projects/projects.controller';
+import { PROJECT_ATTRS } from '../projects/projects.controller';
 
 export const PACKAGE_ATTRS = [
   'statuscode',
@@ -17,7 +17,7 @@ export const PACKAGE_ATTRS = [
   'dcp_packageversion',
 ];
 
-export const PASFORM_PROJECTADDRESS_ATTRS = [
+export const PAS_FORM_PROJECTADDRESS_ATTRS = [
   'dcp_validatedpostalcode',
   'dcp_projectaddressid',
   'modifiedon',
@@ -54,7 +54,7 @@ export const PASFORM_PROJECTADDRESS_ATTRS = [
   'statecode',
 ]
 
-export const RWCDSFORM_ATTRS = [
+export const RWCDS_FORM_ATTRS = [
   'dcp_describethewithactionscenario',
   'dcp_isplannigondevelopingaffordablehousing',
   'dcp_includezoningtextamendment',
@@ -112,13 +112,13 @@ export const RWCDSFORM_ATTRS = [
   project: {
     ref: 'dcp_projectid',
     attributes: [
-      ...PROJECT_ATTRIBUTES
+      ...PROJECT_ATTRS
     ],
   },
   'pas-form': {
     ref: 'dcp_pasformid',
     attributes: [
-      ...PAS_FORM_ATTRIBUTES,
+      ...PAS_FORM_ATTRS,
 
       // associations/relationships/navigation links/extensions
       'applicants',
@@ -128,27 +128,27 @@ export const RWCDSFORM_ATTRS = [
     'project-addresses': {
       ref: 'dcp_projectaddressid',
       attributes: [
-        ...PASFORM_PROJECTADDRESS_ATTRS,
+        ...PAS_FORM_PROJECTADDRESS_ATTRS,
       ],
     },
     applicants: {
       ref: 'dcp_applicantinformationid',
       attributes: [
-        ...APPLICANT_ATTRIBUTES,
+        ...APPLICANT_ATTRS,
         'target_entity', // custom attribute to handle the two applicant crm entities
       ],
     },
     bbls: {
       ref: 'dcp_projectbblid',
       attributes: [
-        ...BBL_ATTRIBUTES,
+        ...BBL_ATTRS,
       ],
     },
   },
   'rwcds-form': {
     ref: 'dcp_rwcdsformid',
     attributes: [
-      ...RWCDSFORM_ATTRS,
+      ...RWCDS_FORM_ATTRS,
     ],
   },
 

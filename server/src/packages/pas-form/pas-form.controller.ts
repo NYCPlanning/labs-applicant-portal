@@ -5,7 +5,7 @@ import { JsonApiDeserializePipe } from '../../json-api-deserialize.pipe';
 import { CrmService } from '../../crm/crm.service';
 import { pick } from 'underscore';
 
-export const PAS_FORM_ATTRIBUTES = [
+export const PAS_FORM_ATTRS = [
   // Project Information
   'dcp_revisedprojectname',
 
@@ -115,7 +115,7 @@ export const PAS_FORM_ATTRIBUTES = [
 
 @UseInterceptors(new JsonApiSerializeInterceptor('pas-forms', {
   attributes: [
-    ...PAS_FORM_ATTRIBUTES,
+    ...PAS_FORM_ATTRS,
   ],
 }))
 @UseGuards(AuthenticateGuard)
@@ -126,7 +126,7 @@ export class PasFormController {
 
   @Patch('/:id')
   async update(@Body() body, @Param('id') id) {
-    const allowedAttrs = pick(body, PAS_FORM_ATTRIBUTES);
+    const allowedAttrs = pick(body, PAS_FORM_ATTRS);
 
     await this.crmService.update('dcp_pasforms', id, allowedAttrs);
 
