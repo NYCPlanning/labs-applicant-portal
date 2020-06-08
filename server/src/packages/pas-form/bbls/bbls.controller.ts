@@ -5,7 +5,7 @@ import { JsonApiSerializeInterceptor } from '../../../json-api-serialize.interce
 import { AuthenticateGuard } from '../../../authenticate.guard';
 import { JsonApiDeserializePipe } from '../../../json-api-deserialize.pipe';
 
-export const BBL_ATTRIBUTES = [
+export const BBL_ATTRS = [
   'dcp_partiallot',
   'dcp_developmentsite',
   'dcp_bblnumber',
@@ -17,7 +17,7 @@ export const BBL_ATTRIBUTES = [
 @UseInterceptors(new JsonApiSerializeInterceptor('bbls', {
   id: 'dcp_projectbblid',
   attributes: [
-    ...BBL_ATTRIBUTES,
+    ...BBL_ATTRS,
   ],
 }))
 @UseGuards(AuthenticateGuard)
@@ -28,7 +28,7 @@ export class BblsController {
 
   @Patch('/:id')
   async update(@Body() body, @Param('id') id) {
-    const allowedAttrs = pick(body, BBL_ATTRIBUTES);
+    const allowedAttrs = pick(body, BBL_ATTRS);
 
     await this.crmService.update('dcp_projectbbls', id, allowedAttrs);
 
@@ -40,7 +40,7 @@ export class BblsController {
 
   @Post('/')
   create(@Body() body) {
-    const allowedAttrs = pick(body, BBL_ATTRIBUTES);
+    const allowedAttrs = pick(body, BBL_ATTRS);
 
     if (!body.pas_form || !body.project) throw new HttpException(
       'Missing pas_form or project ids',
