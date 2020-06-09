@@ -1,23 +1,6 @@
-{{!-- TODO: Make this hardcoded breadcrumb trail dynamic--}}
-
 <nav aria-label="You are here:" role="navigation">
   <ul class="breadcrumbs">
-    <li>
-      <LinkTo @route='projects'>My Projects</LinkTo>
-    </li>
-    <li class="disabled">
-      {{@package.project.dcpProjectname}}
-    </li>
-    <li class="disabled">
-      {{#if (eq @package.dcpPackagetype '717170000')}}
-        Pre-Application Statement
-      {{/if}}
-      {{#if (eq @package.dcpPackagetype '717170004')}}
-        Reasonable Worst Case Development Scenario
-      {{/if}}
-    </li>
-    <li>
-      <span class="show-for-sr">Current: </span> {{this.router.currentRoute.localName}}
-    </li>
+    {{yield (component "breadcrumbs-item")}}
   </ul>
 </nav>
+<hr class="large-margin-bottom">

@@ -1,15 +1,6 @@
-{{!-- TODO:  Make this breadcrumb dynamic with application routing --}}
-{{!-- breadcrumb --}}
-<nav aria-label="You are here:" role="navigation">
-  <ul class="breadcrumbs">
-    <li class="text-extra-large">
-      <span class="show-for-sr">Current: </span>
-      My Projects
-    </li>
-  </ul>
-</nav>
-
-<hr class="large-margin-bottom" />
+<Breadcrumbs as |crumb|>
+  <crumb @text="My Projects" @current={{true}} />
+</Breadcrumbs>
 
 <div class="grid-x grid-padding-x">
   <div class="cell large-8">

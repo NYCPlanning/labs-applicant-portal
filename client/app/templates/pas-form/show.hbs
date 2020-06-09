@@ -1,3 +1,9 @@
+<Breadcrumbs as |crumb|>
+  <crumb @text="My Projects" @route='projects' />
+  <crumb @text={{model.project.dcpProjectname}} @disabled={{true}} />
+  <crumb @text="PAS" @current={{true}} />
+</Breadcrumbs>
+
 <Packages::PasForm::Show @package={{@model}} />
 
 {{outlet}}

@@ -1,15 +1,6 @@
-{{!-- TODO:  Make this breadcrumb dynamic with application routing --}}
-{{!-- breadcrumb --}}
-<nav aria-label="You are here:" role="navigation">
-  <ul class="breadcrumbs">
-    <li class="text-extra-large">
-      <span class="show-for-sr">Current: </span>
-      My Projects
-    </li>
-  </ul>
-</nav>
-
-<hr />
+<Breadcrumbs as |crumb|>
+  <crumb @text="My Projects" @current={{true}} />
+</Breadcrumbs>
 
 <div class="text-center xlarge-padding-top xlarge-padding-bottom xlarge-margin-top xlarge-margin-bottom">
   <FaIcon @icon="spinner" @spin={{true}} @pulse={{true}} @size="6x" class="text-silver" />
