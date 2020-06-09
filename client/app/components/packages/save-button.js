@@ -19,7 +19,7 @@ export default class SaveButtonComponent extends Component {
 
   // triggered when the button is clicked
   @task(function* () {
-    yield this.args.onClick();
-  })
+    yield this.args._saveChangeset(this.args.onClick);
+  }).withTestWaiter()
   clickTask;
 }

@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { Changeset } from 'ember-changeset';
-import { task } from 'ember-concurrency';
 import { action } from '@ember/object';
 import lookupValidator from 'ember-changeset-validations';
 
@@ -39,26 +38,15 @@ export default class SaveableFormComponent extends Component {
     this.submittableChanges.validate();
   }
 
-  @action
-  async save() {
-    await this.saveChangeset.perform(this.args.onSave, this.saveableChanges);
-  }
-
-  @action
-  async submit() {
-    await this.saveChangeset.perform(this.args.onSubmit, this.submittableChanges);
-  }
-
-  @task(function* (callback, changeset) {
+  async saveChangeset(changeset, callback) {
     try {
-      yield changeset.execute();
-      yield callback();
-      yield changeset.rollback();
+      await changeset.execute();
+      await callback();
+      await changeset.rollback();
     } catch (error) {
       console.log('Save error:', error);
     }
-  }).withTestWaiter()
-  saveChangeset;
+  }
 
   @action
   validate() {

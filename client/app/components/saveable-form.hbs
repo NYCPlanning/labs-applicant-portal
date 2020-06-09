@@ -6,12 +6,12 @@
   )
 
   saveButton=(component 'packages/save-button'
-    onClick=this.save
+    _saveChangeset=(fn this.saveChangeset this.saveableChanges)
     isEnabled=true
   )
 
   submitButton=(component 'packages/save-button'
-    onClick=this.submit
+    _saveChangeset=(fn this.saveChangeset this.submittableChanges)
     isEnabled=true
     isSubmit=true
   )

@@ -1,8 +1,6 @@
 <SaveableForm
   @model={{this.pasForm}}
   @validators={{array this.saveablePasFormValidations this.submittablePasFormValidations}}
-  @onSave={{this.savePackage}}
-  @onSubmit={{this.submitPackage}}
   as |saveable-form|
 >
 
@@ -762,6 +760,7 @@
       <div class="sticky-sidebar">
         <saveable-form.saveButton
           @isEnabled={{or @package.isDirty (and saveable-form.saveableChanges.isDirty saveable-form.saveableChanges.isValid)}}
+          @onClick={{this.savePackage}}
           data-test-save-button
         />
         {{!-- Error Handling --}}
@@ -793,6 +792,7 @@
                 </div>
                 <div class="cell large-6 small-padding-left">
                   <saveable-form.submitButton
+                    @onClick={{this.submitPackage}}
                     @isEnabled={{saveable-form.submittableChanges.isValid}}
                     class="no-margin"
                     data-test-confirm-submit-button
