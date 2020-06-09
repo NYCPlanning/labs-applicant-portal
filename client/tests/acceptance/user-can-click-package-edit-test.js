@@ -307,4 +307,52 @@ module('Acceptance | user can click package edit', function(hooks) {
 
     assert.dom('[data-test-section="attachments"').hasTextContaining('PAS Form.pdf');
   });
+
+  test('For input dependent on radio button/checkbox -- when user fills out input, then clicks radio button/checkbox that hides input, text is not saved to model', async function(assert) {
+    this.server.create('package', 1, {
+      pasForm: this.server.create('pas-form'),
+      project: this.server.create('project'),
+    });
+
+    await visit('/packages/1/edit');
+
+    // dcpInclusionaryhousingdesignatedareaname (radio button) -----------------------------------------
+    // user selects "Yes" radio button and fills out input, then saves
+    await click('[data-test-radio="dcpIsinclusionaryhousingdesignatedarea"][data-test-radio-option="Yes"]');
+    await fillIn('[data-test-input="dcpInclusionaryhousingdesignatedareaname"]', 'bananas');
+    await click('[data-test-save-button]');
+    await settled();
+    assert.equal(this.server.db.pasForms[0].dcpInclusionaryhousingdesignatedareaname, 'bananas');
+    // user selects "No" radio button and fills out input, then saves
+    await click('[data-test-radio="dcpIsinclusionaryhousingdesignatedarea"][data-test-radio-option="No"]');
+    await click('[data-test-save-button]');
+    await settled();
+    // clicking on the radio button should set the value to an empty string
+    assert.equal(this.server.db.pasForms[0].dcpInclusionaryhousingdesignatedareaname, '');
+    // user re-selects "Yes" radio button and re-fills out input, then saves
+    await click('[data-test-radio="dcpIsinclusionaryhousingdesignatedarea"][data-test-radio-option="Yes"]');
+    await fillIn('[data-test-input="dcpInclusionaryhousingdesignatedareaname"]', 'peaches');
+    await click('[data-test-save-button]');
+    await settled();
+    assert.equal(this.server.db.pasForms[0].dcpInclusionaryhousingdesignatedareaname, 'peaches');
+
+    // dcpProposeddevelopmentsiteotherexplanation (checkbox) -----------------------------------------
+    // user selects checkbox and fills out input, then saves
+    await click('[data-test-checkbox="dcpProposeddevelopmentsiteinfoother"]');
+    await fillIn('[data-test-input="dcpProposeddevelopmentsiteotherexplanation"]', 'pecan pie');
+    await click('[data-test-save-button]');
+    await settled();
+    assert.equal(this.server.db.pasForms[0].dcpProposeddevelopmentsiteotherexplanation, 'pecan pie');
+    await click('[data-test-checkbox="dcpProposeddevelopmentsiteinfoother"]');
+    await click('[data-test-save-button]');
+    await settled();
+    // clicking the checkbox should set the value to an empty string
+    assert.equal(this.server.db.pasForms[0].dcpProposeddevelopmentsiteotherexplanation, '');
+    // user re-selects checkbox and re-fills out input, then saves
+    await click('[data-test-checkbox="dcpProposeddevelopmentsiteinfoother"]');
+    await fillIn('[data-test-input="dcpProposeddevelopmentsiteotherexplanation"]', 'strawberry rhubarb');
+    await click('[data-test-save-button]');
+    await settled();
+    assert.equal(this.server.db.pasForms[0].dcpProposeddevelopmentsiteotherexplanation, 'strawberry rhubarb');
+  });
 });

@@ -16,10 +16,12 @@
   </label>
 </div>
 {{#if this.sortedSelectedActions}}
-  <h5>Land Use Actions Included in This Project</h5>
+  <h5 class="slide-in-top">
+    Land Use Actions Included in This Project
+  </h5>
 {{/if}}
 {{#each this.sortedSelectedActions as |landUseAction|}}
-  <fieldset class="fieldset relative">
+  <fieldset class="fieldset relative scale-fade-in">
     <legend>
       <strong data-test-action-name="{{landUseAction.name}}">{{landUseAction.name}}</strong>
     </legend>
@@ -30,7 +32,7 @@
             <label for="middle-label" class="middle">How many {{landUseAction.name}} actions?</label>
           </div>
           <div class="auto cell">
-            <ActionFormInput 
+            <ActionFormInput
               @pasForm={{@pasForm}}
               @fieldType="number"
               @length="10"
@@ -44,7 +46,7 @@
         </div>
         <label class="action-form-label">
           Where in the Zoning Resolution can this action be found?
-          <ActionFormInput 
+          <ActionFormInput
             @pasForm={{@pasForm}}
             @fieldType="text"
             @length="250"

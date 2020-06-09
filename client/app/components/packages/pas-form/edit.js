@@ -30,7 +30,14 @@ export default class PasFormComponent extends Component {
 
   @action
   async savePackage() {
-    await this.args.package.save();
+    try {
+      await this.args.package.save();
+      await this.args.package.reload();
+    } catch (error) {
+      console.log('Save package error:', error);
+    }
+
+    this.args.package.refreshExistingDocuments();
   }
 
   @action

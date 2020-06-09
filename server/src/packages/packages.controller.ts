@@ -17,6 +17,43 @@ export const PACKAGE_ATTRS = [
   'dcp_packageversion',
 ];
 
+export const PASFORM_PROJECTADDRESS_ATTRS = [
+  'dcp_validatedpostalcode',
+  'dcp_projectaddressid',
+  'modifiedon',
+  'dcp_dmsourceid',
+  'dcp_name',
+  'dcp_validatedxcoordinate',
+  'overriddencreatedon',
+  'dcp_validatedccd',
+  'createdon',
+  'dcp_userinputborough',
+  'dcp_addressvalidated',
+  'dcp_userinputaddressnumber',
+  'dcp_validatedstreet',
+  'dcp_responsewarning',
+  'dcp_userinputunit',
+  'versionnumber',
+  'dcp_migratedlastupdateddate',
+  'statuscode',
+  'dcp_validatedycoordinate',
+  'dcp_validatedborough',
+  'dcp_responseerror',
+  'dcp_validatedcd',
+  'timezoneruleversionnumber',
+  'dcp_validatedzm',
+  'dcp_validatedaddressnumber',
+  'importsequencenumber',
+  'dcp_dcp_validatedbintext',
+  'utcconversiontimezonecode',
+  'dcp_userinputstreet',
+  'dcp_validatedstreetcode',
+  'dcp_concatenatedaddressvalidated',
+  'dcp_validatedaddressoverride',
+  'dcp_addressvalidateddate',
+  'statecode',
+]
+
 @UseInterceptors(new JsonApiSerializeInterceptor('packages', {
   id: 'dcp_packageid',
   attributes: [
@@ -44,7 +81,14 @@ export const PACKAGE_ATTRS = [
       // associations/relationships/navigation links/extensions
       'applicants',
       'bbls',
+      'project-addresses',
     ],
+    'project-addresses': {
+      ref: 'dcp_projectaddressid',
+      attributes: [
+        ...PASFORM_PROJECTADDRESS_ATTRS,
+      ],
+    },
     applicants: {
       ref: 'dcp_applicantinformationid',
       attributes: [
@@ -76,6 +120,7 @@ export const PACKAGE_ATTRS = [
         ...projectPackage,
         'pas-form': {
           ...pasForm,
+          'project-addresses': pasForm.dcp_dcp_projectaddress_dcp_pasform,
           applicants: [
             ...pasForm.dcp_dcp_applicantinformation_dcp_pasform,
             ...pasForm.dcp_dcp_applicantrepinformation_dcp_pasform.map((applicant) => {

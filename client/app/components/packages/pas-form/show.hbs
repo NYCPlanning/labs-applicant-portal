@@ -49,7 +49,9 @@
         <span id="project-geography" class="section-anchor"></span>
         Project Geography
       </h2>
-
+      <h3>
+        BBLs
+      </h3>
       <ul class="no-bullet">
         {{#each @package.pasForm.bbls as |bbl|}}
           <li class="ruled-adjacent tight">
@@ -62,6 +64,21 @@
             {{#if bbl.dcpPartiallot}}
               <span class="text-silver">|</span> partial lot
             {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+      <h3>
+        Addresses
+      </h3>
+      <ul class="no-bullet">
+        {{#each @package.pasForm.projectAddresses as |address idx|}}
+          <li
+            class="ruled-adjacent tight"
+            data-test-projectAddress={{idx}}
+          >
+            <strong>
+              {{address.dcpConcatenatedaddressvalidated}}
+            </strong>
           </li>
         {{/each}}
       </ul>
@@ -466,16 +483,13 @@
         <strong class="cell auto large-padding-right">
           Proposed development type
         </strong>
-        <span class="cell large-3">
-          {{if @package.pasForm.dcpProposeddevelopmentsitenewconstruction "Newly constructed buildings"}}
-          {{if @package.pasForm.dcpProposeddevelopmentsitedemolition "Demolition" }}
-          {{if @package.pasForm.dcpProposeddevelopmentsiteinfoalteration "Alteration"}}
-          {{if @package.pasForm.dcpProposeddevelopmentsiteinfoaddition "Addition" }}
-          {{if @package.pasForm.dcpProposeddevelopmentsitechnageofuse "Change of use"}}
-          {{if @package.pasForm.dcpProposeddevelopmentsiteenlargement "Enlargement"}}
-          {{#if @package.pasForm.dcpProposeddevelopmentsiteinfoother}}
-            Other: {{@package.pasForm.dcpProposeddevelopmentsiteotherexplanation}}
-          {{/if}}
+        <span
+          class="cell large-3"
+          data-test-proposedDevelopmentTypes
+        >
+          <ProposedDevelopmentTypesList
+            @pasForm={{@package.pasForm}}
+          />
         </span>
       </p>
 

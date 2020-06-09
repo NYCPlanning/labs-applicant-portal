@@ -10,6 +10,8 @@ export default class PasFormModel extends Model {
   @hasMany({ async: false })
   bbls;
 
+  @hasMany('project-address', { async: false })
+  projectAddresses;
 
   @attr('string') dcpApplicantnamecompanyorganization;
 

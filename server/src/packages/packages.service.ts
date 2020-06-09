@@ -48,7 +48,8 @@ export class PackagesService {
         dcp_dcp_applicantinformation_dcp_pasform,
         dcp_dcp_applicantrepinformation_dcp_pasform,
         dcp_package,
-        dcp_dcp_projectbbl_dcp_pasform($filter=statecode eq 0)
+        dcp_dcp_projectbbl_dcp_pasform($filter=statecode eq 0),
+        dcp_dcp_projectaddress_dcp_pasform
     `);
 
     // drive-by redefine because the sharepoint lookup
@@ -89,9 +90,14 @@ export class PackagesService {
     return this.crmService.update('dcp_packages', id, allowedAttrs);
   }
 
+  // We retrieve documents from the Sharepoint folder (`folderIdentifier` in the
+  // code below) that holds both documents from past revisions and the current
+  // revision. CRM automatically carries over documents from past revisions into
+  // this folder, and we deliberately upload documents for the latest/current
+  // revision into this folder.
   async findPackageSharepointDocuments(packageName, id:string) {
-    const cleanedId = id.toUpperCase().replace(/-/g, '');
-    const folderIdentifier = `${packageName}_${cleanedId}`;
+    const strippedPackageName = packageName.replace(/-/g, '').replace(/\s+/g, '').replace(/'+/g,'');
+    const folderIdentifier = `${strippedPackageName}_${id.toUpperCase()}`;
 
     return this.crmService.getSharepointFolderFiles(`dcp_package/${folderIdentifier}`);
   }
