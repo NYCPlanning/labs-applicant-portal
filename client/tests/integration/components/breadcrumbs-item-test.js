@@ -6,21 +6,11 @@ import { hbs } from 'ember-cli-htmlbars';
 module('Integration | Component | breadcrumbs-item', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders a breadcrumb list item', async function(assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<BreadcrumbsItem />`);
-
-    assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      <BreadcrumbsItem>
-        template block text
-      </BreadcrumbsItem>
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    await render(hbs`<BreadcrumbsItem @text="foo" />`);
+    assert.equal(this.element.textContent.trim(), 'foo');
   });
 });
