@@ -12,6 +12,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { selectFiles } from 'ember-file-upload/test-support';
+import { selectChoose } from 'ember-power-select/test-support';
 
 module('Acceptance | user can click pas-form edit', function(hooks) {
   setupApplicationTest(hooks);
@@ -354,5 +355,99 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     await click('[data-test-save-button]');
     await settled();
     assert.equal(this.server.db.pasForms[0].dcpProposeddevelopmentsiteotherexplanation, 'strawberry rhubarb');
+  });
+
+  // applicants
+  test('user can see existing applicants', async function(assert) {
+    const project = this.server.create('project', 1, 'applicant');
+    const { pasForm } = project.packages.models[0];
+
+    // 3 scenarios/permutations of kinds of applicants
+    this.server.create('applicant', 'organizationApplicant', { pasForm });
+    this.server.create('applicant', 'individualApplicant', { pasForm });
+    this.server.create('applicant', 'applicantTeamMember', { pasForm });
+
+    await visit('/pas-form/1/edit');
+
+    // there are 3 fieldsets visibile
+    assert.dom('[data-test-applicant-fieldset="0"]').exists();
+    assert.dom('[data-test-applicant-fieldset="1"]').exists();
+    assert.dom('[data-test-applicant-fieldset="2"]').exists();
+  });
+
+  test('user can add new applicants', async function(assert) {
+    this.server.create('project', 1, 'applicant');
+    await visit('/pas-form/1/edit');
+
+    // can add an applicant
+    await click('[data-test-add-applicant-button]');
+    assert.dom('[data-test-applicant-type="Applicant"]').exists();
+
+    // can add an applicant team member
+    await click('[data-test-add-applicant-team-member-button]');
+    assert.dom('[data-test-applicant-type="Other Team Member"]').exists();
+  });
+
+  test('user can remove applicants', async function(assert) {
+    const project = this.server.create('project', 1, 'applicant');
+    const { pasForm } = project.packages.models[0];
+    // create an applicant model
+    const serverSideApplicant = this.server.create('applicant', 'organizationApplicant', { pasForm });
+    // get the reference to the model instance
+    const applicant = await this.owner.lookup('service:store').findRecord('applicant', serverSideApplicant.id);
+
+    await visit('/pas-form/1/edit');
+
+    await assert.equal(applicant.hasDirtyAttributes, false);
+    await assert.equal(applicant.isDeleted, false);
+
+    // remove the applicant
+    await click('[data-test-remove-applicant-button');
+
+    // should trigger dirty state, be queued for deletion when user saves
+    await assert.equal(applicant.hasDirtyAttributes, true);
+    await assert.equal(applicant.isDeleted, true);
+
+    // FIXME: user shouldn't see the fieldset
+    assert.dom('[data-test-applicant-fieldset="0"]').doesNotExist();
+  });
+
+  test('user can toggle individual or organization applicant type', async function(assert) {
+    const project = this.server.create('project', 1, 'applicant');
+    const { pasForm } = project.packages.models[0];
+    this.server.create('applicant', 'individualApplicant', { pasForm });
+
+    this.applicants = [
+      await this.owner.lookup('service:store').findRecord('applicant', 1),
+    ];
+
+    await visit('/pas-form/1/edit');
+
+    // switch from Individual to Organization applicant type
+    await click('[data-test-applicant-type-radio-organization]');
+
+    // organization input should appear after user toggles to "Organization"
+    assert.dom('[data-test-applicant-organization]').hasText('Organization');
+
+    // should be reflected in the applicants array!
+    assert.equal(this.applicants[0].dcpType, 717170001);
+  });
+
+  test('user can select a state for an applicant team member', async function(assert) {
+    const project = this.server.create('project', 1, 'applicant');
+    const { pasForm } = project.packages.models[0];
+
+    this.server.create('applicant', 'individualApplicant', { pasForm });
+    this.server.create('applicant', 'individualApplicant', { pasForm });
+
+    this.applicants = [
+      await this.owner.lookup('service:store').findRecord('applicant', 1),
+    ];
+
+    await visit('/pas-form/1/edit');
+
+    await selectChoose('[data-test-applicant-state-dropdown]', 'OR');
+
+    assert.equal(this.applicants[0].dcpState, 717170037);
   });
 });
