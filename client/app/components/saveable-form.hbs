@@ -8,12 +8,12 @@
       )
 
       saveButton=(component 'packages/save-button'
-        _saveChangeset=(fn this.saveChangeset saveableChanges)
+        wrapperCallback=(fn this.saveChangeset saveableChanges)
         isEnabled=true
       )
 
       submitButton=(component 'packages/save-button'
-        _saveChangeset=(fn this.saveChangeset submittableChanges)
+        wrapperCallback=(fn this.saveChangeset submittableChanges)
         isEnabled=true
         isSubmit=true
       )
