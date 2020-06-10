@@ -1,0 +1,122 @@
+
+  <section class="form-section">
+    <h2 class="section-header">
+      <span id="project-description" class="section-anchor"></span>
+      Project Description
+    </h2>
+
+    <label>
+      <strong>
+        Has the project changed since submission of the Pre-Application Statement (PAS)?
+      </strong>
+      <br>
+        {{#each (array
+          (hash
+            code=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'code' 'YES')
+            label=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'label' 'YES'))
+          (hash
+            code=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'code' 'NO')
+            label=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'label' 'NO'))
+        ) as |radio|}}
+          <@rwcdsForm.radio
+            @value={{radio.code}}
+            @groupValue={{@rwcdsForm.saveableChanges.dcpHasprojectchangedsincesubmissionofthepas}}
+            data-test-radio="dcpHasprojectchangedsincesubmissionofthepas"
+            data-test-radio-option={{radio.label}}
+          >
+            {{radio.label}}
+          </@rwcdsForm.radio>
+        {{/each}}
+      <br>
+    </label>
+
+    <small class="help-text display-block">
+      Ensure that descriptions below account for any changes since PAS submission 
+    </small>
+
+    <label>
+      <strong>
+        Identify and describe the existing conditions of all areas affected by the proposed actions
+      </strong>
+      <TextArea
+        @property={{@rwcdsForm.saveableChanges.dcpProjectsitedescription}}
+        @propertyName="dcpProjectsitedescription"
+        @changesetError={{@rwcdsForm.submittableChanges.error.dcpProjectsitedescription}}
+        @maxlength="2400"
+      />
+    </label>
+
+    <label>
+      <strong>
+        Describe the proposed project facilitated by the proposed actions
+      </strong>
+      <TextArea
+        @property={{@rwcdsForm.saveableChanges.dcpProposedprojectdevelopmentdescription}}
+        @propertyName="dcpProposedprojectdevelopmentdescription"
+        @changesetError={{@rwcdsForm.submittableChanges.error.dcpProposedprojectdevelopmentdescription}}
+        @maxlength="1800"
+      />
+    </label>
+
+    <label>
+      <strong>
+        Will construction be done in multiple phases? 
+      </strong>
+      <br>
+        {{#each (array
+          (hash
+            code=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'code' 'SINGLE')
+            label=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'label' 'SINGLE'))
+          (hash
+            code=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'code' 'MULTIPLE')
+            label=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'label' 'MULTIPLE'))
+        ) as |radio|}}
+          <@rwcdsForm.radio
+            @value={{radio.code}}
+            @groupValue={{@rwcdsForm.saveableChanges.dcpConstructionphasing}}
+            data-test-radio="dcpConstructionphasing"
+            data-test-radio-option={{radio.label}}
+          >
+            {{radio.label}}
+          </@rwcdsForm.radio>
+        {{/each}}
+      <br>
+    </label>
+
+    <label>
+      <strong>
+        What is the proposed analysis year of the proposed action?
+      </strong>
+      <TextInput
+        @property={{@rwcdsForm.saveableChanges.dcpBuildyear}}
+        @propertyName="dcpBuildyear"
+        @changesetError={{@rwcdsForm.submittableChanges.error.dcpBuildyear}}
+        @showCounter={{true}}
+        @maxlength="4"
+      />
+    </label>
+
+    <label>
+      <strong>
+        Explain the rationale behind the analysis year
+      </strong>
+      <small class="help-text display-block">
+        Providing history allows NYC Planning to analyze potential CEQR analysis&nbsp;
+        sections/chapters, as well as development trends and previous environment&nbsp;
+        review assumptions.
+        <br>
+        Summarize any prior rezonings or discretionary City Planning Commission&nbsp;
+        approvals. Provide ULURP and CEQR Application numbers, if available.&nbsp;
+        Describe any context that is relevant to development on the site (e.g.&nbsp;
+        former uses, large scale development plans, urban renewal plans,&nbsp;
+        Mitchell Lama site plans, or other site controls, easements, restrictive&nbsp;
+        declarations, (E) designations, historic or other designations, etc.).
+      </small>
+      <TextArea
+        @property={{@rwcdsForm.saveableChanges.dcpSitehistory}}
+        @propertyName="dcpSitehistory"
+        @changesetError={{@rwcdsForm.submittableChanges.error.dcpSitehistory}}
+        @maxlength="600"
+      />
+    </label>
+  </section>

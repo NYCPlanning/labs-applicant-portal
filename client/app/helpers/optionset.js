@@ -12,7 +12,10 @@ import {
   PACKAGE_STATUS_OPTIONSET,
   PACKAGE_VISIBILITY_OPTIONSET,
 } from '../models/package';
-
+import {
+  DCPHASPROJECTCHANGEDSINCESUBMISSIONOFTHEPAS_OPTIONSET,
+  DCPCONSTRUCTIONPHASING_OPTIONSET,
+} from '../models/rwcds-form';
 
 const OPTIONSET_LOOKUP = {
   applicant: {
@@ -25,6 +28,10 @@ const OPTIONSET_LOOKUP = {
     state: PACKAGE_STATE_OPTIONSET,
     status: PACKAGE_STATUS_OPTIONSET,
     visibility: PACKAGE_VISIBILITY_OPTIONSET,
+  },
+  rwcdsForm: {
+    dcpHasprojectchangedsincesubmissionofthepas: DCPHASPROJECTCHANGEDSINCESUBMISSIONOFTHEPAS_OPTIONSET,
+    dcpConstructionphasing: DCPCONSTRUCTIONPHASING_OPTIONSET,
   },
 };
 
