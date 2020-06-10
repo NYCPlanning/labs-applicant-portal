@@ -1,18 +1,22 @@
-{{yield (hash
-  saveableChanges=this.saveableChanges
-  submittableChanges=this.submittableChanges
-  radio=(component 'radio-button'
-    changed=this.validate
-  )
+{{#let (validator @model @validators.[0]) as |saveableChanges|}}
+  {{#let (validator @model @validators.[1] dependsOn=saveableChanges) as |submittableChanges|}}
+    {{yield (hash
+      saveableChanges=saveableChanges
+      submittableChanges=submittableChanges
+      radio=(component 'radio-button'
+        changed=(fn this.validate saveableChanges)
+      )
 
-  saveButton=(component 'packages/save-button'
-    _saveChangeset=(fn this.saveChangeset this.saveableChanges)
-    isEnabled=true
-  )
+      saveButton=(component 'packages/save-button'
+        _saveChangeset=(fn this.saveChangeset saveableChanges)
+        isEnabled=true
+      )
 
-  submitButton=(component 'packages/save-button'
-    _saveChangeset=(fn this.saveChangeset this.submittableChanges)
-    isEnabled=true
-    isSubmit=true
-  )
-)}}
+      submitButton=(component 'packages/save-button'
+        _saveChangeset=(fn this.saveChangeset submittableChanges)
+        isEnabled=true
+        isSubmit=true
+      )
+    )}}
+  {{/let}}
+{{/let}}
