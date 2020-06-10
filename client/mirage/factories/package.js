@@ -9,6 +9,7 @@ export default Factory.extend({
     // not sure which tests depend on this assumption
     // so adding logic for it here
     if (!projectPackage.pasForm) server.create('pas-form', { package: projectPackage });
+    if (!projectPackage.rwcdsForm) server.create('rwcds-form', { package: projectPackage });
   },
 
   withLandUseActions: trait({
