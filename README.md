@@ -5,7 +5,7 @@ In order for cookies to work across both the client and the server during local 
 
 1. Clone this repo and follow the steps in its README: https://github.com/NYCPlanning/local-cert-generator
 
-2. Grab two files from Step 1 above (of this repo), `server.key` and `server.crt`. Copy and paste both files into BOTH `ssl/` folders under /client and /server.
+2. Grab two files from Step 1 above (of this repo), `server.key` and `server.crt`. Copy and paste both files into BOTH `ssl/` folders under /client and /server. After adding then, run `yarn` to install the necessary dependencies.
 
 3. Open up your hosts file on your machine with admin permissions: `/etc/hosts`. 
   - For example, `sudo vim /etc/hosts`
