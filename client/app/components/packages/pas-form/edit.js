@@ -9,6 +9,9 @@ export default class PasFormComponent extends Component {
   @service
   router;
 
+  @service
+  store;
+
   saveablePasFormValidations = SaveablePasFormValidations;
 
   submittablePasFormValidations = SubmittablePasFormValidations;
@@ -45,5 +48,18 @@ export default class PasFormComponent extends Component {
     await this.args.package.submit();
 
     this.router.transitionTo('pas-form.show', this.args.package.id);
+  }
+
+  @action
+  addApplicant(targetEntity) {
+    this.store.createRecord('applicant', {
+      targetEntity, // distinguishes between different applicant types for the backend
+      pasForm: this.pasForm,
+    });
+  }
+
+  @action
+  removeApplicant(applicant) {
+    applicant.deleteRecord();
   }
 }
