@@ -11,7 +11,7 @@ Google Chrome is beginning to enforce some restrictions on particular uses of co
 ### Steps to setup SSL locally
 1. Clone this repo and follow the steps in its README: https://github.com/NYCPlanning/local-cert-generator
 
-2. Note that Step 1 generates two files in the `local-cert-generator` repo. Later, you will need to copy/paste these files into the `labs-applicant-portal` repo to run the application (Steps 2 and 3 under "Running the App").
+2. Note that Step 1 generates two files in the `local-cert-generator` repo: `server.key` and `server.crt`. Later, you will need to copy/paste these files into the `labs-applicant-portal` repo to run the application (Steps 2 and 3 under "Running the App").
 
 3. Open up your hosts file on your machine with admin permissions: `/etc/hosts`. For example, `sudo vim /etc/hosts`
 
