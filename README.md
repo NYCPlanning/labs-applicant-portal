@@ -22,10 +22,10 @@ Google Chrome is beginning to enforce some restrictions on particular uses of co
 Once you have SSL enabled...
 1. Clone `labs-applicant-portal` to your computer.
 2. Navigate into the `server` folder.
-    - Copy the `server.key` and `server.crt` files in your `local-cert-generator` repo and paste both files into the `server/ssl/` folder.
+    - Copy the `server.key` and `server.crt` files from your `local-cert-generator` repo and paste both files into the `labs-applicant-portal/server/ssl/` folder.
     - Run `yarn` to install dependencies for the server.
 3. Navigate into the `client` folder.
-    - Copy the `server.key` and `server.crt` files in your `local-cert-generator` repo and paste both files into the `client/ssl/` folder.
+    - Copy the `server.key` and `server.crt` files from your `local-cert-generator` repo and paste both files into the `labs-applicant-portal/client/ssl/` folder.
     - Run `yarn` to install dependencies for the client.
 4. Go to the root of the app `cd ..` and run: `yarn run start`. It will run both the client and server servers.
 
