@@ -2,7 +2,7 @@ import { Factory, trait } from 'ember-cli-mirage';
 import { PACKAGE_STATUS_OPTIONSET, PACKAGE_VISIBILITY_OPTIONSET } from '../../models/package';
 
 export default Factory.extend({
-  dcpPackagetype: 'PAS Package',
+  dcpPackagetype: 717170000,
 
   afterCreate(projectPackage, server) {
     // add a pasForm if it doesn't already exist

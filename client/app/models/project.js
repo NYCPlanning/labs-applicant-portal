@@ -1,4 +1,5 @@
 import Model, { attr, hasMany } from '@ember-data/model';
+import { optionset } from '../helpers/optionset';
 
 export default class ProjectModel extends Model {
   // The human-readable, descriptive name.
@@ -21,7 +22,7 @@ export default class ProjectModel extends Model {
 
   get pasPackages() {
     const [firstPackage] = this.packages
-      .filter((projectPackage) => projectPackage.dcpPackagetype === 'PAS Package')
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'type', 'code', 'PAS_PACKAGE']))
       .sortBy('dcpPackageversion')
       .reverse();
 
