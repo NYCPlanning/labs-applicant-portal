@@ -1,22 +1,31 @@
-{{#let (validator @model @validators.[0]) as |saveableChanges|}}
-  {{#let (validator @model @validators.[1] dependsOn=saveableChanges) as |submittableChanges|}}
-    {{yield (hash
-      saveableChanges=saveableChanges
-      submittableChanges=submittableChanges
-      radio=(component 'radio-button'
-        changed=(fn this.validate saveableChanges)
-      )
+{{yield (hash
+  saveableChanges=this.saveableChanges
+  submittableChanges=this.submittableChanges
 
-      saveButton=(component 'packages/save-button'
-        wrapperCallback=(fn this.saveChangeset saveableChanges)
-        isEnabled=true
-      )
+  radio=(component 'radio-button'
+    changed=(fn this.validate this.saveableChanges)
+  )
 
-      submitButton=(component 'packages/save-button'
-        wrapperCallback=(fn this.saveChangeset submittableChanges)
-        isEnabled=true
-        isSubmit=true
-      )
-    )}}
-  {{/let}}
-{{/let}}
+  saveButton=(component 'packages/save-button'
+    wrapperCallback=(fn this.persistSaveableChangeset)
+    isEnabled=this.isSaveable
+  )
+
+  submitButton=(component 'packages/save-button'
+    wrapperCallback=this.persistSubmittableChangeset
+    isEnabled=this.isSubmittable
+    isSubmit=true
+  )
+
+  SaveableForm=(component 'saveable-form'
+    register=(fn this.register)
+  )
+
+  isSaveable=this.isSaveable
+  isSubmittable=this.isSubmittable
+)}}
+
+{{!-- Child components are passed a registration function. If the function is there, register itself as a descendant. --}}
+{{#if @register}}
+  <div {{did-insert (fn @register this)}}></div>
+{{/if}}

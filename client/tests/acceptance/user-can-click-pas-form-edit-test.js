@@ -429,6 +429,9 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     // organization input should appear after user toggles to "Organization"
     assert.dom('[data-test-applicant-organization]').hasText('Organization');
 
+    await click('[data-test-save-button]');
+    await settled();
+
     // should be reflected in the applicants array!
     assert.equal(this.applicants[0].dcpType, 717170001);
   });
@@ -447,6 +450,9 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     await visit('/pas-form/1/edit');
 
     await selectChoose('[data-test-applicant-state-dropdown]', 'OR');
+
+    await click('[data-test-save-button]');
+    await settled();
 
     assert.equal(this.applicants[0].dcpState, 717170037);
   });
