@@ -778,7 +778,26 @@
     </div>
     <div class="cell large-4">
 
-      <div class="sticky-sidebar">
+      <StickySidebar
+        @navItems={{array
+          (hash anchorId="project-info"
+            label="Project Information")
+          (hash anchorId="applicant-team"
+            label="Applicant Team")
+          (hash anchorId="project-geography"
+            label="Project Geography")
+          (hash anchorId="proposed-land-use-actions"
+            label="Proposed Land Use Actions")
+          (hash anchorId="project-area"
+            label="Project Area")
+          (hash anchorId="proposed-development-site"
+            label="Proposed Development Site")
+          (hash anchorId="project-description"
+            label="Project Description")
+          (hash anchorId="attached-documents"
+            label="Attached Documents")
+          }}
+      >
         <pasForm.saveButton
           @isEnabled={{or @package.isDirty pasForm.isSaveable}}
           @onClick={{this.savePackage}}
@@ -793,92 +812,39 @@
           data-test-submit-button
         />
 
-        {{#if this.modalIsOpen}}
-          <EmberWormhole @to="reveal-modal-container">
-            <RevealModal @toggle={{this.toggleModal}}>
-              <h6>Confirm Pre-Applicant Statement submission</h6>
-              <p class="header-large medium-margin-top small-margin-bottom">Are you sure?</p>
-              <p>Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including the signature form) have been uploaded. If City Planning does not receive enough accurate information to provide guidance, the lead planner will notify you and request that this form be resubmitted with needed materials, corrections, or clarifications.</p>
-              <hr>
-              <div class="grid-x">
-                <div class="cell large-6 small-padding-right">
-                  <button
-                    type="button"
-                    class="button expanded large secondary"
-                    disabled={{pasForm.saveChangeset.isRunning}}
-                    {{on "click" this.toggleModal}}
-                  >
-                    Continue Editing
-                  </button>
-                </div>
-                <div class="cell large-6 small-padding-left">
-                  <pasForm.submitButton
-                    @onClick={{this.submitPackage}}
-                    @isEnabled={{pasForm.isSubmittable}}
-                    class="no-margin"
-                    data-test-confirm-submit-button
-                  />
-                </div>
+      </StickySidebar>
+      {{#if this.modalIsOpen}}
+        <EmberWormhole @to="reveal-modal-container">
+          <RevealModal @toggle={{this.toggleModal}}>
+            <h6>Confirm Pre-Applicant Statement submission</h6>
+            <p class="header-large medium-margin-top small-margin-bottom">Are you sure?</p>
+            <p>Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including the signature form) have been uploaded. If City Planning does not receive enough accurate information to provide guidance, the lead planner will notify you and request that this form be resubmitted with needed materials, corrections, or clarifications.</p>
+            <hr>
+            <div class="grid-x">
+              <div class="cell large-6 small-padding-right">
+                <button
+                  type="button"
+                  class="button expanded large secondary"
+                  disabled={{pasForm.saveChangeset.isRunning}}
+                  {{on "click" this.toggleModal}}
+                >
+                  Continue Editing
+                </button>
               </div>
-              {{!-- Error Handling --}}
-              <Packages::PasFormError @package={{@package}}/>
-            </RevealModal>
-          </EmberWormhole>
-        {{/if}}
-
-        <nav>
-          <ul class="no-bullet text-weight-bold">
-            <li class="medium-margin-bottom">
-              <a href="#project-info">
-                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-                Project Information
-              </a>
-            </li>
-            <li class="medium-margin-bottom">
-              <a href="#applicant-team">
-                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-                Applicant Team
-              </a>
-            </li>
-            <li class="medium-margin-bottom">
-              <a href="#project-geography">
-                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-                Project Geography
-              </a>
-            </li>
-            <li class="medium-margin-bottom">
-              <a href="#proposed-land-use-actions">
-                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-                Proposed Land Use Actions
-              </a>
-            </li>
-            <li class="medium-margin-bottom">
-              <a href="#project-area">
-                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-                Project Area
-              </a>
-            </li>
-            <li class="medium-margin-bottom">
-              <a href="#proposed-development-site">
-                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-                Proposed Development Site
-              </a>
-            </li>
-            <li class="medium-margin-bottom">
-              <a href="#project-description">
-                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-                Project Description
-              </a>
-            </li>
-            <li class="medium-margin-bottom">
-              <a href="#attached-documents">
-                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-                Attached Documents
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>{{!-- end .sticky-sidebar --}}
+              <div class="cell large-6 small-padding-left">
+                <pasForm.submitButton
+                  @onClick={{this.submitPackage}}
+                  @isEnabled={{pasForm.isSubmittable}}
+                  class="no-margin"
+                  data-test-confirm-submit-button
+                />
+              </div>
+            </div>
+            {{!-- Error Handling --}}
+            <Packages::PasFormError @package={{@package}}/>
+          </RevealModal>
+        </EmberWormhole>
+      {{/if}}
     </div>
 
   </div>
