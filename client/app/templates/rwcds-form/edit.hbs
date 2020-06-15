@@ -1,8 +1,8 @@
-<Breadcrumbs as |crumb|>
-  <crumb @text="My Projects" @route='projects' />
-  <crumb @text={{model.project.dcpProjectname}} @disabled={{true}} />
-  <crumb @text="RWCDS" @disabled={{true}} />
-  <crumb @text="Edit" @current={{true}} />
+<Breadcrumbs as |Crumb|>
+  <Crumb @text="My Projects" @route='projects' />
+  <Crumb @text={{@model.project.dcpProjectname}} @disabled={{true}} />
+  <Crumb @text="RWCDS" @disabled={{true}} />
+  <Crumb @text="Edit" @current={{true}} />
 </Breadcrumbs>
 
 <Packages::RwcdsForm::Edit
