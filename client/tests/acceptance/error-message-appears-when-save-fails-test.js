@@ -23,10 +23,8 @@ module('Acceptance | error message appears when save fails', function(hooks) {
   });
 
   test('error message appears when error occurs on save', async function(assert) {
-    this.server.create('package', {
-      dcpPackagetype: 717170000,
+    this.server.create('package', 'pasForm', {
       project: this.server.create('project'),
-      pasForm: this.server.create('pas-form'),
     });
 
     this.server.patch('/pas-forms/:id', { errors: [{ detail: 'server problem with pasForm' }] }, 500); // force mirage to error

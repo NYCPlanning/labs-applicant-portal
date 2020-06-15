@@ -44,20 +44,20 @@ export default Factory.extend({
   // Defaults to Project with a PAS Form applicant package.
   applicant: trait({
     afterCreate(project, server) {
-      server.create('package', { project }, 'applicant');
+      server.create('package', { project }, 'applicant', 'pasForm');
     },
   }),
 
   // These can be either projects with or without a View PAS button
   planning: trait({
     afterCreate(project, server) {
-      server.create('package', { project }, 'planning');
+      server.create('package', { project }, 'planning', 'pasForm');
     },
   }),
 
   planningWithViewPASButton: trait({
     afterCreate(project, server) {
-      server.create('package', { project }, 'planningWithViewPASButton');
+      server.create('package', { project }, 'planningWithViewPASButton', 'pasForm');
     },
   }),
 
@@ -66,7 +66,7 @@ export default Factory.extend({
   // applicant only/general public
   planningNoViewPASButton: trait({
     afterCreate(project, server) {
-      server.create('package', { project }, 'planningNoViewPASButton');
+      server.create('package', { project }, 'planningNoViewPASButton', 'pasForm');
     },
   }),
 

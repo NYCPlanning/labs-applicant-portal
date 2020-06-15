@@ -58,7 +58,7 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
   test('Save button is enabled when file marked for deletion', async function (assert) {
     // TODO: Refactor factories so there doesn't need to be duplicate package
     const project = this.server.create('project', 'applicant');
-    this.server.create('package', 'applicant', 'withExistingDocuments', {
+    this.server.create('package', 'applicant', 'pasForm', 'withExistingDocuments', {
       project,
     });
 
@@ -73,7 +73,7 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
 
   test('Save button is enabled when file marked for upload', async function (assert) {
     const project = this.server.create('project', 'applicant');
-    this.server.create('package', 'applicant', 'withExistingDocuments', {
+    this.server.create('package', 'applicant', 'pasForm', 'withExistingDocuments', {
       project,
     });
 
@@ -90,7 +90,7 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
 
   test('Files marked for upload and deletion are cleared on Save', async function (assert) {
     const project = this.server.create('project', 'applicant');
-    this.server.create('package', 'applicant', 'withExistingDocuments', {
+    this.server.create('package', 'applicant', 'pasForm', 'withExistingDocuments', {
       project,
     });
 
@@ -274,8 +274,7 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
   });
 
   test('It sends an associated project to the server, and associates the correct project', async function (assert) {
-    this.server.create('package', 1, {
-      pasForm: this.server.create('pas-form'),
+    this.server.create('package', 'pasForm', {
       project: this.server.create('project', { id: '42' }),
     });
 
@@ -288,7 +287,7 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
   });
 
   test('Docs appear in attachments section when visiting from another route', async function(assert) {
-    this.server.create('package', 'applicant', 'withExistingDocuments', {
+    this.server.create('package', 'applicant', 'pasForm', 'withExistingDocuments', {
       id: '1',
       project: this.server.create('project'),
     });
@@ -310,8 +309,7 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
   });
 
   test('For input dependent on radio button/checkbox -- when user fills out input, then clicks radio button/checkbox that hides input, text is not saved to model', async function(assert) {
-    this.server.create('package', 1, {
-      pasForm: this.server.create('pas-form'),
+    this.server.create('package', 'pasForm', {
       project: this.server.create('project'),
     });
 

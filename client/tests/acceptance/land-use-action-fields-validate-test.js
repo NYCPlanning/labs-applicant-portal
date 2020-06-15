@@ -19,9 +19,8 @@ module('Acceptance | land use action fields validate', function(hooks) {
   });
 
   test('validation message appears for count field when user types incorrect value', async function(assert) {
-    this.server.create('package', {
+    this.server.create('package', 'pasForm', {
       project: this.server.create('project'),
-      pasForm: this.server.create('pas-form'),
     });
 
     await visit('/pas-form/1/edit');
@@ -48,9 +47,8 @@ module('Acceptance | land use action fields validate', function(hooks) {
   });
 
   test('validation message appears for extra questions when user types incorrect value', async function(assert) {
-    this.server.create('package', {
+    this.server.create('package', 'pasForm', {
       project: this.server.create('project'),
-      pasForm: this.server.create('pas-form'),
     });
 
     // representation of input that is 1 over the maximum character limit

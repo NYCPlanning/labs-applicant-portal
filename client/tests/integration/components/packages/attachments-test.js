@@ -17,7 +17,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
   setupMirage(hooks);
 
   test('it displays a list attachments already uploaded to the package', async function(assert) {
-    this.server.create('package', 'withExistingDocuments', { id: '123' });
+    this.server.create('package', 'pasForm', 'withExistingDocuments', { id: '123' });
 
     const store = this.owner.lookup('service:store');
     this.package = await store.findRecord('package', '123');
@@ -34,7 +34,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
   });
 
   test('user can mark and unmark an existing document for deletion', async function(assert) {
-    this.server.create('package', 'withExistingDocuments', { id: '123' });
+    this.server.create('package', 'rwcdsForm', 'withExistingDocuments', { id: '123' });
 
     const store = this.owner.lookup('service:store');
     this.package = await store.findRecord('package', '123');
@@ -80,7 +80,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
   });
 
   test('user can select and deselect local files for upload', async function(assert) {
-    this.server.create('package', { id: '123' });
+    this.server.create('package', 'pasForm', { id: '123' });
 
     const store = this.owner.lookup('service:store');
     this.package = await store.findRecord('package', '123');
@@ -113,7 +113,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
   });
 
   test('user can return to attachments component and see correct files', async function (assert) {
-    this.server.create('package', { id: '123' });
+    this.server.create('package', 'rwcdsForm', { id: '123' });
 
     const store = this.owner.lookup('service:store');
     this.package = await store.findRecord('package', '123');
@@ -142,7 +142,7 @@ module('Integration | Component | packages/attachments', function(hooks) {
   });
 
   test('fileManager.save() will upload and delete files, then reset to-be-uploaded/deleted lists', async function (assert) {
-    this.server.create('package', 'withExistingDocuments', { id: '123' });
+    this.server.create('package', 'rwcdsForm', 'withExistingDocuments', { id: '123' });
 
     const store = this.owner.lookup('service:store');
     this.package = await store.findRecord('package', '123');

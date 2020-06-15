@@ -2,15 +2,15 @@ import { Factory, trait } from 'ember-cli-mirage';
 import { PACKAGE_STATUS_OPTIONSET, PACKAGE_VISIBILITY_OPTIONSET } from '../../models/package';
 
 export default Factory.extend({
-  // default to PAS Form
-  dcpPackagetype: 717170000,
-
-  afterCreate(projectPackage, server) {
-    // add a pasForm if it doesn't already exist
-    // not sure which tests depend on this assumption
-    // so adding logic for it here
-    if (!projectPackage.pasForm) server.create('pas-form', { package: projectPackage });
-  },
+  pasForm: trait({
+    dcpPackagetype: 717170000,
+    afterCreate(projectPackage, server) {
+      // add a pasForm if it doesn't already exist
+      // not sure which tests depend on this assumption
+      // so adding logic for it here
+      if (!projectPackage.pasForm) server.create('pas-form', { package: projectPackage });
+    },
+  }),
 
   rwcdsForm: trait({
     dcpPackagetype: 717170004,
