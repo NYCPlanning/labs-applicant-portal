@@ -28,6 +28,20 @@ export default Factory.extend({
     return SAMPLE_CUSTOMERS[i % SAMPLE_CUSTOMERS.length];
   },
 
+  dcpBorough(i) {
+    const BOROUGHS = [
+      717170000,
+      717170002,
+      717170001,
+      717170003,
+      717170004,
+      717170005,
+    ];
+
+    return BOROUGHS[i % BOROUGHS.length];
+  },
+
+  // Defaults to Project with a PAS Form applicant package.
   applicant: trait({
     afterCreate(project, server) {
       server.create('package', { project }, 'applicant');

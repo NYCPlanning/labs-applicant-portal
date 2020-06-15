@@ -386,6 +386,13 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     // can add an applicant team member
     await click('[data-test-add-applicant-team-member-button]');
     assert.dom('[data-test-applicant-type="Other Team Member"]').exists();
+
+    await click('[data-test-save-button]');
+
+    await settled();
+
+    assert.dom('[data-test-applicant-type="Applicant"]').exists();
+    assert.dom('[data-test-applicant-type="Other Team Member"]').exists();
   });
 
   test('user can remove applicants', async function(assert) {
@@ -409,6 +416,12 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     await assert.equal(applicant.isDeleted, true);
 
     // FIXME: user shouldn't see the fieldset
+    assert.dom('[data-test-applicant-fieldset="0"]').doesNotExist();
+
+    await click('[data-test-save-button]');
+
+    await settled();
+
     assert.dom('[data-test-applicant-fieldset="0"]').doesNotExist();
   });
 
@@ -452,6 +465,12 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     await selectChoose('[data-test-applicant-state-dropdown]', 'OR');
 
     await click('[data-test-save-button]');
+    await settled();
+
+    assert.equal(this.applicants[0].dcpState, 717170037);
+
+    await click('[data-test-save-button]');
+
     await settled();
 
     assert.equal(this.applicants[0].dcpState, 717170037);

@@ -1,6 +1,8 @@
 import { module, test } from 'qunit';
 import {
+  click,
   fillIn,
+  settled,
   visit,
   currentURL,
 } from '@ember/test-helpers';
@@ -19,16 +21,31 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     });
   });
 
-  test('User can visit edit rwcds-form route', async function(assert) {
-    this.server.create('project', 1, 'applicant');
+  test('User can visit, edit and save rwcds-form route', async function(assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'applicant', 'rwcdsForm')],
+    });
 
     await visit('/rwcds-form/1/edit');
 
     assert.equal(currentURL(), '/rwcds-form/1/edit');
+
+    assert.dom('[data-test-textarea="dcpProjectsitedescription"]').hasNoValue();
+    await fillIn('[data-test-textarea="dcpProjectsitedescription"]', 'Whatever affects one directly, affects all indirectly.');
+
+    await click('[data-test-save-button]');
+
+    await settled();
+
+    assert.dom('[data-test-textarea="dcpProjectsitedescription"]').hasValue('Whatever affects one directly, affects all indirectly.');
+
+    assert.equal(this.server.db.rwcdsForms.firstObject.dcpProjectsitedescription, 'Whatever affects one directly, affects all indirectly.');
   });
 
   test('Validation messages display for Project Description', async function(assert) {
-    this.server.create('project', 1, 'applicant');
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'applicant', 'rwcdsForm')],
+    });
 
     await visit('/rwcds-form/1/edit');
 

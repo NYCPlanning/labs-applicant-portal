@@ -43,6 +43,11 @@ export default function() {
   this.patch('/pas-forms');
   this.post('/pas-forms');
   this.patch('/pas-forms/:id');
+
+  this.patch('/rwcds-forms');
+  this.post('/rwcds-forms');
+  this.patch('/rwcds-forms/:id');
+
   this.post('/packages');
   this.patch('/packages/:id');
   this.post('/applicants');
