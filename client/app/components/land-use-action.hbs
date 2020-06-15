@@ -16,10 +16,12 @@
   </label>
 </div>
 {{#if this.sortedSelectedActions}}
-  <h5>Land Use Actions Included in This Project</h5>
+  <h5 class="slide-in-top">
+    Land Use Actions Included in This Project
+  </h5>
 {{/if}}
 {{#each this.sortedSelectedActions as |landUseAction|}}
-  <fieldset class="fieldset relative">
+  <fieldset class="fieldset relative scale-fade-in">
     <legend>
       <strong data-test-action-name="{{landUseAction.name}}">{{landUseAction.name}}</strong>
     </legend>
@@ -29,21 +31,22 @@
           <div class="shrink cell">
             <label for="middle-label" class="middle">How many {{landUseAction.name}} actions?</label>
           </div>
-        </div>
-        <div class="auto cell">
-          <ActionFormInput 
-            @pasForm={{@pasForm}}
-            @fieldType="number"
-            @length="10"
-            @landUseActionField={{landUseAction.countField}}
-          />
-          <ValidationMessage
-            @changesetError={{get @submittableChanges.error landUseAction.countField}}
-          />
+          <div class="auto cell">
+            <ActionFormInput
+              @pasForm={{@pasForm}}
+              @fieldType="number"
+              @length="10"
+              @landUseActionField={{landUseAction.countField}}
+            />
+            <ValidationMessage
+              @changesetError={{get @submittableChanges.error landUseAction.countField}}
+              data-test-validation-message="{{landUseAction.countField}}"
+            />
+          </div>
         </div>
         <label class="action-form-label">
           Where in the Zoning Resolution can this action be found?
-          <ActionFormInput 
+          <ActionFormInput
             @pasForm={{@pasForm}}
             @fieldType="text"
             @length="250"
@@ -51,6 +54,7 @@
           />
           <ValidationMessage
             @changesetError={{get @submittableChanges.error landUseAction.attr1}}
+            data-test-validation-message="{{landUseAction.attr1}}"
           />
           <span class="help-text">Provide the Zoning Resolution section number. Ex. ZR Sec. 74-711</span>
         </label>
@@ -64,6 +68,7 @@
           />
           <ValidationMessage
             @changesetError={{get @submittableChanges.error landUseAction.attr2}}
+            data-test-validation-message="{{landUseAction.attr2}}"
           />
           <span class="help-text">Provide the Zoning Resolution section number(s). Ex. ZR Sec. 42-10 and 43-17</span>
         </label>
@@ -79,6 +84,7 @@
           />
           <ValidationMessage
             @changesetError={{get @submittableChanges.error landUseAction.attr1}}
+            data-test-validation-message="{{landUseAction.attr1}}"
           />
           <span class="help-text">ex. R7-1/C2-4</span>
         </label>
@@ -92,6 +98,7 @@
           />
           <ValidationMessage
             @changesetError={{get @submittableChanges.error landUseAction.attr2}}
+            data-test-validation-message="{{landUseAction.attr2}}"
           />
           <span class="help-text">ex. C4-5X</span>
         </label>
@@ -107,6 +114,7 @@
           />
           <ValidationMessage
             @changesetError={{get @submittableChanges.error landUseAction.attr1}}
+            data-test-validation-message="{{landUseAction.attr1}}"
           />
           <span class="help-text">Provide the Zoning Resolution section number. Ex. ZR Sec. 74-711</span>
         </label>
@@ -120,6 +128,7 @@
           />
           <ValidationMessage
             @changesetError={{get @submittableChanges.error landUseAction.attr2}}
+            data-test-validation-message="{{landUseAction.attr2}}"
           />
           <span class="help-text">Provide the Zoning Resolution section Title. Ex. EXAMPLE</span>
         </label>
@@ -135,6 +144,7 @@
           />
           <ValidationMessage
             @changesetError={{get @submittableChanges.error landUseAction.attr1}}
+            data-test-validation-message="{{landUseAction.attr1}}"
           />
           <span class="help-text">ex. 200307ZRK</span>
         </label>

@@ -1,7 +1,7 @@
-import EmberRouter from '@ember/routing/router';
+import EmberRouterScroll from 'ember-router-scroll';
 import config from './config/environment';
 
-export default class Router extends EmberRouter {
+export default class Router extends EmberRouterScroll {
   location = config.locationType;
 
   rootURL = config.rootURL;
@@ -13,7 +13,12 @@ Router.map(function() { // eslint-disable-line
   this.route('login');
   this.route('logout');
 
-  this.route('packages', { path: 'packages/:id' }, function () {
+  this.route('pas-form', { path: 'pas-form/:id' }, function () {
+    this.route('edit');
+    this.route('show', { path: '/' });
+  });
+
+  this.route('rwcds-form', { path: 'rwcds-form/:id' }, function () {
     this.route('edit');
     this.route('show', { path: '/' });
   });

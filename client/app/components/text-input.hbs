@@ -1,0 +1,18 @@
+<Input
+  @type="text"
+  @value={{@property}}
+  data-test-input={{@propertyName}}
+  ...attributes
+/>
+{{#if @showCounter}}
+  <CharacterCounter
+    @string={{@property}}
+    @maxlength={{this.maxlength}}
+  />
+{{/if}}
+{{#if @changesetError}}
+  <ValidationMessage
+    @changesetError={{@changesetError}}
+    data-test-validation-message={{@propertyName}}
+  />
+{{/if}}

@@ -1,5 +1,5 @@
 import { Factory, trait } from 'ember-cli-mirage';
-import { PACKAGE_STATUS_CODES, PACKAGE_VISIBILITY_CODES } from '../../models/package';
+import { PACKAGE_STATUS_OPTIONSET, PACKAGE_VISIBILITY_OPTIONSET } from '../../models/package';
 
 export default Factory.extend({
   dcpPackagetype: 'PAS Package',
@@ -9,6 +9,7 @@ export default Factory.extend({
     // not sure which tests depend on this assumption
     // so adding logic for it here
     if (!projectPackage.pasForm) server.create('pas-form', { package: projectPackage });
+    if (!projectPackage.rwcdsForm) server.create('rwcds-form', { package: projectPackage });
   },
 
   withLandUseActions: trait({
@@ -20,7 +21,7 @@ export default Factory.extend({
   applicant: trait({
     statuscode(i) {
       const statuses = [
-        PACKAGE_STATUS_CODES.PACKAGE_PREPARATION.code,
+        PACKAGE_STATUS_OPTIONSET.PACKAGE_PREPARATION.code,
       ];
 
       return statuses[i % statuses.length];
@@ -28,8 +29,8 @@ export default Factory.extend({
 
     dcpVisibility(i) {
       const visibility = [
-        PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY.code,
-        PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC.code,
+        PACKAGE_VISIBILITY_OPTIONSET.APPLICANT_ONLY.code,
+        PACKAGE_VISIBILITY_OPTIONSET.GENERAL_PUBLIC.code,
       ];
 
       return visibility[i % visibility.length];
@@ -42,13 +43,13 @@ export default Factory.extend({
   planning: trait({
     statuscode(i) {
       const statuses = [
-        PACKAGE_STATUS_CODES.CERTIFIED.code,
-        PACKAGE_STATUS_CODES.FINAL_APPROVAL.code,
-        PACKAGE_STATUS_CODES.REVIEWED_NO_REVISIONS_REQUIRED.code,
-        PACKAGE_STATUS_CODES.REVIEWED_REVISIONS_REQUIRED.code,
-        PACKAGE_STATUS_CODES.WITHDRAWN.code,
-        PACKAGE_STATUS_CODES.SUBMITTED.code,
-        PACKAGE_STATUS_CODES.UNDER_REVIEW.code,
+        PACKAGE_STATUS_OPTIONSET.CERTIFIED.code,
+        PACKAGE_STATUS_OPTIONSET.FINAL_APPROVAL.code,
+        PACKAGE_STATUS_OPTIONSET.REVIEWED_NO_REVISIONS_REQUIRED.code,
+        PACKAGE_STATUS_OPTIONSET.REVIEWED_REVISIONS_REQUIRED.code,
+        PACKAGE_STATUS_OPTIONSET.WITHDRAWN.code,
+        PACKAGE_STATUS_OPTIONSET.SUBMITTED.code,
+        PACKAGE_STATUS_OPTIONSET.UNDER_REVIEW.code,
       ];
 
       return statuses[i % statuses.length];
@@ -56,11 +57,11 @@ export default Factory.extend({
 
     dcpVisibility(i) {
       const visibility = [
-        PACKAGE_VISIBILITY_CODES.INTERNAL_DCP_ONLY.code,
-        PACKAGE_VISIBILITY_CODES.CPC_ONLY.code,
-        PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY.code,
-        PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC.code,
-        PACKAGE_VISIBILITY_CODES.LUP.code,
+        PACKAGE_VISIBILITY_OPTIONSET.INTERNAL_DCP_ONLY.code,
+        PACKAGE_VISIBILITY_OPTIONSET.CPC_ONLY.code,
+        PACKAGE_VISIBILITY_OPTIONSET.APPLICANT_ONLY.code,
+        PACKAGE_VISIBILITY_OPTIONSET.GENERAL_PUBLIC.code,
+        PACKAGE_VISIBILITY_OPTIONSET.LUP.code,
       ];
 
       return visibility[i % visibility.length];
@@ -70,10 +71,10 @@ export default Factory.extend({
   planningWithViewPASButton: trait({
     statuscode(i) {
       const statuses = [
-        PACKAGE_STATUS_CODES.REVIEWED_NO_REVISIONS_REQUIRED.code,
-        PACKAGE_STATUS_CODES.REVIEWED_REVISIONS_REQUIRED.code,
-        PACKAGE_STATUS_CODES.SUBMITTED.code,
-        PACKAGE_STATUS_CODES.UNDER_REVIEW.code,
+        PACKAGE_STATUS_OPTIONSET.REVIEWED_NO_REVISIONS_REQUIRED.code,
+        PACKAGE_STATUS_OPTIONSET.REVIEWED_REVISIONS_REQUIRED.code,
+        PACKAGE_STATUS_OPTIONSET.SUBMITTED.code,
+        PACKAGE_STATUS_OPTIONSET.UNDER_REVIEW.code,
       ];
 
       return statuses[i % statuses.length];
@@ -81,8 +82,8 @@ export default Factory.extend({
 
     dcpVisibility(i) {
       const visibility = [
-        PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY.code,
-        PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC.code,
+        PACKAGE_VISIBILITY_OPTIONSET.APPLICANT_ONLY.code,
+        PACKAGE_VISIBILITY_OPTIONSET.GENERAL_PUBLIC.code,
       ];
 
       return visibility[i % visibility.length];
@@ -92,9 +93,9 @@ export default Factory.extend({
   planningNoViewPASButton: trait({
     statuscode(i) {
       const statuses = [
-        PACKAGE_STATUS_CODES.CERTIFIED.code,
-        PACKAGE_STATUS_CODES.FINAL_APPROVAL.code,
-        PACKAGE_STATUS_CODES.WITHDRAWN.code,
+        PACKAGE_STATUS_OPTIONSET.CERTIFIED.code,
+        PACKAGE_STATUS_OPTIONSET.FINAL_APPROVAL.code,
+        PACKAGE_STATUS_OPTIONSET.WITHDRAWN.code,
       ];
 
       return statuses[i % statuses.length];
@@ -102,11 +103,11 @@ export default Factory.extend({
 
     dcpVisibility(i) {
       const visibility = [
-        PACKAGE_VISIBILITY_CODES.INTERNAL_DCP_ONLY.code,
-        PACKAGE_VISIBILITY_CODES.CPC_ONLY.code,
-        PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY.code,
-        PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC.code,
-        PACKAGE_VISIBILITY_CODES.LUP.code,
+        PACKAGE_VISIBILITY_OPTIONSET.INTERNAL_DCP_ONLY.code,
+        PACKAGE_VISIBILITY_OPTIONSET.CPC_ONLY.code,
+        PACKAGE_VISIBILITY_OPTIONSET.APPLICANT_ONLY.code,
+        PACKAGE_VISIBILITY_OPTIONSET.GENERAL_PUBLIC.code,
+        PACKAGE_VISIBILITY_OPTIONSET.LUP.code,
       ];
 
       return visibility[i % visibility.length];

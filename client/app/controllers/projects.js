@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { sort } from '@ember/object/computed';
-import { PACKAGE_STATUS_CODES, PACKAGE_VISIBILITY_CODES } from '../models/package';
+import { PACKAGE_STATUS_OPTIONSET, PACKAGE_VISIBILITY_OPTIONSET } from '../models/package';
 
 export default class ProjectsController extends Controller {
   queryParams = ['email'];
@@ -10,10 +10,10 @@ export default class ProjectsController extends Controller {
   get applicantProjects () {
     return this.model.filter((project) => project.pasPackages.some((projectPackage) => {
       if (
-        projectPackage.statuscode === PACKAGE_STATUS_CODES.PACKAGE_PREPARATION.code
+        projectPackage.statuscode === PACKAGE_STATUS_OPTIONSET.PACKAGE_PREPARATION.code
         && [
-          PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY.code,
-          PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC.code,
+          PACKAGE_VISIBILITY_OPTIONSET.APPLICANT_ONLY.code,
+          PACKAGE_VISIBILITY_OPTIONSET.GENERAL_PUBLIC.code,
         ].includes(projectPackage.dcpVisibility)
       ) {
         return true;
@@ -31,10 +31,10 @@ export default class ProjectsController extends Controller {
       if (project.pasPackages.length === 0) return true;
       return project.pasPackages.some((projectPackage) => {
         if (
-          projectPackage.statuscode === PACKAGE_STATUS_CODES.PACKAGE_PREPARATION.code
+          projectPackage.statuscode === PACKAGE_STATUS_OPTIONSET.PACKAGE_PREPARATION.code
           && [
-            PACKAGE_VISIBILITY_CODES.APPLICANT_ONLY.code,
-            PACKAGE_VISIBILITY_CODES.GENERAL_PUBLIC.code,
+            PACKAGE_VISIBILITY_OPTIONSET.APPLICANT_ONLY.code,
+            PACKAGE_VISIBILITY_OPTIONSET.GENERAL_PUBLIC.code,
           ].includes(projectPackage.dcpVisibility)
         ) {
           return false;

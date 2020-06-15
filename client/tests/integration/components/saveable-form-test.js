@@ -45,8 +45,6 @@ module('Integration | Component | saveable-form', function(hooks) {
     await render(hbs`
       <SaveableForm
         @model={{this.dummyModel}}
-        @onSave={{this.handleSave}}
-        @onSubmit={{this.handleSubmit}}
         as |saveable-form|
       >
         <Input
@@ -67,9 +65,11 @@ module('Integration | Component | saveable-form', function(hooks) {
         />
 
         <saveable-form.saveButton
+          @onClick={{this.handleSave}}
           data-test-save-button
         />
         <saveable-form.submitButton
+          @onClick={{this.handleSubmit}}
           data-test-submit-button
         />
       </SaveableForm>
@@ -101,10 +101,10 @@ module('Integration | Component | saveable-form', function(hooks) {
     await render(hbs`
       <SaveableForm
         @model={{this.dummyModel}}
-        @onSave={{this.handleSave}}
         as |saveable-form|
       >
         <saveable-form.saveButton
+          @onClick={{this.handleSave}}
           data-test-save-button
         />
       </SaveableForm>

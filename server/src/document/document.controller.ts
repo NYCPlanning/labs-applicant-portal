@@ -54,7 +54,16 @@ export class DocumentController {
 
     const { records: [ { dcp_name: packageName }]} = packageRecord;
 
-    const folderName = `${packageName}_${instanceId.replace(/\-/g,'').toUpperCase()}`;
+    // Here, we make sure the packageName matches the format used by Sharepoint
+    // document folders that hold documents from previous revisions.
+    const strippedPackageName = packageName.replace(/-/g, '').replace(/\s+/g, '').replace(/'+/g,'');
+
+    // We upload documents to the Sharepoint folder that holds documents from
+    // previous revisions. This way, the revision folder holds both documents
+    // from current and past revisions. When retrieving documents, we can then
+    // only look up this one folder, instead of two separate folders (one for
+    // previous revision documents and one for current revision documents).
+    const folderName = `${strippedPackageName}_${instanceId.toUpperCase()}`;
 
     return this.documentService.uploadDocument('dcp_package',
       instanceId,

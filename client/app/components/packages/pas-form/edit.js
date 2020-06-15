@@ -9,6 +9,9 @@ export default class PasFormComponent extends Component {
   @service
   router;
 
+  @service
+  store;
+
   saveablePasFormValidations = SaveablePasFormValidations;
 
   submittablePasFormValidations = SubmittablePasFormValidations;
@@ -30,13 +33,33 @@ export default class PasFormComponent extends Component {
 
   @action
   async savePackage() {
-    await this.args.package.save();
+    try {
+      await this.args.package.save();
+      await this.args.package.reload();
+    } catch (error) {
+      console.log('Save package error:', error);
+    }
+
+    this.args.package.refreshExistingDocuments();
   }
 
   @action
   async submitPackage() {
     await this.args.package.submit();
 
-    this.router.transitionTo('packages.show', this.args.package.id);
+    this.router.transitionTo('pas-form.show', this.args.package.id);
+  }
+
+  @action
+  addApplicant(targetEntity) {
+    this.store.createRecord('applicant', {
+      targetEntity, // distinguishes between different applicant types for the backend
+      pasForm: this.pasForm,
+    });
+  }
+
+  @action
+  removeApplicant(applicant) {
+    applicant.deleteRecord();
   }
 }

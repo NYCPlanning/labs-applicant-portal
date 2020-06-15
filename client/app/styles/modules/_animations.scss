@@ -1,0 +1,40 @@
+/* Module: Animations */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scale-shrink {
+  from { transform: scale(1.25); }
+  to   { transform: scale(1); }
+}
+
+@keyframes slide-down {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(0); }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+
+// Scale and fade in
+.scale-fade-in {
+  animation-name: scale-shrink, fade-in;
+  animation-duration: 0.3s;
+}
+
+// Slide in from the top
+.slide-in-top {
+  animation-name: slide-down, fade-in;
+  animation-duration: 0.3s;
+}
+
+// Slide in from the bottom
+.slide-in-bottom {
+  animation-name: slide-up, fade-in;
+  animation-duration: 0.3s;
+}
