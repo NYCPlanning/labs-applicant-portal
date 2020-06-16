@@ -66,6 +66,8 @@
         @onClick={{this.savePackage}}
         data-test-save-button
       />
+      {{!-- Error Handling --}}
+      <Packages::RwcdsForm::RwcdsFormError @package={{@package}} />
     </StickySidebar>
   </div>
 </SaveableForm>

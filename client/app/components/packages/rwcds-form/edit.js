@@ -14,7 +14,7 @@ export default class PackagesRwcdsFormEditComponent extends Component {
       await this.args.package.save();
       await this.args.package.reload();
     } catch (error) {
-      console.log('Save package error:', error);
+      console.log('Save RWCDS package error:', error);
     }
   }
 }
