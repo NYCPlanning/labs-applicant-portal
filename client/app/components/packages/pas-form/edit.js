@@ -5,16 +5,22 @@ import { inject as service } from '@ember/service';
 import SaveablePasFormValidations from '../../../validations/saveable-pas-form';
 import SubmittablePasFormValidations from '../../../validations/submittable-pas-form';
 
+import SaveableApplicantFormValidations from '../../../validations/saveable-applicant-form';
+import SubmittableApplicantFormValidations from '../../../validations/submittable-applicant-form';
+
 export default class PasFormComponent extends Component {
+  validations = {
+    SaveablePasFormValidations,
+    SubmittablePasFormValidations,
+    SaveableApplicantFormValidations,
+    SubmittableApplicantFormValidations,
+  };
+
   @service
   router;
 
   @service
   store;
-
-  saveablePasFormValidations = SaveablePasFormValidations;
-
-  submittablePasFormValidations = SubmittablePasFormValidations;
 
   get package() {
     return this.args.package || {};
