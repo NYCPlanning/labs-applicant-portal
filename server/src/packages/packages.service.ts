@@ -3,7 +3,7 @@ import { CrmService } from '../crm/crm.service';
 import { pick } from 'underscore';
 import { PACKAGE_ATTRS } from './packages.controller';
 
-const PACKAGE_TYPE_CODES = {
+const PACKAGE_TYPE_OPTIONSET = {
   INFORMATION_MEETING: {
     code: 717170014,
     label: 'Information Meeting',
@@ -106,7 +106,7 @@ export class PackagesService {
       _dcp_rwcdsform_value,
     } = firstPackage;
 
-    if (dcp_packagetype === PACKAGE_TYPE_CODES['PAS_PACKAGE'].code) {
+    if (dcp_packagetype === PACKAGE_TYPE_OPTIONSET['PAS_PACKAGE'].code) {
       const { records: [pasForm] } = await this.crmService.get(`dcp_pasforms`, `
       $filter=
         dcp_pasformid eq ${_dcp_pasform_value}
@@ -140,7 +140,7 @@ export class PackagesService {
           serverRelativeUrl: document['ServerRelativeUrl'],
         })),
       };
-    } else if (dcp_packagetype === PACKAGE_TYPE_CODES['RWCDS'].code) {
+    } else if (dcp_packagetype === PACKAGE_TYPE_OPTIONSET['RWCDS'].code) {
       const { records: [rwcdsForm] } = await this.crmService.get(`dcp_rwcdsforms`, `
       $filter=
         dcp_rwcdsformid eq ${_dcp_rwcdsform_value}

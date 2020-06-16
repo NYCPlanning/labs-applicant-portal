@@ -16,7 +16,7 @@ module('Acceptance | user can interact with pas-form packages', function(hooks) 
 
   test('User can visit view-only (show) pas-form route', async function(assert) {
     const ourProject = this.server.create('project');
-    const projectPackage = this.server.create('package', { project: ourProject });
+    const projectPackage = this.server.create('package', 'pasForm', { project: ourProject });
 
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form,project' });
 

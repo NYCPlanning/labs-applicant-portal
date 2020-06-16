@@ -14,7 +14,7 @@ module('Integration | Component | land-use-action', function(hooks) {
   setupMirage(hooks);
 
   test('User can add new actions and answer extra questions', async function(assert) {
-    const projectPackage = this.server.create('package', 1, 'applicant', 'withLandUseActions');
+    const projectPackage = this.server.create('package', 'applicant', 'pasForm', 'withLandUseActions');
 
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
 
@@ -60,7 +60,7 @@ module('Integration | Component | land-use-action', function(hooks) {
   });
 
   test('User can delete actions', async function(assert) {
-    const projectPackage = this.server.create('package', 1, 'applicant', 'withLandUseActions');
+    const projectPackage = this.server.create('package', 'applicant', 'pasForm', 'withLandUseActions');
 
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
 
@@ -100,7 +100,7 @@ module('Integration | Component | land-use-action', function(hooks) {
   });
 
   test('User can load PAS Form with existing Land Use Actions', async function(assert) {
-    const projectPackage = this.server.create('package', 1, 'applicant', 'withLandUseActions');
+    const projectPackage = this.server.create('package', 'applicant', 'pasForm', 'withLandUseActions');
 
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
 
@@ -122,7 +122,7 @@ module('Integration | Component | land-use-action', function(hooks) {
   });
 
   test('Issue #235 Bug: Updating action inputs does not cause actions to show up twice', async function(assert) {
-    const projectPackage = this.server.create('package', 1, 'applicant', 'withLandUseActions');
+    const projectPackage = this.server.create('package', 'applicant', 'pasForm', 'withLandUseActions');
 
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
 
@@ -155,7 +155,7 @@ module('Integration | Component | land-use-action', function(hooks) {
   });
 
   test('selected actions are sorted properly', async function(assert) {
-    const projectPackage = this.server.create('package', 1, 'applicant', 'withLandUseActions');
+    const projectPackage = this.server.create('package', 'applicant', 'pasForm', 'withLandUseActions');
 
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
 

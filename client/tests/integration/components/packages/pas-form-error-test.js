@@ -9,7 +9,7 @@ module('Integration | Component | pas-form-error', function(hooks) {
   setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    await render(hbs`<Packages::PasFormError />`);
+    await render(hbs`<Packages::PasForm::PasFormError />`);
 
     assert.equal(this.element.textContent.trim(), '');
   });

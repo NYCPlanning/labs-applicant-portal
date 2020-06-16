@@ -11,6 +11,7 @@ import {
   PACKAGE_STATE_OPTIONSET,
   PACKAGE_STATUS_OPTIONSET,
   PACKAGE_VISIBILITY_OPTIONSET,
+  PACKAGE_TYPE_OPTIONSET,
 } from '../models/package';
 import {
   DCPHASPROJECTCHANGEDSINCESUBMISSIONOFTHEPAS_OPTIONSET,
@@ -28,6 +29,7 @@ const OPTIONSET_LOOKUP = {
     state: PACKAGE_STATE_OPTIONSET,
     status: PACKAGE_STATUS_OPTIONSET,
     visibility: PACKAGE_VISIBILITY_OPTIONSET,
+    type: PACKAGE_TYPE_OPTIONSET,
   },
   rwcdsForm: {
     dcpHasprojectchangedsincesubmissionofthepas: DCPHASPROJECTCHANGEDSINCESUBMISSIONOFTHEPAS_OPTIONSET,
@@ -51,7 +53,7 @@ const OPTIONSET_LOOKUP = {
  * or label lookup. The identifier is the key to each option in an optionset.
  * @return     {string, number, array or Object}
  */
-export default helper(function optionset([model, optionsetId, returnType, lookupToken]) {
+export function optionset([model, optionsetId, returnType, lookupToken]) {
   const optionset = OPTIONSET_LOOKUP[model][optionsetId];
 
   switch (returnType) {
@@ -71,7 +73,7 @@ export default helper(function optionset([model, optionsetId, returnType, lookup
           return optionByLabel.code;
         }
       }
-      console.assert(false, 'Invalid call to optionset helper: must provide a valid identifier or label to look up a code.');
+      console.assert(false, 'Invalid call to optionset helper: must provide a valid identifier or label to look up a code.'); // eslint-disable-line
       break;
     case 'label':
       if (lookupToken) {
@@ -87,9 +89,12 @@ export default helper(function optionset([model, optionsetId, returnType, lookup
           return optionByCode.label;
         }
       }
-      console.assert(false, 'Invalid call to optionset helper: must provide a valid identifier or code to look up a label.');
+      console.assert(false, `Invalid call to optionset helper with identifier ${lookupToken}: must provide a valid identifier or code to look up a label.`); // eslint-disable-line
       break;
     default:
       return optionset;
   }
-});
+  return undefined;
+}
+
+export default helper(optionset);

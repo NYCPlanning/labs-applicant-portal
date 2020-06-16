@@ -9,7 +9,7 @@ module('Integration | Component | action-form-input', function(hooks) {
   setupMirage(hooks);
 
   test('user-entered input is recorded on pasForm', async function(assert) {
-    const projectPackage = this.server.create('package');
+    const projectPackage = this.server.create('package', 'pasForm');
 
     this.package = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
 
