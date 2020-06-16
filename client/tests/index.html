@@ -21,6 +21,19 @@
     {{content-for "body"}}
     {{content-for "test-body"}}
 
+    <script type="text/javascript">
+      function setGetParam(key, value) {
+        if (history.pushState) {
+          var params = new URLSearchParams(window.location.search);
+          params.set(key, value);
+          var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + params.toString();
+          window.history.pushState({ path: newUrl }, '', newUrl);
+        }
+      }
+
+      setGetParam('hidepassed', true);
+      setGetParam('dockcontainer', true);
+    </script>
     <script src="/testem.js" integrity=""></script>
     <script src="{{rootURL}}assets/vendor.js"></script>
     <script src="{{rootURL}}assets/test-support.js"></script>
