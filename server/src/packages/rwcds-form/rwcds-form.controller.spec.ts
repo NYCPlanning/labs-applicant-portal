@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { RwcdsFormController } from './rwcds-form.controller';
 import { CrmModule } from '../../crm/crm.module';
+import { RwcdsFormService } from './rwcds-form.service';
 
 describe('RwcdsForm Controller', () => {
   let controller: RwcdsFormController;
@@ -8,6 +9,7 @@ describe('RwcdsForm Controller', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [CrmModule],
+      providers: [RwcdsFormService],
       controllers: [RwcdsFormController],
     }).compile();
 
