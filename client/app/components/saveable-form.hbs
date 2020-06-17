@@ -31,6 +31,10 @@
         registerSubmittable=submittableValidator.register
       )
 
+      Section=(component 'saveable-form/section' register=this.registerSection)
+
+      StickySidebar=(component 'sticky-sidebar' navItems=this.sectionData)
+
       isSaveable=(and saveableValidator.isDirty saveableValidator.isValid)
       isSubmittable=submittableValidator.isValid
     )}}
