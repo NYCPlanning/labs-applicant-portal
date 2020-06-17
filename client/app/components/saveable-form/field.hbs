@@ -1,0 +1,20 @@
+{{#let (get @saveableChanges @attribute) (get @submittableChanges (concat 'error.' @attribute)) as |value error|}}
+  {{#if hasBlock}} {{!-- Yield the component so more args can be added --}}
+    {{yield (component @type
+      property=value
+      propertyName=@attribute)
+    }}
+  {{else}} {{!-- Without a block, just invoke it --}}
+    {{component @type
+      property=value
+      propertyName=@attribute
+    }}
+  {{/if}}
+
+  {{#if error}}
+    <ValidationMessage
+      @changesetError={{error}}
+      data-test-validation-message={{@attribute}}
+    />
+  {{/if}}
+{{/let}}
