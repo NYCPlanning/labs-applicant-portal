@@ -61,22 +61,22 @@ module('Integration | Component | saveable-form', function(hooks) {
         />
 
         <span data-test-radio-button-1>
-          <saveable-form.radio
+          <saveable-form.Radio
             @value={{true}}
             @groupValue={{saveable-form.saveableChanges.someBool}}
           />
         </span>
 
-        <saveable-form.radio
+        <saveable-form.Radio
           @value={{false}}
           @groupValue={{saveable-form.saveableChanges.someBool}}
         />
 
-        <saveable-form.saveButton
+        <saveable-form.SaveButton
           @onClick={{this.handleSave}}
           data-test-save-button
         />
-        <saveable-form.submitButton
+        <saveable-form.SubmitButton
           @onClick={{this.handleSubmit}}
           data-test-submit-button
         />
@@ -112,7 +112,7 @@ module('Integration | Component | saveable-form', function(hooks) {
         @validators={{this.validators}}
         as |saveable-form|
       >
-        <saveable-form.saveButton
+        <saveable-form.SaveButton
           @onClick={{this.handleSave}}
           data-test-save-button
         />
@@ -154,11 +154,11 @@ module('Integration | Component | saveable-form', function(hooks) {
           />
         </saveable-form.SaveableForm>
 
-        <saveable-form.saveButton
+        <saveable-form.SaveButton
           @onClick={{this.handleSave}}
           data-test-save-button
         />
-        <saveable-form.submitButton
+        <saveable-form.SubmitButton
           @onClick={{this.handleSubmit}}
           data-test-submit-button
         />

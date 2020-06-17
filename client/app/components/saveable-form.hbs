@@ -1,31 +1,38 @@
-{{yield (hash
-  saveableChanges=this.saveableChanges
-  submittableChanges=this.submittableChanges
+<FormValidator
+  @model={{@model}}
+  @validator={{@validators.[0]}}
+  @parent={{@registerSaveable}} as |saveableValidator|
+>
+  <saveableValidator.FormValidator
+    @validator={{@validators.[1]}}
+    @parent={{@registerSubmittable}} as |submittableValidator|
+  >
+    {{yield (hash
+      saveableChanges=saveableValidator.changeset
+      submittableChanges=submittableValidator.changeset
 
-  radio=(component 'radio-button'
-    changed=(fn this.validate this.saveableChanges)
-  )
+      Radio=(component 'radio-button'
+        changed=saveableValidator.validate
+      )
 
-  saveButton=(component 'packages/save-button'
-    wrapperCallback=(fn this.persistSaveableChangeset)
-    isEnabled=this.isSaveable
-  )
+      SaveButton=(component 'packages/save-button'
+        wrapperCallback=saveableValidator.persist
+        isEnabled=(and saveableValidator.isDirty saveableValidator.isValid)
+      )
 
-  submitButton=(component 'packages/save-button'
-    wrapperCallback=this.persistSubmittableChangeset
-    isEnabled=this.isSubmittable
-    isSubmit=true
-  )
+      SubmitButton=(component 'packages/save-button'
+        wrapperCallback=submittableValidator.persist
+        isEnabled=submittableValidator.isValid
+        isSubmit=true
+      )
 
-  SaveableForm=(component 'saveable-form'
-    register=(fn this.register)
-  )
+      SaveableForm=(component 'saveable-form'
+        registerSaveable=saveableValidator.register
+        registerSubmittable=submittableValidator.register
+      )
 
-  isSaveable=this.isSaveable
-  isSubmittable=this.isSubmittable
-)}}
-
-{{!-- Child components are passed a registration function. If the function is there, register itself as a descendant. --}}
-{{#if @register}}
-  <div {{did-insert (fn @register this)}}></div>
-{{/if}}
+      isSaveable=(and saveableValidator.isDirty saveableValidator.isValid)
+      isSubmittable=submittableValidator.isValid
+    )}}
+  </saveableValidator.FormValidator>
+</FormValidator>

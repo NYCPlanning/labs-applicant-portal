@@ -1,0 +1,19 @@
+{{yield (hash
+  FormValidator=(component 'form-validator'
+    model=@model
+    dependsOn=this.changeset
+  )
+
+  register=(fn this.register)
+  persist=(fn this.persist)
+  validate=(fn this.validate)
+
+  changeset=this.changeset
+  isDirty=this.isDirty
+  isValid=this.isValid
+)}}
+
+{{!-- Child validators are passed registration functions to register themselves as a descendants. --}}
+{{#if @parent}}
+  <div {{did-insert (fn @parent this)}}></div>
+{{/if}}
