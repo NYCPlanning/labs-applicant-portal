@@ -1,0 +1,184 @@
+<@form.Section @title="Proposed Development Site">
+  <p class="text-small">
+    <b>Development Site</b> refers to all property to be developed as part of the applicant’s specific proposal which the land use actions would facilitate. Typically, the Development Site and the Project Area will comprise the same property(ies) unless the application is requesting a zoning map amendment covering an area greater than an applicant’s property to be developed or a large-scale special approval involving multiple tax lots. In these cases, the Development Site may be one or several tax lots within a broader Project Area.
+  </p>
+
+  <label>
+    <strong>In what year do you expect the development to complete?</strong>
+    <TextInput
+      @property={{@form.saveableChanges.dcpEstimatedcompletiondate}}
+      @propertyName="dcpEstimatedcompletiondate"
+      @changesetError={{@form.submittableChanges.error.dcpEstimatedcompletiondate}}
+      @maxlength="4"
+    />
+    {{!-- QUESTION: Should this be a date picker? --}}
+  </label>
+
+  <fieldset class="medium-margin-bottom">
+    <legend>
+      <strong>
+        What type of development is proposed?
+        <small class="text-weight-normal">(select all that apply)</small>
+      </strong>
+    </legend>
+    <ul class="no-bullet no-margin">
+      <li>
+        <Input
+          @type="checkbox"
+          @checked={{@form.saveableChanges.dcpProposeddevelopmentsitenewconstruction}}
+          id="dcpproposeddevelopmentsitenewconstruction"
+          data-test-checkbox="dcpProposeddevelopmentsitenewconstruction"
+        /><label for="dcpproposeddevelopmentsitenewconstruction">Newly constructed buildings</label>
+      </li>
+      <li>
+        <Input
+          @type="checkbox"
+          @checked={{@form.saveableChanges.dcpProposeddevelopmentsitedemolition}}
+          id="dcpproposeddevelopmentsitedemolition"
+          data-test-checkbox="dcpProposeddevelopmentsitedemolition"
+        /><label for="dcpproposeddevelopmentsitedemolition">Demolition</label>
+      </li>
+      <li>
+        <Input
+          @type="checkbox"
+          @checked={{@form.saveableChanges.dcpProposeddevelopmentsiteinfoalteration}}
+          id="dcpproposeddevelopmentsiteinfoalteration"
+          data-test-checkbox="dcpProposeddevelopmentsiteinfoalteration"
+        /><label for="dcpproposeddevelopmentsiteinfoalteration">Alteration</label>
+      </li>
+      <li>
+        <Input
+          @type="checkbox"
+          @checked={{@form.saveableChanges.dcpProposeddevelopmentsiteinfoaddition}}
+          id="dcpproposeddevelopmentsiteinfoaddition"
+          data-test-checkbox="dcpProposeddevelopmentsiteinfoaddition"
+        /><label for="dcpproposeddevelopmentsiteinfoaddition">Addition</label>
+      </li>
+      <li>
+        <Input
+          @type="checkbox"
+          @checked={{@form.saveableChanges.dcpProposeddevelopmentsitechnageofuse}}
+          id="dcpproposeddevelopmentsitechnageofuse"
+          data-test-checkbox="dcpProposeddevelopmentsitechnageofuse"
+        /><label for="dcpproposeddevelopmentsitechnageofuse">Change of use</label>
+      </li>
+      <li>
+        <Input
+          @type="checkbox"
+          @checked={{@form.saveableChanges.dcpProposeddevelopmentsiteenlargement}}
+          id="dcpproposeddevelopmentsiteenlargement"
+          data-test-checkbox="dcpProposeddevelopmentsiteenlargement"
+        /><label for="dcpproposeddevelopmentsiteenlargement">Enlargement</label>
+      </li>
+      <li>
+        <Input
+          @type="checkbox"
+          {{on "click" (fn (mut @form.saveableChanges.dcpProposeddevelopmentsiteotherexplanation) "")}}
+          @checked={{@form.saveableChanges.dcpProposeddevelopmentsiteinfoother}}
+          id="dcpproposeddevelopmentsiteinfoother"
+          data-test-checkbox="dcpProposeddevelopmentsiteinfoother"
+        /><label for="dcpproposeddevelopmentsiteinfoother">Other&hellip;</label>
+      </li>
+    </ul>
+    {{#if @form.saveableChanges.dcpProposeddevelopmentsiteinfoother}}
+      <label>
+        Explain:
+        <Input
+          @type="text"
+          @value={{@form.saveableChanges.dcpProposeddevelopmentsiteotherexplanation}}
+          data-test-input="dcpProposeddevelopmentsiteotherexplanation"
+        />
+        <ValidationMessage
+          @changesetError={{@form.submittableChanges.error.dcpProposeddevelopmentsiteotherexplanation}}
+        />
+      </label>
+    {{/if}}
+  </fieldset>
+
+  <fieldset class="medium-margin-bottom">
+    <legend>
+      <strong>Is the Development Site in an <a href="https://zola.planning.nyc.gov/"  target="_blank" rel="noopener noreferrer">Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?</strong>
+    </legend>
+
+    <p class="text-small">
+      Refer to <a href="https://zr.planning.nyc.gov/appendix-f-inclusionary-housing-designated-areas-and-mandatory-inclusionary-housing-areas" target="_blank" rel="noopener noreferrer">Appendix F<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a> of the Zoning Resolution for full list of all inclusionary housing areas which are areas that incentivize or require affordable housing in certain areas.
+    </p>
+
+    {{#each (array
+      (hash code=true label='Yes')
+      (hash code=false label='No')) as |radio|
+    }}
+      <@form.Radio
+        @value={{radio.code}}
+        @groupValue={{@form.saveableChanges.dcpIsinclusionaryhousingdesignatedarea}}
+        @changed={{fn (mut @form.saveableChanges.dcpInclusionaryhousingdesignatedareaname) ""}}
+        data-test-radio="dcpIsinclusionaryhousingdesignatedarea"
+        data-test-radio-option={{radio.label}}
+      >
+        {{radio.label}}
+      </@form.Radio>
+    {{/each}}
+
+    {{#if @form.saveableChanges.dcpIsinclusionaryhousingdesignatedarea}}
+      <label>
+        Name of Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area
+        <TextInput
+          @property={{@form.saveableChanges.dcpInclusionaryhousingdesignatedareaname}}
+          @propertyName="dcpInclusionaryhousingdesignatedareaname"
+          @changesetError={{@form.submittableChanges.error.dcpInclusionaryhousingdesignatedareaname}}
+        />
+      </label>
+    {{/if}}
+  </fieldset>
+
+  <fieldset class="medium-margin-bottom">
+    <legend>
+      <strong>Does the proposed development involve discretionary funding for Affordable Housing Units?</strong>
+    </legend>
+    {{#each
+      (array
+        (hash code=717170000 label='Yes')
+        (hash code=717170001 label='No')
+        (hash code=717170002 label='Unsure at this time')
+      )
+      as |radio|
+    }}
+      <@form.Radio
+        @value={{radio.code}}
+        @groupValue={{@form.saveableChanges.dcpDiscressionaryfundingforffordablehousing}}
+        @changed={{fn (mut @form.saveableChanges.dcpHousingunittype) ""}}
+        data-test-radio="dcpDiscressionaryfundingforffordablehousing"
+        data-test-radio-option={{radio.label}}
+      >
+        {{radio.label}}
+      </@form.Radio>
+    {{/each}}
+
+    {{#if (eq @form.saveableChanges.dcpDiscressionaryfundingforffordablehousing 717170000)}}
+      <fieldset class="medium-margin-bottom">
+        <legend>
+          Funding source
+        </legend>
+        {{#each (array
+            (hash code=717170000 label='City')
+            (hash code=717170001 label='State')
+            (hash code=717170002 label='Federal')
+            (hash code=717170003 label='Other')) as |radio|
+        }}
+          <@form.Radio
+            @value={{radio.code}}
+            @groupValue={{@form.saveableChanges.dcpHousingunittype}}
+            data-test-radio="dcpHousingunittype"
+            data-test-radio-option={{radio.label}}
+          >
+            {{radio.label}}
+          </@form.Radio>
+        {{/each}}
+      </fieldset>
+      <ValidationMessage
+        @changesetError={{@form.submittableChanges.error.dcpHousingunittype}}
+        data-test-validation-message="dcpHousingunittype"
+      />
+    {{/if}}
+  </fieldset>
+</@form.Section>
