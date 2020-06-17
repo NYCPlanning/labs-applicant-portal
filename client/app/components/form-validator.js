@@ -14,20 +14,20 @@ export default class FormValidatorComponent extends Component {
     return Array.from(this.registeredDescendants);
   }
 
-  get hasDirtyDescendants() {
+  get _hasDirtyDescendants() {
     return this._registeredDescendants.any((formvalidator) => formvalidator.isDirty === true);
   }
 
-  get hasValidDescendants() {
+  get _hasValidDescendants() {
     return this.registeredDescendants.size ? this._registeredDescendants.every((formvalidator) => formvalidator.isValid === true) : true;
   }
 
   get isDirty() {
-    return this.changeset.isDirty || this.hasDirtyDescendants;
+    return this.changeset.isDirty || this._hasDirtyDescendants;
   }
 
   get isValid() {
-    return this.changeset.isValid && this.hasValidDescendants;
+    return this.changeset.isValid && this._hasValidDescendants;
   }
 
   @action
@@ -57,5 +57,9 @@ export default class FormValidatorComponent extends Component {
     });
 
     await this._persistChangeset(callback);
+  }
+
+  willDestroy() {
+    this.registeredDescendants.clear();
   }
 }

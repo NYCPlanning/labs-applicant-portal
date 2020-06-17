@@ -14,7 +14,7 @@ module('Integration | Component | form-validator', function(hooks) {
     await render(hbs`
       <FormValidator
         @model={{this.dummyModel}}
-        @validator={{this.validator}} as |changeset myValidator|
+        @validator={{this.validator}} as |myValidator|
       >
         {{myValidator.isValid}}, {{myValidator.isDirty}}
       </FormValidator>

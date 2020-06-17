@@ -61,7 +61,7 @@
           label="Attached Documents")
         }}
     >
-      <saveableForm.saveButton
+      <saveableForm.SaveButton
         @isEnabled={{or @package.isDirty (and saveableForm.saveableChanges.isDirty saveableForm.saveableChanges.isValid)}}
         @onClick={{this.savePackage}}
         data-test-save-button

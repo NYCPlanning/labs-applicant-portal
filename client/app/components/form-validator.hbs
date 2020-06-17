@@ -1,13 +1,14 @@
-{{yield this.changeset (hash
+{{yield (hash
   FormValidator=(component 'form-validator'
-    model=this.args.model
+    model=@model
     dependsOn=this.changeset
   )
 
-  register=this.register
-  persist=this.persist
-  validate=this.validate
+  register=(fn this.register)
+  persist=(fn this.persist)
+  validate=(fn this.validate)
 
+  changeset=this.changeset
   isDirty=this.isDirty
   isValid=this.isValid
 )}}
