@@ -23,12 +23,7 @@
         </p>
       </section>
 
-      <section class="form-section">
-        <h2 class="section-header">
-          <span id="project-info" class="section-anchor"></span>
-          Project Information
-        </h2>
-
+      <pasForm.Section @title="Project Information">
         <label>
           <strong>Project Name</strong>
           <TextInput
@@ -37,14 +32,9 @@
             @changesetError={{pasForm.submittableChanges.error.dcpRevisedprojectname}}
           />
         </label>
-      </section>
+      </pasForm.Section>
 
-      <section class="form-section">
-        <h2 class="section-header">
-          <span id="applicant-team" class="section-anchor"></span>
-          Applicant Team
-        </h2>
-
+      <pasForm.Section @title="Applicant Team">
         <p>
           Add all applicants (either individuals or organizations) and other team members (including land use consultants and environmental consultants, agency staff, etc.).
         </p>
@@ -73,14 +63,9 @@
             {{/each}}
           </ul>
         </Packages::ApplicantTeamEditor>
-      </section>
+      </pasForm.Section>
 
-      <section class="form-section">
-        <h2 class="section-header">
-          <span id="project-geography" class="section-anchor"></span>
-          Project Geography
-        </h2>
-
+      <pasForm.Section @title="Project Geography">
         <p>
           Please identify the tax lots that are included in the proposed project area and/or development site.
           If the project geography is irregular, especially large, or does not consist of tax lots, please describe it below.
@@ -108,14 +93,9 @@
               @changesetError={{pasForm.submittableChanges.error.dcpDescriptionofprojectareageography}}
             />
         </label>
-      </section>
+      </pasForm.Section>
 
-      <section class="form-section">
-        <h2 class="section-header">
-          <span id="proposed-land-use-actions" class="section-anchor"></span>
-          Proposed Land Use Actions
-        </h2>
-
+      <pasForm.Section @title="Proposed Land Use Actions">
         <p>
           What land use actions does the proposed project require? Identify all that apply and fill in the appropriate related information.
         </p>
@@ -127,14 +107,9 @@
           @pasForm={{pasForm.saveableChanges}}
           @submittableChanges={{pasForm.submittableChanges}}
         />
-      </section>
+      </pasForm.Section>
 
-      <section class="form-section">
-        <h2 class="section-header">
-          <span id="project-area" class="section-anchor"></span>
-          Project Area
-        </h2>
-
+      <pasForm.Section @title="Project Area">
         <p>
           Project Area refers to all property that would be subject to the proposed actions.
         </p>
@@ -429,14 +404,9 @@
             </pasForm.Radio>
           {{/each}}
         </fieldset>
-      </section>
+      </pasForm.Section>
 
-      <section class="form-section">
-        <h2 class="section-header">
-          <span id="proposed-development-site" class="section-anchor"></span>
-          Proposed Development Site
-        </h2>
-
+      <pasForm.Section @title="Proposed Development Site">
         <p class="text-small">
           <b>Development Site</b> refers to all property to be developed as part of the applicant’s specific proposal which the land use actions would facilitate. Typically, the Development Site and the Project Area will comprise the same property(ies) unless the application is requesting a zoning map amendment covering an area greater than an applicant’s property to be developed or a large-scale special approval involving multiple tax lots. In these cases, the Development Site may be one or several tax lots within a broader Project Area.
         </p>
@@ -619,14 +589,9 @@
             />
           {{/if}}
         </fieldset>
-      </section>
+      </pasForm.Section>
 
-      <section class="form-section">
-        <h2 class="section-header">
-          <span id="project-description" class="section-anchor"></span>
-          Project Description
-        </h2>
-
+      <pasForm.Section @title="Project Description">
         <p class="text-small">
           For complex proposals, feel free to upload a draft document (in the Attachments section) explaining this information instead of filling out the form inputs.
         </p>
@@ -690,14 +655,9 @@
             @maxlength="3000"
           />
         </label>
-      </section>
+      </pasForm.Section>
 
-      <section class="form-section">
-        <h2 class="section-header">
-          <span id="attached-documents" class="section-anchor"></span>
-          Attached Documents
-        </h2>
-
+      <pasForm.Section @title="Attached Documents">
         <p>
           Please attach the following required documents. (Additional materials that help to explain the proposed project may also be submitted.)
         </p>
@@ -771,30 +731,11 @@
           @fileManager={{@package.fileManager}}
           data-test-section="attachments"
         />
-      </section>
+      </pasForm.Section>
 
     </div>
     <div class="cell large-4">
-      <StickySidebar
-        @navItems={{array
-          (hash anchorId="project-info"
-            label="Project Information")
-          (hash anchorId="applicant-team"
-            label="Applicant Team")
-          (hash anchorId="project-geography"
-            label="Project Geography")
-          (hash anchorId="proposed-land-use-actions"
-            label="Proposed Land Use Actions")
-          (hash anchorId="project-area"
-            label="Project Area")
-          (hash anchorId="proposed-development-site"
-            label="Proposed Development Site")
-          (hash anchorId="project-description"
-            label="Project Description")
-          (hash anchorId="attached-documents"
-            label="Attached Documents")
-          }}
-      >
+      <pasForm.StickySidebar>
         <pasForm.SaveButton
           @isEnabled={{or @package.isDirty pasForm.isSaveable}}
           @onClick={{this.savePackage}}
@@ -808,7 +749,7 @@
           class="secondary"
           data-test-submit-button
         />
-      </StickySidebar>
+      </pasForm.StickySidebar>
       {{#if this.modalIsOpen}}
         <EmberWormhole @to="reveal-modal-container">
           <RevealModal @toggle={{this.toggleModal}}>
