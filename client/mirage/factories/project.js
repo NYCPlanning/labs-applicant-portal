@@ -28,22 +28,36 @@ export default Factory.extend({
     return SAMPLE_CUSTOMERS[i % SAMPLE_CUSTOMERS.length];
   },
 
+  dcpBorough(i) {
+    const BOROUGHS = [
+      717170000,
+      717170002,
+      717170001,
+      717170003,
+      717170004,
+      717170005,
+    ];
+
+    return BOROUGHS[i % BOROUGHS.length];
+  },
+
+  // Defaults to Project with a PAS Form applicant package.
   applicant: trait({
     afterCreate(project, server) {
-      server.create('package', { project }, 'applicant');
+      server.create('package', { project }, 'applicant', 'pasForm');
     },
   }),
 
   // These can be either projects with or without a View PAS button
   planning: trait({
     afterCreate(project, server) {
-      server.create('package', { project }, 'planning');
+      server.create('package', { project }, 'planning', 'pasForm');
     },
   }),
 
   planningWithViewPASButton: trait({
     afterCreate(project, server) {
-      server.create('package', { project }, 'planningWithViewPASButton');
+      server.create('package', { project }, 'planningWithViewPASButton', 'pasForm');
     },
   }),
 
@@ -52,7 +66,7 @@ export default Factory.extend({
   // applicant only/general public
   planningNoViewPASButton: trait({
     afterCreate(project, server) {
-      server.create('package', { project }, 'planningNoViewPASButton');
+      server.create('package', { project }, 'planningNoViewPASButton', 'pasForm');
     },
   }),
 

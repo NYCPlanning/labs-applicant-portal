@@ -5,16 +5,22 @@ import { inject as service } from '@ember/service';
 import SaveablePasFormValidations from '../../../validations/saveable-pas-form';
 import SubmittablePasFormValidations from '../../../validations/submittable-pas-form';
 
+import SaveableApplicantFormValidations from '../../../validations/saveable-applicant-form';
+import SubmittableApplicantFormValidations from '../../../validations/submittable-applicant-form';
+
 export default class PasFormComponent extends Component {
+  validations = {
+    SaveablePasFormValidations,
+    SubmittablePasFormValidations,
+    SaveableApplicantFormValidations,
+    SubmittableApplicantFormValidations,
+  };
+
   @service
   router;
 
   @service
   store;
-
-  saveablePasFormValidations = SaveablePasFormValidations;
-
-  submittablePasFormValidations = SubmittablePasFormValidations;
 
   get package() {
     return this.args.package || {};
@@ -37,7 +43,7 @@ export default class PasFormComponent extends Component {
       await this.args.package.save();
       await this.args.package.reload();
     } catch (error) {
-      console.log('Save package error:', error);
+      console.log('Save PAS package error:', error);
     }
 
     this.args.package.refreshExistingDocuments();

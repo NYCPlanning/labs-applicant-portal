@@ -75,6 +75,69 @@ export const PACKAGE_STATE_OPTIONSET = {
   },
 };
 
+export const PACKAGE_TYPE_OPTIONSET = {
+  INFORMATION_MEETING: {
+    code: 717170014,
+    label: 'Information Meeting',
+  },
+  PAS_PACKAGE: {
+    code: 717170000,
+    label: 'PAS Package',
+  },
+  DRAFT_LU_PACKAGE: {
+    code: 717170001,
+    label: 'Draft LU Package',
+  },
+  FILED_LU_PACKAGE: {
+    code: 717170011,
+    label: 'Filed LU Package',
+  },
+  DRAFT_EAS: {
+    code: 717170002,
+    label: 'Draft EAS',
+  },
+  FILED_EAS: {
+    code: 717170012,
+    label: 'Filed EAS',
+  },
+  EIS: {
+    code: 717170003,
+    label: 'EIS',
+  },
+  PDEIS: {
+    code: 717170013,
+    label: 'PDEIS',
+  },
+  RWCDS: {
+    code: 717170004,
+    label: 'RWCDS',
+  },
+  LEGAL: {
+    code: 717170005,
+    label: 'Legal',
+  },
+  WRP_PACKAGE: {
+    code: 717170006,
+    label: 'WRP Package',
+  },
+  TECHNICAL_MEMO: {
+    code: 717170007,
+    label: 'Technical Memo',
+  },
+  DRAFT_SCOPE_OF_WORK: {
+    code: 717170008,
+    label: 'Draft Scope of Work',
+  },
+  FINAL_SCOPE_OF_WORK: {
+    code: 717170009,
+    label: 'Final Scope of Work',
+  },
+  WORKING_PACKAGE: {
+    code: 717170010,
+    label: 'Working Package',
+  },
+};
+
 export default class PackageModel extends Model {
   createFileQueue() {
     if (this.fileManager) {
@@ -113,7 +176,7 @@ export default class PackageModel extends Model {
   @attr('number')
   statecode;
 
-  @attr('string')
+  @attr('number')
   dcpPackagetype;
 
   @attr('number')
@@ -132,7 +195,12 @@ export default class PackageModel extends Model {
 
   async save() {
     await this.fileManager.save();
-    await this.pasForm.save();
+    if (this.dcpPackagetype === PACKAGE_TYPE_OPTIONSET.PAS_PACKAGE.code) {
+      await this.pasForm.save();
+    }
+    if (this.dcpPackagetype === PACKAGE_TYPE_OPTIONSET.RWCDS.code) {
+      await this.rwcdsForm.save();
+    }
     await super.save();
   }
 
@@ -143,10 +211,20 @@ export default class PackageModel extends Model {
   }
 
   get isDirty() {
-    return this.hasDirtyAttributes
-      || this.fileManager.isDirty
-      || this.pasForm.hasDirtyAttributes
-      || this.pasForm.isBblsDirty
-      || this.pasForm.isApplicantsDirty;
+    const isPackageDirty = this.hasDirtyAttributes
+      || this.fileManager.isDirty;
+
+    if (this.dcpPackagetype === PACKAGE_TYPE_OPTIONSET.PAS_PACKAGE.code) {
+      return isPackageDirty
+        || this.pasForm.hasDirtyAttributes
+        || this.pasForm.isBblsDirty
+        || this.pasForm.isApplicantsDirty;
+    }
+    if (this.dcpPackagetype === PACKAGE_TYPE_OPTIONSET.RWCDS.code) {
+      return isPackageDirty
+        || this.rwcdsForm.hasDirtyAttributes;
+    }
+
+    return isPackageDirty;
   }
 }

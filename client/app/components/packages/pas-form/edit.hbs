@@ -1,7 +1,7 @@
 <SaveableForm
   @model={{this.pasForm}}
-  @validators={{array this.saveablePasFormValidations this.submittablePasFormValidations}}
-  as |saveable-form|
+  @validators={{array this.validations.SaveablePasFormValidations this.validations.SubmittablePasFormValidations}}
+  as |pasForm|
 >
 
   <div class="grid-x grid-margin-x">
@@ -34,9 +34,9 @@
         <label>
           <strong>Project Name</strong>
           <TextInput
-            @property={{saveable-form.saveableChanges.dcpRevisedprojectname}}
+            @property={{pasForm.saveableChanges.dcpRevisedprojectname}}
             @propertyName="dcpRevisedprojectname"
-            @changesetError={{saveable-form.submittableChanges.error.dcpRevisedprojectname}}
+            @changesetError={{pasForm.submittableChanges.error.dcpRevisedprojectname}}
           />
         </label>
       </section>
@@ -56,14 +56,21 @@
             as |ApplicantFieldset|
           >
             <ul class="no-bullet">
-              {{#each (filter-by 'isDeleted' false this.pasForm.applicants) as |applicant applicantIndex|}}
+              {{#each (filter-by 'isDeleted' false pasForm.saveableChanges.applicants) as |applicant applicantIndex|}}
                 <li class="scale-fade-in">
-                  <ApplicantFieldset
-                    @applicant={{applicant}}
-                    @removeApplicant={{fn this.removeApplicant applicant}}
-                    data-test-applicant-fieldset={{applicantIndex}}
-                    data-test-applicant-type={{applicant.friendlyEntityName}}
-                  />
+                  <pasForm.SaveableForm
+                    @model={{applicant}}
+                    @validators={{array this.validations.SaveableApplicantFormValidations this.validations.SubmittableApplicantFormValidations}}
+                    as |applicantForm|
+                  >
+                    <ApplicantFieldset
+                      @applicant={{applicantForm.saveableChanges}}
+                      @parentForm={{applicantForm}}
+                      @removeApplicant={{fn this.removeApplicant applicant}}
+                      data-test-applicant-fieldset={{applicantIndex}}
+                      data-test-applicant-type={{applicant.friendlyEntityName}}
+                    />
+                  </pasForm.SaveableForm>
                 </li>
               {{/each}}
             </ul>
@@ -98,9 +105,9 @@
               Fill in if the project area and/or development site is irregular, especially large, or does not consist of tax lots.
             </small>
              <TextArea
-                @property={{saveable-form.saveableChanges.dcpDescriptionofprojectareageography}}
+                @property={{pasForm.saveableChanges.dcpDescriptionofprojectareageography}}
                 @propertyName="dcpDescriptionofprojectareageography"
-                @changesetError={{saveable-form.submittableChanges.error.dcpDescriptionofprojectareageography}}
+                @changesetError={{pasForm.submittableChanges.error.dcpDescriptionofprojectareageography}}
               />
           </label>
         </section>
@@ -119,8 +126,8 @@
             Note: This is preliminary information and may change following discussion with NYC Planning.
           </p>
           <LandUseAction
-            @pasForm={{saveable-form.saveableChanges}}
-            @submittableChanges={{saveable-form.submittableChanges}}
+            @pasForm={{pasForm.saveableChanges}}
+            @submittableChanges={{pasForm.submittableChanges}}
           />
         </section>
 
@@ -143,14 +150,14 @@
               (hash code=717170001 label='No')
               (hash code=717170002 label='Unsure at this time')) as |radio|
             }}
-              <saveable-form.radio
+              <pasForm.radio
                 @value={{radio.code}}
-                @groupValue={{saveable-form.saveableChanges.dcpProposedprojectorportionconstruction}}
+                @groupValue={{pasForm.saveableChanges.dcpProposedprojectorportionconstruction}}
                 data-test-radio="dcpProposedprojectorportionconstruction"
                 data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
-              </saveable-form.radio>
+              </pasForm.radio>
             {{/each}}
           </fieldset>
 
@@ -164,24 +171,24 @@
               (hash code=717170001 label='No')
               (hash code=717170002 label='Unsure at this time')) as |radio|
             }}
-              <saveable-form.radio
+              <pasForm.radio
                 @value={{radio.code}}
-                @groupValue={{saveable-form.saveableChanges.dcpUrbanrenewalarea}}
-                @changed={{fn (mut saveable-form.saveableChanges.dcpUrbanareaname) ""}}
+                @groupValue={{pasForm.saveableChanges.dcpUrbanrenewalarea}}
+                @changed={{fn (mut pasForm.saveableChanges.dcpUrbanareaname) ""}}
                  data-test-radio="dcpUrbanrenewalarea"
                  data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
-              </saveable-form.radio>
+              </pasForm.radio>
             {{/each}}
 
-            {{#if (eq saveable-form.saveableChanges.dcpUrbanrenewalarea 717170000)}}
+            {{#if (eq pasForm.saveableChanges.dcpUrbanrenewalarea 717170000)}}
               <label>
                 What is the name of the Urban Renewal Area?
                 <TextInput
-                  @property={{saveable-form.saveableChanges.dcpUrbanareaname}}
+                  @property={{pasForm.saveableChanges.dcpUrbanareaname}}
                   @propertyName="dcpUrbanareaname"
-                  @changesetError={{saveable-form.submittableChanges.error.dcpUrbanareaname}}
+                  @changesetError={{pasForm.submittableChanges.error.dcpUrbanareaname}}
                   @showCounter={{true}}
                 />
               </label>
@@ -200,14 +207,14 @@
                 (hash code=717170004 label='Mapped but not Built')) as |radio|
             }}
               <span class="nowrap">
-                <saveable-form.radio
+                <pasForm.radio
                   @value={{radio.code}}
-                  @groupValue={{saveable-form.saveableChanges.dcpLegalstreetfrontage}}
+                  @groupValue={{pasForm.saveableChanges.dcpLegalstreetfrontage}}
                   data-test-radio="dcpLegalstreetfrontage"
                   data-test-radio-option={{radio.label}}
                 >
                   {{radio.label}}
-                </saveable-form.radio>
+                </pasForm.radio>
               </span>
             {{/each}}
           </fieldset>
@@ -229,27 +236,27 @@
               (hash code=717170001 label='No')
               (hash code=717170002 label='Unsure at this time')) as |radio|
             }}
-              <saveable-form.radio
+              <pasForm.radio
                 @value={{radio.code}}
-                @groupValue={{saveable-form.saveableChanges.dcpLanduseactiontype2}}
-                @changed={{fn (mut saveable-form.saveableChanges.dcpPleaseexplaintypeiienvreview) ""}}
+                @groupValue={{pasForm.saveableChanges.dcpLanduseactiontype2}}
+                @changed={{fn (mut pasForm.saveableChanges.dcpPleaseexplaintypeiienvreview) ""}}
                 data-test-radio="dcpLanduseactiontype2"
                 data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
-              </saveable-form.radio>
+              </pasForm.radio>
             {{/each}}
 
-            {{#if (eq saveable-form.saveableChanges.dcpLanduseactiontype2 717170000)}}
+            {{#if (eq pasForm.saveableChanges.dcpLanduseactiontype2 717170000)}}
               <label>
                 Indicate which SEQRA or CEQR category each action fulfills
                 <small class="help-text display-block">
                   Ex: 617.5(c)(9)
                 </small>
                 <TextInput
-                  @property={{saveable-form.saveableChanges.dcpPleaseexplaintypeiienvreview}}
+                  @property={{pasForm.saveableChanges.dcpPleaseexplaintypeiienvreview}}
                   @propertyName="dcpPleaseexplaintypeiienvreview"
-                  @changesetError={{saveable-form.submittableChanges.error.dcpPleaseexplaintypeiienvreview}}
+                  @changesetError={{pasForm.submittableChanges.error.dcpPleaseexplaintypeiienvreview}}
                   @maxlength="200"
                   @showCounter={{true}}
                 />
@@ -274,23 +281,23 @@
               (hash code=true label='Yes')
               (hash code=false label='No')) as |radio|
             }}
-              <saveable-form.radio
+              <pasForm.radio
                 @value={{radio.code}}
-                @groupValue={{saveable-form.saveableChanges.dcpProjectareaindustrialbusinesszone}}
-                @changed={{fn (mut saveable-form.saveableChanges.dcpProjectareaindutrialzonename) ""}}
+                @groupValue={{pasForm.saveableChanges.dcpProjectareaindustrialbusinesszone}}
+                @changed={{fn (mut pasForm.saveableChanges.dcpProjectareaindutrialzonename) ""}}
                 data-test-radio="dcpProjectareaindustrialbusinesszone"
                 data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
-              </saveable-form.radio>
+              </pasForm.radio>
             {{/each}}
-            {{#if saveable-form.saveableChanges.dcpProjectareaindustrialbusinesszone}}
+            {{#if pasForm.saveableChanges.dcpProjectareaindustrialbusinesszone}}
               <label>
                 Name of Industrial Business Zone
                 <TextInput
-                  @property={{saveable-form.saveableChanges.dcpProjectareaindutrialzonename}}
+                  @property={{pasForm.saveableChanges.dcpProjectareaindutrialzonename}}
                   @propertyName="dcpProjectareaindutrialzonename"
-                  @changesetError={{saveable-form.submittableChanges.error.dcpProjectareaindutrialzonename}}
+                  @changesetError={{pasForm.submittableChanges.error.dcpProjectareaindutrialzonename}}
                   @maxlength="200"
                   @showCounter={{true}}
                 />
@@ -306,24 +313,24 @@
               (hash code=true label='Yes')
               (hash code=false label='No')) as |radio|
             }}
-              <saveable-form.radio
+              <pasForm.radio
                 @value={{radio.code}}
-                @groupValue={{saveable-form.saveableChanges.dcpIsprojectarealandmark}}
-                @changed={{fn (mut saveable-form.saveableChanges.dcpProjectarealandmarkname) ""}}
+                @groupValue={{pasForm.saveableChanges.dcpIsprojectarealandmark}}
+                @changed={{fn (mut pasForm.saveableChanges.dcpProjectarealandmarkname) ""}}
                 data-test-radio="dcpIsprojectarealandmark"
                 data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
-              </saveable-form.radio>
+              </pasForm.radio>
             {{/each}}
 
-            {{#if saveable-form.saveableChanges.dcpIsprojectarealandmark}}
+            {{#if pasForm.saveableChanges.dcpIsprojectarealandmark}}
               <label>
                 Name of Landmark or Historic District
                 <TextInput
-                  @property={{saveable-form.saveableChanges.dcpProjectarealandmarkname}}
+                  @property={{pasForm.saveableChanges.dcpProjectarealandmarkname}}
                   @propertyName="dcpProjectarealandmarkname"
-                  @changesetError={{saveable-form.submittableChanges.error.dcpProjectarealandmarkname}}
+                  @changesetError={{pasForm.submittableChanges.error.dcpProjectarealandmarkname}}
                   @showCounter={{true}}
                 />
               </label>
@@ -338,14 +345,14 @@
               (hash code=true label='Yes')
               (hash code=false label='No')) as |radio|
             }}
-              <saveable-form.radio
+              <pasForm.radio
                 @value={{radio.code}}
-                @groupValue={{saveable-form.saveableChanges.dcpProjectareacoastalzonelocatedin}}
+                @groupValue={{pasForm.saveableChanges.dcpProjectareacoastalzonelocatedin}}
                 data-test-radio="dcpProjectareacoastalzonelocatedin"
                 data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
-              </saveable-form.radio>
+              </pasForm.radio>
             {{/each}}
           </fieldset>
 
@@ -358,14 +365,14 @@
               (hash code=717170001 label='No')
               (hash code=717170002 label='Unsure at this time')) as |radio|
             }}
-              <saveable-form.radio
+              <pasForm.radio
                 @value={{radio.code}}
-                @groupValue={{saveable-form.saveableChanges.dcpProjectareaischancefloodplain}}
+                @groupValue={{pasForm.saveableChanges.dcpProjectareaischancefloodplain}}
                 data-test-radio="dcpProjectareaischancefloodplain"
                 data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
-              </saveable-form.radio>
+              </pasForm.radio>
             {{/each}}
           </fieldset>
 
@@ -377,27 +384,27 @@
               (hash code=true label='Yes')
               (hash code=false label='No')) as |radio|
             }}
-              <saveable-form.radio
+              <pasForm.radio
                 @value={{radio.code}}
-                @groupValue={{saveable-form.saveableChanges.dcpRestrictivedeclaration}}
-                @changed={{fn (mut saveable-form.saveableChanges.dcpCityregisterfilenumber) null}}
+                @groupValue={{pasForm.saveableChanges.dcpRestrictivedeclaration}}
+                @changed={{fn (mut pasForm.saveableChanges.dcpCityregisterfilenumber) null}}
                 data-test-radio="dcpRestrictivedeclaration"
                 data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
-              </saveable-form.radio>
+              </pasForm.radio>
             {{/each}}
 
-            {{#if saveable-form.saveableChanges.dcpRestrictivedeclaration}}
+            {{#if pasForm.saveableChanges.dcpRestrictivedeclaration}}
               <label>
                 <strong>City Register file number or other identifier</strong>
                 <small class="help-text display-block">
                   Feel free to attach a copy of the legal instrument in the Attachments section.
                 </small>
                 <TextInput
-                  @property={{saveable-form.saveableChanges.dcpCityregisterfilenumber}}
+                  @property={{pasForm.saveableChanges.dcpCityregisterfilenumber}}
                   @propertyName="dcpCityregisterfilenumber"
-                  @changesetError={{saveable-form.submittableChanges.error.dcpCityregisterfilenumber}}
+                  @changesetError={{pasForm.submittableChanges.error.dcpCityregisterfilenumber}}
                   @maxlength="25"
                   @showCounter={{true}}
                 />
@@ -414,14 +421,14 @@
               (hash code=717170000 label='No')
               (hash code=717170002 label='Unsure at this time')) as |radio|
             }}
-              <saveable-form.radio
+              <pasForm.radio
                 @value={{radio.code}}
-                @groupValue={{saveable-form.saveableChanges.dcpRestrictivedeclarationrequired}}
+                @groupValue={{pasForm.saveableChanges.dcpRestrictivedeclarationrequired}}
                 data-test-radio="dcpRestrictivedeclarationrequired"
                 data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
-              </saveable-form.radio>
+              </pasForm.radio>
             {{/each}}
           </fieldset>
         </section>
@@ -439,9 +446,9 @@
           <label>
             <strong>In what year do you expect the development to complete?</strong>
             <TextInput
-              @property={{saveable-form.saveableChanges.dcpEstimatedcompletiondate}}
+              @property={{pasForm.saveableChanges.dcpEstimatedcompletiondate}}
               @propertyName="dcpEstimatedcompletiondate"
-              @changesetError={{saveable-form.submittableChanges.error.dcpEstimatedcompletiondate}}
+              @changesetError={{pasForm.submittableChanges.error.dcpEstimatedcompletiondate}}
               @maxlength="4"
             />
             {{!-- QUESTION: Should this be a date picker? --}}
@@ -458,7 +465,7 @@
               <li>
                 <Input
                   @type="checkbox"
-                  @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsitenewconstruction}}
+                  @checked={{pasForm.saveableChanges.dcpProposeddevelopmentsitenewconstruction}}
                   id="dcpproposeddevelopmentsitenewconstruction"
                   data-test-checkbox="dcpProposeddevelopmentsitenewconstruction"
                 /><label for="dcpproposeddevelopmentsitenewconstruction">Newly constructed buildings</label>
@@ -466,7 +473,7 @@
               <li>
                 <Input
                   @type="checkbox"
-                  @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsitedemolition}}
+                  @checked={{pasForm.saveableChanges.dcpProposeddevelopmentsitedemolition}}
                   id="dcpproposeddevelopmentsitedemolition"
                   data-test-checkbox="dcpProposeddevelopmentsitedemolition"
                 /><label for="dcpproposeddevelopmentsitedemolition">Demolition</label>
@@ -474,7 +481,7 @@
               <li>
                 <Input
                   @type="checkbox"
-                  @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsiteinfoalteration}}
+                  @checked={{pasForm.saveableChanges.dcpProposeddevelopmentsiteinfoalteration}}
                   id="dcpproposeddevelopmentsiteinfoalteration"
                   data-test-checkbox="dcpProposeddevelopmentsiteinfoalteration"
                 /><label for="dcpproposeddevelopmentsiteinfoalteration">Alteration</label>
@@ -482,7 +489,7 @@
               <li>
                 <Input
                   @type="checkbox"
-                  @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsiteinfoaddition}}
+                  @checked={{pasForm.saveableChanges.dcpProposeddevelopmentsiteinfoaddition}}
                   id="dcpproposeddevelopmentsiteinfoaddition"
                   data-test-checkbox="dcpProposeddevelopmentsiteinfoaddition"
                 /><label for="dcpproposeddevelopmentsiteinfoaddition">Addition</label>
@@ -490,7 +497,7 @@
               <li>
                 <Input
                   @type="checkbox"
-                  @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsitechnageofuse}}
+                  @checked={{pasForm.saveableChanges.dcpProposeddevelopmentsitechnageofuse}}
                   id="dcpproposeddevelopmentsitechnageofuse"
                   data-test-checkbox="dcpProposeddevelopmentsitechnageofuse"
                 /><label for="dcpproposeddevelopmentsitechnageofuse">Change of use</label>
@@ -498,7 +505,7 @@
               <li>
                 <Input
                   @type="checkbox"
-                  @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsiteenlargement}}
+                  @checked={{pasForm.saveableChanges.dcpProposeddevelopmentsiteenlargement}}
                   id="dcpproposeddevelopmentsiteenlargement"
                   data-test-checkbox="dcpProposeddevelopmentsiteenlargement"
                 /><label for="dcpproposeddevelopmentsiteenlargement">Enlargement</label>
@@ -506,23 +513,23 @@
               <li>
                 <Input
                   @type="checkbox"
-                  {{on "click" (fn (mut saveable-form.saveableChanges.dcpProposeddevelopmentsiteotherexplanation) "")}}
-                  @checked={{saveable-form.saveableChanges.dcpProposeddevelopmentsiteinfoother}}
+                  {{on "click" (fn (mut pasForm.saveableChanges.dcpProposeddevelopmentsiteotherexplanation) "")}}
+                  @checked={{pasForm.saveableChanges.dcpProposeddevelopmentsiteinfoother}}
                   id="dcpproposeddevelopmentsiteinfoother"
                   data-test-checkbox="dcpProposeddevelopmentsiteinfoother"
                 /><label for="dcpproposeddevelopmentsiteinfoother">Other&hellip;</label>
               </li>
             </ul>
-            {{#if saveable-form.saveableChanges.dcpProposeddevelopmentsiteinfoother}}
+            {{#if pasForm.saveableChanges.dcpProposeddevelopmentsiteinfoother}}
               <label>
                 Explain:
                 <Input
                   @type="text"
-                  @value={{saveable-form.saveableChanges.dcpProposeddevelopmentsiteotherexplanation}}
+                  @value={{pasForm.saveableChanges.dcpProposeddevelopmentsiteotherexplanation}}
                   data-test-input="dcpProposeddevelopmentsiteotherexplanation"
                 />
                 <ValidationMessage
-                  @changesetError={{saveable-form.submittableChanges.error.dcpProposeddevelopmentsiteotherexplanation}}
+                  @changesetError={{pasForm.submittableChanges.error.dcpProposeddevelopmentsiteotherexplanation}}
                 />
               </label>
             {{/if}}
@@ -541,24 +548,24 @@
               (hash code=true label='Yes')
               (hash code=false label='No')) as |radio|
             }}
-              <saveable-form.radio
+              <pasForm.radio
                 @value={{radio.code}}
-                @groupValue={{saveable-form.saveableChanges.dcpIsinclusionaryhousingdesignatedarea}}
-                @changed={{fn (mut saveable-form.saveableChanges.dcpInclusionaryhousingdesignatedareaname) ""}}
+                @groupValue={{pasForm.saveableChanges.dcpIsinclusionaryhousingdesignatedarea}}
+                @changed={{fn (mut pasForm.saveableChanges.dcpInclusionaryhousingdesignatedareaname) ""}}
                 data-test-radio="dcpIsinclusionaryhousingdesignatedarea"
                 data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
-              </saveable-form.radio>
+              </pasForm.radio>
             {{/each}}
 
-            {{#if saveable-form.saveableChanges.dcpIsinclusionaryhousingdesignatedarea}}
+            {{#if pasForm.saveableChanges.dcpIsinclusionaryhousingdesignatedarea}}
               <label>
                 Name of Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area
                 <TextInput
-                  @property={{saveable-form.saveableChanges.dcpInclusionaryhousingdesignatedareaname}}
+                  @property={{pasForm.saveableChanges.dcpInclusionaryhousingdesignatedareaname}}
                   @propertyName="dcpInclusionaryhousingdesignatedareaname"
-                  @changesetError={{saveable-form.submittableChanges.error.dcpInclusionaryhousingdesignatedareaname}}
+                  @changesetError={{pasForm.submittableChanges.error.dcpInclusionaryhousingdesignatedareaname}}
                 />
               </label>
             {{/if}}
@@ -576,18 +583,18 @@
               )
               as |radio|
             }}
-              <saveable-form.radio
+              <pasForm.radio
                 @value={{radio.code}}
-                @groupValue={{saveable-form.saveableChanges.dcpDiscressionaryfundingforffordablehousing}}
-                @changed={{fn (mut saveable-form.saveableChanges.dcpHousingunittype) ""}}
+                @groupValue={{pasForm.saveableChanges.dcpDiscressionaryfundingforffordablehousing}}
+                @changed={{fn (mut pasForm.saveableChanges.dcpHousingunittype) ""}}
                 data-test-radio="dcpDiscressionaryfundingforffordablehousing"
                 data-test-radio-option={{radio.label}}
               >
                 {{radio.label}}
-              </saveable-form.radio>
+              </pasForm.radio>
             {{/each}}
 
-            {{#if (eq saveable-form.saveableChanges.dcpDiscressionaryfundingforffordablehousing 717170000)}}
+            {{#if (eq pasForm.saveableChanges.dcpDiscressionaryfundingforffordablehousing 717170000)}}
               <fieldset class="medium-margin-bottom">
                 <legend>
                   Funding source
@@ -598,18 +605,18 @@
                     (hash code=717170002 label='Federal')
                     (hash code=717170003 label='Other')) as |radio|
                 }}
-                  <saveable-form.radio
+                  <pasForm.radio
                     @value={{radio.code}}
-                    @groupValue={{saveable-form.saveableChanges.dcpHousingunittype}}
+                    @groupValue={{pasForm.saveableChanges.dcpHousingunittype}}
                     data-test-radio="dcpHousingunittype"
                     data-test-radio-option={{radio.label}}
                   >
                     {{radio.label}}
-                  </saveable-form.radio>
+                  </pasForm.radio>
                 {{/each}}
               </fieldset>
               <ValidationMessage
-                @changesetError={{saveable-form.submittableChanges.error.dcpHousingunittype}}
+                @changesetError={{pasForm.submittableChanges.error.dcpHousingunittype}}
                 data-test-validation-message="dcpHousingunittype"
               />
             {{/if}}
@@ -629,36 +636,36 @@
           <label>
             <strong>Description of the proposed development being facilitated by the land use actions</strong>
             <TextArea
-              @property={{saveable-form.saveableChanges.dcpProjectdescriptionproposeddevelopment}}
+              @property={{pasForm.saveableChanges.dcpProjectdescriptionproposeddevelopment}}
               @propertyName="dcpProjectdescriptionproposeddevelopment"
-              @changesetError={{saveable-form.submittableChanges.error.dcpProjectdescriptionproposeddevelopment}}
+              @changesetError={{pasForm.submittableChanges.error.dcpProjectdescriptionproposeddevelopment}}
               @maxlength="3000"
             />
           </label>
           <label>
             <strong>Why is this application being proposed? What is the legal, environmental, or land use background?</strong>
             <TextArea
-              @property={{saveable-form.saveableChanges.dcpProjectdescriptionbackground}}
+              @property={{pasForm.saveableChanges.dcpProjectdescriptionbackground}}
               @propertyName="dcpProjectdescriptionbackground"
-              @changesetError={{saveable-form.submittableChanges.error.dcpProjectdescriptionbackground}}
+              @changesetError={{pasForm.submittableChanges.error.dcpProjectdescriptionbackground}}
             />
           </label>
 
           <label>
             <strong>What is the land use rationale for all the proposed actions?</strong>
             <TextArea
-              @property={{saveable-form.saveableChanges.dcpProjectdescriptionproposedactions}}
+              @property={{pasForm.saveableChanges.dcpProjectdescriptionproposedactions}}
               @propertyName="dcpProjectdescriptionproposedactions"
-              @changesetError={{saveable-form.submittableChanges.error.dcpProjectdescriptionproposedactions}}
+              @changesetError={{pasForm.submittableChanges.error.dcpProjectdescriptionproposedactions}}
             />
           </label>
 
           <label>
             <strong>Description of existing land uses and structures in the proposed Project Area and Development Site</strong>
             <TextArea
-              @property={{saveable-form.saveableChanges.dcpProjectdescriptionproposedarea}}
+              @property={{pasForm.saveableChanges.dcpProjectdescriptionproposedarea}}
               @propertyName="dcpProjectdescriptionproposedarea"
-              @changesetError={{saveable-form.submittableChanges.error.dcpProjectdescriptionproposedarea}}
+              @changesetError={{pasForm.submittableChanges.error.dcpProjectdescriptionproposedarea}}
               @maxlength="3000"
             />
           </label>
@@ -666,9 +673,9 @@
           <label>
             <strong>Description of land uses and built context in surrounding area (within 1000 ft)</strong>
             <TextArea
-              @property={{saveable-form.saveableChanges.dcpProjectdescriptionsurroundingarea}}
+              @property={{pasForm.saveableChanges.dcpProjectdescriptionsurroundingarea}}
               @propertyName="dcpProjectdescriptionsurroundingarea"
-              @changesetError={{saveable-form.submittableChanges.error.dcpProjectdescriptionsurroundingarea}}
+              @changesetError={{pasForm.submittableChanges.error.dcpProjectdescriptionsurroundingarea}}
               @maxlength="3000"
             />
           </label>
@@ -679,9 +686,9 @@
               Include to expedite CEQR guidance: If proposed actions are not approved, what is the applicant’s as-of-right development (CEQR “no-action”) proposal? What would be expected to occur on non-applicant-controlled sites because of the Proposed Actions (CEQR “with-action”)?
             </small>
             <TextArea
-              @property={{saveable-form.saveableChanges.dcpProjectattachmentsotherinformation}}
+              @property={{pasForm.saveableChanges.dcpProjectattachmentsotherinformation}}
               @propertyName="dcpProjectattachmentsotherinformation"
-              @changesetError={{saveable-form.submittableChanges.error.dcpProjectattachmentsotherinformation}}
+              @changesetError={{pasForm.submittableChanges.error.dcpProjectattachmentsotherinformation}}
               @maxlength="3000"
             />
           </label>
@@ -771,107 +778,73 @@
     </div>
     <div class="cell large-4">
 
-      <div class="sticky-sidebar">
-        <saveable-form.saveButton
-          @isEnabled={{or @package.isDirty (and saveable-form.saveableChanges.isDirty saveable-form.saveableChanges.isValid)}}
+      <StickySidebar
+        @navItems={{array
+          (hash anchorId="project-info"
+            label="Project Information")
+          (hash anchorId="applicant-team"
+            label="Applicant Team")
+          (hash anchorId="project-geography"
+            label="Project Geography")
+          (hash anchorId="proposed-land-use-actions"
+            label="Proposed Land Use Actions")
+          (hash anchorId="project-area"
+            label="Project Area")
+          (hash anchorId="proposed-development-site"
+            label="Proposed Development Site")
+          (hash anchorId="project-description"
+            label="Project Description")
+          (hash anchorId="attached-documents"
+            label="Attached Documents")
+          }}
+      >
+        <pasForm.saveButton
+          @isEnabled={{or @package.isDirty pasForm.isSaveable}}
           @onClick={{this.savePackage}}
           data-test-save-button
         />
         {{!-- Error Handling --}}
-        <Packages::PasFormError @package={{@package}} />
-        <saveable-form.submitButton
+        <Packages::PasForm::PasFormError @package={{@package}} />
+        <pasForm.submitButton
           @onClick={{this.toggleModal}}
-          @isEnabled={{saveable-form.submittableChanges.isValid}}
+          @isEnabled={{pasForm.isSubmittable}}
           class="secondary"
           data-test-submit-button
         />
 
-        {{#if this.modalIsOpen}}
-          <EmberWormhole @to="reveal-modal-container">
-            <RevealModal @toggle={{this.toggleModal}}>
-              <h6>Confirm Pre-Applicant Statement submission</h6>
-              <p class="header-large medium-margin-top small-margin-bottom">Are you sure?</p>
-              <p>Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including the signature form) have been uploaded. If City Planning does not receive enough accurate information to provide guidance, the lead planner will notify you and request that this form be resubmitted with needed materials, corrections, or clarifications.</p>
-              <hr>
-              <div class="grid-x">
-                <div class="cell large-6 small-padding-right">
-                  <button
-                    type="button"
-                    class="button expanded large secondary"
-                    disabled={{saveable-form.saveChangeset.isRunning}}
-                    {{on "click" this.toggleModal}}
-                  >
-                    Continue Editing
-                  </button>
-                </div>
-                <div class="cell large-6 small-padding-left">
-                  <saveable-form.submitButton
-                    @onClick={{this.submitPackage}}
-                    @isEnabled={{saveable-form.submittableChanges.isValid}}
-                    class="no-margin"
-                    data-test-confirm-submit-button
-                  />
-                </div>
+      </StickySidebar>
+      {{#if this.modalIsOpen}}
+        <EmberWormhole @to="reveal-modal-container">
+          <RevealModal @toggle={{this.toggleModal}}>
+            <h6>Confirm Pre-Applicant Statement submission</h6>
+            <p class="header-large medium-margin-top small-margin-bottom">Are you sure?</p>
+            <p>Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including the signature form) have been uploaded. If City Planning does not receive enough accurate information to provide guidance, the lead planner will notify you and request that this form be resubmitted with needed materials, corrections, or clarifications.</p>
+            <hr>
+            <div class="grid-x">
+              <div class="cell large-6 small-padding-right">
+                <button
+                  type="button"
+                  class="button expanded large secondary"
+                  disabled={{pasForm.saveChangeset.isRunning}}
+                  {{on "click" this.toggleModal}}
+                >
+                  Continue Editing
+                </button>
               </div>
-              {{!-- Error Handling --}}
-              <Packages::PasFormError @package={{@package}}/>
-            </RevealModal>
-          </EmberWormhole>
-        {{/if}}
-
-        <nav>
-          <ul class="no-bullet text-weight-bold">
-            <li class="medium-margin-bottom">
-              <a href="#project-info">
-                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-                Project Information
-              </a>
-            </li>
-            <li class="medium-margin-bottom">
-              <a href="#applicant-team">
-                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-                Applicant Team
-              </a>
-            </li>
-            <li class="medium-margin-bottom">
-              <a href="#project-geography">
-                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-                Project Geography
-              </a>
-            </li>
-            <li class="medium-margin-bottom">
-              <a href="#proposed-land-use-actions">
-                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-                Proposed Land Use Actions
-              </a>
-            </li>
-            <li class="medium-margin-bottom">
-              <a href="#project-area">
-                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-                Project Area
-              </a>
-            </li>
-            <li class="medium-margin-bottom">
-              <a href="#proposed-development-site">
-                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-                Proposed Development Site
-              </a>
-            </li>
-            <li class="medium-margin-bottom">
-              <a href="#project-description">
-                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-                Project Description
-              </a>
-            </li>
-            <li class="medium-margin-bottom">
-              <a href="#attached-documents">
-                <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
-                Attached Documents
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>{{!-- end .sticky-sidebar --}}
+              <div class="cell large-6 small-padding-left">
+                <pasForm.submitButton
+                  @onClick={{this.submitPackage}}
+                  @isEnabled={{pasForm.isSubmittable}}
+                  class="no-margin"
+                  data-test-confirm-submit-button
+                />
+              </div>
+            </div>
+            {{!-- Error Handling --}}
+            <Packages::PasForm::PasFormError @package={{@package}}/>
+          </RevealModal>
+        </EmberWormhole>
+      {{/if}}
     </div>
 
   </div>

@@ -48,5 +48,26 @@
         </h2>
       </section>
     </div>
+     <StickySidebar
+
+      @navItems={{array
+        (hash anchorId="project-description"
+          label="Project Description")
+        (hash anchorId="proposed-actions"
+          label="Proposed Actions")
+        (hash anchorId="analysis"
+          label="Analysis")
+        (hash anchorId="attached-documents"
+          label="Attached Documents")
+        }}
+    >
+      <saveableForm.saveButton
+        @isEnabled={{or @package.isDirty (and saveableForm.saveableChanges.isDirty saveableForm.saveableChanges.isValid)}}
+        @onClick={{this.savePackage}}
+        data-test-save-button
+      />
+      {{!-- Error Handling --}}
+      <Packages::RwcdsForm::RwcdsFormError @package={{@package}} />
+    </StickySidebar>
   </div>
 </SaveableForm>

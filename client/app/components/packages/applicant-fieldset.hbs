@@ -29,9 +29,9 @@
   {{#if (eq @applicant.dcpType 717170001)}}
     <label data-test-applicant-organization>
       Organization
-      <Input
-        type="text"
-        @value={{@applicant.dcpOrganization}}
+      <TextInput
+        @property={{@applicant.dcpOrganization}}
+        @changesetError={{@parentForm.submittableChanges.error.dcpOrganization}}
       />
     </label>
     <hr/>
@@ -41,16 +41,16 @@
   <div class="grid-x grid-margin-x">
     <div class="cell medium-6">
       <label>First Name</label>
-      <Input
-        type="text"
-        @value={{@applicant.dcpFirstname}}
+      <TextInput
+        @property={{@applicant.dcpFirstname}}
+        @changesetError={{@parentForm.submittableChanges.error.dcpFirstname}}
       />
     </div>
     <div class="cell medium-6">
       <label>Last Name</label>
-        <Input
-          type="text"
-          @value={{@applicant.dcpLastname}}
+        <TextInput
+          @property={{@applicant.dcpLastname}}
+          @changesetError={{@parentForm.submittableChanges.error.dcpLastname}}
         />
     </div>
   </div>
@@ -59,19 +59,31 @@
   {{#if (eq @applicant.friendlyEntityName "Other Team Member")}}
     <label>
       Organization
-      <Input
-        type="text"
-        @value={{@applicant.dcpOrganization}}
+      <TextInput
+        @property={{@applicant.dcpOrganization}}
+        @changesetError={{@parentForm.submittableChanges.error.dcpOrganization}}
       />
     </label>
   {{/if}}
 
-  <label>Email Address <Input type="email" @value={{@applicant.dcpEmail}}/></label>
-  <label>Address <Input type="text" @value={{@applicant.dcpAddress}}/></label>
+  <label>
+    Email Address
+    <Input type="email" @value={{@applicant.dcpEmail}}/>
+      <ValidationMessage
+        @changesetError={{@parentForm.submittableChanges.error.dcpEmail}}
+      />
+  </label>
+  <label>Address <TextInput
+    @property={{@applicant.dcpAddress}}
+    @changesetError={{@parentForm.submittableChanges.error.dcpAddress}}
+  /></label>
 
   <div class="grid-x grid-margin-x">
     <div class="cell medium-auto">
-      <label>City <Input type="text" @value={{@applicant.dcpCity}}/></label>
+      <label>City <TextInput
+        @property={{@applicant.dcpCity}}
+        @changesetError={{@parentForm.submittableChanges.error.dcpCity}}
+      /></label>
     </div>
     <div class="cell auto medium-2">
       <label data-test-applicant-state-dropdown>
@@ -82,19 +94,25 @@
           @placeholder="state"
           @searchEnabled={{true}}
           @searchField="label"
-          @options={{this.stateOptions}}
-          @onchange={{fn this.updateAttr @applicant 'dcpState'}}
+          @options={{map-by 'code' (optionset 'applicant' 'state' 'list')}}
+          @onchange={{fn (mut @applicant.dcpState)}}
         as |stateCode|>
           {{optionset 'applicant' 'state' 'label' stateCode}}
         </PowerSelect>
       </label>
     </div>
     <div class="cell auto medium-4">
-      <label>ZIP <Input type="text" @value={{@applicant.dcpZipcode}}/></label>
+      <label>ZIP <TextInput
+        @property={{@applicant.dcpZipcode}}
+        @changesetError={{@parentForm.submittableChanges.error.dcpZipcode}}
+      /></label>
     </div>
   </div>
 
-  <label>Phone <Input type="text" @value={{@applicant.dcpPhone}}/></label>
+  <label>Phone <TextInput
+    @value={{@applicant.dcpPhone}}
+    @changesetError={{@parentForm.submittableChanges.error.dcpPhone}}
+  /></label>
 
   <button
     type="button"
