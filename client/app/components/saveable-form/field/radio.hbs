@@ -1,0 +1,15 @@
+{{#if hasBlock}}
+  <RadioButton
+    @value={{@targetValue}}
+    @groupValue={{@value}}
+    ...attributes
+  >
+    {{yield}}
+  </RadioButton>
+{{else}}
+  <RadioButton
+    @value={{@targetValue}}
+    @groupValue={{@value}}
+    ...attributes
+  />
+{{/if}}

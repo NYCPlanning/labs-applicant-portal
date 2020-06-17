@@ -1,30 +1,58 @@
-<@form.Section @title="Applicant Team">
-  <p>
-    Add all applicants (either individuals or organizations) and other team members (including land use consultants and environmental consultants, agency staff, etc.).
-  </p>
+{{#let @form as |Form|}}
+  <Form.Section @title="Applicant Team">
+    <p>
+      Add all applicants (either individuals or organizations) and other team members (including land use consultants and environmental consultants, agency staff, etc.).
+    </p>
 
-  <Packages::ApplicantTeamEditor
-    @addApplicant={{fn @addApplicant}}
-    as |ApplicantFieldset|
-  >
     <ul class="no-bullet">
       {{#each (filter-by 'isDeleted' false @form.saveableChanges.applicants) as |applicant applicantIndex|}}
         <li class="scale-fade-in">
-          <@form.SaveableForm
+          <Form.SaveableForm
             @model={{applicant}}
-            @validators={{array @validations.SaveableApplicantFormValidations this.validations.SubmittableApplicantFormValidations}}
+            @validators={{array @validations.SaveableApplicantFormValidations @validations.SubmittableApplicantFormValidations}}
             as |applicantForm|
           >
-            <ApplicantFieldset
+            <Packages::ApplicantFieldset
               @applicant={{applicantForm.saveableChanges}}
-              @parentForm={{applicantForm}}
+              @form={{applicantForm}}
               @removeApplicant={{fn @removeApplicant applicant}}
               data-test-applicant-fieldset={{applicantIndex}}
               data-test-applicant-type={{applicant.friendlyEntityName}}
             />
-          </@form.SaveableForm>
+          </Form.SaveableForm>
         </li>
       {{/each}}
     </ul>
-  </Packages::ApplicantTeamEditor>
-</@form.Section>
+
+    {{!-- buttons for user to add new applicants --}}
+    <div class="fieldset-adder">
+      <h5 class="small-margin-bottom">
+        Add a team member:
+      </h5>
+      <div class="grid-x">
+        <div class="cell large-6 small-padding-right">
+          <button
+            class="button expanded secondary no-margin"
+            type="button"
+            {{on "click" (fn @addApplicant "dcp_applicantinformation") }}
+            data-test-add-applicant-button
+          >
+            <strong>Add an applicant</strong>
+            <span class="display-block">(individual or organization)</span>
+          </button>
+        </div>
+        <div class="cell large-6 small-padding-left">
+          <button
+            class="button expanded secondary no-margin"
+            type="button"
+            {{on "click" (fn @addApplicant "dcp_applicantrepresentativeinformation") }}
+            data-test-add-applicant-team-member-button
+          >
+            <strong>Add other team member</strong>
+            <span class="display-block">(land use/environmental consultant, etc.)</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </Form.Section>
+{{/let}}
