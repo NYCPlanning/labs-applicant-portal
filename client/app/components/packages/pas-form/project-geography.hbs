@@ -1,0 +1,29 @@
+<@form.Section @title="Project Geography">
+  <p>
+    Please identify the tax lots that are included in the proposed project area and/or development site.
+    If the project geography is irregular, especially large, or does not consist of tax lots, please describe it below.
+  </p>
+
+  <p class="text-small">
+    NYC Planning's <a href="https://lotselector.planning.nyc.gov/" target="_blank" rel="noopener noreferrer">Tax Lot Selector<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a> is a helpful tool for identifying and selecting tax lot BBL numbers within a project area. If your project is very large, you can download the BBLs from the Tax Lot Selector app using the "Paperless Filing" option and upload that file to this form as an attachment.
+  </p>
+
+  <div data-test-section="project-geography">
+    <ProjectGeography
+      @bbls={{@model.bbls}}
+      @project={{@model.package.project}}
+    />
+  </div>
+
+  <label>
+    <strong>Description of geography</strong>
+    <small class="help-text display-block">
+      Fill in if the project area and/or development site is irregular, especially large, or does not consist of tax lots.
+    </small>
+      <TextArea
+        @property={{@form.saveableChanges.dcpDescriptionofprojectareageography}}
+        @propertyName="dcpDescriptionofprojectareageography"
+        @changesetError={{@form.submittableChanges.error.dcpDescriptionofprojectareageography}}
+      />
+  </label>
+</@form.Section>

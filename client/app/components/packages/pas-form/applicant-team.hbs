@@ -1,0 +1,30 @@
+<@form.Section @title="Applicant Team">
+  <p>
+    Add all applicants (either individuals or organizations) and other team members (including land use consultants and environmental consultants, agency staff, etc.).
+  </p>
+
+  <Packages::ApplicantTeamEditor
+    @addApplicant={{fn @addApplicant}}
+    as |ApplicantFieldset|
+  >
+    <ul class="no-bullet">
+      {{#each (filter-by 'isDeleted' false @form.saveableChanges.applicants) as |applicant applicantIndex|}}
+        <li class="scale-fade-in">
+          <@form.SaveableForm
+            @model={{applicant}}
+            @validators={{array @validations.SaveableApplicantFormValidations this.validations.SubmittableApplicantFormValidations}}
+            as |applicantForm|
+          >
+            <ApplicantFieldset
+              @applicant={{applicantForm.saveableChanges}}
+              @parentForm={{applicantForm}}
+              @removeApplicant={{fn @removeApplicant applicant}}
+              data-test-applicant-fieldset={{applicantIndex}}
+              data-test-applicant-type={{applicant.friendlyEntityName}}
+            />
+          </@form.SaveableForm>
+        </li>
+      {{/each}}
+    </ul>
+  </Packages::ApplicantTeamEditor>
+</@form.Section>

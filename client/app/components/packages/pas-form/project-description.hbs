@@ -1,0 +1,65 @@
+<@form.Section @title="Project Description">
+  <p class="text-small">
+    For complex proposals, feel free to upload a draft document (in the Attachments section) explaining this information instead of filling out the form inputs.
+  </p>
+
+  <label>
+    <strong>Description of the proposed development being facilitated by the land use actions</strong>
+    <TextArea
+      @property={{@form.saveableChanges.dcpProjectdescriptionproposeddevelopment}}
+      @propertyName="dcpProjectdescriptionproposeddevelopment"
+      @changesetError={{@form.submittableChanges.error.dcpProjectdescriptionproposeddevelopment}}
+      @maxlength="3000"
+    />
+  </label>
+  <label>
+    <strong>Why is this application being proposed? What is the legal, environmental, or land use background?</strong>
+    <TextArea
+      @property={{@form.saveableChanges.dcpProjectdescriptionbackground}}
+      @propertyName="dcpProjectdescriptionbackground"
+      @changesetError={{@form.submittableChanges.error.dcpProjectdescriptionbackground}}
+    />
+  </label>
+
+  <label>
+    <strong>What is the land use rationale for all the proposed actions?</strong>
+    <TextArea
+      @property={{@form.saveableChanges.dcpProjectdescriptionproposedactions}}
+      @propertyName="dcpProjectdescriptionproposedactions"
+      @changesetError={{@form.submittableChanges.error.dcpProjectdescriptionproposedactions}}
+    />
+  </label>
+
+  <label>
+    <strong>Description of existing land uses and structures in the proposed Project Area and Development Site</strong>
+    <TextArea
+      @property={{@form.saveableChanges.dcpProjectdescriptionproposedarea}}
+      @propertyName="dcpProjectdescriptionproposedarea"
+      @changesetError={{@form.submittableChanges.error.dcpProjectdescriptionproposedarea}}
+      @maxlength="3000"
+    />
+  </label>
+
+  <label>
+    <strong>Description of land uses and built context in surrounding area (within 1000 ft)</strong>
+    <TextArea
+      @property={{@form.saveableChanges.dcpProjectdescriptionsurroundingarea}}
+      @propertyName="dcpProjectdescriptionsurroundingarea"
+      @changesetError={{@form.submittableChanges.error.dcpProjectdescriptionsurroundingarea}}
+      @maxlength="3000"
+    />
+  </label>
+
+  <label>
+    <strong>Description of proposed CEQR scope</strong>
+    <small class="help-text display-block">
+      Include to expedite CEQR guidance: If proposed actions are not approved, what is the applicant’s as-of-right development (CEQR “no-action”) proposal? What would be expected to occur on non-applicant-controlled sites because of the Proposed Actions (CEQR “with-action”)?
+    </small>
+    <TextArea
+      @property={{@form.saveableChanges.dcpProjectattachmentsotherinformation}}
+      @propertyName="dcpProjectattachmentsotherinformation"
+      @changesetError={{@form.submittableChanges.error.dcpProjectattachmentsotherinformation}}
+      @maxlength="3000"
+    />
+  </label>
+</@form.Section>
