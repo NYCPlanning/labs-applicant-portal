@@ -1,15 +1,28 @@
+{{!-- Code lifted from ember-radio-button: https://github.com/yapplabs/ember-radio-button/blob/master/addon/templates/components/radio-button.hbs --}}
+{{!-- We override this so that we can spread attributes onto the label element which lets us use data-test selectors --}}
+{{!-- Disabling lint because we do not own this source code --}}
+{{!-- template-lint-disable  --}}
+
+{{radio-button-input
+  class=radioClass
+  id=radioId
+  autofocus=autofocus
+  disabled=disabled
+  name=name
+  required=required
+  tabindex=tabindex
+  groupValue=value
+  value=targetValue
+  ariaLabelledby=ariaLabelledby
+  ariaDescribedby=ariaDescribedby
+  changed=(action "changed")
+}}
 {{#if hasBlock}}
-  <RadioButton
-    @value={{@targetValue}}
-    @groupValue={{@value}}
+  <label
+    class="ember-radio-button {{if checked checkedClass}} {{joinedClassNames}}"
+    for={{radioId}}
     ...attributes
   >
     {{yield}}
-  </RadioButton>
-{{else}}
-  <RadioButton
-    @value={{@targetValue}}
-    @groupValue={{@value}}
-    ...attributes
-  />
+  </label>
 {{/if}}

@@ -1,36 +1,30 @@
-{{#let
-  (get @saveableChanges @attribute)
-  (get @submittableChanges (concat 'error.' @attribute))
-  (if @type @type 'text-input') as |value error type|
+{{#let (component (concat 'saveable-form/field/' this.type)
+  value=this.value
+  attribute=@attribute) as |CurriedFieldComponent|
 }}
-  {{#let (component (concat 'saveable-form/field/' type)
-    value=value
-    attribute=@attribute) as |CurriedComponent|
-  }}
-    {{#if hasBlock}}
-      {{!-- Yield the component so more args can be added --}}
-      {{yield CurriedComponent}}
-    {{else}} 
-      {{!-- Without a block, just invoke it --}}
-      {{!-- We invoke as angle brackets so we can spread attributes --}}
-      <CurriedComponent
-        data-test-input={{@attribute}}
-        ...attributes
-      />
-    {{/if}}
-  {{/let}}
-
-  {{#if @showCounter}}
-    <CharacterCounter
-      @string={{value}}
-      @maxlength={{if @maxlength @maxlength '250'}}
-    />
-  {{/if}}
-
-  {{#if error}}
-    <ValidationMessage
-      @changesetError={{error}}
-      data-test-validation-message={{@attribute}}
+  {{#if hasBlock}}
+    {{!-- Yield the component so more args can be added --}}
+    {{yield (component CurriedFieldComponent)}}
+  {{else}} 
+    {{!-- Without a block, just invoke it --}}
+    {{!-- We invoke as angle brackets so we can spread attributes --}}
+    <CurriedFieldComponent
+      data-test-input={{@attribute}}
+      ...attributes
     />
   {{/if}}
 {{/let}}
+
+{{#if @showCounter}}
+  <CharacterCounter
+    @string={{this.value}}
+    @maxlength={{if @maxlength @maxlength '250'}}
+  />
+{{/if}}
+
+{{#if this.error}}
+  <ValidationMessage
+    @changesetError={{this.error}}
+    data-test-validation-message={{@attribute}}
+  />
+{{/if}}
