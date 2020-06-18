@@ -4,11 +4,10 @@
       Project Area refers to all property that would be subject to the proposed actions.
     </p>
 
-    <fieldset class="medium-margin-bottom">
-      <legend>
-        <strong>Does the proposed Project, or portion thereof, require a NYC DEP Storm Water Construction Permit?</strong>
-      </legend>
-
+    <Ui::Fieldset as |Q|>
+      <Q.legend>
+        Does the proposed Project, or portion thereof, require a NYC DEP Storm Water Construction Permit?
+      </Q.legend>
       <Form.Field
         @attribute="dcpProposedprojectorportionconstruction"
         @type="radio-group"
@@ -22,11 +21,11 @@
           }}
         />
       </Form.Field>
-    </fieldset>
+    </Ui::Fieldset>
 
     <fieldset class="medium-margin-bottom">
       <legend>
-        <strong>Is the proposed Project Area located in a current or former <a href="https://www1.nyc.gov/site/hpd/services-and-information/urban-renewal.page" target="_blank" rel="noopener noreferrer">Urban Renewal Area<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?</strong>
+        <strong>Is the proposed Project Area located in a current or former <Ui::ExternalLink @href="https://www1.nyc.gov/site/hpd/services-and-information/urban-renewal.page">Urban Renewal Area</Ui::ExternalLink>?</strong>
       </legend>
 
       <Form.Field
@@ -197,7 +196,7 @@
           @options={{array
             (hash code=true label='Yes')
             (hash code=false label='No')
-          }} 
+          }}
         />
       </Form.Field>
     </fieldset>
@@ -216,7 +215,7 @@
             (hash code=717170000 label='Yes')
             (hash code=717170001 label='No')
             (hash code=717170002 label='Unsure at this time')
-          }} 
+          }}
         />
       </Form.Field>
     </fieldset>
