@@ -3,6 +3,10 @@ import { TrackedSet } from 'tracked-maps-and-sets';
 import { action } from '@ember/object';
 
 export default class SaveableFormComponent extends Component {
+  get validators() {
+    return this.args.validators || [{}, {}];
+  }
+
   sections = new TrackedSet();
 
   get sectionData() {

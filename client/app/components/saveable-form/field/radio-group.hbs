@@ -1,0 +1,21 @@
+<@parentField
+  @type="radio"
+  @hideError={{true}}
+  as |RadioButton|
+>
+  {{#each @options as |radio|}}
+    <span class="nowrap">
+      <RadioButton
+        @targetValue={{radio.code}}
+        @changed={{@onChange}}
+        data-test-radio={{@attribute}}
+        data-test-radio-option={{radio.label}}
+        ...attributes
+      >
+        {{radio.label}}
+      </RadioButton>
+    </span>
+  {{/each}}
+</@parentField>
+
+{{yield @value}}

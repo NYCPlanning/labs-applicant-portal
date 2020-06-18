@@ -1,15 +1,20 @@
 <FormValidator
   @model={{@model}}
-  @validator={{@validators.[0]}}
+  @validator={{this.validators.[0]}}
   @parent={{@registerSaveable}} as |saveableValidator|
 >
   <saveableValidator.FormValidator
-    @validator={{@validators.[1]}}
+    @validator={{this.validators.[1]}}
     @parent={{@registerSubmittable}} as |submittableValidator|
   >
     {{yield (hash
       saveableChanges=saveableValidator.changeset
       submittableChanges=submittableValidator.changeset
+
+      Field=(component 'saveable-form/field'
+        saveableChanges=saveableValidator.changeset
+        submittableChanges=submittableValidator.changeset
+      )
 
       Radio=(component 'radio-button'
         changed=saveableValidator.validate

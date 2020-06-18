@@ -28,15 +28,11 @@
       <Packages::PasForm::ApplicantTeam
         @form={{pasForm}}
         @addApplicant={{this.addApplicant}}
-        @validations={{this.validations}}
         @removeApplicant={{this.removeApplicant}}
+        @validations={{this.validations}}
       />
 
-      {{!-- TODO: Make validatible through saveable Form --}}
-      <Packages::PasForm::ProjectGeography
-        @form={{pasForm}}
-        @model={{this.pasForm}}
-      />
+      <Packages::PasForm::ProjectGeography @form={{pasForm}} />
 
       <Packages::PasForm::ProposedLandUseActions @form={{pasForm}} />
 
