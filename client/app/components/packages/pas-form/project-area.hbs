@@ -18,7 +18,8 @@
           @options={{array
             (hash code=717170000 label='Yes')
             (hash code=717170001 label='No')
-            (hash code=717170002 label='Unsure at this time')}}
+            (hash code=717170002 label='Unsure at this time')
+          }}
         />
       </Form.Field>
     </fieldset>
@@ -37,8 +38,9 @@
           @options={{array
             (hash code=717170000 label='Yes')
             (hash code=717170001 label='No')
-            (hash code=717170002 label='Unsure at this time')}}
-          @changed={{fn (mut @form.saveableChanges.dcpUrbanareaname) ""}} as |value|
+            (hash code=717170002 label='Unsure at this time')
+          }}
+          @onChange={{fn (mut @form.saveableChanges.dcpUrbanareaname) ""}} as |value|
         >
           {{#if (eq value 717170000)}}
             <label>
@@ -97,7 +99,7 @@
             (hash code=717170001 label='No')
             (hash code=717170002 label='Unsure at this time')
             }}
-          @changed={{fn (mut @form.saveableChanges.dcpPleaseexplaintypeiienvreview) ""}} as |value|
+          @onChange={{fn (mut @form.saveableChanges.dcpPleaseexplaintypeiienvreview) ""}} as |value|
         >
           {{#if (eq value 717170000)}}
             <label>
@@ -138,7 +140,7 @@
           @options={{array
             (hash code=true label='Yes')
             (hash code=false label='No')}}
-          @changed={{fn (mut @form.saveableChanges.dcpProjectareaindutrialzonename) ""}} as |value|
+          @onChange={{fn (mut @form.saveableChanges.dcpProjectareaindutrialzonename) ""}} as |value|
         >
           {{#if value}}
             <label>
@@ -167,7 +169,7 @@
           @options={{array
             (hash code=true label='Yes')
             (hash code=false label='No')}}
-          @changed={{fn (mut @form.saveableChanges.dcpProjectarealandmarkname) ""}} as |value|
+          @onChange={{fn (mut @form.saveableChanges.dcpProjectarealandmarkname) ""}} as |value|
         >
           {{#if value}}
             <label>
@@ -194,7 +196,8 @@
         <RadioGroup
           @options={{array
             (hash code=true label='Yes')
-            (hash code=false label='No')}} 
+            (hash code=false label='No')
+          }} 
         />
       </Form.Field>
     </fieldset>
@@ -212,7 +215,8 @@
           @options={{array
             (hash code=717170000 label='Yes')
             (hash code=717170001 label='No')
-            (hash code=717170002 label='Unsure at this time')}} 
+            (hash code=717170002 label='Unsure at this time')
+          }} 
         />
       </Form.Field>
     </fieldset>
@@ -229,8 +233,9 @@
         <RadioGroup
           @options={{array
             (hash code=true label='Yes')
-            (hash code=false label='No')}}
-          @changed={{fn (mut @form.saveableChanges.dcpCityregisterfilenumber) null}} as |value|
+            (hash code=false label='No')
+          }}
+          @onChange={{fn (mut @form.saveableChanges.dcpCityregisterfilenumber) null}} as |value|
         >
           {{#if value}}
             <label>

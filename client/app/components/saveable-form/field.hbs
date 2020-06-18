@@ -27,7 +27,7 @@
   />
 {{/if}}
 
-{{#if this.error}}
+{{#if (and this.error (not @hideError))}}
   <ValidationMessage
     @changesetError={{this.error}}
     data-test-validation-message={{@attribute}}

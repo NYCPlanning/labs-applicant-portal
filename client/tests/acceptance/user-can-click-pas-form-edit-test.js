@@ -429,7 +429,7 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     await visit('/pas-form/1/edit');
 
     // switch from Individual to Organization applicant type
-    await click('[data-test-applicant-type-radio-organization]');
+    await click('[data-test-radio-option="Organization"]');
 
     // organization input should appear after user toggles to "Organization"
     assert.dom('[data-test-applicant-organization]').hasText('Organization');

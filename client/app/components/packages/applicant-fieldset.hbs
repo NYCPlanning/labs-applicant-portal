@@ -11,21 +11,15 @@
       <div class="cell medium-6" data-test-applicant-type-radio-group>
         <Form.Field
           @attribute="dcpType"
-          @type="radio"
-          as |RadioButton|
+          @type="radio-group"
+          as |RadioGroup|
         >
-          <RadioButton
-            @targetValue={{717170000}}
-            data-test-applicant-type-radio-individual
-          >
-            Individual
-          </RadioButton>
-          <RadioButton
-            @targetValue={{717170001}}
-            data-test-applicant-type-radio-organization
-          >
-            Organization
-          </RadioButton>
+          <RadioGroup
+            @options={{array
+              (hash label='Individual' code=717170000)
+              (hash label='Organization' code=717170001)
+            }}
+          />
         </Form.Field>
       </div>
     {{/if}}
