@@ -1,0 +1,11 @@
+<Textarea
+  @value={{@value}}
+  data-test-textarea={{@attribute}}
+  rows="5"
+  ...attributes
+/>
+
+<CharacterCounter
+  @string={{@value}}
+  @maxlength={{if @maxlength @maxlength '2000'}}
+/>

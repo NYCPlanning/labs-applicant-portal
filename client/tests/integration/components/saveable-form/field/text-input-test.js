@@ -13,14 +13,5 @@ module('Integration | Component | saveable-form/field/text-input', function(hook
     await render(hbs`<SaveableForm::Field::TextInput />`);
 
     assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      <SaveableForm::Field::TextInput>
-        template block text
-      </SaveableForm::Field::TextInput>
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
   });
 });

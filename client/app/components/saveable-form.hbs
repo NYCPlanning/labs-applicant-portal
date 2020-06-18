@@ -1,10 +1,10 @@
 <FormValidator
   @model={{@model}}
-  @validator={{@validators.[0]}}
+  @validator={{this.validators.[0]}}
   @parent={{@registerSaveable}} as |saveableValidator|
 >
   <saveableValidator.FormValidator
-    @validator={{@validators.[1]}}
+    @validator={{this.validators.[1]}}
     @parent={{@registerSubmittable}} as |submittableValidator|
   >
     {{yield (hash
