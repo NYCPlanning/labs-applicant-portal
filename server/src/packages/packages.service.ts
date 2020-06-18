@@ -70,6 +70,31 @@ const PACKAGE_TYPE_OPTIONSET = {
 export class PackagesService {
   constructor(private readonly crmService: CrmService) {}
 
+  // Gets the lateset PAS Form on Project `projectId`
+  async getLatestPasForm(projectId): Promise<any> {
+    try {
+      const { records: pasPackages } = await this.crmService.get('dcp_packages', `
+        $filter=
+          _dcp_project_value eq ${projectId}
+          and
+          dcp_packagetype eq ${PACKAGE_TYPE_OPTIONSET['PAS_PACKAGE'].code}
+        &$expand=
+          dcp_pasform
+      `);
+
+      // if pasA is of a higher version than pasB, it should come first
+      const [{ dcp_pasform: latestPasForm }] = pasPackages.sort((pasA, pasB) => {
+        return pasB.dcp_packageversion - pasA.dcp_packageversion;
+      });
+
+      return latestPasForm;
+    } catch(e) {
+      const errorMessage = `Error finding a PAS Form on given Project. ${e.message}`;
+      console.log(errorMessage);
+      throw new HttpException(errorMessage, HttpStatus.UNAUTHORIZED);
+    }
+  }
+
   async getPackage(packageId) {
     // Note: The reason for making two network calls
     // has to do with a limitation with the Web API: we can't request
@@ -88,7 +113,7 @@ export class PackagesService {
 
     // Double network request approach
     const { records: [firstPackage] } = await this.crmService.get('dcp_packages', `
-      $select=_dcp_rwcdsform_value,_dcp_pasform_value,dcp_packagetype,dcp_packageid,dcp_name
+      $select=_dcp_project_value,_dcp_rwcdsform_value,_dcp_pasform_value,dcp_packagetype,dcp_packageid,dcp_name
       &$filter=dcp_packageid eq ${packageId}
       &$expand=dcp_project
     `);
@@ -102,6 +127,7 @@ export class PackagesService {
       dcp_project,
       dcp_packageid,
       dcp_name,
+      _dcp_project_value,
       _dcp_pasform_value,
       _dcp_rwcdsform_value,
     } = firstPackage;
@@ -150,6 +176,24 @@ export class PackagesService {
       let documents = [];
 
       documents = await this.tryFindPackageSharepointDocuments(dcp_name, dcp_packageid);
+
+      if (
+        rwcdsForm.dcp_projectsitedescription === null
+        || rwcdsForm.dcp_proposedprojectdevelopmentdescription === null
+      ) {
+        const {
+          dcp_projectdescriptionproposedarea,
+          dcp_projectdescriptionproposeddevelopment,
+        } = await this.getLatestPasForm(_dcp_project_value);
+
+        if ( rwcdsForm.dcp_projectsitedescription === null ) {
+          rwcdsForm.dcp_projectsitedescription = dcp_projectdescriptionproposedarea;
+        }
+
+        if ( rwcdsForm.dcp_proposedprojectdevelopmentdescription === null ) {
+          rwcdsForm.dcp_proposedprojectdevelopmentdescription = dcp_projectdescriptionproposeddevelopment;
+        }
+      }
 
       return {
         ...rwcdsForm.dcp_package,
