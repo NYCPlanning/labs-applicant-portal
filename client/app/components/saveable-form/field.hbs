@@ -1,6 +1,11 @@
 {{#let (component (concat 'saveable-form/field/' this.type)
   value=this.value
-  attribute=@attribute) as |CurriedFieldComponent|
+  attribute=@attribute
+  parentField=(component 'saveable-form/field'
+    saveableChanges=@saveableChanges
+    submittableChanges=@submittableChanges 
+    attribute=@attribute
+  )) as |CurriedFieldComponent|
 }}
   {{#if hasBlock}}
     {{!-- Yield the component so more args can be added --}}

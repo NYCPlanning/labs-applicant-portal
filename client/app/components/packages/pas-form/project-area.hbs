@@ -11,22 +11,15 @@
 
       <Form.Field
         @attribute="dcpProposedprojectorportionconstruction"
-        @type="radio"
-        as |RadioButton|
+        @type="radio-group"
+        as |GroupedRadio|
       >
-        {{#each (array
-          (hash code=717170000 label='Yes')
-          (hash code=717170001 label='No')
-          (hash code=717170002 label='Unsure at this time')) as |radio|
-        }}
-          <RadioButton
-            @targetValue={{radio.code}}
-            data-test-radio="dcpProposedprojectorportionconstruction"
-            data-test-radio-option={{radio.label}}
-          >
-            {{radio.label}}
-          </RadioButton>
-        {{/each}}
+        <GroupedRadio
+          @options={{array
+            (hash code=717170000 label='Yes')
+            (hash code=717170001 label='No')
+            (hash code=717170002 label='Unsure at this time')}}
+        />
       </Form.Field>
     </fieldset>
 
@@ -37,34 +30,27 @@
 
       <Form.Field
         @attribute="dcpUrbanrenewalarea"
-        @type="radio"
-        as |RadioButton|
+        @type="radio-group"
+        as |RadioGroup|
       >
-        {{#each (array
-          (hash code=717170000 label='Yes')
-          (hash code=717170001 label='No')
-          (hash code=717170002 label='Unsure at this time')) as |radio|
-        }}
-          <RadioButton
-            @targetValue={{radio.code}}
-            @changed={{fn (mut @form.saveableChanges.dcpUrbanareaname) ""}}
-            data-test-radio="dcpUrbanrenewalarea"
-            data-test-radio-option={{radio.label}}
-          >
-            {{radio.label}}
-          </RadioButton>
-        {{/each}}
+        <RadioGroup
+          @options={{array
+            (hash code=717170000 label='Yes')
+            (hash code=717170001 label='No')
+            (hash code=717170002 label='Unsure at this time')}}
+          @changed={{fn (mut @form.saveableChanges.dcpUrbanareaname) ""}} as |value|
+        >
+          {{#if (eq value 717170000)}}
+            <label>
+              What is the name of the Urban Renewal Area?
+              <Form.Field
+                @attribute="dcpUrbanareaname"
+                @showCounter={{true}}
+              />
+            </label>
+          {{/if}}
+        </RadioGroup>
       </Form.Field>
-
-      {{#if (eq @form.saveableChanges.dcpUrbanrenewalarea 717170000)}}
-        <label>
-          What is the name of the Urban Renewal Area?
-          <Form.Field
-            @attribute="dcpUrbanareaname"
-            @showCounter={{true}}
-          />
-        </label>
-      {{/if}}
     </fieldset>
 
     <fieldset class="medium-margin-bottom">
@@ -73,26 +59,18 @@
       </legend>
       <Form.Field
         @attribute="dcpLegalstreetfrontage"
-        @type="radio"
-        as |RadioButton|
+        @type="radio-group"
+        as |RadioGroup|
       >
-        {{#each (array
+        <RadioGroup
+          @options={{array
             (hash code=717170000 label='Mapped and Built')
             (hash code=717170001 label='Private Road')
             (hash code=717170002 label='Record Street')
             (hash code=717170003 label='Corporation Counsel Opinion')
-            (hash code=717170004 label='Mapped but not Built')) as |radio|
-        }}
-          <span class="nowrap">
-            <RadioButton
-              @targetValue={{radio.code}}
-              data-test-radio="dcpLegalstreetfrontage"
-              data-test-radio-option={{radio.label}}
-            >
-              {{radio.label}}
-            </RadioButton>
-          </span>
-        {{/each}}
+            (hash code=717170004 label='Mapped but not Built')
+          }}
+        />
       </Form.Field>
     </fieldset>
 
@@ -110,37 +88,32 @@
       </legend>
       <Form.Field
         @attribute="dcpLanduseactiontype2"
-        @type="radio"
-        as |RadioButton|
+        @type="radio-group"
+        as |RadioGroup|
       >
-        {{#each (array
-          (hash code=717170000 label='Yes')
-          (hash code=717170001 label='No')
-          (hash code=717170002 label='Unsure at this time')) as |radio|
-        }}
-          <RadioButton
-            @targetValue={{radio.code}}
-            @changed={{fn (mut @form.saveableChanges.dcpPleaseexplaintypeiienvreview) ""}}
-            data-test-radio="dcpLanduseactiontype2"
-            data-test-radio-option={{radio.label}}
-          >
-            {{radio.label}}
-          </RadioButton>
-        {{/each}}
+        <RadioGroup
+          @options={{array
+            (hash code=717170000 label='Yes')
+            (hash code=717170001 label='No')
+            (hash code=717170002 label='Unsure at this time')
+            }}
+          @changed={{fn (mut @form.saveableChanges.dcpPleaseexplaintypeiienvreview) ""}} as |value|
+        >
+          {{#if (eq value 717170000)}}
+            <label>
+              Indicate which SEQRA or CEQR category each action fulfills
+              <small class="help-text display-block">
+                Ex: 617.5(c)(9)
+              </small>
+              <Form.Field
+                @attribute="dcpPleaseexplaintypeiienvreview"
+                @showCounter={{true}}
+                maxlength="200"
+              />
+            </label>
+          {{/if}}
+        </RadioGroup>
       </Form.Field>
-      {{#if (eq @form.saveableChanges.dcpLanduseactiontype2 717170000)}}
-        <label>
-          Indicate which SEQRA or CEQR category each action fulfills
-          <small class="help-text display-block">
-            Ex: 617.5(c)(9)
-          </small>
-          <Form.Field
-            @attribute="dcpPleaseexplaintypeiienvreview"
-            @showCounter={{true}}
-            maxlength="200"
-          />
-        </label>
-      {{/if}}
     </fieldset>
 
     <fieldset class="medium-margin-bottom">
@@ -158,33 +131,27 @@
       </legend>
       <Form.Field
         @attribute="dcpProjectareaindustrialbusinesszone"
-        @type="radio"
-        as |RadioButton|
+        @type="radio-group"
+        as |RadioGroup|
       >
-        {{#each (array
-          (hash code=true label='Yes')
-          (hash code=false label='No')) as |radio|
-        }}
-          <RadioButton
-            @targetValue={{radio.code}}
-            @changed={{fn (mut @form.saveableChanges.dcpProjectareaindutrialzonename) ""}}
-            data-test-radio="dcpProjectareaindustrialbusinesszone"
-            data-test-radio-option={{radio.label}}
-          >
-            {{radio.label}}
-          </RadioButton>
-        {{/each}}
+        <RadioGroup
+          @options={{array
+            (hash code=true label='Yes')
+            (hash code=false label='No')}}
+          @changed={{fn (mut @form.saveableChanges.dcpProjectareaindutrialzonename) ""}} as |value|
+        >
+          {{#if value}}
+            <label>
+              Name of Industrial Business Zone
+              <Form.Field
+                @attribute="dcpProjectareaindutrialzonename"
+                @maxlength="200"
+                @showCounter={{true}}
+              />
+            </label>
+          {{/if}}
+        </RadioGroup>
       </Form.Field>
-      {{#if @form.saveableChanges.dcpProjectareaindustrialbusinesszone}}
-        <label>
-          Name of Industrial Business Zone
-          <Form.Field
-            @attribute="dcpProjectareaindutrialzonename"
-            @maxlength="200"
-            @showCounter={{true}}
-          />
-        </label>
-      {{/if}}
     </fieldset>
 
     <fieldset class="medium-margin-bottom">
@@ -193,32 +160,26 @@
       </legend>
       <Form.Field
         @attribute="dcpIsprojectarealandmark"
-        @type="radio"
-        as |RadioButton|
+        @type="radio-group"
+        as |RadioGroup|
       >
-        {{#each (array
-          (hash code=true label='Yes')
-          (hash code=false label='No')) as |radio|
-        }}
-          <RadioButton
-            @targetValue={{radio.code}}
-            @changed={{fn (mut @form.saveableChanges.dcpProjectarealandmarkname) ""}}
-            data-test-radio="dcpIsprojectarealandmark"
-            data-test-radio-option={{radio.label}}
-          >
-            {{radio.label}}
-          </RadioButton>
-        {{/each}}
+        <RadioGroup
+          @options={{array
+            (hash code=true label='Yes')
+            (hash code=false label='No')}}
+          @changed={{fn (mut @form.saveableChanges.dcpProjectarealandmarkname) ""}} as |value|
+        >
+          {{#if value}}
+            <label>
+              Name of Landmark or Historic District
+              <Form.Field
+                @attribute="dcpProjectarealandmarkname"
+                @showCounter={{true}}
+              />
+            </label>
+          {{/if}}
+        </RadioGroup>
       </Form.Field>
-      {{#if @form.saveableChanges.dcpIsprojectarealandmark}}
-        <label>
-          Name of Landmark or Historic District
-          <Form.Field
-            @attribute="dcpProjectarealandmarkname"
-            @showCounter={{true}}
-          />
-        </label>
-      {{/if}}
     </fieldset>
 
     <fieldset class="medium-margin-bottom">
@@ -227,21 +188,14 @@
       </legend>
       <Form.Field
         @attribute="dcpProjectareacoastalzonelocatedin"
-        @type="radio"
-        as |RadioButton|
+        @type="radio-group"
+        as |RadioGroup|
       >
-        {{#each (array
-          (hash code=true label='Yes')
-          (hash code=false label='No')) as |radio|
-        }}
-          <RadioButton
-            @targetValue={{radio.code}}
-            data-test-radio="dcpProjectareacoastalzonelocatedin"
-            data-test-radio-option={{radio.label}}
-          >
-            {{radio.label}}
-          </RadioButton>
-        {{/each}}
+        <RadioGroup
+          @options={{array
+            (hash code=true label='Yes')
+            (hash code=false label='No')}} 
+        />
       </Form.Field>
     </fieldset>
 
@@ -251,22 +205,15 @@
       </legend>
       <Form.Field
         @attribute="dcpProjectareaischancefloodplain"
-        @type="radio"
-        as |RadioButton|
+        @type="radio-group"
+        as |RadioGroup|
       >
-        {{#each (array
-          (hash code=717170000 label='Yes')
-          (hash code=717170001 label='No')
-          (hash code=717170002 label='Unsure at this time')) as |radio|
-        }}
-          <RadioButton
-            @targetValue={{radio.code}}
-            data-test-radio="dcpProjectareaischancefloodplain"
-            data-test-radio-option={{radio.label}}
-          >
-            {{radio.label}}
-          </RadioButton>
-        {{/each}}
+        <RadioGroup
+          @options={{array
+            (hash code=717170000 label='Yes')
+            (hash code=717170001 label='No')
+            (hash code=717170002 label='Unsure at this time')}} 
+        />
       </Form.Field>
     </fieldset>
 
@@ -276,36 +223,30 @@
       </legend>
       <Form.Field
         @attribute="dcpRestrictivedeclaration"
-        @type="radio"
-        as |RadioButton|
+        @type="radio-group"
+        as |RadioGroup|
       >
-        {{#each (array
-          (hash code=true label='Yes')
-          (hash code=false label='No')) as |radio|
-        }}
-          <RadioButton
-            @targetValue={{radio.code}}
-            @changed={{fn (mut @form.saveableChanges.dcpCityregisterfilenumber) null}}
-            data-test-radio="dcpRestrictivedeclaration"
-            data-test-radio-option={{radio.label}}
-          >
-            {{radio.label}}
-          </RadioButton>
-        {{/each}}
+        <RadioGroup
+          @options={{array
+            (hash code=true label='Yes')
+            (hash code=false label='No')}}
+          @changed={{fn (mut @form.saveableChanges.dcpCityregisterfilenumber) null}} as |value|
+        >
+          {{#if value}}
+            <label>
+              <strong>City Register file number or other identifier</strong>
+              <small class="help-text display-block">
+                Feel free to attach a copy of the legal instrument in the Attachments section.
+              </small>
+              <Form.Field
+                @attribute="dcpCityregisterfilenumber"
+                @maxlength="25"
+                @showCounter={{true}}
+              />
+            </label>
+          {{/if}}
+        </RadioGroup>
       </Form.Field>
-      {{#if @form.saveableChanges.dcpRestrictivedeclaration}}
-        <label>
-          <strong>City Register file number or other identifier</strong>
-          <small class="help-text display-block">
-            Feel free to attach a copy of the legal instrument in the Attachments section.
-          </small>
-          <Form.Field
-            @attribute="dcpCityregisterfilenumber"
-            @maxlength="25"
-            @showCounter={{true}}
-          />
-        </label>
-      {{/if}}
     </fieldset>
 
     <fieldset class="medium-margin-bottom">
@@ -314,22 +255,15 @@
       </legend>
       <Form.Field
         @attribute="dcpRestrictivedeclarationrequired"
-        @type="radio"
-        as |RadioButton|
+        @type="radio-group"
+        as |RadioGroup|
       >
-        {{#each (array
-          (hash code=717170001 label='Yes')
-          (hash code=717170000 label='No')
-          (hash code=717170002 label='Unsure at this time')) as |radio|
-        }}
-          <RadioButton
-            @targetValue={{radio.code}}
-            data-test-radio="dcpRestrictivedeclarationrequired"
-            data-test-radio-option={{radio.label}}
-          >
-            {{radio.label}}
-          </RadioButton>
-        {{/each}}
+        <RadioGroup
+          @options={{array
+            (hash code=717170001 label='Yes')
+            (hash code=717170000 label='No')
+            (hash code=717170002 label='Unsure at this time')}}
+        />
       </Form.Field>
     </fieldset>
   </Form.Section>
