@@ -111,6 +111,9 @@ export const PAS_FORM_ATTRS = [
   'dcp_projectdescriptionproposedarea',
   'dcp_projectdescriptionsurroundingarea',
   'dcp_projectattachmentsotherinformation',
+
+  // Internals
+  '_dcp_projectname_value',
 ];
 
 @UseInterceptors(new JsonApiSerializeInterceptor('pas-forms', {
