@@ -3,6 +3,7 @@
     <h5 class="small-margin-bottom">
       Add a Proposed Action:
     </h5>
+
     <label data-test-land-use-action-picker>
       <PowerSelect
         supportsDataTestProperties={{true}}
@@ -16,16 +17,19 @@
       </PowerSelect>
     </label>
   </div>
+
   {{#if this.sortedSelectedActions}}
     <h5 class="slide-in-top">
       Land Use Actions Included in This Project
     </h5>
   {{/if}}
+
   {{#each this.sortedSelectedActions as |landUseAction|}}
-    <fieldset class="fieldset relative scale-fade-in">
-      <legend>
-        <strong data-test-action-name="{{landUseAction.name}}">{{landUseAction.name}}</strong>
-      </legend>
+    <Ui::Fieldset class="fieldset relative scale-fade-in" as |Q|>
+      <Q.legend data-test-action-name="{{landUseAction.name}}">
+        {{landUseAction.name}}
+      </Q.legend>
+
       {{#if (or (eq landUseAction.name "Zoning Special Permit") (eq landUseAction.name "Zoning Certification") (eq landUseAction.name "Zoning Authorization") (eq landUseAction.name "Zoning Map Amendment") (eq landUseAction.name "Zoning Text Amendment") (eq landUseAction.name "Modification") (eq landUseAction.name "Renewal"))}}
         {{#if (or (eq landUseAction.name "Zoning Special Permit") (eq landUseAction.name "Zoning Certification") (eq landUseAction.name "Zoning Authorization"))}}
           <div class="grid-x grid-margin-x">
@@ -55,7 +59,7 @@
                 type="text"
                 maxlength="250"
                 data-test-input={{landUseAction.attr1}}
-              />  
+              />
             </Form.Field>
             <span class="help-text">Provide the Zoning Resolution section number. Ex. ZR Sec. 74-711</span>
           </label>
@@ -69,7 +73,7 @@
                 type="text"
                 maxlength="250"
                 data-test-input={{landUseAction.attr2}}
-              />  
+              />
             </Form.Field>
             <span class="help-text">Provide the Zoning Resolution section number(s). Ex. ZR Sec. 42-10 and 43-17</span>
           </label>
@@ -85,7 +89,7 @@
                 type="text"
                 maxlength="250"
                 data-test-input={{landUseAction.attr1}}
-              />  
+              />
             </Form.Field>
             <span class="help-text">ex. R7-1/C2-4</span>
           </label>
@@ -99,7 +103,7 @@
                 type="text"
                 maxlength="250"
                 data-test-input={{landUseAction.attr2}}
-              />  
+              />
             </Form.Field>
             <span class="help-text">ex. C4-5X</span>
           </label>
@@ -115,7 +119,7 @@
                 type="text"
                 maxlength="250"
                 data-test-input={{landUseAction.attr1}}
-              />  
+              />
             </Form.Field>
             <span class="help-text">Provide the Zoning Resolution section number. Ex. ZR Sec. 74-711</span>
           </label>
@@ -129,7 +133,7 @@
                 type="text"
                 maxlength="250"
                 data-test-input={{landUseAction.attr2}}
-              />  
+              />
             </Form.Field>
             <span class="help-text">Provide the Zoning Resolution section Title. Ex. EXAMPLE</span>
           </label>
@@ -145,7 +149,7 @@
                 type="text"
                 maxlength="100"
                 data-test-input={{landUseAction.attr1}}
-              />  
+              />
             </Form.Field>
             <span class="help-text">ex. 200307ZRK</span>
           </label>
@@ -163,6 +167,6 @@
         Delete Action
         <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
       </button>
-    </fieldset>
+    </Ui::Fieldset>
   {{/each}}
 {{/let}}

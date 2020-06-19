@@ -8,6 +8,7 @@
       <Q.legend>
         Does the proposed Project, or portion thereof, require a NYC DEP Storm Water Construction Permit?
       </Q.legend>
+
       <Form.Field
         @attribute="dcpProposedprojectorportionconstruction"
         @type="radio-group"
@@ -23,10 +24,10 @@
       </Form.Field>
     </Ui::Fieldset>
 
-    <fieldset class="medium-margin-bottom">
-      <legend>
-        <strong>Is the proposed Project Area located in a current or former <Ui::ExternalLink @href="https://www1.nyc.gov/site/hpd/services-and-information/urban-renewal.page">Urban Renewal Area</Ui::ExternalLink>?</strong>
-      </legend>
+    <Ui::Fieldset as |Q|>
+      <Q.legend>
+        Is the proposed Project Area located in a current or former <Ui::ExternalLink @href="https://www1.nyc.gov/site/hpd/services-and-information/urban-renewal.page">Urban Renewal Area</Ui::ExternalLink>?
+      </Q.legend>
 
       <Form.Field
         @attribute="dcpUrbanrenewalarea"
@@ -52,12 +53,13 @@
           {{/if}}
         </RadioGroup>
       </Form.Field>
-    </fieldset>
+    </Ui::Fieldset>
 
-    <fieldset class="medium-margin-bottom">
-      <legend>
-        <strong>What is the <a href="https://streets.planning.nyc.gov/about" target="_blank" rel="noopener noreferrer">Legal Street Frontage Status in the Project Area<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?</strong>
-      </legend>
+    <Ui::Fieldset as |Q|>
+      <Q.legend>
+        What is the <a href="https://streets.planning.nyc.gov/about" target="_blank" rel="noopener noreferrer">Legal Street Frontage Status in the Project Area<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?
+      </Q.legend>
+
       <Form.Field
         @attribute="dcpLegalstreetfrontage"
         @type="radio-group"
@@ -73,20 +75,20 @@
           }}
         />
       </Form.Field>
-    </fieldset>
+    </Ui::Fieldset>
 
-    <fieldset class="medium-margin-bottom">
-      <legend>
-        <strong>Do all land use actions meet&nbsp;
-          <a
-            href="https://govt.westlaw.com/nycrr/Document/I4ec3a767cd1711dda432a117e6e0f345?viewType=FullText&originationContext=documenttoc&transitionType=CategoryPageItem&contextData=(sc.Default)"
-            target="_blank"
-            rel="noopener noreferrer">
-            SEQRA or CEQR criteria<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup>
-          </a>
-          for Type II status?
-        </strong>
-      </legend>
+    <Ui::Fieldset as |Q|>
+      <Q.legend>
+        Do all land use actions meet
+        <a
+          href="https://govt.westlaw.com/nycrr/Document/I4ec3a767cd1711dda432a117e6e0f345?viewType=FullText&originationContext=documenttoc&transitionType=CategoryPageItem&contextData=(sc.Default)"
+          target="_blank"
+          rel="noopener noreferrer">
+          SEQRA or CEQR criteria<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup>
+        </a>
+        for Type II status?
+      </Q.legend>
+
       <Form.Field
         @attribute="dcpLanduseactiontype2"
         @type="radio-group"
@@ -115,21 +117,20 @@
           {{/if}}
         </RadioGroup>
       </Form.Field>
-    </fieldset>
+    </Ui::Fieldset>
 
-    <fieldset class="medium-margin-bottom">
-      <legend>
-        <strong>
-          Is the proposed Project Area in an&nbsp;
-          <a href="https://zola.planning.nyc.gov/" target="_blank" rel="noopener noreferrer">
-            Industrial Business Zone
-            <sup>
-              <FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} />
-            </sup>
-          </a>
-          ?
-        </strong>
-      </legend>
+    <Ui::Fieldset as |Q|>
+      <Q.legend>
+        Is the proposed Project Area in an&nbsp;
+        <a href="https://zola.planning.nyc.gov/" target="_blank" rel="noopener noreferrer">
+          Industrial Business Zone
+          <sup>
+            <FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} />
+          </sup>
+        </a>
+        ?
+      </Q.legend>
+
       <Form.Field
         @attribute="dcpProjectareaindustrialbusinesszone"
         @type="radio-group"
@@ -153,12 +154,13 @@
           {{/if}}
         </RadioGroup>
       </Form.Field>
-    </fieldset>
+    </Ui::Fieldset>
 
-    <fieldset class="medium-margin-bottom">
-      <legend>
-        <strong>Is the proposed Project Area within or adjacent to a designated (City or State) <a href="https://zola.planning.nyc.gov/"  target="_blank" rel="noopener noreferrer">Landmark or Historic District<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?</strong>
-      </legend>
+    <Ui::Fieldset as |Q|>
+      <Q.legend>
+        Is the proposed Project Area within or adjacent to a designated (City or State) <a href="https://zola.planning.nyc.gov/"  target="_blank" rel="noopener noreferrer">Landmark or Historic District<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?
+      </Q.legend>
+
       <Form.Field
         @attribute="dcpIsprojectarealandmark"
         @type="radio-group"
@@ -181,12 +183,13 @@
           {{/if}}
         </RadioGroup>
       </Form.Field>
-    </fieldset>
+    </Ui::Fieldset>
 
-    <fieldset class="medium-margin-bottom">
-      <legend>
-        <strong>Is the proposed Project Area located within the <a href="https://dcp.maps.arcgis.com/apps/View/index.html?appid=90e3a9f927c2471483631a20e8a41d8d"  target="_blank" rel="noopener noreferrer">NYC Coastal Zone<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?</strong>
-      </legend>
+    <Ui::Fieldset as |Q|>
+      <Q.legend>
+        Is the proposed Project Area located within the <a href="https://dcp.maps.arcgis.com/apps/View/index.html?appid=90e3a9f927c2471483631a20e8a41d8d"  target="_blank" rel="noopener noreferrer">NYC Coastal Zone<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?
+      </Q.legend>
+
       <Form.Field
         @attribute="dcpProjectareacoastalzonelocatedin"
         @type="radio-group"
@@ -199,12 +202,13 @@
           }}
         />
       </Form.Field>
-    </fieldset>
+    </Ui::Fieldset>
 
-    <fieldset class="medium-margin-bottom">
-      <legend>
-        <strong>Is the Project Area located within the <a href="https://dcp.maps.arcgis.com/apps/webappviewer/index.html?id=1c37d271fba14163bbb520517153d6d5"  target="_blank" rel="noopener noreferrer">1% annual chance floodplain<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?</strong>
-      </legend>
+    <Ui::Fieldset as |Q|>
+      <Q.legend>
+        Is the Project Area located within the <a href="https://dcp.maps.arcgis.com/apps/webappviewer/index.html?id=1c37d271fba14163bbb520517153d6d5"  target="_blank" rel="noopener noreferrer">1% annual chance floodplain<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?
+      </Q.legend>
+
       <Form.Field
         @attribute="dcpProjectareaischancefloodplain"
         @type="radio-group"
@@ -218,12 +222,13 @@
           }}
         />
       </Form.Field>
-    </fieldset>
+    </Ui::Fieldset>
 
-    <fieldset class="medium-margin-bottom">
-      <legend>
-        <strong>Is a <a href="https://a836-acris.nyc.gov/CP/"  target="_blank" rel="noopener noreferrer">legal instrument<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a> associated with a previous CPC or CPC Chair action recorded against the project site?</strong>
-      </legend>
+    <Ui::Fieldset as |Q|>
+      <Q.legend>
+        Is a <a href="https://a836-acris.nyc.gov/CP/"  target="_blank" rel="noopener noreferrer">legal instrument<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a> associated with a previous CPC or CPC Chair action recorded against the project site?
+      </Q.legend>
+
       <Form.Field
         @attribute="dcpRestrictivedeclaration"
         @type="radio-group"
@@ -251,12 +256,13 @@
           {{/if}}
         </RadioGroup>
       </Form.Field>
-    </fieldset>
+    </Ui::Fieldset>
 
-    <fieldset class="medium-margin-bottom">
-      <legend>
-        <strong>Will a new legal instrument or modification of a current legal instrument be necessary to approve/implement these actions?</strong>
-      </legend>
+    <Ui::Fieldset as |Q|>
+      <Q.legend>
+        Will a new legal instrument or modification of a current legal instrument be necessary to approve/implement these actions?
+      </Q.legend>
+
       <Form.Field
         @attribute="dcpRestrictivedeclarationrequired"
         @type="radio-group"
@@ -269,6 +275,6 @@
             (hash code=717170002 label='Unsure at this time')}}
         />
       </Form.Field>
-    </fieldset>
+    </Ui::Fieldset>
   </Form.Section>
 {{/let}}
