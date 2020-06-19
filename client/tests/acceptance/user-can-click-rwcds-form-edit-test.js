@@ -42,6 +42,29 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     assert.equal(this.server.db.rwcdsForms.firstObject.dcpProjectsitedescription, 'Whatever affects one directly, affects all indirectly.');
   });
 
+  test('User can view existing values in Project Description section', async function(assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'applicant', {
+        dcpPackagetype: 717170004,
+        rwcdsForm: this.server.create('rwcds-form', {
+          dcpProjectsitedescription: 'Mixed use',
+          dcpProposedprojectdevelopmentdescription: 'Increase equity',
+          dcpBuildyear: '1990',
+          dcpSitehistory: 'Some history',
+        }),
+      })],
+    });
+
+    await visit('/rwcds-form/1/edit');
+
+    assert.equal(currentURL(), '/rwcds-form/1/edit');
+
+    assert.dom('[data-test-textarea="dcpProjectsitedescription"]').hasValue('Mixed use');
+    assert.dom('[data-test-textarea="dcpProposedprojectdevelopmentdescription"]').hasValue('Increase equity');
+    assert.dom('[data-test-input="dcpBuildyear"]').hasValue('1990');
+    assert.dom('[data-test-textarea="dcpSitehistory"]').hasValue('Some history');
+  });
+
   test('Validation messages display for Project Description', async function(assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'applicant', 'rwcdsForm')],
