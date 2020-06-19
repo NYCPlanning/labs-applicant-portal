@@ -13,13 +13,12 @@
       {{!-- QUESTION: Should this be a date picker? --}}
     </label>
 
-    <fieldset class="medium-margin-bottom">
-      <legend>
-        <strong>
-          What type of development is proposed?
-          <small class="text-weight-normal">(select all that apply)</small>
-        </strong>
-      </legend>
+    <Ui::Fieldset as |Q|>
+      <Q.legend>
+        What type of development is proposed?
+        <small class="text-weight-normal">(select all that apply)</small>
+      </Q.legend>
+
       <ul class="no-bullet no-margin">
         {{#each (array
           (hash attr="dcpProposeddevelopmentsitenewconstruction" label="Newly constructed buildings")
@@ -61,12 +60,12 @@
           <Form.Field @attribute="dcpProposeddevelopmentsiteotherexplanation"/>
         </label>
       {{/if}}
-    </fieldset>
+    </Ui::Fieldset>
 
-    <fieldset class="medium-margin-bottom">
-      <legend>
-        <strong>Is the Development Site in an <a href="https://zola.planning.nyc.gov/"  target="_blank" rel="noopener noreferrer">Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?</strong>
-      </legend>
+    <Ui::Fieldset as |Q|>
+      <Q.legend>
+        Is the Development Site in an <a href="https://zola.planning.nyc.gov/"  target="_blank" rel="noopener noreferrer">Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?
+      </Q.legend>
 
       <p class="text-small">
         Refer to <a href="https://zr.planning.nyc.gov/appendix-f-inclusionary-housing-designated-areas-and-mandatory-inclusionary-housing-areas" target="_blank" rel="noopener noreferrer">Appendix F<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a> of the Zoning Resolution for full list of all inclusionary housing areas which are areas that incentivize or require affordable housing in certain areas.
@@ -91,12 +90,12 @@
           {{/if}}
         </RadioGroup>
       </Form.Field>
-    </fieldset>
+    </Ui::Fieldset>
 
-    <fieldset class="medium-margin-bottom">
-      <legend>
-        <strong>Does the proposed development involve discretionary funding for Affordable Housing Units?</strong>
-      </legend>
+    <Ui::Fieldset as |Q|>
+      <Q.legend>
+        Does the proposed development involve discretionary funding for Affordable Housing Units?
+      </Q.legend>
 
       <Form.Field
         @attribute="dcpDiscressionaryfundingforffordablehousing"
@@ -111,10 +110,11 @@
           @onChange={{fn (mut @form.saveableChanges.dcpHousingunittype) ""}} as |value|
         >
           {{#if (eq value 717170000)}}
-            <fieldset class="medium-margin-bottom">
-              <legend>
+            <Ui::Fieldset as |Q|>
+              <Q.legend>
                 Funding source
-              </legend>
+              </Q.legend>
+
               <Form.Field
                 @attribute="dcpHousingunittype"
                 @type="radio-group" as |RadioGroup|
@@ -128,10 +128,10 @@
                   }}
                 />
               </Form.Field>
-            </fieldset>
+            </Ui::Fieldset>
           {{/if}}
         </RadioGroup>
       </Form.Field>
-    </fieldset>
+    </Ui::Fieldset>
   </Form.Section>
 {{/let}}
