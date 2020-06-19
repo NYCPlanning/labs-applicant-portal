@@ -3,7 +3,7 @@ import { CrmModule } from '../../crm/crm.module';
 import { RwcdsFormService } from './rwcds-form.service';
 import { CrmService } from '../../crm/crm.service';
 
-describe('PackagesService', () => {
+describe('RwcdsFormService', () => {
   let rwcdsFormService: RwcdsFormService;
   let crmService: CrmService;
 
