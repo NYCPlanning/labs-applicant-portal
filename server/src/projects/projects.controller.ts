@@ -23,13 +23,14 @@ export const PROJECT_ATTRS = [
   'dcp_visibility',
   '_dcp_applicant_customer_value',
   'dcp_dcp_project_dcp_projectapplicant_Project',
-  'packages',
 ];
 
 @UseInterceptors(new JsonApiSerializeInterceptor('projects', {
   id: 'dcp_name',
   attributes: [
     ...PROJECT_ATTRS,
+
+    'packages',
   ],
   packages: {
     ref: 'dcp_packageid',

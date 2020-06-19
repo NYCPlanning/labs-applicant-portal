@@ -1,4 +1,4 @@
-import { Controller, Get, Param, UseInterceptors, Patch, Body, Session, HttpException, HttpStatus, UsePipes, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, UseInterceptors, Patch, Body, UsePipes, UseGuards } from '@nestjs/common';
 import { PackagesService } from './packages.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 import { JsonApiDeserializePipe } from '../json-api-deserialize.pipe';
@@ -15,6 +15,10 @@ export const PACKAGE_ATTRS = [
   'dcp_packagetype',
   'dcp_visibility',
   'dcp_packageversion',
+  '_dcp_rwcdsform_value',
+  '_dcp_pasform_value',
+  'dcp_packageid',
+  'dcp_name',
 ];
 
 export const PAS_FORM_PROJECTADDRESS_ATTRS = [
