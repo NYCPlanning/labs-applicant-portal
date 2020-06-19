@@ -31,10 +31,9 @@
         <strong>
           Identify and describe the existing conditions of all areas affected by the proposed actions
         </strong>
-        <TextArea
-          @property={{@form.saveableChanges.dcpProjectsitedescription}}
-          @propertyName="dcpProjectsitedescription"
-          @changesetError={{@form.submittableChanges.error.dcpProjectsitedescription}}
+        <form.Field
+          @type="text-area"
+          @attribute="dcpProjectsitedescription"
           @maxlength="2400"
         />
       </label>
@@ -43,10 +42,9 @@
         <strong>
           Describe the proposed project facilitated by the proposed actions
         </strong>
-        <TextArea
-          @property={{@form.saveableChanges.dcpProposedprojectdevelopmentdescription}}
-          @propertyName="dcpProposedprojectdevelopmentdescription"
-          @changesetError={{@form.submittableChanges.error.dcpProposedprojectdevelopmentdescription}}
+        <form.Field
+          @type="text-area"
+          @attribute="dcpProposedprojectdevelopmentdescription"
           @maxlength="1800"
         />
       </label>
@@ -78,10 +76,8 @@
         <strong>
           What is the proposed analysis year of the proposed action?
         </strong>
-        <TextInput
-          @property={{@form.saveableChanges.dcpBuildyear}}
-          @propertyName="dcpBuildyear"
-          @changesetError={{@form.submittableChanges.error.dcpBuildyear}}
+        <form.Field
+          @attribute="dcpBuildyear"
           @showCounter={{true}}
           @maxlength="4"
         />
@@ -103,10 +99,9 @@
           Mitchell Lama site plans, or other site controls, easements, restrictive&nbsp;
           declarations, (E) designations, historic or other designations, etc.).
         </small>
-        <TextArea
-          @property={{@form.saveableChanges.dcpSitehistory}}
-          @propertyName="dcpSitehistory"
-          @changesetError={{@form.submittableChanges.error.dcpSitehistory}}
+        <form.Field
+          @type="text-area"
+          @attribute="dcpSitehistory"
           @maxlength="600"
         />
       </label>
