@@ -16,10 +16,6 @@
         error=submittableValidator.changeset.error
       )
 
-      Radio=(component 'radio-button'
-        changed=saveableValidator.validate
-      )
-
       SaveButton=(component 'packages/save-button'
         wrapperCallback=saveableValidator.persist
         isEnabled=(and saveableValidator.isDirty saveableValidator.isValid)

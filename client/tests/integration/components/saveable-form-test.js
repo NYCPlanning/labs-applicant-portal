@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, fillIn, click } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | saveable-form', function(hooks) {
+module('Integration | Component | f', function(hooks) {
   setupRenderingTest(hooks);
 
   // default some blank validators
@@ -53,30 +53,33 @@ module('Integration | Component | saveable-form', function(hooks) {
       <SaveableForm
         @model={{this.dummyModel}}
         @validators={{this.validators}}
-        as |saveable-form|
+        as |f|
       >
         <Input
           @type="text"
-          @value={{saveable-form.saveableChanges.someProp}}
+          @value={{f.saveableChanges.someProp}}
         />
 
-        <span data-test-radio-button-1>
-          <saveable-form.Radio
-            @value={{true}}
-            @groupValue={{saveable-form.saveableChanges.someBool}}
+        <f.Field
+          @type="radio"
+          @attribute="someBool"
+        as |Radio|>
+          <span data-test-radio-button-1>
+            <Radio
+              @targetValue={{true}}
+            />
+          </span>
+
+          <Radio
+            @targetValue={{false}}
           />
-        </span>
+        </f.Field>
 
-        <saveable-form.Radio
-          @value={{false}}
-          @groupValue={{saveable-form.saveableChanges.someBool}}
-        />
-
-        <saveable-form.SaveButton
+        <f.SaveButton
           @onClick={{this.handleSave}}
           data-test-save-button
         />
-        <saveable-form.SubmitButton
+        <f.SubmitButton
           @onClick={{this.handleSubmit}}
           data-test-submit-button
         />
@@ -110,9 +113,9 @@ module('Integration | Component | saveable-form', function(hooks) {
       <SaveableForm
         @model={{this.dummyModel}}
         @validators={{this.validators}}
-        as |saveable-form|
+        as |f|
       >
-        <saveable-form.SaveButton
+        <f.SaveButton
           @onClick={{this.handleSave}}
           data-test-save-button
         />
@@ -141,9 +144,9 @@ module('Integration | Component | saveable-form', function(hooks) {
       <SaveableForm
         @model={{this.dummyModel}}
         @validators={{this.validators}}
-        as |saveable-form|
+        as |f|
       >
-        <saveable-form.SaveableForm
+        <f.SaveableForm
           @model={{this.secondaryModel}}
           @validators={{this.validators}}
           as |saveable-child-form|
@@ -152,13 +155,13 @@ module('Integration | Component | saveable-form', function(hooks) {
             @type="text"
             @value={{saveable-child-form.saveableChanges.someProp}}
           />
-        </saveable-form.SaveableForm>
+        </f.SaveableForm>
 
-        <saveable-form.SaveButton
+        <f.SaveButton
           @onClick={{this.handleSave}}
           data-test-save-button
         />
-        <saveable-form.SubmitButton
+        <f.SubmitButton
           @onClick={{this.handleSubmit}}
           data-test-submit-button
         />

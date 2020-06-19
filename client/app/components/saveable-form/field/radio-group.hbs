@@ -2,11 +2,11 @@
   <Field
     @type="radio"
     @hideError={{true}}
-    as |RadioButton|
+    as |Radio|
   >
     {{#each @options as |radio|}}
       <span class="nowrap">
-        <RadioButton
+        <Radio
           @targetValue={{radio.code}}
           @changed={{@onChange}}
           data-test-radio={{@attribute}}
@@ -14,7 +14,7 @@
           ...attributes
         >
           {{radio.label}}
-        </RadioButton>
+        </Radio>
       </span>
     {{/each}}
   </Field>
