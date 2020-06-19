@@ -64,11 +64,12 @@
 
     <Ui::Fieldset as |Q|>
       <Q.legend>
-        Is the Development Site in an <a href="https://zola.planning.nyc.gov/"  target="_blank" rel="noopener noreferrer">Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a>?
+        Is the Development Site in an
+        <Ui::ExternalLink @href="https://zola.planning.nyc.gov/">Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area</Ui::ExternalLink>?
       </Q.legend>
 
       <p class="text-small">
-        Refer to <a href="https://zr.planning.nyc.gov/appendix-f-inclusionary-housing-designated-areas-and-mandatory-inclusionary-housing-areas" target="_blank" rel="noopener noreferrer">Appendix F<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup></a> of the Zoning Resolution for full list of all inclusionary housing areas which are areas that incentivize or require affordable housing in certain areas.
+        Refer to <Ui::ExternalLink @href="https://zr.planning.nyc.gov/appendix-f-inclusionary-housing-designated-areas-and-mandatory-inclusionary-housing-areas">Appendix F</Ui::ExternalLink> of the Zoning Resolution for full list of all inclusionary housing areas which are areas that incentivize or require affordable housing in certain areas.
       </p>
 
       <Form.Field

@@ -30,13 +30,7 @@
             {{#if bbl.temporaryAddressLabel}}
               ({{bbl.temporaryAddressLabel}})
             {{/if}}
-            <a
-              href="https://zola.planning.nyc.gov/bbl/{{bbl.dcpBblnumber}}"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View in ZoLa<sup><FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} /></sup>
-            </a>
+            <Ui::ExternalLink @href="https://zola.planning.nyc.gov/bbl/{{bbl.dcpBblnumber}}">View in ZoLa</Ui::ExternalLink>
           </span>
         </Q.legend>
 
