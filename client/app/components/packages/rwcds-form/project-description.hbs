@@ -18,14 +18,14 @@
             code=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'code' 'NO')
             label=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'label' 'NO'))
         ) as |radio|}}
-          <@rwcdsForm.radio
+          <@form.radio
             @value={{radio.code}}
-            @groupValue={{@rwcdsForm.saveableChanges.dcpHasprojectchangedsincesubmissionofthepas}}
+            @groupValue={{@form.saveableChanges.dcpHasprojectchangedsincesubmissionofthepas}}
             data-test-radio="dcpHasprojectchangedsincesubmissionofthepas"
             data-test-radio-option={{radio.label}}
           >
             {{radio.label}}
-          </@rwcdsForm.radio>
+          </@form.radio>
         {{/each}}
       <br>
     </label>
@@ -39,9 +39,9 @@
         Identify and describe the existing conditions of all areas affected by the proposed actions
       </strong>
       <TextArea
-        @property={{@rwcdsForm.saveableChanges.dcpProjectsitedescription}}
+        @property={{@form.saveableChanges.dcpProjectsitedescription}}
         @propertyName="dcpProjectsitedescription"
-        @changesetError={{@rwcdsForm.submittableChanges.error.dcpProjectsitedescription}}
+        @changesetError={{@form.submittableChanges.error.dcpProjectsitedescription}}
         @maxlength="2400"
       />
     </label>
@@ -51,9 +51,9 @@
         Describe the proposed project facilitated by the proposed actions
       </strong>
       <TextArea
-        @property={{@rwcdsForm.saveableChanges.dcpProposedprojectdevelopmentdescription}}
+        @property={{@form.saveableChanges.dcpProposedprojectdevelopmentdescription}}
         @propertyName="dcpProposedprojectdevelopmentdescription"
-        @changesetError={{@rwcdsForm.submittableChanges.error.dcpProposedprojectdevelopmentdescription}}
+        @changesetError={{@form.submittableChanges.error.dcpProposedprojectdevelopmentdescription}}
         @maxlength="1800"
       />
     </label>
@@ -71,14 +71,14 @@
             code=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'code' 'MULTIPLE')
             label=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'label' 'MULTIPLE'))
         ) as |radio|}}
-          <@rwcdsForm.radio
+          <@form.radio
             @value={{radio.code}}
-            @groupValue={{@rwcdsForm.saveableChanges.dcpConstructionphasing}}
+            @groupValue={{@form.saveableChanges.dcpConstructionphasing}}
             data-test-radio="dcpConstructionphasing"
             data-test-radio-option={{radio.label}}
           >
             {{radio.label}}
-          </@rwcdsForm.radio>
+          </@form.radio>
         {{/each}}
       <br>
     </label>
@@ -88,9 +88,9 @@
         What is the proposed analysis year of the proposed action?
       </strong>
       <TextInput
-        @property={{@rwcdsForm.saveableChanges.dcpBuildyear}}
+        @property={{@form.saveableChanges.dcpBuildyear}}
         @propertyName="dcpBuildyear"
-        @changesetError={{@rwcdsForm.submittableChanges.error.dcpBuildyear}}
+        @changesetError={{@form.submittableChanges.error.dcpBuildyear}}
         @showCounter={{true}}
         @maxlength="4"
       />
@@ -113,9 +113,9 @@
         declarations, (E) designations, historic or other designations, etc.).
       </small>
       <TextArea
-        @property={{@rwcdsForm.saveableChanges.dcpSitehistory}}
+        @property={{@form.saveableChanges.dcpSitehistory}}
         @propertyName="dcpSitehistory"
-        @changesetError={{@rwcdsForm.submittableChanges.error.dcpSitehistory}}
+        @changesetError={{@form.submittableChanges.error.dcpSitehistory}}
         @maxlength="600"
       />
     </label>

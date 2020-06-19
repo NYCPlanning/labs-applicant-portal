@@ -18,7 +18,7 @@ module('Integration | Component | packages/rwcds-form/project-description', func
 
     await render(hbs`
       <Packages::RwcdsForm::ProjectDescription
-        @rwcdsForm={{this.rwcdsForm}}
+        @form={{this.rwcdsForm}}
       />
     `);
 
