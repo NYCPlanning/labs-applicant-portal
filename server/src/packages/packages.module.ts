@@ -6,11 +6,12 @@ import { PasFormController } from './pas-form/pas-form.controller';
 import { ApplicantsController } from './pas-form/applicants/applicants.controller';
 import { BblsController } from './pas-form/bbls/bbls.controller';
 import { RwcdsFormController } from './rwcds-form/rwcds-form.controller';
+import { RwcdsFormService } from './rwcds-form/rwcds-form.service';
 
 @Module({
   imports: [CrmModule],
   exports: [PackagesService],
-  providers: [PackagesService],
+  providers: [PackagesService, RwcdsFormService],
   controllers: [PackagesController, PasFormController, RwcdsFormController, ApplicantsController, BblsController],
 })
 export class PackagesModule {}

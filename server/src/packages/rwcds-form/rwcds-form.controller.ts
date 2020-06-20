@@ -2,7 +2,7 @@ import { Controller, Patch, Body, Param, UseGuards, UseInterceptors, UsePipes } 
 import { AuthenticateGuard } from '../../authenticate.guard';
 import { JsonApiSerializeInterceptor } from '../../json-api-serialize.interceptor';
 import { JsonApiDeserializePipe } from '../../json-api-deserialize.pipe';
-import { CrmService } from '../../crm/crm.service';
+import { RwcdsFormService } from './rwcds-form.service';
 import { pick } from 'underscore';
 
 export const RWCDS_FORM_ATTRS = [
@@ -55,13 +55,16 @@ export const RWCDS_FORM_ATTRS = [
 @UsePipes(JsonApiDeserializePipe)
 @Controller('rwcds-forms')
 export class RwcdsFormController {
-  constructor(private readonly crmService: CrmService) {}
+  constructor(private readonly rwcdsFormService: RwcdsFormService) {}
 
   @Patch('/:id')
   async update(@Body() body, @Param('id') id) {
-    const allowedAttrs = pick(body, RWCDS_FORM_ATTRS);
+    const allowedAttrs = pick(body, [
+      ...RWCDS_FORM_ATTRS,
+      'package',
+    ]);
 
-    await this.crmService.update('dcp_rwcdsforms', id, allowedAttrs);
+    await this.rwcdsFormService.update(id, allowedAttrs);
 
     return {
       dcp_rwcdsformid: id,
