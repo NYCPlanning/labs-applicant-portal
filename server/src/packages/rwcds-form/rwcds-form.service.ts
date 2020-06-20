@@ -33,8 +33,10 @@ export class RwcdsFormService {
 
     await this.crmService.update('dcp_rwcdsforms', id, allowedAttrs);
 
-    await this.crmService.update('dcp_projects', projectId, {
-      'dcp_anticipatedyearbuilt': allowedAttrs.dcp_buildyear,
-    });
+    if (allowedAttrs.hasOwnProperty('dcp_buildyear')) {
+      await this.crmService.update('dcp_projects', projectId, {
+        dcp_anticipatedyearbuilt: allowedAttrs.dcp_buildyear,
+      });
+    }
   }
 }
