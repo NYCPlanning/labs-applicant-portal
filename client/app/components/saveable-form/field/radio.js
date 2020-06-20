@@ -1,3 +1,6 @@
-import RadioButton from '../../radio-button';
+import RadioButtonComponent from 'ember-radio-button/components/radio-button';
+import { guidFor } from '@ember/object/internals';
 
-export default class SaveableFormFieldRadioComponent extends RadioButton {}
+export default class GroupIdentifier extends RadioButtonComponent {
+  radioId = `radio-${guidFor(this)}`;
+}
