@@ -432,7 +432,7 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     await click('[data-test-radio-option="Organization"]');
 
     // organization input should appear after user toggles to "Organization"
-    assert.dom('[data-test-applicant-organization]').hasText('Organization');
+    assert.dom('[data-test-applicant-organization]').hasText('Organization Name');
 
     await saveForm();
 
