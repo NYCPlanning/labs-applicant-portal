@@ -4,10 +4,10 @@
       Project Area refers to all property that would be subject to the proposed actions.
     </p>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @group={{true}} as |Q|>
+      <Q.prompt>
         Does the proposed Project, or portion thereof, require a NYC DEP Storm Water Construction Permit?
-      </Q.legend>
+      </Q.prompt>
 
       <Form.Field
         @attribute="dcpProposedprojectorportionconstruction"
@@ -22,12 +22,12 @@
           }}
         />
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @group={{true}} as |Q|>
+      <Q.prompt>
         Is the proposed Project Area located in a current or former <Ui::ExternalLink @href="https://www1.nyc.gov/site/hpd/services-and-information/urban-renewal.page">Urban Renewal Area</Ui::ExternalLink>?
-      </Q.legend>
+      </Q.prompt>
 
       <Form.Field
         @attribute="dcpUrbanrenewalarea"
@@ -53,12 +53,12 @@
           {{/if}}
         </RadioGroup>
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @group={{true}} as |Q|>
+      <Q.prompt>
         What is the <Ui::ExternalLink @href="https://streets.planning.nyc.gov/about">Legal Street Frontage Status in the Project Area</Ui::ExternalLink>?
-      </Q.legend>
+      </Q.prompt>
 
       <Form.Field
         @attribute="dcpLegalstreetfrontage"
@@ -75,14 +75,14 @@
           }}
         />
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @group={{true}} as |Q|>
+      <Q.prompt>
         Do all land use actions meet
         <Ui::ExternalLink @href="https://govt.westlaw.com/nycrr/Document/I4ec3a767cd1711dda432a117e6e0f345?viewType=FullText&originationContext=documenttoc&transitionType=CategoryPageItem&contextData=(sc.Default)">SEQRA or CEQR criteria</Ui::ExternalLink>
         for Type II status?
-      </Q.legend>
+      </Q.prompt>
 
       <Form.Field
         @attribute="dcpLanduseactiontype2"
@@ -112,12 +112,12 @@
           {{/if}}
         </RadioGroup>
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @group={{true}} as |Q|>
+      <Q.prompt>
         Is the proposed Project Area in an <Ui::ExternalLink @href="https://zola.planning.nyc.gov/">Industrial Business Zone</Ui::ExternalLink>?
-      </Q.legend>
+      </Q.prompt>
 
       <Form.Field
         @attribute="dcpProjectareaindustrialbusinesszone"
@@ -142,12 +142,12 @@
           {{/if}}
         </RadioGroup>
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @group={{true}} as |Q|>
+      <Q.prompt>
         Is the proposed Project Area within or adjacent to a designated (City or State) <Ui::ExternalLink @href="https://zola.planning.nyc.gov/">Landmark or Historic District</Ui::ExternalLink>?
-      </Q.legend>
+      </Q.prompt>
 
       <Form.Field
         @attribute="dcpIsprojectarealandmark"
@@ -171,12 +171,12 @@
           {{/if}}
         </RadioGroup>
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @group={{true}} as |Q|>
+      <Q.prompt>
         Is the proposed Project Area located within the <Ui::ExternalLink @href="https://dcp.maps.arcgis.com/apps/View/index.html?appid=90e3a9f927c2471483631a20e8a41d8d">NYC Coastal Zone</Ui::ExternalLink>?
-      </Q.legend>
+      </Q.prompt>
 
       <Form.Field
         @attribute="dcpProjectareacoastalzonelocatedin"
@@ -190,12 +190,12 @@
           }}
         />
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @group={{true}} as |Q|>
+      <Q.prompt>
         Is the Project Area located within the <Ui::ExternalLink @href="https://dcp.maps.arcgis.com/apps/webappviewer/index.html?id=1c37d271fba14163bbb520517153d6d5">1% annual chance floodplain</Ui::ExternalLink>?
-      </Q.legend>
+      </Q.prompt>
 
       <Form.Field
         @attribute="dcpProjectareaischancefloodplain"
@@ -210,12 +210,12 @@
           }}
         />
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @group={{true}} as |Q|>
+      <Q.prompt>
         Is a <Ui::ExternalLink @href="https://a836-acris.nyc.gov/CP/">legal instrument</Ui::ExternalLink> associated with a previous CPC or CPC Chair action recorded against the project site?
-      </Q.legend>
+      </Q.prompt>
 
       <Form.Field
         @attribute="dcpRestrictivedeclaration"
@@ -244,12 +244,12 @@
           {{/if}}
         </RadioGroup>
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @group={{true}} as |Q|>
+      <Q.prompt>
         Will a new legal instrument or modification of a current legal instrument be necessary to approve/implement these actions?
-      </Q.legend>
+      </Q.prompt>
 
       <Form.Field
         @attribute="dcpRestrictivedeclarationrequired"
@@ -263,6 +263,6 @@
             (hash code=717170002 label='Unsure at this time')}}
         />
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
   </Form.Section>
 {{/let}}

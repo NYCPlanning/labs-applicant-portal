@@ -1,0 +1,18 @@
+{{#let
+  (concat 'ui/' (if @group 'fieldset-legend' 'label-text'))
+  as |promptComponent|
+}}
+  {{#if @group}}
+    <fieldset class="medium-margin-bottom" ...attributes>
+      {{yield (hash
+        prompt=(component promptComponent)
+      )}}
+    </fieldset>
+  {{else}}
+    <label class="medium-margin-bottom" ...attributes>
+      {{yield (hash
+        prompt=(component promptComponent)
+      )}}
+    </label>
+  {{/if}}
+{{/let}}

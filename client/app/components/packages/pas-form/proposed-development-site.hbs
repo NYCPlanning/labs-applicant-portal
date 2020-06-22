@@ -4,20 +4,22 @@
       <b>Development Site</b> refers to all property to be developed as part of the applicant’s specific proposal which the land use actions would facilitate. Typically, the Development Site and the Project Area will comprise the same property(ies) unless the application is requesting a zoning map amendment covering an area greater than an applicant’s property to be developed or a large-scale special approval involving multiple tax lots. In these cases, the Development Site may be one or several tax lots within a broader Project Area.
     </p>
 
-    <label>
-      <strong>In what year do you expect the development to complete?</strong>
+    <Ui::Question as |Q|>
+      <Q.prompt>
+        In what year do you expect the development to complete?
+      </Q.prompt>
       <Form.Field
         @attribute="dcpEstimatedcompletiondate"
         @maxlength="4"
       />
       {{!-- QUESTION: Should this be a date picker? --}}
-    </label>
+    </Ui::Question>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @group={{true}} as |Q|>
+      <Q.prompt>
         What type of development is proposed?
         <small class="text-weight-normal">(select all that apply)</small>
-      </Q.legend>
+      </Q.prompt>
 
       <ul class="no-bullet no-margin">
         {{#each (array
@@ -60,13 +62,13 @@
           <Form.Field @attribute="dcpProposeddevelopmentsiteotherexplanation"/>
         </label>
       {{/if}}
-    </Ui::Fieldset>
+    </Ui::Question>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @group={{true}} as |Q|>
+      <Q.prompt>
         Is the Development Site in an
         <Ui::ExternalLink @href="https://zola.planning.nyc.gov/">Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area</Ui::ExternalLink>?
-      </Q.legend>
+      </Q.prompt>
 
       <p class="text-small">
         Refer to <Ui::ExternalLink @href="https://zr.planning.nyc.gov/appendix-f-inclusionary-housing-designated-areas-and-mandatory-inclusionary-housing-areas">Appendix F</Ui::ExternalLink> of the Zoning Resolution for full list of all inclusionary housing areas which are areas that incentivize or require affordable housing in certain areas.
@@ -91,12 +93,12 @@
           {{/if}}
         </RadioGroup>
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @group={{true}} as |Q|>
+      <Q.prompt>
         Does the proposed development involve discretionary funding for Affordable Housing Units?
-      </Q.legend>
+      </Q.prompt>
 
       <Form.Field
         @attribute="dcpDiscressionaryfundingforffordablehousing"
@@ -111,10 +113,10 @@
           @onChange={{fn (mut @form.saveableChanges.dcpHousingunittype) ""}} as |value|
         >
           {{#if (eq value 717170000)}}
-            <Ui::Fieldset as |Q|>
-              <Q.legend>
+            <Ui::Question @group={{true}} as |Q|>
+              <Q.prompt>
                 Funding source
-              </Q.legend>
+              </Q.prompt>
 
               <Form.Field
                 @attribute="dcpHousingunittype"
@@ -129,10 +131,10 @@
                   }}
                 />
               </Form.Field>
-            </Ui::Fieldset>
+            </Ui::Question>
           {{/if}}
         </RadioGroup>
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
   </Form.Section>
 {{/let}}

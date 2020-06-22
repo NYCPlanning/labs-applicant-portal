@@ -25,10 +25,10 @@
   {{/if}}
 
   {{#each this.sortedSelectedActions as |landUseAction|}}
-    <Ui::Fieldset class="fieldset relative scale-fade-in" as |Q|>
-      <Q.legend data-test-action-name="{{landUseAction.name}}">
+    <Ui::Question class="fieldset relative scale-fade-in" as |Q|>
+      <Q.prompt data-test-action-name="{{landUseAction.name}}">
         {{landUseAction.name}}
-      </Q.legend>
+      </Q.prompt>
 
       {{#if (or (eq landUseAction.name "Zoning Special Permit") (eq landUseAction.name "Zoning Certification") (eq landUseAction.name "Zoning Authorization") (eq landUseAction.name "Zoning Map Amendment") (eq landUseAction.name "Zoning Text Amendment") (eq landUseAction.name "Modification") (eq landUseAction.name "Renewal"))}}
         {{#if (or (eq landUseAction.name "Zoning Special Permit") (eq landUseAction.name "Zoning Certification") (eq landUseAction.name "Zoning Authorization"))}}
@@ -167,6 +167,6 @@
         Delete Action
         <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
       </button>
-    </Ui::Fieldset>
+    </Ui::Question>
   {{/each}}
 {{/let}}

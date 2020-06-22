@@ -1,8 +1,8 @@
 {{#let @form as |Form|}}
-  <Ui::Fieldset class="fieldset relative" ...attributes as |Q|>
-    <Q.legend data-test-applicant-title="{{@applicant.friendlyEntityName}}">
+  <Ui::Question class="fieldset relative" ...attributes as |Q|>
+    <Q.prompt data-test-applicant-title="{{@applicant.friendlyEntityName}}">
       {{@applicant.friendlyEntityName}}
-    </Q.legend>
+    </Q.prompt>
 
     {{!-- if sent to CRM "Applicant Information" table, need to know "type" --}}
     {{#if (eq @applicant.friendlyEntityName "Applicant")}}
@@ -106,5 +106,5 @@
       <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
     </button>
 
-  </Ui::Fieldset>
+  </Ui::Question>
 {{/let}}
