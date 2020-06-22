@@ -1,8 +1,11 @@
 {{#let @form as |Form|}}
   <Form.Section @title="Project Information">
-    <label>
-      <strong>Project Name</strong>
+    <Ui::Question as |Q|>
+      <Q.Prompt>
+        Project Name
+      </Q.Prompt>
+
       <Form.Field @attribute="dcpRevisedprojectname" />
-    </label>
+    </Ui::Question>
   </Form.Section>
 {{/let}}
