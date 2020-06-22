@@ -35,11 +35,6 @@ export default class FormValidatorComponent extends Component {
     this.registeredDescendants.add(component);
   }
 
-  @action
-  validate() {
-    this.changeset.validate();
-  }
-
   async _persistChangeset(callback) {
     try {
       await this.changeset.execute();

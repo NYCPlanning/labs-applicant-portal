@@ -12,12 +12,8 @@
       submittableChanges=submittableValidator.changeset
 
       Field=(component 'saveable-form/field'
-        saveableChanges=saveableValidator.changeset
-        submittableChanges=submittableValidator.changeset
-      )
-
-      Radio=(component 'radio-button'
-        changed=saveableValidator.validate
+        data=saveableValidator.changeset
+        error=submittableValidator.changeset.error
       )
 
       SaveButton=(component 'packages/save-button'
