@@ -17,15 +17,18 @@
       />
     </div>
 
-    <label>
-      <strong>Description of geography</strong>
-      <small class="help-text display-block">
-        Fill in if the project area and/or development site is irregular, especially large, or does not consist of tax lots.
-      </small>
-        <Form.Field
-          @attribute="dcpDescriptionofprojectareageography"
-          @type="text-area"
-        />
-    </label>
+    <Ui::Question as |Q|>
+      <Q.prompt>
+        Description of geography
+        <small class="help-text display-block text-weight-normal">
+          Fill in if the project area and/or development site is irregular, especially large, or does not consist of tax lots.
+        </small>
+      </Q.prompt>
+
+      <Form.Field
+        @attribute="dcpDescriptionofprojectareageography"
+        @type="text-area"
+      />
+    </Ui::Question>
   </Form.Section>
 {{/let}}
