@@ -1,12 +1,24 @@
 {{#let @form as |Form|}}
-  <Ui::Question class="fieldset relative" ...attributes as |Q|>
-    <Q.Prompt data-test-applicant-title="{{@applicant.friendlyEntityName}}">
+  <Ui::Question
+    @fieldset={{true}}
+    class="fieldset relative"
+    ...attributes
+    as |Q|
+  >
+    <Q.prompt data-test-applicant-title="{{@applicant.friendlyEntityName}}">
       {{@applicant.friendlyEntityName}}
-    </Q.Prompt>
+    </Q.prompt>
 
     {{!-- if sent to CRM "Applicant Information" table, need to know "type" --}}
     {{#if (eq @applicant.friendlyEntityName "Applicant")}}
-      <div class="cell medium-6" data-test-applicant-type-radio-group>
+      <Ui::Question
+        data-test-applicant-type-radio-group
+        as |Q|
+      >
+        <Q.prompt class="show-for-sr">
+          Type of applicant
+        </Q.prompt>
+
         <Form.Field
           @attribute="dcpType"
           @type="radio-group"
@@ -19,57 +31,91 @@
             }}
           />
         </Form.Field>
-      </div>
+      </Ui::Question>
     {{/if}}
 
     {{!-- and if the applicant is on behalf of an organization, we need to know which organization --}}
     {{#if (eq @applicant.dcpType 717170001)}}
-      <label data-test-applicant-organization>
-        Organization
+      <Ui::Question data-test-applicant-organization as |Q|>
+        <Q.prompt>
+          <span class="text-weight-normal">Organization Name</span>
+        </Q.prompt>
         <Form.Field @attribute="dcpOrganization"/>
-      </label>
+      </Ui::Question>
+
       <hr/>
+
       <h5>Authorized Organization Representative</h5>
     {{/if}}
 
     <div class="grid-x grid-margin-x">
       <div class="cell medium-6">
-        <label>First Name</label>
-        <Form.Field @attribute="dcpFirstname"/>
+        <Ui::Question as |Q|>
+          <Q.prompt>
+            <span class="text-weight-normal">First Name</span>
+          </Q.prompt>
+
+          <Form.Field @attribute="dcpFirstname"/>
+        </Ui::Question>
       </div>
+
       <div class="cell medium-6">
-        <label>Last Name</label>
+        <Ui::Question as |Q|>
+          <Q.prompt>
+            <span class="text-weight-normal">Last Name</span>
+          </Q.prompt>
+
           <Form.Field @attribute="dcpLastname"/>
+        </Ui::Question>
       </div>
     </div>
 
     {{!-- always allow input for Other Team Members --}}
     {{#if (eq @applicant.friendlyEntityName "Other Team Member")}}
-      <label>
-        Organization
+      <Ui::Question as |Q|>
+        <Q.prompt>
+          <span class="text-weight-normal">Organization</span>
+        </Q.prompt>
+
         <Form.Field @attribute="dcpOrganization"/>
-      </label>
+      </Ui::Question>
     {{/if}}
 
-    <label>
-      Email Address
+    <Ui::Question as |Q|>
+      <Q.prompt>
+        <span class="text-weight-normal">Email Address</span>
+      </Q.prompt>
+
       <Form.Field @attribute="dcpEmail"/>
-    </label>
-    <label>
-      Address
+    </Ui::Question>
+
+    <Ui::Question as |Q|>
+      <Q.prompt>
+        <span class="text-weight-normal">Address</span>
+      </Q.prompt>
+
       <Form.Field @attribute="dcpAddress"/>
-    </label>
+    </Ui::Question>
 
     <div class="grid-x grid-margin-x">
       <div class="cell medium-auto">
-        <label>
-          City
+        <Ui::Question as |Q|>
+          <Q.prompt>
+            <span class="text-weight-normal">City</span>
+          </Q.prompt>
+
           <Form.Field @attribute="dcpCity"/>
-        </label>
+        </Ui::Question>
       </div>
       <div class="cell auto medium-2">
-        <label data-test-applicant-state-dropdown>
-          State
+        <Ui::Question
+          data-test-applicant-state-dropdown
+          as |Q|
+        >
+          <Q.prompt>
+            <span class="text-weight-normal">State</span>
+          </Q.prompt>
+
           <PowerSelect
             supportsDataTestProperties={{true}}
             @selected={{@applicant.dcpState}}
@@ -81,20 +127,27 @@
           as |stateCode|>
             {{optionset 'applicant' 'state' 'label' stateCode}}
           </PowerSelect>
-        </label>
+        </Ui::Question>
       </div>
+
       <div class="cell auto medium-4">
-        <label>
-          ZIP
+        <Ui::Question as |Q|>
+          <Q.prompt>
+            <span class="text-weight-normal">ZIP</span>
+          </Q.prompt>
+
           <Form.Field @attribute="dcpZipcode"/>
-        </label>
+        </Ui::Question>
       </div>
     </div>
 
-    <label>
-      Phone
+    <Ui::Question as |Q|>
+      <Q.prompt>
+        <span class="text-weight-normal">Phone</span>
+      </Q.prompt>
+
       <Form.Field @attribute="dcpPhone"/>
-    </label>
+    </Ui::Question>
 
     <button
       type="button"
