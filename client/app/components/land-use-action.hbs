@@ -25,10 +25,14 @@
   {{/if}}
 
   {{#each this.sortedSelectedActions as |landUseAction|}}
-    <Ui::Question class="fieldset relative scale-fade-in" as |Q|>
-      <Q.Prompt data-test-action-name="{{landUseAction.name}}">
+    <Ui::Question
+      @group={{true}}
+      class="fieldset relative scale-fade-in"
+      as |Q|
+    >
+      <Q.prompt data-test-action-name="{{landUseAction.name}}">
         {{landUseAction.name}}
-      </Q.Prompt>
+      </Q.prompt>
 
       {{#if (or (eq landUseAction.name "Zoning Special Permit") (eq landUseAction.name "Zoning Certification") (eq landUseAction.name "Zoning Authorization") (eq landUseAction.name "Zoning Map Amendment") (eq landUseAction.name "Zoning Text Amendment") (eq landUseAction.name "Modification") (eq landUseAction.name "Renewal"))}}
         {{#if (or (eq landUseAction.name "Zoning Special Permit") (eq landUseAction.name "Zoning Certification") (eq landUseAction.name "Zoning Authorization"))}}
@@ -49,8 +53,12 @@
               </Form.Field>
             </div>
           </div>
-          <label class="action-form-label">
-            Where in the Zoning Resolution can this action be found?
+
+          <Ui::Question as |Q|>
+            <Q.prompt>
+              Where in the Zoning Resolution can this action be found?
+            </Q.prompt>
+
             <Form.Field
               @attribute={{landUseAction.attr1}}
               as |TextInput|
@@ -62,9 +70,13 @@
               />
             </Form.Field>
             <span class="help-text">Provide the Zoning Resolution section number. Ex. ZR Sec. 74-711</span>
-          </label>
-          <label class="action-form-label">
-            Which sections of the Zoning Resolution does this modify?
+          </Ui::Question>
+
+          <Ui::Question as |Q|>
+            <Q.prompt>
+              Which sections of the Zoning Resolution does this modify?
+            </Q.prompt>
+
             <Form.Field
               @attribute={{landUseAction.attr2}}
               as |TextInput|
@@ -76,11 +88,15 @@
               />
             </Form.Field>
             <span class="help-text">Provide the Zoning Resolution section number(s). Ex. ZR Sec. 42-10 and 43-17</span>
-          </label>
+          </Ui::Question>
         {{/if}}
+
         {{#if (eq landUseAction.name "Zoning Map Amendment")}}
-          <label class="action-form-label">
-            Existing Zoning Districts:
+          <Ui::Question as |Q|>
+            <Q.prompt>
+              Existing Zoning Districts:
+            </Q.prompt>
+
             <Form.Field
               @attribute={{landUseAction.attr1}}
               as |TextInput|
@@ -92,9 +108,13 @@
               />
             </Form.Field>
             <span class="help-text">ex. R7-1/C2-4</span>
-          </label>
-          <label>
-            Proposed Zoning Districts:
+          </Ui::Question>
+
+          <Ui::Question as |Q|>
+            <Q.prompt>
+              Proposed Zoning Districts:
+            </Q.prompt>
+
             <Form.Field
               @attribute={{landUseAction.attr2}}
               as |TextInput|
@@ -106,11 +126,15 @@
               />
             </Form.Field>
             <span class="help-text">ex. C4-5X</span>
-          </label>
+          </Ui::Question>
         {{/if}}
+
         {{#if (eq landUseAction.name "Zoning Text Amendment")}}
-          <label class="action-form-label">
-            Affected ZR Section Number:
+          <Ui::Question as |Q|>
+            <Q.prompt>
+              Affected ZR Section Number:
+            </Q.prompt>
+
             <Form.Field
               @attribute={{landUseAction.attr1}}
               as |TextInput|
@@ -122,9 +146,13 @@
               />
             </Form.Field>
             <span class="help-text">Provide the Zoning Resolution section number. Ex. ZR Sec. 74-711</span>
-          </label>
-          <label class="action-form-label">
-            Affected ZR Section Title:
+          </Ui::Question>
+
+          <Ui::Question as |Q|>
+            <Q.prompt>
+              Affected ZR Section Title:
+            </Q.prompt>
+
             <Form.Field
               @attribute={{landUseAction.attr2}}
               as |TextInput|
@@ -136,11 +164,15 @@
               />
             </Form.Field>
             <span class="help-text">Provide the Zoning Resolution section Title. Ex. EXAMPLE</span>
-          </label>
+          </Ui::Question>
         {{/if}}
+
         {{#if (or (eq landUseAction.name "Modification") (eq landUseAction.name "Renewal"))}}
-          <label class="action-form-label">
-            Previous ULURP Numbers:
+          <Ui::Question as |Q|>
+            <Q.prompt>
+              Previous ULURP Numbers:
+            </Q.prompt>
+
             <Form.Field
               @attribute={{landUseAction.attr1}}
               as |TextInput|
@@ -152,10 +184,10 @@
               />
             </Form.Field>
             <span class="help-text">ex. 200307ZRK</span>
-          </label>
+          </Ui::Question>
         {{/if}}
       {{else}}
-        <span class="help-text">No additional information required for this action</span>
+        <p class="help-text">No additional information required for this action</p>
       {{/if}}
 
       <button
