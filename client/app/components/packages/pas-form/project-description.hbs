@@ -4,54 +4,73 @@
       For complex proposals, feel free to upload a draft document (in the Attachments section) explaining this information instead of filling out the form inputs.
     </p>
 
-    <label>
-      <strong>Description of the proposed development being facilitated by the land use actions</strong>
+    <Ui::Question as |Q|>
+      <Q.Prompt>
+        Description of the proposed development being facilitated by the land use actions
+      </Q.Prompt>
+
       <Form.Field
         @attribute="dcpProjectdescriptionproposeddevelopment"
         @type="text-area"
       />
-    </label>
-    <label>
-      <strong>Why is this application being proposed? What is the legal, environmental, or land use background?</strong>
+    </Ui::Question>
+
+    <Ui::Question as |Q|>
+      <Q.Prompt>
+        Why is this application being proposed? What is the legal, environmental, or land use background?
+      </Q.Prompt>
+
       <Form.Field
         @attribute="dcpProjectdescriptionbackground"
         @type="text-area"
       />
-    </label>
+    </Ui::Question>
 
-    <label>
-      <strong>What is the land use rationale for all the proposed actions?</strong>
+    <Ui::Question as |Q|>
+      <Q.Prompt>
+        What is the land use rationale for all the proposed actions?
+      </Q.Prompt>
+
       <Form.Field
         @attribute="dcpProjectdescriptionproposedactions"
         @type="text-area"
       />
-    </label>
+    </Ui::Question>
 
-    <label>
-      <strong>Description of existing land uses and structures in the proposed Project Area and Development Site</strong>
+    <Ui::Question as |Q|>
+      <Q.Prompt>
+        Description of existing land uses and structures in the proposed Project Area and Development Site
+      </Q.Prompt>
+
       <Form.Field
         @attribute="dcpProjectdescriptionproposedarea"
         @type="text-area"
       />
-    </label>
+    </Ui::Question>
 
-    <label>
-      <strong>Description of land uses and built context in surrounding area (within 1000 ft)</strong>
+    <Ui::Question as |Q|>
+      <Q.Prompt>
+        Description of land uses and built context in surrounding area (within 1000 ft)
+      </Q.Prompt>
+
       <Form.Field
         @attribute="dcpProjectdescriptionsurroundingarea"
         @type="text-area"
       />
-    </label>
+    </Ui::Question>
 
-    <label>
-      <strong>Description of proposed CEQR scope</strong>
-      <small class="help-text display-block">
-        Include to expedite CEQR guidance: If proposed actions are not approved, what is the applicant’s as-of-right development (CEQR “no-action”) proposal? What would be expected to occur on non-applicant-controlled sites because of the Proposed Actions (CEQR “with-action”)?
-      </small>
+    <Ui::Question as |Q|>
+      <Q.Prompt>
+        Description of proposed CEQR scope
+        <small class="help-text display-block text-weight-normal">
+          Include to expedite CEQR guidance: If proposed actions are not approved, what is the applicant’s as-of-right development (CEQR “no-action”) proposal? What would be expected to occur on non-applicant-controlled sites because of the Proposed Actions (CEQR “with-action”)?
+        </small>
+      </Q.Prompt>
+
       <Form.Field
         @attribute="dcpProjectattachmentsotherinformation"
         @type="text-area"
       />
-    </label>
+    </Ui::Question>
   </Form.Section>
 {{/let}}

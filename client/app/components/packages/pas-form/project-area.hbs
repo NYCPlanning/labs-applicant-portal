@@ -1,13 +1,13 @@
 {{#let @form as |Form|}}
   <Form.Section @title="Project Area">
-    <p>
+    <p class="text-small">
       Project Area refers to all property that would be subject to the proposed actions.
     </p>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @fieldset={{true}} as |Q|>
+      <Q.Prompt>
         Does the proposed Project, or portion thereof, require a NYC DEP Storm Water Construction Permit?
-      </Q.legend>
+      </Q.Prompt>
 
       <Form.Field
         @attribute="dcpProposedprojectorportionconstruction"
@@ -22,12 +22,12 @@
           }}
         />
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @fieldset={{true}} as |Q|>
+      <Q.Prompt>
         Is the proposed Project Area located in a current or former <Ui::ExternalLink @href="https://www1.nyc.gov/site/hpd/services-and-information/urban-renewal.page">Urban Renewal Area</Ui::ExternalLink>?
-      </Q.legend>
+      </Q.Prompt>
 
       <Form.Field
         @attribute="dcpUrbanrenewalarea"
@@ -43,22 +43,25 @@
           @onChange={{fn (mut @form.saveableChanges.dcpUrbanareaname) ""}} as |value|
         >
           {{#if (eq value 717170000)}}
-            <label>
-              What is the name of the Urban Renewal Area?
+            <Ui::Question as |Q|>
+              <Q.Prompt>
+                What is the name of the Urban Renewal Area?
+              </Q.Prompt>
+
               <Form.Field
                 @attribute="dcpUrbanareaname"
                 @showCounter={{true}}
               />
-            </label>
+            </Ui::Question>
           {{/if}}
         </RadioGroup>
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @fieldset={{true}} as |Q|>
+      <Q.Prompt>
         What is the <Ui::ExternalLink @href="https://streets.planning.nyc.gov/about">Legal Street Frontage Status in the Project Area</Ui::ExternalLink>?
-      </Q.legend>
+      </Q.Prompt>
 
       <Form.Field
         @attribute="dcpLegalstreetfrontage"
@@ -75,14 +78,14 @@
           }}
         />
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @fieldset={{true}} as |Q|>
+      <Q.Prompt>
         Do all land use actions meet
         <Ui::ExternalLink @href="https://govt.westlaw.com/nycrr/Document/I4ec3a767cd1711dda432a117e6e0f345?viewType=FullText&originationContext=documenttoc&transitionType=CategoryPageItem&contextData=(sc.Default)">SEQRA or CEQR criteria</Ui::ExternalLink>
         for Type II status?
-      </Q.legend>
+      </Q.Prompt>
 
       <Form.Field
         @attribute="dcpLanduseactiontype2"
@@ -98,26 +101,29 @@
           @onChange={{fn (mut @form.saveableChanges.dcpPleaseexplaintypeiienvreview) ""}} as |value|
         >
           {{#if (eq value 717170000)}}
-            <label>
-              Indicate which SEQRA or CEQR category each action fulfills
-              <small class="help-text display-block">
-                Ex: 617.5(c)(9)
-              </small>
+            <Ui::Question as |Q|>
+              <Q.Prompt>
+                Indicate which SEQRA or CEQR category each action fulfills
+                <small class="help-text display-block text-weight-normal">
+                  Ex: 617.5(c)(9)
+                </small>
+              </Q.Prompt>
+
               <Form.Field
                 @attribute="dcpPleaseexplaintypeiienvreview"
                 @showCounter={{true}}
                 maxlength="200"
               />
-            </label>
+            </Ui::Question>
           {{/if}}
         </RadioGroup>
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @fieldset={{true}} as |Q|>
+      <Q.Prompt>
         Is the proposed Project Area in an <Ui::ExternalLink @href="https://zola.planning.nyc.gov/">Industrial Business Zone</Ui::ExternalLink>?
-      </Q.legend>
+      </Q.Prompt>
 
       <Form.Field
         @attribute="dcpProjectareaindustrialbusinesszone"
@@ -131,23 +137,26 @@
           @onChange={{fn (mut @form.saveableChanges.dcpProjectareaindutrialzonename) ""}} as |value|
         >
           {{#if value}}
-            <label>
-              Name of Industrial Business Zone
+            <Ui::Question as |Q|>
+              <Q.Prompt>
+                Name of Industrial Business Zone
+              </Q.Prompt>
+
               <Form.Field
                 @attribute="dcpProjectareaindutrialzonename"
                 @maxlength="200"
                 @showCounter={{true}}
               />
-            </label>
+            </Ui::Question>
           {{/if}}
         </RadioGroup>
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @fieldset={{true}} as |Q|>
+      <Q.Prompt>
         Is the proposed Project Area within or adjacent to a designated (City or State) <Ui::ExternalLink @href="https://zola.planning.nyc.gov/">Landmark or Historic District</Ui::ExternalLink>?
-      </Q.legend>
+      </Q.Prompt>
 
       <Form.Field
         @attribute="dcpIsprojectarealandmark"
@@ -161,22 +170,25 @@
           @onChange={{fn (mut @form.saveableChanges.dcpProjectarealandmarkname) ""}} as |value|
         >
           {{#if value}}
-            <label>
-              Name of Landmark or Historic District
+            <Ui::Question as |Q|>
+              <Q.Prompt>
+                Name of Landmark or Historic District
+              </Q.Prompt>
+
               <Form.Field
                 @attribute="dcpProjectarealandmarkname"
                 @showCounter={{true}}
               />
-            </label>
+            </Ui::Question>
           {{/if}}
         </RadioGroup>
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @fieldset={{true}} as |Q|>
+      <Q.Prompt>
         Is the proposed Project Area located within the <Ui::ExternalLink @href="https://dcp.maps.arcgis.com/apps/View/index.html?appid=90e3a9f927c2471483631a20e8a41d8d">NYC Coastal Zone</Ui::ExternalLink>?
-      </Q.legend>
+      </Q.Prompt>
 
       <Form.Field
         @attribute="dcpProjectareacoastalzonelocatedin"
@@ -190,12 +202,12 @@
           }}
         />
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @fieldset={{true}} as |Q|>
+      <Q.Prompt>
         Is the Project Area located within the <Ui::ExternalLink @href="https://dcp.maps.arcgis.com/apps/webappviewer/index.html?id=1c37d271fba14163bbb520517153d6d5">1% annual chance floodplain</Ui::ExternalLink>?
-      </Q.legend>
+      </Q.Prompt>
 
       <Form.Field
         @attribute="dcpProjectareaischancefloodplain"
@@ -210,12 +222,12 @@
           }}
         />
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @fieldset={{true}} as |Q|>
+      <Q.Prompt>
         Is a <Ui::ExternalLink @href="https://a836-acris.nyc.gov/CP/">legal instrument</Ui::ExternalLink> associated with a previous CPC or CPC Chair action recorded against the project site?
-      </Q.legend>
+      </Q.Prompt>
 
       <Form.Field
         @attribute="dcpRestrictivedeclaration"
@@ -230,26 +242,29 @@
           @onChange={{fn (mut @form.saveableChanges.dcpCityregisterfilenumber) null}} as |value|
         >
           {{#if value}}
-            <label>
-              <strong>City Register file number or other identifier</strong>
-              <small class="help-text display-block">
-                Feel free to attach a copy of the legal instrument in the Attachments section.
-              </small>
+            <Ui::Question as |Q|>
+              <Q.Prompt>
+                City Register file number or other identifier
+                <small class="help-text display-block text-weight-normal">
+                  Feel free to attach a copy of the legal instrument in the Attachments section.
+                </small>
+              </Q.Prompt>
+
               <Form.Field
                 @attribute="dcpCityregisterfilenumber"
                 @maxlength="25"
                 @showCounter={{true}}
               />
-            </label>
+            </Ui::Question>
           {{/if}}
         </RadioGroup>
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
 
-    <Ui::Fieldset as |Q|>
-      <Q.legend>
+    <Ui::Question @fieldset={{true}} as |Q|>
+      <Q.Prompt>
         Will a new legal instrument or modification of a current legal instrument be necessary to approve/implement these actions?
-      </Q.legend>
+      </Q.Prompt>
 
       <Form.Field
         @attribute="dcpRestrictivedeclarationrequired"
@@ -263,6 +278,6 @@
             (hash code=717170002 label='Unsure at this time')}}
         />
       </Form.Field>
-    </Ui::Fieldset>
+    </Ui::Question>
   </Form.Section>
 {{/let}}
