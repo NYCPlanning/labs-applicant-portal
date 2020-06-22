@@ -57,10 +57,12 @@
         </li>
       </ul>
       {{#if @form.saveableChanges.dcpProposeddevelopmentsiteinfoother}}
-        <label>
-          Explain:
+        <Ui::Question as |Q|>
+          <Q.prompt>
+            Explain:
+          </Q.prompt>
           <Form.Field @attribute="dcpProposeddevelopmentsiteotherexplanation"/>
-        </label>
+        </Ui::Question>
       {{/if}}
     </Ui::Question>
 
@@ -86,10 +88,12 @@
           @onChange={{fn (mut @form.saveableChanges.dcpInclusionaryhousingdesignatedareaname) ""}} as |value|
         >
           {{#if value}}
-            <label>
-              Name of Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area
+            <Ui::Question as |Q|>
+              <Q.prompt>
+                Name of Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area
+              </Q.prompt>
               <Form.Field @attribute="dcpInclusionaryhousingdesignatedareaname"/>
-            </label>
+            </Ui::Question>
           {{/if}}
         </RadioGroup>
       </Form.Field>
