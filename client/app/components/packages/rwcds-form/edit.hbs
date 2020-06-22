@@ -1,6 +1,6 @@
 <SaveableForm
   @model={{@package.rwcdsForm}}
-  @validators={{array this.saveableRwcdsFormValidations this.submittableRwcdsFormValidations}}
+  @validators={{array this.validations.SaveableRwcdsFormValidations this.validations.SubmittableRwcdsFormValidations}}
   as |saveableForm|
 >
   <div class="grid-x grid-margin-x">
@@ -28,11 +28,10 @@
         @form={{saveableForm}}
       />
 
-      <saveableForm.Section @title="Proposed Actions">
-        <p>
-          Listed below are the actions proposed in this project:
-        </p>
-      </saveableForm.Section>
+      <Packages::RwcdsForm::ProposedProjectActions
+        @form={{saveableForm}}
+        @validations={{this.validations}}
+      />
 
       <saveableForm.Section @title="Analysis">
       </saveableForm.Section>

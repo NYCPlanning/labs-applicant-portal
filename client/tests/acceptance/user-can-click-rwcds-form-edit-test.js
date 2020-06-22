@@ -86,4 +86,31 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     await fillIn('[data-test-textarea="dcpSitehistory"]', exceedMaximum(600, 'String'));
     assert.dom('[data-test-validation-message="dcpSitehistory"').hasText('Text is too long (max 600 characters)');
   });
+
+  test('Validation messages display for Proposed Actions', async function(assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'applicant', 'rwcdsForm')],
+    });
+
+    await visit('/rwcds-form/1/edit');
+
+    assert.equal(currentURL(), '/rwcds-form/1/edit');
+
+    assert.dom('[data-test-zrsectionnumber]').exists();
+
+    await fillIn('[data-test-input="dcpModifiedzrsectionnumber"]', exceedMaximum(25, 'String'));
+    assert.dom('[data-test-validation-message="dcpModifiedzrsectionnumber"]').hasText('Text is too long (max 25 characters)');
+
+    await fillIn('[data-test-input="dcpPurposeandneedfortheproposedaction"]', exceedMaximum(1500, 'String'));
+    assert.dom('[data-test-validation-message="dcpPurposeandneedfortheproposedaction"]').hasText('Text is too long (max 1500 characters)');
+
+    assert.dom('[data-test-validation-message="dcpWhichactionsfromotheragenciesaresought"]').doesNotExist();
+    await click('[data-test-radio="dcpIsapplicantseekingaction"][data-test-radio-option="Yes"]');
+
+    await fillIn('[data-test-input="dcpWhichactionsfromotheragenciesaresought"]', exceedMaximum(2400, 'String'));
+    assert.dom('[data-test-validation-message="dcpWhichactionsfromotheragenciesaresought"]').hasText('Text is too long (max 2400 characters)');
+
+    await fillIn('[data-test-input="dcpWhichactionsfromotheragenciesaresought"]', '');
+    assert.dom('[data-test-validation-message="dcpWhichactionsfromotheragenciesaresought"]').hasText('This field is required');
+  });
 });
