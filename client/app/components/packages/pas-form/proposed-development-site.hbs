@@ -58,9 +58,9 @@
       </ul>
       {{#if @form.saveableChanges.dcpProposeddevelopmentsiteinfoother}}
         <Ui::Question as |Q|>
-          <Q.prompt>
+          <Q.Prompt>
             Explain:
-          </Q.prompt>
+          </Q.Prompt>
           <Form.Field @attribute="dcpProposeddevelopmentsiteotherexplanation"/>
         </Ui::Question>
       {{/if}}
@@ -89,9 +89,9 @@
         >
           {{#if value}}
             <Ui::Question as |Q|>
-              <Q.prompt>
+              <Q.Prompt>
                 Name of Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area
-              </Q.prompt>
+              </Q.Prompt>
               <Form.Field @attribute="dcpInclusionaryhousingdesignatedareaname"/>
             </Ui::Question>
           {{/if}}
