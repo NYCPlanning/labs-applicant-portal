@@ -9,7 +9,14 @@
   >
     {{yield (hash
       saveableChanges=saveableValidator.changeset
-      submittableChanges=submittableValidator.changeset
+
+      isSaveable=(and saveableValidator.isDirty saveableValidator.isValid)
+      isSubmittable=submittableValidator.isValid
+
+      SaveableForm=(component 'saveable-form'
+        registerSaveable=saveableValidator.register
+        registerSubmittable=submittableValidator.register
+      )
 
       Field=(component 'saveable-form/field'
         data=saveableValidator.changeset
@@ -22,22 +29,17 @@
       )
 
       SubmitButton=(component 'packages/save-button'
+        onClick=this.toggleModal
         wrapperCallback=submittableValidator.persist
         isEnabled=submittableValidator.isValid
         isSubmit=true
-      )
-
-      SaveableForm=(component 'saveable-form'
-        registerSaveable=saveableValidator.register
-        registerSubmittable=submittableValidator.register
       )
 
       Section=(component 'saveable-form/section' register=this.registerSection)
 
       StickySidebar=(component 'sticky-sidebar' navItems=this.sectionData)
 
-      isSaveable=(and saveableValidator.isDirty saveableValidator.isValid)
-      isSubmittable=submittableValidator.isValid
+      ConfirmationModal=(component 'ui/confirmation-message' show=this.modalIsOpen toggle=this.toggleModal)
     )}}
   </saveableValidator.FormValidator>
 </FormValidator>

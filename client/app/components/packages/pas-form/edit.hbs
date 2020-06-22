@@ -46,8 +46,8 @@
         @form={{pasForm}}
         @model={{this.pasForm}}
       />
-
     </div>
+
     <div class="cell large-4">
       <pasForm.StickySidebar>
         <pasForm.SaveButton
@@ -55,47 +55,37 @@
           @onClick={{this.savePackage}}
           data-test-save-button
         />
-        {{!-- Error Handling --}}
+
         <Packages::PasForm::PasFormError @package={{@package}} />
         <pasForm.SubmitButton
-          @onClick={{this.toggleModal}}
           @isEnabled={{pasForm.isSubmittable}}
           class="secondary"
           data-test-submit-button
         />
       </pasForm.StickySidebar>
-      {{#if this.modalIsOpen}}
-        <EmberWormhole @to="reveal-modal-container">
-          <RevealModal @toggle={{this.toggleModal}}>
-            <h6>Confirm Pre-Applicant Statement submission</h6>
-            <p class="header-large medium-margin-top small-margin-bottom">Are you sure?</p>
-            <p>Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including the signature form) have been uploaded. If City Planning does not receive enough accurate information to provide guidance, the lead planner will notify you and request that this form be resubmitted with needed materials, corrections, or clarifications.</p>
-            <hr>
-            <div class="grid-x">
-              <div class="cell large-6 small-padding-right">
-                <button
-                  type="button"
-                  class="button expanded large secondary"
-                  disabled={{pasForm.saveChangeset.isRunning}}
-                  {{on "click" this.toggleModal}}
-                >
-                  Continue Editing
-                </button>
-              </div>
-              <div class="cell large-6 small-padding-left">
-                <pasForm.SubmitButton
-                  @onClick={{this.submitPackage}}
-                  @isEnabled={{pasForm.isSubmittable}}
-                  class="no-margin"
-                  data-test-confirm-submit-button
-                />
-              </div>
-            </div>
-            {{!-- Error Handling --}}
-            <Packages::PasForm::PasFormError @package={{@package}}/>
-          </RevealModal>
-        </EmberWormhole>
-      {{/if}}
+
+      <pasForm.ConfirmationModal
+        @action={{component pasForm.SubmitButton
+          onClick=this.submitPackage
+          isEnabled=pasForm.isSubmittable
+          class="no-margin"
+        }}
+        @footer={{component 'packages/pas-form/pas-form-error'
+          package=@package
+        }}
+        data-test-confirm-submit-button={{true}}
+      >
+        <h6>Confirm Pre-Applicant Statement submission</h6>
+        <p class="header-large medium-margin-top small-margin-bottom">
+          Are you sure?
+        </p>
+        <p>
+          Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including the
+          signature form) have been uploaded. If City Planning does not receive enough accurate information to provide guidance,
+          the lead planner will notify you and request that this form be resubmitted with needed materials, corrections, or
+          clarifications.
+        </p>
+      </pasForm.ConfirmationModal>
     </div>
   </div>
 </SaveableForm>

@@ -26,48 +26,53 @@
       <Packages::RwcdsForm::ProjectDescription
         @form={{saveableForm}}
       />
-      <section class="form-section">
-        <h2 class="section-header">
-          <span id="proposed-actions" class="section-anchor"></span>
-          Proposed Actions
-        </h2>
+
+      <saveableForm.Section @title="Proposed Actions">
         <p>
           Listed below are the actions proposed in this project:
         </p>
-      </section>
-      <section class="form-section">
-        <h2 class="section-header">
-          <span id="analysis" class="section-anchor"></span>
-            Analysis
-        </h2>
-      </section>
+      </saveableForm.Section>
+
+      <saveableForm.Section @title="Analysis">
+      </saveableForm.Section>
 
       <Packages::RwcdsForm::AttachedDocuments
         @form={{saveableForm}}
         @model={{@package.rwcdsForm}}
       />
-
     </div>
-     <StickySidebar
 
-      @navItems={{array
-        (hash anchorId="project-description"
-          label="Project Description")
-        (hash anchorId="proposed-actions"
-          label="Proposed Actions")
-        (hash anchorId="analysis"
-          label="Analysis")
-        (hash anchorId="attached-documents"
-          label="Attached Documents")
+    <div class="cell large-4">
+      <saveableForm.StickySidebar>
+        <saveableForm.SaveButton
+          @isEnabled={{or @package.isDirty (and saveableForm.saveableChanges.isDirty saveableForm.saveableChanges.isValid)}}
+          @onClick={{this.savePackage}}
+          data-test-save-button
+        />
+        <Packages::RwcdsForm::RwcdsFormError @package={{@package}} />
+
+        <saveableForm.SubmitButton
+          @isEnabled={{saveableForm.isSubmittable}}
+          class="secondary"
+          data-test-submit-button
+        />
+      </saveableForm.StickySidebar>
+
+      <saveableForm.ConfirmationModal
+        @action={{component saveableForm.SubmitButton
+          onClick=this.submitPackage
+          isEnabled=saveableForm.isSubmittable
+          class="no-margin"
         }}
-    >
-      <saveableForm.SaveButton
-        @isEnabled={{or @package.isDirty (and saveableForm.saveableChanges.isDirty saveableForm.saveableChanges.isValid)}}
-        @onClick={{this.savePackage}}
-        data-test-save-button
-      />
-      {{!-- Error Handling --}}
-      <Packages::RwcdsForm::RwcdsFormError @package={{@package}} />
-    </StickySidebar>
+        @footer={{component 'packages/rwcds-form/rwcds-form-error'
+          package=@package
+        }}
+        data-test-confirm-submit-button={{true}}
+      >
+        <h6>[CONFIRMATION MESSAGE HERE]</h6>
+        <p class="header-large medium-margin-top small-margin-bottom">Are you sure?</p>
+        <p>[CONFIRMATION EXPLANATION HERE]</p>
+      </saveableForm.ConfirmationModal>
+    </div>
   </div>
 </SaveableForm>

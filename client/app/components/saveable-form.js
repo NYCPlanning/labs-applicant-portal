@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { TrackedSet } from 'tracked-maps-and-sets';
 import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
 export default class SaveableFormComponent extends Component {
   get validators() {
@@ -16,5 +17,13 @@ export default class SaveableFormComponent extends Component {
   @action
   registerSection(section) {
     this.sections.add(section);
+  }
+
+  @tracked
+  modalIsOpen = false;
+
+  @action
+  toggleModal() {
+    this.modalIsOpen = !this.modalIsOpen;
   }
 }
