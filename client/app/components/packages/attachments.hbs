@@ -1,9 +1,9 @@
 <div class="site-main grid-x grid-margin-x" ...attributes>
   <div class="cell">
     <Ui::Question class="fieldset" as |Q|>
-      <Q.prompt>
+      <Q.Prompt>
         Attachments
-      </Q.prompt>
+      </Q.Prompt>
 
       <ul class="no-bullet">
         {{#each @fileManager.existingFiles as |file idx|}}

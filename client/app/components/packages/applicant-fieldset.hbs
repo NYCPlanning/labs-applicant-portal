@@ -1,8 +1,8 @@
 {{#let @form as |Form|}}
   <Ui::Question class="fieldset relative" ...attributes as |Q|>
-    <Q.prompt data-test-applicant-title="{{@applicant.friendlyEntityName}}">
+    <Q.Prompt data-test-applicant-title="{{@applicant.friendlyEntityName}}">
       {{@applicant.friendlyEntityName}}
-    </Q.prompt>
+    </Q.Prompt>
 
     {{!-- if sent to CRM "Applicant Information" table, need to know "type" --}}
     {{#if (eq @applicant.friendlyEntityName "Applicant")}}

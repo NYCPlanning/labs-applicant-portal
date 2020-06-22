@@ -24,7 +24,7 @@
   {{#let @form as |Form|}}
     <Form.SaveableForm @model={{bbl}} as |bblForm|>
       <Ui::Question class="fieldset relative scale-fade-in" as |Q|>
-        <Q.prompt data-test-bbl-title="{{bbl.dcpBblnumber}}">
+        <Q.Prompt data-test-bbl-title="{{bbl.dcpBblnumber}}">
           {{bbl.dcpBblnumber}}
           <span class="text-weight-normal">
             {{#if bbl.temporaryAddressLabel}}
@@ -32,12 +32,12 @@
             {{/if}}
             <Ui::ExternalLink @href="https://zola.planning.nyc.gov/bbl/{{bbl.dcpBblnumber}}">View in ZoLa</Ui::ExternalLink>
           </span>
-        </Q.prompt>
+        </Q.Prompt>
 
-        <Ui::Question @group={{true}} as |Q|>
-          <Q.prompt data-test-development-site-question="{{bbl.dcpBblnumber}}-{{bblForm.saveableChanges.dcpDevelopmentsite}}">
+        <Ui::Question @fieldset={{true}} as |Q|>
+          <Q.Prompt data-test-development-site-question="{{bbl.dcpBblnumber}}-{{bblForm.saveableChanges.dcpDevelopmentsite}}">
             Is this BBL part of the development site?
-          </Q.prompt>
+          </Q.Prompt>
 
           <bblForm.Field
             @attribute="dcpDevelopmentsite"
@@ -59,10 +59,10 @@
           </bblForm.Field>
         </Ui::Question>
 
-        <Ui::Question @group={{true}} as |Q|>
-          <Q.prompt data-test-partial-lot-question="{{bbl.dcpBblnumber}}-{{bblForm.saveableChanges.dcpPartiallot}}">
+        <Ui::Question @fieldset={{true}} as |Q|>
+          <Q.Prompt data-test-partial-lot-question="{{bbl.dcpBblnumber}}-{{bblForm.saveableChanges.dcpPartiallot}}">
             Is only a portion of this lot included in the project area?
-          </Q.prompt>
+          </Q.Prompt>
 
           <bblForm.Field
             @attribute="dcpPartiallot"

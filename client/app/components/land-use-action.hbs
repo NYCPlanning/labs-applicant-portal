@@ -26,9 +26,9 @@
 
   {{#each this.sortedSelectedActions as |landUseAction|}}
     <Ui::Question class="fieldset relative scale-fade-in" as |Q|>
-      <Q.prompt data-test-action-name="{{landUseAction.name}}">
+      <Q.Prompt data-test-action-name="{{landUseAction.name}}">
         {{landUseAction.name}}
-      </Q.prompt>
+      </Q.Prompt>
 
       {{#if (or (eq landUseAction.name "Zoning Special Permit") (eq landUseAction.name "Zoning Certification") (eq landUseAction.name "Zoning Authorization") (eq landUseAction.name "Zoning Map Amendment") (eq landUseAction.name "Zoning Text Amendment") (eq landUseAction.name "Modification") (eq landUseAction.name "Renewal"))}}
         {{#if (or (eq landUseAction.name "Zoning Special Permit") (eq landUseAction.name "Zoning Certification") (eq landUseAction.name "Zoning Authorization"))}}
