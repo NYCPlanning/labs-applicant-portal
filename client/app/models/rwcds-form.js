@@ -20,6 +20,10 @@ export const DCPCONSTRUCTIONPHASING_OPTIONSET = {
     code: 717170001,
     label: 'Multiple',
   },
+  NOT_APPLICABLE: {
+    code: null,
+    label: 'Not Applicable',
+  },
 };
 
 export default class RwcdsFormModel extends Model {
