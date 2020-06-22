@@ -1,6 +1,6 @@
 {{#let @form as |Form|}}
   <Form.Section @title="Project Area">
-    <p>
+    <p class="text-small">
       Project Area refers to all property that would be subject to the proposed actions.
     </p>
 
@@ -43,13 +43,16 @@
           @onChange={{fn (mut @form.saveableChanges.dcpUrbanareaname) ""}} as |value|
         >
           {{#if (eq value 717170000)}}
-            <label>
-              What is the name of the Urban Renewal Area?
+            <Ui::Question as |Q|>
+              <Q.Prompt>
+                What is the name of the Urban Renewal Area?
+              </Q.Prompt>
+
               <Form.Field
                 @attribute="dcpUrbanareaname"
                 @showCounter={{true}}
               />
-            </label>
+            </Ui::Question>
           {{/if}}
         </RadioGroup>
       </Form.Field>
@@ -98,17 +101,20 @@
           @onChange={{fn (mut @form.saveableChanges.dcpPleaseexplaintypeiienvreview) ""}} as |value|
         >
           {{#if (eq value 717170000)}}
-            <label>
-              Indicate which SEQRA or CEQR category each action fulfills
-              <small class="help-text display-block">
-                Ex: 617.5(c)(9)
-              </small>
+            <Ui::Question as |Q|>
+              <Q.Prompt>
+                Indicate which SEQRA or CEQR category each action fulfills
+                <small class="help-text display-block text-weight-normal">
+                  Ex: 617.5(c)(9)
+                </small>
+              </Q.Prompt>
+
               <Form.Field
                 @attribute="dcpPleaseexplaintypeiienvreview"
                 @showCounter={{true}}
                 maxlength="200"
               />
-            </label>
+            </Ui::Question>
           {{/if}}
         </RadioGroup>
       </Form.Field>
@@ -131,14 +137,17 @@
           @onChange={{fn (mut @form.saveableChanges.dcpProjectareaindutrialzonename) ""}} as |value|
         >
           {{#if value}}
-            <label>
-              Name of Industrial Business Zone
+            <Ui::Question as |Q|>
+              <Q.Prompt>
+                Name of Industrial Business Zone
+              </Q.Prompt>
+
               <Form.Field
                 @attribute="dcpProjectareaindutrialzonename"
                 @maxlength="200"
                 @showCounter={{true}}
               />
-            </label>
+            </Ui::Question>
           {{/if}}
         </RadioGroup>
       </Form.Field>
@@ -161,13 +170,16 @@
           @onChange={{fn (mut @form.saveableChanges.dcpProjectarealandmarkname) ""}} as |value|
         >
           {{#if value}}
-            <label>
-              Name of Landmark or Historic District
+            <Ui::Question as |Q|>
+              <Q.Prompt>
+                Name of Landmark or Historic District
+              </Q.Prompt>
+
               <Form.Field
                 @attribute="dcpProjectarealandmarkname"
                 @showCounter={{true}}
               />
-            </label>
+            </Ui::Question>
           {{/if}}
         </RadioGroup>
       </Form.Field>
@@ -230,17 +242,20 @@
           @onChange={{fn (mut @form.saveableChanges.dcpCityregisterfilenumber) null}} as |value|
         >
           {{#if value}}
-            <label>
-              <strong>City Register file number or other identifier</strong>
-              <small class="help-text display-block">
-                Feel free to attach a copy of the legal instrument in the Attachments section.
-              </small>
+            <Ui::Question as |Q|>
+              <Q.Prompt>
+                City Register file number or other identifier
+                <small class="help-text display-block text-weight-normal">
+                  Feel free to attach a copy of the legal instrument in the Attachments section.
+                </small>
+              </Q.Prompt>
+
               <Form.Field
                 @attribute="dcpCityregisterfilenumber"
                 @maxlength="25"
                 @showCounter={{true}}
               />
-            </label>
+            </Ui::Question>
           {{/if}}
         </RadioGroup>
       </Form.Field>

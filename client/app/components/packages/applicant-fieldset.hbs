@@ -5,9 +5,9 @@
     ...attributes
     as |Q|
   >
-    <Q.prompt data-test-applicant-title="{{@applicant.friendlyEntityName}}">
+    <Q.Prompt data-test-applicant-title="{{@applicant.friendlyEntityName}}">
       {{@applicant.friendlyEntityName}}
-    </Q.prompt>
+    </Q.Prompt>
 
     {{!-- if sent to CRM "Applicant Information" table, need to know "type" --}}
     {{#if (eq @applicant.friendlyEntityName "Applicant")}}
@@ -15,9 +15,9 @@
         data-test-applicant-type-radio-group
         as |Q|
       >
-        <Q.prompt class="show-for-sr">
+        <Q.Prompt class="show-for-sr">
           Type of applicant
-        </Q.prompt>
+        </Q.Prompt>
 
         <Form.Field
           @attribute="dcpType"
@@ -37,9 +37,9 @@
     {{!-- and if the applicant is on behalf of an organization, we need to know which organization --}}
     {{#if (eq @applicant.dcpType 717170001)}}
       <Ui::Question data-test-applicant-organization as |Q|>
-        <Q.prompt>
+        <Q.Prompt>
           <span class="text-weight-normal">Organization Name</span>
-        </Q.prompt>
+        </Q.Prompt>
         <Form.Field @attribute="dcpOrganization"/>
       </Ui::Question>
 
@@ -51,9 +51,9 @@
     <div class="grid-x grid-margin-x">
       <div class="cell medium-6">
         <Ui::Question as |Q|>
-          <Q.prompt>
+          <Q.Prompt>
             <span class="text-weight-normal">First Name</span>
-          </Q.prompt>
+          </Q.Prompt>
 
           <Form.Field @attribute="dcpFirstname"/>
         </Ui::Question>
@@ -61,9 +61,9 @@
 
       <div class="cell medium-6">
         <Ui::Question as |Q|>
-          <Q.prompt>
+          <Q.Prompt>
             <span class="text-weight-normal">Last Name</span>
-          </Q.prompt>
+          </Q.Prompt>
 
           <Form.Field @attribute="dcpLastname"/>
         </Ui::Question>
@@ -73,26 +73,26 @@
     {{!-- always allow input for Other Team Members --}}
     {{#if (eq @applicant.friendlyEntityName "Other Team Member")}}
       <Ui::Question as |Q|>
-        <Q.prompt>
+        <Q.Prompt>
           <span class="text-weight-normal">Organization</span>
-        </Q.prompt>
+        </Q.Prompt>
 
         <Form.Field @attribute="dcpOrganization"/>
       </Ui::Question>
     {{/if}}
 
     <Ui::Question as |Q|>
-      <Q.prompt>
+      <Q.Prompt>
         <span class="text-weight-normal">Email Address</span>
-      </Q.prompt>
+      </Q.Prompt>
 
       <Form.Field @attribute="dcpEmail"/>
     </Ui::Question>
 
     <Ui::Question as |Q|>
-      <Q.prompt>
+      <Q.Prompt>
         <span class="text-weight-normal">Address</span>
-      </Q.prompt>
+      </Q.Prompt>
 
       <Form.Field @attribute="dcpAddress"/>
     </Ui::Question>
@@ -100,9 +100,9 @@
     <div class="grid-x grid-margin-x">
       <div class="cell medium-auto">
         <Ui::Question as |Q|>
-          <Q.prompt>
+          <Q.Prompt>
             <span class="text-weight-normal">City</span>
-          </Q.prompt>
+          </Q.Prompt>
 
           <Form.Field @attribute="dcpCity"/>
         </Ui::Question>
@@ -112,9 +112,9 @@
           data-test-applicant-state-dropdown
           as |Q|
         >
-          <Q.prompt>
+          <Q.Prompt>
             <span class="text-weight-normal">State</span>
-          </Q.prompt>
+          </Q.Prompt>
 
           <PowerSelect
             supportsDataTestProperties={{true}}
@@ -132,9 +132,9 @@
 
       <div class="cell auto medium-4">
         <Ui::Question as |Q|>
-          <Q.prompt>
+          <Q.Prompt>
             <span class="text-weight-normal">ZIP</span>
-          </Q.prompt>
+          </Q.Prompt>
 
           <Form.Field @attribute="dcpZipcode"/>
         </Ui::Question>
@@ -142,9 +142,9 @@
     </div>
 
     <Ui::Question as |Q|>
-      <Q.prompt>
+      <Q.Prompt>
         <span class="text-weight-normal">Phone</span>
-      </Q.prompt>
+      </Q.Prompt>
 
       <Form.Field @attribute="dcpPhone"/>
     </Ui::Question>

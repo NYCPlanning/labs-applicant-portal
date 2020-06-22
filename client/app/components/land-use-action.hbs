@@ -30,9 +30,9 @@
       class="fieldset relative scale-fade-in"
       as |Q|
     >
-      <Q.prompt data-test-action-name="{{landUseAction.name}}">
+      <Q.Prompt data-test-action-name="{{landUseAction.name}}">
         {{landUseAction.name}}
-      </Q.prompt>
+      </Q.Prompt>
 
       {{#if (or (eq landUseAction.name "Zoning Special Permit") (eq landUseAction.name "Zoning Certification") (eq landUseAction.name "Zoning Authorization") (eq landUseAction.name "Zoning Map Amendment") (eq landUseAction.name "Zoning Text Amendment") (eq landUseAction.name "Modification") (eq landUseAction.name "Renewal"))}}
         {{#if (or (eq landUseAction.name "Zoning Special Permit") (eq landUseAction.name "Zoning Certification") (eq landUseAction.name "Zoning Authorization"))}}
@@ -55,9 +55,9 @@
           </div>
 
           <Ui::Question as |Q|>
-            <Q.prompt>
+            <Q.Prompt>
               Where in the Zoning Resolution can this action be found?
-            </Q.prompt>
+            </Q.Prompt>
 
             <Form.Field
               @attribute={{landUseAction.attr1}}
@@ -73,9 +73,9 @@
           </Ui::Question>
 
           <Ui::Question as |Q|>
-            <Q.prompt>
+            <Q.Prompt>
               Which sections of the Zoning Resolution does this modify?
-            </Q.prompt>
+            </Q.Prompt>
 
             <Form.Field
               @attribute={{landUseAction.attr2}}
@@ -93,9 +93,9 @@
 
         {{#if (eq landUseAction.name "Zoning Map Amendment")}}
           <Ui::Question as |Q|>
-            <Q.prompt>
+            <Q.Prompt>
               Existing Zoning Districts:
-            </Q.prompt>
+            </Q.Prompt>
 
             <Form.Field
               @attribute={{landUseAction.attr1}}
@@ -111,9 +111,9 @@
           </Ui::Question>
 
           <Ui::Question as |Q|>
-            <Q.prompt>
+            <Q.Prompt>
               Proposed Zoning Districts:
-            </Q.prompt>
+            </Q.Prompt>
 
             <Form.Field
               @attribute={{landUseAction.attr2}}
@@ -131,9 +131,9 @@
 
         {{#if (eq landUseAction.name "Zoning Text Amendment")}}
           <Ui::Question as |Q|>
-            <Q.prompt>
+            <Q.Prompt>
               Affected ZR Section Number:
-            </Q.prompt>
+            </Q.Prompt>
 
             <Form.Field
               @attribute={{landUseAction.attr1}}
@@ -149,9 +149,9 @@
           </Ui::Question>
 
           <Ui::Question as |Q|>
-            <Q.prompt>
+            <Q.Prompt>
               Affected ZR Section Title:
-            </Q.prompt>
+            </Q.Prompt>
 
             <Form.Field
               @attribute={{landUseAction.attr2}}
@@ -169,9 +169,9 @@
 
         {{#if (or (eq landUseAction.name "Modification") (eq landUseAction.name "Renewal"))}}
           <Ui::Question as |Q|>
-            <Q.prompt>
+            <Q.Prompt>
               Previous ULURP Numbers:
-            </Q.prompt>
+            </Q.Prompt>
 
             <Form.Field
               @attribute={{landUseAction.attr1}}
