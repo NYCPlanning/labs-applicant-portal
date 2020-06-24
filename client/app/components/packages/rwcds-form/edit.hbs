@@ -41,12 +41,12 @@
             Analysis
         </h2>
       </section>
-      <section class="form-section">
-        <h2 class="section-header">
-          <span id="attached-documents" class="section-anchor"></span>
-          Attached Documents
-        </h2>
-      </section>
+
+      <Packages::RwcdsForm::AttachedDocuments
+        @form={{saveableForm}}
+        @model={{@package.rwcdsForm}}
+      />
+
     </div>
      <StickySidebar
 
