@@ -2,9 +2,9 @@ import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 import { CrmService } from '../crm/crm.service';
 import { PasFormService } from './pas-form/pas-form.service';
 import { pick } from 'underscore';
-import { PACKAGE_ATTRS } from './packages.controller';
-import { PROJECT_ATTRS } from '../projects/projects.controller';
 import { RwcdsFormService } from './rwcds-form/rwcds-form.service';
+import { PACKAGE_ATTRS } from './packages.attrs';
+import { PROJECT_ATTRS } from '../projects/projects.attrs';
 
 export const PACKAGE_TYPE_OPTIONSET = {
   INFORMATION_MEETING: {

@@ -13,17 +13,7 @@ import { ConfigService } from '../config/config.service';
 import { ContactService } from '../contact/contact.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 import { AuthenticateGuard } from '../authenticate.guard';
-
-export const PROJECT_ATTRS = [
-  'dcp_projectname',
-  'dcp_name',
-  'dcp_borough',
-  'statecode',
-  'statuscode',
-  'dcp_visibility',
-  '_dcp_applicant_customer_value',
-  'dcp_dcp_project_dcp_projectapplicant_Project',
-];
+import { PROJECT_ATTRS } from './projects.attrs';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('projects', {
   id: 'dcp_name',

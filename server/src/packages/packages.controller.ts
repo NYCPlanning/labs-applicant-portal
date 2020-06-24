@@ -3,61 +3,13 @@ import { PackagesService } from './packages.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 import { JsonApiDeserializePipe } from '../json-api-deserialize.pipe';
 import { AuthenticateGuard } from '../authenticate.guard';
-import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.controller';
-import { BBL_ATTRS } from './pas-form/bbls/bbls.controller';
 import { pick } from 'underscore';
-import { PROJECT_ATTRS } from '../projects/projects.controller';
 import { RWCDS_FORM_ATTRS } from './rwcds-form/rwcds-form.attrs';
-import { PAS_FORM_ATTRS } from './pas-form/pas-form.attrs';
-
-export const PACKAGE_ATTRS = [
-  'statuscode',
-  'statecode',
-  'dcp_packagetype',
-  'dcp_visibility',
-  'dcp_packageversion',
-  '_dcp_rwcdsform_value',
-  '_dcp_pasform_value',
-  'dcp_packageid',
-  'dcp_name',
-];
-
-export const PAS_FORM_PROJECTADDRESS_ATTRS = [
-  'dcp_validatedpostalcode',
-  'dcp_projectaddressid',
-  'modifiedon',
-  'dcp_dmsourceid',
-  'dcp_name',
-  'dcp_validatedxcoordinate',
-  'overriddencreatedon',
-  'dcp_validatedccd',
-  'createdon',
-  'dcp_userinputborough',
-  'dcp_addressvalidated',
-  'dcp_userinputaddressnumber',
-  'dcp_validatedstreet',
-  'dcp_responsewarning',
-  'dcp_userinputunit',
-  'versionnumber',
-  'dcp_migratedlastupdateddate',
-  'statuscode',
-  'dcp_validatedycoordinate',
-  'dcp_validatedborough',
-  'dcp_responseerror',
-  'dcp_validatedcd',
-  'timezoneruleversionnumber',
-  'dcp_validatedzm',
-  'dcp_validatedaddressnumber',
-  'importsequencenumber',
-  'dcp_dcp_validatedbintext',
-  'utcconversiontimezonecode',
-  'dcp_userinputstreet',
-  'dcp_validatedstreetcode',
-  'dcp_concatenatedaddressvalidated',
-  'dcp_validatedaddressoverride',
-  'dcp_addressvalidateddate',
-  'statecode',
-]
+import { PAS_FORM_ATTRS, PAS_FORM_PROJECTADDRESS_ATTRS } from './pas-form/pas-form.attrs';
+import { PACKAGE_ATTRS } from './packages.attrs';
+import { PROJECT_ATTRS } from '../projects/projects.attrs';
+import { BBL_ATTRS } from './pas-form/bbls/bbls.attrs';
+import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('packages', {
   id: 'dcp_packageid',

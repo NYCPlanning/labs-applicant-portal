@@ -1,8 +1,8 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { CrmService } from '../../crm/crm.service';
-import { PACKAGE_ATTRS } from '../packages.controller';
 import { PACKAGE_TYPE_OPTIONSET } from '../packages.service';
 import { PAS_FORM_ATTRS } from './pas-form.attrs';
+import { PACKAGE_ATTRS } from '../packages.attrs';
 
 @Injectable()
 export class PasFormService {

@@ -4,15 +4,7 @@ import { CrmService } from '../../../crm/crm.service';
 import { JsonApiSerializeInterceptor } from '../../../json-api-serialize.interceptor';
 import { AuthenticateGuard } from '../../../authenticate.guard';
 import { JsonApiDeserializePipe } from '../../../json-api-deserialize.pipe';
-
-export const BBL_ATTRS = [
-  'dcp_partiallot',
-  'dcp_developmentsite',
-  'dcp_bblnumber',
-  'dcp_userinputborough',
-  'dcp_userinputblock',
-  'dcp_userinputlot',
-];
+import { BBL_ATTRS } from './bbls.attrs';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('bbls', {
   id: 'dcp_projectbblid',

@@ -2,8 +2,8 @@ import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 import { CrmService } from '../../crm/crm.service';
 import { PasFormService } from '../pas-form/pas-form.service';
 import { pick } from 'underscore';
-import { PACKAGE_ATTRS } from '../packages.controller';
 import { RWCDS_FORM_ATTRS } from './rwcds-form.attrs';
+import { PACKAGE_ATTRS } from '../packages.attrs';
 
 @Injectable()
 export class RwcdsFormService {
