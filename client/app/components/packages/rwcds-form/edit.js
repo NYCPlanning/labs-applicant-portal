@@ -16,5 +16,7 @@ export default class PackagesRwcdsFormEditComponent extends Component {
     } catch (error) {
       console.log('Save RWCDS package error:', error);
     }
+
+    this.args.package.refreshExistingDocuments();
   }
 }
