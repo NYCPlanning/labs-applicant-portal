@@ -1,0 +1,250 @@
+<div class="grid-x grid-margin-x">
+  <div class="cell large-8">
+
+    <section class="form-section">
+      <h1 class="no-margin header-large">
+        <span id="project-info" class="section-anchor"></span>
+        Reasonable Worst Case Development Scenario
+      </h1>
+
+      <h2 class="section-header header-xxlarge"
+        data-test-show="dcpProjectname">
+        {{@package.rwcdsForm.dcpProjectname}}
+      </h2>
+    </section>
+
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="" class="section-anchor"></span>
+        Description
+      </h2>
+
+      <p class="grid-x">
+        <strong class="cell auto large-padding-right">
+          Has the project changed since submission of the Pre-Application Statement (PAS)?
+        </strong>
+        <span class="cell large-3">
+          {{if @package.pasForm.dcpHasprojectchangedsincesubmissionofthepas "Yes" "No"}}
+        </span>
+      </p>
+
+      <p class="ruled-top">
+        <strong>
+          Project site description:
+        </strong>
+        <br />
+        {{@package.rwcdsForm.dcpProjectsitedescription}}
+      </p>
+
+      <p class="ruled-top">
+        <strong>
+          Proposed development description:
+        </strong>
+        <br />
+        {{@package.rwcdsForm.dcpProposedprojectdevelopmentdescription}}
+      </p>
+
+      <p class="grid-x ruled-top">
+        <strong class="cell auto large-padding-right">
+          Will construction be done in multiple phases?
+        </strong>
+        <span class="cell large-3">
+          {{#if (eq @package.rwcdsForm.dcpConstructionphasing 717170000)}}
+            Single
+          {{else if (eq @package.rwcdsForm.dcpConstructionphasing 717170001)}}
+            Multiple
+          {{else}}
+            Not Applicable
+          {{/if}}
+        </span>
+      </p>
+
+      <p class="grid-x ruled-top">
+        <strong class="cell auto large-padding-right">
+          What is the proposed analysis year of the proposed action?
+        </strong>
+        <span class="cell large-3">
+          {{@package.rwcdsForm.dcpBuildyear}}
+        </span>
+      </p>
+
+      <p class="ruled-top">
+        <strong>
+          Analysis year rationale:
+        </strong>
+        <br />
+        {{@package.rwcdsForm.dcpRationalbehindthebuildyear}}
+      </p>
+
+      <p class="ruled-top">
+        <strong>
+          History of sites within the Project Area:
+        </strong>
+        <br />
+        {{@package.rwcdsForm.dcpSitehistory}}
+      </p>
+    </section>
+
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="" class="section-anchor"></span>
+        Proposed Actions
+      </h2>
+
+      {{!-- TODO: add list of actions --}}
+
+      <p class="ruled-top">
+        <strong>
+          Purpose and need for all proposed actions:
+        </strong>
+        <br />
+        {{@package.rwcdsForm.dcpPurposeandneedfortheproposedaction}}
+      </p>
+
+      <p class="grid-x ruled-top">
+        <strong class="cell auto large-padding-right">
+          Does the applicant plan to develop a 100% affordable housing development?
+        </strong>
+        <span class="cell large-3">
+          {{if @package.pasForm.dcpIsplannigondevelopingaffordablehousing "Yes" "No"}}
+        </span>
+      </p>
+
+      <p class="grid-x ruled-top">
+        <strong class="cell auto large-padding-right">
+          Is the applicant seeking actions from other City/State/Federal agencies?
+        </strong>
+        <span class="cell large-3">
+          {{if (eq @package.rwcdsForm.dcpIsapplicantseekingaction 717170000) "Yes"}}
+          {{if (eq @package.rwcdsForm.dcpIsapplicantseekingaction 717170001) "No" }}
+          {{if (eq @package.rwcdsForm.dcpIsapplicantseekingaction 717170002) "Unsure at this time"}}
+        </span>
+      </p>
+
+      {{#if (eq @package.rwcdsForm.dcpIsapplicantseekingaction 717170000)}}
+        <p class="ruled-top">
+          <strong>
+            Actions sought from other agencies:
+          </strong>
+          <br />
+          {{@package.rwcdsForm.dcpWhichactionsfromotheragenciesaresought}}
+        </p>
+      {{/if}}
+    </section>
+
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="" class="section-anchor"></span>
+        Analysis
+      </h2>
+
+      <p class="">
+        <strong>
+          Description of development assumptions:
+        </strong>
+        <br />
+        {{@package.rwcdsForm.dcpDevelopmentsiteassumptions}}
+      </p>
+
+      <h3>
+        No-Action Scenario
+      </h3>
+
+      <p class="grid-x">
+        <strong class="cell auto large-padding-right">
+          Is the No-Action scenario the same as the Existing Conditions?
+        </strong>
+        <span class="cell large-3">
+          {{if @package.rwcdsForm.dcpExistingconditions "Yes" "No" }}
+        </span>
+      </p>
+
+      {{#if @package.rwcdsForm.dcpDescribethenoactionscenario}}
+        <p class="ruled-top">
+          <strong>
+            Description of No-Action scenario:
+          </strong>
+          <br />
+          {{@package.rwcdsForm.dcpDescribethenoactionscenario}}
+        </p>
+      {{/if}}
+
+      {{#if @package.rwcdsForm.dcpHowdidyoudeterminethenoactionscenario}}
+        <p class="ruled-top">
+          <strong>
+            How No-Action scenario was determined:
+          </strong>
+          <br />
+          {{@package.rwcdsForm.dcpHowdidyoudeterminethenoactionscenario}}
+        </p>
+      {{/if}}
+
+      <h3>
+        With-Action Scenario
+      </h3>
+
+      <p class="grid-x">
+        <strong class="cell auto large-padding-right">
+          Is the proposed project the same as the proposed With-Action scenario?
+        </strong>
+        <span class="cell large-3">
+          {{if @package.rwcdsForm.dcpIsrwcdsscenario "Yes" "No" }}
+        </span>
+      </p>
+
+      <p class="ruled-top">
+        <strong>
+          Why the project is the same as the propsed With-Action scenario:
+        </strong>
+        <br />
+        {{@package.rwcdsForm.dcpRwcdsexplanation}}
+      </p>
+
+      <p class="ruled-top">
+        <strong>
+          Description of With-Action scenario:
+        </strong>
+        <br />
+        {{@package.rwcdsForm.dcpDescribethewithactionscenario}}
+      </p>
+
+      <p class="ruled-top">
+        <strong>
+          How With-Action scenario was determines:
+        </strong>
+        <br />
+        {{@package.rwcdsForm.dcpHowdidyoudeterminethiswithactionscena}}
+      </p>
+    </section>
+
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="" class="section-anchor"></span>
+        Attachments
+      </h2>
+
+      {{log @package.rwcdsForm}}
+    </section>
+
+  </div>{{! end left/main column }}
+  <div class="cell large-4">
+
+    <StickySidebar
+      @navItems={{array
+        (hash anchorId="project-info"
+          label="Project Information")
+        (hash anchorId="project-description"
+          label="Description")
+        (hash anchorId="proposed-actions"
+          label="Proposed Actions")
+        (hash anchorId="analysis"
+          label="Analysis")
+        (hash anchorId="attachments"
+          label="Attachments")
+        }}
+    />
+
+  </div>{{! end right/sidebar column }}
+</div>
+
+{{yield}}
