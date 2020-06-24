@@ -52,7 +52,7 @@ export class RwcdsFormService {
       &$expand=dcp_package($select=${PACKAGE_ATTRS.join(',')})
     `);
 
-    const { dcp_project } = rwcdsForm;
+    const { _dcp_projectid_value } = rwcdsForm;
 
     // requires info from adjacent latest pasForm
     if (
@@ -62,7 +62,7 @@ export class RwcdsFormService {
       const {
         dcp_projectdescriptionproposedarea,
         dcp_projectdescriptionproposeddevelopment,
-      } = await this.pasFormService.getLatestPasForm(dcp_project.dcp_projectid);
+      } = await this.pasFormService.getLatestPasForm(_dcp_projectid_value);
 
       if (rwcdsForm.dcp_projectsitedescription === null) {
         rwcdsForm.dcp_projectsitedescription = dcp_projectdescriptionproposedarea;
