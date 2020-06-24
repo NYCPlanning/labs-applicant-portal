@@ -1,99 +1,15 @@
-import { Controller, Get, Param, UseInterceptors, Patch, Body, Session, HttpException, HttpStatus, UsePipes, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, UseInterceptors, Patch, Body, UsePipes, UseGuards } from '@nestjs/common';
 import { PackagesService } from './packages.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 import { JsonApiDeserializePipe } from '../json-api-deserialize.pipe';
 import { AuthenticateGuard } from '../authenticate.guard';
-import { PAS_FORM_ATTRS } from './pas-form/pas-form.controller';
-import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.controller';
-import { BBL_ATTRS } from './pas-form/bbls/bbls.controller';
 import { pick } from 'underscore';
-import { PROJECT_ATTRS } from '../projects/projects.controller';
-
-export const PACKAGE_ATTRS = [
-  'statuscode',
-  'statecode',
-  'dcp_packagetype',
-  'dcp_visibility',
-  'dcp_packageversion',
-];
-
-export const PAS_FORM_PROJECTADDRESS_ATTRS = [
-  'dcp_validatedpostalcode',
-  'dcp_projectaddressid',
-  'modifiedon',
-  'dcp_dmsourceid',
-  'dcp_name',
-  'dcp_validatedxcoordinate',
-  'overriddencreatedon',
-  'dcp_validatedccd',
-  'createdon',
-  'dcp_userinputborough',
-  'dcp_addressvalidated',
-  'dcp_userinputaddressnumber',
-  'dcp_validatedstreet',
-  'dcp_responsewarning',
-  'dcp_userinputunit',
-  'versionnumber',
-  'dcp_migratedlastupdateddate',
-  'statuscode',
-  'dcp_validatedycoordinate',
-  'dcp_validatedborough',
-  'dcp_responseerror',
-  'dcp_validatedcd',
-  'timezoneruleversionnumber',
-  'dcp_validatedzm',
-  'dcp_validatedaddressnumber',
-  'importsequencenumber',
-  'dcp_dcp_validatedbintext',
-  'utcconversiontimezonecode',
-  'dcp_userinputstreet',
-  'dcp_validatedstreetcode',
-  'dcp_concatenatedaddressvalidated',
-  'dcp_validatedaddressoverride',
-  'dcp_addressvalidateddate',
-  'statecode',
-]
-
-export const RWCDS_FORM_ATTRS = [
-  'dcp_describethewithactionscenario',
-  'dcp_isplannigondevelopingaffordablehousing',
-  'dcp_includezoningtextamendment',
-  'dcp_existingconditions',
-  'processid',
-  'statecode',
-  'importsequencenumber',
-  'versionnumber',
-  'dcp_rationalbehindthebuildyear',
-  'createdon',
-  'modifiedon',
-  'dcp_isapplicantseekingaction',
-  'dcp_whichactionsfromotheragenciesaresought',
-  'dcp_proposedprojectdevelopmentdescription',
-  'dcp_version',
-  'dcp_projectsitedescription',
-  'dcp_sitehistory',
-  'dcp_purposeandneedfortheproposedaction',
-  'dcp_describethenoactionscenario',
-  'dcp_applicant',
-  'dcp_hasprojectchangedsincesubmissionofthepas',
-  'traversedpath',
-  'statuscode',
-  'dcp_borough',
-  'dcp_projectname',
-  'dcp_rwcdsexplanation',
-  'dcp_communitydistrict',
-  'dcp_howdidyoudeterminethenoactionscenario',
-  'dcp_name',
-  'dcp_isrwcdsscenario',
-  'timezoneruleversionnumber',
-  'dcp_howdidyoudeterminethiswithactionscena',
-  'dcp_buildyear',
-  'dcp_developmentsiteassumptions',
-  'dcp_constructionphasing',
-  'dcp_date',
-  'overriddencreatedon',
-  'utcconversiontimezonecode',
-]
+import { RWCDS_FORM_ATTRS } from './rwcds-form/rwcds-form.attrs';
+import { PAS_FORM_ATTRS, PAS_FORM_PROJECTADDRESS_ATTRS } from './pas-form/pas-form.attrs';
+import { PACKAGE_ATTRS } from './packages.attrs';
+import { PROJECT_ATTRS } from '../projects/projects.attrs';
+import { BBL_ATTRS } from './pas-form/bbls/bbls.attrs';
+import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('packages', {
   id: 'dcp_packageid',

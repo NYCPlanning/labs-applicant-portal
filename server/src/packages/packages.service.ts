@@ -1,9 +1,12 @@
 import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 import { CrmService } from '../crm/crm.service';
+import { PasFormService } from './pas-form/pas-form.service';
 import { pick } from 'underscore';
-import { PACKAGE_ATTRS } from './packages.controller';
+import { RwcdsFormService } from './rwcds-form/rwcds-form.service';
+import { PACKAGE_ATTRS } from './packages.attrs';
+import { PROJECT_ATTRS } from '../projects/projects.attrs';
 
-const PACKAGE_TYPE_OPTIONSET = {
+export const PACKAGE_TYPE_OPTIONSET = {
   INFORMATION_MEETING: {
     code: 717170014,
     label: 'Information Meeting',
@@ -68,8 +71,15 @@ const PACKAGE_TYPE_OPTIONSET = {
 
 @Injectable()
 export class PackagesService {
-  constructor(private readonly crmService: CrmService) {}
+  constructor(
+    private readonly crmService: CrmService,
+    private readonly pasFormService: PasFormService,
+    private readonly rwcdsFormService: RwcdsFormService,
+  ) {}
 
+  // this is starting to do way more than get a package. It gets a package, gets related
+  // forms, detects the form type, includes that form with the payload, includes additional
+  // munging that's specific to the form, and also includes attached documents.
   async getPackage(packageId) {
     // Note: The reason for making two network calls
     // has to do with a limitation with the Web API: we can't request
@@ -87,10 +97,12 @@ export class PackagesService {
     // but it's slower.
 
     // Double network request approach
+
+    // Get package
     const { records: [firstPackage] } = await this.crmService.get('dcp_packages', `
-      $select=_dcp_rwcdsform_value,_dcp_pasform_value,dcp_packagetype,dcp_packageid,dcp_name
+      $select=${PACKAGE_ATTRS.join(',')}
       &$filter=dcp_packageid eq ${packageId}
-      &$expand=dcp_project
+      &$expand=dcp_project($select=${PROJECT_ATTRS.join(',')})
     `);
 
     if (!firstPackage) {
@@ -98,77 +110,53 @@ export class PackagesService {
     }
 
     const {
-      dcp_packagetype,
       dcp_project,
       dcp_packageid,
       dcp_name,
-      _dcp_pasform_value,
-      _dcp_rwcdsform_value,
     } = firstPackage;
 
-    if (dcp_packagetype === PACKAGE_TYPE_OPTIONSET['PAS_PACKAGE'].code) {
-      const { records: [pasForm] } = await this.crmService.get(`dcp_pasforms`, `
-      $filter=
-        dcp_pasformid eq ${_dcp_pasform_value}
-      &$expand=
-        dcp_dcp_applicantinformation_dcp_pasform,
-        dcp_dcp_applicantrepinformation_dcp_pasform,
-        dcp_package,
-        dcp_dcp_projectbbl_dcp_pasform($filter=statecode eq 0),
-        dcp_dcp_projectaddress_dcp_pasform
-      `);
+    // drive-by redefine because the sharepoint lookup
+    // is failing for some reason and we don't want it
+    // to take the entire system down with it.
+    //
+    // TODO: Why does it need to be this? We should check to see if this is still
+    // flakey given current configuration
+    let documents = [];
+    documents = await this.tryFindPackageSharepointDocuments(dcp_name, dcp_packageid);
 
-       // drive-by redefine because the sharepoint lookup
-      // is failing for some reason and we don't want it
-      // to take the entire system down with it.
-      let documents = [];
+    const formData = await this.fetchPackageForm(firstPackage);
 
-      documents = await this.tryFindPackageSharepointDocuments(dcp_name, dcp_packageid);
+    return {
+      ...firstPackage,
+      ...formData,
 
+      project: dcp_project,
+      documents: documents.map(document => ({
+        name: document['Name'],
+        timeCreated: document['TimeCreated'],
+        serverRelativeUrl: document['ServerRelativeUrl'],
+      })),
+    };
+  }
+
+  // packages have a dcp_packagetype which indicates the type of form it will have
+  async fetchPackageForm(dcpPackage) {
+    if (dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['PAS_PACKAGE'].code) {
       return {
-        ...pasForm.dcp_package,
-        dcp_pasform: {
-          ...pasForm,
-
-          dcp_revisedprojectname: pasForm.dcp_revisedprojectname
-          || dcp_project.dcp_projectname,
-        },
-        project: dcp_project,
-        documents: documents.map(document => ({
-          name: document['Name'],
-          timeCreated: document['TimeCreated'],
-          serverRelativeUrl: document['ServerRelativeUrl'],
-        })),
+        dcp_pasform: await this.pasFormService.find(dcpPackage._dcp_pasform_value)
       };
-    } else if (dcp_packagetype === PACKAGE_TYPE_OPTIONSET['RWCDS'].code) {
-      const { records: [rwcdsForm] } = await this.crmService.get(`dcp_rwcdsforms`, `
-      $filter=
-        dcp_rwcdsformid eq ${_dcp_rwcdsform_value}
-      &$expand=dcp_package
-    `);
-
-      let documents = [];
-
-      documents = await this.tryFindPackageSharepointDocuments(dcp_name, dcp_packageid);
-
-      return {
-        ...rwcdsForm.dcp_package,
-        dcp_rwcdsform: {
-          ...rwcdsForm,
-        },
-        project: dcp_project,
-        documents: documents.map(document => ({
-          name: document['Name'],
-          timeCreated: document['TimeCreated'],
-          serverRelativeUrl: document['ServerRelativeUrl'],
-        })),
-      };
-    } else {
-      throw new HttpException({
-        "code": "INVALID_PACKAGE_TYPE",
-        "message": 'Requested package has invalid type.',
-      }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    if (dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['RWCDS'].code) {
+      return {
+        dcp_rwcdsform: await this.rwcdsFormService.find(dcpPackage._dcp_rwcdsform_value)
+      };
+    }
+
+    throw new HttpException({
+      "code": "INVALID_PACKAGE_TYPE",
+      "message": 'Requested package has invalid type.',
+    }, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
   async update(id, body) {

@@ -2,15 +2,16 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CrmModule } from '../../crm/crm.module';
 import { RwcdsFormService } from './rwcds-form.service';
 import { CrmService } from '../../crm/crm.service';
+import { PasFormService } from '../pas-form/pas-form.service';
 
-describe('PackagesService', () => {
+describe('RwcdsFormService', () => {
   let rwcdsFormService: RwcdsFormService;
   let crmService: CrmService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [CrmModule],
-      providers: [RwcdsFormService],
+      providers: [RwcdsFormService, PasFormService],
     }).compile();
 
     rwcdsFormService = module.get<RwcdsFormService>(RwcdsFormService);
