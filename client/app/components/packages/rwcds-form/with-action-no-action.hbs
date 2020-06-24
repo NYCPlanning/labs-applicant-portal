@@ -1,0 +1,186 @@
+{{#let @form as |Form|}}
+  <Form.Section @title="Analysis">
+    <Ui::Question as |Q|>
+      <Q.Prompt>
+        Describe the development assumptions. These assumption could be the result of existing conditions, local policies, etc.
+      </Q.Prompt>
+      <Ui::CollapsibleText
+        @buttonText="Additional Guidance"
+      >
+        <p>
+          Consider the guidance on soft site criteria provided in the CEQR Technical Manual Chapter, "Establishing the Analysis Framework" (pages 2-6 and 2-7, 2-10 and 2-11), in conjunction with neighborhood-specific trends in the "Study Area."
+        </p>
+        <p>
+          Summarize the criteria used to identify soft sites while including the following information:
+        </p>
+          <ul>
+            <li>Rationale for selecting Projected Development Sites and Potential Development Sites</li>
+            <li>Possible use conversions</li>
+            <li>Expansions or sites with bulk or uses that would be legalized in the future with the Proposed Actions</li>
+            <li>Other Sites that may be excluded from the analysis, if applicable (e.g., rent stabilized    residential buildings, which are difficult to legally demolish due to tenant relocation requirements)  Please note that dwelling unit sizes typically range between 850 – 1,000 gsf.</li>
+          </ul>
+        <p>Please note that dwelling unit sizes typically range between 850 – 1,000 gsf.</p>
+      </Ui::CollapsibleText>
+      <Form.Field
+        @attribute="dcpDevelopmentsiteassumptions"
+        @type="text-area"
+        @maxlength="2400"
+      />
+    </Ui::Question>
+
+    <h3 class="xlarge-margin-top">
+      No-Action Scenario
+    </h3>
+    <Ui::Question as |Q|>
+      <Q.Prompt>
+        Is the No Action Scenario the same as the existing conditions?
+      </Q.Prompt>
+      <p class="help-text">If no development is expected to reasonably occur within the Project/Affected Area absent the Proposed Action(s) or other discretionary approvals, assume that existing conditions would remain unchanged in the future No-Action Scenario.
+      </p>
+      <Form.Field
+        @type="radio-group"
+        @attribute="dcpExistingconditions"
+        as |RadioGroup|
+      >
+        <RadioGroup
+          @options={{array
+            (hash label='Yes' code=true)
+            (hash label='No' code=false)
+          }}
+          @onChange={{fn (mut @form.saveableChanges.dcpDescribethenoactionscenario) ""}} as |value|
+        >
+          {{#if value}}
+            <Ui::Question as |Q|>
+              <Q.Prompt>
+                How did you determine this No-Action scenario?
+              </Q.Prompt>
+                <p class="help-text">
+                  If Department of Building (DOB) approvals were granted that support the future No-Action Scenario assumed in the prior section, please indicate that in this summary, and if available, attach the DOB approved plans to this document.
+                </p>
+              <Form.Field
+                @attribute="dcpHowdidyoudeterminethenoactionscenario"
+                @type="text-area"
+                @maxlength="1500"
+              />
+            </Ui::Question>
+          {{/if}}
+          {{#if (eq value false)}}
+            <Ui::Question as |Q|>
+              <Q.Prompt>
+                Description of No-Action scenario
+              </Q.Prompt>
+              <Ui::CollapsibleText
+                @buttonText="Additional Guidance"
+              >
+                <p>
+                  Describe a future development scenario that is likely and would reasonably occur absent approval of the Proposed Action(s) (and other discretionary actions) by the Analysis Year, including:
+                </p>
+                  <ul>
+                    <li>How all of the Development Sites(s) in question could reasonably be developed with regard to the underlying zoning district and any other applicable site controls</li>
+                    <li>The proposed Project’s/Development's overall gsf</li>
+                    <li>All proposed land uses (in gsf per land use)</li>
+                    <li>Overall height, number of stories</li>
+                    <li>Floor Area Ratio (F.A.R.) and lot coverage</li>
+                    <li>Number of dwelling units (and number of affordable dwelling units, as well as the mechanism for providing affordable units, e.g., MIH)</li>
+                    <li>Number of parking spaces</li>
+                    <li>New curb cuts (where applicable)</li>
+                    <li>Development trends in the neighborhood</li>
+                    <li>Site ownership, etc</li>
+                  </ul>
+                <p>If a prior environmental review was conducted on the Project/Development Site, and the Projected or Potential Development Sites were assumed as soft sites in the prior environmental review materials, it may be appropriate to assume that the prior project’s With-Action Scenario is this Project’s/Development’s future No-Action Scenario.</p>
+              </Ui::CollapsibleText>
+              <Form.Field 
+                @attribute="dcpDescribethenoactionscenario"
+                @type="text-area"
+                @maxlength="1500"
+              />
+            </Ui::Question>
+          {{/if}}
+        </RadioGroup>
+      </Form.Field>
+    </Ui::Question>
+
+    <h3 class="xlarge-margin-top">
+      With-Action Scenario
+    </h3>
+    <Ui::Question as |Q|>
+      <Q.Prompt>
+        Is the proposed Project the same as the proposed With-Action Scenario?
+      </Q.Prompt>
+      <br>
+      <Form.Field
+        @type="radio-group"
+        @attribute="dcpIsrwcdsscenario"
+        as |RadioGroup|
+      >
+        <RadioGroup
+          @options={{array
+            (hash label='Yes' code=true)
+            (hash label='No' code=false)
+          }}
+          @onChange={{fn (mut @form.saveableChanges.dcpRwcdsexplanation) ""}} as |value|
+        >
+          {{#if value}}
+            <Ui::Question as |Q|>
+              <Q.Prompt>
+                Explain why the project is the same as the proposed With-Action Scenario.
+              </Q.Prompt>
+              <Form.Field
+                @attribute="dcpRwcdsexplanation"
+                @type="text-area"
+                @maxlength="50"
+              />
+            </Ui::Question>
+          {{else}}
+            <Ui::Question as |Q|>
+              <Q.Prompt>
+                Description of With-Action scenario
+              </Q.Prompt>
+              <Ui::CollapsibleText
+                @buttonText="Additional Guidance"
+              >
+                <p>
+                Describe a future development scenario that is likely and would reasonably occur with the approval of the Proposed Action(s) by the Analysis Year, including: 
+                </p>
+                  <ul>
+                    <li>How all of the Development Sites(s) in question could reasonably be developed with regard to the underlying zoning district and any other applicable site controls</li>
+                    <li>The proposed Project’s/Development's overall gsf</li>
+                    <li>All proposed land uses (in gsf per land use)</li>
+                    <li>Base height, overall height, and number of stories</li>
+                    <li>Floor Area Ratio (F.A.R.) and lot coverage</li>
+                    <li>Number of dwelling units (and number of affordable dwelling units, as well as the mechanism for providing affordable units, e.g., MIH). Explain the dwelling unit size assumptions (e.g., 850-1,000 gsf per dwelling unit, based on real estate trends)</li>
+                    <li>Number of parking spaces. Be sure to account for any relevant changes in parking requirements resulting from the Proposed Action(s).</li>
+                    <li>New curb cuts (where applicable)</li>
+                    <li>Development trends in the neighborhood</li>
+                    <li>Site ownership, etc</li>
+                  </ul>
+                <p>
+                  Describe the future development expected to occur on all of the Projected Development Sites (and in a separate paragraph, the Potential Development Sites, if any). 
+                </p>
+              </Ui::CollapsibleText>
+              <Form.Field
+                @attribute="dcpDescribethewithactionscenario"
+                @type="text-area"
+                @maxlength="1500"
+              />
+            </Ui::Question>
+          {{/if}}
+        </RadioGroup>
+      </Form.Field>
+    </Ui::Question>
+
+    <Ui::Question as |Q|>
+      <Q.Prompt>
+        How did you determine this With-Action scenario?
+      </Q.Prompt>
+      <p class="help-text">
+        Explain the rationale supporting the With-Action Scenario described above. If future conditions are not "maximized", please indicate why this is the case (e.g., existing site controls, site configuration).
+      </p>
+      <Form.Field
+        @attribute="dcpHowdidyoudeterminethiswithactionscena"
+        @type="text-area"
+        @maxlength="600"
+      />
+    </Ui::Question>
+  </Form.Section>
+{{/let}}

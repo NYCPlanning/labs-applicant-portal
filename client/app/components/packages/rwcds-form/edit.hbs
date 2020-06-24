@@ -33,8 +33,9 @@
         @validations={{this.validations}}
       />
 
-      <saveableForm.Section @title="Analysis">
-      </saveableForm.Section>
+      <Packages::RwcdsForm::WithActionNoAction
+        @form={{saveableForm}}
+      />
 
       <Packages::RwcdsForm::AttachedDocuments
         @form={{saveableForm}}

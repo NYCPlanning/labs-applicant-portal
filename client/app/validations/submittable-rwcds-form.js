@@ -3,13 +3,16 @@ import {
 } from 'ember-changeset-validations/validators';
 import validatePresenceIf from '../validators/required-if-selected';
 import SaveableRwcdsForm from './saveable-rwcds-form';
+import validatePresenceIf from '../validators/required-if-selected';
 
 export default {
   ...SaveableRwcdsForm,
   dcpRwcdsexplanation: [
     ...SaveableRwcdsForm.dcpRwcdsexplanation,
-    validatePresence({
+    validatePresenceIf({
       presence: true,
+      on: 'dcpIsrwcdsscenario',
+      withValue: true,
       message: 'This field is required',
     }),
   ],
