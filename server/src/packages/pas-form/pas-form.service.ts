@@ -16,7 +16,6 @@ export class PasFormService {
       &$expand=
         dcp_dcp_applicantinformation_dcp_pasform,
         dcp_dcp_applicantrepinformation_dcp_pasform,
-        dcp_package($select=${PACKAGE_ATTRS.join(',')}),
         dcp_dcp_projectbbl_dcp_pasform($filter=statecode eq 0),
         dcp_dcp_projectaddress_dcp_pasform
     `);
@@ -31,7 +30,7 @@ export class PasFormService {
     };
   }
 
-  // Gets the lateset PAS Package on Project `projectId`
+  // Gets the lateset PAS Form on Project `projectId`
   async getLatestPasForm(projectId): Promise<any> {
     try {
       const { records: pasPackages } = await this.crmService.get('dcp_packages', `
@@ -49,7 +48,7 @@ export class PasFormService {
 
       return latestPasForm;
     } catch (e) {
-      const errorMessage = `Error finding a PAS Package on given Project. ${e.message}`;
+      const errorMessage = `Error finding a PAS Form on given Project. ${e.message}`;
       console.log(errorMessage);
       throw new HttpException(errorMessage, HttpStatus.UNAUTHORIZED);
     }
