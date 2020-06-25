@@ -22,22 +22,29 @@
       <ul class="no-bullet">
         {{#each @package.pasForm.applicants as |applicant|}}
           <li class="ruled-adjacent">
-            <strong>
+            <h4 class="no-margin">
+              {{#if applicant.dcpOrganization}}
+                {{applicant.dcpOrganization}} |
+              {{/if}}
               {{applicant.dcpFirstname}} {{applicant.dcpLastname}}
-            </strong>
-            {{#if applicant.dcpOrganization}}
-              | {{applicant.dcpOrganization}}
-            {{/if}}
+            </h4>
             {{#if applicant.dcpEmail}}
-              <br>{{applicant.dcpEmail}}
+              <div>
+                <FaIcon @icon="envelope" class="text-gray" @fixedWidth={{true}} />
+                {{applicant.dcpEmail}}
+              </div>
             {{/if}}
             {{#if applicant.dcpAddress}}
-              <br><FaIcon @icon="map-marker-alt" class="text-gray" />
-              {{applicant.dcpAddress}}, {{applicant.dcpCity}}, {{applicant.dcpState}} {{applicant.dcpZipcode}}
+              <div>
+                <FaIcon @icon="map-marker-alt" class="text-gray" @fixedWidth={{true}} />
+                {{applicant.dcpAddress}}, {{applicant.dcpCity}}, {{applicant.dcpState}} {{applicant.dcpZipcode}}
+              </div>
             {{/if}}
             {{#if applicant.dcpPhone}}
-              <br><FaIcon @icon="phone-square" class="text-gray" />
-              {{applicant.dcpPhone}}
+              <div>
+                <FaIcon @icon="phone-square" class="text-gray" @fixedWidth={{true}} />
+                {{applicant.dcpPhone}}
+              </div>
             {{/if}}
           </li>
         {{/each}}
@@ -49,48 +56,52 @@
         <span id="project-geography" class="section-anchor"></span>
         Project Geography
       </h2>
-      <h3>
-        BBLs
-      </h3>
-      <ul class="no-bullet">
-        {{#each @package.pasForm.bbls as |bbl|}}
-          <li class="ruled-adjacent tight">
-            <strong>
-              {{bbl.dcpBblnumber}}
-            </strong>
-            {{#if bbl.dcpDevelopmentsite}}
-              <span class="text-silver">|</span> part of the development site
-            {{/if}}
-            {{#if bbl.dcpPartiallot}}
-              <span class="text-silver">|</span> partial lot
-            {{/if}}
-          </li>
-        {{/each}}
-      </ul>
-      <h3>
-        Addresses
-      </h3>
-      <ul class="no-bullet">
-        {{#each @package.pasForm.projectAddresses as |address idx|}}
-          <li
-            class="ruled-adjacent tight"
-            data-test-projectAddress={{idx}}
-          >
-            <strong>
-              {{address.dcpConcatenatedaddressvalidated}}
-            </strong>
-          </li>
-        {{/each}}
-      </ul>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          BBLs:
+        </A.Prompt>
+        <A.Field>
+          <ul>
+            {{#each @package.pasForm.bbls as |bbl|}}
+              <li>
+                {{bbl.dcpBblnumber}}
+                {{#if bbl.dcpDevelopmentsite}}
+                  <span class="text-silver">|</span> part of the development site
+                {{/if}}
+                {{#if bbl.dcpPartiallot}}
+                  <span class="text-silver">|</span> partial lot
+                {{/if}}
+              </li>
+            {{/each}}
+          </ul>
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Addresses:
+        </A.Prompt>
+        <A.Field>
+          <ul>
+            {{#each @package.pasForm.projectAddresses as |address idx|}}
+              <li data-test-projectAddress={{idx}}>
+                {{address.dcpConcatenatedaddressvalidated}}
+              </li>
+            {{/each}}
+          </ul>
+        </A.Field>
+      </Ui::Answer>
 
       {{#if @package.pasForm.dcpDescriptionofprojectareageography}}
-        <p class="ruled-top">
-          <strong>
+        <Ui::Answer as |A|>
+          <A.Prompt>
             Description of geography:
-          </strong>
-          <br />
-          {{@package.pasForm.dcpDescriptionofprojectareageography}}
-        </p>
+          </A.Prompt>
+          <A.Field>
+            {{@package.pasForm.dcpDescriptionofprojectareageography}}
+          </A.Field>
+        </Ui::Answer>
       {{/if}}
     </section>
 
@@ -100,87 +111,101 @@
         Proposed Land Use Actions
       </h2>
 
-      <ul class="no-bullet">
+      <ul>
         {{#if @package.pasForm.dcpPfacquisitionofrealproperty}}
-          <li class="ruled-adjacent">
+          <li>
             <strong>Acquisition of Real Property</strong>
             {{@package.pasForm.dcpPfacquisitionofrealproperty}}
           </li>
         {{/if}}
+
         {{#if @package.pasForm.dcpPfchangeincitymap}}
-          <li class="ruled-adjacent">
+          <li>
             <strong>Change in CityMap</strong>
             ({{@package.pasForm.dcpPfchangeincitymap}})
           </li>
         {{/if}}
+
         {{#if @package.pasForm.dcpPfconcession}}
-          <li class="ruled-adjacent">
+          <li>
             <strong>Concession</strong>
             ({{@package.pasForm.dcpPfconcession}})
           </li>
         {{/if}}
+
         {{#if @package.pasForm.dcpPfdispositionofrealproperty}}
-          <li class="ruled-adjacent">
+          <li>
             <strong>Disposition of Real Property</strong>
             ({{@package.pasForm.dcpPfdispositionofrealproperty}})
           </li>
         {{/if}}
+
         {{#if @package.pasForm.dcpPffranchise}}
-          <li class="ruled-adjacent">
+          <li>
             <strong>Franchise</strong>
             ({{@package.pasForm.dcpPffranchise}})
           </li>
         {{/if}}
+
         {{#if @package.pasForm.dcpPfhousingplanandproject}}
-          <li class="ruled-adjacent">
+          <li>
             <strong>Housing Plan & Project</strong>
             ({{@package.pasForm.dcpPfhousingplanandproject}})
           </li>
         {{/if}}
+
         {{#if @package.pasForm.dcpPflandfill}}
-          <li class="ruled-adjacent">
+          <li>
             <strong>Landfill</strong>
             ({{@package.pasForm.dcpPflandfill}})
           </li>
         {{/if}}
+
         {{#if @package.pasForm.dcpPfmodification}}
-          <li class="ruled-adjacent">
+          <li>
             <strong>Modification</strong>
             ({{@package.pasForm.dcpPfmodification}}, {{@package.pasForm.dcpPreviousulurpnumbers1}})
           </li>
         {{/if}}
+
         {{#if @package.pasForm.dcpPfrenewal}}
-          <li class="ruled-adjacent">
+          <li>
             <strong>Renewal</strong>
-            ({{@package.pasForm.dcpPfrenewal}}, {{@package.pasForm.dcpPreviousulurpnumbers2}})
+            ({{@package.pasForm.dcpPfrenewal ~}}
+            {{if @package.pasForm.dcpPreviousulurpnumbers2 (concat ', ' @package.pasForm.dcpPreviousulurpnumbers2)}})
           </li>
         {{/if}}
+
         {{#if @package.pasForm.dcpPfrevocableconsent}}
-          <li class="ruled-adjacent">
+          <li>
             <strong>Revocable Consent</strong>
             ({{@package.pasForm.dcpPfrevocableconsent}})
           </li>
         {{/if}}
+
         {{#if @package.pasForm.dcpPfsiteselectionpublicfacility}}
-          <li class="ruled-adjacent">
+          <li>
             <strong>Site Selection - Public Facility</strong>
             ({{@package.pasForm.dcpPfsiteselectionpublicfacility}})
           </li>
         {{/if}}
+
         {{#if @package.pasForm.dcpPfudaap}}
-          <li class="ruled-adjacent">
+          <li>
             <strong>UDAAP</strong>
             ({{@package.pasForm.dcpPfudaap}})
           </li>
         {{/if}}
+
         {{#if @package.pasForm.dcpPfura}}
-          <li class="ruled-adjacent">
+          <li>
             <strong>URA</strong>
             ({{@package.pasForm.dcpPfura}})
           </li>
         {{/if}}
+
         {{#if @package.pasForm.dcpPfzoningauthorization}}
-          <li class="ruled-adjacent">
+          <li>
             <strong>Zoning Authorization</strong>
             ({{@package.pasForm.dcpPfzoningauthorization}})
             {{#if @package.pasForm.dcpZoningauthorizationpursuantto}}
@@ -197,8 +222,9 @@
             {{/if}}
           </li>
         {{/if}}
+
         {{#if @package.pasForm.dcpPfzoningcertification}}
-          <li class="ruled-adjacent">
+          <li>
             <strong>Zoning Certification</strong>
             ({{@package.pasForm.dcpPfzoningcertification}})
             {{#if @package.pasForm.dcpZoningpursuantto}}
@@ -215,8 +241,9 @@
             {{/if}}
           </li>
         {{/if}}
+
         {{#if @package.pasForm.dcpPfzoningmapamendment}}
-          <li class="ruled-adjacent">
+          <li>
             <strong>Zoning Map Amendment</strong>
             ({{@package.pasForm.dcpPfzoningmapamendment}})
             {{#if @package.pasForm.dcpExistingmapamend}}
@@ -233,8 +260,9 @@
             {{/if}}
           </li>
         {{/if}}
+
         {{#if @package.pasForm.dcpPfzoningspecialpermit}}
-          <li class="ruled-adjacent">
+          <li>
             <strong>Zoning Special Permit</strong>
             ({{@package.pasForm.dcpPfzoningspecialpermit}})
             {{#if @package.pasForm.dcpZoningspecialpermitpursuantto}}
@@ -251,8 +279,9 @@
             {{/if}}
           </li>
         {{/if}}
+
         {{#if @package.pasForm.dcpPfzoningtextamendment}}
-          <li class="ruled-adjacent">
+          <li>
             <strong>Zoning Text Amendment</strong>
             ({{@package.pasForm.dcpPfzoningtextamendment}})
             {{#if @package.pasForm.dcpAffectedzrnumber}}
@@ -278,190 +307,141 @@
         Project Area
       </h2>
 
-      <p class="grid-x ruled-adjacent tight">
-        <strong class="cell auto large-padding-right">
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
           Requires a NYC DEP Storm Water Construction Permit
-        </strong>
-        <span class="cell large-3">
-          {{if (eq @package.pasForm.dcpProposedprojectorportionconstruction 717170000) "Yes"}}
-          {{if (eq @package.pasForm.dcpProposedprojectorportionconstruction 717170001) "No" }}
-          {{if (eq @package.pasForm.dcpProposedprojectorportionconstruction 717170002) "Unsure at this time"}}
-        </span>
-      </p>
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'pasForm' 'dcpProposedprojectorportionconstruction' 'label' @package.pasForm.dcpProposedprojectorportionconstruction}}
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="grid-x ruled-adjacent tight">
-        <strong class="cell auto large-padding-right">
-          Located in a current or former
-          <a href="#">
-            Urban Renewal Area
-          </a>
-          {{! TODO: add link }}
-        </strong>
-        <span class="cell large-3">
-          {{if (eq @package.pasForm.dcpUrbanrenewalarea 717170000) "Yes"}}
-          {{if (eq @package.pasForm.dcpUrbanrenewalarea 717170001) "No"}}
-          {{if (eq @package.pasForm.dcpUrbanrenewalarea 717170002) "Unsure at this time"}}
-        </span>
-      </p>
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Located in a current or former Urban Renewal Area
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'pasForm' 'dcpUrbanrenewalarea' 'label' @package.pasForm.dcpUrbanrenewalarea}}
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="grid-x ruled-adjacent tight">
-        <strong class="cell auto large-padding-right">
-          <a href="#">
-            Legal Street Frontage Status
-          </a>
-          {{! TODO: add link }}
-        </strong>
-        <span class="cell large-3">
-          {{if (eq @package.pasForm.dcpLegalstreetfrontage 717170000) "Mapped and Built"}}
-          {{if (eq @package.pasForm.dcpLegalstreetfrontage 717170001) "Private Road"}}
-          {{if (eq @package.pasForm.dcpLegalstreetfrontage 717170002) "Record Street"}}
-          {{if (eq @package.pasForm.dcpLegalstreetfrontage 717170003) "Corporation Counsel Opinion"}}
-          {{if (eq @package.pasForm.dcpLegalstreetfrontage 717170004) "Mapped but not Built"}}
-        </span>
-      </p>
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Legal Street Frontage Status
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'pasForm' 'dcpLegalstreetfrontage' 'label' @package.pasForm.dcpLegalstreetfrontage}}
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="grid-x ruled-adjacent tight">
-        <strong class="cell auto large-padding-right">
-          Meets
-          <a href="#">
-            SEQRA or CEQR criteria
-          </a>
-          for Type II status
-          {{! TODO: add link }}
-        </strong>
-        <span class="cell large-3">
-          {{if (eq @package.pasForm.dcpLanduseactiontype2 717170000) "Yes"}}
-          {{if (eq @package.pasForm.dcpLanduseactiontype2 717170001) "No"}}
-          {{if (eq @package.pasForm.dcpLanduseactiontype2 717170002) "Unsure at this time"}}
-        </span>
-      </p>
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Meets SEQRA or CEQR criteria for Type II status
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'pasForm' 'dcpLanduseactiontype2' 'label' @package.pasForm.dcpLanduseactiontype2}}
+        </A.Field>
+      </Ui::Answer>
 
-      {{#if @package.pasForm.dcpPleaseexplaintypeiienvreview}}
-        <p class="grid-x ruled-adjacent tight">
-          <strong class="cell auto large-padding-right">
-            SEQRA or CEQR category each action fulfills:
-          </strong>
-          <span class="cell large-3">
-            {{@package.pasForm.dcpPleaseexplaintypeiienvreview}}
-          </span>
-        </p>
-      {{/if}}
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          SEQRA or CEQR category each action fulfills:
+        </A.Prompt>
+        <A.Field>
+          {{@package.pasForm.dcpPleaseexplaintypeiienvreview}}
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="grid-x ruled-adjacent tight">
-        <strong class="cell auto large-padding-right">
-          In an
-          <a href="#">
-            Industrial Business Zone
-          </a>
-          {{! TODO: add link }}
-        </strong>
-        <span class="cell large-3">
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          In an Industrial Business Zone
+        </A.Prompt>
+        <A.Field>
           {{if (eq @package.pasForm.dcpProjectareaindustrialbusinesszone true) "Yes"}}
           {{if (eq @package.pasForm.dcpProjectareaindustrialbusinesszone false) "No"}}
-        </span>
-      </p>
+        </A.Field>
+      </Ui::Answer>
 
       {{#if @package.pasForm.dcpProjectareaindutrialzonename}}
-        <p class="grid-x ruled-adjacent tight">
-          <strong class="cell auto large-padding-right">
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
             Name of Industrial Business Zone:
-          </strong>
-          <span class="cell large-3">
+          </A.Prompt>
+          <A.Field>
             {{@package.pasForm.dcpProjectareaindutrialzonename}}
-          </span>
-        </p>
+          </A.Field>
+        </Ui::Answer>
       {{/if}}
 
-      <p class="grid-x ruled-adjacent tight">
-        <strong class="cell auto large-padding-right">
-          Within or adjacent to a designated (City or State)
-          <a href="#">
-            Landmark or Historic District
-          </a>
-          {{! TODO: add link }}
-        </strong>
-        <span class="cell large-3">
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Within or adjacent to a designated (City or State) Landmark or Historic District
+        </A.Prompt>
+        <A.Field>
           {{if (eq @package.pasForm.dcpIsprojectarealandmark true) "Yes"}}
           {{if (eq @package.pasForm.dcpIsprojectarealandmark false) "No"}}
-        </span>
-      </p>
+        </A.Field>
+      </Ui::Answer>
 
       {{#if @package.pasForm.dcpProjectarealandmarkname}}
-        <p class="grid-x ruled-adjacent tight">
-          <strong class="cell auto large-padding-right">
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
             Name of Landmark or Historic District:
-          </strong>
-          <span class="cell large-3">
+          </A.Prompt>
+          <A.Field>
             {{@package.pasForm.dcpProjectarealandmarkname}}
-          </span>
-        </p>
+          </A.Field>
+        </Ui::Answer>
       {{/if}}
 
-      <p class="grid-x ruled-adjacent tight">
-        <strong class="cell auto large-padding-right">
-          Located within the
-          <a href="#">
-            NYC Coastal Zone
-          </a>
-          {{! TODO: add link }}
-        </strong>
-        <span class="cell large-3">
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Located within the NYC Coastal Zone
+        </A.Prompt>
+        <A.Field>
           {{if (eq @package.pasForm.dcpProjectareacoastalzonelocatedin true) "Yes"}}
           {{if (eq @package.pasForm.dcpProjectareacoastalzonelocatedin false) "No"}}
-        </span>
-      </p>
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="grid-x ruled-adjacent tight">
-        <strong class="cell auto large-padding-right">
-          Located within the
-          <a href="#">
-            1% annual chance floodplain
-          </a>
-          {{! TODO: add link }}
-        </strong>
-        <span class="cell large-3">
-          {{if (eq @package.pasForm.dcpProjectareaischancefloodplain 717170000) "Yes"}}
-          {{if (eq @package.pasForm.dcpProjectareaischancefloodplain 717170001) "No"}}
-          {{if (eq @package.pasForm.dcpProjectareaischancefloodplain 717170002) "Unsure at this time"}}
-        </span>
-      </p>
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Located within the 1% annual chance floodplain
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'pasForm' 'dcpProjectareaischancefloodplain' 'label' @package.pasForm.dcpProjectareaischancefloodplain}}
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="grid-x ruled-adjacent tight">
-        <strong class="cell auto large-padding-right">
-          A
-          <a href="#">
-            legal instrument
-          </a>
-          is associated with a previous CPC or CPC Chair action recorded against the project site
-          {{! TODO: add link }}
-        </strong>
-        <span class="cell large-3">
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          A legal instrument is associated with a previous CPC or CPC Chair action recorded against the project site
+        </A.Prompt>
+        <A.Field>
           {{if (eq @package.pasForm.dcpRestrictivedeclaration true) "Yes"}}
           {{if (eq @package.pasForm.dcpRestrictivedeclaration false) "No"}}
-        </span>
-      </p>
+        </A.Field>
+      </Ui::Answer>
 
       {{#if @package.pasForm.dcpCityregisterfilenumber}}
-        <p class="grid-x ruled-adjacent tight">
-          <strong class="cell auto large-padding-right">
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
             City Register File Number:
-          </strong>
-          <span class="cell large-3">
+          </A.Prompt>
+          <A.Field>
             {{@package.pasForm.dcpCityregisterfilenumber}}
-          </span>
-        </p>
+          </A.Field>
+        </Ui::Answer>
       {{/if}}
 
-      <p class="grid-x ruled-adjacent tight">
-        <strong class="cell auto large-padding-right">
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
           Requires new legal instrument or modification of a current legal instrument
-        </strong>
-        <span class="cell large-3">
-          {{if (eq @package.pasForm.dcpRestrictivedeclarationrequired 717170000) "Yes"}}
-          {{if (eq @package.pasForm.dcpRestrictivedeclarationrequired 717170001) "No"}}
-          {{if (eq @package.pasForm.dcpRestrictivedeclarationrequired 717170002) "Unsure at this time"}}
-        </span>
-      </p>
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'pasForm' 'dcpRestrictivedeclarationrequired' 'label' @package.pasForm.dcpRestrictivedeclarationrequired}}
+        </A.Field>
+      </Ui::Answer>
     </section>
 
     <section class="form-section">
@@ -470,77 +450,65 @@
         Proposed Development Site
       </h2>
 
-      <p class="grid-x ruled-adjacent tight">
-        <strong class="cell auto large-padding-right">
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
           Estimated development completion year
-        </strong>
-        <span class="cell large-3">
+        </A.Prompt>
+        <A.Field>
           {{@package.pasForm.dcpEstimatedcompletiondate}}
-        </span>
-      </p>
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="grid-x ruled-adjacent tight">
-        <strong class="cell auto large-padding-right">
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
           Proposed development type
-        </strong>
-        <span
-          class="cell large-3"
-          data-test-proposedDevelopmentTypes
-        >
-          <ProposedDevelopmentTypesList
-            @pasForm={{@package.pasForm}}
-          />
-        </span>
-      </p>
+        </A.Prompt>
+        <A.Field>
+          <span data-test-proposedDevelopmentTypes>
+            <ProposedDevelopmentTypesList @pasForm={{@package.pasForm}} />
+          </span>
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="grid-x ruled-adjacent tight">
-        <strong class="cell auto large-padding-right">
-          In an
-          <a href="#">
-            Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area
-          </a>
-          {{! TODO: add link }}
-        </strong>
-        <span class="cell large-3">
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          In an Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area
+        </A.Prompt>
+        <A.Field>
           {{if (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea true) "Yes"}}
           {{if (eq @package.pasForm.dcpIsinclusionaryhousingdesignatedarea false) "No"}}
-        </span>
-      </p>
+        </A.Field>
+      </Ui::Answer>
 
       {{#if @package.pasForm.dcpInclusionaryhousingdesignatedareaname}}
-        <p class="grid-x ruled-adjacent tight">
-          <strong class="cell auto large-padding-right">
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
             Name of Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area
-          </strong>
-          <span class="cell large-3">
+          </A.Prompt>
+          <A.Field>
             {{@package.pasForm.dcpInclusionaryhousingdesignatedareaname}}
-          </span>
-        </p>
+          </A.Field>
+        </Ui::Answer>
       {{/if}}
 
-      <p class="grid-x ruled-adjacent tight">
-        <strong class="cell auto large-padding-right">
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
           Involves discretionary funding for Affordable Housing Units
-        </strong>
-        <span class="cell large-3">
-          {{if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing 717170000) "Yes"}}
-          {{if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing 717170001) "No"}}
-          {{if (eq @package.pasForm.dcpDiscressionaryfundingforffordablehousing 717170002) "Unsure at this time"}}
-        </span>
-      </p>
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'pasForm' 'dcpDiscressionaryfundingforffordablehousing' 'label' @package.pasForm.dcpDiscressionaryfundingforffordablehousing}}
+        </A.Field>
+      </Ui::Answer>
 
       {{#if @package.pasForm.dcpHousingunittype}}
-        <p class="grid-x ruled-adjacent tight">
-          <strong class="cell auto large-padding-right">
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
             Funding source
-          </strong>
-          <span class="cell large-3">
-            {{if (eq @package.pasForm.dcpHousingunittype 717170000) "City"}}
-            {{if (eq @package.pasForm.dcpHousingunittype 717170001) "State"}}
-            {{if (eq @package.pasForm.dcpHousingunittype 717170002) "Federal"}}
-            {{if (eq @package.pasForm.dcpHousingunittype 717170003) "Other"}}
-          </span>
-        </p>
+          </A.Prompt>
+          <A.Field>
+            {{optionset 'pasForm' 'dcpHousingunittype' 'label' @package.pasForm.dcpHousingunittype}}
+          </A.Field>
+        </Ui::Answer>
       {{/if}}
     </section>
 
@@ -550,53 +518,60 @@
         Project Description
       </h2>
 
-      <p class="ruled-adjacent">
-        <strong>
-          Description of the proposed development being facilitated by the land use actions
-        </strong>
-        <br />
-        {{@package.pasForm.dcpProjectdescriptionproposeddevelopment}}
-      </p>
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Description of the proposed development being facilitated by the land use actions:
+        </A.Prompt>
+        <A.Field>
+          {{@package.pasForm.dcpProjectdescriptionproposeddevelopment}}
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="ruled-adjacent">
-        <strong>
-          Why is this application being proposed? What is the legal, environmental, or land use background?
-        </strong>
-        <br />
-        {{@package.pasForm.dcpProjectdescriptionbackground}}
-      </p>
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Why is this application being proposed?
+          <br>What is the legal, environmental, or land use background?
+        </A.Prompt>
+        <A.Field>
+          {{@package.pasForm.dcpProjectdescriptionbackground}}
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="ruled-adjacent">
-        <strong>
+      <Ui::Answer as |A|>
+        <A.Prompt>
           What is the land use rationale for all the proposed actions?
-        </strong>
-        <br />
-        {{@package.pasForm.dcpProjectdescriptionproposedactions}}
-      </p>
+        </A.Prompt>
+        <A.Field>
+          {{@package.pasForm.dcpProjectdescriptionproposedactions}}
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="ruled-adjacent">
-        <strong>
+      <Ui::Answer as |A|>
+        <A.Prompt>
           Description of existing land uses and structures in the proposed Project Area and Development Site
-        </strong>
-        <br />
-        {{@package.pasForm.dcpProjectdescriptionproposedarea}}
-      </p>
+        </A.Prompt>
+        <A.Field>
+          {{@package.pasForm.dcpProjectdescriptionproposedarea}}
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="ruled-adjacent">
-        <strong>
+      <Ui::Answer as |A|>
+        <A.Prompt>
           Description of land uses and built context in surrounding area (within 1000 ft)
-        </strong>
-        <br />
-        {{@package.pasForm.dcpProjectdescriptionsurroundingarea}}
-      </p>
+        </A.Prompt>
+        <A.Field>
+          {{@package.pasForm.dcpProjectdescriptionsurroundingarea}}
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="ruled-adjacent">
-        <strong>
+      <Ui::Answer as |A|>
+        <A.Prompt>
           Description of proposed CEQR scope
-        </strong>
-        <br />
-        {{@package.pasForm.dcpProjectattachmentsotherinformation}}
-      </p>
+        </A.Prompt>
+        <A.Field>
+          {{@package.pasForm.dcpProjectattachmentsotherinformation}}
+        </A.Field>
+      </Ui::Answer>
     </section>
 
     <section class="form-section" id="attached-documents">

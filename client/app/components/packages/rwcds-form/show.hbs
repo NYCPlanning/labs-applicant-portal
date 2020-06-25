@@ -19,70 +19,68 @@
         Description
       </h2>
 
-      <p class="grid-x">
-        <strong class="cell auto large-padding-right">
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
           Has the project changed since submission of the Pre-Application Statement (PAS)?
-        </strong>
-        <span class="cell large-3">
-          {{if @package.pasForm.dcpHasprojectchangedsincesubmissionofthepas "Yes" "No"}}
-        </span>
-      </p>
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'label' @package.rwcdsForm.dcpHasprojectchangedsincesubmissionofthepas}}
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="ruled-top">
-        <strong>
+      <Ui::Answer as |A|>
+        <A.Prompt>
           Project site description:
-        </strong>
-        <br />
-        {{@package.rwcdsForm.dcpProjectsitedescription}}
-      </p>
+        </A.Prompt>
+        <A.Field>
+          {{@package.rwcdsForm.dcpProjectsitedescription}}
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="ruled-top">
-        <strong>
+      <Ui::Answer as |A|>
+        <A.Prompt>
           Proposed development description:
-        </strong>
-        <br />
-        {{@package.rwcdsForm.dcpProposedprojectdevelopmentdescription}}
-      </p>
+        </A.Prompt>
+        <A.Field>
+          {{@package.rwcdsForm.dcpProposedprojectdevelopmentdescription}}
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="grid-x ruled-top">
-        <strong class="cell auto large-padding-right">
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
           Will construction be done in multiple phases?
-        </strong>
-        <span class="cell large-3">
-          {{#if (eq @package.rwcdsForm.dcpConstructionphasing 717170000)}}
-            Single
-          {{else if (eq @package.rwcdsForm.dcpConstructionphasing 717170001)}}
-            Multiple
-          {{else}}
-            Not Applicable
-          {{/if}}
-        </span>
-      </p>
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'rwcdsForm' 'dcpConstructionphasing' 'label' @package.rwcdsForm.dcpConstructionphasing}}
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="grid-x ruled-top">
-        <strong class="cell auto large-padding-right">
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
           What is the proposed analysis year of the proposed action?
-        </strong>
-        <span class="cell large-3">
+        </A.Prompt>
+        <A.Field>
           {{@package.rwcdsForm.dcpBuildyear}}
-        </span>
-      </p>
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="ruled-top">
-        <strong>
+      <Ui::Answer as |A|>
+        <A.Prompt>
           Analysis year rationale:
-        </strong>
-        <br />
-        {{@package.rwcdsForm.dcpRationalbehindthebuildyear}}
-      </p>
+        </A.Prompt>
+        <A.Field>
+          {{@package.rwcdsForm.dcpRationalbehindthebuildyear}}
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="ruled-top">
-        <strong>
+      <Ui::Answer as |A|>
+        <A.Prompt>
           History of sites within the Project Area:
-        </strong>
-        <br />
-        {{@package.rwcdsForm.dcpSitehistory}}
-      </p>
+        </A.Prompt>
+        <A.Field>
+          {{@package.rwcdsForm.dcpSitehistory}}
+        </A.Field>
+      </Ui::Answer>
     </section>
 
     <section class="form-section">
@@ -93,42 +91,44 @@
 
       {{!-- TODO: add list of actions --}}
 
-      <p class="ruled-top">
-        <strong>
+      <Ui::Answer as |A|>
+        <A.Prompt>
           Purpose and need for all proposed actions:
-        </strong>
-        <br />
-        {{@package.rwcdsForm.dcpPurposeandneedfortheproposedaction}}
-      </p>
+        </A.Prompt>
+        <A.Field>
+          {{@package.rwcdsForm.dcpPurposeandneedfortheproposedaction}}
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="grid-x ruled-top">
-        <strong class="cell auto large-padding-right">
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
           Does the applicant plan to develop a 100% affordable housing development?
-        </strong>
-        <span class="cell large-3">
+        </A.Prompt>
+        <A.Field>
           {{if @package.pasForm.dcpIsplannigondevelopingaffordablehousing "Yes" "No"}}
-        </span>
-      </p>
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="grid-x ruled-top">
-        <strong class="cell auto large-padding-right">
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
           Is the applicant seeking actions from other City/State/Federal agencies?
-        </strong>
-        <span class="cell large-3">
+        </A.Prompt>
+        <A.Field>
           {{if (eq @package.rwcdsForm.dcpIsapplicantseekingaction 717170000) "Yes"}}
           {{if (eq @package.rwcdsForm.dcpIsapplicantseekingaction 717170001) "No" }}
           {{if (eq @package.rwcdsForm.dcpIsapplicantseekingaction 717170002) "Unsure at this time"}}
-        </span>
-      </p>
+        </A.Field>
+      </Ui::Answer>
 
       {{#if (eq @package.rwcdsForm.dcpIsapplicantseekingaction 717170000)}}
-        <p class="ruled-top">
-          <strong>
+        <Ui::Answer as |A|>
+          <A.Prompt>
             Actions sought from other agencies:
-          </strong>
-          <br />
-          {{@package.rwcdsForm.dcpWhichactionsfromotheragenciesaresought}}
-        </p>
+          </A.Prompt>
+          <A.Field>
+            {{@package.rwcdsForm.dcpWhichactionsfromotheragenciesaresought}}
+          </A.Field>
+        </Ui::Answer>
       {{/if}}
     </section>
 
@@ -138,83 +138,89 @@
         Analysis
       </h2>
 
-      <p class="">
-        <strong>
+      <Ui::Answer as |A|>
+        <A.Prompt>
           Description of development assumptions:
-        </strong>
-        <br />
-        {{@package.rwcdsForm.dcpDevelopmentsiteassumptions}}
-      </p>
+        </A.Prompt>
+        <A.Field>
+          {{@package.rwcdsForm.dcpDevelopmentsiteassumptions}}
+        </A.Field>
+      </Ui::Answer>
 
       <h3>
         No-Action Scenario
       </h3>
 
-      <p class="grid-x">
-        <strong class="cell auto large-padding-right">
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
           Is the No-Action scenario the same as the Existing Conditions?
-        </strong>
-        <span class="cell large-3">
-          {{if @package.rwcdsForm.dcpExistingconditions "Yes" "No" }}
-        </span>
-      </p>
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'rwcdsForm' 'dcpExistingconditions' 'label' @package.rwcdsForm.dcpExistingconditions}}
+        </A.Field>
+      </Ui::Answer>
 
       {{#if @package.rwcdsForm.dcpDescribethenoactionscenario}}
-        <p class="ruled-top">
-          <strong>
+        <Ui::Answer as |A|>
+          <A.Prompt>
             Description of No-Action scenario:
-          </strong>
-          <br />
-          {{@package.rwcdsForm.dcpDescribethenoactionscenario}}
-        </p>
+          </A.Prompt>
+          <A.Field>
+            {{@package.rwcdsForm.dcpDescribethenoactionscenario}}
+          </A.Field>
+        </Ui::Answer>
       {{/if}}
 
       {{#if @package.rwcdsForm.dcpHowdidyoudeterminethenoactionscenario}}
-        <p class="ruled-top">
-          <strong>
+        <Ui::Answer as |A|>
+          <A.Prompt>
             How No-Action scenario was determined:
-          </strong>
-          <br />
-          {{@package.rwcdsForm.dcpHowdidyoudeterminethenoactionscenario}}
-        </p>
+          </A.Prompt>
+          <A.Field>
+            {{@package.rwcdsForm.dcpHowdidyoudeterminethenoactionscenario}}
+          </A.Field>
+        </Ui::Answer>
       {{/if}}
 
       <h3>
         With-Action Scenario
       </h3>
 
-      <p class="grid-x">
-        <strong class="cell auto large-padding-right">
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
           Is the proposed project the same as the proposed With-Action scenario?
-        </strong>
-        <span class="cell large-3">
-          {{if @package.rwcdsForm.dcpIsrwcdsscenario "Yes" "No" }}
-        </span>
-      </p>
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'rwcdsForm' 'dcpIsrwcdsscenario' 'label' @package.rwcdsForm.dcpIsrwcdsscenario}}
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="ruled-top">
-        <strong>
+      <Ui::Answer as |A|>
+        <A.Prompt>
           Why the project is the same as the propsed With-Action scenario:
-        </strong>
-        <br />
-        {{@package.rwcdsForm.dcpRwcdsexplanation}}
-      </p>
+        </A.Prompt>
+        <A.Field>
+          {{@package.rwcdsForm.dcpRwcdsexplanation}}
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="ruled-top">
-        <strong>
+      <Ui::Answer as |A|>
+        <A.Prompt>
           Description of With-Action scenario:
-        </strong>
-        <br />
-        {{@package.rwcdsForm.dcpDescribethewithactionscenario}}
-      </p>
+        </A.Prompt>
+        <A.Field>
+          {{@package.rwcdsForm.dcpDescribethewithactionscenario}}
+        </A.Field>
+      </Ui::Answer>
 
-      <p class="ruled-top">
-        <strong>
+      <Ui::Answer as |A|>
+        <A.Prompt>
           How With-Action scenario was determines:
-        </strong>
-        <br />
-        {{@package.rwcdsForm.dcpHowdidyoudeterminethiswithactionscena}}
-      </p>
+        </A.Prompt>
+        <A.Field>
+          {{@package.rwcdsForm.dcpHowdidyoudeterminethiswithactionscena}}
+        </A.Field>
+      </Ui::Answer>
     </section>
 
     <section class="form-section">
@@ -222,6 +228,8 @@
         <span id="" class="section-anchor"></span>
         Attachments
       </h2>
+
+      {{!-- TODO: add list of attachments --}}
 
     </section>
 
