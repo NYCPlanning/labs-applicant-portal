@@ -49,7 +49,6 @@ export class RwcdsFormService {
     const { records: [rwcdsForm] } = await this.crmService.get(`dcp_rwcdsforms`, `
       $filter=
         dcp_rwcdsformid eq ${id}
-      &$expand=dcp_package($select=${PACKAGE_ATTRS.join(',')})
     `);
 
     const { _dcp_projectid_value } = rwcdsForm;
