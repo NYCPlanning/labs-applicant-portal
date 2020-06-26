@@ -49,9 +49,14 @@ export class RwcdsFormService {
     const { records: [rwcdsForm] } = await this.crmService.get(`dcp_rwcdsforms`, `
       $filter=
         dcp_rwcdsformid eq ${id}
+      &$expand=dcp_rwcdsform_dcp_affectedzoningresolution_rwcdsform
     `);
 
     const { _dcp_projectid_value } = rwcdsForm;
+
+    // run syncActions to synchronize dcp_projectaction and dcp_affectedzoningresolution entities
+    const affectedZoningResolutions = rwcdsForm.dcp_rwcdsform_dcp_affectedzoningresolution_rwcdsform;
+    this.syncActions(_dcp_projectid_value, id, affectedZoningResolutions);
 
     // requires info from adjacent latest pasForm
     if (
@@ -73,5 +78,39 @@ export class RwcdsFormService {
     }
 
     return rwcdsForm;
+  }
+
+  // The syncActions method queries for project actions (dcp_projectaction) associated
+  // with the rwcds form's related project. 
+  // Then, it posts each of the project actions to dcp_affectedzoningresolution.
+  // This occurs every time that the rwcds-form endpoint is hit
+  async syncActions(projectId, rwcdsFormId, affectedZoningResolutions) {
+    const { records: [currentProjectWithActions] } = await this.crmService.get(`dcp_projects`, `
+      $select=dcp_projectid
+      &$filter=_dcp_projectid_value eq ${projectId}
+      &$expand=dcp_dcp_project_dcp_projectaction_project($filter=statuscode eq 1)
+    `);
+
+    const projectActions = currentProjectWithActions.dcp_dcp_project_dcp_projectaction_project;
+
+    const regexFirstWord = /^(\w+)/g;
+
+    console.log('bananas', affectedZoningResolutions[0]);
+
+    const zrIds = affectedZoningResolutions.map(zr => zr.dcp_affectedzoningresolutionid);
+
+    projectActions.forEach(action => !zrIds.includes(action.dcp_projectactionid) ? this.crmService.create(
+      `dcp_affectedzoningresolution`, 
+        {
+          'dcp_zoningresolutiontype': action.dcp_name.match(regexFirstWord),
+          'dcp_zrsectionnumber': action.dcp_zrsectionnumber,
+          'dcp_modifiedzrsectoinnumber': action.dcp_zrmodifyingzrtxt,
+          '_dcp_rwcdsform_value': rwcdsFormId,
+          'dcp_affectedzoningresolutionid': action.dcp_projectactionid, 
+          // how is this generated?? With the projectaction id?
+          // e.g. b6d22b11-4502-ea11-b862-00155da05478
+        },
+      ) : console.log(`zoning resolution with id ${action.dcp_projectactionid} already exists`),
+    );
   }
 }
