@@ -4,6 +4,7 @@
 
 <div class="grid-x grid-padding-x">
   <div class="cell large-8">
+
     {{#if (gt this.model.length 0)}}
       {{#if (gt this.applicantProjects.length 0)}}
         <ul class="no-bullet">
@@ -38,9 +39,12 @@
           You are not currently assigned to any active DCP projects.
         </p>
     {{/if}}
-  </div>
-  <div class="cell large-4">
+
+  </div>{{! end left/main column }}
+  <div class="cell large-4 sticky-sidebar">
+
     <NeedAssistanceMessage class="large-margin-top" />
+
   </div>
 </div>
 

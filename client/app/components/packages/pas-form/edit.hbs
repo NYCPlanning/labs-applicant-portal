@@ -5,6 +5,7 @@
 >
   <div class="grid-x grid-margin-x">
     <div class="cell large-8">
+
       <section class="form-section">
         <h1>
           Pre-Application Statement
@@ -46,9 +47,10 @@
         @form={{pasForm}}
         @model={{this.pasForm}}
       />
-    </div>
 
+    </div>{{! end left/main column }}
     <div class="cell large-4 sticky-sidebar">
+
       <pasForm.PageNav>
         <pasForm.SaveButton
           @isEnabled={{or @package.isDirty pasForm.isSaveable}}
@@ -88,6 +90,7 @@
       </pasForm.ConfirmationModal>
 
       <NeedAssistanceMessage class="large-margin-top" />
-    </div>
+
+    </div>{{! end right/sidebar column }}
   </div>
 </SaveableForm>
