@@ -48,8 +48,8 @@
       />
     </div>
 
-    <div class="cell large-4">
-      <pasForm.StickySidebar>
+    <div class="cell large-4 sticky-sidebar">
+      <pasForm.PageNav>
         <pasForm.SaveButton
           @isEnabled={{or @package.isDirty pasForm.isSaveable}}
           @onClick={{this.savePackage}}
@@ -62,7 +62,7 @@
           class="secondary"
           data-test-submit-button
         />
-      </pasForm.StickySidebar>
+      </pasForm.PageNav>
 
       <pasForm.ConfirmationModal
         @action={{component pasForm.SubmitButton
@@ -86,6 +86,8 @@
           clarifications.
         </p>
       </pasForm.ConfirmationModal>
+
+      <NeedAssistanceMessage class="large-margin-top" />
     </div>
   </div>
 </SaveableForm>

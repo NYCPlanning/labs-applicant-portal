@@ -43,7 +43,7 @@
     </div>
 
     <div class="cell large-4">
-      <saveableForm.StickySidebar>
+      <saveableForm.PageNav>
         <saveableForm.SaveButton
           @isEnabled={{or @package.isDirty (and saveableForm.saveableChanges.isDirty saveableForm.saveableChanges.isValid)}}
           @onClick={{this.savePackage}}
@@ -56,7 +56,7 @@
           class="secondary"
           data-test-submit-button
         />
-      </saveableForm.StickySidebar>
+      </saveableForm.PageNav>
 
       <saveableForm.ConfirmationModal
         @action={{component saveableForm.SubmitButton
