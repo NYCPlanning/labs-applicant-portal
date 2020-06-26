@@ -6,21 +6,13 @@ import { hbs } from 'ember-cli-htmlbars';
 module('Integration | Component | ui/answer', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
-
+  test('it’s not a grid cell', async function(assert) {
     await render(hbs`<Ui::Answer />`);
+    assert.dom('.grid-x').doesNotExist();
+  });
 
-    assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      <Ui::Answer>
-        template block text
-      </Ui::Answer>
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
+  test('it’s a grid cell', async function(assert) {
+    await render(hbs`<Ui::Answer @beside={{true}} />`);
+    assert.dom('.grid-x').exists();
   });
 });

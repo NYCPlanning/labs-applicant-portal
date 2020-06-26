@@ -6,21 +6,13 @@ import { hbs } from 'ember-cli-htmlbars';
 module('Integration | Component | ui/answer-field', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
-
+  test('it’s not a grid cell', async function(assert) {
     await render(hbs`<Ui::AnswerField />`);
+    assert.dom('.cell.large-3').doesNotExist();
+  });
 
-    assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      <Ui::AnswerField>
-        template block text
-      </Ui::AnswerField>
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
+  test('it’s a grid cell', async function(assert) {
+    await render(hbs`<Ui::AnswerField @beside={{true}} />`);
+    assert.dom('.cell.large-3').exists();
   });
 });
