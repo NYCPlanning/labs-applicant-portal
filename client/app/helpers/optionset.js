@@ -68,7 +68,7 @@ const OPTIONSET_LOOKUP = {
  * @return     {string, number, array or Object}
  */
 export function optionset([model, optionsetId, returnType, lookupToken]) {
-  const optionset = OPTIONSET_LOOKUP[model][optionsetId]; // eslint-disable-line
+  const optionset = OPTIONSET_LOOKUP[model][optionsetId];
   const optionById = optionset[lookupToken];
   let option;
 
