@@ -3,12 +3,12 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | page-nav', function(hooks) {
+module('Integration | Component | ui/page-nav', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders navItems and yields block content', async function(assert) {
     await render(hbs`
-      <PageNav
+      <Ui::PageNav
         @navItems={{array
           (hash
             anchorId="one"
@@ -24,7 +24,7 @@ module('Integration | Component | page-nav', function(hooks) {
         <div>
           A button
         </div>
-      </PageNav>
+      </Ui::PageNav>
     `);
 
     assert.dom('[data-test-page-nav]').containsText('A button');
