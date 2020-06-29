@@ -28,8 +28,10 @@
 {{/if}}
 
 {{#if (and this.error (not @hideError))}}
-  <ValidationMessage
-    @changesetError={{this.error}}
+  <span
+    class="form-error is-visible"
     data-test-validation-message={{@attribute}}
-  />
+  >
+    {{this.error.validation}}
+  </span>
 {{/if}}
