@@ -3,6 +3,10 @@ import {
 } from 'ember-changeset-validations/validators';
 
 // These validate the fields for _saving_ to the server
+// REMEMBER: You still need to manually update "maxlength"
+// attributes for TextArea and TextInput components in the
+// templates (in addition to the `max` attribute in the
+// validateLength validators here).
 export default {
   dcpRevisedprojectname: [
     validateLength({

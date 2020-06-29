@@ -1,11 +1,9 @@
 <div class="site-main grid-x grid-margin-x" ...attributes>
   <div class="cell">
-    <fieldset class="fieldset">
-      <legend>
-        <b>
-          Attachments
-        </b>
-      </legend>
+    <Ui::Question class="fieldset" as |Q|>
+      <Q.Prompt>
+        Attachments
+      </Q.Prompt>
 
       <ul class="no-bullet">
         {{#each @fileManager.existingFiles as |file idx|}}
@@ -40,7 +38,9 @@
           </li>
         {{/each}}
       </ul>
+
       <hr>
+
       {{#if (or @fileManager.filesToDelete @fileManager.filesToUpload.files)}}
         <h6 class="medium-margin-bottom slide-in-top">
           To be
@@ -50,6 +50,7 @@
           when you save the project:
         </h6>
       {{/if}}
+
       <ul class="no-bullet">
         {{#each @fileManager.filesToDelete as |file idx|}}
           <li class="slide-in-top">
@@ -79,6 +80,7 @@
           </li>
         {{/each}}
       </ul>
+
       <ul class="no-bullet">
         {{#each @fileManager.filesToUpload.files as |file idx|}}
           <li class="slide-in-top">
@@ -109,6 +111,7 @@
           </li>
         {{/each}}
       </ul>
+
       <div class="cell large-auto">
         <FileUpload
           id={{concat "FileUploader" @package.id}}
@@ -122,6 +125,6 @@
           Choose Files
         </FileUpload>
       </div>
-    </fieldset>
+    </Ui::Question>
   </div>
 </div>

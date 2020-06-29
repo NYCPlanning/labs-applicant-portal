@@ -1,0 +1,21 @@
+{{#if (or @package.rwcdsForm.adapterError @package.adapterError)}}
+  <div class="callout alert" data-test-error-saving>
+    <h5 class="text-red-dark">
+      <FaIcon
+      @icon="exclamation-circle"
+      @size="2x"
+      class="text-red float-left medium-margin-right tiny-margin-top"
+      />
+        There was a problem saving your information.
+    </h5>
+      {{#each @package.rwcdsForm.adapterError.errors as |error|}}
+        <p class="font-mono text-red-dark bg-red-white small-padding text-small" data-test-error-message>{{error.detail}}</p>
+      {{/each}}
+      {{#each @package.adapterError.errors as |error|}}
+        <p class="font-mono text-red-dark bg-red-white small-padding text-small" data-test-error-message>{{error.detail}}</p>
+      {{/each}}
+      <p class="text-red-dark text-small">
+        Please try again. If the problem persists, please contact City Planning at <a href="mailto:ZAP_feedback_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a> or <a href="tel:212-720-3300" class="nowrap">212-720-3300</a>.
+      </p>
+  </div>
+{{/if}}

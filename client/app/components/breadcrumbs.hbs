@@ -1,18 +1,10 @@
-{{!-- TODO: Make this hardcoded breadcrumb trail dynamic--}}
-
-<nav aria-label="You are here:" role="navigation">
-  <ul class="breadcrumbs">
-    <li>
-      <LinkTo @route='projects'>My Projects</LinkTo>
-    </li>
-    <li class="disabled">
-      {{@package.project.dcpProjectname}}
-    </li>
-    <li class="disabled">
-      Pre-Application Statement
-    </li>
-    <li>
-      <span class="show-for-sr">Current: </span> {{this.router.currentRoute.localName}}
-    </li>
+<nav
+  aria-label="You are here:"
+  role="navigation"
+  data-test-breadcrumb-nav
+>
+  <ul class="breadcrumbs" data-test-breadcrumb-list>
+    {{yield (component "breadcrumbs-item")}}
   </ul>
 </nav>
+<hr class="large-margin-bottom">

@@ -1,10 +1,8 @@
 <div class="character-counter">
-  {{#if this.warningClass}}
-    <span
-      class="count {{this.warningClass}}"
-      data-character-counter
-    >
-      {{this.stringLength}} / {{@maxlength}}
-    </span>
-  {{/if}}
+  <span
+    class="count {{this.warningClass}}"
+    data-character-counter
+  >
+    {{this.stringLength}} / {{@maxlength}}
+  </span>
 </div>

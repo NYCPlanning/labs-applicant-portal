@@ -14,6 +14,10 @@
 [context.qa]
   environment = { HOST="https://applicant-portal-qa.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-qa' }
 
+# training
+[context.training]
+  environment = { HOST="https://applicant-portal-training.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-training' }
+
 # develop
 [context.develop]
   environment = { HOST="https://applicant-portal-develop.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-develop' }

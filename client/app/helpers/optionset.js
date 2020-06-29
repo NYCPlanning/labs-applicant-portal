@@ -11,8 +11,17 @@ import {
   PACKAGE_STATE_OPTIONSET,
   PACKAGE_STATUS_OPTIONSET,
   PACKAGE_VISIBILITY_OPTIONSET,
+  PACKAGE_TYPE_OPTIONSET,
 } from '../models/package';
-
+import {
+  DCPHASPROJECTCHANGEDSINCESUBMISSIONOFTHEPAS_OPTIONSET,
+  DCPCONSTRUCTIONPHASING_OPTIONSET,
+} from '../models/rwcds-form';
+import {
+  YES_NO_UNSURE_OPTIONSET,
+  DCPLEGALSTREETFRONTAGE_OPTIONSET,
+  DCPHOUSINGUNITTYPE_OPTIONSET,
+} from '../models/pas-form';
 
 const OPTIONSET_LOOKUP = {
   applicant: {
@@ -25,9 +34,23 @@ const OPTIONSET_LOOKUP = {
     state: PACKAGE_STATE_OPTIONSET,
     status: PACKAGE_STATUS_OPTIONSET,
     visibility: PACKAGE_VISIBILITY_OPTIONSET,
+    type: PACKAGE_TYPE_OPTIONSET,
+  },
+  rwcdsForm: {
+    dcpHasprojectchangedsincesubmissionofthepas: DCPHASPROJECTCHANGEDSINCESUBMISSIONOFTHEPAS_OPTIONSET,
+    dcpConstructionphasing: DCPCONSTRUCTIONPHASING_OPTIONSET,
+  },
+  pasForm: {
+    dcpProposedprojectorportionconstruction: YES_NO_UNSURE_OPTIONSET,
+    dcpUrbanrenewalarea: YES_NO_UNSURE_OPTIONSET,
+    dcpLegalstreetfrontage: DCPLEGALSTREETFRONTAGE_OPTIONSET,
+    dcpLanduseactiontype2: YES_NO_UNSURE_OPTIONSET,
+    dcpProjectareaischancefloodplain: YES_NO_UNSURE_OPTIONSET,
+    dcpRestrictivedeclarationrequired: YES_NO_UNSURE_OPTIONSET,
+    dcpDiscressionaryfundingforffordablehousing: YES_NO_UNSURE_OPTIONSET,
+    dcpHousingunittype: DCPHOUSINGUNITTYPE_OPTIONSET,
   },
 };
-
 
 /**
  * Use this helper in templates to retrieve optionsets and their values.
@@ -44,45 +67,42 @@ const OPTIONSET_LOOKUP = {
  * or label lookup. The identifier is the key to each option in an optionset.
  * @return     {string, number, array or Object}
  */
-export default helper(function optionset([model, optionsetId, returnType, lookupToken]) {
+export function optionset([model, optionsetId, returnType, lookupToken]) {
   const optionset = OPTIONSET_LOOKUP[model][optionsetId];
+  const optionById = optionset[lookupToken];
+  let option;
 
   switch (returnType) {
     case 'list':
       return Object.values(optionset);
     case 'code':
-      if (lookupToken) {
-        const optionById = optionset[lookupToken];
-
-        if (optionById) {
-          return optionById.code;
-        }
-
-        const optionByLabel = Object.values(optionset).findBy('label', lookupToken);
-
-        if (optionByLabel) {
-          return optionByLabel.code;
-        }
+      if (optionById) {
+        return optionById.code;
       }
-      console.assert(false, 'Invalid call to optionset helper: must provide a valid identifier or label to look up a code.');
+
+      option = Object.values(optionset).findBy('label', lookupToken);
+
+      if (option) {
+        return option.code;
+      }
+      console.assert(false, 'Invalid call to optionset helper: must provide a valid identifier or label to look up a code.'); // eslint-disable-line
       break;
     case 'label':
-      if (lookupToken) {
-        const optionById = optionset[lookupToken];
-
-        if (optionById) {
-          return optionById.label;
-        }
-
-        const optionByCode = Object.values(optionset).findBy('code', lookupToken);
-
-        if (optionByCode) {
-          return optionByCode.label;
-        }
+      if (optionById) {
+        return optionById.label;
       }
-      console.assert(false, 'Invalid call to optionset helper: must provide a valid identifier or code to look up a label.');
+
+      option = Object.values(optionset).findBy('code', lookupToken);
+
+      if (option) {
+        return option.label;
+      }
+      console.assert(false, `Invalid call to optionset helper with identifier ${lookupToken}: must provide a valid identifier or code to look up a label.`); // eslint-disable-line
       break;
     default:
       return optionset;
   }
-});
+  return undefined;
+}
+
+export default helper(optionset);

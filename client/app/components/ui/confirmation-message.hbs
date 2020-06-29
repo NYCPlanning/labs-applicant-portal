@@ -1,0 +1,55 @@
+<Ui::Modal
+  @open={{@show}}
+  @container="reveal-modal-container"
+>
+  <div class="reveal-overlay">
+    <div
+      class="reveal-overlay-target"
+      role="button"
+      data-test-opaque-overlay
+      {{on "click" @toggle}}
+    />
+    <div
+      class="reveal"
+      role="dialog"
+      aria-hidden="false"
+      tabindex="-1"
+      data-test-reveal-modal
+    >
+      {{yield}}
+  
+      <hr>
+      <div class="grid-x">
+        <div class="cell large-6 small-padding-right">
+          <button
+            type="button"
+            class="button expanded large secondary" {{on "click" @toggle}}
+            data-test-continue-button
+          >
+            Continue Editing
+          </button>
+        </div>
+        <div class="cell large-6 small-padding-left">
+          <@action
+            data-test-action
+            ...attributes
+          />
+        </div>
+      </div>
+  
+      {{#if @footer}}
+        <@footer />
+      {{/if}}
+  
+      <button
+        type="button"
+        class="close-button"
+        aria-label="Close modal"
+        data-test-close-button
+        {{on "click" @toggle}}
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+</Ui::Modal>

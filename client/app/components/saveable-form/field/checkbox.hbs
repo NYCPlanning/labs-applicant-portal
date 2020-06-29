@@ -1,0 +1,11 @@
+<Input
+  @type="checkbox"
+  @checked={{@value}}
+  id={{@attribute}}
+  data-test-checkbox={{@attribute}}
+  ...attributes
+/>
+
+<label for={{@attribute}}>
+  {{yield}}
+</label>

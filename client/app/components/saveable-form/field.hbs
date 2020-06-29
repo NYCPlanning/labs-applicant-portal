@@ -1,0 +1,35 @@
+{{#let (component (concat 'saveable-form/field/' this.type)
+  value=this.value
+  attribute=@attribute
+  parentField=(component 'saveable-form/field'
+    data=@data
+    error=@error
+    attribute=@attribute
+  )) as |CurriedFieldComponent|
+}}
+  {{#if hasBlock}}
+    {{!-- Yield the component so more args can be added --}}
+    {{yield (component CurriedFieldComponent)}}
+  {{else}} 
+    {{!-- Without a block, just invoke it --}}
+    {{!-- We invoke as angle brackets so we can spread attributes --}}
+    <CurriedFieldComponent
+      data-test-input={{@attribute}}
+      ...attributes
+    />
+  {{/if}}
+{{/let}}
+
+{{#if @showCounter}}
+  <CharacterCounter
+    @string={{this.value}}
+    @maxlength={{if @maxlength @maxlength '250'}}
+  />
+{{/if}}
+
+{{#if (and this.error (not @hideError))}}
+  <ValidationMessage
+    @changesetError={{this.error}}
+    data-test-validation-message={{@attribute}}
+  />
+{{/if}}

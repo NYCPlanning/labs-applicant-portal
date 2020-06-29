@@ -1,0 +1,112 @@
+{{#let @form as |form|}}
+  <form.Section @title="Project Description">
+    <label>
+      <strong>
+        Has the project changed since submission of the Pre-Application Statement (PAS)?
+      </strong>
+      <br>
+      <form.Field
+        @type="radio-group"
+        @attribute="dcpHasprojectchangedsincesubmissionofthepas"
+      as |RadioGroup|>
+          <RadioGroup
+            @options={{array
+              (hash
+                code=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'code' 'YES')
+                label=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'label' 'YES'))
+              (hash
+                code=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'code' 'NO')
+                label=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'label' 'NO'))
+            }}
+          />
+      </form.Field>
+      <br>
+    </label>
+
+    <small class="help-text display-block">
+      Ensure that descriptions below account for any changes since PAS submission
+    </small>
+
+    <label>
+      <strong>
+        Identify and describe the existing conditions of all areas affected by the proposed actions
+      </strong>
+      <form.Field
+        @type="text-area"
+        @attribute="dcpProjectsitedescription"
+        @maxlength="2400"
+      />
+    </label>
+
+    <label>
+      <strong>
+        Describe the proposed project facilitated by the proposed actions
+      </strong>
+      <form.Field
+        @type="text-area"
+        @attribute="dcpProposedprojectdevelopmentdescription"
+        @maxlength="1800"
+      />
+    </label>
+
+    <label>
+      <strong>
+        Will construction be done in multiple phases?
+      </strong>
+      <br>
+        <form.Field
+          @type="radio-group"
+          @attribute="dcpConstructionphasing"
+        as |RadioGroup|>
+          <RadioGroup
+            @options={{array
+              (hash
+                code=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'code' 'SINGLE')
+                label=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'label' 'SINGLE'))
+              (hash
+                code=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'code' 'MULTIPLE')
+                label=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'label' 'MULTIPLE'))
+              (hash
+                code=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'code' 'NOT_APPLICABLE')
+                label=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'label' 'NOT_APPLICABLE'))
+              }}
+          />
+        </form.Field>
+      <br>
+    </label>
+
+    <label>
+      <strong>
+        What is the proposed analysis year of the proposed action?
+      </strong>
+      <form.Field
+        @attribute="dcpBuildyear"
+        @showCounter={{true}}
+        @maxlength="4"
+      />
+    </label>
+
+    <label>
+      <strong>
+        Explain the rationale behind the analysis year
+      </strong>
+      <small class="help-text display-block">
+        Providing history allows NYC Planning to analyze potential CEQR analysis&nbsp;
+        sections/chapters, as well as development trends and previous environment&nbsp;
+        review assumptions.
+        <br>
+        Summarize any prior rezonings or discretionary City Planning Commission&nbsp;
+        approvals. Provide ULURP and CEQR Application numbers, if available.&nbsp;
+        Describe any context that is relevant to development on the site (e.g.&nbsp;
+        former uses, large scale development plans, urban renewal plans,&nbsp;
+        Mitchell Lama site plans, or other site controls, easements, restrictive&nbsp;
+        declarations, (E) designations, historic or other designations, etc.).
+      </small>
+      <form.Field
+        @type="text-area"
+        @attribute="dcpSitehistory"
+        @maxlength="600"
+      />
+    </label>
+  </form.Section>
+{{/let}}

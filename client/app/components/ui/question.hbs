@@ -1,0 +1,13 @@
+{{#if @fieldset}}
+  <fieldset class="medium-margin-bottom" ...attributes>
+    {{yield (hash
+      Prompt=(component 'ui/fieldset-legend')
+    )}}
+  </fieldset>
+  {{else}}
+  <label class="medium-margin-bottom" ...attributes>
+    {{yield (hash
+      Prompt=(component 'ui/label-text')
+    )}}
+  </label>
+{{/if}}

@@ -17,9 +17,21 @@ export default class SaveButtonComponent extends Component {
     return !this.isEnabled && this.clickTask.lastSuccessful;
   }
 
+  // Allows for a curried function to be invoked and passed
+  // the public onClick callback:
+  // <SaveButton
+  //   @wrapperCallback={{fn this.callback someArg}} {{! called first}}
+  //   @onClick={{this.clickHandler}}  {{! passed to wrapperCallback}}
+  // />
+  // Necessary here because consuming component might need to control
+  // sequencing of public and private events
+  get wrapperCallback() {
+    return this.args.wrapperCallback || ((callback) => callback());
+  }
+
   // triggered when the button is clicked
   @task(function* () {
-    yield this.args.onClick();
-  })
+    yield this.wrapperCallback(this.args.onClick);
+  }).withTestWaiter()
   clickTask;
 }

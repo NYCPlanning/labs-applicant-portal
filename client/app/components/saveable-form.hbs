@@ -1,18 +1,45 @@
-{{yield (hash
-  saveableChanges=this.saveableChanges
-  submittableChanges=this.submittableChanges
-  radio=(component 'radio-button'
-    changed=this.validate
-  )
+<FormValidator
+  @model={{@model}}
+  @validator={{this.validators.[0]}}
+  @parent={{@registerSaveable}} as |saveableValidator|
+>
+  <saveableValidator.FormValidator
+    @validator={{this.validators.[1]}}
+    @parent={{@registerSubmittable}} as |submittableValidator|
+  >
+    {{yield (hash
+      saveableChanges=saveableValidator.changeset
 
-  saveButton=(component 'packages/save-button'
-    onClick=this.save
-    isEnabled=true
-  )
+      isSaveable=(and saveableValidator.isDirty saveableValidator.isValid)
+      isSubmittable=submittableValidator.isValid
 
-  submitButton=(component 'packages/save-button'
-    onClick=this.submit
-    isEnabled=true
-    isSubmit=true
-  )
-)}}
+      SaveableForm=(component 'saveable-form'
+        registerSaveable=saveableValidator.register
+        registerSubmittable=submittableValidator.register
+      )
+
+      Field=(component 'saveable-form/field'
+        data=saveableValidator.changeset
+        error=submittableValidator.changeset.error
+      )
+
+      SaveButton=(component 'packages/save-button'
+        wrapperCallback=saveableValidator.persist
+        isEnabled=(and saveableValidator.isDirty saveableValidator.isValid)
+      )
+
+      SubmitButton=(component 'packages/save-button'
+        onClick=this.toggleModal
+        wrapperCallback=submittableValidator.persist
+        isEnabled=submittableValidator.isValid
+        isSubmit=true
+      )
+
+      Section=(component 'saveable-form/section' register=this.registerSection)
+
+      StickySidebar=(component 'sticky-sidebar' navItems=this.sectionData)
+
+      ConfirmationModal=(component 'ui/confirmation-message' show=this.modalIsOpen toggle=this.toggleModal)
+    )}}
+  </saveableValidator.FormValidator>
+</FormValidator>

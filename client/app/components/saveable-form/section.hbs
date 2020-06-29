@@ -1,0 +1,13 @@
+<section class="form-section" ...attributes>
+  <h2 class="section-header">
+    <span id={{this.elementId}} class="section-anchor"></span>
+
+    {{@title}}
+  </h2>
+
+  {{yield}}
+
+  {{#if @register}}
+    <div {{did-insert (fn @register this)}}></div>
+  {{/if}}
+</section>
