@@ -4,6 +4,7 @@
 
 <div class="grid-x grid-padding-x">
   <div class="cell large-8">
+
     {{#if (gt this.model.length 0)}}
       {{#if (gt this.applicantProjects.length 0)}}
         <ul class="no-bullet">
@@ -38,12 +39,12 @@
           You are not currently assigned to any active DCP projects.
         </p>
     {{/if}}
-  </div>
-  <div class="cell large-4">
-    <p>
-      If something has gone wrong, or you believe projects are missing from this list, please contact City Planning at
-      <a href="mailto:ZAP_feedback_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a> or <a href="tel:212-720-3300" class="nowrap">212-720-3300</a>.
-    </p>
+
+  </div>{{! end left/main column }}
+  <div class="cell large-4 sticky-sidebar">
+
+    <AssistanceMessage class="large-margin-top" />
+
   </div>
 </div>
 

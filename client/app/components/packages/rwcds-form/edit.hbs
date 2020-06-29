@@ -5,6 +5,7 @@
 >
   <div class="grid-x grid-margin-x">
     <div class="cell large-8">
+
       <section class="form-section">
         <h1>
           Reasonable Worst Case Development Scenario (V{{@package.dcpPackageversion}})
@@ -40,10 +41,11 @@
         @form={{saveableForm}}
         @model={{@package.rwcdsForm}}
       />
-    </div>
 
-    <div class="cell large-4">
-      <saveableForm.StickySidebar>
+    </div>{{! end left/main column }}
+    <div class="cell large-4 sticky-sidebar">
+
+      <saveableForm.PageNav>
         <saveableForm.SaveButton
           @isEnabled={{or @package.isDirty (and saveableForm.saveableChanges.isDirty saveableForm.saveableChanges.isValid)}}
           @onClick={{this.savePackage}}
@@ -56,7 +58,7 @@
           class="secondary"
           data-test-submit-button
         />
-      </saveableForm.StickySidebar>
+      </saveableForm.PageNav>
 
       <saveableForm.ConfirmationModal
         @action={{component saveableForm.SubmitButton
@@ -73,6 +75,9 @@
         <p class="header-large medium-margin-top small-margin-bottom">Are you sure?</p>
         <p>[CONFIRMATION EXPLANATION HERE]</p>
       </saveableForm.ConfirmationModal>
-    </div>
+
+      <AssistanceMessage class="large-margin-top" />
+
+    </div>{{! end right/sidebar column }}
   </div>
 </SaveableForm>
