@@ -1,4 +1,4 @@
-import Model, { attr, belongsTo } from '@ember-data/model';
+import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 
 export const DCPHASPROJECTCHANGEDSINCESUBMISSIONOFTHEPAS_OPTIONSET = {
   YES: {
@@ -30,10 +30,16 @@ export default class RwcdsFormModel extends Model {
   @belongsTo('package', { async: false })
   package;
 
+  @hasMany('affected-zoning-resolution', { async: false })
+  affectedZoningResolutions;
+
   @attr('string') dcpDescribethewithactionscenario;
 
   @attr('boolean') dcpIsplannigondevelopingaffordablehousing;
 
+  // dependent on when:
+  // there's a project-action with dcpZoningresolutiontype = 'ZR'
+  // && dcpZrsectionnumber = 'Appendix F'
   @attr('number') dcpIncludezoningtextamendment;
 
   @attr('boolean') dcpExistingconditions;
