@@ -23,12 +23,12 @@
         error=submittableValidator.changeset.error
       )
 
-      SaveButton=(component 'packages/save-button'
+      SaveButton=(component 'saveable-form/save-button'
         wrapperCallback=saveableValidator.persist
         isEnabled=(and saveableValidator.isDirty saveableValidator.isValid)
       )
 
-      SubmitButton=(component 'packages/save-button'
+      SubmitButton=(component 'saveable-form/save-button'
         onClick=this.toggleModal
         wrapperCallback=submittableValidator.persist
         isEnabled=submittableValidator.isValid
