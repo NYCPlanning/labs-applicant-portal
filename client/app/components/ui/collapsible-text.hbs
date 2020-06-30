@@ -1,0 +1,14 @@
+<button
+  class="text-a11y-orange"
+  type="button"
+  onClick={{fn this.toggleAdditionalText}}
+  data-test-title="{{@buttonText}}"
+>
+  {{@buttonText}}
+  <FaIcon @icon={{if this.showAdditionalText "caret-up" "caret-down"}}/>
+</button>
+{{#if this.showAdditionalText}}
+  <div class="bg-white-smoke medium-padding medium-margin-bottom scale-fade-in" data-test-additional-text>
+    {{yield}}
+  </div>
+{{/if}}
