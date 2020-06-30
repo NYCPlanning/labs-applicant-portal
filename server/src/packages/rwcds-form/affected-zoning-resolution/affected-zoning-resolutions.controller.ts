@@ -14,7 +14,7 @@ import { CrmService } from '../../../crm/crm.service';
 @UseGuards(AuthenticateGuard)
 @UsePipes(JsonApiDeserializePipe)
 @Controller('affected-zoning-resolutions')
-export class AffectedZoningResolutionController {
+export class AffectedZoningResolutionsController {
   constructor(private readonly crmService: CrmService) {}
 
   @Patch('/:id')

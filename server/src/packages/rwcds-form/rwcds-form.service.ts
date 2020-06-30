@@ -84,6 +84,19 @@ export class RwcdsFormService {
   }
 
   async find(id) {
+    // Because we post data from dcp_projectaction to dcp_affectedzoningresolution, we need
+    // to GET the rwcdsForm twice. Once to pass the form into the syncActions method. And 
+    // a second time to include the updated dcp_affectedzoningresolution relationship. 
+    const { records: [rwcdsFormWithoutUpdatedZr] } = await this.crmService.get(`dcp_rwcdsforms`, `
+      $filter=
+        dcp_rwcdsformid eq ${id}
+      &$expand=dcp_rwcdsform_dcp_affectedzoningresolution_rwcdsform
+    `);
+
+    // run syncActions to synchronize dcp_projectaction and dcp_affectedzoningresolution entities
+    await this.syncActions(rwcdsFormWithoutUpdatedZr);
+
+    // version of rwcdsForm that guarantees we have updated dcp_affectedzoningresolution
     const { records: [rwcdsForm] } = await this.crmService.get(`dcp_rwcdsforms`, `
       $filter=
         dcp_rwcdsformid eq ${id}
@@ -91,9 +104,6 @@ export class RwcdsFormService {
     `);
 
     const { _dcp_projectid_value } = rwcdsForm;
-
-    // run syncActions to synchronize dcp_projectaction and dcp_affectedzoningresolution entities
-    await this.syncActions(rwcdsForm);
 
     // requires info from adjacent latest pasForm
     if (
@@ -128,7 +138,6 @@ export class RwcdsFormService {
       dcp_rwcdsformid,
     } = rwcdsForm;
     const zrTypes = affectedZoningResolutions.map(zr => zr['dcp_zoningresolutiontype@OData.Community.Display.V1.FormattedValue']);
-    console.log(zrTypes);
     const { records: projectActions } = await this.crmService.get(`dcp_projectactions`, `
       $filter=_dcp_project_value eq ${_dcp_projectid_value}
     `);
