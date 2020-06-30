@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import ENV from '../config/environment';
+import ENV from '../../config/environment';
 
 export default class DoLogoutComponent extends Component {
   get nycIDHost() {

@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
 import { TrackedSet } from 'tracked-maps-and-sets';
 import { action } from '@ember/object';
-import createChangeset from '../utils/create-changeset';
+import createChangeset from '../../utils/create-changeset';
 
 const noop = () => {};
 
-export default class FormValidatorComponent extends Component {
+export default class ValidatorComponent extends Component {
   changeset = createChangeset(this.args.model, this.args.validator, { dependsOn: this.args.dependsOn });
 
   registeredDescendants = new TrackedSet();

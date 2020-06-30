@@ -3,14 +3,16 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | breadcrumbs-item', function(hooks) {
+module('Integration | Component | ui/breadcrumbs', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders a breadcrumb list item', async function(assert) {
+  test('it renders a list in a nav', async function(assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<BreadcrumbsItem @text="foo" />`);
-    assert.equal(this.element.textContent.trim(), 'foo');
+    await render(hbs`<Ui::Breadcrumbs />`);
+
+    assert.dom('nav[data-test-breadcrumb-nav]').exists();
+    assert.dom('ul[data-test-breadcrumb-list]').exists();
   });
 });
