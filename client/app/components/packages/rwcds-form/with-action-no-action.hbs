@@ -1,1 +1,17 @@
-{{yield}}
+{{#let @form as |form|}}
+  <form.Section @title="Analysis">
+    <Ui::Question as |Q|>
+      <Q.Prompt>
+        How did you determine this With-Action scenario?
+      </Q.Prompt>
+      <p class="help-text">
+        Explain the rationale supporting the With-Action Scenario described above. If future conditions are not "maximized", please indicate why this is the case (e.g., existing site controls, site configuration).
+      </p>
+      <form.Field
+        @attribute="dcpHowdidyoudeterminethiswithactionscena"
+        @type="text-area"
+        @maxlength="600"
+      />
+    </Ui::Question>
+  </form.Section>
+{{/let}}
