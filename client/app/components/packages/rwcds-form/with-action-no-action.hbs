@@ -30,8 +30,34 @@
             (hash label='Yes' code=true)
             (hash label='No' code=false)
           }}
-          @onChange={{fn (mut @form.saveableChanges.dcpDescribethenoactionscenario) ""}}
+          @onChange={{fn (mut @form.saveableChanges.dcpDescribethenoactionscenario) ""}} as |value|
         >
+          {{#if value}}
+            <Ui::Question as |Q|>
+              <Q.Prompt>
+                How did you determine this No-Action scenario?
+              </Q.Prompt>
+                <p class="help-text">
+                  If Department of Building (DOB) approvals were granted that support the future No-Action Scenario assumed in the prior section, please indicate that in this summary, and if available, attach the DOB approved plans to this document.
+                </p>
+              <form.Field
+                @attribute="dcpHowdidyoudeterminethenoactionscenario"
+                @type="text-area"
+                @maxlength="1500"
+              />
+            </Ui::Question>
+          {{else}}
+            <Ui::Question as |Q|>
+              <Q.Prompt>
+                Description of No-Action scenario
+              </Q.Prompt>
+              <form.Field 
+                @attribute="dcpDescribethenoactionscenario"
+                @type="text-area"
+                @maxlength="1500"
+              />
+            </Ui::Question>
+          {{/if}}
         </RadioGroup>
       </form.Field>
     </Ui::Question>
@@ -54,8 +80,31 @@
             (hash label='Yes' code=true)
             (hash label='No' code=false)
           }}
-          @onChange={{fn (mut @form.saveableChanges.dcpRwcdsexplanation) ""}}
+          @onChange={{fn (mut @form.saveableChanges.dcpRwcdsexplanation) ""}} as |value|
         >
+          {{#if value}}
+            <Ui::Question as |Q|>
+              <Q.Prompt>
+                Explain why the project is the same as the proposed With-Action Scenario.
+              </Q.Prompt>
+              <form.Field
+                @attribute="dcpRwcdsexplanation"
+                @type="text-area"
+                @maxlength="50"
+              />
+            </Ui::Question>
+          {{else}}
+            <Ui::Question as |Q|>
+              <Q.Prompt>
+                Description of With-Action scenario
+              </Q.Prompt>
+              <form.Field
+                @attribute="dcpDescribethewithactionscenario"
+                @type="text-area"
+                @maxlength="1500"
+              />
+            </Ui::Question>
+          {{/if}}
         </RadioGroup>
       </form.Field>
     </Ui::Question>
