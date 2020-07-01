@@ -2,6 +2,66 @@
   <form.Section @title="Analysis">
     <Ui::Question as |Q|>
       <Q.Prompt>
+        Describe the development assumptions. These assumption could be the result of existing conditions, local policies, etc.
+      </Q.Prompt>
+      <form.Field
+        @attribute="dcpDevelopmentsiteassumptions"
+        @type="text-area"
+        @maxlength="2400"
+      />
+    </Ui::Question>
+
+    <h3 class="xlarge-margin-top">
+      No-Action Scenario
+    </h3>
+    <Ui::Question @fieldset={{true}} as |Q|>
+      <Q.Prompt>
+        Is the No Action Scenario the same as the existing conditions?
+      </Q.Prompt>
+      <p class="help-text">If no development is expected to reasonably occur within the Project/Affected Area absent the Proposed Action(s) or other discretionary approvals, assume that existing conditions would remain unchanged in the future No-Action Scenario.
+      </p>
+      <form.Field
+        @type="radio-group"
+        @attribute="dcpExistingconditions"
+        as |RadioGroup|
+      >
+        <RadioGroup
+          @options={{array
+            (hash label='Yes' code=true)
+            (hash label='No' code=false)
+          }}
+          @onChange={{fn (mut @form.saveableChanges.dcpDescribethenoactionscenario) ""}}
+        >
+        </RadioGroup>
+      </form.Field>
+    </Ui::Question>
+
+    <h3 class="xlarge-margin-top">
+      With-Action Scenario
+    </h3>
+    <Ui::Question @fieldset={{true}} as |Q|>
+      <Q.Prompt>
+        Is the proposed Project the same as the proposed With-Action Scenario?
+      </Q.Prompt>
+      <br>
+      <form.Field
+        @type="radio-group"
+        @attribute="dcpIsrwcdsscenario"
+        as |RadioGroup|
+      >
+        <RadioGroup
+          @options={{array
+            (hash label='Yes' code=true)
+            (hash label='No' code=false)
+          }}
+          @onChange={{fn (mut @form.saveableChanges.dcpRwcdsexplanation) ""}}
+        >
+        </RadioGroup>
+      </form.Field>
+    </Ui::Question>
+
+    <Ui::Question as |Q|>
+      <Q.Prompt>
         How did you determine this With-Action scenario?
       </Q.Prompt>
       <p class="help-text">
