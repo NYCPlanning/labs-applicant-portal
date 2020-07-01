@@ -8,8 +8,10 @@ export default {
   ...SaveableRwcdsForm,
   dcpRwcdsexplanation: [
     ...SaveableRwcdsForm.dcpRwcdsexplanation,
-    validatePresence({
+    validatePresenceIf({
       presence: true,
+      on: 'dcpIsrwcdsscenario',
+      withValue: true,
       message: 'This field is required',
     }),
   ],
