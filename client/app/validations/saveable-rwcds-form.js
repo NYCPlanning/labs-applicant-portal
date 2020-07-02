@@ -87,7 +87,8 @@ export default {
   ],
   dcpHowdidyoudeterminethiswithactionscena: [
     validateLength({
-      min: 600,
+      min: 0,
+      max: 600,
       message: 'Text is too long (max {max} characters)',
     }),
   ],
