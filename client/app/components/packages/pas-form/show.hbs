@@ -465,7 +465,7 @@
         </A.Prompt>
         <A.Field>
           <span data-test-proposedDevelopmentTypes>
-            <ProposedDevelopmentTypesList @pasForm={{@package.pasForm}} />
+            <Packages::ProposedDevelopmentTypesList @pasForm={{@package.pasForm}} />
           </span>
         </A.Field>
       </Ui::Answer>
@@ -601,9 +601,9 @@
     </section>
 
   </div>{{! end left/main column }}
-  <div class="cell large-4">
+  <div class="cell large-4 sticky-sidebar">
 
-    <StickySidebar
+    <Ui::PageNav
       @navItems={{array
         (hash anchorId="project-info"
           label="Project Information")
@@ -623,6 +623,8 @@
           label="Attached Documents")
         }}
     />
+
+    <Messages::Assistance class="large-margin-top" />
 
   </div>{{! end right/sidebar column }}
 </div>

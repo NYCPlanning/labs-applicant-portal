@@ -3,12 +3,12 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | sticky-sidebar', function(hooks) {
+module('Integration | Component | ui/page-nav', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders navItems and yields block content', async function(assert) {
     await render(hbs`
-      <StickySidebar
+      <Ui::PageNav
         @navItems={{array
           (hash
             anchorId="one"
@@ -19,16 +19,16 @@ module('Integration | Component | sticky-sidebar', function(hooks) {
             label="two"
           )
         }}
-        data-test-stickysidebar
+        data-test-page-nav
       >
         <div>
           A button
         </div>
-      </StickySidebar>
+      </Ui::PageNav>
     `);
 
-    assert.dom('[data-test-stickysidebar]').containsText('A button');
-    assert.dom('[data-test-stickysidebar-navitem="one"]').exists();
-    assert.dom('[data-test-stickysidebar-navitem="two"]').exists();
+    assert.dom('[data-test-page-nav]').containsText('A button');
+    assert.dom('[data-test-page-nav-navitem="one"]').exists();
+    assert.dom('[data-test-page-nav-navitem="two"]').exists();
   });
 });

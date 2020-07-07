@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | form-validator', function(hooks) {
+module('Integration | Component | saveable-form/validator', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
@@ -12,12 +12,12 @@ module('Integration | Component | form-validator', function(hooks) {
 
     // Template block usage:
     await render(hbs`
-      <FormValidator
+      <SaveableForm::Validator
         @model={{this.dummyModel}}
         @validator={{this.validator}} as |myValidator|
       >
         {{myValidator.isValid}}, {{myValidator.isDirty}}
-      </FormValidator>
+      </SaveableForm::Validator>
     `);
 
     assert.dom().hasText('true, false');

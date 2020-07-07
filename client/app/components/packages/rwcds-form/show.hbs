@@ -234,9 +234,9 @@
     </section>
 
   </div>{{! end left/main column }}
-  <div class="cell large-4">
+  <div class="cell large-4 sticky-sidebar">
 
-    <StickySidebar
+    <Ui::PageNav
       @navItems={{array
         (hash anchorId="project-info"
           label="Project Information")
@@ -250,6 +250,8 @@
           label="Attachments")
         }}
     />
+
+    <Messages::Assistance class="large-margin-top" />
 
   </div>{{! end right/sidebar column }}
 </div>

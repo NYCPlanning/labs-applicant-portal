@@ -1,9 +1,9 @@
-<FormValidator
+<SaveableForm::Validator
   @model={{@model}}
   @validator={{this.validators.[0]}}
   @parent={{@registerSaveable}} as |saveableValidator|
 >
-  <saveableValidator.FormValidator
+  <saveableValidator.Validator
     @validator={{this.validators.[1]}}
     @parent={{@registerSubmittable}} as |submittableValidator|
   >
@@ -23,12 +23,12 @@
         error=submittableValidator.changeset.error
       )
 
-      SaveButton=(component 'packages/save-button'
+      SaveButton=(component 'saveable-form/save-button'
         wrapperCallback=saveableValidator.persist
         isEnabled=(and saveableValidator.isDirty saveableValidator.isValid)
       )
 
-      SubmitButton=(component 'packages/save-button'
+      SubmitButton=(component 'saveable-form/save-button'
         onClick=this.toggleModal
         wrapperCallback=submittableValidator.persist
         isEnabled=submittableValidator.isValid
@@ -37,9 +37,9 @@
 
       Section=(component 'saveable-form/section' register=this.registerSection)
 
-      StickySidebar=(component 'sticky-sidebar' navItems=this.sectionData)
+      PageNav=(component 'ui/page-nav' navItems=this.sectionData)
 
-      ConfirmationModal=(component 'ui/confirmation-message' show=this.modalIsOpen toggle=this.toggleModal)
+      ConfirmationModal=(component 'ui/confirmation-modal' show=this.modalIsOpen toggle=this.toggleModal)
     )}}
-  </saveableValidator.FormValidator>
-</FormValidator>
+  </saveableValidator.Validator>
+</SaveableForm::Validator>

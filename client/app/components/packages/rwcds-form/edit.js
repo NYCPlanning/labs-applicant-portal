@@ -2,11 +2,16 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import SaveableRwcdsFormValidations from '../../../validations/saveable-rwcds-form';
 import SubmittableRwcdsFormValidations from '../../../validations/submittable-rwcds-form';
+import SaveableAffectedZoningResolutionFormValidations from '../../../validations/saveable-affected-zoning-resolution-form';
+import SubmittableAffectedZoningResolutionFormValidations from '../../../validations/submittable-affected-zoning-resolution-form';
 
 export default class PackagesRwcdsFormEditComponent extends Component {
-  saveableRwcdsFormValidations = SaveableRwcdsFormValidations;
-
-  submittableRwcdsFormValidations = SubmittableRwcdsFormValidations;
+  validations = {
+    SaveableRwcdsFormValidations,
+    SubmittableRwcdsFormValidations,
+    SaveableAffectedZoningResolutionFormValidations,
+    SubmittableAffectedZoningResolutionFormValidations,
+  };
 
   @action
   async savePackage() {

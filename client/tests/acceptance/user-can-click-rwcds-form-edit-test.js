@@ -86,4 +86,69 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     await fillIn('[data-test-textarea="dcpSitehistory"]', exceedMaximum(600, 'String'));
     assert.dom('[data-test-validation-message="dcpSitehistory"').hasText('Text is too long (max 600 characters)');
   });
+
+  test('Validation messages display for Proposed Actions', async function(assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'applicant', 'rwcdsForm')],
+    });
+
+    await visit('/rwcds-form/1/edit');
+
+    assert.equal(currentURL(), '/rwcds-form/1/edit');
+
+    assert.dom('[data-test-zrsectionnumber]').exists();
+
+    await fillIn('[data-test-input="dcpModifiedzrsectionnumber"]', exceedMaximum(25, 'String'));
+    assert.dom('[data-test-validation-message="dcpModifiedzrsectionnumber"]').hasText('Text is too long (max 25 characters)');
+
+    await fillIn('[data-test-input="dcpPurposeandneedfortheproposedaction"]', exceedMaximum(1500, 'String'));
+    assert.dom('[data-test-validation-message="dcpPurposeandneedfortheproposedaction"]').hasText('Text is too long (max 1500 characters)');
+
+    assert.dom('[data-test-validation-message="dcpWhichactionsfromotheragenciesaresought"]').doesNotExist();
+    await click('[data-test-radio="dcpIsapplicantseekingaction"][data-test-radio-option="Yes"]');
+
+    await fillIn('[data-test-input="dcpWhichactionsfromotheragenciesaresought"]', exceedMaximum(2400, 'String'));
+    assert.dom('[data-test-validation-message="dcpWhichactionsfromotheragenciesaresought"]').hasText('Text is too long (max 2400 characters)');
+
+    await fillIn('[data-test-input="dcpWhichactionsfromotheragenciesaresought"]', '');
+    assert.dom('[data-test-validation-message="dcpWhichactionsfromotheragenciesaresought"]').hasText('This field is required');
+  });
+
+  test('Validation messages display for With-Action-No-Action', async function(assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'applicant', 'rwcdsForm')],
+    });
+
+    await visit('/rwcds-form/1/edit');
+
+    assert.equal(currentURL(), '/rwcds-form/1/edit');
+
+    await fillIn('[data-test-textarea="dcpDevelopmentsiteassumptions"]', exceedMaximum(2400, 'String'));
+    assert.dom('[data-test-validation-message="dcpDevelopmentsiteassumptions"').hasText('Text is too long (max 2400 characters)');
+
+    await click('[data-test-radio="dcpExistingconditions"][data-test-radio-option="Yes"]');
+
+    await fillIn('[data-test-textarea="dcpHowdidyoudeterminethenoactionscenario"]', exceedMaximum(1500, 'String'));
+    assert.dom('[data-test-validation-message="dcpHowdidyoudeterminethenoactionscenario"').hasText('Text is too long (max 1500 characters)');
+
+    await click('[data-test-radio="dcpExistingconditions"][data-test-radio-option="No"]');
+
+    await fillIn('[data-test-textarea="dcpDescribethenoactionscenario"]', exceedMaximum(1500, 'String'));
+    assert.dom('[data-test-validation-message="dcpDescribethenoactionscenario"').hasText('Text is too long (max 1500 characters)');
+
+    await click('[data-test-radio="dcpIsrwcdsscenario"][data-test-radio-option="Yes"]');
+
+    assert.dom('[data-test-validation-message="dcpRwcdsexplanation"]').hasText('This field is required');
+
+    await fillIn('[data-test-textarea="dcpRwcdsexplanation"]', exceedMaximum(50, 'String'));
+    assert.dom('[data-test-validation-message="dcpRwcdsexplanation"').hasText('Text is too long (max 50 characters)');
+
+    await click('[data-test-radio="dcpIsrwcdsscenario"][data-test-radio-option="No"]');
+
+    await fillIn('[data-test-textarea="dcpDescribethewithactionscenario"]', exceedMaximum(1500, 'String'));
+    assert.dom('[data-test-validation-message="dcpDescribethewithactionscenario"').hasText('Text is too long (max 1500 characters)');
+
+    await fillIn('[data-test-textarea="dcpHowdidyoudeterminethiswithactionscena"]', exceedMaximum(600, 'String'));
+    assert.dom('[data-test-validation-message="dcpHowdidyoudeterminethiswithactionscena"').hasText('Text is too long (max 600 characters)');
+  });
 });

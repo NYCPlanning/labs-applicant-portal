@@ -1,5 +1,5 @@
 <div
-  class="sticky-sidebar"
+  class="page-nav"
   ...attributes
 >
   {{yield}}
@@ -9,7 +9,7 @@
       {{#each @navItems as |item|}}
         <li
           class="medium-margin-bottom"
-          data-test-stickysidebar-navitem={{item.anchorId}}
+          data-test-page-nav-navitem={{item.anchorId}}
         >
           <a href="#{{item.anchorId}}">
             <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />

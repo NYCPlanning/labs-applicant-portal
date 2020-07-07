@@ -15,7 +15,25 @@ export default Factory.extend({
   rwcdsForm: trait({
     dcpPackagetype: 717170004,
     afterCreate(projectPackage, server) {
-      if (!projectPackage.rwcdsForm) server.create('rwcds-form', { package: projectPackage });
+      if (!projectPackage.rwcdsForm) {
+        server.create('rwcds-form', {
+          package: projectPackage,
+          // this field is set to true in the backend IF
+          // there exists a 'ZR' dcpZoningresolutiontype and
+          // that zoning resolution's dcpZrsectionnumber is 'Appendix F'
+          dcpIncludezoningtextamendment: true,
+          affectedZoningResolutions: [
+            server.create('affected-zoning-resolution', {
+              dcpZoningresolutiontype: 'ZA',
+              dcpZrsectionnumber: 'Section 74 7-11',
+            }),
+            server.create('affected-zoning-resolution', {
+              dcpZoningresolutiontype: 'ZR',
+              dcpZrsectionnumber: 'Appendix F',
+            }),
+          ],
+        });
+      }
     },
   }),
 

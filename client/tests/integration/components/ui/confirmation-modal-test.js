@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | ui/confirmation-message', function(hooks) {
+module('Integration | Component | ui/confirmation-modal', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
@@ -15,12 +15,12 @@ module('Integration | Component | ui/confirmation-message', function(hooks) {
       <div id="reveal-modal-container">
       </div>
 
-      <Ui::ConfirmationMessage
+      <Ui::ConfirmationModal
         @show={{this.show}}
         @toggle={{this.toggle}}
       >
         template block text
-      </Ui::ConfirmationMessage>
+      </Ui::ConfirmationModal>
     `);
 
     assert.dom().doesNotContainText('template block text');
