@@ -59,7 +59,7 @@
       {{#if @form.saveableChanges.dcpProposeddevelopmentsiteinfoother}}
         <Ui::Question as |Q|>
           <Q.Prompt>
-            Explain:
+            Explain: <Ui::RequiredAsterisk />
           </Q.Prompt>
           <Form.Field @attribute="dcpProposeddevelopmentsiteotherexplanation"/>
         </Ui::Question>
@@ -70,6 +70,7 @@
       <Q.Prompt>
         Is the Development Site in an
         <Ui::ExternalLink @href="https://zola.planning.nyc.gov/">Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area</Ui::ExternalLink>?
+        <Ui::RequiredAsterisk />
       </Q.Prompt>
 
       <p class="text-small">
@@ -102,6 +103,7 @@
     <Ui::Question @fieldset={{true}} as |Q|>
       <Q.Prompt>
         Does the proposed development involve discretionary funding for Affordable Housing Units?
+        <Ui::RequiredAsterisk />
       </Q.Prompt>
 
       <Form.Field
