@@ -1,0 +1,41 @@
+{{#let @form as |Form|}}
+  <Ui::Question class="fieldset relative scale-fade-in" as |Q|>
+    <span class="label">
+      {{~@form.saveableChanges.dcpZoningresolutiontype~}}
+      {{#if (lookup-action-type @form.saveableChanges.dcpZoningresolutiontype)}}
+        <LabsUi::IconTooltip
+          @tip={{lookup-action-type @form.saveableChanges.dcpZoningresolutiontype}}
+          @icon="info-circle"
+          @side="bottom"
+          @transform="shrink-4 up-2"
+          @fixedWidth={{true}}
+        />
+      {{/if}}
+    </span>
+    {{#if this.zrSectionNumber}}
+      <span data-test-zrsectionnumber>{{this.zrSectionNumber}}</span>
+    {{/if}}
+    {{#if this.hasModifiedZrSectionNumberQuestion}}
+      <Q.Prompt>
+        Which sections of the Zoning Resolution does this modify?
+      </Q.Prompt>
+      <small class="help-text display-block">
+        Provide the Zoning Resolution section number(s). Ex. ZR Sec. 42-10 and 43-17
+      </small>
+      <Form.Field
+        @attribute="dcpModifiedzrsectionnumber"
+        as |TextInput|
+      >
+        <TextInput
+          type="text"
+          maxlength="250"
+          data-test-input="dcpModifiedzrsectionnumber"
+        />
+      </Form.Field>
+    {{else if this.zrAppendixF}}
+      This action {{if @rwcdsForm.saveableChanges.dcpIncludezoningtextamendment "includes" "does not include"}} MIH. If this is a mistake, please contact City Planning. 
+    {{else}}
+      <span class="help-text">No additional information required for this action</span>
+    {{/if}}
+  </Ui::Question>
+{{/let}}

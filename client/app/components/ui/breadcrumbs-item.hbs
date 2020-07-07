@@ -1,0 +1,12 @@
+<li class="{{if @disabled 'disabled'}}">
+  {{#if @current}}
+    <span class="show-for-sr">Current:</span>
+  {{/if}}
+  {{#if @route}}
+    <LinkTo @route={{@route}}>
+      {{@text}}
+    </LinkTo>
+  {{else}}
+    {{@text}}
+  {{/if}}
+</li>

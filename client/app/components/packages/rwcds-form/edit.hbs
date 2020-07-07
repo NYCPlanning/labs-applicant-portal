@@ -1,0 +1,83 @@
+<SaveableForm
+  @model={{@package.rwcdsForm}}
+  @validators={{array this.validations.SaveableRwcdsFormValidations this.validations.SubmittableRwcdsFormValidations}}
+  as |saveableForm|
+>
+  <div class="grid-x grid-margin-x">
+    <div class="cell large-8">
+
+      <section class="form-section">
+        <h1>
+          Reasonable Worst Case Development Scenario (V{{@package.dcpPackageversion}})
+        </h1>
+        <h2 class="gray">
+          {{@package.project.dcpProjectname}} ({{@package.project.dcpName}})
+        </h2>
+        <h3>
+          {{optionset 'bbl' 'boroughs' 'label' @package.project.dcpBorough}}
+        </h3>
+
+        <p>
+          The <strong>Reasonable Worst Case Development Scenario (RWCDS)</strong> form may be used for either site-specific or generic/area wide&nbsp;
+          actions and should only be completed once the proposed action(s) have been finalized. If there are questions, contact&nbsp;
+          the Environmental Assessment and Review Division (EARD) Project Manager.
+        </p>
+      </section>
+
+      <Packages::RwcdsForm::ProjectDescription
+        @form={{saveableForm}}
+      />
+
+      <Packages::RwcdsForm::ProposedProjectActions
+        @form={{saveableForm}}
+        @validations={{this.validations}}
+      />
+
+      <Packages::RwcdsForm::WithActionNoAction
+        @form={{saveableForm}}
+      />
+
+      <Packages::RwcdsForm::AttachedDocuments
+        @form={{saveableForm}}
+        @model={{@package.rwcdsForm}}
+      />
+
+    </div>{{! end left/main column }}
+    <div class="cell large-4 sticky-sidebar">
+
+      <saveableForm.PageNav>
+        <saveableForm.SaveButton
+          @isEnabled={{or @package.isDirty (and saveableForm.saveableChanges.isDirty saveableForm.saveableChanges.isValid)}}
+          @onClick={{this.savePackage}}
+          data-test-save-button
+        />
+        <Packages::RwcdsForm::RwcdsFormError @package={{@package}} />
+
+        <saveableForm.SubmitButton
+          @isEnabled={{saveableForm.isSubmittable}}
+          class="secondary"
+          data-test-submit-button
+        />
+      </saveableForm.PageNav>
+
+      <saveableForm.ConfirmationModal
+        @action={{component saveableForm.SubmitButton
+          onClick=this.submitPackage
+          isEnabled=saveableForm.isSubmittable
+          class="no-margin"
+        }}
+        @footer={{component 'packages/rwcds-form/rwcds-form-error'
+          package=@package
+        }}
+        data-test-confirm-submit-button={{true}}
+      >
+        <h6>[CONFIRMATION MESSAGE HERE]</h6>
+        <p class="header-large medium-margin-top small-margin-bottom">Are you sure?</p>
+        <p>[CONFIRMATION EXPLANATION HERE]</p>
+      </saveableForm.ConfirmationModal>
+
+      <Messages::Assistance class="large-margin-top" />
+
+    </div>{{! end right/sidebar column }}
+  </div>
+</SaveableForm>

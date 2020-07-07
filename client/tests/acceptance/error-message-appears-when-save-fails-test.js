@@ -22,15 +22,14 @@ module('Acceptance | error message appears when save fails', function(hooks) {
     });
   });
 
-  test('error message appears when error occurs on save', async function(assert) {
-    this.server.create('package', {
+  test('error message appears when error occurs on save for PAS Form', async function(assert) {
+    this.server.create('package', 'pasForm', {
       project: this.server.create('project'),
-      pasForm: this.server.create('pas-form'),
     });
 
     this.server.patch('/pas-forms/:id', { errors: [{ detail: 'server problem with pasForm' }] }, 500); // force mirage to error
 
-    await visit('/packages/1/edit');
+    await visit('/pas-form/1/edit');
 
     assert.dom('[data-test-error-message]').doesNotExist();
 
@@ -49,6 +48,32 @@ module('Acceptance | error message appears when save fails', function(hooks) {
     assert.equal(this.server.db.pasForms[0].dcpRevisedprojectname, undefined);
   });
 
+  test('error message appears when error occurs on save for RWCDS Form', async function(assert) {
+    this.server.create('package', 'rwcdsForm', {
+      project: this.server.create('project'),
+    });
+
+    this.server.patch('/rwcds-forms/:id', { errors: [{ detail: 'server problem with rwcdsForm' }] }, 500); // force mirage to error
+
+    await visit('/rwcds-form/1/edit');
+
+    assert.dom('[data-test-error-message]').doesNotExist();
+
+    await fillIn('[data-test-textarea="dcpProjectsitedescription"]', 'Whatever affects one directly, affects all indirectly.');
+
+    // save it
+    await click('[data-test-save-button]');
+    await settled(); // async make sure save action finishes before assertion
+
+    await waitFor('[data-test-error-message]');
+
+    assert.dom('[data-test-error-message]').exists();
+    assert.dom('[data-test-error-message]').includesText('server problem with rwcdsForm');
+
+    // check that model was not saved
+    assert.equal(this.server.db.rwcdsForms[0].dcpProjectsitedescription, undefined);
+  });
+
   test('error message appears when error occurs on file upload', async function(assert) {
     this.server.create('package', 'applicant', {
       documents: [],
@@ -60,7 +85,7 @@ module('Acceptance | error message appears when save fails', function(hooks) {
 
     this.server.patch('/packages/:id', { errors: [{ detail: 'server problem with package' }] }, 500); // force mirage to error
 
-    await visit('/packages/2/edit');
+    await visit('/pas-form/2/edit');
 
     assert.dom('[data-test-error-message]').doesNotExist();
 
@@ -83,6 +108,7 @@ module('Acceptance | error message appears when save fails', function(hooks) {
   test('error message appears when error occurs on submit', async function(assert) {
     // all required fields are filled for submitting
     this.server.create('package', {
+      dcpPackagetype: 717170000,
       project: this.server.create('project'),
       pasForm: this.server.create('pas-form', {
         dcpRevisedprojectname: 'project name',
@@ -99,7 +125,7 @@ module('Acceptance | error message appears when save fails', function(hooks) {
 
     this.server.patch('/pas-forms/:id', { errors: [{ detail: 'server problem with pasForm' }] }, 500); // force mirage to error
 
-    await visit('/packages/1/edit');
+    await visit('/pas-form/1/edit');
 
     assert.dom('[data-test-error-message]').doesNotExist();
 
@@ -112,6 +138,6 @@ module('Acceptance | error message appears when save fails', function(hooks) {
     assert.dom('[data-test-error-message]').includesText('server problem with pasForm');
 
     // make sure route did not transition
-    assert.equal(currentURL(), '/packages/1/edit');
+    assert.equal(currentURL(), '/pas-form/1/edit');
   });
 });

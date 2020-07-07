@@ -1,0 +1,9 @@
+<div
+  class="ruled-adjacent {{if @beside 'grid-x'}}"
+  ...attributes
+>
+  {{yield (hash
+    Prompt=(component 'ui/answer-prompt' beside=@beside)
+    Field=(component 'ui/answer-field' beside=@beside)
+  )}}
+</div>

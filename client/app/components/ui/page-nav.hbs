@@ -1,0 +1,22 @@
+<div
+  class="page-nav"
+  ...attributes
+>
+  {{yield}}
+
+  <nav>
+    <ul class="no-bullet text-weight-bold">
+      {{#each @navItems as |item|}}
+        <li
+          class="medium-margin-bottom"
+          data-test-page-nav-navitem={{item.anchorId}}
+        >
+          <a href="#{{item.anchorId}}">
+            <FaIcon @icon="chevron-circle-down" @fixedWidth={{true}} class="text-silver" />
+            {{item.label}}
+          </a>
+        </li>
+      {{/each}}
+    </ul>
+  </nav>
+</div>
