@@ -14,6 +14,8 @@ import { CrmService } from '../../../crm/crm.service';
 import { JsonApiSerializeInterceptor } from '../../../json-api-serialize.interceptor';
 import { AuthenticateGuard } from '../../../authenticate.guard';
 import { JsonApiDeserializePipe } from '../../../json-api-deserialize.pipe';
+import { APPLICANT_REPRESENTATIVE_ATTRS } from './applicant-representative.attrs';
+import { APPLICANT_ATTRS } from './applicants.attrs';
 
 /**
 * CRM has two entities for applicants (dcp_applicantinformation and dcp_applicantrepresentativeinformation)
@@ -26,27 +28,10 @@ import { JsonApiDeserializePipe } from '../../../json-api-deserialize.pipe';
 * delete method in this controller (which doesn't have access to body.target_entity!)
 **/
 
-export const APPLICANT_REPRESENTATIVE_ATTRIBUTES = [
-  'dcp_firstname',
-  'dcp_lastname',
-  'dcp_organization',
-  'dcp_email',
-  'dcp_address',
-  'dcp_city',
-  'dcp_state',
-  'dcp_zipcode',
-  'dcp_phone',
-];
-
-export const APPLICANT_ATTRIBUTES = [
-  ...APPLICANT_REPRESENTATIVE_ATTRIBUTES,
-  'dcp_type',
-];
-
 @UseInterceptors(
   new JsonApiSerializeInterceptor('applicants', {
     id: 'dcp_applicantinformationid',
-    attributes: [...APPLICANT_ATTRIBUTES],
+    attributes: [...APPLICANT_ATTRS],
   }),
 )
 @UseGuards(AuthenticateGuard)
@@ -62,7 +47,7 @@ export class ApplicantsController {
     let allowedAttrs;
 
     if (target_entity === 'dcp_applicantinformation') {
-      allowedAttrs = pick(body, APPLICANT_ATTRIBUTES);
+      allowedAttrs = pick(body, APPLICANT_ATTRS);
 
       await this.crmService.update(
         'dcp_applicantinformations',
@@ -70,7 +55,7 @@ export class ApplicantsController {
         allowedAttrs,
       );
     } else if (target_entity === 'dcp_applicantrepresentativeinformation') {
-      allowedAttrs = pick(body, APPLICANT_REPRESENTATIVE_ATTRIBUTES);
+      allowedAttrs = pick(body, APPLICANT_REPRESENTATIVE_ATTRS);
 
       // strip the hacky prepended "representative-" to use the exact CRM id
       const representativeId = id.replace('representative-', '');
@@ -97,7 +82,7 @@ export class ApplicantsController {
 
     // determine the appropriate attributes based on the entity type
     if (target_entity === 'dcp_applicantinformation') {
-      allowedAttrs = pick(body, APPLICANT_ATTRIBUTES);
+      allowedAttrs = pick(body, APPLICANT_ATTRS);
 
       if (body.pas_form) {
         return this.crmService.create('dcp_applicantinformations', {
@@ -116,7 +101,7 @@ export class ApplicantsController {
         );
       }
     } else if (target_entity === 'dcp_applicantrepresentativeinformation') {
-      allowedAttrs = pick(body, APPLICANT_REPRESENTATIVE_ATTRIBUTES);
+      allowedAttrs = pick(body, APPLICANT_REPRESENTATIVE_ATTRS);
 
       if (body.pas_form) {
         return this.crmService.create(

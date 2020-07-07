@@ -19,12 +19,11 @@ module('Acceptance | land use action fields validate', function(hooks) {
   });
 
   test('validation message appears for count field when user types incorrect value', async function(assert) {
-    this.server.create('package', {
+    this.server.create('package', 'pasForm', {
       project: this.server.create('project'),
-      pasForm: this.server.create('pas-form'),
     });
 
-    await visit('/packages/1/edit');
+    await visit('/pas-form/1/edit');
 
     await selectChoose('[data-test-land-use-action-picker]', 'Zoning Authorization');
 
@@ -48,15 +47,14 @@ module('Acceptance | land use action fields validate', function(hooks) {
   });
 
   test('validation message appears for extra questions when user types incorrect value', async function(assert) {
-    this.server.create('package', {
+    this.server.create('package', 'pasForm', {
       project: this.server.create('project'),
-      pasForm: this.server.create('pas-form'),
     });
 
     // representation of input that is 1 over the maximum character limit
     const maximum = (maxLength, singleCharacter) => singleCharacter.repeat(maxLength) + singleCharacter;
 
-    await visit('/packages/1/edit');
+    await visit('/pas-form/1/edit');
 
     assert.dom('[data-test-validation-message="dcpZoningauthorizationpursuantto"]').doesNotExist();
     assert.dom('[data-test-validation-message="dcpZoningauthorizationtomodify"]').doesNotExist();

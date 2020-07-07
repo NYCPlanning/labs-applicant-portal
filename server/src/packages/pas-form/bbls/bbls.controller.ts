@@ -4,20 +4,12 @@ import { CrmService } from '../../../crm/crm.service';
 import { JsonApiSerializeInterceptor } from '../../../json-api-serialize.interceptor';
 import { AuthenticateGuard } from '../../../authenticate.guard';
 import { JsonApiDeserializePipe } from '../../../json-api-deserialize.pipe';
-
-export const BBL_ATTRIBUTES = [
-  'dcp_partiallot',
-  'dcp_developmentsite',
-  'dcp_bblnumber',
-  'dcp_userinputborough',
-  'dcp_userinputblock',
-  'dcp_userinputlot',
-];
+import { BBL_ATTRS } from './bbls.attrs';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('bbls', {
   id: 'dcp_projectbblid',
   attributes: [
-    ...BBL_ATTRIBUTES,
+    ...BBL_ATTRS,
   ],
 }))
 @UseGuards(AuthenticateGuard)
@@ -28,7 +20,7 @@ export class BblsController {
 
   @Patch('/:id')
   async update(@Body() body, @Param('id') id) {
-    const allowedAttrs = pick(body, BBL_ATTRIBUTES);
+    const allowedAttrs = pick(body, BBL_ATTRS);
 
     await this.crmService.update('dcp_projectbbls', id, allowedAttrs);
 
@@ -40,7 +32,7 @@ export class BblsController {
 
   @Post('/')
   create(@Body() body) {
-    const allowedAttrs = pick(body, BBL_ATTRIBUTES);
+    const allowedAttrs = pick(body, BBL_ATTRS);
 
     if (!body.pas_form || !body.project) throw new HttpException(
       'Missing pas_form or project ids',

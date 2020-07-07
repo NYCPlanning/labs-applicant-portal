@@ -3,8 +3,13 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, fillIn, click } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | saveable-form', function(hooks) {
+module('Integration | Component | f', function(hooks) {
   setupRenderingTest(hooks);
+
+  // default some blank validators
+  hooks.beforeEach(function() {
+    this.set('validators', [{}, {}]);
+  });
 
   test('it renders', async function(assert) {
     this.dummyModel = {};
@@ -12,6 +17,7 @@ module('Integration | Component | saveable-form', function(hooks) {
     await render(hbs`
       <SaveableForm
         @model={{this.dummyModel}}
+        @validators={{this.validators}}
       />
     `);
 
@@ -20,6 +26,7 @@ module('Integration | Component | saveable-form', function(hooks) {
     await render(hbs`
       <SaveableForm
         @model={{this.dummyModel}}
+        @validators={{this.validators}}
       >
         template block text
       </SaveableForm>
@@ -45,31 +52,35 @@ module('Integration | Component | saveable-form', function(hooks) {
     await render(hbs`
       <SaveableForm
         @model={{this.dummyModel}}
-        @onSave={{this.handleSave}}
-        @onSubmit={{this.handleSubmit}}
-        as |saveable-form|
+        @validators={{this.validators}}
+        as |f|
       >
         <Input
           @type="text"
-          @value={{saveable-form.saveableChanges.someProp}}
+          @value={{f.saveableChanges.someProp}}
         />
 
-        <span data-test-radio-button-1>
-          <saveable-form.radio
-            @value={{true}}
-            @groupValue={{saveable-form.saveableChanges.someBool}}
+        <f.Field
+          @type="radio"
+          @attribute="someBool"
+        as |Radio|>
+          <span data-test-radio-button-1>
+            <Radio
+              @targetValue={{true}}
+            />
+          </span>
+
+          <Radio
+            @targetValue={{false}}
           />
-        </span>
+        </f.Field>
 
-        <saveable-form.radio
-          @value={{false}}
-          @groupValue={{saveable-form.saveableChanges.someBool}}
-        />
-
-        <saveable-form.saveButton
+        <f.SaveButton
+          @onClick={{this.handleSave}}
           data-test-save-button
         />
-        <saveable-form.submitButton
+        <f.SubmitButton
+          @onClick={{this.handleSubmit}}
           data-test-submit-button
         />
       </SaveableForm>
@@ -101,18 +112,78 @@ module('Integration | Component | saveable-form', function(hooks) {
     await render(hbs`
       <SaveableForm
         @model={{this.dummyModel}}
-        @onSave={{this.handleSave}}
-        as |saveable-form|
+        @validators={{this.validators}}
+        as |f|
       >
-        <saveable-form.saveButton
+        <f.SaveButton
+          @onClick={{this.handleSave}}
           data-test-save-button
         />
       </SaveableForm>
     `);
 
-
     await click('[data-test-save-button]');
 
     assert.ok(true);
+  });
+
+  test('it yields validatable child forms, validates', async function (assert) {
+    this.dummyModel = {
+      someProp: 'test',
+      someBool: null,
+    };
+
+    this.secondaryModel = {
+      someProp: 'test',
+      someBool: null,
+    };
+
+    this.handleSave = async () => {};
+
+    await render(hbs`
+      <SaveableForm
+        @model={{this.dummyModel}}
+        @validators={{this.validators}}
+        as |f|
+      >
+        <f.SaveableForm
+          @model={{this.secondaryModel}}
+          @validators={{this.validators}}
+          as |saveable-child-form|
+        >
+          <Input
+            @type="text"
+            @value={{saveable-child-form.saveableChanges.someProp}}
+          />
+        </f.SaveableForm>
+
+        <f.SaveButton
+          @onClick={{this.handleSave}}
+          data-test-save-button
+        />
+        <f.SubmitButton
+          @onClick={{this.handleSubmit}}
+          data-test-submit-button
+        />
+      </SaveableForm>
+    `);
+
+    assert.dom('[data-test-save-button]').isDisabled();
+
+    await fillIn('input', 'asdf');
+
+    assert.dom('[data-test-save-button]').isEnabled();
+
+    assert.deepEqual(this.secondaryModel, {
+      someProp: 'test',
+      someBool: null,
+    }, 'does not mutate until saved');
+
+    await click('[data-test-save-button]');
+
+    assert.deepEqual(this.secondaryModel, {
+      someProp: 'asdf',
+      someBool: null,
+    }, 'mutates when saved');
   });
 });

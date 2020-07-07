@@ -1,0 +1,99 @@
+<div class="fieldset-adder">
+  <h5 class="small-margin-bottom">
+    Add tax lots by searching for an address or BBL:
+  </h5>
+  <LabsSearch
+    @searchPlaceholder='Enter an address or BBL (ex 1001440001)'
+    @onSelect={{fn this.selectSearchResult}}
+    data-test-input="bbl-search" as |search|
+  >
+    <span class="text-black">
+      {{search.result.label}}
+      <small class="display-block text-dark-gray">{{bbl-breakup search.result.bbl}}</small>
+    </span>
+  </LabsSearch>
+</div>
+
+{{#if @bbls}}
+  <h5 class="slide-in-top">
+    Tax Lots Included in This Project
+  </h5>
+{{/if}}
+
+{{#each @bbls as |bbl|}}
+  {{#let @form as |Form|}}
+    <Form.SaveableForm @model={{bbl}} as |bblForm|>
+      <Ui::Question class="fieldset relative scale-fade-in" as |Q|>
+        <Q.Prompt data-test-bbl-title="{{bbl.dcpBblnumber}}">
+          {{bbl.dcpBblnumber}}
+          <span class="text-weight-normal">
+            {{#if bbl.temporaryAddressLabel}}
+              ({{bbl.temporaryAddressLabel}})
+            {{/if}}
+            <Ui::ExternalLink @href="https://zola.planning.nyc.gov/bbl/{{bbl.dcpBblnumber}}">View in ZoLa</Ui::ExternalLink>
+          </span>
+        </Q.Prompt>
+
+        <Ui::Question @fieldset={{true}} as |Q|>
+          <Q.Prompt data-test-development-site-question="{{bbl.dcpBblnumber}}-{{bblForm.saveableChanges.dcpDevelopmentsite}}">
+            Is this BBL part of the development site?
+          </Q.Prompt>
+
+          <bblForm.Field
+            @attribute="dcpDevelopmentsite"
+            @type="radio"
+            as |RadioButton|
+          >
+            <RadioButton
+              @targetValue={{true}}
+              data-test-bbl-development-site-yes={{bbl.dcpBblnumber}}
+            >
+              Yes
+            </RadioButton>
+            <RadioButton
+              @targetValue={{false}}
+              data-test-bbl-development-site-no={{bbl.dcpBblnumber}}
+            >
+              No
+            </RadioButton>
+          </bblForm.Field>
+        </Ui::Question>
+
+        <Ui::Question @fieldset={{true}} as |Q|>
+          <Q.Prompt data-test-partial-lot-question="{{bbl.dcpBblnumber}}-{{bblForm.saveableChanges.dcpPartiallot}}">
+            Is only a portion of this lot included in the project area?
+          </Q.Prompt>
+
+          <bblForm.Field
+            @attribute="dcpPartiallot"
+            @type="radio"
+            as |RadioButton|
+          >
+            <RadioButton
+              @targetValue={{true}}
+              data-test-bbl-partial-lot-yes={{bbl.dcpBblnumber}}
+            >
+              Yes
+            </RadioButton>
+            <RadioButton
+              @targetValue={{false}}
+              data-test-bbl-partial-lot-no={{bbl.dcpBblnumber}}
+            >
+              No
+            </RadioButton>
+          </bblForm.Field>
+        </Ui::Question>
+
+        <button
+          type="button"
+          class="delete-fieldset"
+          {{on "click" (fn this.removeBbl bbl)}}
+          data-test-button-remove-bbl="{{bbl.dcpBblnumber}}"
+        >
+          Delete BBL
+          <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
+        </button>
+      </Ui::Question>
+    </Form.SaveableForm>
+  {{/let}}
+{{/each}}

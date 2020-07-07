@@ -1,0 +1,63 @@
+<@form.Section @title="Attached Documents">
+  <p>
+    Please attach the following required documents. (Additional materials that help to explain the proposed project may also be submitted.)
+  </p>
+
+  <div class="grid-x grid-margin-x">
+    <div class="cell large-6">
+      <h5>Required for all projects:</h5>
+      <ul class="text-small">
+        <li class="small-margin-bottom">
+          <Ui::ExternalLink @href="http://gis.nyc.gov/taxmap/map.htm">Tax Map(s)</Ui::ExternalLink> — if project area has more than one tax block submit a separate map for each tax block
+        </li>
+        <li class="small-margin-bottom">
+          <Ui::ExternalLink @href="https://www1.nyc.gov/site/planning/zoning/index-map.page">Official Zoning Map</Ui::ExternalLink> — circle the project area
+        </li>
+        <li class="small-margin-bottom">
+          <Ui::ExternalLink @href="https://applicantmaps.planning.nyc.gov/">Land Use Map</Ui::ExternalLink>
+        </li>
+        <li class="small-margin-bottom">
+          Illustrative Representation of Any Proposed Development —  include details as needed to explain the nature of the project and its relationship to the surrounding area (such as heights, square footage, units, etc.). The Lead Planner can provide appropriate guidance for these materials.
+        </li>
+        <li class="small-margin-bottom">
+          Photographs —
+          <Ui::ExternalLink @href="https://www1.nyc.gov/assets/planning/download/pdf/applicants/applicant-portal/project_area_photographs_standards.pdf">Standards for photographs</Ui::ExternalLink>,
+          <Ui::ExternalLink class="nowrap" @href="https://www1.nyc.gov/assets/planning/download/pdf/applicants/applicant-portal/project_area_photographs_sample.pdf">Sample</Ui::ExternalLink>
+        </li>
+        <li class="small-margin-bottom">
+          <Ui::ExternalLink @href="https://www1.nyc.gov/assets/planning/download/pdf/applicants/applicant-portal/dcp-signature-form.pdf">Signature Form</Ui::ExternalLink>
+        </li>
+      </ul>
+
+      <h5>
+        For <Ui::ExternalLink @href="https://streets.planning.nyc.gov/about">City Map changes</Ui::ExternalLink>:
+      </h5>
+      <ul class="text-small">
+        <li class="small-margin-bottom">Most recent Borough President’s final Section Map or most recent approved and filed Alteration Map for the project area</li>
+        <li class="small-margin-bottom">Site survey — recommended but not required</li>
+      </ul>
+    </div>
+    <div class="cell large-6">
+      <h5>For projects in the NYC Coastal Zone: </h5>
+      <ul class="text-small">
+        <li class="small-margin-bottom">
+          Map of <Ui::ExternalLink @href="https://dcp.maps.arcgis.com/apps/View/index.html?app id=90e3a9f927c2471483631a20e8a41d8d">project location within the NYC coastal zone</Ui::ExternalLink> including Special Area Designations
+        </li>
+      </ul>
+
+      <h5>For Staten Island or Bronx projects in South Richmond, Special Hillsides Preservation, or Special Natural Resources Districts: </h5>
+      <ul class="text-small">
+        <li class="small-margin-bottom">Site Survey — Existing conditions (required if there have been changes to previous submissions)</li>
+        <li class="small-margin-bottom">Site Plan — Proposed conditions</li>
+        <li class="small-margin-bottom">Zoning Calculations: Tree Calculations</li>
+        <li class="small-margin-bottom">Zoning Calculations: Average Percent (%) of Slope (Special Hillsides Preservation and Special Natural Resources Districts)</li>
+      </ul>
+    </div>
+  </div>
+
+  <Packages::Attachments
+    @package={{@model.package}}
+    @fileManager={{@model.package.fileManager}}
+    data-test-section="attachments"
+  />
+</@form.Section>

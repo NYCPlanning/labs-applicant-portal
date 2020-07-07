@@ -1,109 +1,163 @@
-<fieldset class="fieldset relative" ...attributes>
-  <legend data-test-applicant-title="{{@applicant.friendlyEntityName}}">
-    <strong>
-      {{@applicant.friendlyEntityName}}
-    </strong>
-  </legend>
-
-  {{!-- if sent to CRM "Applicant Information" table, need to know "type" --}}
-  {{#if (eq @applicant.friendlyEntityName "Applicant")}}
-    <div class="cell medium-6" data-test-applicant-type-radio-group>
-      <RadioButton
-        @value={{717170000}}
-        @groupValue={{@applicant.dcpType}}
-        data-test-applicant-type-radio-individual
-      >
-        Individual
-      </RadioButton>
-      <RadioButton
-        @value={{717170001}}
-        @groupValue={{@applicant.dcpType}}
-        data-test-applicant-type-radio-organization
-      >
-        Organization
-      </RadioButton>
-    </div>
-  {{/if}}
-
-  {{!-- and if the applicant is on behalf of an organization, we need to know which organization --}}
-  {{#if (eq @applicant.dcpType 717170001)}}
-    <label data-test-applicant-organization>
-      Organization
-      <Input
-        type="text"
-        @value={{@applicant.dcpOrganization}}
-      />
-    </label>
-    <hr/>
-    <h5>Authorized Organization Representative</h5>
-  {{/if}}
-
-  <div class="grid-x grid-margin-x">
-    <div class="cell medium-6">
-      <label>First Name</label>
-      <Input
-        type="text"
-        @value={{@applicant.dcpFirstname}}
-      />
-    </div>
-    <div class="cell medium-6">
-      <label>Last Name</label>
-        <Input
-          type="text"
-          @value={{@applicant.dcpLastname}}
-        />
-    </div>
-  </div>
-
-  {{!-- always allow input for Other Team Members --}}
-  {{#if (eq @applicant.friendlyEntityName "Other Team Member")}}
-    <label>
-      Organization
-      <Input
-        type="text"
-        @value={{@applicant.dcpOrganization}}
-      />
-    </label>
-  {{/if}}
-
-  <label>Email Address <Input type="email" @value={{@applicant.dcpEmail}}/></label>
-  <label>Address <Input type="text" @value={{@applicant.dcpAddress}}/></label>
-
-  <div class="grid-x grid-margin-x">
-    <div class="cell medium-auto">
-      <label>City <Input type="text" @value={{@applicant.dcpCity}}/></label>
-    </div>
-    <div class="cell auto medium-2">
-      <label data-test-applicant-state-dropdown>
-        State
-        <PowerSelect
-          supportsDataTestProperties={{true}}
-          @selected={{@applicant.dcpState}}
-          @placeholder="state"
-          @searchEnabled={{true}}
-          @searchField="label"
-          @options={{this.stateOptions}}
-          @onchange={{fn this.updateAttr @applicant 'dcpState'}}
-        as |stateCode|>
-          {{optionset 'applicant' 'state' 'label' stateCode}}
-        </PowerSelect>
-      </label>
-    </div>
-    <div class="cell auto medium-4">
-      <label>ZIP <Input type="text" @value={{@applicant.dcpZipcode}}/></label>
-    </div>
-  </div>
-
-  <label>Phone <Input type="text" @value={{@applicant.dcpPhone}}/></label>
-
-  <button
-    type="button"
-    class="delete-fieldset"
-    {{on "click" (fn @removeApplicant @applicant)}}
-    data-test-remove-applicant-button
+{{#let @form as |Form|}}
+  <Ui::Question
+    @fieldset={{true}}
+    class="fieldset relative"
+    ...attributes
+    as |Q|
   >
-    Remove {{@applicant.friendlyEntityName}}
-    <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
-  </button>
+    <Q.Prompt data-test-applicant-title="{{@applicant.friendlyEntityName}}">
+      {{@applicant.friendlyEntityName}}
+    </Q.Prompt>
 
-</fieldset>
+    {{!-- if sent to CRM "Applicant Information" table, need to know "type" --}}
+    {{#if (eq @applicant.friendlyEntityName "Applicant")}}
+      <Ui::Question
+        data-test-applicant-type-radio-group
+        as |Q|
+      >
+        <Q.Prompt class="show-for-sr">
+          Type of applicant
+        </Q.Prompt>
+
+        <Form.Field
+          @attribute="dcpType"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{array
+              (hash label='Individual' code=717170000)
+              (hash label='Organization' code=717170001)
+            }}
+          />
+        </Form.Field>
+      </Ui::Question>
+    {{/if}}
+
+    {{!-- and if the applicant is on behalf of an organization, we need to know which organization --}}
+    {{#if (eq @applicant.dcpType 717170001)}}
+      <Ui::Question data-test-applicant-organization as |Q|>
+        <Q.Prompt>
+          <span class="text-weight-normal">Organization Name</span>
+        </Q.Prompt>
+        <Form.Field @attribute="dcpOrganization"/>
+      </Ui::Question>
+
+      <hr/>
+
+      <h5>Authorized Organization Representative</h5>
+    {{/if}}
+
+    <div class="grid-x grid-margin-x">
+      <div class="cell medium-6">
+        <Ui::Question as |Q|>
+          <Q.Prompt>
+            <span class="text-weight-normal">First Name</span>
+          </Q.Prompt>
+
+          <Form.Field @attribute="dcpFirstname"/>
+        </Ui::Question>
+      </div>
+
+      <div class="cell medium-6">
+        <Ui::Question as |Q|>
+          <Q.Prompt>
+            <span class="text-weight-normal">Last Name</span>
+          </Q.Prompt>
+
+          <Form.Field @attribute="dcpLastname"/>
+        </Ui::Question>
+      </div>
+    </div>
+
+    {{!-- always allow input for Other Team Members --}}
+    {{#if (eq @applicant.friendlyEntityName "Other Team Member")}}
+      <Ui::Question as |Q|>
+        <Q.Prompt>
+          <span class="text-weight-normal">Organization</span>
+        </Q.Prompt>
+
+        <Form.Field @attribute="dcpOrganization"/>
+      </Ui::Question>
+    {{/if}}
+
+    <Ui::Question as |Q|>
+      <Q.Prompt>
+        <span class="text-weight-normal">Email Address</span>
+      </Q.Prompt>
+
+      <Form.Field @attribute="dcpEmail"/>
+    </Ui::Question>
+
+    <Ui::Question as |Q|>
+      <Q.Prompt>
+        <span class="text-weight-normal">Address</span>
+      </Q.Prompt>
+
+      <Form.Field @attribute="dcpAddress"/>
+    </Ui::Question>
+
+    <div class="grid-x grid-margin-x">
+      <div class="cell medium-auto">
+        <Ui::Question as |Q|>
+          <Q.Prompt>
+            <span class="text-weight-normal">City</span>
+          </Q.Prompt>
+
+          <Form.Field @attribute="dcpCity"/>
+        </Ui::Question>
+      </div>
+      <div class="cell auto medium-2">
+        <Ui::Question
+          data-test-applicant-state-dropdown
+          as |Q|
+        >
+          <Q.Prompt>
+            <span class="text-weight-normal">State</span>
+          </Q.Prompt>
+
+          <PowerSelect
+            supportsDataTestProperties={{true}}
+            @selected={{@applicant.dcpState}}
+            @placeholder="state"
+            @searchEnabled={{true}}
+            @searchField="label"
+            @options={{map-by 'code' (optionset 'applicant' 'state' 'list')}}
+            @onchange={{fn (mut @applicant.dcpState)}}
+          as |stateCode|>
+            {{optionset 'applicant' 'state' 'label' stateCode}}
+          </PowerSelect>
+        </Ui::Question>
+      </div>
+
+      <div class="cell auto medium-4">
+        <Ui::Question as |Q|>
+          <Q.Prompt>
+            <span class="text-weight-normal">ZIP</span>
+          </Q.Prompt>
+
+          <Form.Field @attribute="dcpZipcode"/>
+        </Ui::Question>
+      </div>
+    </div>
+
+    <Ui::Question as |Q|>
+      <Q.Prompt>
+        <span class="text-weight-normal">Phone</span>
+      </Q.Prompt>
+
+      <Form.Field @attribute="dcpPhone"/>
+    </Ui::Question>
+
+    <button
+      type="button"
+      class="delete-fieldset"
+      {{on "click" (fn @removeApplicant @applicant)}}
+      data-test-remove-applicant-button
+    >
+      Remove {{@applicant.friendlyEntityName}}
+      <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
+    </button>
+
+  </Ui::Question>
+{{/let}}

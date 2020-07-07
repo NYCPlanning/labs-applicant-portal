@@ -2,14 +2,40 @@ import { Factory, trait } from 'ember-cli-mirage';
 import { PACKAGE_STATUS_OPTIONSET, PACKAGE_VISIBILITY_OPTIONSET } from '../../models/package';
 
 export default Factory.extend({
-  dcpPackagetype: 'PAS Package',
+  pasForm: trait({
+    dcpPackagetype: 717170000,
+    afterCreate(projectPackage, server) {
+      // add a pasForm if it doesn't already exist
+      // not sure which tests depend on this assumption
+      // so adding logic for it here
+      if (!projectPackage.pasForm) server.create('pas-form', { package: projectPackage });
+    },
+  }),
 
-  afterCreate(projectPackage, server) {
-    // add a pasForm if it doesn't already exist
-    // not sure which tests depend on this assumption
-    // so adding logic for it here
-    if (!projectPackage.pasForm) server.create('pas-form', { package: projectPackage });
-  },
+  rwcdsForm: trait({
+    dcpPackagetype: 717170004,
+    afterCreate(projectPackage, server) {
+      if (!projectPackage.rwcdsForm) {
+        server.create('rwcds-form', {
+          package: projectPackage,
+          // this field is set to true in the backend IF
+          // there exists a 'ZR' dcpZoningresolutiontype and
+          // that zoning resolution's dcpZrsectionnumber is 'Appendix F'
+          dcpIncludezoningtextamendment: true,
+          affectedZoningResolutions: [
+            server.create('affected-zoning-resolution', {
+              dcpZoningresolutiontype: 'ZA',
+              dcpZrsectionnumber: 'Section 74 7-11',
+            }),
+            server.create('affected-zoning-resolution', {
+              dcpZoningresolutiontype: 'ZR',
+              dcpZrsectionnumber: 'Appendix F',
+            }),
+          ],
+        });
+      }
+    },
+  }),
 
   withLandUseActions: trait({
     afterCreate(projectPackage, server) {

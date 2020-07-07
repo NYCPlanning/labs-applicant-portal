@@ -50,7 +50,6 @@ export class ProjectsService {
   private overwriteCodesWithLabels(projects) {
     return overwriteCodesWithLabels(projects, [
       '_dcp_applicant_customer_value',
-      'dcp_packagetype',
     ]);
   }
 }

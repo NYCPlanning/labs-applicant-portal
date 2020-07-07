@@ -1,0 +1,10 @@
+<nav
+  aria-label="You are here:"
+  role="navigation"
+  data-test-breadcrumb-nav
+>
+  <ul class="breadcrumbs" data-test-breadcrumb-list>
+    {{yield (component "ui/breadcrumbs-item")}}
+  </ul>
+</nav>
+<hr class="large-margin-bottom">

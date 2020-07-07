@@ -1,58 +1,15 @@
-import { Controller, Get, Param, UseInterceptors, Patch, Body, Session, HttpException, HttpStatus, UsePipes, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, UseInterceptors, Patch, Body, UsePipes, UseGuards } from '@nestjs/common';
 import { PackagesService } from './packages.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 import { JsonApiDeserializePipe } from '../json-api-deserialize.pipe';
 import { AuthenticateGuard } from '../authenticate.guard';
-import { PAS_FORM_ATTRIBUTES } from './pas-form/pas-form.controller';
-import { APPLICANT_ATTRIBUTES } from './pas-form/applicants/applicants.controller';
-import { BBL_ATTRIBUTES } from './pas-form/bbls/bbls.controller';
 import { pick } from 'underscore';
-import { PROJECT_ATTRIBUTES } from '../projects/projects.controller';
-
-export const PACKAGE_ATTRS = [
-  'statuscode',
-  'statecode',
-  'dcp_packagetype',
-  'dcp_visibility',
-  'dcp_packageversion',
-];
-
-export const PASFORM_PROJECTADDRESS_ATTRS = [
-  'dcp_validatedpostalcode',
-  'dcp_projectaddressid',
-  'modifiedon',
-  'dcp_dmsourceid',
-  'dcp_name',
-  'dcp_validatedxcoordinate',
-  'overriddencreatedon',
-  'dcp_validatedccd',
-  'createdon',
-  'dcp_userinputborough',
-  'dcp_addressvalidated',
-  'dcp_userinputaddressnumber',
-  'dcp_validatedstreet',
-  'dcp_responsewarning',
-  'dcp_userinputunit',
-  'versionnumber',
-  'dcp_migratedlastupdateddate',
-  'statuscode',
-  'dcp_validatedycoordinate',
-  'dcp_validatedborough',
-  'dcp_responseerror',
-  'dcp_validatedcd',
-  'timezoneruleversionnumber',
-  'dcp_validatedzm',
-  'dcp_validatedaddressnumber',
-  'importsequencenumber',
-  'dcp_dcp_validatedbintext',
-  'utcconversiontimezonecode',
-  'dcp_userinputstreet',
-  'dcp_validatedstreetcode',
-  'dcp_concatenatedaddressvalidated',
-  'dcp_validatedaddressoverride',
-  'dcp_addressvalidateddate',
-  'statecode',
-]
+import { RWCDS_FORM_ATTRS } from './rwcds-form/rwcds-form.attrs';
+import { PAS_FORM_ATTRS, PAS_FORM_PROJECTADDRESS_ATTRS } from './pas-form/pas-form.attrs';
+import { PACKAGE_ATTRS } from './packages.attrs';
+import { PROJECT_ATTRS } from '../projects/projects.attrs';
+import { BBL_ATTRS } from './pas-form/bbls/bbls.attrs';
+import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('packages', {
   id: 'dcp_packageid',
@@ -65,18 +22,19 @@ export const PASFORM_PROJECTADDRESS_ATTRS = [
 
     // entity relationships
     'pas-form',
+    'rwcds-form',
     'project',
   ],
   project: {
     ref: 'dcp_projectid',
     attributes: [
-      ...PROJECT_ATTRIBUTES
+      ...PROJECT_ATTRS
     ],
   },
   'pas-form': {
     ref: 'dcp_pasformid',
     attributes: [
-      ...PAS_FORM_ATTRIBUTES,
+      ...PAS_FORM_ATTRS,
 
       // associations/relationships/navigation links/extensions
       'applicants',
@@ -86,22 +44,28 @@ export const PASFORM_PROJECTADDRESS_ATTRS = [
     'project-addresses': {
       ref: 'dcp_projectaddressid',
       attributes: [
-        ...PASFORM_PROJECTADDRESS_ATTRS,
+        ...PAS_FORM_PROJECTADDRESS_ATTRS,
       ],
     },
     applicants: {
       ref: 'dcp_applicantinformationid',
       attributes: [
-        ...APPLICANT_ATTRIBUTES,
+        ...APPLICANT_ATTRS,
         'target_entity', // custom attribute to handle the two applicant crm entities
       ],
     },
     bbls: {
       ref: 'dcp_projectbblid',
       attributes: [
-        ...BBL_ATTRIBUTES,
+        ...BBL_ATTRS,
       ],
     },
+  },
+  'rwcds-form': {
+    ref: 'dcp_rwcdsformid',
+    attributes: [
+      ...RWCDS_FORM_ATTRS,
+    ],
   },
 
   // Transform here should only be used for remapping
@@ -109,13 +73,16 @@ export const PASFORM_PROJECTADDRESS_ATTRS = [
   // handling special virtual properties that do not
   // come from CRM 
   transform(projectPackage) {
-    const { dcp_pasform: pasForm } = projectPackage;
+    // TODO: Consider creating separate endpoints for each
+    // form, or some other solution, to avoid the
+    // forking logic within the package controller/service
+    // that handles the indiosyncracies of each form.
+    const {
+      dcp_pasform: pasForm,
+      dcp_rwcdsform: rwcdsForm
+    } = projectPackage;
 
-    if (!pasForm) {
-      return {
-        ...projectPackage,
-      };
-    } else {
+    if (pasForm) {
       return {
         ...projectPackage,
         'pas-form': {
@@ -140,6 +107,17 @@ export const PASFORM_PROJECTADDRESS_ATTRS = [
           bbls: pasForm.dcp_dcp_projectbbl_dcp_pasform,
         },
       }
+    } else if (rwcdsForm) {
+      return {
+        ...projectPackage,
+        'rwcds-form': {
+          ...rwcdsForm,
+        }
+      }
+    } else {
+      return {
+        ...projectPackage,
+      };
     }
   },
 }))

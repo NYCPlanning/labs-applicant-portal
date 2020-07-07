@@ -1,0 +1,57 @@
+<@form.Section @title="Attached Documents">
+  <div class="grid-x grid-margin-x">
+    <div class="cell large-12">
+      <p>
+        Please attach the following required documents.
+      </p>
+      <ul class="text-small">
+        <li class="small-margin-bottom">
+          <Ui::DownloadLink @href="https://www1.nyc.gov/assets/planning/download/office/applicants/applicant-portal/part2-rwcds-analysis-framework-table.xlsx">
+            RWCDS Analysis Framework Table
+          </Ui::DownloadLink>
+        </li>
+        <li class="small-margin-bottom">
+          <Ui::DownloadLink @href="https://www1.nyc.gov/assets/planning/download/office/applicants/applicant-portal/part3-rwcds-analysis-framework-spreadsheet.xlsx">
+            Official Zoning Map
+          </Ui::DownloadLink>
+        </li>
+        <li class="small-margin-bottom">
+          Massing diagrams&nbsp;
+          <small>
+            (if the future With-Action Scenario does not maximize all available bulk and/or FAR)
+          </small>
+        </li>
+      </ul>
+      <h5>
+        A map of the directly affected area can aid the review of the proposed actions. If maps are provided, they should not exceed 11x17”, and each map must clearly include:
+      </h5>
+      <ol class="text-small">
+        <li class="small-margin-bottom">
+          The boundaries of the directly affected area or areas
+        </li>
+        <li class="small-margin-bottom">
+          A 400-foot radius drawn from the outer boundaries of the project site
+        </li>
+        <li class="small-margin-bottom">
+          A title, scale and legend
+        </li>
+        <li class="small-margin-bottom">
+          Identification/label of any applicant-owned sites and additional projected and/or potential development sites
+        </li>
+        <li class="small-margin-bottom">
+          Labeled streets and labeled tax lots, where applicable
+        </li>
+      </ol>
+      <h5>
+        Additional materials such as zoning maps, massing diagrams, illustrative drawings, etc. that help explain the proposed project may also be submitted.
+      </h5>
+    </div>
+  </div>
+
+  The size limit for each file is 50 MB. You can upload up to 1 GB of files.
+  <Packages::Attachments
+    @package={{@model.package}}
+    @fileManager={{@model.package.fileManager}}
+    data-test-section="attachments"
+  />
+</@form.Section>
