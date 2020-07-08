@@ -8,7 +8,7 @@ export default Factory.extend({
   dcpCity: 'New York',
   dcpState: 1,
   dcpZipcode: '10014',
-  dcpPhone: '867-5309',
+  dcpPhone: '2127203300',
 
   individualApplicant: trait({
     targetEntity: 'dcp_applicantinformation',
