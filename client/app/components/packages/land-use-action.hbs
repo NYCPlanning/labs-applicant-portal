@@ -44,6 +44,7 @@
               --}}
               <label class="middle">
                 <strong>How many {{landUseAction.name}} actions?</strong>
+                <Ui::RequiredAsterisk />
               </label>
             </div>
             <div class="auto cell">
@@ -63,6 +64,7 @@
           <Ui::Question as |Q|>
             <Q.Prompt>
               Where in the Zoning Resolution can this action be found?
+              <Ui::RequiredAsterisk />
             </Q.Prompt>
 
             <Form.Field
@@ -81,6 +83,7 @@
           <Ui::Question as |Q|>
             <Q.Prompt>
               Which sections of the Zoning Resolution does this modify?
+              <Ui::RequiredAsterisk />
             </Q.Prompt>
 
             <Form.Field
@@ -101,6 +104,7 @@
           <Ui::Question as |Q|>
             <Q.Prompt>
               Existing Zoning Districts:
+              <Ui::RequiredAsterisk />
             </Q.Prompt>
 
             <Form.Field
@@ -119,6 +123,7 @@
           <Ui::Question as |Q|>
             <Q.Prompt>
               Proposed Zoning Districts:
+              <Ui::RequiredAsterisk />
             </Q.Prompt>
 
             <Form.Field
@@ -139,6 +144,7 @@
           <Ui::Question as |Q|>
             <Q.Prompt>
               Affected ZR Section Number:
+              <Ui::RequiredAsterisk />
             </Q.Prompt>
 
             <Form.Field
@@ -157,6 +163,7 @@
           <Ui::Question as |Q|>
             <Q.Prompt>
               Affected ZR Section Title:
+              <Ui::RequiredAsterisk />
             </Q.Prompt>
 
             <Form.Field
@@ -177,6 +184,7 @@
           <Ui::Question as |Q|>
             <Q.Prompt>
               Previous ULURP Numbers:
+              <Ui::RequiredAsterisk />
             </Q.Prompt>
 
             <Form.Field
