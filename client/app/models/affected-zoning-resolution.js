@@ -1,6 +1,6 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default class ProjectActionModel extends Model {
+export default class AffectedZoningResolutionModel extends Model {
   @belongsTo('rwcds-form')
   rwcdsForm;
 
@@ -12,4 +12,7 @@ export default class ProjectActionModel extends Model {
 
   @attr
   dcpModifiedzrsectionnumber;
+
+  @attr
+  dcpZrsectiontitle;
 }
