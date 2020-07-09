@@ -53,6 +53,7 @@
         <Ui::Question as |Q|>
           <Q.Prompt>
             <span class="text-weight-normal">First Name</span>
+            <Ui::RequiredAsterisk />
           </Q.Prompt>
 
           <Form.Field @attribute="dcpFirstname"/>
@@ -63,6 +64,7 @@
         <Ui::Question as |Q|>
           <Q.Prompt>
             <span class="text-weight-normal">Last Name</span>
+            <Ui::RequiredAsterisk />
           </Q.Prompt>
 
           <Form.Field @attribute="dcpLastname"/>
@@ -84,6 +86,7 @@
     <Ui::Question as |Q|>
       <Q.Prompt>
         <span class="text-weight-normal">Email Address</span>
+        <Ui::RequiredAsterisk />
       </Q.Prompt>
 
       <Form.Field @attribute="dcpEmail"/>
