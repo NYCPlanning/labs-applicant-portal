@@ -116,7 +116,7 @@ module('Acceptance | error message appears when save fails', function(hooks) {
           this.server.create('applicant', {
             dcpFirstname: 'first name',
             dcpLastname: 'last name',
-            dcpEmail: 'email',
+            dcpEmail: 'email@planning.nyc.gov',
             dcpType: '717170000',
           }),
         ],
