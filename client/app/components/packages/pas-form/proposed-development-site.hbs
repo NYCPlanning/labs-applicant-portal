@@ -59,7 +59,8 @@
       {{#if @form.saveableChanges.dcpProposeddevelopmentsiteinfoother}}
         <Ui::Question as |Q|>
           <Q.Prompt>
-            Explain: <Ui::RequiredAsterisk />
+            Explain:
+            <Ui::RequiredAsterisk />
           </Q.Prompt>
           <Form.Field @attribute="dcpProposeddevelopmentsiteotherexplanation"/>
         </Ui::Question>
