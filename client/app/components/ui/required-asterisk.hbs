@@ -1,6 +1,9 @@
-<sup>
-  <FaIcon @icon="asterisk" class="text-red text-weight-normal" @transform="shrink-4" />
-  <EmberTooltip>
-    Required
-  </EmberTooltip>
+<sup class="text-red">
+  <LabsUi::IconTooltip
+    @tip="This field is required"
+    @icon="asterisk"
+    @side="top"
+    @transform="shrink-4"
+    @fixedWidth={{false}}
+  />
 </sup>
