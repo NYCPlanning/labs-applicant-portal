@@ -1,7 +1,7 @@
 {{#let @form as |Form|}}
   <Form.Section @title="Project Area">
-    <p class="text-small">
-      Project Area refers to all property that would be subject to the proposed actions.
+    <p>
+      Project Area refers to all property that would be subject to the Proposed Actions.
     </p>
 
     <Ui::Question @fieldset={{true}} as |Q|>
@@ -83,7 +83,7 @@
 
     <Ui::Question @fieldset={{true}} as |Q|>
       <Q.Prompt>
-        Do all land use actions meet
+        Do all Land Use Actions meet
         <Ui::ExternalLink @href="https://govt.westlaw.com/nycrr/Document/I4ec3a767cd1711dda432a117e6e0f345?viewType=FullText&originationContext=documenttoc&transitionType=CategoryPageItem&contextData=(sc.Default)">SEQRA or CEQR criteria</Ui::ExternalLink>
         for Type II status?
       </Q.Prompt>
@@ -104,7 +104,7 @@
           {{#if (eq value 717170000)}}
             <Ui::Question as |Q|>
               <Q.Prompt>
-                Indicate which SEQRA or CEQR category each action fulfills
+                Indicate which SEQRA or CEQR category each Action fulfills
                 <Ui::RequiredAsterisk />
                 <small class="help-text display-block text-weight-normal">
                   Ex: 617.5(c)(9)
@@ -210,7 +210,7 @@
 
     <Ui::Question @fieldset={{true}} as |Q|>
       <Q.Prompt>
-        Is the Project Area located within the <Ui::ExternalLink @href="https://dcp.maps.arcgis.com/apps/webappviewer/index.html?id=1c37d271fba14163bbb520517153d6d5">1% annual chance floodplain</Ui::ExternalLink>?
+        Is the Project Area located within the <Ui::ExternalLink @href="https://dcp.maps.arcgis.com/apps/webappviewer/index.html?id=1c37d271fba14163bbb520517153d6d5">1% Annual Chance Floodplain</Ui::ExternalLink>?
       </Q.Prompt>
 
       <Form.Field
@@ -230,7 +230,7 @@
 
     <Ui::Question @fieldset={{true}} as |Q|>
       <Q.Prompt>
-        Is a <Ui::ExternalLink @href="https://a836-acris.nyc.gov/CP/">legal instrument</Ui::ExternalLink> associated with a previous CPC or CPC Chair action recorded against the project site?
+        Is a <Ui::ExternalLink @href="https://a836-acris.nyc.gov/CP/">legal instrument</Ui::ExternalLink> associated with a previous CPC or CPC Chair action recorded against the Project Site?
       </Q.Prompt>
 
       <Form.Field
@@ -267,7 +267,7 @@
 
     <Ui::Question @fieldset={{true}} as |Q|>
       <Q.Prompt>
-        Will a new legal instrument or modification of a current legal instrument be necessary to approve/implement these actions?
+        Will a new legal instrument or modification of a current legal instrument be necessary to approve/implement these Actions?
       </Q.Prompt>
 
       <Form.Field
