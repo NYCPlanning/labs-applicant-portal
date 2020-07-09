@@ -325,6 +325,17 @@
         </A.Field>
       </Ui::Answer>
 
+      {{#if @package.pasForm.dcpUrbanareaname}}
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
+            Name of Urban Renewal Area:
+          </A.Prompt>
+          <A.Field>
+            {{@package.pasForm.dcpUrbanareaname}}
+          </A.Field>
+        </Ui::Answer>
+      {{/if}}
+
       <Ui::Answer @beside={{true}} as |A|>
         <A.Prompt>
           Legal Street Frontage Status
