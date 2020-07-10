@@ -2,10 +2,10 @@
   <fieldset class="fieldset">
     <Ui::Legend>
       <span class="label">
-        {{~zrForm.saveableChanges.dcpZoningresolutiontype~}}
-        {{#if (lookup-action-type zrForm.saveableChanges.dcpZoningresolutiontype)}}
+        {{~this.zrTypeLabel~}}
+        {{#if (lookup-action-type this.zrTypeLabel)}}
           <LabsUi::IconTooltip
-            @tip={{lookup-action-type zrForm.saveableChanges.dcpZoningresolutiontype}}
+            @tip={{lookup-action-type this.zrTypeLabel}}
             @icon="info-circle"
             @side="bottom"
             @transform="shrink-4 up-2"

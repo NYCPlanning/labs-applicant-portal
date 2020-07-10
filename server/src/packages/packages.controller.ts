@@ -9,6 +9,7 @@ import { PAS_FORM_ATTRS, PAS_FORM_PROJECTADDRESS_ATTRS } from './pas-form/pas-fo
 import { PACKAGE_ATTRS } from './packages.attrs';
 import { PROJECT_ATTRS } from '../projects/projects.attrs';
 import { BBL_ATTRS } from './pas-form/bbls/bbls.attrs';
+import { AFFECTEDZONINGRESOLUTION_ATTRS } from './rwcds-form/affected-zoning-resolution/affected-zoning-resolutions.attrs';
 import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('packages', {
@@ -65,7 +66,14 @@ import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
     ref: 'dcp_rwcdsformid',
     attributes: [
       ...RWCDS_FORM_ATTRS,
+      'affected-zoning-resolutions',
     ],
+    'affected-zoning-resolutions': {
+      ref: 'dcp_affectedzoningresolutionid',
+      attributes: [
+        ...AFFECTEDZONINGRESOLUTION_ATTRS,
+      ],
+    },
   },
 
   // Transform here should only be used for remapping
@@ -112,6 +120,7 @@ import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
         ...projectPackage,
         'rwcds-form': {
           ...rwcdsForm,
+          'affected-zoning-resolutions': rwcdsForm.dcp_rwcdsform_dcp_affectedzoningresolution_rwcdsform,
         }
       }
     } else {

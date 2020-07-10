@@ -8,6 +8,9 @@ import {
   BOROUGHS_OPTIONSET,
 } from '../models/bbl';
 import {
+  AFFECTED_ZONING_RESOLUTION_ACTION_OPTIONSET,
+} from '../models/affected-zoning-resolution';
+import {
   PACKAGE_STATE_OPTIONSET,
   PACKAGE_STATUS_OPTIONSET,
   PACKAGE_VISIBILITY_OPTIONSET,
@@ -49,6 +52,9 @@ const OPTIONSET_LOOKUP = {
     dcpRestrictivedeclarationrequired: YES_NO_UNSURE_OPTIONSET,
     dcpDiscressionaryfundingforffordablehousing: YES_NO_UNSURE_OPTIONSET,
     dcpHousingunittype: DCPHOUSINGUNITTYPE_OPTIONSET,
+  },
+  affectedZoningResolution: {
+    actions: AFFECTED_ZONING_RESOLUTION_ACTION_OPTIONSET,
   },
 };
 
