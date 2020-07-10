@@ -40,7 +40,7 @@ export default {
     validateLength({
       min: 0,
       max: 5,
-      message: 'Text is too long (max {max} characters)',
+      message: 'ZIP is too long (max {max} digits)',
     }),
   ],
   dcpCity: [
