@@ -18,16 +18,18 @@
     </div>
 
     <Ui::Question as |Q|>
-      <Q.Prompt>
+      <Q.Label>
         Description of geography
-        <small class="help-text display-block text-weight-normal">
-          Fill in if the Project Area and/or Development Site is irregular, especially large, or does not consist of tax lots.
-        </small>
-      </Q.Prompt>
+      </Q.Label>
+
+      <Q.HelpText>
+        Fill in if the Project Area and/or Development Site is irregular, especially large, or does not consist of tax lots.
+      </Q.HelpText>
 
       <Form.Field
         @attribute="dcpDescriptionofprojectareageography"
         @type="text-area"
+        id={{Q.questionId}}
       />
     </Ui::Question>
   </Form.Section>

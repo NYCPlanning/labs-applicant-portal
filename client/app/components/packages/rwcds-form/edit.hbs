@@ -7,20 +7,26 @@
     <div class="cell large-8">
 
       <section class="form-section">
-        <h1>
-          Reasonable Worst Case Development Scenario (V{{@package.dcpPackageversion}})
+        <h1 class="header-large">
+          Reasonable Worst Case Development Scenario
+          <small class="text-weight-normal">
+            {{if @package.dcpPackageversion (concat '(V' @package.dcpPackageversion ')')}}
+          </small>
         </h1>
-        <h2 class="gray">
-          {{@package.project.dcpProjectname}} ({{@package.project.dcpName}})
+
+        <h2 class="no-margin">
+          {{@package.project.dcpProjectname}}
+          <small class="text-weight-normal">
+            {{if @package.project.dcpName (concat '(V' @package.project.dcpName ')')}}
+          </small>
         </h2>
-        <h3>
+
+        <p class="text-large text-dark-gray">
           {{optionset 'bbl' 'boroughs' 'label' @package.project.dcpBorough}}
-        </h3>
+        </p>
 
         <p>
-          The <strong>Reasonable Worst Case Development Scenario (RWCDS)</strong> form may be used for either site-specific or generic/area wide&nbsp;
-          actions and should only be completed once the proposed action(s) have been finalized. If there are questions, contact&nbsp;
-          the Environmental Assessment and Review Division (EARD) Project Manager.
+          The <strong>Reasonable Worst Case Development Scenario (RWCDS)</strong> form may be used for either Site-specific or generic/area wide Actions and should only be completed once the Proposed Action(s) have been finalized. If there are questions, contact the Environmental Assessment and Review Division (EARD) Project Manager.
         </p>
       </section>
 
@@ -71,9 +77,13 @@
         }}
         data-test-confirm-submit-button={{true}}
       >
-        <h6>[CONFIRMATION MESSAGE HERE]</h6>
-        <p class="header-large medium-margin-top small-margin-bottom">Are you sure?</p>
-        <p>[CONFIRMATION EXPLANATION HERE]</p>
+        <h6>Confirm Reasonable Worst Case Development Scenario Submission</h6>
+        <p class="header-large medium-margin-top small-margin-bottom">
+          Are you sure?
+        </p>
+        <p>
+          Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including the analysis framework table and spreadsheet) have been uploaded. If NYC Planning does not receive enough accurate information, the Lead Planner will notify you and request that this form be resubmitted with necessary materials, corrections, or clarifications.
+        </p>
       </saveableForm.ConfirmationModal>
 
       <Messages::Assistance class="large-margin-top" />

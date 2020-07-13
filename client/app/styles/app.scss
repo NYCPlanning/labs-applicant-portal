@@ -102,9 +102,13 @@ $sticky-sidebar-offset: 6rem + rem-calc(20);
   background-color: $green-muted !important;
 }
 
+:not(.fieldset) > legend {
+  @include form-label;
+}
+
 .character-counter {
   float: right;
-  margin: -0.5rem 0 $global-margin $global-margin;
+  margin: -0.5rem 0 0 rem-calc(40);
   font-size: rem-calc(12);
   text-align: right;
 
@@ -134,4 +138,21 @@ $sticky-sidebar-offset: 6rem + rem-calc(20);
 .ruled-top {
   border-top: 1px solid $white-smoke;
   padding-top: $global-margin;
+}
+
+.collapsible-text--trigger {
+  margin-top: -0.5rem;
+  margin-bottom: $global-margin;
+}
+
+.collapsible-text--content {
+  background-color: $white-smoke;
+  padding: $global-margin;
+  margin-top: -$global-margin;
+  margin-bottom: $global-margin;
+}
+
+:not(.fieldset) > .ui-question {
+  clear: both;
+  margin: $global-margin*1.5 0;
 }

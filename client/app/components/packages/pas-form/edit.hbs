@@ -7,8 +7,11 @@
     <div class="cell large-8">
 
       <section class="form-section">
-        <h1>
+        <h1 class="header-large">
           Pre-Application Statement
+          <small class="text-weight-normal">
+            {{if @package.dcpPackageversion (concat '(V' @package.dcpPackageversion ')')}}
+          </small>
         </h1>
 
         <p>

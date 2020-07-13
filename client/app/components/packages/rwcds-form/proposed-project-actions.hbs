@@ -18,19 +18,28 @@
         </Form.SaveableForm>
       {{/each}}
 
-      <Ui::Question class="fieldset relative scale-fade-in" as |Q|>
-        <Q.Prompt>
-          Describe the purpose and need for all the proposed actions.
-        </Q.Prompt>
-          <Form.Field
-            @attribute="dcpPurposeandneedfortheproposedaction"
-            @type="text-area"
-            @maxlength="1500"
-          />
-        <Q.Prompt>
+      <Ui::Question as |Q|>
+        <Q.Label>
+          Describe the purpose and need for all the proposed actions
+        </Q.Label>
+
+        <Q.HelpText>
+          Refer to <strong>Chapter 2 page 2</strong> of the <Ui::ExternalLink @href="#">CEQR Technical manual</Ui::ExternalLink>. If multiple actions are sought, please address each action individually.
+        </Q.HelpText>
+
+        <Form.Field
+          @attribute="dcpPurposeandneedfortheproposedaction"
+          @type="text-area"
+          @maxlength="1500"
+          id={{Q.questionId}}
+        />
+      </Ui::Question>
+
+      <Ui::Question as |Q|>
+        <Q.Legend>
           Does the applicant plan to develop a 100% affordable housing development?
-        </Q.Prompt>
-        <br>
+        </Q.Legend>
+
         <Form.Field
           @attribute="dcpIsplannigondevelopingaffordablehousing"
           @type="radio-group"
@@ -43,48 +52,51 @@
             }}
           />
         </Form.Field>
-        <br>
-        <Q.Prompt>
+      </Ui::Question>
+
+      <Ui::Question as |Q|>
+        <Q.Legend>
           Is the applicant seeking action from other City/State/Federal agencies?
-        </Q.Prompt>
-        <small class="help-text display-block">
-          Note that financing for affordable housing is considered an action.
-        </small>
-        <div class="cell medium-6">
-          <Form.Field
-            @attribute="dcpIsapplicantseekingaction"
-            @type="radio-group"
-            as |RadioGroup|
+        </Q.Legend>
+
+        <Q.HelpText>
+          Note that financing for affordable housing is considered an action
+        </Q.HelpText>
+
+        <Form.Field
+          @attribute="dcpIsapplicantseekingaction"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{array
+              (hash label='Yes' code=717170000)
+              (hash label='No' code=717170001)
+              (hash label='Do not know' code=717170002)
+            }}
+            @onChange={{fn (mut @form.saveableChanges.dcpWhichactionsfromotheragenciesaresought) ""}} as |value|
           >
-            <RadioGroup
-              @options={{array
-                (hash label='Yes' code=717170000)
-                (hash label='No' code=717170001)
-                (hash label='Do not know' code=717170002)
-              }}
-              @onChange={{fn (mut @form.saveableChanges.dcpWhichactionsfromotheragenciesaresought) ""}} as |value|
-            >
-            <br>
             {{#if (eq value 717170000)}}
-              <Q.Prompt>
-                Which actions from other agencies are sought?
-                <Ui::RequiredAsterisk />
-              </Q.Prompt>
-              <br>
-              <Form.Field
-                @attribute="dcpWhichactionsfromotheragenciesaresought"
-                as |TextInput|
-              >
-                <TextInput
-                  type="text"
-                  maxlength="200"
-                  data-test-input="dcpWhichactionsfromotheragenciesaresought"
-                />
-              </Form.Field>
+              <Ui::Question @required={{true}} as |Q|>
+                <Q.Label>
+                  Which actions from other agencies are sought?
+                </Q.Label>
+
+                <Form.Field
+                  @attribute="dcpWhichactionsfromotheragenciesaresought"
+                  as |TextInput|
+                >
+                  <TextInput
+                    type="text"
+                    maxlength="200"
+                    data-test-input="dcpWhichactionsfromotheragenciesaresought"
+                    id={{Q.questionId}}
+                  />
+                </Form.Field>
+              </Ui::Question>
             {{/if}}
-            </RadioGroup>
-          </Form.Field>
-        </div>
+          </RadioGroup>
+        </Form.Field>
       </Ui::Question>
     </div>
   </Form.Section>

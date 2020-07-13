@@ -3,22 +3,22 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | ui/fieldset-legend', function(hooks) {
+module('Integration | Component | ui/label', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<Ui::FieldsetLegend />`);
+    await render(hbs`<Ui::Label />`);
 
     assert.equal(this.element.textContent.trim(), '');
 
     // Template block usage:
     await render(hbs`
-      <Ui::FieldsetLegend>
+      <Ui::Label>
         template block text
-      </Ui::FieldsetLegend>
+      </Ui::Label>
     `);
 
     assert.equal(this.element.textContent.trim(), 'template block text');

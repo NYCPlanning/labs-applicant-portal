@@ -1,8 +1,8 @@
 <div ...attributes>
-  <Ui::Question @fieldset={{true}} class="fieldset" as |Q|>
-    <Q.Prompt>
+  <fieldset class="fieldset">
+    <Ui::Legend>
       Attachments
-    </Q.Prompt>
+    </Ui::Legend>
 
     <ul class="no-bullet">
       {{#each @fileManager.existingFiles as |file idx|}}
@@ -39,7 +39,9 @@
     </ul>
 
     {{#if (or @fileManager.filesToDelete @fileManager.filesToUpload.files)}}
-      <hr>
+      {{#if @fileManager.existingFiles}}
+        <hr>
+      {{/if}}
 
       <h6 class="medium-margin-bottom slide-in-top">
         To be
@@ -122,5 +124,9 @@
       <FaIcon @icon="upload" @prefix="fas" />
       Choose Files
     </FileUpload>
-  </Ui::Question>
+
+    <Ui::HelpText class="text-dark-gray">
+      The size limit for each file is 50 MB. You can upload up to 1 GB of files.
+    </Ui::HelpText>
+  </fieldset>
 </div>

@@ -3,6 +3,12 @@
     Please attach the following required documents. (Additional materials that help to explain the proposed project may also be submitted.)
   </p>
 
+  <Packages::Attachments
+    @package={{@model.package}}
+    @fileManager={{@model.package.fileManager}}
+    data-test-section="attachments"
+  />
+
   <div class="grid-x grid-margin-x">
     <div class="cell large-6">
       <h5>Required for all Projects:</h5>
@@ -54,10 +60,4 @@
       </ul>
     </div>
   </div>
-
-  <Packages::Attachments
-    @package={{@model.package}}
-    @fileManager={{@model.package.fileManager}}
-    data-test-section="attachments"
-  />
 </@form.Section>
