@@ -129,18 +129,24 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
 
     assert.equal(currentURL(), '/rwcds-form/1/edit');
 
+    // no-action
     await fillIn('[data-test-textarea="dcpDevelopmentsiteassumptions"]', exceedMaximum(2400, 'String'));
     assert.dom('[data-test-validation-message="dcpDevelopmentsiteassumptions"').hasText('Text is too long (max 2400 characters)');
 
-    await click('[data-test-radio="dcpExistingconditions"][data-test-radio-option="Yes"]');
+    await fillIn('[data-test-textarea="dcpDescribethenoactionscenario"]', exceedMaximum(1500, 'String'));
+    assert.dom('[data-test-validation-message="dcpDescribethenoactionscenario"').hasText('Text is too long (max 1500 characters)');
+
+    await click('[data-test-radio="dcpExistingconditions"][data-test-radio-option="No"]');
 
     await fillIn('[data-test-textarea="dcpHowdidyoudeterminethenoactionscenario"]', exceedMaximum(1500, 'String'));
     assert.dom('[data-test-validation-message="dcpHowdidyoudeterminethenoactionscenario"').hasText('Text is too long (max 1500 characters)');
 
-    await click('[data-test-radio="dcpExistingconditions"][data-test-radio-option="No"]');
+    // with-action
+    await fillIn('[data-test-textarea="dcpDescribethewithactionscenario"]', exceedMaximum(1500, 'String'));
+    assert.dom('[data-test-validation-message="dcpDescribethewithactionscenario"').hasText('Text is too long (max 1500 characters)');
 
-    await fillIn('[data-test-textarea="dcpDescribethenoactionscenario"]', exceedMaximum(1500, 'String'));
-    assert.dom('[data-test-validation-message="dcpDescribethenoactionscenario"').hasText('Text is too long (max 1500 characters)');
+    await fillIn('[data-test-textarea="dcpHowdidyoudeterminethiswithactionscena"]', exceedMaximum(600, 'String'));
+    assert.dom('[data-test-validation-message="dcpHowdidyoudeterminethiswithactionscena"').hasText('Text is too long (max 600 characters)');
 
     await click('[data-test-radio="dcpIsrwcdsscenario"][data-test-radio-option="Yes"]');
 
@@ -148,13 +154,5 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
 
     await fillIn('[data-test-textarea="dcpRwcdsexplanation"]', exceedMaximum(50, 'String'));
     assert.dom('[data-test-validation-message="dcpRwcdsexplanation"').hasText('Text is too long (max 50 characters)');
-
-    await click('[data-test-radio="dcpIsrwcdsscenario"][data-test-radio-option="No"]');
-
-    await fillIn('[data-test-textarea="dcpDescribethewithactionscenario"]', exceedMaximum(1500, 'String'));
-    assert.dom('[data-test-validation-message="dcpDescribethewithactionscenario"').hasText('Text is too long (max 1500 characters)');
-
-    await fillIn('[data-test-textarea="dcpHowdidyoudeterminethiswithactionscena"]', exceedMaximum(600, 'String'));
-    assert.dom('[data-test-validation-message="dcpHowdidyoudeterminethiswithactionscena"').hasText('Text is too long (max 600 characters)');
   });
 });
