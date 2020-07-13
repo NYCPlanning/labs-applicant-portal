@@ -51,9 +51,9 @@
             (hash label='Yes' code=true)
             (hash label='No' code=false)
           }}
-          @onChange={{fn (mut @form.saveableChanges.dcpDescribethenoactionscenario) ""}} as |value|
+          @onChange={{fn (mut @form.saveableChanges.dcpHowdidyoudeterminethenoactionscenario) ""}} as |value|
         >
-          {{#if value}}
+          {{#if (eq value false)}}
             <Ui::Question as |Q|>
               <Q.Prompt>
                 How did you determine this No-Action scenario?
@@ -67,42 +67,41 @@
                 @maxlength="1500"
               />
             </Ui::Question>
-          {{else}}
-            <Ui::Question as |Q|>
-              <Q.Prompt>
-                Description of No-Action scenario
-              </Q.Prompt>
-              <div>
-                <Ui::CollapsibleText
-                  @buttonText="Additional Guidance"
-                >
-                  <p>
-                    Describe a future development scenario that is likely and would reasonably occur absent approval of the Proposed Action(s) (and other discretionary actions) by the Analysis Year, including:
-                  </p>
-                    <ul>
-                      <li>How all of the Development Sites(s) in question could reasonably be developed with regard to the underlying zoning district and any other applicable site controls</li>
-                      <li>The proposed Project’s/Development's overall gsf</li>
-                      <li>All proposed land uses (in gsf per land use)</li>
-                      <li>Overall height, number of stories</li>
-                      <li>Floor Area Ratio (F.A.R.) and lot coverage</li>
-                      <li>Number of dwelling units (and number of affordable dwelling units, as well as the mechanism for providing affordable units, e.g., MIH)</li>
-                      <li>Number of parking spaces</li>
-                      <li>New curb cuts (where applicable)</li>
-                      <li>Development trends in the neighborhood</li>
-                      <li>Site ownership, etc</li>
-                    </ul>
-                  <p>
-                    If a prior environmental review was conducted on the Project/Development Site, and the Projected or Potential Development Sites were assumed as soft sites in the prior environmental review materials, it may be appropriate to assume that the prior project’s With-Action Scenario is this Project’s/Development’s future No-Action Scenario.
-                  </p>
-                </Ui::CollapsibleText>
-              </div>
-              <form.Field
-                @attribute="dcpDescribethenoactionscenario"
-                @type="text-area"
-                @maxlength="1500"
-              />
-            </Ui::Question>
           {{/if}}
+          <Ui::Question as |Q|>
+            <Q.Prompt>
+              Description of No-Action scenario
+            </Q.Prompt>
+            <div>
+              <Ui::CollapsibleText
+                @buttonText="Additional Guidance"
+              >
+                <p>
+                  Describe a future development scenario that is likely and would reasonably occur absent approval of the Proposed Action(s) (and other discretionary actions) by the Analysis Year, including:
+                </p>
+                  <ul>
+                    <li>How all of the Development Sites(s) in question could reasonably be developed with regard to the underlying zoning district and any other applicable site controls</li>
+                    <li>The proposed Project’s/Development's overall gsf</li>
+                    <li>All proposed land uses (in gsf per land use)</li>
+                    <li>Overall height, number of stories</li>
+                    <li>Floor Area Ratio (F.A.R.) and lot coverage</li>
+                    <li>Number of dwelling units (and number of affordable dwelling units, as well as the mechanism for providing affordable units, e.g., MIH)</li>
+                    <li>Number of parking spaces</li>
+                    <li>New curb cuts (where applicable)</li>
+                    <li>Development trends in the neighborhood</li>
+                    <li>Site ownership, etc</li>
+                  </ul>
+                <p>
+                  If a prior environmental review was conducted on the Project/Development Site, and the Projected or Potential Development Sites were assumed as soft sites in the prior environmental review materials, it may be appropriate to assume that the prior project’s With-Action Scenario is this Project’s/Development’s future No-Action Scenario.
+                </p>
+              </Ui::CollapsibleText>
+            </div>
+            <form.Field
+              @attribute="dcpDescribethenoactionscenario"
+              @type="text-area"
+              @maxlength="1500"
+            />
+          </Ui::Question>
         </RadioGroup>
       </form.Field>
     </Ui::Question>
@@ -139,42 +138,41 @@
                 @maxlength="50"
               />
             </Ui::Question>
-          {{else}}
-            <Ui::Question as |Q|>
-              <Q.Prompt>
-                Description of With-Action scenario
-              </Q.Prompt>
-              <div>
-                <Ui::CollapsibleText
-                  @buttonText="Additional Guidance"
-                >
-                  <p>
-                  Describe a future development scenario that is likely and would reasonably occur with the approval of the Proposed Action(s) by the Analysis Year, including:
-                  </p>
-                    <ul>
-                      <li>How all of the Development Sites(s) in question could reasonably be developed with regard to the underlying zoning district and any other applicable site controls</li>
-                      <li>The proposed Project’s/Development's overall gsf</li>
-                      <li>All proposed land uses (in gsf per land use)</li>
-                      <li>Base height, overall height, and number of stories</li>
-                      <li>Floor Area Ratio (F.A.R.) and lot coverage</li>
-                      <li>Number of dwelling units (and number of affordable dwelling units, as well as the mechanism for providing affordable units, e.g., MIH). Explain the dwelling unit size assumptions (e.g., 850-1,000 gsf per dwelling unit, based on real estate trends)</li>
-                      <li>Number of parking spaces. Be sure to account for any relevant changes in parking requirements resulting from the Proposed Action(s).</li>
-                      <li>New curb cuts (where applicable)</li>
-                      <li>Development trends in the neighborhood</li>
-                      <li>Site ownership, etc</li>
-                    </ul>
-                  <p>
-                    Describe the future development expected to occur on all of the Projected Development Sites (and in a separate paragraph, the Potential Development Sites, if any).
-                  </p>
-                </Ui::CollapsibleText>
-              </div>
-              <form.Field
-                @attribute="dcpDescribethewithactionscenario"
-                @type="text-area"
-                @maxlength="1500"
-              />
-            </Ui::Question>
           {{/if}}
+          <Ui::Question as |Q|>
+            <Q.Prompt>
+              Description of With-Action scenario
+            </Q.Prompt>
+            <div>
+              <Ui::CollapsibleText
+                @buttonText="Additional Guidance"
+              >
+                <p>
+                Describe a future development scenario that is likely and would reasonably occur with the approval of the Proposed Action(s) by the Analysis Year, including:
+                </p>
+                  <ul>
+                    <li>How all of the Development Sites(s) in question could reasonably be developed with regard to the underlying zoning district and any other applicable site controls</li>
+                    <li>The proposed Project’s/Development's overall gsf</li>
+                    <li>All proposed land uses (in gsf per land use)</li>
+                    <li>Base height, overall height, and number of stories</li>
+                    <li>Floor Area Ratio (F.A.R.) and lot coverage</li>
+                    <li>Number of dwelling units (and number of affordable dwelling units, as well as the mechanism for providing affordable units, e.g., MIH). Explain the dwelling unit size assumptions (e.g., 850-1,000 gsf per dwelling unit, based on real estate trends)</li>
+                    <li>Number of parking spaces. Be sure to account for any relevant changes in parking requirements resulting from the Proposed Action(s).</li>
+                    <li>New curb cuts (where applicable)</li>
+                    <li>Development trends in the neighborhood</li>
+                    <li>Site ownership, etc</li>
+                  </ul>
+                <p>
+                  Describe the future development expected to occur on all of the Projected Development Sites (and in a separate paragraph, the Potential Development Sites, if any).
+                </p>
+              </Ui::CollapsibleText>
+            </div>
+            <form.Field
+              @attribute="dcpDescribethewithactionscenario"
+              @type="text-area"
+              @maxlength="1500"
+            />
+          </Ui::Question>
         </RadioGroup>
       </form.Field>
     </Ui::Question>
