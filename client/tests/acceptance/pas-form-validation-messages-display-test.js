@@ -19,7 +19,7 @@ module('Acceptance | pas form validation messages display', function(hooks) {
     });
   });
 
-  test('Certain fields display both Saveable and Submittable validation errors', async function(assert) {
+  test('Certain PAS Form fields display both Saveable and Submittable validation errors', async function(assert) {
     this.server.create('package', 'pasForm', {
       project: this.server.create('project'),
     });
@@ -154,5 +154,74 @@ module('Acceptance | pas form validation messages display', function(hooks) {
     assert.dom('[data-test-validation-message="dcpProjectattachmentsotherinformation"]').hasText('Text is too long (max 2000 characters)');
     await fillIn('[data-test-textarea="dcpProjectattachmentsotherinformation"]', 'abc');
     assert.dom('[data-test-validation-message="dcpProjectattachmentsotherinformation"]').doesNotExist();
+  });
+
+  test('Certain Applicant fields on the PAS Form display both Saveable and Submittable validation errors', async function(assert) {
+    this.server.create('project', 1, 'applicant');
+
+    await visit('/pas-form/1/edit');
+
+    await click('[data-test-add-applicant-button]');
+
+    assert.dom('[data-test-validation-message="dcpFirstname"]').hasText('This field is required');
+
+    assert.dom('[data-test-validation-message="dcpLastname"]').hasText('This field is required');
+
+    // email
+    assert.dom('[data-test-validation-message="dcpEmail"]').hasText('This field is required');
+
+    await fillIn('[data-test-input="dcpEmail"]', 'email');
+
+    assert.dom('[data-test-validation-message="dcpEmail"]').hasText('Must be a valid email address');
+
+    await fillIn('[data-test-input="dcpEmail"]', 'email@planning.nyc.gov');
+
+    assert.dom('[data-test-validation-message="dcpEmail"]').doesNotExist();
+
+    // phone
+    assert.dom('[data-test-validation-message="dcpPhone"]').doesNotExist();
+
+    await fillIn('[data-test-input="dcpPhone"]', '1234');
+
+    assert.dom('[data-test-validation-message="dcpPhone"]').hasText('Please enter a 10 digit phone number');
+
+    await fillIn('[data-test-input="dcpPhone"]', '2127203300');
+
+    assert.dom('[data-test-validation-message="dcpPhone"]').doesNotExist();
+
+    // zipcode
+    assert.dom('[data-test-validation-message="dcpZipcode"]').doesNotExist();
+
+    await fillIn('[data-test-input="dcpZipcode"]', exceedMaximum(5, 'Number'));
+
+    assert.dom('[data-test-validation-message="dcpZipcode"]').hasText('ZIP is too long (max 5 digits)');
+
+    await fillIn('[data-test-input="dcpZipcode"]', '10020');
+
+    assert.dom('[data-test-validation-message="dcpZipcode"]').doesNotExist();
+  });
+
+  test('User cannot fill in letters for Applicant phone number or ZIP on the PAS Form', async function(assert) {
+    this.server.create('project', 1, 'applicant');
+
+    await visit('/pas-form/1/edit');
+
+    await click('[data-test-add-applicant-button]');
+
+    await fillIn('[data-test-input="dcpPhone"]', 'asdfg');
+
+    assert.dom('[data-test-input="dcpPhone"]').hasNoValue();
+
+    await fillIn('[data-test-input="dcpPhone"]', '2127203300');
+
+    assert.dom('[data-test-input="dcpPhone"]').hasValue('2127203300');
+
+    await fillIn('[data-test-input="dcpZipcode"]', 'asdfg');
+
+    assert.dom('[data-test-input="dcpZipcode"]').hasNoValue();
+
+    await fillIn('[data-test-input="dcpZipcode"]', '10022');
+
+    assert.dom('[data-test-input="dcpZipcode"]').hasValue('10022');
   });
 });
