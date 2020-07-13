@@ -72,9 +72,9 @@
               Where in the Zoning Resolution can this action be found?
             </Q.Label>
 
-            <Q.HelpText>
+            <p class="q-help">
               Provide the Zoning Resolution section number. Ex. ZR Sec. 74-711
-            </Q.HelpText>
+            </p>
 
             <Form.Field
               @attribute={{landUseAction.attr1}}
@@ -94,9 +94,9 @@
               Which sections of the Zoning Resolution does this modify?
             </Q.Label>
 
-            <Q.HelpText>
+            <p class="q-help">
               Provide the Zoning Resolution section number(s). Ex. ZR Sec. 42-10 and 43-17
-            </Q.HelpText>
+            </p>
 
             <Form.Field
               @attribute={{landUseAction.attr2}}
@@ -118,9 +118,9 @@
               Existing Zoning Districts:
             </Q.Label>
 
-            <Q.HelpText>
+            <p class="q-help">
               ex. R7-1/C2-4
-            </Q.HelpText>
+            </p>
 
             <Form.Field
               @attribute={{landUseAction.attr1}}
@@ -140,9 +140,9 @@
               Proposed Zoning Districts:
             </Q.Label>
 
-            <Q.HelpText>
+            <p class="q-help">
               ex. C4-5X
-            </Q.HelpText>
+            </p>
 
             <Form.Field
               @attribute={{landUseAction.attr2}}
@@ -164,9 +164,9 @@
               Affected ZR Section Number:
             </Q.Label>
 
-            <Q.HelpText>
+            <p class="q-help">
               Provide the Zoning Resolution section number. Ex. ZR Sec. 74-711
-            </Q.HelpText>
+            </p>
 
             <Form.Field
               @attribute={{landUseAction.attr1}}
@@ -186,9 +186,9 @@
               Affected ZR Section Title:
             </Q.Label>
 
-            <Q.HelpText>
+            <p class="q-help">
               Provide the Zoning Resolution section Title. Ex. EXAMPLE
-            </Q.HelpText>
+            </p>
 
             <Form.Field
               @attribute={{landUseAction.attr2}}
@@ -213,9 +213,9 @@
               Previous ULURP Numbers:
             </Q.Label>
 
-            <Q.HelpText>
+            <p class="q-help">
               ex. 200307ZRK
-            </Q.HelpText>
+            </p>
 
             <Form.Field
               @attribute={{landUseAction.attr1}}
@@ -231,7 +231,9 @@
           </Ui::Question>
         {{/if}}
       {{else}}
-        <p class="help-text">No additional information required for this action</p>
+        <p class="q-help">
+          No additional information required for this action
+        </p>
       {{/if}}
 
       <button

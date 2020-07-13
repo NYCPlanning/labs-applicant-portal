@@ -26,9 +26,9 @@
             Which sections of the Zoning Resolution does this modify?
           </Q.Label>
 
-          <Q.HelpText>
+          <p class="q-help">
             Provide the Zoning Resolution section number(s). Ex. ZR Sec. 42-10 and 43-17
-          </Q.HelpText>
+          </p>
 
           <zrForm.Field
             @attribute="dcpModifiedzrsectionnumber"
@@ -50,9 +50,9 @@
             What is the title for the section of the Zoning Resolution that this action is pursuant to?
           </Q.Label>
 
-          <Q.HelpText>
+          <p class="q-help">
             Example: “Landmark preservation in all districts”. Refer to the Zoning Resolution to find the title for the section number.
-          </Q.HelpText>
+          </p>
 
           <zrForm.Field
             @attribute="dcpZrsectiontitle"
@@ -72,7 +72,9 @@
         This action {{if @rwcdsForm.saveableChanges.dcpIncludezoningtextamendment "includes" "does not include"}} MIH. If this is a mistake, please contact City Planning.
       {{/if}}
     {{else}}
-      <span class="help-text">No additional information required for this action</span>
+      <p class="q-help">
+        No additional information required for this action
+      </p>
     {{/if}}
   </fieldset>
 {{/let}}

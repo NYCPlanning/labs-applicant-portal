@@ -156,3 +156,8 @@ $sticky-sidebar-offset: 6rem + rem-calc(20);
   clear: both;
   margin: $global-margin*1.5 0;
 }
+
+.q-help {
+  font-size: rem-calc(13);
+  margin-bottom: 0.25 * $global-margin;
+}
