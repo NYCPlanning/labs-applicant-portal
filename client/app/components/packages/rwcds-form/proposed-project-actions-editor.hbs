@@ -1,6 +1,6 @@
 {{#let @zrForm as |zrForm|}}
-  <Ui::Question @fieldset={{true}} class="fieldset" as |Q|>
-    <Q.Prompt>
+  <fieldset class="fieldset">
+    <Ui::Legend>
       <span class="label">
         {{~zrForm.saveableChanges.dcpZoningresolutiontype~}}
         {{#if (lookup-action-type zrForm.saveableChanges.dcpZoningresolutiontype)}}
@@ -13,52 +13,68 @@
           />
         {{/if}}
       </span>
+
       {{#if this.zrSectionNumber}}
         <span data-test-zrsectionnumber>{{this.zrSectionNumber}}</span>
       {{/if}}
-    </Q.Prompt>
+    </Ui::Legend>
+
     {{#if (or this.hasModifiedZrSectionNumberQuestion this.hasZrSectionTitleQuestion)}}
       {{#if this.hasModifiedZrSectionNumberQuestion}}
-        <Q.Prompt>
-          Which sections of the Zoning Resolution does this modify?
-        </Q.Prompt>
-        <small class="help-text display-block">
-          Provide the Zoning Resolution section number(s). Ex. ZR Sec. 42-10 and 43-17
-        </small>
-        <zrForm.Field
-          @attribute="dcpModifiedzrsectionnumber"
-          as |TextInput|
-        >
-          <TextInput
-            type="text"
-            maxlength="25"
-            data-test-input="dcpModifiedzrsectionnumber"
-          />
-        </zrForm.Field>
+        <Ui::Question as |Q|>
+          <Q.Label>
+            Which sections of the Zoning Resolution does this modify?
+          </Q.Label>
+
+          <p class="q-help">
+            Provide the Zoning Resolution section number(s). Ex. ZR Sec. 42-10 and 43-17
+          </p>
+
+          <zrForm.Field
+            @attribute="dcpModifiedzrsectionnumber"
+            as |TextInput|
+          >
+            <TextInput
+              type="text"
+              maxlength="25"
+              id={{Q.questionId}}
+              data-test-input="dcpModifiedzrsectionnumber"
+            />
+          </zrForm.Field>
+        </Ui::Question>
       {{/if}}
+
       {{#if this.hasZrSectionTitleQuestion}}
-        <Q.Prompt>
-          What is the title for the section of the Zoning Resolution that this action is pursuant to?
-        </Q.Prompt>
-        <small class="help-text display-block">
-          Example: “Landmark preservation in all districts”. Refer to the Zoning Resolution to find the title for the section number.
-        </small>
-        <zrForm.Field
-          @attribute="dcpZrsectiontitle"
-          as |TextInput|
-        >
-          <TextInput
-            type="text"
-            maxlength="100"
-            data-test-input="dcpZrsectiontitle"
-          />
-        </zrForm.Field>
+        <Ui::Question as |Q|>
+          <Q.Label>
+            What is the title for the section of the Zoning Resolution that this action is pursuant to?
+          </Q.Label>
+
+          <p class="q-help">
+            Example: “Landmark preservation in all districts”. Refer to the Zoning Resolution to find the title for the section number.
+          </p>
+
+          <zrForm.Field
+            @attribute="dcpZrsectiontitle"
+            as |TextInput|
+          >
+            <TextInput
+              type="text"
+              maxlength="100"
+              id={{Q.questionId}}
+              data-test-input="dcpZrsectiontitle"
+            />
+          </zrForm.Field>
+        </Ui::Question>
       {{/if}}
+
       {{#if this.zrAppendixF}}
         This action {{if @rwcdsForm.saveableChanges.dcpIncludezoningtextamendment "includes" "does not include"}} MIH. If this is a mistake, please contact City Planning.
-      {{/if}} 
+      {{/if}}
     {{else}}
-      <span class="help-text">No additional information required for this action</span>
+      <p class="q-help">
+        No additional information required for this action
+      </p>
     {{/if}}
-  </Ui::Question>
+  </fieldset>
 {{/let}}

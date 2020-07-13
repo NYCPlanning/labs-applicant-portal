@@ -1,12 +1,14 @@
 {{#let @form as |Form|}}
   <Form.Section @title="Project Information">
-    <Ui::Question as |Q|>
-      <Q.Prompt>
+    <Ui::Question @required={{true}} as |Q|>
+      <Q.Label>
         Project Name
-        <Ui::RequiredAsterisk />
-      </Q.Prompt>
+      </Q.Label>
 
-      <Form.Field @attribute="dcpRevisedprojectname" />
+      <Form.Field
+        @attribute="dcpRevisedprojectname"
+        id={{Q.questionId}}
+      />
     </Ui::Question>
   </Form.Section>
 {{/let}}
