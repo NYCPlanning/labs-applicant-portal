@@ -69,7 +69,7 @@
       {{/if}}
 
       {{#if this.zrAppendixF}}
-        This action {{if @rwcdsForm.saveableChanges.dcpIncludezoningtextamendment "includes" "does not include"}} MIH. If this is a mistake, please contact City Planning.
+        This action {{if (eq @rwcdsForm.saveableChanges.dcpIncludezoningtextamendment 717170000) "includes" "does not include"}} MIH. If this is a mistake, please contact City Planning.
       {{/if}}
     {{else}}
       <p class="q-help">

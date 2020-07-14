@@ -18,7 +18,7 @@ export default class ProposedActionsComponent extends Component {
 
   get zrAppendixF() {
     const zrSectionNumber = this.args.zrForm.saveableChanges.dcpZrsectionnumber;
-    return this.zrTypeLabel === 'ZR' && zrSectionNumber === 'Appendix F';
+    return this.zrTypeLabel === 'ZR' && zrSectionNumber === 'AppendixF';
   }
 
   get zrSectionNumber() {
