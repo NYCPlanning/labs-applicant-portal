@@ -42,6 +42,30 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     assert.equal(this.server.db.rwcdsForms.firstObject.dcpProjectsitedescription, 'Whatever affects one directly, affects all indirectly.');
   });
 
+  test('User can visit, edit, save, and submit rwcds-form route', async function(assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'applicant', 'rwcdsForm')],
+    });
+
+    await visit('/rwcds-form/1/edit');
+
+    assert.equal(currentURL(), '/rwcds-form/1/edit');
+
+    assert.dom('[data-test-textarea="dcpProjectsitedescription"]').hasNoValue();
+    await fillIn('[data-test-textarea="dcpProjectsitedescription"]', 'Whatever affects one directly, affects all indirectly.');
+
+    await fillIn('[data-test-textarea="dcpProposedprojectdevelopmentdescription"]', 'bananas');
+
+    await click('[data-test-save-button]');
+
+    await settled();
+
+    await click('[data-test-submit-button]');
+    await click('[data-test-confirm-submit-button]');
+
+    assert.equal(currentURL(), '/rwcds-form/1');
+  });
+
   test('User can view existing values in Project Description section', async function(assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'applicant', {

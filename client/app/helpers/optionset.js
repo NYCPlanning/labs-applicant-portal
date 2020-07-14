@@ -19,6 +19,9 @@ import {
 import {
   DCPHASPROJECTCHANGEDSINCESUBMISSIONOFTHEPAS_OPTIONSET,
   DCPCONSTRUCTIONPHASING_OPTIONSET,
+  DCPEXISTINGCONDITIONS_OPTIONSET,
+  DCPISRWCDSSCENARIO_OPTIONSET,
+
 } from '../models/rwcds-form';
 import {
   YES_NO_UNSURE_OPTIONSET,
@@ -42,6 +45,8 @@ const OPTIONSET_LOOKUP = {
   rwcdsForm: {
     dcpHasprojectchangedsincesubmissionofthepas: DCPHASPROJECTCHANGEDSINCESUBMISSIONOFTHEPAS_OPTIONSET,
     dcpConstructionphasing: DCPCONSTRUCTIONPHASING_OPTIONSET,
+    dcpExistingconditions: DCPEXISTINGCONDITIONS_OPTIONSET,
+    dcpIsrwcdsscenario: DCPISRWCDSSCENARIO_OPTIONSET,
   },
   pasForm: {
     dcpProposedprojectorportionconstruction: YES_NO_UNSURE_OPTIONSET,

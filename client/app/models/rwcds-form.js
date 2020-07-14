@@ -26,6 +26,28 @@ export const DCPCONSTRUCTIONPHASING_OPTIONSET = {
   },
 };
 
+export const DCPEXISTINGCONDITIONS_OPTIONSET = {
+  YES: {
+    code: true,
+    label: 'Yes',
+  },
+  NO: {
+    code: false,
+    label: 'No',
+  },
+};
+
+export const DCPISRWCDSSCENARIO_OPTIONSET = {
+  YES: {
+    code: true,
+    label: 'Yes',
+  },
+  NO: {
+    code: false,
+    label: 'No',
+  },
+};
+
 export default class RwcdsFormModel extends Model {
   @belongsTo('package', { async: false })
   package;
