@@ -1,7 +1,7 @@
 <SaveableForm
   @model={{this.pasForm}}
   @validators={{array this.validations.SaveablePasFormValidations this.validations.SubmittablePasFormValidations}}
-  as |pasForm|
+  as |saveableForm|
 >
   <div class="grid-x grid-margin-x">
     <div class="cell large-8">
@@ -27,53 +27,53 @@
         </p>
       </section>
 
-      <Packages::PasForm::ProjectInformation @form={{pasForm}} />
+      <Packages::PasForm::ProjectInformation @form={{saveableForm}} />
 
       <Packages::PasForm::ApplicantTeam
-        @form={{pasForm}}
+        @form={{saveableForm}}
         @pasForm={{this.pasForm}}
         @addApplicant={{this.addApplicant}}
         @removeApplicant={{this.removeApplicant}}
         @validations={{this.validations}}
       />
 
-      <Packages::PasForm::ProjectGeography @form={{pasForm}} />
+      <Packages::PasForm::ProjectGeography @form={{saveableForm}} />
 
-      <Packages::PasForm::ProposedLandUseActions @form={{pasForm}} />
+      <Packages::PasForm::ProposedLandUseActions @form={{saveableForm}} />
 
-      <Packages::PasForm::ProjectArea @form={{pasForm}} />
+      <Packages::PasForm::ProjectArea @form={{saveableForm}} />
 
-      <Packages::PasForm::ProposedDevelopmentSite @form={{pasForm}} />
+      <Packages::PasForm::ProposedDevelopmentSite @form={{saveableForm}} />
 
-      <Packages::PasForm::ProjectDescription @form={{pasForm}} />
+      <Packages::PasForm::ProjectDescription @form={{saveableForm}} />
 
       <Packages::PasForm::AttachedDocuments
-        @form={{pasForm}}
+        @form={{saveableForm}}
         @model={{this.pasForm}}
       />
 
     </div>{{! end left/main column }}
     <div class="cell large-4 sticky-sidebar">
 
-      <pasForm.PageNav>
-        <pasForm.SaveButton
-          @isEnabled={{or @package.isDirty pasForm.isSaveable}}
+      <saveableForm.PageNav>
+        <saveableForm.SaveButton
+          @isEnabled={{or @package.isDirty saveableForm.isSaveable}}
           @onClick={{this.savePackage}}
           data-test-save-button
         />
 
         <Packages::PasForm::PasFormError @package={{@package}} />
-        <pasForm.SubmitButton
-          @isEnabled={{and @package.isValid  pasForm.isSubmittable}}
+        <saveableForm.SubmitButton
+          @isEnabled={{and @package.isValid  saveableForm.isSubmittable}}
           class="secondary"
           data-test-submit-button
         />
-      </pasForm.PageNav>
+      </saveableForm.PageNav>
 
-      <pasForm.ConfirmationModal
-        @action={{component pasForm.SubmitButton
+      <saveableForm.ConfirmationModal
+        @action={{component saveableForm.SubmitButton
           onClick=this.submitPackage
-          isEnabled=pasForm.isSubmittable
+          isEnabled=saveableForm.isSubmittable
           class="no-margin"
         }}
         @footer={{component 'packages/pas-form/pas-form-error'
@@ -88,7 +88,7 @@
         <p>
           Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including the signature form) have been uploaded. If NYC Planning does not receive enough accurate information to provide guidance, the Lead Planner will notify you and request that this form be resubmitted with necessary materials, corrections, or clarifications.
         </p>
-      </pasForm.ConfirmationModal>
+      </saveableForm.ConfirmationModal>
 
       <Messages::Assistance class="large-margin-top" />
 
