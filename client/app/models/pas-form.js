@@ -883,4 +883,8 @@ export default class PasFormModel extends Model {
 
     return dirtyApplicants.length > 0;
   }
+
+  get hasApplicants() {
+    return this.applicants.length > 0;
+  }
 }

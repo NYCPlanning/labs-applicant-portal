@@ -54,5 +54,13 @@
         </div>
       </div>
     </div>
+    {{#unless @pasForm.hasApplicants}}
+      <span
+        class="form-error is-visible"
+        data-test-validation-message="has-applicants"
+      >
+        One or more applicant team members is required.
+      </span>
+    {{/unless}}
   </Form.Section>
 {{/let}}

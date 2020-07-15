@@ -227,4 +227,11 @@ export default class PackageModel extends Model {
 
     return isPackageDirty;
   }
+
+  get isValid() {
+    if (this.dcpPackagetype === PACKAGE_TYPE_OPTIONSET.PAS_PACKAGE.code) {
+      return this.pasForm.hasApplicants;
+    }
+    return true;
+  }
 }

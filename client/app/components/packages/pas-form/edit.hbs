@@ -31,6 +31,7 @@
 
       <Packages::PasForm::ApplicantTeam
         @form={{pasForm}}
+        @pasForm={{this.pasForm}}
         @addApplicant={{this.addApplicant}}
         @removeApplicant={{this.removeApplicant}}
         @validations={{this.validations}}
@@ -63,7 +64,7 @@
 
         <Packages::PasForm::PasFormError @package={{@package}} />
         <pasForm.SubmitButton
-          @isEnabled={{pasForm.isSubmittable}}
+          @isEnabled={{and @package.isValid  pasForm.isSubmittable}}
           class="secondary"
           data-test-submit-button
         />

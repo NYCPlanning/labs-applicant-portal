@@ -44,6 +44,10 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     await visit('/projects');
     await click('[data-test-project="edit-pas"]');
     await fillIn('[data-test-input="dcpRevisedprojectname"]', 'my project name');
+    await click('[data-test-add-applicant-button]');
+    await fillIn('[data-test-input="dcpFirstname"]', 'Tess');
+    await fillIn('[data-test-input="dcpLastname"]', 'Ter');
+    await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
     await click('[data-test-save-button]');
 
     await waitFor('[data-test-submit-button]:not([disabled])');
@@ -221,6 +225,11 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     await visit('/pas-form/1/edit');
 
     await fillIn('[data-test-input="dcpRevisedprojectname"]', 'my project name');
+
+    await click('[data-test-add-applicant-button]');
+    await fillIn('[data-test-input="dcpFirstname"]', 'Tess');
+    await fillIn('[data-test-input="dcpLastname"]', 'Ter');
+    await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
 
     // modal doesn't exist to start
     assert.dom('[data-test-reveal-modal]').doesNotExist();
