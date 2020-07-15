@@ -1,12 +1,12 @@
-{{#let @form as |Form|}}
-  <Form.Section @title="Proposed Actions">
+{{#let @form as |form|}}
+  <form.Section @title="Proposed Actions">
     <p>
       Listed below are the actions involved in this project:
     </p>
 
     <div data-test-section="proposed-project-actions">
       {{#each @form.saveableChanges.affectedZoningResolutions as |affectedZoningResolution|}}
-        <Form.SaveableForm
+        <form.SaveableForm
           @model={{affectedZoningResolution}}
           @validators={{array @validations.SaveableAffectedZoningResolutionFormValidations @validations.SubmittableAffectedZoningResolutionFormValidations}}
           as |affectedZoningResolutionForm|
@@ -15,7 +15,7 @@
             @zrForm={{affectedZoningResolutionForm}}
             @rwcdsForm={{@form}}
           />
-        </Form.SaveableForm>
+        </form.SaveableForm>
       {{/each}}
 
       <Ui::Question as |Q|>
@@ -27,7 +27,7 @@
           Refer to <strong>Chapter 2 page 2</strong> of the <Ui::ExternalLink @href="#">CEQR Technical manual</Ui::ExternalLink>. If multiple actions are sought, please address each action individually.
         </p>
 
-        <Form.Field
+        <form.Field
           @attribute="dcpPurposeandneedfortheproposedaction"
           @type="text-area"
           @maxlength="1500"
@@ -40,7 +40,7 @@
           Does the applicant plan to develop a 100% affordable housing development?
         </Q.Legend>
 
-        <Form.Field
+        <form.Field
           @attribute="dcpIsplannigondevelopingaffordablehousing"
           @type="radio-group"
           as |RadioGroup|
@@ -51,7 +51,7 @@
               (hash label='No' code=false)
             }}
           />
-        </Form.Field>
+        </form.Field>
       </Ui::Question>
 
       <Ui::Question as |Q|>
@@ -63,7 +63,7 @@
           Note that financing for affordable housing is considered an action
         </p>
 
-        <Form.Field
+        <form.Field
           @attribute="dcpIsapplicantseekingaction"
           @type="radio-group"
           as |RadioGroup|
@@ -82,7 +82,7 @@
                   Which actions from other agencies are sought?
                 </Q.Label>
 
-                <Form.Field
+                <form.Field
                   @attribute="dcpWhichactionsfromotheragenciesaresought"
                   as |TextInput|
                 >
@@ -92,12 +92,12 @@
                     data-test-input="dcpWhichactionsfromotheragenciesaresought"
                     id={{Q.questionId}}
                   />
-                </Form.Field>
+                </form.Field>
               </Ui::Question>
             {{/if}}
           </RadioGroup>
-        </Form.Field>
+        </form.Field>
       </Ui::Question>
     </div>
-  </Form.Section>
+  </form.Section>
 {{/let}}
