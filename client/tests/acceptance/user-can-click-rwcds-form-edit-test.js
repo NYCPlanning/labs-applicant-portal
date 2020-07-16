@@ -42,6 +42,27 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     assert.equal(this.server.db.rwcdsForms.firstObject.dcpProjectsitedescription, 'Whatever affects one directly, affects all indirectly.');
   });
 
+  test('User can save proposed actions information on rwcds form', async function(assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'applicant', 'rwcdsForm')],
+    });
+
+    await visit('/rwcds-form/1/edit');
+
+    assert.equal(currentURL(), '/rwcds-form/1/edit');
+
+    assert.dom('[data-test-input="dcpModifiedzrsectionnumber"]').hasNoValue();
+    await fillIn('[data-test-input="dcpModifiedzrsectionnumber"]', 'blah blah blah');
+
+    await click('[data-test-save-button]');
+
+    await settled();
+
+    assert.dom('[data-test-input="dcpModifiedzrsectionnumber"]').hasValue('blah blah blah');
+
+    assert.equal(this.server.db.affectedZoningResolutions.firstObject.dcpModifiedzrsectionnumber, 'blah blah blah');
+  });
+
   test('User can visit, edit, save, and submit rwcds-form route', async function(assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'applicant', 'rwcdsForm')],
