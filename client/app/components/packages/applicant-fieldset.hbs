@@ -1,4 +1,4 @@
-{{#let @form as |Form|}}
+{{#let @form as |form|}}
   <Ui::Question
     class="fieldset relative"
     ...attributes
@@ -19,7 +19,7 @@
           Type of applicant
         </Q.Legend>
 
-        <Form.Field
+        <form.Field
           @attribute="dcpType"
           @type="radio-group"
           as |RadioGroup|
@@ -30,7 +30,7 @@
               (hash label='Organization' code=717170001)
             }}
           />
-        </Form.Field>
+        </form.Field>
       </Ui::Question>
     {{/if}}
 
@@ -38,7 +38,7 @@
     {{#if (eq @applicant.dcpType 717170001)}}
       <label data-test-applicant-organization>
         Organization Name <Ui::RequiredAsterisk />
-        <Form.Field @attribute="dcpOrganization" />
+        <form.Field @attribute="dcpOrganization" />
       </label>
 
       <hr/>
@@ -50,13 +50,13 @@
       <div class="cell medium-6">
         <label>
           First Name <Ui::RequiredAsterisk />
-          <Form.Field @attribute="dcpFirstname" />
+          <form.Field @attribute="dcpFirstname" />
         </label>
       </div>
       <div class="cell medium-6">
         <label>
           Last Name <Ui::RequiredAsterisk />
-          <Form.Field @attribute="dcpLastname" />
+          <form.Field @attribute="dcpLastname" />
         </label>
       </div>
     </div>
@@ -65,25 +65,25 @@
     {{#if (eq @applicant.friendlyEntityName "Other Team Member")}}
       <label>
         Organization
-        <Form.Field @attribute="dcpOrganization" />
+        <form.Field @attribute="dcpOrganization" />
       </label>
     {{/if}}
 
     <label>
       Email Address <Ui::RequiredAsterisk />
-      <Form.Field @attribute="dcpEmail" />
+      <form.Field @attribute="dcpEmail" />
     </label>
 
     <label>
       Address
-      <Form.Field @attribute="dcpAddress" />
+      <form.Field @attribute="dcpAddress" />
     </label>
 
     <div class="grid-x grid-margin-x">
       <div class="cell medium-auto">
         <label>
           City
-          <Form.Field @attribute="dcpCity" />
+          <form.Field @attribute="dcpCity" />
         </label>
       </div>
 
@@ -107,7 +107,7 @@
       <div class="cell auto medium-4">
         <label>
           ZIP
-          <Form.Field
+          <form.Field
             @attribute="dcpZipcode"
             type="number"
           />
@@ -117,7 +117,7 @@
 
     <label>
       Phone
-      <Form.Field
+      <form.Field
         @attribute="dcpPhone"
         type="number"
       />

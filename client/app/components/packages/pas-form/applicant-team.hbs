@@ -1,5 +1,5 @@
-{{#let @form as |Form|}}
-  <Form.Section @title="Applicant Team">
+{{#let @form as |form|}}
+  <form.Section @title="Applicant Team">
     <p>
       Add all Applicants (either individuals or organizations) and other Team Members (including Land Use Consultants and Environmental Consultants, agency staff, etc.).
     </p>
@@ -7,7 +7,7 @@
     <ul class="no-bullet">
       {{#each (filter-by 'isDeleted' false @form.saveableChanges.applicants) as |applicant applicantIndex|}}
         <li class="scale-fade-in">
-          <Form.SaveableForm
+          <form.SaveableForm
             @model={{applicant}}
             @validators={{array @validations.SaveableApplicantFormValidations @validations.SubmittableApplicantFormValidations}}
             as |applicantForm|
@@ -19,7 +19,7 @@
               data-test-applicant-fieldset={{applicantIndex}}
               data-test-applicant-type={{applicant.friendlyEntityName}}
             />
-          </Form.SaveableForm>
+          </form.SaveableForm>
         </li>
       {{/each}}
     </ul>
@@ -54,5 +54,5 @@
         </div>
       </div>
     </div>
-  </Form.Section>
+  </form.Section>
 {{/let}}

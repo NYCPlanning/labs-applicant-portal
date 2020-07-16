@@ -1,5 +1,5 @@
-{{#let @form as |Form|}}
-  <Form.Section @title="Project Geography">
+{{#let @form as |form|}}
+  <form.Section @title="Project Geography">
     <p>
       Please identify the tax lots that are included in the proposed Project Area and/or Development Site.
       If the Project's geography is irregular, especially large, or does not consist of tax lots, describe it below.
@@ -26,11 +26,11 @@
         Fill in if the Project Area and/or Development Site is irregular, especially large, or does not consist of tax lots.
       </p>
 
-      <Form.Field
+      <form.Field
         @attribute="dcpDescriptionofprojectareageography"
         @type="text-area"
         id={{Q.questionId}}
       />
     </Ui::Question>
-  </Form.Section>
+  </form.Section>
 {{/let}}

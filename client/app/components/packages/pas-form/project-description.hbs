@@ -1,5 +1,5 @@
-{{#let @form as |Form|}}
-  <Form.Section @title="Project Description">
+{{#let @form as |form|}}
+  <form.Section @title="Project Description">
     <p>
       For complex proposals, feel free to upload a draft document (in the Attachments section) explaining this information instead of filling out the form inputs.
     </p>
@@ -9,7 +9,7 @@
         Description of the Proposed Development being facilitated by the Land Use Actions
       </Q.Label>
 
-      <Form.Field
+      <form.Field
         @attribute="dcpProjectdescriptionproposeddevelopment"
         @type="text-area"
         id={{Q.questionId}}
@@ -21,7 +21,7 @@
         Why is this application being proposed? What is the legal, environmental, or land use background?
       </Q.Label>
 
-      <Form.Field
+      <form.Field
         @attribute="dcpProjectdescriptionbackground"
         @type="text-area"
         id={{Q.questionId}}
@@ -33,7 +33,7 @@
         What is the land use rationale for all the Proposed Actions?
       </Q.Label>
 
-      <Form.Field
+      <form.Field
         @attribute="dcpProjectdescriptionproposedactions"
         @type="text-area"
         id={{Q.questionId}}
@@ -45,7 +45,7 @@
         Description of existing land uses and structures in the proposed Project Area and Development&nbsp;Site
       </Q.Label>
 
-      <Form.Field
+      <form.Field
         @attribute="dcpProjectdescriptionproposedarea"
         @type="text-area"
         id={{Q.questionId}}
@@ -57,7 +57,7 @@
         Description of land uses and built context in surrounding area (within 1000 ft)
       </Q.Label>
 
-      <Form.Field
+      <form.Field
         @attribute="dcpProjectdescriptionsurroundingarea"
         @type="text-area"
         id={{Q.questionId}}
@@ -73,11 +73,11 @@
         Include to expedite CEQR guidance: If Proposed Actions are not approved, what is the Applicant’s as-of-right development (CEQR “No-Action”) proposal? What would be expected to occur on non-applicant-controlled sites because of the Proposed Actions (CEQR “With-Action”)?
       </p>
 
-      <Form.Field
+      <form.Field
         @attribute="dcpProjectattachmentsotherinformation"
         @type="text-area"
         id={{Q.questionId}}
       />
     </Ui::Question>
-  </Form.Section>
+  </form.Section>
 {{/let}}
