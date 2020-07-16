@@ -53,7 +53,7 @@
 
       <saveableForm.PageNav>
         <saveableForm.SaveButton
-          @isEnabled={{or @package.isDirty (and saveableForm.saveableChanges.isDirty saveableForm.saveableChanges.isValid)}}
+          @isEnabled={{or @package.isDirty saveableForm.isSaveable}}
           @onClick={{this.savePackage}}
           data-test-save-button
         />

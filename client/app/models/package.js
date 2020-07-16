@@ -222,7 +222,8 @@ export default class PackageModel extends Model {
     }
     if (this.dcpPackagetype === PACKAGE_TYPE_OPTIONSET.RWCDS.code) {
       return isPackageDirty
-        || this.rwcdsForm.hasDirtyAttributes;
+        || this.rwcdsForm.hasDirtyAttributes
+        || this.rwcdsForm.isAffectedZoningResolutionsDirty;
     }
 
     return isPackageDirty;
