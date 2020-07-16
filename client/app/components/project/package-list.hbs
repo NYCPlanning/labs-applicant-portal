@@ -1,0 +1,21 @@
+<h2>{{@packageName}}</h2>
+<ol class="no-bullet">
+  <li>
+    <!-- TODO update all ifs with real logic -->
+    <a href="#">
+      {{#if (eq status "revision required")}}
+        <FaIcon @icon="exclamation-triangle" class="text-gold" />
+      {{else}}
+        <FaIcon
+          @icon={{if (eq status "package prep") 'edit' 'check'}}
+          class={{if (eq status "package prep") '' 'text-green-dark'}}
+        />
+      {{/if}}
+      <strong>dcp_packageversion</strong>
+      <!-- TODO format date appropriately -->
+      <span class="text-gray">| {{if (eq status "package prep") 'Editable since ' 'Submitted '}} dcp_statusdate </span>
+    </a>
+  </li>
+</ol>
+
+{{yield}}
