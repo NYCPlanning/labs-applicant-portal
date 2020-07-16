@@ -59,7 +59,7 @@ module('Acceptance | error message appears when save fails', function(hooks) {
 
     assert.dom('[data-test-error-message]').doesNotExist();
 
-    await fillIn('[data-test-textarea="dcpProjectsitedescription"]', 'Whatever affects one directly, affects all indirectly.');
+    await fillIn('[data-test-input="dcpProjectsitedescription"]', 'Whatever affects one directly, affects all indirectly.');
 
     // save it
     await click('[data-test-save-button]');
