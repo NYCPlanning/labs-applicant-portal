@@ -1,0 +1,9 @@
+<legend ...attributes>
+  <span class="text-weight-bold">
+    {{yield}}
+  </span>
+
+  {{#if @required}}
+    <Ui::RequiredAsterisk />
+  {{/if}}
+</legend>

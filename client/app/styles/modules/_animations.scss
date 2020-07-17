@@ -20,6 +20,11 @@
   to   { transform: translateY(0); }
 }
 
+@keyframes grow-down {
+  from { transform: scaleY(0); transform-origin: 0 0; }
+  to   { transform: scaleY(100%); transform-origin: 0 0; }
+}
+
 
 // Scale and fade in
 .scale-fade-in {
@@ -37,4 +42,14 @@
 .slide-in-bottom {
   animation-name: slide-up, fade-in;
   animation-duration: 0.3s;
+}
+
+// Grow from the top
+.grow-down {
+  animation-name: grow-down, fade-in;
+  animation-duration: 0.3s;
+}
+
+.fast {
+  animation-duration: 0.15s;
 }

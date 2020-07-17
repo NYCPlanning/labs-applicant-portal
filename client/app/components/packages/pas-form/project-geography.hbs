@@ -1,12 +1,12 @@
-{{#let @form as |Form|}}
-  <Form.Section @title="Project Geography">
+{{#let @form as |form|}}
+  <form.Section @title="Project Geography">
     <p>
-      Please identify the tax lots that are included in the proposed project area and/or development site.
-      If the project geography is irregular, especially large, or does not consist of tax lots, please describe it below.
+      Please identify the tax lots that are included in the proposed Project Area and/or Development Site.
+      If the Project's geography is irregular, especially large, or does not consist of tax lots, describe it below.
     </p>
 
     <p class="text-small">
-      NYC Planning's <Ui::ExternalLink @href="https://lotselector.planning.nyc.gov/">Tax Lot Selector</Ui::ExternalLink> is a helpful tool for identifying and selecting tax lot BBL numbers within a project area. If your project is very large, you can download the BBLs from the Tax Lot Selector app using the "Paperless Filing" option and upload that file to this form as an attachment.
+      NYC Planning's <Ui::ExternalLink @href="https://lotselector.planning.nyc.gov/">Tax Lot Selector</Ui::ExternalLink> is a helpful tool for identifying and selecting tax lot BBL numbers within a Project Area. If your Project is very large, you can download the BBLs from the Tax Lot Selector app using the "Paperless Filing" option and upload that file to this form as an attachment.
     </p>
 
     <div data-test-section="project-geography">
@@ -18,17 +18,19 @@
     </div>
 
     <Ui::Question as |Q|>
-      <Q.Prompt>
+      <Q.Label>
         Description of geography
-        <small class="help-text display-block text-weight-normal">
-          Fill in if the project area and/or development site is irregular, especially large, or does not consist of tax lots.
-        </small>
-      </Q.Prompt>
+      </Q.Label>
 
-      <Form.Field
+      <p class="q-help">
+        Fill in if the Project Area and/or Development Site is irregular, especially large, or does not consist of tax lots.
+      </p>
+
+      <form.Field
         @attribute="dcpDescriptionofprojectareageography"
         @type="text-area"
+        id={{Q.questionId}}
       />
     </Ui::Question>
-  </Form.Section>
+  </form.Section>
 {{/let}}
