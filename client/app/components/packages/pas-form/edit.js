@@ -7,6 +7,8 @@ import SubmittablePasFormValidations from '../../../validations/submittable-pas-
 import SaveableApplicantFormValidations from '../../../validations/saveable-applicant-form';
 import SubmittableApplicantFormValidations from '../../../validations/submittable-applicant-form';
 
+import { addToHasMany, removeFromHasMany } from '../../../utils/ember-changeset';
+
 export default class PasFormComponent extends Component {
   validations = {
     SaveablePasFormValidations,
@@ -49,15 +51,19 @@ export default class PasFormComponent extends Component {
   }
 
   @action
-  addApplicant(targetEntity) {
-    this.store.createRecord('applicant', {
+  addApplicant(targetEntity, changeset) {
+    const newApplicant = this.store.createRecord('applicant', {
       targetEntity, // distinguishes between different applicant types for the backend
       pasForm: this.pasForm,
     });
+  
+    addToHasMany(changeset, 'applicants', newApplicant);
   }
 
   @action
-  removeApplicant(applicant) {
+  removeApplicant(applicant, changeset) {
+    removeFromHasMany(changeset, 'applicants', applicant);
+
     applicant.deleteRecord();
   }
 }

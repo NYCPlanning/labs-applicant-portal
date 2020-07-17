@@ -15,7 +15,7 @@
             <Packages::ApplicantFieldset
               @applicant={{applicantForm.saveableChanges}}
               @form={{applicantForm}}
-              @removeApplicant={{fn @removeApplicant applicant}}
+              @removeApplicant={{fn @removeApplicant applicant @form.saveableChanges}}
               data-test-applicant-fieldset={{applicantIndex}}
               data-test-applicant-type={{applicant.friendlyEntityName}}
             />
@@ -34,7 +34,7 @@
           <button
             class="button expanded secondary no-margin"
             type="button"
-            {{on "click" (fn @addApplicant "dcp_applicantinformation") }}
+            {{on "click" (fn @addApplicant "dcp_applicantinformation" @form.saveableChanges) }}
             data-test-add-applicant-button
           >
             <strong>Add an Applicant</strong>
@@ -45,7 +45,7 @@
           <button
             class="button expanded secondary no-margin"
             type="button"
-            {{on "click" (fn @addApplicant "dcp_applicantrepresentativeinformation") }}
+            {{on "click" (fn @addApplicant "dcp_applicantrepresentativeinformation" @form.saveableChanges) }}
             data-test-add-applicant-team-member-button
           >
             <strong>Add other Team Member</strong>

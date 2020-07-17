@@ -1,5 +1,6 @@
 import {
   validatePresence,
+  validateLength,
 } from 'ember-changeset-validations/validators';
 import SaveablePasForm from './saveable-pas-form';
 import validatePresenceIf from '../validators/required-if-selected';
@@ -207,6 +208,12 @@ export default {
       withValue: (target) => target !== null && target !== undefined,
       gte: 1,
       message: 'Number of actions must be greater than 0',
+    }),
+  ],
+
+  applicants: [
+    validateLength({
+      min: 1,
     }),
   ],
 };
