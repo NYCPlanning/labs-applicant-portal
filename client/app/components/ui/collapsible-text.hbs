@@ -1,5 +1,5 @@
 <button
-  class="text-a11y-orange"
+  class="collapsible-text--trigger text-a11y-orange button small secondary"
   type="button"
   onClick={{fn this.toggleAdditionalText}}
   data-test-title="{{@buttonText}}"
@@ -8,7 +8,7 @@
   <FaIcon @icon={{if this.showAdditionalText "caret-up" "caret-down"}}/>
 </button>
 {{#if this.showAdditionalText}}
-  <div class="bg-white-smoke medium-padding medium-margin-bottom scale-fade-in" data-test-additional-text>
+  <div class="collapsible-text--content grow-down fast" data-test-additional-text ...attributes>
     {{yield}}
   </div>
 {{/if}}

@@ -1,112 +1,175 @@
 {{#let @form as |form|}}
   <form.Section @title="Project Description">
-    <label>
-      <strong>
-        Has the project changed since submission of the Pre-Application Statement (PAS)?
-      </strong>
-      <br>
+
+    <Ui::Question as |Q|>
+      <Q.Legend>
+        Has the Project changed since submission of the Pre-Application Statement (PAS)?
+      </Q.Legend>
+
+      <p class="q-help">
+        Ensure that the descriptions below account for any changes since PAS submission
+      </p>
+
       <form.Field
         @type="radio-group"
         @attribute="dcpHasprojectchangedsincesubmissionofthepas"
-      as |RadioGroup|>
-          <RadioGroup
-            @options={{array
-              (hash
-                code=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'code' 'YES')
-                label=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'label' 'YES'))
-              (hash
-                code=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'code' 'NO')
-                label=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'label' 'NO'))
-            }}
-          />
+        as |RadioGroup|
+      >
+        <RadioGroup
+          @options={{array
+            (hash
+              code=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'code' 'YES')
+              label=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'label' 'YES'))
+            (hash
+              code=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'code' 'NO')
+              label=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'label' 'NO'))
+          }}
+        />
       </form.Field>
-      <br>
-    </label>
+    </Ui::Question>
 
-    <small class="help-text display-block">
-      Ensure that descriptions below account for any changes since PAS submission
-    </small>
+    <Ui::Question @required={{true}} as |Q|>
+      <Q.Label>
+        Identify and describe the Existing Conditions of all areas affected by the Proposed Actions
+      </Q.Label>
 
-    <label>
-      <strong>
-        Identify and describe the existing conditions of all areas affected by the proposed actions
-      </strong>
       <form.Field
         @type="text-area"
         @attribute="dcpProjectsitedescription"
         @maxlength="2400"
+        id={{Q.questionId}}
       />
-    </label>
+    </Ui::Question>
 
-    <label>
-      <strong>
-        Describe the proposed project facilitated by the proposed actions
-      </strong>
+    <Ui::Question @required={{true}} as |Q|>
+      <Q.Label>
+        Describe the proposed Project facilitated by the Proposed Actions
+      </Q.Label>
+
       <form.Field
         @type="text-area"
         @attribute="dcpProposedprojectdevelopmentdescription"
         @maxlength="1800"
+        id={{Q.questionId}}
       />
-    </label>
 
-    <label>
-      <strong>
+      <Q.AdditionalGuidance>
+        <p class="text-small">
+          Be sure to describe the proposed Project’s/Development’s following information:
+        </p>
+        <ul class="text-small">
+          <li>Overall gross square footage</li>
+          <li>All proposed land uses (in gsf per land use)</li>
+          <li>Overall height</li>
+          <li>Number of stories</li>
+          <li>Number of dwelling units</li>
+          <li>Number of affordable dwelling units and mechanism for providing affordable units (e.g. MIH)</li>
+          <li>Number of parking spaces</li>
+          <li>New curb cuts (where applicable)</li>
+          <li>Number of buildings included in the the proposed Project/Development</li>
+        </ul>
+      </Q.AdditionalGuidance>
+    </Ui::Question>
+
+    <Ui::Question @required={{true}} as |Q|>
+      <Q.Legend>
         Will construction be done in multiple phases?
-      </strong>
-      <br>
-        <form.Field
-          @type="radio-group"
-          @attribute="dcpConstructionphasing"
-        as |RadioGroup|>
-          <RadioGroup
-            @options={{array
-              (hash
-                code=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'code' 'SINGLE')
-                label=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'label' 'SINGLE'))
-              (hash
-                code=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'code' 'MULTIPLE')
-                label=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'label' 'MULTIPLE'))
-              (hash
-                code=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'code' 'NOT_APPLICABLE')
-                label=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'label' 'NOT_APPLICABLE'))
-              }}
-          />
-        </form.Field>
-      <br>
-    </label>
+      </Q.Legend>
 
-    <label>
-      <strong>
-        What is the proposed analysis year of the proposed action?
-      </strong>
+      <form.Field
+        @type="radio-group"
+        @attribute="dcpConstructionphasing"
+        as |RadioGroup|
+      >
+        <RadioGroup
+          @options={{array
+            (hash
+              code=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'code' 'SINGLE')
+              label=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'label' 'SINGLE'))
+            (hash
+              code=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'code' 'MULTIPLE')
+              label=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'label' 'MULTIPLE'))
+            (hash
+              code=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'code' 'NOT_APPLICABLE')
+              label=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'label' 'NOT_APPLICABLE'))
+          }}
+        />
+      </form.Field>
+    </Ui::Question>
+
+    <Ui::Question as |Q|>
+      <Q.Label>
+        What is the proposed analysis year of the Proposed Action?
+      </Q.Label>
+
+      <p class="q-help">
+        Refer to Chapter 2 pages 2-4 of the <Ui::ExternalLink @href="https://www1.nyc.gov/site/oec/environmental-quality-review/technical-manual.page">CEQR Technical Manual</Ui::ExternalLink>
+      </p>
+
       <form.Field
         @attribute="dcpBuildyear"
         @showCounter={{true}}
         @maxlength="4"
+        id={{Q.questionId}}
       />
-    </label>
+    </Ui::Question>
 
-    <label>
-      <strong>
+    <Ui::Question as |Q|>
+      <Q.Label>
         Explain the rationale behind the analysis year
-      </strong>
-      <small class="help-text display-block">
-        Providing history allows NYC Planning to analyze potential CEQR analysis&nbsp;
-        sections/chapters, as well as development trends and previous environment&nbsp;
-        review assumptions.
-        <br>
-        Summarize any prior rezonings or discretionary City Planning Commission&nbsp;
-        approvals. Provide ULURP and CEQR Application numbers, if available.&nbsp;
-        Describe any context that is relevant to development on the site (e.g.&nbsp;
-        former uses, large scale development plans, urban renewal plans,&nbsp;
-        Mitchell Lama site plans, or other site controls, easements, restrictive&nbsp;
-        declarations, (E) designations, historic or other designations, etc.).
-      </small>
+      </Q.Label>
+
+      <form.Field
+        @type="text-area"
+        @attribute="dcpRationalbehindthebuildyear"
+        @maxlength="300"
+        id={{Q.questionId}}
+      />
+
+      <Q.AdditionalGuidance>
+        <p class="text-small">
+          Please explain how the Analysis Year was determined while factoring in the following information:
+        </p>
+        <ul class="text-small">
+          <li>Intended construction duration and phasing</li>
+          <li>Consider the Application review period (and ULURP process, if applicable)</li>
+          <li>All of the Projected Development Sites </li>
+        </ul>
+      </Q.AdditionalGuidance>
+    </Ui::Question>
+
+    <Ui::Question as |Q|>
+      <Q.Label>
+        History of sites within the Project Area
+      </Q.Label>
+
+      <p class="q-help">
+        Providing history allows NYC Planning to analyze potential CEQR analysis sections/chapters, as well as development trends and previous environment review assumptions.
+      </p>
+
       <form.Field
         @type="text-area"
         @attribute="dcpSitehistory"
         @maxlength="600"
+        id={{Q.questionId}}
       />
-    </label>
+
+      <Q.AdditionalGuidance>
+        <p class="text-small">
+          Summarize any prior rezonings or discretionary City Planning Commission approvals providing the following information. You can paste links to supporting documents in the text box below.
+        </p>
+        <ul class="text-small">
+          <li>ULURP and CEQR Application numbers, if available</li>
+          <li>Former site uses </li>
+          <li>Large scale development plans</li>
+          <li>Urban renewal plans </li>
+          <li>Mitchell Lama site plans, or other site controls</li>
+          <li>Easements</li>
+          <li>Restrictive declarations</li>
+          <li>(E) designations, historic or other designations, etc.</li>
+        </ul>
+      </Q.AdditionalGuidance>
+    </Ui::Question>
+
   </form.Section>
 {{/let}}

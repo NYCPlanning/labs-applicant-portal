@@ -1,0 +1,9 @@
+<label for={{@for}} ...attributes>
+  <span class="text-weight-bold">
+    {{yield}}
+  </span>
+
+  {{#if @required}}
+    <Ui::RequiredAsterisk />
+  {{/if}}
+</label>

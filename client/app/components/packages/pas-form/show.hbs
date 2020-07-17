@@ -37,7 +37,7 @@
             {{#if applicant.dcpAddress}}
               <div>
                 <FaIcon @icon="map-marker-alt" class="text-gray" @fixedWidth={{true}} />
-                {{applicant.dcpAddress}}, {{applicant.dcpCity}}, {{applicant.dcpState}} {{applicant.dcpZipcode}}
+                {{applicant.dcpAddress}}, {{applicant.dcpCity}}, {{optionset 'applicant' 'state' 'label' applicant.dcpState}} {{applicant.dcpZipcode}}
               </div>
             {{/if}}
             {{#if applicant.dcpPhone}}
@@ -67,7 +67,7 @@
               <li>
                 {{bbl.dcpBblnumber}}
                 {{#if bbl.dcpDevelopmentsite}}
-                  <span class="text-silver">|</span> part of the development site
+                  <span class="text-silver">|</span> part of the Development Site
                 {{/if}}
                 {{#if bbl.dcpPartiallot}}
                   <span class="text-silver">|</span> partial lot
@@ -309,7 +309,7 @@
 
       <Ui::Answer @beside={{true}} as |A|>
         <A.Prompt>
-          Requires a NYC DEP Storm Water Construction Permit
+          Requires a NYC DEP Stormwater Construction Permit
         </A.Prompt>
         <A.Field>
           {{optionset 'pasForm' 'dcpProposedprojectorportionconstruction' 'label' @package.pasForm.dcpProposedprojectorportionconstruction}}
@@ -324,6 +324,17 @@
           {{optionset 'pasForm' 'dcpUrbanrenewalarea' 'label' @package.pasForm.dcpUrbanrenewalarea}}
         </A.Field>
       </Ui::Answer>
+
+      {{#if @package.pasForm.dcpUrbanareaname}}
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
+            Name of Urban Renewal Area:
+          </A.Prompt>
+          <A.Field>
+            {{@package.pasForm.dcpUrbanareaname}}
+          </A.Field>
+        </Ui::Answer>
+      {{/if}}
 
       <Ui::Answer @beside={{true}} as |A|>
         <A.Prompt>

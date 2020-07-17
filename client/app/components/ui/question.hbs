@@ -1,13 +1,8 @@
-{{#if @fieldset}}
-  <fieldset class="medium-margin-bottom" ...attributes>
-    {{yield (hash
-      Prompt=(component 'ui/fieldset-legend')
-    )}}
-  </fieldset>
-  {{else}}
-  <label class="medium-margin-bottom" ...attributes>
-    {{yield (hash
-      Prompt=(component 'ui/label-text')
-    )}}
-  </label>
-{{/if}}
+<fieldset class="ui-question" ...attributes>
+  {{yield (hash
+    questionId=this.questionId
+    Legend=(component 'ui/legend' required=@required)
+    Label=(component 'ui/label' required=@required for=this.questionId)
+    AdditionalGuidance=(component 'ui/collapsible-text' buttonText="Additional Guidance")
+  )}}
+</fieldset>

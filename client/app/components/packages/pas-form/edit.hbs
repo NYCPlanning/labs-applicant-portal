@@ -1,19 +1,22 @@
 <SaveableForm
   @model={{this.pasForm}}
   @validators={{array this.validations.SaveablePasFormValidations this.validations.SubmittablePasFormValidations}}
-  as |pasForm|
+  as |saveableForm|
 >
   <div class="grid-x grid-margin-x">
     <div class="cell large-8">
 
       <section class="form-section">
-        <h1>
+        <h1 class="header-large">
           Pre-Application Statement
+          <small class="text-weight-normal">
+            {{if @package.dcpPackageversion (concat '(V' @package.dcpPackageversion ')')}}
+          </small>
         </h1>
 
         <p>
-          The <strong>Pre-Application Statement</strong> requests pertinent information about a site and proposed project. By
-          submitting the PAS, a prospective applicant acknowledges that they intend to file a land use application with NYC
+          The <strong>Pre-Application Statement</strong> requests pertinent information about a Site and Proposed Project. By
+          submitting the PAS, a prospective Applicant acknowledges that they intend to file a Land Use Application with NYC
           Planning. Submission allows staff to be assigned from appropriate divisions and project tracking to commence.
         </p>
 
@@ -24,52 +27,53 @@
         </p>
       </section>
 
-      <Packages::PasForm::ProjectInformation @form={{pasForm}} />
+      <Packages::PasForm::ProjectInformation @form={{saveableForm}} />
 
       <Packages::PasForm::ApplicantTeam
-        @form={{pasForm}}
+        @form={{saveableForm}}
         @addApplicant={{this.addApplicant}}
         @removeApplicant={{this.removeApplicant}}
         @validations={{this.validations}}
       />
 
-      <Packages::PasForm::ProjectGeography @form={{pasForm}} />
+      <Packages::PasForm::ProjectGeography @form={{saveableForm}} />
 
-      <Packages::PasForm::ProposedLandUseActions @form={{pasForm}} />
+      <Packages::PasForm::ProposedLandUseActions @form={{saveableForm}} />
 
-      <Packages::PasForm::ProjectArea @form={{pasForm}} />
+      <Packages::PasForm::ProjectArea @form={{saveableForm}} />
 
-      <Packages::PasForm::ProposedDevelopmentSite @form={{pasForm}} />
+      <Packages::PasForm::ProposedDevelopmentSite @form={{saveableForm}} />
 
-      <Packages::PasForm::ProjectDescription @form={{pasForm}} />
+      <Packages::PasForm::ProjectDescription @form={{saveableForm}} />
 
       <Packages::PasForm::AttachedDocuments
-        @form={{pasForm}}
+        @form={{saveableForm}}
         @model={{this.pasForm}}
       />
 
     </div>{{! end left/main column }}
     <div class="cell large-4 sticky-sidebar">
 
-      <pasForm.PageNav>
-        <pasForm.SaveButton
-          @isEnabled={{or @package.isDirty pasForm.isSaveable}}
+      <saveableForm.PageNav>
+        <saveableForm.SaveButton
+          @isEnabled={{or @package.isDirty saveableForm.isSaveable}}
           @onClick={{this.savePackage}}
           data-test-save-button
         />
 
         <Packages::PasForm::PasFormError @package={{@package}} />
-        <pasForm.SubmitButton
-          @isEnabled={{pasForm.isSubmittable}}
+
+        <saveableForm.SubmitButton
+          @isEnabled={{saveableForm.isSubmittable}}
           class="secondary"
           data-test-submit-button
         />
-      </pasForm.PageNav>
+      </saveableForm.PageNav>
 
-      <pasForm.ConfirmationModal
-        @action={{component pasForm.SubmitButton
+      <saveableForm.ConfirmationModal
+        @action={{component saveableForm.SubmitButton
           onClick=this.submitPackage
-          isEnabled=pasForm.isSubmittable
+          isEnabled=saveableForm.isSubmittable
           class="no-margin"
         }}
         @footer={{component 'packages/pas-form/pas-form-error'
@@ -77,17 +81,14 @@
         }}
         data-test-confirm-submit-button={{true}}
       >
-        <h6>Confirm Pre-Applicant Statement submission</h6>
+        <h6>Confirm Pre-Applicant Statement Submission</h6>
         <p class="header-large medium-margin-top small-margin-bottom">
           Are you sure?
         </p>
         <p>
-          Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including the
-          signature form) have been uploaded. If City Planning does not receive enough accurate information to provide guidance,
-          the lead planner will notify you and request that this form be resubmitted with needed materials, corrections, or
-          clarifications.
+          Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including the signature form) have been uploaded. If NYC Planning does not receive enough accurate information to provide guidance, the Lead Planner will notify you and request that this form be resubmitted with necessary materials, corrections, or clarifications.
         </p>
-      </pasForm.ConfirmationModal>
+      </saveableForm.ConfirmationModal>
 
       <Messages::Assistance class="large-margin-top" />
 

@@ -26,6 +26,28 @@ export const DCPCONSTRUCTIONPHASING_OPTIONSET = {
   },
 };
 
+export const DCPEXISTINGCONDITIONS_OPTIONSET = {
+  YES: {
+    code: true,
+    label: 'Yes',
+  },
+  NO: {
+    code: false,
+    label: 'No',
+  },
+};
+
+export const DCPISRWCDSSCENARIO_OPTIONSET = {
+  YES: {
+    code: true,
+    label: 'Yes',
+  },
+  NO: {
+    code: false,
+    label: 'No',
+  },
+};
+
 export default class RwcdsFormModel extends Model {
   @belongsTo('package', { async: false })
   package;
@@ -111,4 +133,23 @@ export default class RwcdsFormModel extends Model {
   @attr('date') overriddencreatedon;
 
   @attr('number') utcconversiontimezonecode;
+
+  async save() {
+    await this.saveDirtyAffectedZoningResolutions();
+    await super.save();
+  }
+
+  async saveDirtyAffectedZoningResolutions() {
+    return Promise.all(
+      this.affectedZoningResolutions
+        .filter((zoningResolution) => zoningResolution.hasDirtyAttributes)
+        .map((zoningResolution) => zoningResolution.save()),
+    );
+  }
+
+  get isAffectedZoningResolutionsDirty() {
+    const dirtyZrs = this.affectedZoningResolutions.filter((zr) => zr.hasDirtyAttributes);
+
+    return dirtyZrs.length > 0;
+  }
 }
