@@ -27,7 +27,7 @@ module('Acceptance | error message appears when save fails', function(hooks) {
       project: this.server.create('project'),
     });
 
-    this.server.patch('/pas-forms/:id', { errors: [{ detail: 'server problem with pasForm' }] }, 500); // force mirage to error
+    this.server.patch('/pas-forms/:id', { errors: [{ message: 'server problem with pasForm' }] }, 500); // force mirage to error
 
     await visit('/pas-form/1/edit');
 
@@ -53,13 +53,13 @@ module('Acceptance | error message appears when save fails', function(hooks) {
       project: this.server.create('project'),
     });
 
-    this.server.patch('/rwcds-forms/:id', { errors: [{ detail: 'server problem with rwcdsForm' }] }, 500); // force mirage to error
+    this.server.patch('/rwcds-forms/:id', { errors: [{ message: 'server problem with rwcdsForm' }] }, 500); // force mirage to error
 
     await visit('/rwcds-form/1/edit');
 
     assert.dom('[data-test-error-message]').doesNotExist();
 
-    await fillIn('[data-test-textarea="dcpProjectsitedescription"]', 'Whatever affects one directly, affects all indirectly.');
+    await fillIn('[data-test-input="dcpProjectsitedescription"]', 'Whatever affects one directly, affects all indirectly.');
 
     // save it
     await click('[data-test-save-button]');
@@ -83,7 +83,7 @@ module('Acceptance | error message appears when save fails', function(hooks) {
       }),
     });
 
-    this.server.patch('/packages/:id', { errors: [{ detail: 'server problem with package' }] }, 500); // force mirage to error
+    this.server.patch('/packages/:id', { errors: [{ message: 'server problem with package' }] }, 500); // force mirage to error
 
     await visit('/pas-form/2/edit');
 
@@ -123,7 +123,7 @@ module('Acceptance | error message appears when save fails', function(hooks) {
       }),
     });
 
-    this.server.patch('/pas-forms/:id', { errors: [{ detail: 'server problem with pasForm' }] }, 500); // force mirage to error
+    this.server.patch('/pas-forms/:id', { errors: [{ message: 'server problem with pasForm' }] }, 500); // force mirage to error
 
     await visit('/pas-form/1/edit');
 
