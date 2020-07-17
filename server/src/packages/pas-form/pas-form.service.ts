@@ -23,7 +23,7 @@ export class PasFormService {
 
     // dcp_projectname is the name of the CRM navigation link.
     // then dcp_projectname is the real project name
-    const { dcp_projectname } = pasForm.dcp_projectname;
+    const { dcp_projectname } = pasForm.dcp_projectname || {};
 
     return {
       ...pasForm,
