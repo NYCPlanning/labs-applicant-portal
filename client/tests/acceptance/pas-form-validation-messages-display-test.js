@@ -42,9 +42,9 @@ module('Acceptance | pas form validation messages display', function(hooks) {
 
     // dcpDescriptionofprojectareageography (length limits)
     assert.dom('[data-test-validation-message="dcpDescriptionofprojectareageography"]').doesNotExist();
-    await fillIn('[data-test-textarea="dcpDescriptionofprojectareageography"]', exceedMaximum(2000, 'String'));
+    await fillIn('[data-test-input="dcpDescriptionofprojectareageography"]', exceedMaximum(2000, 'String'));
     assert.dom('[data-test-validation-message="dcpDescriptionofprojectareageography"]').exists();
-    await fillIn('[data-test-textarea="dcpDescriptionofprojectareageography"]', 'my short description');
+    await fillIn('[data-test-input="dcpDescriptionofprojectareageography"]', 'my short description');
     assert.dom('[data-test-validation-message="dcpDescriptionofprojectareageography"]').doesNotExist();
 
     // dcpUrbanareaname (length limits and presence required in certain conditions)
@@ -115,44 +115,44 @@ module('Acceptance | pas form validation messages display', function(hooks) {
 
     // dcpProjectdescriptionproposeddevelopment (length limits)
     assert.dom('[data-test-validation-message="dcpEstimatedcompletiondate"]').doesNotExist();
-    await fillIn('[data-test-textarea="dcpProjectdescriptionproposeddevelopment"]', exceedMaximum(3000, 'String'));
+    await fillIn('[data-test-input="dcpProjectdescriptionproposeddevelopment"]', exceedMaximum(3000, 'String'));
     assert.dom('[data-test-validation-message="dcpProjectdescriptionproposeddevelopment"]').exists('Text is too long (max 3000 characters)');
-    await fillIn('[data-test-textarea="dcpProjectdescriptionproposeddevelopment"]', 'abc');
+    await fillIn('[data-test-input="dcpProjectdescriptionproposeddevelopment"]', 'abc');
     assert.dom('[data-test-validation-message="dcpProjectdescriptionproposeddevelopment"]').doesNotExist();
 
     // dcpProjectdescriptionbackground (length limits)
     assert.dom('[data-test-validation-message="dcpProjectdescriptionbackground"]').doesNotExist();
-    await fillIn('[data-test-textarea="dcpProjectdescriptionbackground"]', exceedMaximum(2000, 'String'));
+    await fillIn('[data-test-input="dcpProjectdescriptionbackground"]', exceedMaximum(2000, 'String'));
     assert.dom('[data-test-validation-message="dcpProjectdescriptionbackground"]').hasText('Text is too long (max 2000 characters)');
-    await fillIn('[data-test-textarea="dcpProjectdescriptionbackground"]', 'abc');
+    await fillIn('[data-test-input="dcpProjectdescriptionbackground"]', 'abc');
     assert.dom('[data-test-validation-message="dcpProjectdescriptionproposeddevelopment"]').doesNotExist();
 
     // dcpProjectdescriptionproposedactions (length limits)
     assert.dom('[data-test-validation-message="dcpProjectdescriptionproposedactions"]').doesNotExist();
-    await fillIn('[data-test-textarea="dcpProjectdescriptionproposedactions"]', exceedMaximum(2000, 'String'));
+    await fillIn('[data-test-input="dcpProjectdescriptionproposedactions"]', exceedMaximum(2000, 'String'));
     assert.dom('[data-test-validation-message="dcpProjectdescriptionproposedactions"]').hasText('Text is too long (max 2000 characters)');
-    await fillIn('[data-test-textarea="dcpProjectdescriptionproposedactions"]', 'abc');
+    await fillIn('[data-test-input="dcpProjectdescriptionproposedactions"]', 'abc');
     assert.dom('[data-test-validation-message="dcpProjectdescriptionproposedactions"]').doesNotExist();
 
     // dcpProjectdescriptionproposedarea (length limits)
     assert.dom('[data-test-validation-message="dcpProjectdescriptionproposedarea"]').doesNotExist();
-    await fillIn('[data-test-textarea="dcpProjectdescriptionproposedarea"]', exceedMaximum(3000, 'String'));
+    await fillIn('[data-test-input="dcpProjectdescriptionproposedarea"]', exceedMaximum(3000, 'String'));
     assert.dom('[data-test-validation-message="dcpProjectdescriptionproposedarea"]').hasText('Text is too long (max 3000 characters)');
-    await fillIn('[data-test-textarea="dcpProjectdescriptionproposedarea"]', 'abc');
+    await fillIn('[data-test-input="dcpProjectdescriptionproposedarea"]', 'abc');
     assert.dom('[data-test-validation-message="dcpProjectdescriptionproposedarea"]').doesNotExist();
 
     // dcpProjectdescriptionsurroundingarea (length limits)
     assert.dom('[data-test-validation-message="dcpProjectdescriptionsurroundingarea"]').doesNotExist();
-    await fillIn('[data-test-textarea="dcpProjectdescriptionsurroundingarea"]', exceedMaximum(3000, 'String'));
+    await fillIn('[data-test-input="dcpProjectdescriptionsurroundingarea"]', exceedMaximum(3000, 'String'));
     assert.dom('[data-test-validation-message="dcpProjectdescriptionsurroundingarea"]').hasText('Text is too long (max 3000 characters)');
-    await fillIn('[data-test-textarea="dcpProjectdescriptionsurroundingarea"]', 'abc');
+    await fillIn('[data-test-input="dcpProjectdescriptionsurroundingarea"]', 'abc');
     assert.dom('[data-test-validation-message="dcpProjectdescriptionsurroundingarea"]').doesNotExist();
 
     // dcpProjectattachmentsotherinformation (length limits)
     assert.dom('[data-test-validation-message="dcpProjectattachmentsotherinformation"]').doesNotExist();
-    await fillIn('[data-test-textarea="dcpProjectattachmentsotherinformation"]', exceedMaximum(2000, 'String'));
+    await fillIn('[data-test-input="dcpProjectattachmentsotherinformation"]', exceedMaximum(2000, 'String'));
     assert.dom('[data-test-validation-message="dcpProjectattachmentsotherinformation"]').hasText('Text is too long (max 2000 characters)');
-    await fillIn('[data-test-textarea="dcpProjectattachmentsotherinformation"]', 'abc');
+    await fillIn('[data-test-input="dcpProjectattachmentsotherinformation"]', 'abc');
     assert.dom('[data-test-validation-message="dcpProjectattachmentsotherinformation"]').doesNotExist();
   });
 

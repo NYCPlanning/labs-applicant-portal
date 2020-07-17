@@ -3,12 +3,12 @@ import { AuthenticateGuard } from '../../../authenticate.guard';
 import { JsonApiSerializeInterceptor } from '../../../json-api-serialize.interceptor';
 import { JsonApiDeserializePipe } from '../../../json-api-deserialize.pipe';
 import { pick } from 'underscore';
-import { AFFECTED_ZONING_RESOLUTION_ATTRIBUTES } from './affected-zoning-resolutions.attrs';
+import { AFFECTEDZONINGRESOLUTION_ATTRS } from './affected-zoning-resolutions.attrs';
 import { CrmService } from '../../../crm/crm.service';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('affected-zoning-resolutions', {
   attributes: [
-    ...AFFECTED_ZONING_RESOLUTION_ATTRIBUTES,
+    ...AFFECTEDZONINGRESOLUTION_ATTRS,
   ],
 }))
 @UseGuards(AuthenticateGuard)
@@ -19,7 +19,7 @@ export class AffectedZoningResolutionsController {
 
   @Patch('/:id')
   async update(@Body() body, @Param('id') id) {
-    const allowedAttrs = pick(body, AFFECTED_ZONING_RESOLUTION_ATTRIBUTES);
+    const allowedAttrs = pick(body, AFFECTEDZONINGRESOLUTION_ATTRS);
 
     await this.crmService.update(
       'dcp_affectedzoningresolutions',

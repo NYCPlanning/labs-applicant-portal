@@ -1,15 +1,15 @@
-{{#let @form as |Form|}}
-  <Form.Section @title="Project Area">
+{{#let @form as |form|}}
+  <form.Section @title="Project Area">
     <p>
       Project Area refers to all property that would be subject to the Proposed Actions.
     </p>
 
     <Ui::Question as |Q|>
       <Q.Legend>
-        Does the proposed Project, or portion thereof, require a NYC DEP Storm Water Construction Permit?
+        Does the proposed Project, or portion thereof, require a <Ui::ExternalLink @href="https://www1.nyc.gov/site/dep/water/stormwater-management.page">NYC DEP Stormwater Construction Permit</Ui::ExternalLink>?
       </Q.Legend>
 
-      <Form.Field
+      <form.Field
         @attribute="dcpProposedprojectorportionconstruction"
         @type="radio-group"
         as |GroupedRadio|
@@ -21,7 +21,7 @@
             (hash code=717170002 label='Unsure at this time')
           }}
         />
-      </Form.Field>
+      </form.Field>
     </Ui::Question>
 
     <Ui::Question as |Q|>
@@ -29,7 +29,7 @@
         Is the proposed Project Area located in a current or former <Ui::ExternalLink @href="https://www1.nyc.gov/site/hpd/services-and-information/urban-renewal.page">Urban Renewal Area</Ui::ExternalLink>?
       </Q.Legend>
 
-      <Form.Field
+      <form.Field
         @attribute="dcpUrbanrenewalarea"
         @type="radio-group"
         as |RadioGroup|
@@ -48,7 +48,7 @@
                 What is the name of the Urban Renewal Area?
               </Q.Label>
 
-              <Form.Field
+              <form.Field
                 @attribute="dcpUrbanareaname"
                 @showCounter={{true}}
                 id={{Q.questionId}}
@@ -56,7 +56,7 @@
             </Ui::Question>
           {{/if}}
         </RadioGroup>
-      </Form.Field>
+      </form.Field>
     </Ui::Question>
 
     <Ui::Question as |Q|>
@@ -64,7 +64,7 @@
         What is the <Ui::ExternalLink @href="https://streets.planning.nyc.gov/about">Legal Street Frontage Status in the Project Area</Ui::ExternalLink>?
       </Q.Legend>
 
-      <Form.Field
+      <form.Field
         @attribute="dcpLegalstreetfrontage"
         @type="radio-group"
         as |RadioGroup|
@@ -78,7 +78,7 @@
             (hash code=717170004 label='Mapped but not Built')
           }}
         />
-      </Form.Field>
+      </form.Field>
     </Ui::Question>
 
     <Ui::Question as |Q|>
@@ -86,7 +86,7 @@
         Do all Land Use Actions meet <Ui::ExternalLink @href="https://govt.westlaw.com/nycrr/Document/I4ec3a767cd1711dda432a117e6e0f345?viewType=FullText&originationContext=documenttoc&transitionType=CategoryPageItem&contextData=(sc.Default)">SEQRA or CEQR criteria</Ui::ExternalLink> for Type II status?
       </Q.Legend>
 
-      <Form.Field
+      <form.Field
         @attribute="dcpLanduseactiontype2"
         @type="radio-group"
         as |RadioGroup|
@@ -109,7 +109,7 @@
                 Ex: 617.5(c)(9)
               </p>
 
-              <Form.Field
+              <form.Field
                 @attribute="dcpPleaseexplaintypeiienvreview"
                 @showCounter={{true}}
                 maxlength="200"
@@ -118,7 +118,7 @@
             </Ui::Question>
           {{/if}}
         </RadioGroup>
-      </Form.Field>
+      </form.Field>
     </Ui::Question>
 
     <Ui::Question as |Q|>
@@ -126,7 +126,7 @@
         Is the proposed Project Area in an <Ui::ExternalLink @href="https://zola.planning.nyc.gov/">Industrial Business Zone</Ui::ExternalLink>?
       </Q.Legend>
 
-      <Form.Field
+      <form.Field
         @attribute="dcpProjectareaindustrialbusinesszone"
         @type="radio-group"
         as |RadioGroup|
@@ -143,7 +143,7 @@
                 Name of Industrial Business Zone
               </Q.Label>
 
-              <Form.Field
+              <form.Field
                 @attribute="dcpProjectareaindutrialzonename"
                 @maxlength="200"
                 @showCounter={{true}}
@@ -152,7 +152,7 @@
             </Ui::Question>
           {{/if}}
         </RadioGroup>
-      </Form.Field>
+      </form.Field>
     </Ui::Question>
 
     <Ui::Question as |Q|>
@@ -160,7 +160,7 @@
         Is the proposed Project Area within or adjacent to a designated (City or State) <Ui::ExternalLink @href="https://zola.planning.nyc.gov/">Landmark or Historic District</Ui::ExternalLink>?
       </Q.Legend>
 
-      <Form.Field
+      <form.Field
         @attribute="dcpIsprojectarealandmark"
         @type="radio-group"
         as |RadioGroup|
@@ -177,7 +177,7 @@
                 Name of Landmark or Historic District
               </Q.Label>
 
-              <Form.Field
+              <form.Field
                 @attribute="dcpProjectarealandmarkname"
                 @showCounter={{true}}
                 id={{Q.questionId}}
@@ -185,7 +185,7 @@
             </Ui::Question>
           {{/if}}
         </RadioGroup>
-      </Form.Field>
+      </form.Field>
     </Ui::Question>
 
     <Ui::Question as |Q|>
@@ -193,7 +193,7 @@
         Is the proposed Project Area located within the <Ui::ExternalLink @href="https://dcp.maps.arcgis.com/apps/View/index.html?appid=90e3a9f927c2471483631a20e8a41d8d">NYC Coastal Zone</Ui::ExternalLink>?
       </Q.Legend>
 
-      <Form.Field
+      <form.Field
         @attribute="dcpProjectareacoastalzonelocatedin"
         @type="radio-group"
         as |RadioGroup|
@@ -204,7 +204,7 @@
             (hash code=false label='No')
           }}
         />
-      </Form.Field>
+      </form.Field>
     </Ui::Question>
 
     <Ui::Question as |Q|>
@@ -212,7 +212,7 @@
         Is the Project Area located within the <Ui::ExternalLink @href="https://dcp.maps.arcgis.com/apps/webappviewer/index.html?id=1c37d271fba14163bbb520517153d6d5">1% Annual Chance Floodplain</Ui::ExternalLink>?
       </Q.Legend>
 
-      <Form.Field
+      <form.Field
         @attribute="dcpProjectareaischancefloodplain"
         @type="radio-group"
         as |RadioGroup|
@@ -224,7 +224,7 @@
             (hash code=717170002 label='Unsure at this time')
           }}
         />
-      </Form.Field>
+      </form.Field>
     </Ui::Question>
 
     <Ui::Question as |Q|>
@@ -232,7 +232,7 @@
         Is a <Ui::ExternalLink @href="https://a836-acris.nyc.gov/CP/">legal instrument</Ui::ExternalLink> associated with a previous CPC or CPC Chair action recorded against the Project Site?
       </Q.Legend>
 
-      <Form.Field
+      <form.Field
         @attribute="dcpRestrictivedeclaration"
         @type="radio-group"
         as |RadioGroup|
@@ -254,7 +254,7 @@
                 Feel free to attach a copy of the legal instrument in the Attachments section.
               </p>
 
-              <Form.Field
+              <form.Field
                 @attribute="dcpCityregisterfilenumber"
                 @maxlength="25"
                 @showCounter={{true}}
@@ -263,7 +263,7 @@
             </Ui::Question>
           {{/if}}
         </RadioGroup>
-      </Form.Field>
+      </form.Field>
     </Ui::Question>
 
     <Ui::Question as |Q|>
@@ -271,7 +271,7 @@
         Will a new legal instrument or modification of a current legal instrument be necessary to approve/implement these Actions?
       </Q.Legend>
 
-      <Form.Field
+      <form.Field
         @attribute="dcpRestrictivedeclarationrequired"
         @type="radio-group"
         as |RadioGroup|
@@ -282,7 +282,7 @@
             (hash code=717170000 label='No')
             (hash code=717170002 label='Unsure at this time')}}
         />
-      </Form.Field>
+      </form.Field>
     </Ui::Question>
-  </Form.Section>
+  </form.Section>
 {{/let}}

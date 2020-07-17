@@ -21,8 +21,8 @@
 {{/if}}
 
 {{#each @bbls as |bbl|}}
-  {{#let @form as |Form|}}
-    <Form.SaveableForm @model={{bbl}} as |bblForm|>
+  {{#let @form as |form|}}
+    <form.SaveableForm @model={{bbl}} as |bblForm|>
       <fieldset class="fieldset relative scale-fade-in">
 
         <legend data-test-bbl-title="{{bbl.dcpBblnumber}}">
@@ -91,6 +91,6 @@
           <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
         </button>
       </fieldset>
-    </Form.SaveableForm>
+    </form.SaveableForm>
   {{/let}}
 {{/each}}

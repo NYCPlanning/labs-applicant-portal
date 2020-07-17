@@ -1,4 +1,4 @@
-{{#let @form as |Form|}}
+{{#let @form as |form|}}
   <div class="fieldset-adder">
     <h5 class="small-margin-bottom">
       Add a Proposed Action:
@@ -52,7 +52,7 @@
                 </Q.Label>
               </div>
               <div class="auto cell">
-                <Form.Field
+                <form.Field
                   @attribute={{landUseAction.countField}}
                   as |TextInput|
                 >
@@ -62,7 +62,7 @@
                     id={{Q.questionId}}
                     data-test-input={{landUseAction.countField}}
                   />
-                </Form.Field>
+                </form.Field>
               </div>
             </div>
           </Ui::Question>
@@ -76,7 +76,7 @@
               Provide the Zoning Resolution section number. Ex. ZR Sec. 74-711
             </p>
 
-            <Form.Field
+            <form.Field
               @attribute={{landUseAction.attr1}}
               as |TextInput|
             >
@@ -86,7 +86,7 @@
                 id={{Q.questionId}}
                 data-test-input={{landUseAction.attr1}}
               />
-            </Form.Field>
+            </form.Field>
           </Ui::Question>
 
           <Ui::Question @required={{true}} as |Q|>
@@ -98,7 +98,7 @@
               Provide the Zoning Resolution section number(s). Ex. ZR Sec. 42-10 and 43-17
             </p>
 
-            <Form.Field
+            <form.Field
               @attribute={{landUseAction.attr2}}
               as |TextInput|
             >
@@ -108,7 +108,7 @@
                 id={{Q.questionId}}
                 data-test-input={{landUseAction.attr2}}
               />
-            </Form.Field>
+            </form.Field>
           </Ui::Question>
         {{/if}}
 
@@ -122,7 +122,7 @@
               ex. R7-1/C2-4
             </p>
 
-            <Form.Field
+            <form.Field
               @attribute={{landUseAction.attr1}}
               as |TextInput|
             >
@@ -132,7 +132,7 @@
                 id={{Q.questionId}}
                 data-test-input={{landUseAction.attr1}}
               />
-            </Form.Field>
+            </form.Field>
           </Ui::Question>
 
           <Ui::Question @required={{true}} as |Q|>
@@ -144,7 +144,7 @@
               ex. C4-5X
             </p>
 
-            <Form.Field
+            <form.Field
               @attribute={{landUseAction.attr2}}
               as |TextInput|
             >
@@ -154,7 +154,7 @@
                 id={{Q.questionId}}
                 data-test-input={{landUseAction.attr2}}
               />
-            </Form.Field>
+            </form.Field>
           </Ui::Question>
         {{/if}}
 
@@ -168,7 +168,7 @@
               Provide the Zoning Resolution section number. Ex. ZR Sec. 74-711
             </p>
 
-            <Form.Field
+            <form.Field
               @attribute={{landUseAction.attr1}}
               as |TextInput|
             >
@@ -178,7 +178,7 @@
                 id={{Q.questionId}}
                 data-test-input={{landUseAction.attr1}}
               />
-            </Form.Field>
+            </form.Field>
           </Ui::Question>
 
           <Ui::Question @required={{true}} as |Q|>
@@ -190,7 +190,7 @@
               Provide the Zoning Resolution section Title. Ex. EXAMPLE
             </p>
 
-            <Form.Field
+            <form.Field
               @attribute={{landUseAction.attr2}}
               as |TextInput|
             >
@@ -200,7 +200,7 @@
                 id={{Q.questionId}}
                 data-test-input={{landUseAction.attr2}}
               />
-            </Form.Field>
+            </form.Field>
           </Ui::Question>
         {{/if}}
 
@@ -217,7 +217,7 @@
               ex. 200307ZRK
             </p>
 
-            <Form.Field
+            <form.Field
               @attribute={{landUseAction.attr1}}
               as |TextInput|
             >
@@ -227,7 +227,7 @@
                 id={{Q.questionId}}
                 data-test-input={{landUseAction.attr1}}
               />
-            </Form.Field>
+            </form.Field>
           </Ui::Question>
         {{/if}}
       {{else}}

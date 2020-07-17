@@ -37,7 +37,7 @@
             {{#if applicant.dcpAddress}}
               <div>
                 <FaIcon @icon="map-marker-alt" class="text-gray" @fixedWidth={{true}} />
-                {{applicant.dcpAddress}}, {{applicant.dcpCity}}, {{applicant.dcpState}} {{applicant.dcpZipcode}}
+                {{applicant.dcpAddress}}, {{applicant.dcpCity}}, {{optionset 'applicant' 'state' 'label' applicant.dcpState}} {{applicant.dcpZipcode}}
               </div>
             {{/if}}
             {{#if applicant.dcpPhone}}
@@ -309,7 +309,7 @@
 
       <Ui::Answer @beside={{true}} as |A|>
         <A.Prompt>
-          Requires a NYC DEP Storm Water Construction Permit
+          Requires a NYC DEP Stormwater Construction Permit
         </A.Prompt>
         <A.Field>
           {{optionset 'pasForm' 'dcpProposedprojectorportionconstruction' 'label' @package.pasForm.dcpProposedprojectorportionconstruction}}

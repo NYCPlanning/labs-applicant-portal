@@ -6,41 +6,41 @@ import { RWCDS_FORM_ATTRS } from './rwcds-form.attrs';
 import { PACKAGE_ATTRS } from '../packages.attrs';
 
 const ZONING_RESOLUTION_TYPES = [
-  ["ZA", 717170000],
-  ["ZC", 717170001],
-  ["ZS", 717170002],
-  ["ZR", 717170003],
-  ["ZM", 717170008],
-  ["SD", 717170009],
-  ["SC", 717170010],
-  ["SA", 717170011],
-  ["RS", 717170012],
-  ["RC", 717170013],
-  ["RA", 717170014],
-  ["PS", 717170015],
-  ["PQ", 717170016],
-  ["PP", 717170017],
-  ["PE", 717170018],
-  ["PC", 717170019],
-  ["NP", 717170020],
-  ["MY", 717170021],
-  ["MM", 717170022],
-  ["ML", 717170023],
-  ["ME", 717170024],
-  ["MC", 717170025],
-  ["LD", 717170026],
-  ["HU", 717170027],
-  ["HP", 717170028],
-  ["HO", 717170029],
-  ["HN", 717170030],
-  ["HG", 717170031],
-  ["HD", 717170032],
-  ["HC", 717170033],
-  ["HA", 717170034],
-  ["GF", 717170035],
-  ["CM", 717170036],
-  ["BF", 717170037],
-  ["BD", 717170038],
+  { label: "ZA", code: 717170000 },
+  { label: "ZC", code: 717170001 },
+  { label: "ZS", code: 717170002 },
+  { label: "ZR", code: 717170003 },
+  { label: "ZM", code: 717170008 },
+  { label: "SD", code: 717170009 },
+  { label: "SC", code: 717170010 },
+  { label: "SA", code: 717170011 },
+  { label: "RS", code: 717170012 },
+  { label: "RC", code: 717170013 },
+  { label: "RA", code: 717170014 },
+  { label: "PS", code: 717170015 },
+  { label: "PQ", code: 717170016 },
+  { label: "PP", code: 717170017 },
+  { label: "PE", code: 717170018 },
+  { label: "PC", code: 717170019 },
+  { label: "NP", code: 717170020 },
+  { label: "MY", code: 717170021 },
+  { label: "MM", code: 717170022 },
+  { label: "ML", code: 717170023 },
+  { label: "ME", code: 717170024 },
+  { label: "MC", code: 717170025 },
+  { label: "LD", code: 717170026 },
+  { label: "HU", code: 717170027 },
+  { label: "HP", code: 717170028 },
+  { label: "HO", code: 717170029 },
+  { label: "HN", code: 717170030 },
+  { label: "HG", code: 717170031 },
+  { label: "HD", code: 717170032 },
+  { label: "HC", code: 717170033 },
+  { label: "HA", code: 717170034 },
+  { label: "GF", code: 717170035 },
+  { label: "CM", code: 717170036 },
+  { label: "BF", code: 717170037 },
+  { label: "BD", code: 717170038 },
 ];
 
 @Injectable()
@@ -140,25 +140,24 @@ export class RwcdsFormService {
     const zrTypes = affectedZoningResolutions.map(zr => zr['dcp_zoningresolutiontype@OData.Community.Display.V1.FormattedValue']);
     const { records: projectActions } = await this.crmService.get(`dcp_projectactions`, `
       $filter=_dcp_project_value eq ${_dcp_projectid_value}
+      &$expand=dcp_ZoningResolution
     `);
 
     await Promise.all(projectActions.map(action => {
       const projectActionLabel = action['_dcp_action_value@OData.Community.Display.V1.FormattedValue'];
 
       // Lookup: dcp_affectedzoningresolutions asks for a ZR type,
-      const [actionLabel, actionCode] = ZONING_RESOLUTION_TYPES.find((label) => label === projectActionLabel) || ['ZA', 717170000];
+      const { label, code } = ZONING_RESOLUTION_TYPES.filter((zr) => zr.label === projectActionLabel)[0] || { label: '', code: null };
 
-      if (!actionLabel) console.log(`Could not find Affected ZR Type for ${projectActionLabel}`);
+      if (!label) console.log(`Could not find Affected ZR Type for ${projectActionLabel}`);
 
-      if (!zrTypes.includes(actionLabel)) {
+      if (!zrTypes.includes(label) && label) {
         return this.crmService.create(`dcp_affectedzoningresolutions`, {
-          'dcp_zoningresolutiontype': actionCode, // this is a coded value
-          'dcp_zrsectionnumber': action.dcp_zrsectionnumber,
+          'dcp_zoningresolutiontype': code, // this is a coded value
+          'dcp_zrsectionnumber': action.dcp_ZoningResolution ? action.dcp_ZoningResolution.dcp_zoningresolution : null,
           'dcp_modifiedzrsectionnumber': action.dcp_zrmodifyingzrtxt,
           'dcp_rwcdsform@odata.bind': `/dcp_pasforms(${dcp_rwcdsformid})`,
         });
-      } else {
-        console.log(`zoning resolution with id ${projectActionLabel} already exists`);
       }
     }));
   }
