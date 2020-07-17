@@ -8,6 +8,9 @@ import {
   BOROUGHS_OPTIONSET,
 } from '../models/bbl';
 import {
+  AFFECTED_ZONING_RESOLUTION_ACTION_OPTIONSET,
+} from '../models/affected-zoning-resolution';
+import {
   PACKAGE_STATE_OPTIONSET,
   PACKAGE_STATUS_OPTIONSET,
   PACKAGE_VISIBILITY_OPTIONSET,
@@ -16,6 +19,9 @@ import {
 import {
   DCPHASPROJECTCHANGEDSINCESUBMISSIONOFTHEPAS_OPTIONSET,
   DCPCONSTRUCTIONPHASING_OPTIONSET,
+  DCPEXISTINGCONDITIONS_OPTIONSET,
+  DCPISRWCDSSCENARIO_OPTIONSET,
+
 } from '../models/rwcds-form';
 import {
   YES_NO_UNSURE_OPTIONSET,
@@ -39,6 +45,8 @@ const OPTIONSET_LOOKUP = {
   rwcdsForm: {
     dcpHasprojectchangedsincesubmissionofthepas: DCPHASPROJECTCHANGEDSINCESUBMISSIONOFTHEPAS_OPTIONSET,
     dcpConstructionphasing: DCPCONSTRUCTIONPHASING_OPTIONSET,
+    dcpExistingconditions: DCPEXISTINGCONDITIONS_OPTIONSET,
+    dcpIsrwcdsscenario: DCPISRWCDSSCENARIO_OPTIONSET,
   },
   pasForm: {
     dcpProposedprojectorportionconstruction: YES_NO_UNSURE_OPTIONSET,
@@ -49,6 +57,9 @@ const OPTIONSET_LOOKUP = {
     dcpRestrictivedeclarationrequired: YES_NO_UNSURE_OPTIONSET,
     dcpDiscressionaryfundingforffordablehousing: YES_NO_UNSURE_OPTIONSET,
     dcpHousingunittype: DCPHOUSINGUNITTYPE_OPTIONSET,
+  },
+  affectedZoningResolution: {
+    actions: AFFECTED_ZONING_RESOLUTION_ACTION_OPTIONSET,
   },
 };
 

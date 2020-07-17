@@ -1,25 +1,27 @@
-{{#let @form as |Form|}}
-  <Form.Section @title="Proposed Development Site">
+{{#let @form as |form|}}
+  <form.Section @title="Proposed Development Site">
     <p class="text-small">
-      <b>Development Site</b> refers to all property to be developed as part of the applicant’s specific proposal which the land use actions would facilitate. Typically, the Development Site and the Project Area will comprise the same property(ies) unless the application is requesting a zoning map amendment covering an area greater than an applicant’s property to be developed or a large-scale special approval involving multiple tax lots. In these cases, the Development Site may be one or several tax lots within a broader Project Area.
+      <b>Development Site</b> refers to all property to be developed as part of the Applicant’s specific proposal which the Land Use Actions would facilitate. Typically, the Development Site and the Project Area will comprise the same property(ies) unless the application is requesting a Zoning Map Amendment covering an area greater than an Applicant’s property to be developed or a large-scale special approval involving multiple tax lots. In these cases, the Development Site may be one or several tax lots within a broader Project Area.
     </p>
 
     <Ui::Question as |Q|>
-      <Q.Prompt>
+      <Q.Label>
         In what year do you expect the development to complete?
-      </Q.Prompt>
-      <Form.Field
+      </Q.Label>
+
+      <form.Field
         @attribute="dcpEstimatedcompletiondate"
         @maxlength="4"
+        id={{Q.questionId}}
       />
       {{!-- QUESTION: Should this be a date picker? --}}
     </Ui::Question>
 
-    <Ui::Question @fieldset={{true}} as |Q|>
-      <Q.Prompt>
+    <Ui::Question as |Q|>
+      <Q.Legend>
         What type of development is proposed?
         <small class="text-weight-normal">(select all that apply)</small>
-      </Q.Prompt>
+      </Q.Legend>
 
       <ul class="no-bullet no-margin">
         {{#each (array
@@ -31,7 +33,7 @@
           (hash attr="dcpProposeddevelopmentsiteenlargement" label="Enlargement")) as |developmentType|
         }}
           <li>
-            <Form.Field
+            <form.Field
               @attribute={{developmentType.attr}}
               @type="checkbox"
               as |Checkbox|
@@ -39,11 +41,11 @@
               <Checkbox>
                 {{developmentType.label}}
               </Checkbox>
-            </Form.Field>
+            </form.Field>
           </li>
         {{/each}}
         <li>
-          <Form.Field
+          <form.Field
             @attribute="dcpProposeddevelopmentsiteinfoother"
             @type="checkbox"
             as |Checkbox|
@@ -53,32 +55,36 @@
             >
               Other&hellip;
             </Checkbox>
-          </Form.Field>
+          </form.Field>
         </li>
       </ul>
       {{#if @form.saveableChanges.dcpProposeddevelopmentsiteinfoother}}
-        <Ui::Question as |Q|>
-          <Q.Prompt>
+        <Ui::Question @required={{true}} as |Q|>
+          <Q.Label>
             Explain:
-          </Q.Prompt>
-          <Form.Field @attribute="dcpProposeddevelopmentsiteotherexplanation"/>
+          </Q.Label>
+
+          <form.Field
+            @attribute="dcpProposeddevelopmentsiteotherexplanation"
+            id={{Q.questionId}}
+          />
         </Ui::Question>
       {{/if}}
     </Ui::Question>
 
-    <Ui::Question @fieldset={{true}} as |Q|>
-      <Q.Prompt>
-        Is the Development Site in an
-        <Ui::ExternalLink @href="https://zola.planning.nyc.gov/">Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area</Ui::ExternalLink>?
-      </Q.Prompt>
+    <Ui::Question @required={{true}} as |Q|>
+      <Q.Legend>
+        Is the Development Site in an <Ui::ExternalLink @href="https://zola.planning.nyc.gov/">Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area</Ui::ExternalLink>?
+      </Q.Legend>
 
-      <p class="text-small">
-        Refer to <Ui::ExternalLink @href="https://zr.planning.nyc.gov/appendix-f-inclusionary-housing-designated-areas-and-mandatory-inclusionary-housing-areas">Appendix F</Ui::ExternalLink> of the Zoning Resolution for full list of all inclusionary housing areas which are areas that incentivize or require affordable housing in certain areas.
+      <p class="q-help">
+        Refer to <Ui::ExternalLink @href="https://zr.planning.nyc.gov/appendix-f-inclusionary-housing-designated-areas-and-mandatory-inclusionary-housing-areas">Appendix F</Ui::ExternalLink> of the Zoning Resolution for full list of all Inclusionary Housing Areas which are areas that incentivize or require affordable housing.
       </p>
 
-      <Form.Field
+      <form.Field
         @attribute="dcpIsinclusionaryhousingdesignatedarea"
-        @type="radio-group" as |RadioGroup|
+        @type="radio-group"
+        as |RadioGroup|
       >
         <RadioGroup
           @options={{array
@@ -89,24 +95,33 @@
         >
           {{#if value}}
             <Ui::Question as |Q|>
-              <Q.Prompt>
+              <Q.Label>
                 Name of Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area
-              </Q.Prompt>
-              <Form.Field @attribute="dcpInclusionaryhousingdesignatedareaname"/>
+              </Q.Label>
+
+              <p class="q-help">
+                Refer to the "Inclusionary Housing Designated Areas" data layer in <Ui::ExternalLink @href="https://zola.planning.nyc.gov/about">ZoLa</Ui::ExternalLink> if you are unsure of the name.
+              </p>
+
+              <form.Field
+                @attribute="dcpInclusionaryhousingdesignatedareaname"
+                id={{Q.questionId}}
+              />
             </Ui::Question>
           {{/if}}
         </RadioGroup>
-      </Form.Field>
+      </form.Field>
     </Ui::Question>
 
-    <Ui::Question @fieldset={{true}} as |Q|>
-      <Q.Prompt>
+    <Ui::Question @required={{true}} as |Q|>
+      <Q.Legend>
         Does the proposed development involve discretionary funding for Affordable Housing Units?
-      </Q.Prompt>
+      </Q.Legend>
 
-      <Form.Field
+      <form.Field
         @attribute="dcpDiscressionaryfundingforffordablehousing"
-        @type="radio-group" as |RadioGroup|
+        @type="radio-group"
+        as |RadioGroup|
       >
         <RadioGroup
           @options={{array
@@ -117,14 +132,15 @@
           @onChange={{fn (mut @form.saveableChanges.dcpHousingunittype) ""}} as |value|
         >
           {{#if (eq value 717170000)}}
-            <Ui::Question @fieldset={{true}} as |Q|>
-              <Q.Prompt>
+            <Ui::Question as |Q|>
+              <Q.Legend>
                 Funding source
-              </Q.Prompt>
+              </Q.Legend>
 
-              <Form.Field
+              <form.Field
                 @attribute="dcpHousingunittype"
-                @type="radio-group" as |RadioGroup|
+                @type="radio-group"
+                as |RadioGroup|
               >
                 <RadioGroup
                   @options={{array
@@ -134,11 +150,11 @@
                     (hash code=717170003 label='Other')
                   }}
                 />
-              </Form.Field>
+              </form.Field>
             </Ui::Question>
           {{/if}}
         </RadioGroup>
-      </Form.Field>
+      </form.Field>
     </Ui::Question>
-  </Form.Section>
+  </form.Section>
 {{/let}}

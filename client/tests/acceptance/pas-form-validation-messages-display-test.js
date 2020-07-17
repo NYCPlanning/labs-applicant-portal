@@ -19,7 +19,7 @@ module('Acceptance | pas form validation messages display', function(hooks) {
     });
   });
 
-  test('Certain fields display both Saveable and Submittable validation errors', async function(assert) {
+  test('Certain PAS Form fields display both Saveable and Submittable validation errors', async function(assert) {
     this.server.create('package', 'pasForm', {
       project: this.server.create('project'),
     });
@@ -42,9 +42,9 @@ module('Acceptance | pas form validation messages display', function(hooks) {
 
     // dcpDescriptionofprojectareageography (length limits)
     assert.dom('[data-test-validation-message="dcpDescriptionofprojectareageography"]').doesNotExist();
-    await fillIn('[data-test-textarea="dcpDescriptionofprojectareageography"]', exceedMaximum(2000, 'String'));
+    await fillIn('[data-test-input="dcpDescriptionofprojectareageography"]', exceedMaximum(2000, 'String'));
     assert.dom('[data-test-validation-message="dcpDescriptionofprojectareageography"]').exists();
-    await fillIn('[data-test-textarea="dcpDescriptionofprojectareageography"]', 'my short description');
+    await fillIn('[data-test-input="dcpDescriptionofprojectareageography"]', 'my short description');
     assert.dom('[data-test-validation-message="dcpDescriptionofprojectareageography"]').doesNotExist();
 
     // dcpUrbanareaname (length limits and presence required in certain conditions)
@@ -115,44 +115,113 @@ module('Acceptance | pas form validation messages display', function(hooks) {
 
     // dcpProjectdescriptionproposeddevelopment (length limits)
     assert.dom('[data-test-validation-message="dcpEstimatedcompletiondate"]').doesNotExist();
-    await fillIn('[data-test-textarea="dcpProjectdescriptionproposeddevelopment"]', exceedMaximum(3000, 'String'));
+    await fillIn('[data-test-input="dcpProjectdescriptionproposeddevelopment"]', exceedMaximum(3000, 'String'));
     assert.dom('[data-test-validation-message="dcpProjectdescriptionproposeddevelopment"]').exists('Text is too long (max 3000 characters)');
-    await fillIn('[data-test-textarea="dcpProjectdescriptionproposeddevelopment"]', 'abc');
+    await fillIn('[data-test-input="dcpProjectdescriptionproposeddevelopment"]', 'abc');
     assert.dom('[data-test-validation-message="dcpProjectdescriptionproposeddevelopment"]').doesNotExist();
 
     // dcpProjectdescriptionbackground (length limits)
     assert.dom('[data-test-validation-message="dcpProjectdescriptionbackground"]').doesNotExist();
-    await fillIn('[data-test-textarea="dcpProjectdescriptionbackground"]', exceedMaximum(2000, 'String'));
+    await fillIn('[data-test-input="dcpProjectdescriptionbackground"]', exceedMaximum(2000, 'String'));
     assert.dom('[data-test-validation-message="dcpProjectdescriptionbackground"]').hasText('Text is too long (max 2000 characters)');
-    await fillIn('[data-test-textarea="dcpProjectdescriptionbackground"]', 'abc');
+    await fillIn('[data-test-input="dcpProjectdescriptionbackground"]', 'abc');
     assert.dom('[data-test-validation-message="dcpProjectdescriptionproposeddevelopment"]').doesNotExist();
 
     // dcpProjectdescriptionproposedactions (length limits)
     assert.dom('[data-test-validation-message="dcpProjectdescriptionproposedactions"]').doesNotExist();
-    await fillIn('[data-test-textarea="dcpProjectdescriptionproposedactions"]', exceedMaximum(2000, 'String'));
+    await fillIn('[data-test-input="dcpProjectdescriptionproposedactions"]', exceedMaximum(2000, 'String'));
     assert.dom('[data-test-validation-message="dcpProjectdescriptionproposedactions"]').hasText('Text is too long (max 2000 characters)');
-    await fillIn('[data-test-textarea="dcpProjectdescriptionproposedactions"]', 'abc');
+    await fillIn('[data-test-input="dcpProjectdescriptionproposedactions"]', 'abc');
     assert.dom('[data-test-validation-message="dcpProjectdescriptionproposedactions"]').doesNotExist();
 
     // dcpProjectdescriptionproposedarea (length limits)
     assert.dom('[data-test-validation-message="dcpProjectdescriptionproposedarea"]').doesNotExist();
-    await fillIn('[data-test-textarea="dcpProjectdescriptionproposedarea"]', exceedMaximum(3000, 'String'));
+    await fillIn('[data-test-input="dcpProjectdescriptionproposedarea"]', exceedMaximum(3000, 'String'));
     assert.dom('[data-test-validation-message="dcpProjectdescriptionproposedarea"]').hasText('Text is too long (max 3000 characters)');
-    await fillIn('[data-test-textarea="dcpProjectdescriptionproposedarea"]', 'abc');
+    await fillIn('[data-test-input="dcpProjectdescriptionproposedarea"]', 'abc');
     assert.dom('[data-test-validation-message="dcpProjectdescriptionproposedarea"]').doesNotExist();
 
     // dcpProjectdescriptionsurroundingarea (length limits)
     assert.dom('[data-test-validation-message="dcpProjectdescriptionsurroundingarea"]').doesNotExist();
-    await fillIn('[data-test-textarea="dcpProjectdescriptionsurroundingarea"]', exceedMaximum(3000, 'String'));
+    await fillIn('[data-test-input="dcpProjectdescriptionsurroundingarea"]', exceedMaximum(3000, 'String'));
     assert.dom('[data-test-validation-message="dcpProjectdescriptionsurroundingarea"]').hasText('Text is too long (max 3000 characters)');
-    await fillIn('[data-test-textarea="dcpProjectdescriptionsurroundingarea"]', 'abc');
+    await fillIn('[data-test-input="dcpProjectdescriptionsurroundingarea"]', 'abc');
     assert.dom('[data-test-validation-message="dcpProjectdescriptionsurroundingarea"]').doesNotExist();
 
     // dcpProjectattachmentsotherinformation (length limits)
     assert.dom('[data-test-validation-message="dcpProjectattachmentsotherinformation"]').doesNotExist();
-    await fillIn('[data-test-textarea="dcpProjectattachmentsotherinformation"]', exceedMaximum(2000, 'String'));
+    await fillIn('[data-test-input="dcpProjectattachmentsotherinformation"]', exceedMaximum(2000, 'String'));
     assert.dom('[data-test-validation-message="dcpProjectattachmentsotherinformation"]').hasText('Text is too long (max 2000 characters)');
-    await fillIn('[data-test-textarea="dcpProjectattachmentsotherinformation"]', 'abc');
+    await fillIn('[data-test-input="dcpProjectattachmentsotherinformation"]', 'abc');
     assert.dom('[data-test-validation-message="dcpProjectattachmentsotherinformation"]').doesNotExist();
+  });
+
+  test('Certain Applicant fields on the PAS Form display both Saveable and Submittable validation errors', async function(assert) {
+    this.server.create('project', 1, 'applicant');
+
+    await visit('/pas-form/1/edit');
+
+    await click('[data-test-add-applicant-button]');
+
+    assert.dom('[data-test-validation-message="dcpFirstname"]').hasText('This field is required');
+
+    assert.dom('[data-test-validation-message="dcpLastname"]').hasText('This field is required');
+
+    // email
+    assert.dom('[data-test-validation-message="dcpEmail"]').hasText('This field is required');
+
+    await fillIn('[data-test-input="dcpEmail"]', 'email');
+
+    assert.dom('[data-test-validation-message="dcpEmail"]').hasText('Must be a valid email address');
+
+    await fillIn('[data-test-input="dcpEmail"]', 'email@planning.nyc.gov');
+
+    assert.dom('[data-test-validation-message="dcpEmail"]').doesNotExist();
+
+    // phone
+    assert.dom('[data-test-validation-message="dcpPhone"]').doesNotExist();
+
+    await fillIn('[data-test-input="dcpPhone"]', '1234');
+
+    assert.dom('[data-test-validation-message="dcpPhone"]').hasText('Please enter a 10 digit phone number');
+
+    await fillIn('[data-test-input="dcpPhone"]', '2127203300');
+
+    assert.dom('[data-test-validation-message="dcpPhone"]').doesNotExist();
+
+    // zipcode
+    assert.dom('[data-test-validation-message="dcpZipcode"]').doesNotExist();
+
+    await fillIn('[data-test-input="dcpZipcode"]', exceedMaximum(5, 'Number'));
+
+    assert.dom('[data-test-validation-message="dcpZipcode"]').hasText('ZIP is too long (max 5 digits)');
+
+    await fillIn('[data-test-input="dcpZipcode"]', '10020');
+
+    assert.dom('[data-test-validation-message="dcpZipcode"]').doesNotExist();
+  });
+
+  test('User cannot fill in letters for Applicant phone number or ZIP on the PAS Form', async function(assert) {
+    this.server.create('project', 1, 'applicant');
+
+    await visit('/pas-form/1/edit');
+
+    await click('[data-test-add-applicant-button]');
+
+    await fillIn('[data-test-input="dcpPhone"]', 'asdfg');
+
+    assert.dom('[data-test-input="dcpPhone"]').hasNoValue();
+
+    await fillIn('[data-test-input="dcpPhone"]', '2127203300');
+
+    assert.dom('[data-test-input="dcpPhone"]').hasValue('2127203300');
+
+    await fillIn('[data-test-input="dcpZipcode"]', 'asdfg');
+
+    assert.dom('[data-test-input="dcpZipcode"]').hasNoValue();
+
+    await fillIn('[data-test-input="dcpZipcode"]', '10022');
+
+    assert.dom('[data-test-input="dcpZipcode"]').hasValue('10022');
   });
 });

@@ -1,13 +1,13 @@
-{{#let @form as |Form|}}
-  <Form.Section @title="Applicant Team">
+{{#let @form as |form|}}
+  <form.Section @title="Applicant Team">
     <p>
-      Add all applicants (either individuals or organizations) and other team members (including land use consultants and environmental consultants, agency staff, etc.).
+      Add all Applicants (either individuals or organizations) and other Team Members (including Land Use Consultants and Environmental Consultants, agency staff, etc.).
     </p>
 
     <ul class="no-bullet">
       {{#each (filter-by 'isDeleted' false @form.saveableChanges.applicants) as |applicant applicantIndex|}}
         <li class="scale-fade-in">
-          <Form.SaveableForm
+          <form.SaveableForm
             @model={{applicant}}
             @validators={{array @validations.SaveableApplicantFormValidations @validations.SubmittableApplicantFormValidations}}
             as |applicantForm|
@@ -19,7 +19,7 @@
               data-test-applicant-fieldset={{applicantIndex}}
               data-test-applicant-type={{applicant.friendlyEntityName}}
             />
-          </Form.SaveableForm>
+          </form.SaveableForm>
         </li>
       {{/each}}
     </ul>
@@ -27,7 +27,7 @@
     {{!-- buttons for user to add new applicants --}}
     <div class="fieldset-adder">
       <h5 class="small-margin-bottom">
-        Add a team member:
+        Add a Team Member:
       </h5>
       <div class="grid-x">
         <div class="cell large-6 small-padding-right">
@@ -37,7 +37,7 @@
             {{on "click" (fn @addApplicant "dcp_applicantinformation") }}
             data-test-add-applicant-button
           >
-            <strong>Add an applicant</strong>
+            <strong>Add an Applicant</strong>
             <span class="display-block">(individual or organization)</span>
           </button>
         </div>
@@ -48,11 +48,11 @@
             {{on "click" (fn @addApplicant "dcp_applicantrepresentativeinformation") }}
             data-test-add-applicant-team-member-button
           >
-            <strong>Add other team member</strong>
-            <span class="display-block">(land use/environmental consultant, etc.)</span>
+            <strong>Add other Team Member</strong>
+            <span class="display-block">(Land Use/Environmental Consultant, etc.)</span>
           </button>
         </div>
       </div>
     </div>
-  </Form.Section>
+  </form.Section>
 {{/let}}

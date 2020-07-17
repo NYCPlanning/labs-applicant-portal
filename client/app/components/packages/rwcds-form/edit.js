@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 import SaveableRwcdsFormValidations from '../../../validations/saveable-rwcds-form';
 import SubmittableRwcdsFormValidations from '../../../validations/submittable-rwcds-form';
 import SaveableAffectedZoningResolutionFormValidations from '../../../validations/saveable-affected-zoning-resolution-form';
@@ -13,6 +14,9 @@ export default class PackagesRwcdsFormEditComponent extends Component {
     SubmittableAffectedZoningResolutionFormValidations,
   };
 
+  @service
+  router;
+
   @action
   async savePackage() {
     try {
@@ -23,5 +27,12 @@ export default class PackagesRwcdsFormEditComponent extends Component {
     }
 
     this.args.package.refreshExistingDocuments();
+  }
+
+  @action
+  async submitPackage() {
+    await this.args.package.submit();
+
+    this.router.transitionTo('rwcds-form.show', this.args.package.id);
   }
 }
