@@ -22,7 +22,7 @@ import {
   DCPEXISTINGCONDITIONS_OPTIONSET,
   DCPISRWCDSSCENARIO_OPTIONSET,
 
-} from '../models/rwcds-form';
+} from '../optionsets/rwcds-form';
 import {
   YES_NO_UNSURE_OPTIONSET,
   DCPLEGALSTREETFRONTAGE_OPTIONSET,
