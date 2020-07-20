@@ -45,6 +45,7 @@ export default Factory.extend({
   applicant: trait({
     afterCreate(project, server) {
       server.create('package', { project }, 'applicant', 'pasForm');
+      server.create('package', { project }, 'applicant', 'rwcdsForm');
     },
   }),
 

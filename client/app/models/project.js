@@ -34,4 +34,16 @@ export default class ProjectModel extends Model {
     }
     return [];
   }
+
+  get rwcdsPackages() {
+    const [firstPackage] = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'type', 'code', 'RWCDS']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    if (firstPackage) {
+      return [firstPackage];
+    }
+    return [];
+  }
 }

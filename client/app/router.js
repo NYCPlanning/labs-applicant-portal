@@ -8,7 +8,8 @@ export default class Router extends EmberRouterScroll {
 }
 
 // TODO: wrap in an authenticated route
-Router.map(function() { // eslint-disable-line
+Router.map(function() {
+  // eslint-disable-line
   this.route('projects');
   this.route('login');
   this.route('logout');
@@ -22,4 +23,5 @@ Router.map(function() { // eslint-disable-line
     this.route('edit');
     this.route('show', { path: '/' });
   });
+  this.route('project', { path: 'projects/:id'});
 });
