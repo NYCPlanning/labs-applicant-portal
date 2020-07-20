@@ -3,7 +3,7 @@ import { helper } from '@ember/component/helper';
 // an entry to the OPTIONSET_LOOKUP object.
 import {
   STATE_OPTIONSET,
-} from '../models/applicant';
+} from '../optionset-lookups/applicant-optionsets';
 import {
   BOROUGHS_OPTIONSET,
 } from '../models/bbl';
