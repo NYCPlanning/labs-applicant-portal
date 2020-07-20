@@ -50,7 +50,7 @@ export class ContactService {
   public async findOneByEmail(email: string) {
     try {
       const { records: [firstRecord] } = await this.crmService.get('contacts', `
-        $filter=emailaddress1 eq '${email}'
+        $filter=startswith(emailaddress1, '${email}')
           and statuscode eq ${ACTIVE_CODE}
         &$top=1
       `);
