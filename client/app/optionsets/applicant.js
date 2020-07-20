@@ -1,3 +1,14 @@
+export const TYPE_OPTIONSET = {
+  INDIVIDUAL: {
+    label: 'Individual',
+    code: 717170000,
+  },
+  ORGANIZATION: {
+    label: 'Organization',
+    code: 717170001,
+  },
+};
+
 export const STATE_OPTIONSET = {
   AK: {
     code: 717170000,

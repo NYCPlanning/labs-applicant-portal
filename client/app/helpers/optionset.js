@@ -3,6 +3,7 @@ import { helper } from '@ember/component/helper';
 // an entry to the OPTIONSET_LOOKUP object.
 import {
   STATE_OPTIONSET,
+  TYPE_OPTIONSET,
 } from '../optionsets/applicant';
 import {
   BOROUGHS_OPTIONSET,
@@ -33,6 +34,7 @@ import { DCPPUBLICSTATUS_OPTIONSET } from '../optionsets/project';
 const OPTIONSET_LOOKUP = {
   applicant: {
     state: STATE_OPTIONSET,
+    type: TYPE_OPTIONSET,
   },
   bbl: {
     boroughs: BOROUGHS_OPTIONSET,
