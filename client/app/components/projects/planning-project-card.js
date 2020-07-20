@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { PACKAGE_STATUS_OPTIONSET, PACKAGE_VISIBILITY_OPTIONSET } from '../../models/package';
+import { PACKAGE_STATUS_OPTIONSET, PACKAGE_VISIBILITY_OPTIONSET } from '../../optionsets/package';
 
 /**
   * Generates a  project card listed under "Planning is working on it..."

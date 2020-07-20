@@ -1,5 +1,5 @@
 import { Factory, trait } from 'ember-cli-mirage';
-import { PACKAGE_STATUS_OPTIONSET, PACKAGE_VISIBILITY_OPTIONSET } from '../../models/package';
+import { PACKAGE_STATUS_OPTIONSET, PACKAGE_VISIBILITY_OPTIONSET } from '../../optionsets/package';
 
 export default Factory.extend({
   pasForm: trait({

@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { sort } from '@ember/object/computed';
-import { PACKAGE_STATUS_OPTIONSET, PACKAGE_VISIBILITY_OPTIONSET } from '../models/package';
+import { PACKAGE_STATUS_OPTIONSET, PACKAGE_VISIBILITY_OPTIONSET } from '../optionsets/package';
 
 export default class ProjectsController extends Controller {
   queryParams = ['email'];
