@@ -9,6 +9,7 @@
   >
     {{yield (hash
       saveableChanges=saveableValidator.changeset
+      errors=submittableValidator.changeset.error
 
       isSaveable=(and saveableValidator.isDirty saveableValidator.isValid)
       isSubmittable=submittableValidator.isValid

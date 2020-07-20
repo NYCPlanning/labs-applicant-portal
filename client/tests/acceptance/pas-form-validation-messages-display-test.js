@@ -3,6 +3,7 @@ import {
   visit,
   fillIn,
   click,
+  waitFor,
 } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -223,5 +224,32 @@ module('Acceptance | pas form validation messages display', function(hooks) {
     await fillIn('[data-test-input="dcpZipcode"]', '10022');
 
     assert.dom('[data-test-input="dcpZipcode"]').hasValue('10022');
+  });
+
+  test('User is required to add at least one Applicant member in order to submit PAS', async function(assert) {
+    this.server.create('project', 1, 'applicant');
+    await visit('/pas-form/1/edit');
+
+    await fillIn('[data-test-input="dcpRevisedprojectname"]', 'my project name');
+
+    assert.dom('[data-test-submit-button]').hasAttribute('disabled');
+
+    assert.dom('[data-test-validation-message="has-applicants"]').hasText('One or more applicant team members is required.');
+
+    await click('[data-test-add-applicant-button]');
+
+    await fillIn('[data-test-input="dcpFirstname"]', 'Tess');
+
+    await fillIn('[data-test-input="dcpLastname"]', 'Ter');
+
+    assert.dom('[data-test-submit-button]').hasAttribute('disabled');
+
+    await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
+
+    await waitFor('[data-test-submit-button]:not([disabled])');
+    await click('[data-test-submit-button]');
+
+    assert.dom('[data-test-reveal-modal]').exists();
+    assert.dom('[data-test-confirm-submit-button]').exists();
   });
 });
