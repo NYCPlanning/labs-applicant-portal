@@ -27,7 +27,7 @@ import {
   YES_NO_UNSURE_OPTIONSET,
   DCPLEGALSTREETFRONTAGE_OPTIONSET,
   DCPHOUSINGUNITTYPE_OPTIONSET,
-} from '../models/pas-form';
+} from '../optionsets/pas-form';
 import { DCPPUBLICSTATUS_OPTIONSET } from '../optionsets/project';
 
 const OPTIONSET_LOOKUP = {
