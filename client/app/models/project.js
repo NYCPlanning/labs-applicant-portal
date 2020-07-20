@@ -20,12 +20,26 @@ export default class ProjectModel extends Model {
 
   @attr dcpApplicantCustomerValue;
 
+  @attr dcpProjectbrief;
+
   @hasMany('package', { async: false })
   packages;
 
   get pasPackages() {
     const [firstPackage] = this.packages
       .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'type', 'code', 'PAS_PACKAGE']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    if (firstPackage) {
+      return [firstPackage];
+    }
+    return [];
+  }
+
+  get rwcdsPackages() {
+    const [firstPackage] = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'type', 'code', 'RWCDS']))
       .sortBy('dcpPackageversion')
       .reverse();
 

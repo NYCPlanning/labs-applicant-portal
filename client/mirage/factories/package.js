@@ -2,6 +2,18 @@ import { Factory, trait } from 'ember-cli-mirage';
 import { PACKAGE_STATUS, PACKAGE_VISIBILITY } from '../../optionsets/package';
 
 export default Factory.extend({
+  dcpStatusdate: new Date('December 17, 1995 03:24:00'),
+
+  dcpPackageversion(i) {
+    const SAMPLE_VERSIONS = [
+      1,
+      2,
+      3,
+    ];
+
+    return SAMPLE_VERSIONS[i % SAMPLE_VERSIONS.length];
+  },
+
   pasForm: trait({
     dcpPackagetype: 717170000,
     afterCreate(projectPackage, server) {

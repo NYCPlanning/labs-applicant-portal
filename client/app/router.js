@@ -23,5 +23,5 @@ Router.map(function() {
     this.route('edit');
     this.route('show', { path: '/' });
   });
-  this.route('project');
+  this.route('project', { path: 'projects/:id' });
 });

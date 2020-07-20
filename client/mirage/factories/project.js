@@ -2,6 +2,7 @@ import { Factory, trait } from 'ember-cli-mirage';
 
 export default Factory.extend({
   statuscode: 'Active', // default project statuscode
+  dcpPublicstatus: 'Filed',
 
   dcpProjectname(i) {
     const SAMPLE_NAMES = [
@@ -13,6 +14,15 @@ export default Factory.extend({
       'Pop Up Palm Tree & Goat Farm'];
 
     return SAMPLE_NAMES[i % SAMPLE_NAMES.length];
+  },
+
+  dcpName(i) {
+    const SAMPLE_CODENAMES = [
+      '2019R0380',
+      '2020K0445',
+      '1990M0111'];
+
+    return SAMPLE_CODENAMES[i % SAMPLE_CODENAMES.length];
   },
 
   dcpApplicantCustomerValue(i) {
@@ -27,6 +37,8 @@ export default Factory.extend({
 
     return SAMPLE_CUSTOMERS[i % SAMPLE_CUSTOMERS.length];
   },
+
+  dcpProjectbrief: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
 
   dcpBorough(i) {
     const BOROUGHS = [
@@ -45,6 +57,7 @@ export default Factory.extend({
   applicant: trait({
     afterCreate(project, server) {
       server.create('package', { project }, 'applicant', 'pasForm');
+      server.create('package', { project }, 'applicant', 'rwcdsForm');
     },
   }),
 
