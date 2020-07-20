@@ -11,18 +11,18 @@ export default class ProposedActionsComponent extends Component {
   ];
 
   get zrTypeLabel() {
-    const zrTypeCode = this.args.zrForm.saveableChanges.dcpZoningresolutiontype;
+    const zrTypeCode = this.args.zrForm.data.dcpZoningresolutiontype;
 
     return optionset(['affectedZoningResolution', 'actions', 'label', zrTypeCode]);
   }
 
   get zrAppendixF() {
-    const zrSectionNumber = this.args.zrForm.saveableChanges.dcpZrsectionnumber;
+    const zrSectionNumber = this.args.zrForm.data.dcpZrsectionnumber;
     return this.zrTypeLabel === 'ZR' && zrSectionNumber === 'AppendixF';
   }
 
   get zrSectionNumber() {
-    const zrSectionNumber = this.args.zrForm.saveableChanges.dcpZrsectionnumber;
+    const zrSectionNumber = this.args.zrForm.data.dcpZrsectionnumber;
 
     const zrTypeInArray = this.actionsWithSectionNumberAndSectionTitle.includes(this.zrTypeLabel);
     if (zrTypeInArray || this.zrAppendixF) {

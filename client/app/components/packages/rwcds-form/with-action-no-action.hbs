@@ -58,7 +58,7 @@
             (hash label='Yes' code=true)
             (hash label='No' code=false)
           }}
-          @onChange={{fn (mut @form.saveableChanges.dcpHowdidyoudeterminethenoactionscenario) ""}} as |value|
+          @onChange={{fn (mut @form.data.dcpHowdidyoudeterminethenoactionscenario) ""}} as |value|
         >
           {{#if (eq value false)}}
             <Ui::Question as |Q|>
@@ -142,7 +142,7 @@
             (hash label='Yes' code=true)
             (hash label='No' code=false)
           }}
-          @onChange={{fn (mut @form.saveableChanges.dcpRwcdsexplanation) ""}} as |value|
+          @onChange={{fn (mut @form.data.dcpRwcdsexplanation) ""}} as |value|
         >
           {{#if value}}
             <Ui::Question @required={{true}} as |Q|>
