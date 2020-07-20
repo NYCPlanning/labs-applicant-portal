@@ -15,6 +15,9 @@ export default class ProjectModel extends Model {
 
   @attr statuscode;
 
+  // e.g. 'Prefiled', 'Filed', 'In Public Review', 'Completed'
+  @attr dcpPublicstatus;
+
   @attr dcpApplicantCustomerValue;
 
   @hasMany('package', { async: false })
