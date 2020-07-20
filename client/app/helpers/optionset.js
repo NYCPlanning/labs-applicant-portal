@@ -3,7 +3,7 @@ import { helper } from '@ember/component/helper';
 // an entry to the OPTIONSET_LOOKUP object.
 import {
   STATE_OPTIONSET,
-} from '../optionset-lookups/applicant-optionsets';
+} from '../optionsets/applicant';
 import {
   BOROUGHS_OPTIONSET,
 } from '../models/bbl';
@@ -28,7 +28,7 @@ import {
   DCPLEGALSTREETFRONTAGE_OPTIONSET,
   DCPHOUSINGUNITTYPE_OPTIONSET,
 } from '../models/pas-form';
-import { DCPPUBLICSTATUS_OPTIONSET } from '../optionset-lookups/project-optionset-lookup';
+import { DCPPUBLICSTATUS_OPTIONSET } from '../optionsets/project';
 
 const OPTIONSET_LOOKUP = {
   applicant: {
