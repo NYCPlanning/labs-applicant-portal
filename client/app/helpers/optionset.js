@@ -9,7 +9,7 @@ import {
 } from '../models/bbl';
 import {
   AFFECTED_ZONING_RESOLUTION_ACTION_OPTIONSET,
-} from '../models/affected-zoning-resolution';
+} from '../optionsets/affected-zoning-resolution';
 import {
   PACKAGE_STATE_OPTIONSET,
   PACKAGE_STATUS_OPTIONSET,
