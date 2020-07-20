@@ -4,6 +4,12 @@
       Add all Applicants (either individuals or organizations) and other Team Members (including Land Use Consultants and Environmental Consultants, agency staff, etc.).
     </p>
 
+    {{#if form.errors.applicants}}
+      {{#each form.errors.applicants.validation as |message|}}
+        <div class="callout alert">{{message}}</div>
+      {{/each}}
+    {{/if}}
+
     <ul class="no-bullet">
       {{#each (filter-by 'isDeleted' false @form.saveableChanges.applicants) as |applicant applicantIndex|}}
         <li class="scale-fade-in">

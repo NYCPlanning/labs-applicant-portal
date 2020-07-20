@@ -56,7 +56,7 @@ export default class PasFormComponent extends Component {
       targetEntity, // distinguishes between different applicant types for the backend
       pasForm: this.pasForm,
     });
-  
+
     addToHasMany(changeset, 'applicants', newApplicant);
   }
 

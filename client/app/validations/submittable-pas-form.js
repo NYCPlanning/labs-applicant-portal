@@ -214,6 +214,7 @@ export default {
   applicants: [
     validateLength({
       min: 1,
+      message: 'At least one applicant required',
     }),
   ],
 };
