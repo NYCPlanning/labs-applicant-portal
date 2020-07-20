@@ -6,7 +6,7 @@ import {
 } from '../optionsets/applicant';
 import {
   BOROUGHS_OPTIONSET,
-} from '../models/bbl';
+} from '../optionsets/bbl';
 import {
   AFFECTED_ZONING_RESOLUTION_ACTION_OPTIONSET,
 } from '../optionsets/affected-zoning-resolution';

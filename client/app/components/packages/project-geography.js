@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { bblBreakup } from '../../helpers/bbl-breakup';
-import { BOROUGHS_OPTIONSET } from '../../models/bbl';
+import { BOROUGHS_OPTIONSET } from '../../optionsets/bbl';
 
 // zap search provides bbls as 1-5-4 digits. the first part of the bbl,
 // the borough, is represented as a number. this object maps those
