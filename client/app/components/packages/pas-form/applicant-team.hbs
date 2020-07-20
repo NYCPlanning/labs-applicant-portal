@@ -6,7 +6,7 @@
 
     {{#if form.errors.applicants}}
       {{#each form.errors.applicants.validation as |message|}}
-        <div class="callout alert">{{message}}</div>
+        <div class="callout alert" data-test-validation-message="has-applicants">{{message}}</div>
       {{/each}}
     {{/if}}
 
