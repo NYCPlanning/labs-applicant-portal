@@ -102,7 +102,7 @@ export class AuthService {
 
       const responseBody = {
         "code": "NO_CONTACT_FOUND",
-        "message": 'CRM Contact not found for given email or ID.',
+        "message": `CRM Contact not found for given email or ID: ${mail}`,
       }
 
       throw new HttpException(responseBody, HttpStatus.UNAUTHORIZED);
