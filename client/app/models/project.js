@@ -18,6 +18,8 @@ export default class ProjectModel extends Model {
   // e.g. 'Prefiled', 'Filed', 'In Public Review', 'Completed'
   @attr dcpPublicstatus;
 
+  @attr dcpVisibility;
+
   @attr dcpApplicantCustomerValue;
 
   @attr dcpProjectbrief;

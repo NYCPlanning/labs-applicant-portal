@@ -29,7 +29,10 @@ import {
   DCPLEGALSTREETFRONTAGE,
   DCPHOUSINGUNITTYPE,
 } from '../optionsets/pas-form';
-import { DCPPUBLICSTATUS } from '../optionsets/project';
+import {
+  DCPPUBLICSTATUS,
+  PROJECT_VISIBILITY,
+} from '../optionsets/project';
 
 const OPTIONSET_LOOKUP = {
   applicant: {
@@ -47,6 +50,7 @@ const OPTIONSET_LOOKUP = {
   },
   project: {
     dcpPublicstatus: DCPPUBLICSTATUS,
+    dcpVisibility: PROJECT_VISIBILITY,
   },
   rwcdsForm: {
     dcpHasprojectchangedsincesubmissionofthepas: YES_NO,

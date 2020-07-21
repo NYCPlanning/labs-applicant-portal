@@ -1,47 +1,47 @@
 <Ui::Breadcrumbs as |Crumb|>
   <Crumb @text="My Projects" @route='projects' />
-  <!-- TODO plug in real project name from model -->
-  <Crumb @text="dcp_projectname" @current={{true}} />
+  <Crumb @text={{@model.dcpProjectname}} @current={{true}} />
 </Ui::Breadcrumbs>
 
 <div class="grid-x grid-padding-x">
   <div class="cell large-8">
     <h1>
-      dcp_projectname
+      {{@model.dcpProjectname}}
     </h1>
 
     <p>
-      <strong>Project Number:</strong> dcp_name
+      <strong>Project Number:</strong> {{@model.dcpName}}
     </p>
 
     <p>
-      <strong>Primary Applicant:</strong> dcp_applicant_customer
+      <strong>Primary Applicant:</strong> {{@model.dcpApplicantCustomerValue}}
     </p>
 
     <p>
-      <strong>Project Status:</strong> statuscode
+      <strong>Project Status:</strong> {{@model.statuscode}}
       <span class="text-gray"> | </span>
       <strong>Public Status:</strong>
-      <!-- when dcp_publicstatus not null and visibility = general public -->
-      <!-- TODO incorporate real logic for if statement -->
-      <FaIcon @icon={{if true 'eye' 'eye-slash'}} @prefix="far" class="text-gray"/>
-      <!-- TODO incorporate real logic for if statement -->
-      {{#if true}}
-        <!-- TODO remember to plug in dcp_name as a variable in the URL -->
-        <Ui::ExternalLink @href="https://zap.planning.nyc.gov/projects/{{dcp_name}}"> dcp_publicstatus </Ui::ExternalLink>
+      <FaIcon @icon={{if publicStatusNotNullVisibilityGeneralPublic 'eye' 'eye-slash'}} @prefix="far" class="text-gray"/>
+      {{#if publicStatusNotNullVisibilityGeneralPublic}}
+        <Ui::ExternalLink @href="https://zap.planning.nyc.gov/projects/{{@model.dcpName}}"> {{optionset 'project' 'dcpPublicstatus' 'label' @model.dcpPublicstatus}} </Ui::ExternalLink>
       {{else}}
-        dcp_publicstatus
+        {{@model.dcpPublicstatus}}
       {{/if}}
 
     </p>
 
     <p>
-      <strong>Project Brief:</strong> dcp_projectbrief. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <strong>Project Brief:</strong> {{@model.dcpProjectbrief}}
     </p>
 
     <hr>
 
-    <Project::PackageList @packageName="Reasonable Worst Case Development Scenario"/>
+    <h2>Reasonable Worst Case Development Scenario</h2>
+    {{#each @model.rwcdsPackages as |rwcdsPackage|}}
+      <Project::PackageList
+        @package={{rwcdsPackage}}
+      />
+    {{/each}}
 
   </div>{{! end left/main column }}
   <div class="cell large-4 sticky-sidebar">
@@ -52,3 +52,4 @@
 </div>
 
 {{outlet}}
+

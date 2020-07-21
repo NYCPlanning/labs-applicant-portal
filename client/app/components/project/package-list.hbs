@@ -1,19 +1,17 @@
-<h2>{{@packageName}}</h2>
 <ol class="no-bullet">
   <li>
-    <!-- TODO update all ifs with real logic -->
     <a href="#">
-      {{#if (eq status "revision required")}}
+      {{#if (eq @package.statuscode (optionset 'package' 'status' 'code' "Reviewed - Revisions Required"))}}
         <FaIcon @icon="exclamation-triangle" class="text-gold" />
       {{else}}
         <FaIcon
-          @icon={{if (eq status "package prep") 'edit' 'check'}}
-          class={{if (eq status "package prep") '' 'text-green-dark'}}
+          @icon={{if (eq @package.statuscode (optionset 'package' 'status' 'code' "Package Preparation")) 'edit' 'check'}}
+          class={{if (eq @package.statuscode (optionset 'package' 'status' 'code' "Package Preparation")) '' 'text-green-dark'}}
         />
       {{/if}}
-      <strong>dcp_packageversion</strong>
+      <strong>Version {{@package.dcpPackageversion}}</strong>
       <!-- TODO format date appropriately -->
-      <span class="text-gray">| {{if (eq status "package prep") 'Editable since ' 'Submitted '}} dcp_statusdate </span>
+      <span class="text-gray">| {{if (eq status "package prep") 'Editable since ' 'Submitted '}} {{@package.dcpStatusdate}} </span>
     </a>
   </li>
 </ol>

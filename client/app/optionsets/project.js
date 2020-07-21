@@ -16,3 +16,26 @@ export const DCPPUBLICSTATUS = {
     label: 'Completed',
   },
 };
+
+export const PROJECT_VISIBILITY_OPTIONSET = {
+  APPLICANT_ONLY: {
+    code: 717170002,
+    label: 'Applicant Only',
+  },
+  CPC_ONLY: {
+    code: 717170001,
+    label: 'CPC Only',
+  },
+  GENERAL_PUBLIC: {
+    code: 717170003,
+    label: 'General Public',
+  },
+  INTERNAL_DCP_ONLY: {
+    code: 717170000,
+    label: 'Internal DCP Only',
+  },
+  LUP: {
+    code: 717170004,
+    label: 'LUP',
+  },
+};

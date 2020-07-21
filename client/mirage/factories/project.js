@@ -2,7 +2,8 @@ import { Factory, trait } from 'ember-cli-mirage';
 
 export default Factory.extend({
   statuscode: 'Active', // default project statuscode
-  dcpPublicstatus: 'Filed',
+  dcpPublicstatus: 717170000,
+  dcpVisibility: 717170003,
 
   dcpProjectname(i) {
     const SAMPLE_NAMES = [
