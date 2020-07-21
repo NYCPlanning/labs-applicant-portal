@@ -54,6 +54,8 @@ const OPTIONSET_LOOKUP = {
     dcpExistingconditions: YES_NO_OPTIONSET,
     dcpIsrwcdsscenario: YES_NO_OPTIONSET,
     dcpIncludezoningtextamendment: YES_NO_DONT_KNOW_OPTIONSET,
+    dcpIsplannigondevelopingaffordablehousing: YES_NO_OPTIONSET,
+    dcpIsapplicantseekingaction: YES_NO_DONT_KNOW_OPTIONSET,
   },
   pasForm: {
     dcpProposedprojectorportionconstruction: YES_NO_UNSURE_OPTIONSET,
