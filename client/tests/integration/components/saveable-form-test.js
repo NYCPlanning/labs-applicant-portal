@@ -57,7 +57,7 @@ module('Integration | Component | f', function(hooks) {
       >
         <Input
           @type="text"
-          @value={{f.saveableChanges.someProp}}
+          @value={{f.data.someProp}}
         />
 
         <f.Field
@@ -153,7 +153,7 @@ module('Integration | Component | f', function(hooks) {
         >
           <Input
             @type="text"
-            @value={{saveable-child-form.saveableChanges.someProp}}
+            @value={{saveable-child-form.data.someProp}}
           />
         </f.SaveableForm>
 

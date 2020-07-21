@@ -21,7 +21,7 @@ export default Factory.extend({
           // this field is set to true in the backend IF
           // there exists a 'ZR' dcpZoningresolutiontype and
           // that zoning resolution's dcpZrsectionnumber is 'Appendix F'
-          dcpIncludezoningtextamendment: true,
+          dcpIncludezoningtextamendment: 717170000,
           affectedZoningResolutions: [
             server.create('affected-zoning-resolution', {
               dcpZoningresolutiontype: 'ZA',
@@ -29,7 +29,7 @@ export default Factory.extend({
             }),
             server.create('affected-zoning-resolution', {
               dcpZoningresolutiontype: 'ZR',
-              dcpZrsectionnumber: 'Appendix F',
+              dcpZrsectionnumber: 'AppendixF',
             }),
           ],
         });

@@ -1,4 +1,8 @@
 <!-- Don't forget to add labels to this issue! -->
+---
+name: "\U0001F680 Feature Request"
+about: Suggest an idea for ZAP
+---
 
 [Azure Requirement](#)
 
@@ -24,16 +28,3 @@ What attributes should the API response include?
 Which records should be included? Which should be excluded?
 
 ## Unresolved Questions
-
-<!-- For Bugs -->
-## What should happen:
-
-## What happened instead:
-
-## How to reproduce this bug:
-
-1. Step one
-2. ???
-3. Error
-
-## Browser(s) and Device(s) observed on:

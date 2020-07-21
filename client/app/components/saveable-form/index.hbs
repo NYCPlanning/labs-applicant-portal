@@ -8,7 +8,8 @@
     @parent={{@registerSubmittable}} as |submittableValidator|
   >
     {{yield (hash
-      saveableChanges=saveableValidator.changeset
+      data=saveableValidator.changeset
+      errors=submittableValidator.changeset.error
 
       isSaveable=(and saveableValidator.isDirty saveableValidator.isValid)
       isSubmittable=submittableValidator.isValid
