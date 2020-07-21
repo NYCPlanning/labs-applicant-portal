@@ -26,6 +26,7 @@ import {
 } from '../optionsets/rwcds-form';
 import {
   YES_NO_UNSURE_OPTIONSET,
+  YES_NO_OPTIONSET,
   DCPLEGALSTREETFRONTAGE_OPTIONSET,
   DCPHOUSINGUNITTYPE_OPTIONSET,
 } from '../optionsets/pas-form';
@@ -59,7 +60,11 @@ const OPTIONSET_LOOKUP = {
     dcpUrbanrenewalarea: YES_NO_UNSURE_OPTIONSET,
     dcpLegalstreetfrontage: DCPLEGALSTREETFRONTAGE_OPTIONSET,
     dcpLanduseactiontype2: YES_NO_UNSURE_OPTIONSET,
+    dcpProjectareaindustrialbusinesszone: YES_NO_OPTIONSET,
+    dcpIsprojectarealandmark: YES_NO_OPTIONSET,
+    dcpProjectareacoastalzonelocatedin: YES_NO_OPTIONSET,
     dcpProjectareaischancefloodplain: YES_NO_UNSURE_OPTIONSET,
+    dcpRestrictivedeclaration: YES_NO_OPTIONSET,
     dcpRestrictivedeclarationrequired: YES_NO_UNSURE_OPTIONSET,
     dcpDiscressionaryfundingforffordablehousing: YES_NO_UNSURE_OPTIONSET,
     dcpHousingunittype: DCPHOUSINGUNITTYPE_OPTIONSET,

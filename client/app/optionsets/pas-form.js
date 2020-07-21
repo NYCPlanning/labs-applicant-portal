@@ -13,6 +13,17 @@ export const YES_NO_UNSURE_OPTIONSET = {
   },
 };
 
+export const YES_NO_OPTIONSET = {
+  YES: {
+    code: true,
+    label: 'Yes',
+  },
+  NO: {
+    code: false,
+    label: 'No',
+  },
+};
+
 export const DCPLEGALSTREETFRONTAGE_OPTIONSET = {
   MAPPED_AND_BUILT: {
     code: 717170000,
