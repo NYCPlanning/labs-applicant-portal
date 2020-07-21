@@ -2,25 +2,34 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | project/package-list-item', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+  test('displays package item correctly', async function(assert) {
+    const packageDate = new Date(2018, 11, 24);
 
-    await render(hbs`<Project::PackageListItem />`);
+    this.server.create('package', 'pasForm', {
+      id: '123',
+      dcpPackagetype: 717170000,
+      statuscode: 1,
+      dcpPackageversion: 1,
+      dcpVisibility: 717170002,
+      dcpStatusdate: packageDate,
+    });
 
-    assert.equal(this.element.textContent.trim(), '');
+    const store = this.owner.lookup('service:store');
+    this.package = await store.findRecord('package', '123');
 
-    // Template block usage:
     await render(hbs`
-      <Project::PackageListItem>
-        template block text
+      <Project::PackageListItem @package={{this.package}}>
       </Project::PackageListItem>
     `);
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.dom(this.element).includesText('Version 1');
+    assert.dom(this.element).includesText('Editable');
+    assert.dom(this.element).includesText('12/24/2018');
   });
 });

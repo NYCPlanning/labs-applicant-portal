@@ -26,7 +26,7 @@
         </LinkTo>
       {{/if}}
       <span class="text-gray">| {{if (eq @package.statuscode (optionset 'package' 'status' 'code' "Package Preparation")) 'Editable since ' 'Submitted '}}
-        <Ui::DateDisplay @date={{@package.dcpStatusdate}} @outputFormat="MM/D/YYYY"/>
+        <Ui::DateDisplay @date={{@package.dcpStatusdate}} @outputFormat="MM/D/YYYY" @errorMessage="Date Unknown"/>
       </span>
     </a>
   </li>

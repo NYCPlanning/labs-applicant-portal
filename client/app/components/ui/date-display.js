@@ -5,7 +5,4 @@ import Component from '@glimmer/component';
 // https://github.com/stefanpenner/ember-moment#common-optional-named-arguments
 export default class DateDisplayComponent extends Component {
   tagName = '';
-
-  // message to display if invalid date
-  errorMessage = 'Date Unknown';
 }
