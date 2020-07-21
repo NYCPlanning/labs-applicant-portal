@@ -45,3 +45,18 @@ export const DCPISRWCDSSCENARIO_OPTIONSET = {
     label: 'No',
   },
 };
+
+export const DCPINCLUDEZONINGTEXTAMENDMENT_OPTIONSET = {
+  YES: {
+    code: 717170000,
+    label: 'Yes',
+  },
+  NO: {
+    code: 717170001,
+    label: 'No',
+  },
+  DONT_KNOW: {
+    code: 717170002,
+    label: 'Don\u2019t Know',
+  },
+};
