@@ -37,12 +37,52 @@ export class ProjectsService {
             $filter= statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
           )
       `);
-   
       return this.overwriteCodesWithLabels(records);
     } catch(e) {
       const errorMessage = `Error finding projects by contact ID. ${e.message}`;
       console.log(errorMessage);
       throw new HttpException(errorMessage, HttpStatus.UNAUTHORIZED);
+    }
+  }
+
+  /**
+   * Gets a Project for given dcp_projectid and contactid
+   *
+   * @param      {string}  projectId   CRM Project dcp_projectid
+   * @param      {string}  contactId   CRM Contact contactid
+   * @return     {any}     { ...Project Attributes }
+   */
+  public async getProject(projectId: string, contactId: string) {
+    try {
+      const { records } = await this.crmService.get('dcp_projects', `
+        $filter=
+          dcp_dcp_project_dcp_projectapplicant_Project/
+            any(o:
+              o/_dcp_applicant_customer_value eq '${contactId}'
+              and o/statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
+            )
+          and (
+            dcp_visibility eq ${PROJECT_VISIBILITY_APPLICANT_ONLY}
+            or dcp_visibility eq ${PROJECT_VISIBILITY_GENERAL_PUBLIC}
+          )
+          and statecode eq ${PROJECT_ACTIVE_STATE_CODE}
+          and dcp_projectid eq '${projectId}'
+        &$expand=
+          dcp_dcp_project_dcp_package_project,
+          dcp_dcp_project_dcp_projectapplicant_Project(
+            $filter= statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
+          )
+      `);
+
+      const [ project ] = this.overwriteCodesWithLabels(records);
+      return project;
+    } catch(e) {
+      const errorMessage = `Error finding project by project ID. ${e.message}`;
+      console.log(errorMessage);
+      throw new HttpException({
+        "code": "GET_PROJECT_SERVICE_ERROR",
+        "message": errorMessage,
+      }, HttpStatus.UNAUTHORIZED);
     }
   }
 

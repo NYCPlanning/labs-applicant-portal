@@ -7,6 +7,7 @@ import {
   Session,
   UseInterceptors,
   UseGuards,
+  Param,
 } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { ConfigService } from '../config/config.service';
@@ -73,6 +74,30 @@ export class ProjectsController {
       const errorMessage = `${e}`;
 
       throw new HttpException(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @Get('/projects/:id')
+  async projectById(@Session() session, @Param('id') id, @Query('email') email) {
+    let { contactId } = session;
+
+    if (email) {
+      ({ contactid: contactId } = await this.contactService.findOneByEmail(
+        email,
+      ));
+    }
+
+    try {
+      if (contactId) {
+        return this.projectsService.getProject(id, contactId);
+      }
+    } catch (e) {
+      const errorMessage = `${e}`;
+
+      throw new HttpException({
+        "code": "GET_PROJECT_CONTROLLER_ERROR",
+        "message": errorMessage,
+      }, HttpStatus.BAD_REQUEST);
     }
   }
 }
