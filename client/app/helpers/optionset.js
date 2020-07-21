@@ -2,6 +2,11 @@ import { helper } from '@ember/component/helper';
 // Register Option Sets by importing them and then adding
 // an entry to the OPTIONSET_LOOKUP object.
 import {
+  YES_NO_OPTIONSET,
+  YES_NO_UNSURE_OPTIONSET,
+  YES_NO_DONT_KNOW_OPTIONSET,
+} from '../optionsets/common';
+import {
   STATE_OPTIONSET,
   TYPE_OPTIONSET,
 } from '../optionsets/applicant';
@@ -18,15 +23,9 @@ import {
   PACKAGE_TYPE_OPTIONSET,
 } from '../optionsets/package';
 import {
-  DCPHASPROJECTCHANGEDSINCESUBMISSIONOFTHEPAS_OPTIONSET,
   DCPCONSTRUCTIONPHASING_OPTIONSET,
-  DCPEXISTINGCONDITIONS_OPTIONSET,
-  DCPISRWCDSSCENARIO_OPTIONSET,
-  DCPINCLUDEZONINGTEXTAMENDMENT_OPTIONSET,
 } from '../optionsets/rwcds-form';
 import {
-  YES_NO_UNSURE_OPTIONSET,
-  YES_NO_OPTIONSET,
   DCPLEGALSTREETFRONTAGE_OPTIONSET,
   DCPHOUSINGUNITTYPE_OPTIONSET,
 } from '../optionsets/pas-form';
@@ -50,11 +49,11 @@ const OPTIONSET_LOOKUP = {
     dcpPublicstatus: DCPPUBLICSTATUS_OPTIONSET,
   },
   rwcdsForm: {
-    dcpHasprojectchangedsincesubmissionofthepas: DCPHASPROJECTCHANGEDSINCESUBMISSIONOFTHEPAS_OPTIONSET,
+    dcpHasprojectchangedsincesubmissionofthepas: YES_NO_OPTIONSET,
     dcpConstructionphasing: DCPCONSTRUCTIONPHASING_OPTIONSET,
-    dcpExistingconditions: DCPEXISTINGCONDITIONS_OPTIONSET,
-    dcpIsrwcdsscenario: DCPISRWCDSSCENARIO_OPTIONSET,
-    dcpIncludezoningtextamendment: DCPINCLUDEZONINGTEXTAMENDMENT_OPTIONSET,
+    dcpExistingconditions: YES_NO_OPTIONSET,
+    dcpIsrwcdsscenario: YES_NO_OPTIONSET,
+    dcpIncludezoningtextamendment: YES_NO_DONT_KNOW_OPTIONSET,
   },
   pasForm: {
     dcpProposedprojectorportionconstruction: YES_NO_UNSURE_OPTIONSET,
