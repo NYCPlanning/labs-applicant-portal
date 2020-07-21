@@ -53,15 +53,15 @@ export const DCPHOUSINGUNITTYPE_OPTIONSET = {
     label: 'City',
   },
   STATE: {
-    code: 717170000,
+    code: 717170001,
     label: 'State',
   },
   FEDERAL: {
-    code: 717170000,
+    code: 717170002,
     label: 'Federal',
   },
   OTHER: {
-    code: 717170000,
+    code: 717170003,
     label: 'Other',
   },
 };

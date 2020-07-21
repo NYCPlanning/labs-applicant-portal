@@ -66,6 +66,7 @@ const OPTIONSET_LOOKUP = {
     dcpProjectareaischancefloodplain: YES_NO_UNSURE_OPTIONSET,
     dcpRestrictivedeclaration: YES_NO_OPTIONSET,
     dcpRestrictivedeclarationrequired: YES_NO_UNSURE_OPTIONSET,
+    dcpIsinclusionaryhousingdesignatedarea: YES_NO_OPTIONSET,
     dcpDiscressionaryfundingforffordablehousing: YES_NO_UNSURE_OPTIONSET,
     dcpHousingunittype: DCPHOUSINGUNITTYPE_OPTIONSET,
   },
