@@ -17,11 +17,13 @@ export class PasFormService {
         dcp_dcp_applicantinformation_dcp_pasform,
         dcp_dcp_applicantrepinformation_dcp_pasform,
         dcp_dcp_projectbbl_dcp_pasform($filter=statecode eq 0),
-        dcp_dcp_projectaddress_dcp_pasform
+        dcp_dcp_projectaddress_dcp_pasform,
+        dcp_projectname($select=dcp_projectname)
     `);
 
-    // CRM feature for providing the human-readable value for the related resource
-    const { '_dcp_projectname_value@OData.Community.Display.V1.FormattedValue': dcp_projectname } = pasForm;
+    // dcp_projectname is the name of the CRM navigation link.
+    // then dcp_projectname is the real project name
+    const { dcp_projectname } = pasForm.dcp_projectname || {};
 
     return {
       ...pasForm,

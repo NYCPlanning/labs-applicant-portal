@@ -7,4 +7,5 @@ export const PROJECT_ATTRS = [
   'dcp_visibility',
   '_dcp_applicant_customer_value',
   'dcp_dcp_project_dcp_projectapplicant_Project',
+  'dcp_publicstatus',
 ];

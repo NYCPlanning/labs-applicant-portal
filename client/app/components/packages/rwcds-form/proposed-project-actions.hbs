@@ -5,7 +5,7 @@
     </p>
 
     <div data-test-section="proposed-project-actions">
-      {{#each @form.saveableChanges.affectedZoningResolutions as |affectedZoningResolution|}}
+      {{#each @form.data.affectedZoningResolutions as |affectedZoningResolution|}}
         <form.SaveableForm
           @model={{affectedZoningResolution}}
           @validators={{array @validations.SaveableAffectedZoningResolutionFormValidations @validations.SubmittableAffectedZoningResolutionFormValidations}}
@@ -24,7 +24,7 @@
         </Q.Label>
 
         <p class="q-help">
-          Refer to <strong>Chapter 2 page 2</strong> of the <Ui::ExternalLink @href="#">CEQR Technical manual</Ui::ExternalLink>. If multiple actions are sought, please address each action individually.
+          Refer to <strong>Chapter 2 page 2</strong> of the <Ui::ExternalLink href="#">CEQR Technical manual</Ui::ExternalLink>. If multiple actions are sought, please address each action individually.
         </p>
 
         <form.Field
@@ -74,7 +74,7 @@
               (hash label='No' code=717170001)
               (hash label='Do not know' code=717170002)
             }}
-            @onChange={{fn (mut @form.saveableChanges.dcpWhichactionsfromotheragenciesaresought) ""}} as |value|
+            @onChange={{fn (mut @form.data.dcpWhichactionsfromotheragenciesaresought) ""}} as |value|
           >
             {{#if (eq value 717170000)}}
               <Ui::Question @required={{true}} as |Q|>
