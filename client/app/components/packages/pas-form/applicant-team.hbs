@@ -11,7 +11,7 @@
     {{/if}}
 
     <ul class="no-bullet">
-      {{#each (filter-by 'isDeleted' false @form.saveableChanges.applicants) as |applicant applicantIndex|}}
+      {{#each (filter-by 'isDeleted' false @form.data.applicants) as |applicant applicantIndex|}}
         <li class="scale-fade-in">
           <form.SaveableForm
             @model={{applicant}}
@@ -19,9 +19,9 @@
             as |applicantForm|
           >
             <Packages::ApplicantFieldset
-              @applicant={{applicantForm.saveableChanges}}
+              @applicant={{applicantForm.data}}
               @form={{applicantForm}}
-              @removeApplicant={{fn @removeApplicant applicant @form.saveableChanges}}
+              @removeApplicant={{fn @removeApplicant applicant @form.data}}
               data-test-applicant-fieldset={{applicantIndex}}
               data-test-applicant-type={{applicant.friendlyEntityName}}
             />
@@ -40,7 +40,7 @@
           <button
             class="button expanded secondary no-margin"
             type="button"
-            {{on "click" (fn @addApplicant "dcp_applicantinformation" @form.saveableChanges) }}
+            {{on "click" (fn @addApplicant "dcp_applicantinformation" @form.data) }}
             data-test-add-applicant-button
           >
             <strong>Add an Applicant</strong>
@@ -51,7 +51,7 @@
           <button
             class="button expanded secondary no-margin"
             type="button"
-            {{on "click" (fn @addApplicant "dcp_applicantrepresentativeinformation" @form.saveableChanges) }}
+            {{on "click" (fn @addApplicant "dcp_applicantrepresentativeinformation" @form.data) }}
             data-test-add-applicant-team-member-button
           >
             <strong>Add other Team Member</strong>
