@@ -1,4 +1,4 @@
-export const YES_NO_OPTIONSET = {
+export const YES_NO = {
   YES: {
     code: true,
     label: 'Yes',
@@ -9,7 +9,7 @@ export const YES_NO_OPTIONSET = {
   },
 };
 
-export const YES_NO_UNSURE_OPTIONSET = {
+export const YES_NO_UNSURE = {
   YES: {
     code: 717170000,
     label: 'Yes',
@@ -24,7 +24,7 @@ export const YES_NO_UNSURE_OPTIONSET = {
   },
 };
 
-export const YES_NO_DONT_KNOW_OPTIONSET = {
+export const YES_NO_DONT_KNOW = {
   YES: {
     code: 717170000,
     label: 'Yes',

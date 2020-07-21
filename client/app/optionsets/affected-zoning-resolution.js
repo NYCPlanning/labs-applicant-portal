@@ -1,4 +1,4 @@
-export const AFFECTED_ZONING_RESOLUTION_ACTION_OPTIONSET = {
+export const AFFECTED_ZONING_RESOLUTION_ACTION = {
   ZA: {
     code: 717170000,
     label: 'ZA',

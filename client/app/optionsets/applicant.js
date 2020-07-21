@@ -1,4 +1,4 @@
-export const TYPE_OPTIONSET = {
+export const TYPE = {
   INDIVIDUAL: {
     label: 'Individual',
     code: 717170000,
@@ -9,7 +9,7 @@ export const TYPE_OPTIONSET = {
   },
 };
 
-export const STATE_OPTIONSET = {
+export const STATE = {
   AK: {
     code: 717170000,
     label: 'AK',

@@ -1,4 +1,4 @@
-export const PACKAGE_STATUS_OPTIONSET = {
+export const PACKAGE_STATUS = {
   PACKAGE_PREPARATION: {
     code: 1,
     label: 'Package Preparation',
@@ -37,7 +37,7 @@ export const PACKAGE_STATUS_OPTIONSET = {
   },
 };
 
-export const PACKAGE_VISIBILITY_OPTIONSET = {
+export const PACKAGE_VISIBILITY = {
   INTERNAL_DCP_ONLY: {
     code: 717170000,
     label: 'Internal DCP Only',
@@ -60,7 +60,7 @@ export const PACKAGE_VISIBILITY_OPTIONSET = {
   },
 };
 
-export const PACKAGE_STATE_OPTIONSET = {
+export const PACKAGE_STATE = {
   ACTIVE: {
     code: 0,
     label: 'Active',
@@ -71,7 +71,7 @@ export const PACKAGE_STATE_OPTIONSET = {
   },
 };
 
-export const PACKAGE_TYPE_OPTIONSET = {
+export const PACKAGE_TYPE = {
   INFORMATION_MEETING: {
     code: 717170014,
     label: 'Information Meeting',

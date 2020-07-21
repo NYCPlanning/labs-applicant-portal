@@ -1,4 +1,4 @@
-export const YES_NO_UNSURE_OPTIONSET = {
+export const YES_NO_UNSURE = {
   YES: {
     code: 717170000,
     label: 'Yes',
@@ -13,7 +13,7 @@ export const YES_NO_UNSURE_OPTIONSET = {
   },
 };
 
-export const YES_NO_OPTIONSET = {
+export const YES_NO = {
   YES: {
     code: true,
     label: 'Yes',
@@ -24,7 +24,7 @@ export const YES_NO_OPTIONSET = {
   },
 };
 
-export const DCPLEGALSTREETFRONTAGE_OPTIONSET = {
+export const DCPLEGALSTREETFRONTAGE = {
   MAPPED_AND_BUILT: {
     code: 717170000,
     label: 'Mapped and Built',
@@ -47,7 +47,7 @@ export const DCPLEGALSTREETFRONTAGE_OPTIONSET = {
   },
 };
 
-export const DCPHOUSINGUNITTYPE_OPTIONSET = {
+export const DCPHOUSINGUNITTYPE = {
   CITY: {
     code: 717170000,
     label: 'City',

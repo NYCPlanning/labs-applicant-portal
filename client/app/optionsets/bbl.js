@@ -1,4 +1,4 @@
-export const BOROUGHS_OPTIONSET = {
+export const BOROUGHS = {
   BRONX: {
     code: 717170000,
     label: 'Bronx',

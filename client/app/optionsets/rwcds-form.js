@@ -1,4 +1,4 @@
-export const DCPCONSTRUCTIONPHASING_OPTIONSET = {
+export const DCPCONSTRUCTIONPHASING = {
   SINGLE: {
     code: 717170000,
     label: 'Single',

@@ -2,78 +2,78 @@ import { helper } from '@ember/component/helper';
 // Register Option Sets by importing them and then adding
 // an entry to the OPTIONSET_LOOKUP object.
 import {
-  YES_NO_OPTIONSET,
-  YES_NO_UNSURE_OPTIONSET,
-  YES_NO_DONT_KNOW_OPTIONSET,
+  YES_NO,
+  YES_NO_UNSURE,
+  YES_NO_DONT_KNOW,
 } from '../optionsets/common';
 import {
-  STATE_OPTIONSET,
-  TYPE_OPTIONSET,
+  STATE,
+  TYPE,
 } from '../optionsets/applicant';
 import {
-  BOROUGHS_OPTIONSET,
+  BOROUGHS,
 } from '../optionsets/bbl';
 import {
-  AFFECTED_ZONING_RESOLUTION_ACTION_OPTIONSET,
+  AFFECTED_ZONING_RESOLUTION_ACTION,
 } from '../optionsets/affected-zoning-resolution';
 import {
-  PACKAGE_STATE_OPTIONSET,
-  PACKAGE_STATUS_OPTIONSET,
-  PACKAGE_VISIBILITY_OPTIONSET,
-  PACKAGE_TYPE_OPTIONSET,
+  PACKAGE_STATE,
+  PACKAGE_STATUS,
+  PACKAGE_VISIBILITY,
+  PACKAGE_TYPE,
 } from '../optionsets/package';
 import {
-  DCPCONSTRUCTIONPHASING_OPTIONSET,
+  DCPCONSTRUCTIONPHASING,
 } from '../optionsets/rwcds-form';
 import {
-  DCPLEGALSTREETFRONTAGE_OPTIONSET,
-  DCPHOUSINGUNITTYPE_OPTIONSET,
+  DCPLEGALSTREETFRONTAGE,
+  DCPHOUSINGUNITTYPE,
 } from '../optionsets/pas-form';
-import { DCPPUBLICSTATUS_OPTIONSET } from '../optionsets/project';
+import { DCPPUBLICSTATUS } from '../optionsets/project';
 
 const OPTIONSET_LOOKUP = {
   applicant: {
-    state: STATE_OPTIONSET,
-    type: TYPE_OPTIONSET,
+    state: STATE,
+    type: TYPE,
   },
   bbl: {
-    boroughs: BOROUGHS_OPTIONSET,
+    boroughs: BOROUGHS,
   },
   package: {
-    state: PACKAGE_STATE_OPTIONSET,
-    status: PACKAGE_STATUS_OPTIONSET,
-    visibility: PACKAGE_VISIBILITY_OPTIONSET,
-    type: PACKAGE_TYPE_OPTIONSET,
+    state: PACKAGE_STATE,
+    status: PACKAGE_STATUS,
+    visibility: PACKAGE_VISIBILITY,
+    type: PACKAGE_TYPE,
   },
   project: {
-    dcpPublicstatus: DCPPUBLICSTATUS_OPTIONSET,
+    dcpPublicstatus: DCPPUBLICSTATUS,
   },
   rwcdsForm: {
-    dcpHasprojectchangedsincesubmissionofthepas: YES_NO_OPTIONSET,
-    dcpConstructionphasing: DCPCONSTRUCTIONPHASING_OPTIONSET,
-    dcpExistingconditions: YES_NO_OPTIONSET,
-    dcpIsrwcdsscenario: YES_NO_OPTIONSET,
-    dcpIncludezoningtextamendment: YES_NO_DONT_KNOW_OPTIONSET,
-    dcpIsplannigondevelopingaffordablehousing: YES_NO_OPTIONSET,
-    dcpIsapplicantseekingaction: YES_NO_DONT_KNOW_OPTIONSET,
+    dcpHasprojectchangedsincesubmissionofthepas: YES_NO,
+    dcpConstructionphasing: DCPCONSTRUCTIONPHASING,
+    dcpExistingconditions: YES_NO,
+    dcpIsrwcdsscenario: YES_NO,
+    dcpIncludezoningtextamendment: YES_NO_DONT_KNOW,
+    dcpIsplannigondevelopingaffordablehousing: YES_NO,
+    dcpIsapplicantseekingaction: YES_NO_DONT_KNOW,
   },
   pasForm: {
-    dcpProposedprojectorportionconstruction: YES_NO_UNSURE_OPTIONSET,
-    dcpUrbanrenewalarea: YES_NO_UNSURE_OPTIONSET,
-    dcpLegalstreetfrontage: DCPLEGALSTREETFRONTAGE_OPTIONSET,
-    dcpLanduseactiontype2: YES_NO_UNSURE_OPTIONSET,
-    dcpProjectareaindustrialbusinesszone: YES_NO_OPTIONSET,
-    dcpIsprojectarealandmark: YES_NO_OPTIONSET,
-    dcpProjectareacoastalzonelocatedin: YES_NO_OPTIONSET,
-    dcpProjectareaischancefloodplain: YES_NO_UNSURE_OPTIONSET,
-    dcpRestrictivedeclaration: YES_NO_OPTIONSET,
-    dcpRestrictivedeclarationrequired: YES_NO_UNSURE_OPTIONSET,
-    dcpIsinclusionaryhousingdesignatedarea: YES_NO_OPTIONSET,
-    dcpDiscressionaryfundingforffordablehousing: YES_NO_UNSURE_OPTIONSET,
-    dcpHousingunittype: DCPHOUSINGUNITTYPE_OPTIONSET,
+    dcpProposedprojectorportionconstruction: YES_NO_UNSURE,
+    dcpUrbanrenewalarea: YES_NO_UNSURE,
+    dcpLegalstreetfrontage: DCPLEGALSTREETFRONTAGE,
+    dcpLanduseactiontype2: YES_NO_UNSURE,
+    dcpProjectareaindustrialbusinesszone: YES_NO,
+    dcpIsprojectarealandmark: YES_NO,
+    dcpProjectareacoastalzonelocatedin: YES_NO,
+    dcpProjectareaischancefloodplain: YES_NO_UNSURE,
+    dcpRestrictivedeclaration: YES_NO,
+    dcpRestrictivedeclarationrequired: YES_NO_UNSURE,
+    dcpIsinclusionaryhousingdesignatedarea: YES_NO,
+    dcpDiscressionaryfundingforffordablehousing: YES_NO_UNSURE,
+    dcpHousingunittype: DCPHOUSINGUNITTYPE,
   },
   affectedZoningResolution: {
-    actions: AFFECTED_ZONING_RESOLUTION_ACTION_OPTIONSET,
+    actions: AFFECTED_ZONING_RESOLUTION_ACTION,
   },
 };
 

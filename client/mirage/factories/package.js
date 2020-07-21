@@ -1,5 +1,5 @@
 import { Factory, trait } from 'ember-cli-mirage';
-import { PACKAGE_STATUS_OPTIONSET, PACKAGE_VISIBILITY_OPTIONSET } from '../../optionsets/package';
+import { PACKAGE_STATUS, PACKAGE_VISIBILITY } from '../../optionsets/package';
 
 export default Factory.extend({
   pasForm: trait({
@@ -46,7 +46,7 @@ export default Factory.extend({
   applicant: trait({
     statuscode(i) {
       const statuses = [
-        PACKAGE_STATUS_OPTIONSET.PACKAGE_PREPARATION.code,
+        PACKAGE_STATUS.PACKAGE_PREPARATION.code,
       ];
 
       return statuses[i % statuses.length];
@@ -54,8 +54,8 @@ export default Factory.extend({
 
     dcpVisibility(i) {
       const visibility = [
-        PACKAGE_VISIBILITY_OPTIONSET.APPLICANT_ONLY.code,
-        PACKAGE_VISIBILITY_OPTIONSET.GENERAL_PUBLIC.code,
+        PACKAGE_VISIBILITY.APPLICANT_ONLY.code,
+        PACKAGE_VISIBILITY.GENERAL_PUBLIC.code,
       ];
 
       return visibility[i % visibility.length];
@@ -68,13 +68,13 @@ export default Factory.extend({
   planning: trait({
     statuscode(i) {
       const statuses = [
-        PACKAGE_STATUS_OPTIONSET.CERTIFIED.code,
-        PACKAGE_STATUS_OPTIONSET.FINAL_APPROVAL.code,
-        PACKAGE_STATUS_OPTIONSET.REVIEWED_NO_REVISIONS_REQUIRED.code,
-        PACKAGE_STATUS_OPTIONSET.REVIEWED_REVISIONS_REQUIRED.code,
-        PACKAGE_STATUS_OPTIONSET.WITHDRAWN.code,
-        PACKAGE_STATUS_OPTIONSET.SUBMITTED.code,
-        PACKAGE_STATUS_OPTIONSET.UNDER_REVIEW.code,
+        PACKAGE_STATUS.CERTIFIED.code,
+        PACKAGE_STATUS.FINAL_APPROVAL.code,
+        PACKAGE_STATUS.REVIEWED_NO_REVISIONS_REQUIRED.code,
+        PACKAGE_STATUS.REVIEWED_REVISIONS_REQUIRED.code,
+        PACKAGE_STATUS.WITHDRAWN.code,
+        PACKAGE_STATUS.SUBMITTED.code,
+        PACKAGE_STATUS.UNDER_REVIEW.code,
       ];
 
       return statuses[i % statuses.length];
@@ -82,11 +82,11 @@ export default Factory.extend({
 
     dcpVisibility(i) {
       const visibility = [
-        PACKAGE_VISIBILITY_OPTIONSET.INTERNAL_DCP_ONLY.code,
-        PACKAGE_VISIBILITY_OPTIONSET.CPC_ONLY.code,
-        PACKAGE_VISIBILITY_OPTIONSET.APPLICANT_ONLY.code,
-        PACKAGE_VISIBILITY_OPTIONSET.GENERAL_PUBLIC.code,
-        PACKAGE_VISIBILITY_OPTIONSET.LUP.code,
+        PACKAGE_VISIBILITY.INTERNAL_DCP_ONLY.code,
+        PACKAGE_VISIBILITY.CPC_ONLY.code,
+        PACKAGE_VISIBILITY.APPLICANT_ONLY.code,
+        PACKAGE_VISIBILITY.GENERAL_PUBLIC.code,
+        PACKAGE_VISIBILITY.LUP.code,
       ];
 
       return visibility[i % visibility.length];
@@ -96,10 +96,10 @@ export default Factory.extend({
   planningWithViewPASButton: trait({
     statuscode(i) {
       const statuses = [
-        PACKAGE_STATUS_OPTIONSET.REVIEWED_NO_REVISIONS_REQUIRED.code,
-        PACKAGE_STATUS_OPTIONSET.REVIEWED_REVISIONS_REQUIRED.code,
-        PACKAGE_STATUS_OPTIONSET.SUBMITTED.code,
-        PACKAGE_STATUS_OPTIONSET.UNDER_REVIEW.code,
+        PACKAGE_STATUS.REVIEWED_NO_REVISIONS_REQUIRED.code,
+        PACKAGE_STATUS.REVIEWED_REVISIONS_REQUIRED.code,
+        PACKAGE_STATUS.SUBMITTED.code,
+        PACKAGE_STATUS.UNDER_REVIEW.code,
       ];
 
       return statuses[i % statuses.length];
@@ -107,8 +107,8 @@ export default Factory.extend({
 
     dcpVisibility(i) {
       const visibility = [
-        PACKAGE_VISIBILITY_OPTIONSET.APPLICANT_ONLY.code,
-        PACKAGE_VISIBILITY_OPTIONSET.GENERAL_PUBLIC.code,
+        PACKAGE_VISIBILITY.APPLICANT_ONLY.code,
+        PACKAGE_VISIBILITY.GENERAL_PUBLIC.code,
       ];
 
       return visibility[i % visibility.length];
@@ -118,9 +118,9 @@ export default Factory.extend({
   planningNoViewPASButton: trait({
     statuscode(i) {
       const statuses = [
-        PACKAGE_STATUS_OPTIONSET.CERTIFIED.code,
-        PACKAGE_STATUS_OPTIONSET.FINAL_APPROVAL.code,
-        PACKAGE_STATUS_OPTIONSET.WITHDRAWN.code,
+        PACKAGE_STATUS.CERTIFIED.code,
+        PACKAGE_STATUS.FINAL_APPROVAL.code,
+        PACKAGE_STATUS.WITHDRAWN.code,
       ];
 
       return statuses[i % statuses.length];
@@ -128,11 +128,11 @@ export default Factory.extend({
 
     dcpVisibility(i) {
       const visibility = [
-        PACKAGE_VISIBILITY_OPTIONSET.INTERNAL_DCP_ONLY.code,
-        PACKAGE_VISIBILITY_OPTIONSET.CPC_ONLY.code,
-        PACKAGE_VISIBILITY_OPTIONSET.APPLICANT_ONLY.code,
-        PACKAGE_VISIBILITY_OPTIONSET.GENERAL_PUBLIC.code,
-        PACKAGE_VISIBILITY_OPTIONSET.LUP.code,
+        PACKAGE_VISIBILITY.INTERNAL_DCP_ONLY.code,
+        PACKAGE_VISIBILITY.CPC_ONLY.code,
+        PACKAGE_VISIBILITY.APPLICANT_ONLY.code,
+        PACKAGE_VISIBILITY.GENERAL_PUBLIC.code,
+        PACKAGE_VISIBILITY.LUP.code,
       ];
 
       return visibility[i % visibility.length];

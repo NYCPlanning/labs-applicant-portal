@@ -2,9 +2,9 @@ import Model, { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import FileManager from '../services/file-manager';
 import {
-  PACKAGE_STATUS_OPTIONSET,
-  PACKAGE_STATE_OPTIONSET,
-  PACKAGE_TYPE_OPTIONSET,
+  PACKAGE_STATUS,
+  PACKAGE_STATE,
+  PACKAGE_TYPE,
 } from '../optionsets/package';
 
 export default class PackageModel extends Model {
@@ -58,16 +58,16 @@ export default class PackageModel extends Model {
   documents;
 
   setAttrsForSubmission() {
-    this.statuscode = PACKAGE_STATUS_OPTIONSET.SUBMITTED.code;
-    this.statecode = PACKAGE_STATE_OPTIONSET.INACTIVE.code;
+    this.statuscode = PACKAGE_STATUS.SUBMITTED.code;
+    this.statecode = PACKAGE_STATE.INACTIVE.code;
   }
 
   async save() {
     await this.fileManager.save();
-    if (this.dcpPackagetype === PACKAGE_TYPE_OPTIONSET.PAS_PACKAGE.code) {
+    if (this.dcpPackagetype === PACKAGE_TYPE.PAS_PACKAGE.code) {
       await this.pasForm.save();
     }
-    if (this.dcpPackagetype === PACKAGE_TYPE_OPTIONSET.RWCDS.code) {
+    if (this.dcpPackagetype === PACKAGE_TYPE.RWCDS.code) {
       await this.rwcdsForm.save();
     }
     await super.save();
@@ -83,13 +83,13 @@ export default class PackageModel extends Model {
     const isPackageDirty = this.hasDirtyAttributes
       || this.fileManager.isDirty;
 
-    if (this.dcpPackagetype === PACKAGE_TYPE_OPTIONSET.PAS_PACKAGE.code) {
+    if (this.dcpPackagetype === PACKAGE_TYPE.PAS_PACKAGE.code) {
       return isPackageDirty
         || this.pasForm.hasDirtyAttributes
         || this.pasForm.isBblsDirty
         || this.pasForm.isApplicantsDirty;
     }
-    if (this.dcpPackagetype === PACKAGE_TYPE_OPTIONSET.RWCDS.code) {
+    if (this.dcpPackagetype === PACKAGE_TYPE.RWCDS.code) {
       return isPackageDirty
         || this.rwcdsForm.hasDirtyAttributes
         || this.rwcdsForm.isAffectedZoningResolutionsDirty;
