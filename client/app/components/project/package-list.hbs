@@ -10,8 +10,9 @@
         />
       {{/if}}
       <strong>Version {{@package.dcpPackageversion}}</strong>
-      <!-- TODO format date appropriately -->
-      <span class="text-gray">| {{if (eq status "package prep") 'Editable since ' 'Submitted '}} {{@package.dcpStatusdate}} </span>
+      <span class="text-gray">| {{if (eq status "package prep") 'Editable since ' 'Submitted '}}
+        <Ui::DateDisplay @date={{@package.dcpStatusdate}} @outputFormat="MM/D/YYYY"/>
+      </span>
     </a>
   </li>
 </ol>

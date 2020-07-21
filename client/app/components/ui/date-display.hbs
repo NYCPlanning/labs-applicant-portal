@@ -1,0 +1,7 @@
+{{#if @date}}
+  {{~moment-format @date @outputFormat @inputFormat~}}
+{{else}}
+  <span class="light-gray">
+    {{this.errorMessage}}
+  </span>
+{{/if}}

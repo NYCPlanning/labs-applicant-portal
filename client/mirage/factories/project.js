@@ -19,9 +19,9 @@ export default Factory.extend({
 
   dcpName(i) {
     const SAMPLE_CODENAMES = [
-      '2019R0380',
-      '2020K0445',
-      '1990M0111'];
+      'P2018M0268',
+      'P2017M0366',
+      '2019M0123'];
 
     return SAMPLE_CODENAMES[i % SAMPLE_CODENAMES.length];
   },
