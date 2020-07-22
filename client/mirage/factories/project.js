@@ -21,7 +21,8 @@ export default Factory.extend({
     const SAMPLE_CODENAMES = [
       'P2018M0268',
       'P2017M0366',
-      '2019M0123'];
+      '2019M0123',
+    ];
 
     return SAMPLE_CODENAMES[i % SAMPLE_CODENAMES.length];
   },

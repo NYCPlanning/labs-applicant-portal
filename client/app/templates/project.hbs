@@ -18,14 +18,14 @@
     </p>
 
     <p>
-      <strong>Project Status:</strong> {{@model.statuscode}}
+      <strong>Project Status:</strong> {{optionset 'project' 'status' 'label' @model.statuscode}}
       <span class="text-gray"> | </span>
       <strong>Public Status:</strong>
-      <FaIcon @icon={{if this.publicStatusNotNullVisibilityGeneralPublic 'eye' 'eye-slash'}} @prefix="far" class="text-gray"/>
-      {{#if this.publicStatusNotNullVisibilityGeneralPublic}}
+      <FaIcon @icon={{if this.publicStatusGeneralPublicProjects 'eye' 'eye-slash'}} @prefix="far" class="text-gray"/>
+      {{#if this.publicStatusGeneralPublicProjects}}
         <Ui::ExternalLink @href="https://zap.planning.nyc.gov/projects/{{@model.dcpName}}"> {{optionset 'project' 'dcpPublicstatus' 'label' @model.dcpPublicstatus}} </Ui::ExternalLink>
       {{else}}
-        {{@model.dcpPublicstatus}}
+        {{optionset 'project' 'dcpPublicstatus' 'label' @model.dcpPublicstatus}}
       {{/if}}
 
     </p>
