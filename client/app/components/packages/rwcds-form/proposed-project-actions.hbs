@@ -46,10 +46,7 @@
           as |RadioGroup|
         >
           <RadioGroup
-            @options={{array
-              (hash label='Yes' code=true)
-              (hash label='No' code=false)
-            }}
+            @options={{optionset 'rwcdsForm' 'dcpIsplannigondevelopingaffordablehousing' 'list'}}
           />
         </form.Field>
       </Ui::Question>
@@ -69,14 +66,10 @@
           as |RadioGroup|
         >
           <RadioGroup
-            @options={{array
-              (hash label='Yes' code=717170000)
-              (hash label='No' code=717170001)
-              (hash label='Do not know' code=717170002)
-            }}
+            @options={{optionset 'rwcdsForm' 'dcpIsapplicantseekingaction' 'list'}}
             @onChange={{fn (mut @form.data.dcpWhichactionsfromotheragenciesaresought) ""}} as |value|
           >
-            {{#if (eq value 717170000)}}
+            {{#if (eq value (optionset 'rwcdsForm' 'dcpIsapplicantseekingaction' 'code' 'YES'))}}
               <Ui::Question @required={{true}} as |Q|>
                 <Q.Label>
                   Which actions from other agencies are sought?

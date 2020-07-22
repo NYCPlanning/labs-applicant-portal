@@ -1,4 +1,4 @@
-export const DCPPUBLICSTATUS_OPTIONSET = {
+export const DCPPUBLICSTATUS = {
   PREFILED: {
     code: 717170005,
     label: 'Prefiled',

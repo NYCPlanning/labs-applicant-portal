@@ -114,13 +114,14 @@
           Is the applicant seeking actions from other City/State/Federal agencies?
         </A.Prompt>
         <A.Field>
-          {{if (eq @package.rwcdsForm.dcpIsapplicantseekingaction 717170000) "Yes"}}
-          {{if (eq @package.rwcdsForm.dcpIsapplicantseekingaction 717170001) "No" }}
-          {{if (eq @package.rwcdsForm.dcpIsapplicantseekingaction 717170002) "Unsure at this time"}}
+          {{optionset 'rwcdsForm' 'dcpIsapplicantseekingaction' 'label' @package.rwcdsForm.dcpIsapplicantseekingaction}}
         </A.Field>
       </Ui::Answer>
 
-      {{#if (eq @package.rwcdsForm.dcpIsapplicantseekingaction 717170000)}}
+      {{#if (eq
+        @package.rwcdsForm.dcpIsapplicantseekingaction
+        (optionset 'rwcdsForm' 'dcpIsapplicantseekingaction' 'code' 'YES')
+      )}}
         <Ui::Answer as |A|>
           <A.Prompt>
             Actions sought from other agencies:
