@@ -4,7 +4,12 @@
   data-test-type='to-do'
 >
   <h3 class="no-margin">
-    {{@project.dcpProjectname}}
+    <LinkTo
+      @route='project'
+      @model={{@project.id}}
+    >
+      {{@project.dcpProjectname}}
+    </LinkTo>
 
     {{#if (eq @project.statuscode "On-Hold")}}
       <span class="text-red text-weight-normal"
@@ -14,7 +19,7 @@
       </span>
     {{/if}}
 
-    <small class="text-weight-normal">{{@project.id}}</small>
+    <small class="text-weight-normal">{{@project.dcpName}}</small>
   </h3>
 
   <p class="tiny-margin-bottom">

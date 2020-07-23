@@ -42,6 +42,9 @@ export default class PackageModel extends Model {
   @attr('number')
   statuscode;
 
+  @attr('date')
+  dcpStatusdate;
+
   @attr('number')
   statecode;
 

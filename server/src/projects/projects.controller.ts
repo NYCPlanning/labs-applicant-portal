@@ -15,9 +15,10 @@ import { ContactService } from '../contact/contact.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 import { AuthenticateGuard } from '../authenticate.guard';
 import { PROJECT_ATTRS } from './projects.attrs';
+import { PACKAGE_ATTRS } from '../packages/packages.attrs';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('projects', {
-  id: 'dcp_name',
+  id: 'dcp_projectid',
   attributes: [
     ...PROJECT_ATTRS,
 
@@ -26,11 +27,7 @@ import { PROJECT_ATTRS } from './projects.attrs';
   packages: {
     ref: 'dcp_packageid',
     attributes: [
-      'statuscode',
-      'statecode',
-      'dcp_packagetype',
-      'dcp_visibility',
-      'dcp_packageversion',
+      ...PACKAGE_ATTRS,
     ],
   },
 

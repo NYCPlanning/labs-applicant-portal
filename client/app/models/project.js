@@ -18,7 +18,11 @@ export default class ProjectModel extends Model {
   // e.g. 'Prefiled', 'Filed', 'In Public Review', 'Completed'
   @attr dcpPublicstatus;
 
+  @attr dcpVisibility;
+
   @attr dcpApplicantCustomerValue;
+
+  @attr dcpProjectbrief;
 
   @hasMany('package', { async: false })
   packages;
@@ -26,6 +30,18 @@ export default class ProjectModel extends Model {
   get pasPackages() {
     const [firstPackage] = this.packages
       .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'type', 'code', 'PAS_PACKAGE']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    if (firstPackage) {
+      return [firstPackage];
+    }
+    return [];
+  }
+
+  get rwcdsPackages() {
+    const [firstPackage] = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'type', 'code', 'RWCDS']))
       .sortBy('dcpPackageversion')
       .reverse();
 
