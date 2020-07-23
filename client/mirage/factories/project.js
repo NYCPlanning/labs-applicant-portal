@@ -56,31 +56,16 @@ export default Factory.extend({
   },
 
   // Defaults to Project with a PAS Form applicant package.
-  applicant: trait({
+  toDo: trait({
     afterCreate(project, server) {
-      server.create('package', { project }, 'applicant', 'pasForm');
+      server.create('package', { project }, 'toDo', 'pasForm');
     },
   }),
 
   // These can be either projects with or without a View PAS button
-  planning: trait({
+  done: trait({
     afterCreate(project, server) {
-      server.create('package', { project }, 'planning', 'pasForm');
-    },
-  }),
-
-  planningWithViewPASButton: trait({
-    afterCreate(project, server) {
-      server.create('package', { project }, 'planningWithViewPASButton', 'pasForm');
-    },
-  }),
-
-  // A "View PAS" button does not show up as long it is not
-  // BOTH submitted/under review/reviewed* and visible to
-  // applicant only/general public
-  planningNoViewPASButton: trait({
-    afterCreate(project, server) {
-      server.create('package', { project }, 'planningNoViewPASButton', 'pasForm');
+      server.create('package', { project }, 'done', 'pasForm');
     },
   }),
 

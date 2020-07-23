@@ -15,8 +15,8 @@ module('Acceptance | user sees projects of all types', function(hooks) {
   });
 
   test('Shows correct # of projects by type', async function(assert) {
-    this.server.createList('project', 4, 'applicant');
-    this.server.createList('project', 5, 'planning');
+    this.server.createList('project', 4, 'toDo');
+    this.server.createList('project', 5, 'done');
 
     await visit('/projects');
 
@@ -25,7 +25,7 @@ module('Acceptance | user sees projects of all types', function(hooks) {
   });
 
   test('Page should display "No response required" message if no applicant projects', async function(assert) {
-    this.server.createList('project', 1, 'planning');
+    this.server.createList('project', 1, 'done');
 
     await visit('/projects');
 
@@ -39,16 +39,16 @@ module('Acceptance | user sees projects of all types', function(hooks) {
   });
 
   test('Projects are listed alphabetically', async function (assert) {
-    this.server.create('project', 'applicant', {
+    this.server.create('project', 'toDo', {
       dcpProjectname: 'Title Is C',
     });
-    this.server.create('project', 'applicant', {
+    this.server.create('project', 'toDo', {
       dcpProjectname: 'Title Is A',
     });
-    this.server.create('project', 'applicant', {
+    this.server.create('project', 'toDo', {
       dcpProjectname: 'Title Is B',
     });
-    this.server.create('project', 'applicant', {
+    this.server.create('project', 'toDo', {
       dcpProjectname: 'Title Is b', // check lower case
     });
 

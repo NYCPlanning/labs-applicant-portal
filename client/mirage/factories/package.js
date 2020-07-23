@@ -55,7 +55,7 @@ export default Factory.extend({
     },
   }),
 
-  applicant: trait({
+  toDo: trait({
     statuscode(i) {
       const statuses = [
         PACKAGE_STATUS.PACKAGE_PREPARATION.code,
@@ -75,9 +75,9 @@ export default Factory.extend({
   }),
 
   // Projects with General Public and Applicant Only packages
-  // may still still show in "Working on It" list as long as
+  // may still still show in "Other Projects" list as long as
   // the package statuscode is not "Prepared"
-  planning: trait({
+  done: trait({
     statuscode(i) {
       const statuses = [
         PACKAGE_STATUS.CERTIFIED.code,
@@ -87,52 +87,6 @@ export default Factory.extend({
         PACKAGE_STATUS.WITHDRAWN.code,
         PACKAGE_STATUS.SUBMITTED.code,
         PACKAGE_STATUS.UNDER_REVIEW.code,
-      ];
-
-      return statuses[i % statuses.length];
-    },
-
-    dcpVisibility(i) {
-      const visibility = [
-        PACKAGE_VISIBILITY.INTERNAL_DCP_ONLY.code,
-        PACKAGE_VISIBILITY.CPC_ONLY.code,
-        PACKAGE_VISIBILITY.APPLICANT_ONLY.code,
-        PACKAGE_VISIBILITY.GENERAL_PUBLIC.code,
-        PACKAGE_VISIBILITY.LUP.code,
-      ];
-
-      return visibility[i % visibility.length];
-    },
-  }),
-
-  planningWithViewPASButton: trait({
-    statuscode(i) {
-      const statuses = [
-        PACKAGE_STATUS.REVIEWED_NO_REVISIONS_REQUIRED.code,
-        PACKAGE_STATUS.REVIEWED_REVISIONS_REQUIRED.code,
-        PACKAGE_STATUS.SUBMITTED.code,
-        PACKAGE_STATUS.UNDER_REVIEW.code,
-      ];
-
-      return statuses[i % statuses.length];
-    },
-
-    dcpVisibility(i) {
-      const visibility = [
-        PACKAGE_VISIBILITY.APPLICANT_ONLY.code,
-        PACKAGE_VISIBILITY.GENERAL_PUBLIC.code,
-      ];
-
-      return visibility[i % visibility.length];
-    },
-  }),
-
-  planningNoViewPASButton: trait({
-    statuscode(i) {
-      const statuses = [
-        PACKAGE_STATUS.CERTIFIED.code,
-        PACKAGE_STATUS.FINAL_APPROVAL.code,
-        PACKAGE_STATUS.WITHDRAWN.code,
       ];
 
       return statuses[i % statuses.length];

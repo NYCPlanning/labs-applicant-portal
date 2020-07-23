@@ -75,9 +75,9 @@ module('Acceptance | error message appears when save fails', function(hooks) {
   });
 
   test('error message appears when error occurs on file upload', async function(assert) {
-    this.server.create('package', 'applicant', {
+    this.server.create('package', 'toDo', {
       documents: [],
-      project: this.server.create('project', 'applicant'),
+      project: this.server.create('project', 'toDo'),
       pasForm: this.server.create('pas-form', {
         dcpRevisedprojectname: 'my project name',
       }),

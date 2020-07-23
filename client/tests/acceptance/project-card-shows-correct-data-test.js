@@ -16,10 +16,10 @@ module('Acceptance | my-projects sorts projects into two buckets', function(hook
 
   test('Shows projects in the right list', async function(assert) {
     // 4 to-do projects
-    this.server.createList('project', 4, 'applicant');
+    this.server.createList('project', 4, 'toDo');
 
     // 2 done projects
-    this.server.createList('project', 2, 'planning');
+    this.server.createList('project', 2, 'done');
 
     await visit('/projects');
 
