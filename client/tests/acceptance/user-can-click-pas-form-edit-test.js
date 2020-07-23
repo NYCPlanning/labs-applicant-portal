@@ -33,7 +33,8 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     this.server.create('project', 1, 'applicant');
 
     await visit('/projects');
-    await click('[data-test-project="edit-pas"]');
+    await click('[data-test-project-link="1"]');
+    await click('[data-test-package-link="1"]');
 
     assert.equal(currentURL(), '/pas-form/1/edit');
   });
@@ -42,7 +43,8 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     this.server.create('project', 1, 'applicant');
 
     await visit('/projects');
-    await click('[data-test-project="edit-pas"]');
+    await click('[data-test-project-link="1"]');
+    await click('[data-test-package-link="1"]');
     await fillIn('[data-test-input="dcpRevisedprojectname"]', 'my project name');
     await click('[data-test-add-applicant-button]');
     await fillIn('[data-test-input="dcpFirstname"]', 'Tess');
@@ -317,7 +319,8 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     });
 
     await visit('/projects');
-    await click('[data-test-project="edit-pas"]');
+    await click('[data-test-project-link="1"]');
+    await click('[data-test-package-link="1"]');
 
     assert.dom('[data-test-section="attachments"').hasTextContaining('PAS Form.pdf');
   });

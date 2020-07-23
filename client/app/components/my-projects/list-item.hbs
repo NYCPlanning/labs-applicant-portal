@@ -7,6 +7,7 @@
     <LinkTo
       @route='project'
       @model={{@project.id}}
+      data-test-project-link={{@project.id}}
     >
       {{@project.dcpProjectname}}
       <small class="text-weight-normal text-dark-gray">{{@project.dcpName}}</small>
