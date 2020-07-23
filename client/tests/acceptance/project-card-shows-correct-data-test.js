@@ -24,9 +24,9 @@ module('Acceptance | my-projects sorts projects into two buckets', function(hook
     await visit('/projects');
 
     // should have 4 projects in the done list
-    assert.equal(findAll('[data-test-to-do-projects-list] [data-test-my-project-list-item]').length, 4);
+    assert.equal(findAll('[data-test-projects-list="to-do"] [data-test-my-project-list-item]').length, 4);
 
     // should have 2 projects in the done list
-    assert.equal(findAll('[data-test-done-projects-list] [data-test-my-project-list-item]').length, 2);
+    assert.equal(findAll('[data-test-projects-list="done"] [data-test-my-project-list-item]').length, 2);
   });
 });

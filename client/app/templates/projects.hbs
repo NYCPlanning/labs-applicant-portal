@@ -10,7 +10,7 @@
       <h2>Projects Awaiting Submission</h2>
 
       {{#if (gt this.toDoProjects.length 0)}}
-        <ul class="no-bullet" data-test-to-do-projects-list>
+        <ul class="no-bullet" data-test-projects-list="to-do">
           {{#each this.sortedToDoProjects as |project|}}
             <MyProjects::ListItem @project={{project}} />
           {{/each}}
@@ -28,7 +28,7 @@
 
         <h2>Other Projects</h2>
 
-        <ul class="no-bullet" data-test-done-projects-list>
+        <ul class="no-bullet" data-test-projects-list="done">
           {{#each this.sortedDoneProjects as |project|}}
             <MyProjects::ListItem @project={{project}} />
           {{/each}}

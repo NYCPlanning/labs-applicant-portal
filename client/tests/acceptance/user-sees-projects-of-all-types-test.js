@@ -20,8 +20,8 @@ module('Acceptance | user sees projects of all types', function(hooks) {
 
     await visit('/projects');
 
-    assert.equal(findAll('[data-test-to-do-projects-list] [data-test-my-project-list-item]').length, 4);
-    assert.equal(findAll('[data-test-done-projects-list] [data-test-my-project-list-item]').length, 5);
+    assert.equal(findAll('[data-test-projects-list="to-do"] [data-test-my-project-list-item]').length, 4);
+    assert.equal(findAll('[data-test-projects-list="done"] [data-test-my-project-list-item]').length, 5);
   });
 
   test('Page should display "No response required" message if no applicant projects', async function(assert) {
@@ -54,10 +54,10 @@ module('Acceptance | user sees projects of all types', function(hooks) {
 
     await visit('/projects');
 
-    assert.ok(findAll('[data-test-to-do-projects-list] [data-test-my-project-list-item]')[0].textContent.includes('Title Is A'));
-    assert.ok(findAll('[data-test-to-do-projects-list] [data-test-my-project-list-item]')[1].textContent.includes('Title Is b'));
-    assert.ok(findAll('[data-test-to-do-projects-list] [data-test-my-project-list-item]')[2].textContent.includes('Title Is B'));
-    assert.ok(findAll('[data-test-to-do-projects-list] [data-test-my-project-list-item]')[3].textContent.includes('Title Is C'));
+    assert.ok(findAll('[data-test-projects-list="to-do"] [data-test-my-project-list-item]')[0].textContent.includes('Title Is A'));
+    assert.ok(findAll('[data-test-projects-list="to-do"] [data-test-my-project-list-item]')[1].textContent.includes('Title Is b'));
+    assert.ok(findAll('[data-test-projects-list="to-do"] [data-test-my-project-list-item]')[2].textContent.includes('Title Is B'));
+    assert.ok(findAll('[data-test-projects-list="to-do"] [data-test-my-project-list-item]')[3].textContent.includes('Title Is C'));
   });
 
   test('Page should honor creeper mode query param', async function(assert) {
