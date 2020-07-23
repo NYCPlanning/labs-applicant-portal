@@ -6,12 +6,13 @@
   <div class="cell large-8">
 
     {{#if (gt this.model.length 0)}}
+
       <h2>Projects Awaiting Submission</h2>
 
       {{#if (gt this.toDoProjects.length 0)}}
-        <ul class="no-bullet">
+        <ul class="no-bullet" data-test-to-do-projects-list>
           {{#each this.sortedToDoProjects as |project|}}
-            <MyProjects::ToDoItem @project={{project}} />
+            <MyProjects::ListItem @project={{project}} />
           {{/each}}
         </ul>
       {{else}}
@@ -27,18 +28,21 @@
 
         <h2>Other Projects</h2>
 
-        <ul class="no-bullet">
+        <ul class="no-bullet" data-test-done-projects-list>
           {{#each this.sortedDoneProjects as |project|}}
-            <MyProjects::DoneItem @project={{project}} />
+            <MyProjects::ListItem @project={{project}} />
           {{/each}}
         </ul>
       {{/if}}
+
     {{else}}
+
       <h4 class="text-dark-gray tiny-margin-bottom">Nothing to do.</h4>
 
       <p class="text-dark-gray" data-test-not-assigned-any-active-project>
         You are not currently assigned to any projects.
       </p>
+
     {{/if}}
 
   </div>{{! end left/main column }}
