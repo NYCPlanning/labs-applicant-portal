@@ -6,38 +6,39 @@
   <div class="cell large-8">
 
     {{#if (gt this.model.length 0)}}
-      {{#if (gt this.applicantProjects.length 0)}}
+      <h2>Projects Awaiting Submission</h2>
+
+      {{#if (gt this.toDoProjects.length 0)}}
         <ul class="no-bullet">
-          {{#each this.sortedApplicantProjects as |project|}}
-            <Projects::ApplicantProjectCard @project={{project}} />
+          {{#each this.sortedToDoProjects as |project|}}
+            <MyProjects::ToDoItem @project={{project}} />
           {{/each}}
         </ul>
       {{else}}
         <h4 class="text-dark-gray tiny-margin-bottom">Nothing to do.</h4>
-        <p
-          class="text-dark-gray"
-          data-test-no-response-required
-        >
+
+        <p class="text-dark-gray" data-test-no-response-required>
           You do not currently have any projects that require your response.
         </p>
       {{/if}}
 
-      {{#if (gt this.planningProjects.length 0)}}
+      {{#if (gt this.doneProjects.length 0)}}
         <hr class="large-margin-top large-margin-bottom" />
+
+        <h2>Other Projects</h2>
+
         <ul class="no-bullet">
-          {{#each this.sortedPlanningProjects as |project|}}
-            <Projects::PlanningProjectCard @project={{project}} />
+          {{#each this.sortedDoneProjects as |project|}}
+            <MyProjects::DoneItem @project={{project}} />
           {{/each}}
         </ul>
       {{/if}}
     {{else}}
       <h4 class="text-dark-gray tiny-margin-bottom">Nothing to do.</h4>
-        <p
-          class="text-dark-gray"
-          data-test-not-assigned-any-active-project
-        >
-          You are not currently assigned to any active DCP projects.
-        </p>
+
+      <p class="text-dark-gray" data-test-not-assigned-any-active-project>
+        You are not currently assigned to any projects.
+      </p>
     {{/if}}
 
   </div>{{! end left/main column }}
