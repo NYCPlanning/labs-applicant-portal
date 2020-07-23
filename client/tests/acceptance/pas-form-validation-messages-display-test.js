@@ -158,7 +158,7 @@ module('Acceptance | pas form validation messages display', function(hooks) {
   });
 
   test('Certain Applicant fields on the PAS Form display both Saveable and Submittable validation errors', async function(assert) {
-    this.server.create('project', 1, 'applicant');
+    this.server.create('project', 1, 'toDo');
 
     await visit('/pas-form/1/edit');
 
@@ -203,7 +203,7 @@ module('Acceptance | pas form validation messages display', function(hooks) {
   });
 
   test('User cannot fill in letters for Applicant phone number or ZIP on the PAS Form', async function(assert) {
-    this.server.create('project', 1, 'applicant');
+    this.server.create('project', 1, 'toDo');
 
     await visit('/pas-form/1/edit');
 
@@ -227,7 +227,7 @@ module('Acceptance | pas form validation messages display', function(hooks) {
   });
 
   test('User is required to add at least one Applicant member in order to submit PAS', async function(assert) {
-    this.server.create('project', 1, 'applicant');
+    this.server.create('project', 1, 'toDo');
     await visit('/pas-form/1/edit');
 
     await fillIn('[data-test-input="dcpRevisedprojectname"]', 'my project name');

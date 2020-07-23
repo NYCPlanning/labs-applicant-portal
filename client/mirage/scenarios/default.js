@@ -5,5 +5,6 @@ export default function(server) {
   */
 
   server.create('contact');
-  server.createList('project', 3, 'applicant');
+  server.createList('project', 3, 'toDo');
+  server.createList('project', 5, 'done');
 }

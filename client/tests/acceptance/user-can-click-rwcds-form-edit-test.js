@@ -23,7 +23,7 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
 
   test('User can visit, edit and save rwcds-form route', async function(assert) {
     this.server.create('project', 1, {
-      packages: [this.server.create('package', 'applicant', 'rwcdsForm')],
+      packages: [this.server.create('package', 'toDo', 'rwcdsForm')],
     });
 
     await visit('/rwcds-form/1/edit');
@@ -44,7 +44,7 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
 
   test('User can save proposed actions information on rwcds form', async function(assert) {
     this.server.create('project', 1, {
-      packages: [this.server.create('package', 'applicant', 'rwcdsForm')],
+      packages: [this.server.create('package', 'toDo', 'rwcdsForm')],
     });
 
     await visit('/rwcds-form/1/edit');
@@ -65,7 +65,7 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
 
   test('User can visit, edit, save, and submit rwcds-form route', async function(assert) {
     this.server.create('project', 1, {
-      packages: [this.server.create('package', 'applicant', 'rwcdsForm')],
+      packages: [this.server.create('package', 'toDo', 'rwcdsForm')],
     });
 
     await visit('/rwcds-form/1/edit');
@@ -89,7 +89,7 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
 
   test('User can view existing values in Project Description section', async function(assert) {
     this.server.create('project', 1, {
-      packages: [this.server.create('package', 'applicant', {
+      packages: [this.server.create('package', 'toDo', {
         dcpPackagetype: 717170004,
         rwcdsForm: this.server.create('rwcds-form', {
           dcpProjectsitedescription: 'Mixed use',
@@ -112,7 +112,7 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
 
   test('Validation messages display for Project Description', async function(assert) {
     this.server.create('project', 1, {
-      packages: [this.server.create('package', 'applicant', 'rwcdsForm')],
+      packages: [this.server.create('package', 'toDo', 'rwcdsForm')],
     });
 
     await visit('/rwcds-form/1/edit');
@@ -137,7 +137,7 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
 
   test('Validation messages display for Proposed Actions', async function(assert) {
     this.server.create('project', 1, {
-      packages: [this.server.create('package', 'applicant', 'rwcdsForm')],
+      packages: [this.server.create('package', 'toDo', 'rwcdsForm')],
     });
 
     await visit('/rwcds-form/1/edit');
@@ -167,7 +167,7 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
 
   test('Validation messages display for With-Action-No-Action', async function(assert) {
     this.server.create('project', 1, {
-      packages: [this.server.create('package', 'applicant', 'rwcdsForm')],
+      packages: [this.server.create('package', 'toDo', 'rwcdsForm')],
     });
 
     await visit('/rwcds-form/1/edit');
