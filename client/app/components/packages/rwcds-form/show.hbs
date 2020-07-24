@@ -230,8 +230,24 @@
         Attachments
       </h2>
 
-      {{!-- TODO: add list of attachments --}}
-
+      <ul class="no-bullet">
+        {{#each @package.documents as |document|}}
+          <li class="ruled-adjacent tight">
+            <a
+              href={{concat (get-env-variable 'host') '/documents' document.serverRelativeUrl}}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <strong>
+                {{document.name}}
+              </strong>
+            </a>
+            <small class="text-gray">
+              {{document.timeCreated}}
+            </small>
+          </li>
+        {{/each}}
+      </ul>
     </section>
 
   </div>{{! end left/main column }}
