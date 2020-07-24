@@ -25,17 +25,14 @@
           as |RadioGroup|
         >
           <RadioGroup
-            @options={{array
-              (hash label='Individual' code=717170000)
-              (hash label='Organization' code=717170001)
-            }}
+            @options={{optionset 'applicant' 'type' 'list'}}
           />
         </form.Field>
       </Ui::Question>
     {{/if}}
 
     {{!-- and if the applicant is on behalf of an organization, we need to know which organization --}}
-    {{#if (eq @applicant.dcpType 717170001)}}
+    {{#if (eq @applicant.dcpType (optionset 'applicant' 'type' 'code' 'ORGANIZATION'))}}
       <label data-test-applicant-organization>
         Organization Name <Ui::RequiredAsterisk />
         <form.Field @attribute="dcpOrganization" />

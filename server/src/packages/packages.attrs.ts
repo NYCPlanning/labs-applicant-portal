@@ -8,4 +8,5 @@ export const PACKAGE_ATTRS = [
   '_dcp_pasform_value',
   'dcp_packageid',
   'dcp_name',
+  'dcp_statusdate',
 ];
