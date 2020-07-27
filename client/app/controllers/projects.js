@@ -2,6 +2,20 @@ import Controller from '@ember/controller';
 import { sort } from '@ember/object/computed';
 import { PACKAGE_STATUS, PACKAGE_VISIBILITY } from '../optionsets/package';
 
+export function packageIsToDo(project) {
+  return project.pasPackages.some((projectPackage) => {
+    if (
+      projectPackage.statuscode === PACKAGE_STATUS.PACKAGE_PREPARATION.code
+      && [
+        PACKAGE_VISIBILITY.APPLICANT_ONLY.code,
+        PACKAGE_VISIBILITY.GENERAL_PUBLIC.code,
+      ].includes(projectPackage.dcpVisibility)
+    ) {
+      return true;
+    } return false;
+  });
+}
+
 export default class ProjectsController extends Controller {
   queryParams = ['email'];
 
@@ -10,18 +24,10 @@ export default class ProjectsController extends Controller {
   // Projects awaiting the applicant's submission
   // (includes active projects with packages that haven't been submitted)
   get toDoProjects () {
-    return this.model.filter((project) => project.pasPackages.some((projectPackage) => {
-      if (
-        projectPackage.statuscode === PACKAGE_STATUS.PACKAGE_PREPARATION.code
-        && [
-          PACKAGE_VISIBILITY.APPLICANT_ONLY.code,
-          PACKAGE_VISIBILITY.GENERAL_PUBLIC.code,
-        ].includes(projectPackage.dcpVisibility)
-      ) {
-        return true;
-      }
-      return false;
-    }));
+    const boop = this.model.filter((project) => 
+      packageIsToDo(project)
+    );
+    return boop;
   }
 
   // Projects in NYC Planning's hands
@@ -31,18 +37,7 @@ export default class ProjectsController extends Controller {
     return this.model.filter((project) => {
       // if pasPackages is empty, some() automatically returnse false, but we want to return true.
       if (project.pasPackages.length === 0) return true;
-      return project.pasPackages.some((projectPackage) => {
-        if (
-          projectPackage.statuscode === PACKAGE_STATUS.PACKAGE_PREPARATION.code
-          && [
-            PACKAGE_VISIBILITY.APPLICANT_ONLY.code,
-            PACKAGE_VISIBILITY.GENERAL_PUBLIC.code,
-          ].includes(projectPackage.dcpVisibility)
-        ) {
-          return false;
-        }
-        return true;
-      });
+      return !packageIsToDo(project);
     });
   }
 

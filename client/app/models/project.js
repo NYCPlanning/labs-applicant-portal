@@ -28,26 +28,28 @@ export default class ProjectModel extends Model {
   packages;
 
   get pasPackages() {
-    const [firstPackage] = this.packages
+    const pasPackages = this.packages
       .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'type', 'code', 'PAS_PACKAGE']))
       .sortBy('dcpPackageversion')
       .reverse();
 
-    if (firstPackage) {
-      return [firstPackage];
-    }
-    return [];
+  return pasPackages;
+  }
+
+  get latestPasPackage() {
+    return this.pasPackages.firstObject;
   }
 
   get rwcdsPackages() {
-    const [firstPackage] = this.packages
+    const rwcdsPackages = this.packages
       .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'type', 'code', 'RWCDS']))
       .sortBy('dcpPackageversion')
       .reverse();
 
-    if (firstPackage) {
-      return [firstPackage];
-    }
-    return [];
+    return rwcdsPackages;
+  }
+
+  get latestRwcdsPackage() {
+    return this.rwcdsPackages.firstObject;
   }
 }
