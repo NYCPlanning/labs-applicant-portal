@@ -19,7 +19,7 @@
       {{/if}}
     </Ui::Legend>
 
-    {{#if (or this.hasModifiedZrSectionNumberQuestion this.hasZrSectionTitleQuestion)}}
+    {{#if this.isActionWithAdditionalInformation}}
       {{#if this.hasModifiedZrSectionNumberQuestion}}
         <Ui::Question as |Q|>
           <Q.Label>
@@ -67,9 +67,9 @@
           </zrForm.Field>
         </Ui::Question>
       {{/if}}
-
-      {{#if this.zrAppendixF}}
-        This action {{if (eq
+    
+      {{#if (eq this.zrTypeCode (optionset 'affectedZoningResolution' 'actions' 'code' 'ZR'))}}
+          This action {{if (eq
           @rwcdsForm.data.dcpIncludezoningtextamendment
           (optionset 'rwcdsForm' 'dcpIncludezoningtextamendment' 'code' 'YES')
           ) "includes" "does not include"}} MIH.&nbsp;
