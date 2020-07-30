@@ -34,19 +34,45 @@ export class AuthService {
   }
 
   /**
-   * Generates a new ZAP token, including the contact id
+   * Generates a new app token, using NYC.ID's expiration, and including the CRM contact id
    *
    * @param      {string}  contactId  The CRM contactid
    * @param      {string}  exp        A string coercable to a Date
+   * @param      {object}  exp        Metadata about the nyc ID user
    * @return     {string}             String representing ZAP token
    */
   private signNewToken(
     contactId: string,
-    expiration: number = moment().add(1, 'days').unix(),
+    nycIdAccount: any = {},
   ): string {
     const { ZAP_TOKEN_SECRET } = this;
+    const {
+      nycExtTOUVersion,
+      mail,
+      scope,
+      nycExtEmailValidationFlag,
+      GUID,
+      userType,
+      exp,
+      jti,
+    } = nycIdAccount;
 
-    return jwt.sign({ contactId, expiration }, ZAP_TOKEN_SECRET);
+    return jwt.sign({
+      // JWT standard name for expiration - see https://github.com/auth0/node-jsonwebtoken#token-expiration-exp-claim
+      exp,
+
+      // CRM id — added to this app's JWT for later queries
+      contactId,
+
+      // additional NYC.ID account information
+      nycExtTOUVersion,
+      mail,
+      scope,
+      nycExtEmailValidationFlag,
+      GUID,
+      userType,
+      jti,
+    }, ZAP_TOKEN_SECRET);
   }
 
   private verifyToken(token, secret): string | {} {
@@ -86,7 +112,10 @@ export class AuthService {
    * @return     {string}              String representing generated ZAP Token
    */
   public async generateNewToken(NYCIDToken: string): Promise<string> {
-    const { mail, exp } = this.verifyNYCIDToken(NYCIDToken);
+    const nycIdAccount = this.verifyNYCIDToken(NYCIDToken);
+
+    // need the email to lookup a CRM contact.
+    const { mail } = nycIdAccount;
     const { CRM_IMPOSTER_ID } = this;
 
     let contact = null;
@@ -99,7 +128,6 @@ export class AuthService {
     };
 
     if (!contact) {
-
       const responseBody = {
         "code": "NO_CONTACT_FOUND",
         "message": `CRM Contact not found for given email or ID: ${mail}`,
@@ -108,7 +136,7 @@ export class AuthService {
       throw new HttpException(responseBody, HttpStatus.UNAUTHORIZED);
     }
 
-    return this.signNewToken(contact.contactid, exp);
+    return this.signNewToken(contact.contactid, nycIdAccount);
   }
 
   /**
