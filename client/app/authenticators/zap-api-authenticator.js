@@ -29,11 +29,4 @@ export default class ZAPAuthenticator extends OAuth2ImplicitGrantAuthenticator {
     // See: https://ember-simple-auth.com/api/classes/SessionService.html
     return body;
   }
-
-  invalidate() {
-    return fetch(`${ENV.host}/logout`, {
-      mode: 'same-origin',
-      credentials: 'include',
-    });
-  }
 }

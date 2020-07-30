@@ -28,10 +28,9 @@ module('Acceptance | user can login', function(hooks) {
   });
 
   test('User can logout', async function (assert) {
-    assert.expect(3);
+    assert.expect(2);
 
     this.server.create('contact');
-    this.server.get('/logout', () => assert.ok(true));
 
     window.location.hash = '#access_token=a-valid-jwt';
     await visit('/login');
