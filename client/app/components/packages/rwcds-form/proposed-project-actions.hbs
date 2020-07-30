@@ -24,7 +24,7 @@
         </Q.Label>
 
         <p class="q-help">
-          Refer to <strong>Chapter 2 page 2</strong> of the <Ui::ExternalLink href="#">CEQR Technical manual</Ui::ExternalLink>. If multiple actions are sought, please address each action individually.
+          Refer to <strong>Chapter 2 page 2</strong> of the <Ui::ExternalLink href="https://www1.nyc.gov/site/oec/environmental-quality-review/technical-manual.page">CEQR Technical manual</Ui::ExternalLink>. If multiple actions are sought, please address each action individually.
         </p>
 
         <form.Field
@@ -76,16 +76,12 @@
                 </Q.Label>
 
                 <form.Field
+                  @type="text-area"
                   @attribute="dcpWhichactionsfromotheragenciesaresought"
-                  as |TextInput|
-                >
-                  <TextInput
-                    type="text"
-                    maxlength="200"
-                    data-test-input="dcpWhichactionsfromotheragenciesaresought"
-                    id={{Q.questionId}}
-                  />
-                </form.Field>
+                  @maxlength="2400"
+                  id={{Q.questionId}}
+                />
+
               </Ui::Question>
             {{/if}}
           </RadioGroup>
