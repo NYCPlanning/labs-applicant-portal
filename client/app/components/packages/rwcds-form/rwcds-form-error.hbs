@@ -14,7 +14,7 @@
           Status: {{error.status}} <br>
           Response:
           <ul>
-            {{#each-in error.response as |key value|}}
+            {{#each-in error as |key value|}}
               <li class="display-block">
                 {{key}}: {{value}}
               </li>
@@ -28,7 +28,7 @@
           Status: {{error.status}} <br>
           Response:
           <ul>
-            {{#each-in error.response as |key value|}}
+            {{#each-in error as |key value|}}
               <li class="display-block">
                 {{key}}: {{value}}
               </li>
