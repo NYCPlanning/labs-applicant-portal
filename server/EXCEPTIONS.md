@@ -11,21 +11,24 @@ frontend, throw a [Nest-defined HttpException](https://docs.nestjs.com/exception
 
 Where...
   - `status` is one of `HttpStatus` enum codes. E.g. `HttpStatus.UNAUTHORIZED`
-  - `responseBody` argument is an object with the following schema.
+  - `responseBody` argument is an object with the following schema. All three responseBody properties below
+  conform to the [JSONAPI spec for error objects](https://jsonapi.org/format/#errors-processing). Visit the spec for more info and examples on each property.
     ```js
        const responseBody = {
-        code: 'APPLICANT_PORTAL_ERROR_CODE',
-        message: 'Applicant Portal could not find coffee. CRM: CRM ran out of tea.',
+        code: 'OUT_OF_CAFFEINE',
+        title: 'Insufficient caffiene',
+        detail: 'Applicant Portal could not fi nd coffee in Grand Central.',
       }
     ```
-    - The `code` property is developer-defined, and should be a unique, concise,
-    descriptive identifier for the type of error. Users can provide this code to
-    help developers locate the code that yielded the error.
-    - The `message` property is a short, human-readable sentence firstly
-    describing the error for the benefit of end users. Secondly, it should contain
-    errors relayed from CRM, if available.
+    - The `code` property is developer-defined, and should be a concise,
+    app-identifier for the general type of error.
+    - The `title` property is a short, human-readable sentence
+    generally describing the error.
+    - The `detail` property is a longer and more specific description of the
+    error, providing context as necessary.
 
-To scope the error to a specific part of the code, use try-catch blocks. For example,
+To scope the error to a specific part of the code, use try-catch blocks. Fo
+r example,
 the following try-catch scopes the thrown error to an attempt to find a project.
 
 ```ts
@@ -35,9 +38,9 @@ public async getProject(){
     return myProject = this.get('dcp_project', ...);
   } catch (e) {
     throw new HttpException({
-      code: 'GET_PROJECTS',
-      message: `Failed to find a project for given id. CRM: ${e.message}`,
-    });
+      code: 'NO_PROJECT_FOR_ID',
+      detail: `Failed to find a project for given id. ${e.message}`,
+    }, HttpStatus.NOT_FOUND);
   }
 }
 ```
@@ -60,7 +63,7 @@ async getProject(@Session() session) {
   try {
     return await this.myProjectService.getProject();
   } catch (e) {
-    throw e; // simply relay the bubbling error
+    throw e; // re-throw the caught error to pass it along
   }
 }
 ```
@@ -69,7 +72,7 @@ Note how it is not necessary to construct a new HttpException in the controller 
 
 The `catch` block in a try-catch will catch uncaught errors generated *within* functions that are called in the `try` block. Errors not yet caught will *bubble* through the function call stack until caught.
 
-<u>Ultimately, we are relaying errors up to the Nest global HttpException filter.</u> By re-throwing or generating a new error in catch blocks, we keep the error in an "uncaught" state. The global filter catches any uncaught errors and standardizes how they are wrapped in a request before being sent to the frontend (more in a following section). If in any try-catch blocks caught an error but did nothing in the catch block (relay it or generate a new error), the filter would never detect an uncaught exception.
+<u>Ultimately, we are relaying errors up to the Nest global HttpException filter.</u> By re-throwing or generating a new error in catch blocks, we keep the error in an "uncaught" state. The global filter catches any uncaught errors and standardizes how they are wrapped in a request before being sent to the frontend (more in a following section). If any try-catch catches an error but did not relay it or generate a new error, the filter would never detect an uncaught exception.
 
 Controllers are usually the last handoff in the "relay" of errors.
 (It may be possible that errors occur in Nest Guards or Interceptors sitting
@@ -113,8 +116,8 @@ async getProject(@Session() session) {
     } else {
       // A catch-all, providing a general error
       throw new HttpException({
-        code: 'GET_PROJECT_UNKNOWN',
-        message: 'An unknown server error occured while getting projects',
+        code: 'GET_PROJECT_FAILED',
+        title: 'An unknown server error occured while getting projects',
       }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
@@ -123,11 +126,15 @@ async getProject(@Session() session) {
 
 ## HTTP Exception Filter
 
-Our nest backend has a custom [Nest exception filter](https://docs.nestjs.com/exception-filters#throwing-standard-exceptions) in place to catch all uncaught  HttpExceptions and format them before relaying them to the frontend. It will wrap the errors inside an `errors` array in an object:
+Our nest backend has a custom [Nest exception filter](https://docs.nestjs.com/exception-filters#throwing-standard-exceptions) in place to catch all uncaught HttpExceptions and formats them to JSONAPI specifications before relaying them to the frontend. It will wrap the errors inside an `errors` array in an object:
 
 ```json
   {
-    errors: [ ...thrownHttpExceptions]
+    errors: [{
+      code: 'OUT_OF_CAFFEINE',
+      title: 'Insufficient caffiene',
+      detail: 'Applicant Portal could not fi nd coffee in Grand Central.',
+    }],
   }
 ```
 
@@ -164,29 +171,15 @@ following the example for generating errors in the Quickstart section.
 ```json
 {
   errors: [
-    response: {
-      message: "our error message",
-      code: OUR_ERROR_CODE, // We also determine this value
-    },
-    status: [401|500|etc...],
-    message: "our error message" // auto copied from response.message
+    {
+      code: 'OUT_OF_CAFFEINE',
+      title: 'Insufficient caffiene',
+      detail: 'Applicant Portal could not find coffee in Grand Central.',
+      status: [401|500|etc...],
+    }
   ]
 }
 ```
 
 The errors will then be accessible in the frontend via
 `@model.errors` in `*-errors` routes.
-
-## More about the HttpException error format (optional reading)
-
-The `response` property takes the form (string or object) of whatever is passed in to the first ("response") argument of the HTTPException constructor. For applicant portal, we prescribe always passing an object to the "response" constructor argument for consistency. This also allows us to add our own "error code" within the response obejct.
-
-The `status` property is derived from the status code passed in to the second ("status")  argument of the HTTPException constructor.
-
-The top-level `message` is either
-  - a) A copy of the `response` property, if that property is a simple string.
-  - b) The value of the "message" property within `response`, if the value of `response` is an object.
-    - Since we do prescribe assigning an object to `response`, we also prescribe adding a "message" property to that object (otherwise, the top-level `message` will be display a generic "HTTP Exception" string).
-  - c) Derived from the "status" argument, if `response` is an object without the `message` property.
-
- In general, we've written the frontend to discard use of the `error.message` property, and instead use its identical source,  `error.response.message`.
