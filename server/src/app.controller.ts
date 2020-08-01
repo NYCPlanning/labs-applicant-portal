@@ -20,9 +20,12 @@ export class AppController {
   async login(@Res() res: Response, @Query('accessToken') NYCIDToken: string) {
     try {
       const ZAPToken = await this.authService.generateNewToken(NYCIDToken);
+      const { contactId } = await this.authService.validateCurrentToken(ZAPToken);
+      const { emailaddress1 } = await this.contactService.findOneById(contactId);
 
       res.send({
         access_token: ZAPToken,
+        emailaddress1,
       });
     } catch (e) {
       if (e instanceof HttpException) {
