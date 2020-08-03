@@ -111,7 +111,7 @@ describe('DocumentController (e2e)', () => {
       .attach('file', file, 'test.txt')
       .field('instanceId', 'dfa002f2-8fce-e911-a99c-001dd8308076') // corresponds to package w  dcp_name = 2020K0109 - draft LUA - 1
       .field('entityName', 'dcp_package')
-      .set('Cookie', token)
+      .set('Authorization', `Bearer ${token}`)
       .expect(201)
       .expect({});
   });

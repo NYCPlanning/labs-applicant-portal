@@ -43,6 +43,28 @@ const ZONING_RESOLUTION_TYPES = [
   { label: "BD", code: 717170038 },
 ];
 
+export const INCLUDE_ZONING_TEXT_AMENDMENT_OPTIONSET = {
+  YES: {
+    code: 717170000,
+    label: 'Yes',
+  },
+  NO: {
+    code: 717170001,
+    label: 'No',
+  },
+  DONT_KNOW: {
+    code: 717170002,
+    label: 'Don\u2019t Know',
+  },
+}
+
+export const ACTION_VALUE_OPTIONSET = {
+  ZR: {
+    code: '886ede3a-dad0-e711-8125-1458d04e2f18',
+    label: 'ZR',
+  }
+}
+
 @Injectable()
 export class RwcdsFormService {
   constructor(
@@ -143,6 +165,8 @@ export class RwcdsFormService {
       &$expand=dcp_ZoningResolution
     `);
 
+    await this.updateIncludeZoningTextAmendment(dcp_rwcdsformid, projectActions);
+
     await Promise.all(projectActions.map(action => {
       const projectActionLabel = action['_dcp_action_value@OData.Community.Display.V1.FormattedValue'];
 
@@ -160,5 +184,26 @@ export class RwcdsFormService {
         });
       }
     }));
+  }
+
+  async updateIncludeZoningTextAmendment(dcp_rwcdsformid, projectActions) {
+    // dcp_includezoningtextamendment is a field on the rwcds-form that should be "Yes" (717170000) if...
+    // there exists a "ZR" action and that action's dcp_ZoningResolution.dcp_zoningresolution is "AppendixF"
+    const includeZoningTextAmendmentAction = projectActions.find(action =>
+      action._dcp_action_value === ACTION_VALUE_OPTIONSET['ZR'].code
+      && action.dcp_ZoningResolution.dcp_zoningresolution === 'AppendixF'
+    );
+
+    if (includeZoningTextAmendmentAction) {
+      await this.crmService.update('dcp_rwcdsforms', dcp_rwcdsformid, {
+        // set to "Yes"
+        dcp_includezoningtextamendment: INCLUDE_ZONING_TEXT_AMENDMENT_OPTIONSET['YES'].code,
+      });
+    } else {
+      await this.crmService.update('dcp_rwcdsforms', dcp_rwcdsformid, {
+        // set to "No"
+        dcp_includezoningtextamendment: INCLUDE_ZONING_TEXT_AMENDMENT_OPTIONSET['NO'].code,
+      });
+    }
   }
 }

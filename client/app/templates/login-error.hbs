@@ -20,7 +20,7 @@
           {{#if error.detail}}
             <code class="callout display-block text-left red-muted" data-test-error-message={{idx}}>{{error.detail}}</code>
           {{else}}
-            {{#each-in error.response as |key value|}}
+            {{#each-in error as |key value|}}
               <code class="callout display-block text-left red-muted" data-test-error-response={{concat key idx}}>
                 {{key}}: {{value}}
               </code>
