@@ -1,0 +1,16 @@
+<FaIcon @icon="user-circle" @prefix="fas" @size="2x" class="auth--icon" />
+<div>
+  <span class="auth--name">
+    <a href={{this.userProfileURI}} rel="noopener noreferrer">
+      {{this.session.data.authenticated.emailaddress1}}
+    </a>
+  </span>
+  <button
+    type="button"
+    class="auth--logout-button"
+    {{on "click" this.doLogout}}
+    data-test-auth="logout"
+  >
+    Sign Out
+  </button>
+</div>
