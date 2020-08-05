@@ -1,0 +1,11 @@
+{{#each @errors as |error idx|}}
+  {{#each-in error as |key value|}}
+    <code
+      class="callout display-block text-left red-muted"
+      data-test-error-key={{key}}
+      data-test-error-idx={{idx}}
+    >
+      {{key}}: {{value}}
+    </code>
+  {{/each-in}}
+{{/each}}
