@@ -30,15 +30,16 @@ export function unfoldedStackTrace(response, status) {
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
-    const response = ctx.getResponse<Response>();
+    const httpResponse = ctx.getResponse<Response>();
     const status = exception.getStatus();
+    const errorResponse = exception.getResponse();
 
     // this shapes the error responses into JSON:API
     // see https://jsonapi.org/format/#errors
-    response
+    httpResponse
       .status(status)
       .json({
-        errors: unfoldedStackTrace(response, status),
+        errors: unfoldedStackTrace(errorResponse, status),
       });
   }
 }
