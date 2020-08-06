@@ -34,10 +34,22 @@ import { PACKAGE_ATTRS } from '../packages/packages.attrs';
   // remap verbose navigation link names to
   // more concise names
   transform(project) {
-    return {
-      ...project,
-      packages: project.dcp_dcp_project_dcp_package_project,
-    };
+    try {
+      return {
+        ...project,
+        packages: project.dcp_dcp_project_dcp_package_project,
+      };
+    } catch(e) {
+      if (e instanceof HttpException) {
+        throw e;
+      } else {
+        throw new HttpException({
+          code: 'PROJECTS_ERROR',
+          title: 'Failed load project(s)',
+          detail: `An error occurred while loading one or more projects. ${e.message}`,
+        }, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    }
   },
 }))
 @UseGuards(AuthenticateGuard)
