@@ -39,9 +39,11 @@ export class ProjectsService {
       `);
       return this.overwriteCodesWithLabels(records);
     } catch(e) {
-      const errorMessage = `Error finding projects by contact ID. ${e.message}`;
-      console.log(errorMessage);
-      throw new HttpException(errorMessage, HttpStatus.UNAUTHORIZED);
+      const errorMessage = `Unable to find projects for current user. ${e.message}`;
+      throw new HttpException({
+        "code": "USER_PROJECTS_NOT_FOUND",
+        "detail": errorMessage,
+      }, HttpStatus.NOT_FOUND);
     }
   }
 
@@ -77,12 +79,13 @@ export class ProjectsService {
       const [ project ] = this.overwriteCodesWithLabels(records);
       return project;
     } catch(e) {
-      const errorMessage = `Error finding project by project ID. ${e.message}`;
+      const errorMessage = `Could not find requested project ${projectId}.`;
       console.log(errorMessage);
       throw new HttpException({
-        "code": "GET_PROJECT_SERVICE_ERROR",
-        "message": errorMessage,
-      }, HttpStatus.UNAUTHORIZED);
+        "code": "PROJECT_NOT_FOUND",
+        "title": "Project not found",
+        "detail": errorMessage,
+      }, HttpStatus.NOT_FOUND);
     }
   }
 

@@ -1,4 +1,15 @@
-import { Controller, Get, Param, UseInterceptors, Patch, Body, UsePipes, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  UseInterceptors,
+  Patch,
+  Body,
+  UsePipes,
+  UseGuards
+} from '@nestjs/common';
 import { PackagesService } from './packages.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 import { JsonApiDeserializePipe } from '../json-api-deserialize.pipe';
@@ -138,18 +149,42 @@ export class PackagesController {
 
   @Get('/:id')
   getPackage(@Param('id') id) {
-    return this.packagesService.getPackage(id);
+    try {
+      return this.packagesService.getPackage(id);
+    } catch (e) {
+      if (e instanceof HttpException) {
+        throw e;
+      } else {
+        throw new HttpException({
+          code: 'FIND_PACKAGED_FAILED',
+          title: 'Failed getting a package',
+          detail: `An unknown server error occured while finding a package by ID. ${e.message}`,
+        }, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    }
   }
 
   @Patch('/:id')
   async patchPackage(@Body() body, @Param('id') id) {
-    const allowedAttrs = pick(body, PACKAGE_ATTRS);
+    try {
+      const allowedAttrs = pick(body, PACKAGE_ATTRS);
 
-    await this.packagesService.update(id, allowedAttrs);
+      await this.packagesService.update(id, allowedAttrs);
 
-    return {
-      dcp_packageid: id,
-      ...allowedAttrs,
-    };
+      return {
+        dcp_packageid: id,
+        ...allowedAttrs,
+      };
+    } catch (e) {
+      if (e instanceof HttpException) {
+        throw e;
+      } else {
+        throw new HttpException({
+          code: 'PATCH_PROJECT_FAILED',
+          title: 'Failed patching package',
+          detail: `An unknown server error occured while patching a package. ${e.message}`,
+        }, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    }
   }
 }
