@@ -96,48 +96,60 @@ import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
     // form, or some other solution, to avoid the
     // forking logic within the package controller/service
     // that handles the indiosyncracies of each form.
-    const {
-      dcp_pasform: pasForm,
-      dcp_rwcdsform: rwcdsForm
-    } = projectPackage;
-
-    if (pasForm) {
-      return {
-        ...projectPackage,
-        'pas-form': {
-          ...pasForm,
-          'project-addresses': pasForm.dcp_dcp_projectaddress_dcp_pasform,
-          applicants: [
-            ...pasForm.dcp_dcp_applicantinformation_dcp_pasform,
-            ...pasForm.dcp_dcp_applicantrepinformation_dcp_pasform.map((applicant) => {
-              // map this array to handle the slight differences in schemas between these two entities
-              // that we treat as one applicants array on the frontend
-
-              // define target_entity for the frontend (defaults to dcp_applicantinformation)
-              applicant['target_entity'] = 'dcp_applicantrepresentativeinformation'
-
-              return {
-              ...applicant,
-              // FIXME: this is ensuring the Ember Data relationships work (with a unique ref)
-              // but this is hacky because dcp_applicantinformationid doesn't exist on this entity
-              dcp_applicantinformationid: `representative-${applicant.dcp_applicantrepresentativeinformationid}`
-            }}),
-          ],
-          bbls: pasForm.dcp_dcp_projectbbl_dcp_pasform,
-        },
-      }
-    } else if (rwcdsForm) {
-      return {
-        ...projectPackage,
-        'rwcds-form': {
-          ...rwcdsForm,
-          'affected-zoning-resolutions': rwcdsForm.dcp_rwcdsform_dcp_affectedzoningresolution_rwcdsform,
+    try {
+      const {
+        dcp_pasform: pasForm,
+        dcp_rwcdsform: rwcdsForm
+      } = projectPackage;
+  
+      if (pasForm) {
+        return {
+          ...projectPackage,
+          'pas-form': {
+            ...pasForm,
+            'project-addresses': pasForm.dcp_dcp_projectaddress_dcp_pasform,
+            applicants: [
+              ...pasForm.dcp_dcp_applicantinformation_dcp_pasform,
+              ...pasForm.dcp_dcp_applicantrepinformation_dcp_pasform.map((applicant) => {
+                // map this array to handle the slight differences in schemas between these two entities
+                // that we treat as one applicants array on the frontend
+  
+                // define target_entity for the frontend (defaults to dcp_applicantinformation)
+                applicant['target_entity'] = 'dcp_applicantrepresentativeinformation'
+  
+                return {
+                ...applicant,
+                // FIXME: this is ensuring the Ember Data relationships work (with a unique ref)
+                // but this is hacky because dcp_applicantinformationid doesn't exist on this entity
+                dcp_applicantinformationid: `representative-${applicant.dcp_applicantrepresentativeinformationid}`
+              }}),
+            ],
+            bbls: pasForm.dcp_dcp_projectbbl_dcp_pasform,
+          },
         }
+      } else if (rwcdsForm) {
+        return {
+          ...projectPackage,
+          'rwcds-form': {
+            ...rwcdsForm,
+            'affected-zoning-resolutions': rwcdsForm.dcp_rwcdsform_dcp_affectedzoningresolution_rwcdsform,
+          }
+        }
+      } else {
+        return {
+          ...projectPackage,
+        };
       }
-    } else {
-      return {
-        ...projectPackage,
-      };
+    } catch (e) {
+      if (e instanceof HttpException) {
+        throw e;
+      } else {
+        throw new HttpException({
+          code: 'PACKAGES_ERROR',
+          title: 'Failed to load package(s)',
+          detail: `An error occurred while loading one or more packages. ${e.message}`,
+        }, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
     }
   },
 }))
