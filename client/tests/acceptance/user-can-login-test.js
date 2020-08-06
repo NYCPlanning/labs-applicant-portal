@@ -55,7 +55,7 @@ module('Acceptance | user can login', function(hooks) {
     await visit('/login');
 
     assert.ok(find('[data-test-applicant-error-message="contact-not-assigned"'));
-    assert.dom('[data-test-error-response="code0"]')
+    assert.dom('[data-test-error-key="code"]')
       .hasText('code: NO_CONTACT_FOUND', 'It displays the correct error code');
   });
 
@@ -85,7 +85,7 @@ module('Acceptance | user can login', function(hooks) {
 
     await visit('/login');
 
-    assert.dom('[data-test-error-message="0"]')
-      .hasText('Invalid auth params - "access_token" missing.');
+    assert.dom('[data-test-error-key="detail"][data-test-error-idx="0"]')
+      .hasText('detail: Invalid auth params - "access_token" missing.');
   });
 });

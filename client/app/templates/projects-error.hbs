@@ -5,20 +5,9 @@
 <div class="text-center xlarge-padding-top xlarge-padding-bottom xlarge-margin-top xlarge-margin-bottom">
   <span>Hmm, something went wrong:</span>
 
-  {{#each this.model.errors as |error|}}
-    <p class="font-mono text-red-dark bg-red-white small-padding text-small" data-test-error-message>
-      Message: {{error.message}} <br>
-      Status: {{error.status}} <br>
-      Response:
-      <ul>
-        {{#each-in error.response as |key value|}}
-          <li class="display-block">
-            {{key}}: {{value}}
-          </li>
-        {{/each-in}}
-      </ul>
-    </p>
-  {{/each}}
+  <Errors::List
+    @errors={{this.model.errors}}
+  />
 
   {{!-- If there's an error, try to logout --}}
   <Auth::DoLogout />
