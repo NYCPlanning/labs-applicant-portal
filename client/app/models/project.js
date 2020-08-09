@@ -27,6 +27,11 @@ export default class ProjectModel extends Model {
   @hasMany('package', { async: false })
   packages;
 
+  get publicStatusGeneralPublicProject() {
+    const isGeneralPublic = this.dcpVisibility === optionset(['project', 'dcpVisibility', 'code', 'GENERAL_PUBLIC']);
+    return this.dcpPublicstatus && isGeneralPublic;
+  }
+
   get pasPackages() {
     const pasPackages = this.packages
       .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'type', 'code', 'PAS_PACKAGE']))

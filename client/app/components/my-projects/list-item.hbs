@@ -26,8 +26,8 @@
     <span class="text-gray"> | </span>
 
     <strong>Public Status:</strong>
-    <FaIcon @icon={{if this.publicStatusGeneralPublicProjects 'eye' 'eye-slash'}} @prefix="far" class="text-gray"/>
-    {{#if this.publicStatusGeneralPublicProjects}}
+    <FaIcon @icon={{if @project.publicStatusGeneralPublicProject 'eye' 'eye-slash'}} @prefix="far" class="text-gray"/>
+    {{#if @project.publicStatusGeneralPublicProject}}
       <Ui::ExternalLink @href="https://zap.planning.nyc.gov/projects/{{@project.dcpName}}"> {{optionset 'project' 'dcpPublicstatus' 'label' @project.dcpPublicstatus}} </Ui::ExternalLink>
     {{else}}
       {{optionset 'project' 'dcpPublicstatus' 'label' @project.dcpPublicstatus}}
