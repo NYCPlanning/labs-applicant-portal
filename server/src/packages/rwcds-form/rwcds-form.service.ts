@@ -193,10 +193,10 @@ export class RwcdsFormService {
       }
 
       // IF the zr type does not exist yet, then POST the action
-      // NOTE: some actions that exist in dcp_projectaction SHOULD NOT be copied over
-      // NOTE cont. -- The ZONING_RESOLUTION_TYPES lookup also functions as a list of actions that SHOULD...
-      // NOTE cont. -- be copied over from dcp_projectaction, which is why we check that `label` exists here.
-      if (!matchingZr && label) {
+      // NOTE: Some actions that exist in dcp_projectaction SHOULD NOT be copied over.
+      // The ZONING_RESOLUTION_TYPES lookup also functions as a list of actions that SHOULD be
+      // copied over from dcp_projectaction, which is why we check that `code` exists here.
+      if (!matchingZr && code) {
         return this.crmService.create(`dcp_affectedzoningresolutions`, {
           'dcp_zoningresolutiontype': code, // coded value
           'dcp_zrsectionnumber': currentActionZoningResolution,
