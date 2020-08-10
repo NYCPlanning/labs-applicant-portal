@@ -1,19 +1,19 @@
 import {
+  Body,
   Controller,
   Get,
   HttpException,
   HttpStatus,
   Param,
-  UseInterceptors,
   Patch,
-  Body,
+  UseInterceptors,
+  UseGuards,
   UsePipes,
-  UseGuards
 } from '@nestjs/common';
 import { PackagesService } from './packages.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 import { JsonApiDeserializePipe } from '../json-api-deserialize.pipe';
-import { AuthenticateGuard } from '../authenticate.guard';
+import { PackageAccessGuard } from './package-access.guard';
 import { pick } from 'underscore';
 import { RWCDS_FORM_ATTRS } from './rwcds-form/rwcds-form.attrs';
 import { PAS_FORM_ATTRS, PAS_FORM_PROJECTADDRESS_ATTRS } from './pas-form/pas-form.attrs';
@@ -154,7 +154,7 @@ import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
   },
 }))
 @UsePipes(JsonApiDeserializePipe)
-@UseGuards(AuthenticateGuard)
+@UseGuards(PackageAccessGuard)
 @Controller('packages')
 export class PackagesController {
   constructor(private readonly packagesService: PackagesService) {}
