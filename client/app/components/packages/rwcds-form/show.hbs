@@ -102,7 +102,45 @@
         Proposed Actions
       </h2>
 
-      {{!-- TODO: add list of actions --}}
+      {{#each @package.rwcdsForm.affectedZoningResolutions as |affectedZoningResolution|}}
+        {{#let (optionset
+            'affectedZoningResolution'
+            'actions'
+            'label'
+            affectedZoningResolution.dcpZoningresolutiontype)
+          as |zrTypeLabel|}}
+          <div
+            class="ruled-adjacent grid-x"
+          >
+            <div
+              class="text-weight-bold cell auto large-padding-right"
+            >
+              {{~zrTypeLabel~}}
+              {{#if (lookup-action-type zrTypeLabel)}}
+                <LabsUi::IconTooltip
+                  @tip={{lookup-action-type zrTypeLabel}}
+                  @icon="info-circle"
+                  @side="bottom"
+                  @transform="shrink-4 up-2"
+                  @fixedWidth={{true}}
+                />
+              {{/if}}
+              {{affectedZoningResolution.dcpZrsectiontitle}}
+            </div>
+            <div
+              class="cell large-3"
+            >
+              {{affectedZoningResolution.dcpModifiedzrsectionnumber}}
+              {{#if (eq affectedZoningResolution.dcpZoningresolutiontype (optionset 'affectedZoningResolution' 'actions' 'code' 'ZR'))}}
+                {{if (eq
+                @package.rwcdsForm.dcpIncludezoningtextamendment
+                (optionset 'rwcdsForm' 'dcpIncludezoningtextamendment' 'code' 'YES')
+                ) "includes" "does not include"}} MIH.
+              {{/if}}
+            </div>
+          </div>
+        {{/let}}
+      {{/each}}
 
       <Ui::Answer as |A|>
         <A.Prompt>
