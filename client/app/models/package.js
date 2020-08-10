@@ -19,6 +19,7 @@ export default class PackageModel extends Model {
         this.documents,
         [],
         fileQueue,
+        this.session,
       );
     }
   }
@@ -26,6 +27,9 @@ export default class PackageModel extends Model {
   refreshExistingDocuments() {
     this.fileManager.existingFiles = this.documents;
   }
+
+  @service
+  session;
 
   @service
   fileQueue;
