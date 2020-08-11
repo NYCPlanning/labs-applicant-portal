@@ -2,21 +2,34 @@
   <div class="cell large-8">
 
     <section class="form-section">
-      <h1 class="no-margin header-large">
+      <h1 class="header-large">
         <span id="project-info" class="section-anchor"></span>
         Reasonable Worst Case Development Scenario
+        <small class="text-weight-normal">
+          {{if @package.dcpPackageversion (concat '(V' @package.dcpPackageversion ')')}}
+        </small>
       </h1>
 
-      <h2 class="section-header header-xxlarge"
-        data-test-show="dcpProjectname">
+      <h2
+        class="no-margin"
+        data-test-show="dcpProjectname"
+      >
         {{@package.rwcdsForm.dcpProjectname}}
+        <small class="text-weight-normal">
+          {{if @package.project.dcpName (concat '(' @package.project.dcpName ')')}}
+        </small>
       </h2>
+
+      <p class="text-large text-dark-gray">
+        {{optionset 'bbl' 'boroughs' 'label' @package.project.dcpBorough}} |
+        {{optionset 'package' 'status' 'label' @package.statuscode}}
+      </p>
     </section>
 
     <section class="form-section">
       <h2 class="section-header">
         <span id="" class="section-anchor"></span>
-        Description
+        Project Description
       </h2>
 
       <Ui::Answer @beside={{true}} as |A|>
