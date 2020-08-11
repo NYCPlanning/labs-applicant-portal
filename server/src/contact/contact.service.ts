@@ -35,9 +35,13 @@ export class ContactService {
 
       return firstRecord;
     } catch(e) {
-      const errorMessage = `Error finding contact by ID. ${e.message}`;
+      const errorMessage = `Error finding contact by ID, possibly due to missing or bad ID. ${e.message}`;
       console.log(errorMessage);
-      throw new HttpException(errorMessage, HttpStatus.UNAUTHORIZED);
+      throw new HttpException({
+        code: "CONTACT_FROM_ID_ERROR",
+        title: "Error finding contact by ID.",
+        errorMessage,
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -57,9 +61,13 @@ export class ContactService {
 
       return firstRecord;
     } catch(e) {
-      const errorMessage = `Error finding contact by email. ${e.message}`;
+      const errorMessage = `Error finding contact by email, possibly due to missing or bad email. ${e.message}`;
       console.log(errorMessage);
-      throw new HttpException(errorMessage, HttpStatus.UNAUTHORIZED);
+      throw new HttpException({
+        code: "CONTACT_FROM_EMAIL_ERROR",
+        title: "Error finding contact by email.",
+        errorMessage,
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }
