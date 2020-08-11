@@ -4,6 +4,7 @@ import {
   Query,
   Res,
   HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthService } from './auth/auth.service';
@@ -29,11 +30,15 @@ export class AppController {
       });
     } catch (e) {
       if (e instanceof HttpException) {
-        res.status(401).send({ errors: [e] });
+        throw e;
       } else {
-        console.log(e);
-
-        res.status(500).send({ errors: [e] });
+        const error = {
+          code: "LOGIN_ERROR",
+          title: "Failed to login",
+          detail: "An unknown error occured while authenticating user",
+        };
+        console.log(error);
+        throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
       }
     }
   }
