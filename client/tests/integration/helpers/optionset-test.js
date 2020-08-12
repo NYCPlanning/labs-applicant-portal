@@ -29,7 +29,7 @@ module('Integration | Helper | optionset', function(hooks) {
   });
 
   test('it returns a label for a given identifier', async function(assert) {
-    await render(hbs`{{optionset 'applicant' 'state' 'label' 'OR'}}`);
+    await render(hbs`{{optionset 'applicant' 'dcpState' 'label' 'OR'}}`);
 
     assert.equal(this.element.textContent.trim(), 'OR');
   });

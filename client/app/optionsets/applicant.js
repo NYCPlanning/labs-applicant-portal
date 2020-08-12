@@ -1,4 +1,4 @@
-export const TYPE = {
+export const DCPTYPE = {
   INDIVIDUAL: {
     label: 'Individual',
     code: 717170000,
@@ -9,7 +9,7 @@ export const TYPE = {
   },
 };
 
-export const STATE = {
+export const DCPSTATE = {
   AK: {
     code: 717170000,
     label: 'AK',
