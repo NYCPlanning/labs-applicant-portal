@@ -133,3 +133,12 @@ export const DCPPACKAGETYPE = {
     label: 'Working Package',
   },
 };
+
+const PACKAGE_OPTIONSETS = {
+  STATUSCODE,
+  DCPVISIBILITY,
+  STATECODE,
+  DCPPACKAGETYPE,
+};
+
+export default PACKAGE_OPTIONSETS;
