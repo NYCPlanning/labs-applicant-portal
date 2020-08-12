@@ -247,14 +247,19 @@
         </A.Field>
       </Ui::Answer>
 
-      <Ui::Answer as |A|>
-        <A.Prompt>
-          Why the project is the same as the propsed With-Action scenario:
-        </A.Prompt>
-        <A.Field>
-          {{@package.rwcdsForm.dcpRwcdsexplanation}}
-        </A.Field>
-      </Ui::Answer>
+      {{#if (eq
+        @package.rwcdsForm.dcpIsrwcdsscenario
+        (optionset 'rwcdsForm' 'dcpIsrwcdsscenario' 'code' 'YES')
+      )}}
+        <Ui::Answer as |A|>
+          <A.Prompt>
+            Why the project is the same as the propsed With-Action scenario:
+          </A.Prompt>
+          <A.Field>
+            {{@package.rwcdsForm.dcpRwcdsexplanation}}
+          </A.Field>
+        </Ui::Answer>
+      {{/if}}
 
       <Ui::Answer as |A|>
         <A.Prompt>
