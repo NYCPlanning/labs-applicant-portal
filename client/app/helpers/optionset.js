@@ -17,10 +17,10 @@ import {
   AFFECTED_ZONING_RESOLUTION_ACTION,
 } from '../optionsets/affected-zoning-resolution';
 import {
-  PACKAGE_STATE,
-  PACKAGE_STATUS,
-  PACKAGE_VISIBILITY,
-  PACKAGE_TYPE,
+  STATUSCODE,
+  STATECODE,
+  DCPPACKAGETYPE,
+  DCPVISIBILITY,
 } from '../optionsets/package';
 import {
   DCPCONSTRUCTIONPHASING,
@@ -44,10 +44,10 @@ const OPTIONSET_LOOKUP = {
     boroughs: BOROUGHS,
   },
   package: {
-    state: PACKAGE_STATE,
-    status: PACKAGE_STATUS,
-    visibility: PACKAGE_VISIBILITY,
-    type: PACKAGE_TYPE,
+    statecode: STATECODE,
+    statuscode: STATUSCODE,
+    dcpVisibility: DCPVISIBILITY,
+    dcpPackagetype: DCPPACKAGETYPE,
   },
   project: {
     dcpPublicstatus: DCPPUBLICSTATUS,
