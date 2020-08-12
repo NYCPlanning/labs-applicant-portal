@@ -90,7 +90,10 @@
           @options={{optionset 'pasForm' 'dcpIsinclusionaryhousingdesignatedarea' 'list'}}
           @onChange={{fn (mut @form.data.dcpInclusionaryhousingdesignatedareaname) ""}} as |value|
         >
-          {{#if value}}
+          {{#if (eq
+            value
+            (optionset 'pasForm' 'dcpIsinclusionaryhousingdesignatedarea' 'code' 'YES')
+          )}}
             <Ui::Question as |Q|>
               <Q.Label>
                 Name of Inclusionary Housing Designated Area/Mandatory Inclusionary Housing Area
