@@ -247,3 +247,10 @@ export const DCPSTATE = {
     code: 717170052,
   },
 };
+
+const APPLICANT_OPTIONSETS = {
+  DCPTYPE,
+  DCPSTATE,
+};
+
+export default APPLICANT_OPTIONSETS;

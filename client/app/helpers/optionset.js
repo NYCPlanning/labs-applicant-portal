@@ -6,10 +6,7 @@ import {
   YES_NO_UNSURE,
   YES_NO_DONT_KNOW,
 } from '../optionsets/common';
-import {
-  DCPSTATE,
-  DCPTYPE,
-} from '../optionsets/applicant';
+import APPLICANT_OPTIONSETS from '../optionsets/applicant';
 import {
   BOROUGHS,
 } from '../optionsets/bbl';
@@ -37,8 +34,8 @@ import {
 
 const OPTIONSET_LOOKUP = {
   applicant: {
-    dcpState: DCPSTATE,
-    dcpType: DCPTYPE,
+    dcpState: APPLICANT_OPTIONSETS.DCPSTATE,
+    dcpType: APPLICANT_OPTIONSETS.DCPTYPE,
   },
   bbl: {
     boroughs: BOROUGHS,
