@@ -21,11 +21,7 @@ import {
   DCPLEGALSTREETFRONTAGE,
   DCPHOUSINGUNITTYPE,
 } from '../optionsets/pas-form';
-import {
-  DCPPUBLICSTATUS,
-  PROJECT_VISIBILITY,
-  PROJECT_STATUS,
-} from '../optionsets/project';
+import PROJECT_OPTIONSETS from '../optionsets/project';
 
 const OPTIONSET_LOOKUP = {
   applicant: {
@@ -42,9 +38,9 @@ const OPTIONSET_LOOKUP = {
     dcpPackagetype: PACKAGE_OPTIONSETS.DCPPACKAGETYPE,
   },
   project: {
-    dcpPublicstatus: DCPPUBLICSTATUS,
-    dcpVisibility: PROJECT_VISIBILITY,
-    status: PROJECT_STATUS,
+    dcpPublicstatus: PROJECT_OPTIONSETS.DCPPUBLICSTATUS,
+    dcpVisibility: PROJECT_OPTIONSETS.DCPVISIBILITY,
+    statuscode: PROJECT_OPTIONSETS.STATUSCODE,
   },
   rwcdsForm: {
     dcpHasprojectchangedsincesubmissionofthepas: YES_NO,
