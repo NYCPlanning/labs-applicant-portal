@@ -35,19 +35,27 @@
 
     <hr>
 
-    <h2>Reasonable Worst Case Development Scenario</h2>
-    {{#each @model.rwcdsPackages as |rwcdsPackage|}}
-      <Project::PackageListItem
-        @package={{rwcdsPackage}}
-      />
-    {{/each}}
+    {{#if @model.rwcdsPackages.length}}
+      <h2>Reasonable Worst Case Development Scenario</h2>
+      <ol class="no-bullet">
+        {{#each @model.rwcdsPackages as |rwcdsPackage|}}
+          <Project::PackageListItem
+            @package={{rwcdsPackage}}
+          />
+        {{/each}}
+      </ol>
+    {{/if}}
 
-    <h2>Pre-Application Statement</h2>
-    {{#each @model.pasPackages as |pasPackage|}}
-      <Project::PackageListItem
-        @package={{pasPackage}}
-      />
-    {{/each}}
+    {{#if @model.pasPackages.length}}
+      <h2>Pre-Application Statement</h2>
+      <ol class="no-bullet">
+        {{#each @model.pasPackages as |pasPackage|}}
+          <Project::PackageListItem
+            @package={{pasPackage}}
+          />
+        {{/each}}
+      </ol>
+    {{/if}}
 
   </div>{{! end left/main column }}
   <div class="cell large-4 sticky-sidebar">
