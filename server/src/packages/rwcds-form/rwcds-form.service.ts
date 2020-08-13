@@ -132,17 +132,24 @@ export class RwcdsFormService {
       rwcdsForm.dcp_projectsitedescription === null
       || rwcdsForm.dcp_proposedprojectdevelopmentdescription === null
     ) {
-      const {
-        dcp_projectdescriptionproposedarea,
-        dcp_projectdescriptionproposeddevelopment,
-      } = await this.pasFormService.getLatestPasForm(_dcp_projectid_value);
+     const latestPasForm = await this.pasFormService.getLatestPasForm(_dcp_projectid_value);
 
-      if (rwcdsForm.dcp_projectsitedescription === null) {
-        rwcdsForm.dcp_projectsitedescription = dcp_projectdescriptionproposedarea;
-      }
+     if (latestPasForm) {
+        const {
+          dcp_projectdescriptionproposedarea,
+          dcp_projectdescriptionproposeddevelopment,
+        } = latestPasForm;
 
-      if (rwcdsForm.dcp_proposedprojectdevelopmentdescription === null) {
-        rwcdsForm.dcp_proposedprojectdevelopmentdescription = dcp_projectdescriptionproposeddevelopment;
+        // It is possible that only one of dcp_projectsitedescription
+        // or dcp_proposedprojectdevelopmentdescription is not yet
+        // edited on the RWCDs form
+        if (rwcdsForm.dcp_projectsitedescription === null) {
+          rwcdsForm.dcp_projectsitedescription = dcp_projectdescriptionproposedarea;
+        }
+
+        if (rwcdsForm.dcp_proposedprojectdevelopmentdescription === null) {
+          rwcdsForm.dcp_proposedprojectdevelopmentdescription = dcp_projectdescriptionproposeddevelopment;
+        }
       }
     }
 
