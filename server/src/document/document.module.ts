@@ -12,6 +12,9 @@ import { DocumentService } from './document.service';
   providers: [
     DocumentService,
   ],
+  exports: [
+    DocumentService,
+  ],
   controllers: [DocumentController],
 })
 export class DocumentModule {}
