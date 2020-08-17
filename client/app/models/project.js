@@ -41,6 +41,10 @@ export default class ProjectModel extends Model {
     return pasPackages;
   }
 
+  get latestPasPackage() {
+    return this.pasPackages[0];
+  }
+
   get rwcdsPackages() {
     const rwcdsPackages = this.packages
       .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'type', 'code', 'RWCDS']))

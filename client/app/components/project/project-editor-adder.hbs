@@ -1,0 +1,33 @@
+{{#let @form as |form|}}
+  <h5 class="small-margin-bottom">
+    Add Project Editor:
+  </h5>
+
+  <ul class="no-bullet">
+    {{#each (filter-by 'isDeleted' false @form.data.applicants) as |applicant applicantIndex|}}
+      <li class="scale-fade-in">
+        <form.SaveableForm
+          @model={{applicant}}
+          @validators={{array @validations.SaveableApplicantFormValidations @validations.SubmittableApplicantFormValidations}}
+          as |applicantForm|
+        >
+          <Packages::ApplicantFieldset
+            @applicant={{applicantForm.data}}
+            @form={{applicantForm}}
+            @removeApplicant={{fn @removeApplicant applicant @form.data}}
+            @includesOtherFields={{true}}
+            data-test-applicant-fieldset={{applicantIndex}}
+            data-test-applicant-type={{applicant.friendlyEntityName}}
+          />
+        </form.SaveableForm>
+      </li>
+    {{/each}}
+  </ul>
+
+    <button
+      class="button expanded secondary no-margin"
+      type="button"
+    >
+      <strong>Add Editor</strong>
+    </button>
+{{/let}}

@@ -58,12 +58,14 @@
       </div>
     </div>
 
-    {{!-- always allow input for Other Team Members --}}
-    {{#if (eq @applicant.friendlyEntityName "Other Team Member")}}
-      <label>
-        Organization
-        <form.Field @attribute="dcpOrganization" />
-      </label>
+    {{#if @includesOtherFields}}
+      {{!-- always allow input for Other Team Members --}}
+      {{#if (eq @applicant.friendlyEntityName "Other Team Member")}}
+        <label>
+          Organization
+          <form.Field @attribute="dcpOrganization" />
+        </label>
+      {{/if}}
     {{/if}}
 
     <label>
@@ -71,64 +73,66 @@
       <form.Field @attribute="dcpEmail" />
     </label>
 
-    <label>
-      Address
-      <form.Field @attribute="dcpAddress" />
-    </label>
+    {{#if @includesOtherFields}}
+      <label>
+        Address
+        <form.Field @attribute="dcpAddress" />
+      </label>
 
-    <div class="grid-x grid-margin-x">
-      <div class="cell medium-auto">
-        <label>
-          City
-          <form.Field @attribute="dcpCity" />
-        </label>
+      <div class="grid-x grid-margin-x">
+        <div class="cell medium-auto">
+          <label>
+            City
+            <form.Field @attribute="dcpCity" />
+          </label>
+        </div>
+
+        <div class="cell auto medium-2">
+          <label data-test-applicant-state-dropdown>
+            State
+            <PowerSelect
+              supportsDataTestProperties={{true}}
+              @selected={{@applicant.dcpState}}
+              @placeholder="state"
+              @searchEnabled={{true}}
+              @searchField="label"
+              @options={{map-by 'code' (optionset 'applicant' 'state' 'list')}}
+              @onchange={{fn (mut @applicant.dcpState)}}
+            as |stateCode|>
+              {{optionset 'applicant' 'state' 'label' stateCode}}
+            </PowerSelect>
+          </label>
+        </div>
+
+        <div class="cell auto medium-4">
+          <label>
+            ZIP
+            <form.Field
+              @attribute="dcpZipcode"
+              type="number"
+            />
+          </label>
+        </div>
       </div>
 
-      <div class="cell auto medium-2">
-        <label data-test-applicant-state-dropdown>
-          State
-          <PowerSelect
-            supportsDataTestProperties={{true}}
-            @selected={{@applicant.dcpState}}
-            @placeholder="state"
-            @searchEnabled={{true}}
-            @searchField="label"
-            @options={{map-by 'code' (optionset 'applicant' 'state' 'list')}}
-            @onchange={{fn (mut @applicant.dcpState)}}
-          as |stateCode|>
-            {{optionset 'applicant' 'state' 'label' stateCode}}
-          </PowerSelect>
-        </label>
-      </div>
+      <label>
+        Phone
+        <form.Field
+          @attribute="dcpPhone"
+          type="number"
+        />
+      </label>
 
-      <div class="cell auto medium-4">
-        <label>
-          ZIP
-          <form.Field
-            @attribute="dcpZipcode"
-            type="number"
-          />
-        </label>
-      </div>
-    </div>
-
-    <label>
-      Phone
-      <form.Field
-        @attribute="dcpPhone"
-        type="number"
-      />
-    </label>
-
-    <button
-      type="button"
-      class="delete-fieldset"
-      {{on "click" (fn @removeApplicant @applicant)}}
-      data-test-remove-applicant-button
-    >
-      Remove {{@applicant.friendlyEntityName}}
-      <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
-    </button>
+      <button
+        type="button"
+        class="delete-fieldset"
+        {{on "click" (fn @removeApplicant @applicant)}}
+        data-test-remove-applicant-button
+      >
+        Remove {{@applicant.friendlyEntityName}}
+        <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
+      </button>
+    {{/if}}
 
   </Ui::Question>
 {{/let}}
