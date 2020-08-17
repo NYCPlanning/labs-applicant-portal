@@ -58,7 +58,7 @@ export default Factory.extend({
   // Defaults to Project with a PAS Form applicant package.
   toDo: trait({
     afterCreate(project, server) {
-      server.create('package', { project }, 'toDo', 'pasForm');
+      server.create('package', { project }, 'toDo', 'pasForm', 'withExistingDocuments');
     },
   }),
 

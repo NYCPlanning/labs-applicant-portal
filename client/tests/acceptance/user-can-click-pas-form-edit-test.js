@@ -254,7 +254,7 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
   });
 
   test('Urban Renewal Area sub Q, after set to no, does not block submit', async function (assert) {
-    this.server.create('package', 1, {
+    this.server.create('package', 'withExistingDocuments', 1, {
       pasForm: this.server.create('pas-form', {
         dcpUrbanrenewalarea: null,
         dcpUrbanareaname: '',

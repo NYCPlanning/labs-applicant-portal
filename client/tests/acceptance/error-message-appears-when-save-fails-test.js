@@ -107,7 +107,7 @@ module('Acceptance | error message appears when save fails', function(hooks) {
 
   test('error message appears when error occurs on submit', async function(assert) {
     // all required fields are filled for submitting
-    this.server.create('package', {
+    this.server.create('package', 'withExistingDocuments', {
       dcpPackagetype: 717170000,
       project: this.server.create('project'),
       pasForm: this.server.create('pas-form', {
