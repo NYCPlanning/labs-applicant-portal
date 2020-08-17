@@ -34,10 +34,22 @@ import { PACKAGE_ATTRS } from '../packages/packages.attrs';
   // remap verbose navigation link names to
   // more concise names
   transform(project) {
-    return {
-      ...project,
-      packages: project.dcp_dcp_project_dcp_package_project,
-    };
+    try {
+      return {
+        ...project,
+        packages: project.dcp_dcp_project_dcp_package_project,
+      };
+    } catch(e) {
+      if (e instanceof HttpException) {
+        throw e;
+      } else {
+        throw new HttpException({
+          code: 'PROJECTS_ERROR',
+          title: 'Failed load project(s)',
+          detail: `An error occurred while loading one or more projects. ${e.message}`,
+        }, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    }
   },
 }))
 @UseGuards(AuthenticateGuard)
@@ -65,12 +77,18 @@ export class ProjectsController {
 
     try {
       if (contactId) {
-        return this.projectsService.findManyByContactId(contactId);
+        return await this.projectsService.findManyByContactId(contactId);
       }
     } catch (e) {
-      const errorMessage = `${e}`;
-
-      throw new HttpException(errorMessage, HttpStatus.BAD_REQUEST);
+      if (e instanceof HttpException) {
+        throw e;
+      } else {
+        throw new HttpException({
+          code: 'FIND_USER_PROJECTS_FAILED',
+          title: 'Failed getting projects',
+          detail: `An unknown server error occured while getting projects. ${e.message}`,
+        }, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
     }
   }
 
@@ -86,15 +104,18 @@ export class ProjectsController {
 
     try {
       if (contactId) {
-        return this.projectsService.getProject(id, contactId);
+        return await this.projectsService.getProject(id, contactId);
       }
     } catch (e) {
-      const errorMessage = `${e}`;
-
-      throw new HttpException({
-        "code": "GET_PROJECT_CONTROLLER_ERROR",
-        "message": errorMessage,
-      }, HttpStatus.BAD_REQUEST);
+      if (e instanceof HttpException) {
+        throw e;
+      } else {
+        throw new HttpException({
+          code: 'FIND_PROJECT_FAILED',
+          title: 'Failed getting a project',
+          detail: `An unknown server error occured while finding a project by ID. ${e.message}`,
+        }, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
     }
   }
 }

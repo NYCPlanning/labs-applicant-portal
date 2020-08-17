@@ -2,21 +2,34 @@
   <div class="cell large-8">
 
     <section class="form-section">
-      <h1 class="no-margin header-large">
+      <h1 class="header-large">
         <span id="project-info" class="section-anchor"></span>
         Reasonable Worst Case Development Scenario
+        <small class="text-weight-normal">
+          {{if @package.dcpPackageversion (concat '(V' @package.dcpPackageversion ')')}}
+        </small>
       </h1>
 
-      <h2 class="section-header header-xxlarge"
-        data-test-show="dcpProjectname">
+      <h2
+        class="no-margin"
+        data-test-show="dcpProjectname"
+      >
         {{@package.rwcdsForm.dcpProjectname}}
+        <small class="text-weight-normal">
+          {{if @package.project.dcpName (concat '(' @package.project.dcpName ')')}}
+        </small>
       </h2>
+
+      <p class="text-large text-dark-gray">
+        {{optionset 'bbl' 'boroughs' 'label' @package.project.dcpBorough}} |
+        {{optionset 'package' 'status' 'label' @package.statuscode}}
+      </p>
     </section>
 
     <section class="form-section">
       <h2 class="section-header">
         <span id="" class="section-anchor"></span>
-        Description
+        Project Description
       </h2>
 
       <Ui::Answer @beside={{true}} as |A|>
@@ -89,7 +102,45 @@
         Proposed Actions
       </h2>
 
-      {{!-- TODO: add list of actions --}}
+      {{#each @package.rwcdsForm.affectedZoningResolutions as |affectedZoningResolution|}}
+        {{#let (optionset
+            'affectedZoningResolution'
+            'actions'
+            'label'
+            affectedZoningResolution.dcpZoningresolutiontype)
+          as |zrTypeLabel|}}
+          <div
+            class="ruled-adjacent grid-x"
+          >
+            <div
+              class="text-weight-bold cell auto large-padding-right"
+            >
+              {{~zrTypeLabel~}}
+              {{#if (lookup-action-type zrTypeLabel)}}
+                <LabsUi::IconTooltip
+                  @tip={{lookup-action-type zrTypeLabel}}
+                  @icon="info-circle"
+                  @side="bottom"
+                  @transform="shrink-4 up-2"
+                  @fixedWidth={{true}}
+                />
+              {{/if}}
+              {{affectedZoningResolution.dcpZrsectiontitle}}
+            </div>
+            <div
+              class="cell large-3"
+            >
+              {{affectedZoningResolution.dcpModifiedzrsectionnumber}}
+              {{#if (eq affectedZoningResolution.dcpZoningresolutiontype (optionset 'affectedZoningResolution' 'actions' 'code' 'ZR'))}}
+                {{if (eq
+                @package.rwcdsForm.dcpIncludezoningtextamendment
+                (optionset 'rwcdsForm' 'dcpIncludezoningtextamendment' 'code' 'YES')
+                ) "includes" "does not include"}} MIH.
+              {{/if}}
+            </div>
+          </div>
+        {{/let}}
+      {{/each}}
 
       <Ui::Answer as |A|>
         <A.Prompt>
@@ -196,14 +247,19 @@
         </A.Field>
       </Ui::Answer>
 
-      <Ui::Answer as |A|>
-        <A.Prompt>
-          Why the project is the same as the propsed With-Action scenario:
-        </A.Prompt>
-        <A.Field>
-          {{@package.rwcdsForm.dcpRwcdsexplanation}}
-        </A.Field>
-      </Ui::Answer>
+      {{#if (eq
+        @package.rwcdsForm.dcpIsrwcdsscenario
+        (optionset 'rwcdsForm' 'dcpIsrwcdsscenario' 'code' 'YES')
+      )}}
+        <Ui::Answer as |A|>
+          <A.Prompt>
+            Why the project is the same as the propsed With-Action scenario:
+          </A.Prompt>
+          <A.Field>
+            {{@package.rwcdsForm.dcpRwcdsexplanation}}
+          </A.Field>
+        </Ui::Answer>
+      {{/if}}
 
       <Ui::Answer as |A|>
         <A.Prompt>
