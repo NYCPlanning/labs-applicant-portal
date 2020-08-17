@@ -1,97 +1,103 @@
 <SaveableForm
-  @model={{this.pasForm}}
-  @validators={{array this.validations.SaveablePasFormValidations this.validations.SubmittablePasFormValidations}}
-  as |saveableForm|
+  @model={{@package}}
+  @validators={{array hash this.validations.SubmittablePackageFormValidations}}
+  as |saveablePackageForm|
 >
-  <div class="grid-x grid-margin-x">
-    <div class="cell large-8">
+  <saveablePackageForm.SaveableForm
+    @model={{saveablePackageForm.data.pasForm}}
+    @validators={{array this.validations.SaveablePasFormValidations this.validations.SubmittablePasFormValidations}}
+    as |saveablePasForm|
+  >
+    <div class="grid-x grid-margin-x">
+      <div class="cell large-8">
 
-      <section class="form-section">
-        <h1 class="header-large">
-          Pre-Application Statement
-          <small class="text-weight-normal">
-            {{if @package.dcpPackageversion (concat '(V' @package.dcpPackageversion ')')}}
-          </small>
-        </h1>
+        <section class="form-section">
+          <h1 class="header-large">
+            Pre-Application Statement
+            <small class="text-weight-normal">
+              {{if @package.dcpPackageversion (concat '(V' @package.dcpPackageversion ')')}}
+            </small>
+          </h1>
 
-        <p>
-          The <strong>Pre-Application Statement</strong> requests pertinent information about a Site and Proposed Project. By
-          submitting the PAS, a prospective Applicant acknowledges that they intend to file a Land Use Application with NYC
-          Planning. Submission allows staff to be assigned from appropriate divisions and project tracking to commence.
-        </p>
+          <p>
+            The <strong>Pre-Application Statement</strong> requests pertinent information about a Site and Proposed Project. By
+            submitting the PAS, a prospective Applicant acknowledges that they intend to file a Land Use Application with NYC
+            Planning. Submission allows staff to be assigned from appropriate divisions and project tracking to commence.
+          </p>
 
-        <p>
-          NYC Planning understands that some projects may not be fully formed at the submission of the PAS. Give as much
-          detailed information as possible. Failure to provide detailed, relevant information will result in the PAS being
-          rejected.
-        </p>
-      </section>
+          <p>
+            NYC Planning understands that some projects may not be fully formed at the submission of the PAS. Give as much
+            detailed information as possible. Failure to provide detailed, relevant information will result in the PAS being
+            rejected.
+          </p>
+        </section>
 
-      <Packages::PasForm::ProjectInformation @form={{saveableForm}} />
+        <Packages::PasForm::ProjectInformation @form={{saveablePasForm}} />
 
-      <Packages::PasForm::ApplicantTeam
-        @form={{saveableForm}}
-        @addApplicant={{this.addApplicant}}
-        @removeApplicant={{this.removeApplicant}}
-        @validations={{this.validations}}
-      />
-
-      <Packages::PasForm::ProjectGeography @form={{saveableForm}} />
-
-      <Packages::PasForm::ProposedLandUseActions @form={{saveableForm}} />
-
-      <Packages::PasForm::ProjectArea @form={{saveableForm}} />
-
-      <Packages::PasForm::ProposedDevelopmentSite @form={{saveableForm}} />
-
-      <Packages::PasForm::ProjectDescription @form={{saveableForm}} />
-
-      <Packages::PasForm::AttachedDocuments
-        @form={{saveableForm}}
-        @model={{this.pasForm}}
-      />
-
-    </div>{{! end left/main column }}
-    <div class="cell large-4 sticky-sidebar">
-
-      <saveableForm.PageNav>
-        <saveableForm.SaveButton
-          @isEnabled={{or @package.isDirty saveableForm.isSaveable}}
-          @onClick={{this.savePackage}}
-          data-test-save-button
+        <Packages::PasForm::ApplicantTeam
+          @form={{saveablePasForm}}
+          @addApplicant={{this.addApplicant}}
+          @removeApplicant={{this.removeApplicant}}
+          @validations={{this.validations}}
         />
 
-        <Packages::PasForm::PasFormError @package={{@package}} />
+        <Packages::PasForm::ProjectGeography @form={{saveablePasForm}} />
 
-        <saveableForm.SubmitButton
-          @isEnabled={{saveableForm.isSubmittable}}
-          class="secondary"
-          data-test-submit-button
+        <Packages::PasForm::ProposedLandUseActions @form={{saveablePasForm}} />
+
+        <Packages::PasForm::ProjectArea @form={{saveablePasForm}} />
+
+        <Packages::PasForm::ProposedDevelopmentSite @form={{saveablePasForm}} />
+
+        <Packages::PasForm::ProjectDescription @form={{saveablePasForm}} />
+
+        <Packages::PasForm::AttachedDocuments
+          @form={{saveablePasForm}}
+          @model={{@package}}
         />
-      </saveableForm.PageNav>
 
-      <saveableForm.ConfirmationModal
-        @action={{component saveableForm.SubmitButton
-          onClick=this.submitPackage
-          isEnabled=saveableForm.isSubmittable
-          class="no-margin"
-        }}
-        @footer={{component 'packages/pas-form/pas-form-error'
-          package=@package
-        }}
-        data-test-confirm-submit-button={{true}}
-      >
-        <h6>Confirm Pre-Applicant Statement Submission</h6>
-        <p class="header-large medium-margin-top small-margin-bottom">
-          Are you sure?
-        </p>
-        <p>
-          Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including the signature form) have been uploaded. If NYC Planning does not receive enough accurate information to provide guidance, the Lead Planner will notify you and request that this form be resubmitted with necessary materials, corrections, or clarifications.
-        </p>
-      </saveableForm.ConfirmationModal>
+      </div>{{! end left/main column }}
+      <div class="cell large-4 sticky-sidebar">
 
-      <Messages::Assistance class="large-margin-top" />
+        <saveablePasForm.PageNav>
+          <saveablePasForm.SaveButton
+            @isEnabled={{or @package.isDirty saveablePasForm.isSaveable}}
+            @onClick={{this.savePackage}}
+            data-test-save-button
+          />
 
-    </div>{{! end right/sidebar column }}
-  </div>
+          <Packages::PasForm::PasFormError @package={{@package}} />
+
+          <saveablePasForm.SubmitButton
+            @isEnabled={{saveablePasForm.isSubmittable}}
+            class="secondary"
+            data-test-submit-button
+          />
+        </saveablePasForm.PageNav>
+
+        <saveablePasForm.ConfirmationModal
+          @action={{component saveablePasForm.SubmitButton
+            onClick=this.submitPackage
+            isEnabled=saveablePasForm.isSubmittable
+            class="no-margin"
+          }}
+          @footer={{component 'packages/pas-form/pas-form-error'
+            package=@package
+          }}
+          data-test-confirm-submit-button={{true}}
+        >
+          <h6>Confirm Pre-Applicant Statement Submission</h6>
+          <p class="header-large medium-margin-top small-margin-bottom">
+            Are you sure?
+          </p>
+          <p>
+            Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including the signature form) have been uploaded. If NYC Planning does not receive enough accurate information to provide guidance, the Lead Planner will notify you and request that this form be resubmitted with necessary materials, corrections, or clarifications.
+          </p>
+        </saveablePasForm.ConfirmationModal>
+
+        <Messages::Assistance class="large-margin-top" />
+
+      </div>{{! end right/sidebar column }}
+    </div>
+  </saveablePackageForm.SaveableForm>
 </SaveableForm>

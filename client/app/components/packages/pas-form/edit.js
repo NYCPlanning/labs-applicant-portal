@@ -7,6 +7,8 @@ import SubmittablePasFormValidations from '../../../validations/submittable-pas-
 import SaveableApplicantFormValidations from '../../../validations/saveable-applicant-form';
 import SubmittableApplicantFormValidations from '../../../validations/submittable-applicant-form';
 
+import SubmittablePackageFormValidations from '../../../validations/submittable-package';
+
 import { addToHasMany, removeFromHasMany } from '../../../utils/ember-changeset';
 
 export default class PasFormComponent extends Component {
@@ -15,6 +17,8 @@ export default class PasFormComponent extends Component {
     SubmittablePasFormValidations,
     SaveableApplicantFormValidations,
     SubmittableApplicantFormValidations,
+
+    SubmittablePackageFormValidations,
   };
 
   @service
