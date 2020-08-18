@@ -1,8 +1,9 @@
-<h5 class="no-margin">
-  <FaIcon @icon='user' @prefix="far" class="text-gray"/>
-  {{@projectApplicant.dcpName}}
-</h5>
-
-<p class="tiny-margin-bottom">
-  {{@projectApplicant.emailaddress}}
-</p>
+<li class="grid-x medium-margin-bottom">
+  <div class="cell shrink small-padding-right">
+    <FaIcon @icon='user' @fixedWidth={{true}} @transform='down-1' class="text-gray" />
+  </div>
+  <div class="cell auto">
+    <div class="text-weight-bold">{{@projectApplicant.dcpName}}</div>
+    <div class="text-small"><a href="mailto:{{@projectApplicant.emailaddress}}">{{@projectApplicant.emailaddress}}</a></div>
+  </div>
+</li>

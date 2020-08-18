@@ -60,10 +60,15 @@
   </div>{{! end left/main column }}
   <div class="cell large-4 sticky-sidebar">
 
-    <h3>Project Editors</h3>
-    {{#each @model.projectApplicants as |projectApplicant|}}
-      <Project::ProjectEditorListItem @projectApplicant={{projectApplicant}} />
-    {{/each}}
+    <h3>
+      Project Editors
+      <FaIcon @icon='users-cog' @fixedWidth={{true}} />
+    </h3>
+    <ul class="no-bullet">
+      {{#each @model.projectApplicants as |projectApplicant|}}
+        <Project::ProjectEditorListItem @projectApplicant={{projectApplicant}} />
+      {{/each}}
+    </ul>
 
     <Messages::Assistance class="large-margin-top" />
 
