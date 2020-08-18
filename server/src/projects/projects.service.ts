@@ -82,6 +82,9 @@ export class ProjectsService {
           and statecode eq ${PROJECT_ACTIVE_STATE_CODE}
           and dcp_projectid eq '${projectId}'
         &$expand=
+          dcp_dcp_project_dcp_projectapplicant_Project(
+            $filter= statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
+          ),
           dcp_dcp_project_dcp_package_project(
             $filter= 
             (
