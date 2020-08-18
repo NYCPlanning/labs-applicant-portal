@@ -13,7 +13,7 @@ See [./optionset.js](./optionset.js) for details on the parameters.
 
 The examples below illustrate the six different uses of the helper.
 
-**{{optionset 'package' 'status'}}** --> returns the optionset object
+**{{optionset 'package' 'statuscode'}}** --> returns the optionset object
 ```js
     {
       UNDER_REVIEW: {
@@ -28,7 +28,7 @@ The examples below illustrate the six different uses of the helper.
     } 
 ```
 
-**{{optionset 'package' 'status' 'list'}}** --> returns an array of the optionset's options
+**{{optionset 'package' 'statuscode' 'list'}}** --> returns an array of the optionset's options
 ```js
     [
       {
@@ -43,22 +43,22 @@ The examples below illustrate the six different uses of the helper.
     ] 
 ```
 
-**{{optionset  'package' 'status' 'label' 717170013}}** --> returns label for given code 
+**{{optionset 'package' 'statuscode' 'label' 717170013}}** --> returns label for given code 
 ```
 'Under Review'
 ```
 
-**{{optionset  'package' 'status' 'label' 'UNDER_REVIEW'}}** --> returns label for given identifier 
+**{{optionset 'package' 'statuscode' 'label' 'UNDER_REVIEW'}}** --> returns label for given identifier 
 ```
 'Under Review'
 ```
 
-**{{optionset  'package' 'status' 'code' 'Under Review'}}** --> returns code for given label
+**{{optionset 'package' 'statuscode' 'code' 'Under Review'}}** --> returns code for given label
 ```
 717170013
 ```
 
-**{{optionset  'package' 'status' 'code' 'UNDER_REVIEW'}}** --> returns label for given identifier 
+**{{optionset 'package' 'statuscode' 'code' 'UNDER_REVIEW'}}** --> returns label for given identifier 
 ```
 717170013
 ```
