@@ -66,14 +66,8 @@ export class ProjectsController {
   }
 
   @Get('/projects')
-  async listOfCurrentUserProjects(@Session() session, @Query('email') email) {
-    let { contactId } = session;
-
-    if (email) {
-      ({ contactid: contactId } = await this.contactService.findOneByEmail(
-        email,
-      ));
-    }
+  async listOfCurrentUserProjects(@Session() session) {
+    const { contactId } = session;
 
     try {
       if (contactId) {
@@ -93,19 +87,9 @@ export class ProjectsController {
   }
 
   @Get('/projects/:id')
-  async projectById(@Session() session, @Param('id') id, @Query('email') email) {
-    let { contactId } = session;
-
-    if (email) {
-      ({ contactid: contactId } = await this.contactService.findOneByEmail(
-        email,
-      ));
-    }
-
+  async projectById(@Param('id') id) {
     try {
-      if (contactId) {
-        return await this.projectsService.getProject(id, contactId);
-      }
+      return await this.projectsService.getProject(id);
     } catch (e) {
       if (e instanceof HttpException) {
         throw e;

@@ -32,8 +32,14 @@ export class PackageAccessGuard implements CanActivate {
       },
       session: {
         contactId,
+        isCreeper = false,
       }
     } = context.switchToHttp().getRequest();
+
+    // because creeper mode allows authorization on all resources, skip this layer
+    if (isCreeper) {
+      return true;
+    }
 
     if (contactId) {
       const { records } = await this.crmService.get('dcp_projects', `
