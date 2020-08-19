@@ -103,18 +103,23 @@ export class ProjectsService {
       const [ project ] = this.overwriteCodesWithLabels(records);
 
       if (!project) {
-        throw 'No projects found.';
+        const errorMessage = `Could not find requested project ${projectId}.`;
+        console.log(errorMessage);
+
+        throw new HttpException({
+          "code": "PROJECT_NOT_FOUND",
+          "title": "Project not found",
+          "detail": errorMessage,
+        }, HttpStatus.NOT_FOUND);
       }
 
       return project;
     } catch(e) {
-      const errorMessage = `Could not find requested project ${projectId}.`;
-      console.log(errorMessage);
       throw new HttpException({
-        "code": "PROJECT_NOT_FOUND",
-        "title": "Project not found",
-        "detail": errorMessage,
-      }, HttpStatus.NOT_FOUND);
+        "code": "PROJECTS_SERVICE_FAILURE",
+        "title": "Could not lookup projects. Something went wrong.",
+        "detail": e,
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 

@@ -32,12 +32,12 @@ export class AuthMiddleware implements NestMiddleware {
         // which includes the query params
         const refererParams = new URL(referer);
         const email = refererParams.searchParams.get('email'); // the query param, email, sent from the client. this is who the "Creeper" wants to be.
-        const { mail } = validatedToken; // the "creepers" actual email, for verification.
+        const { mail: userEmail } = validatedToken; // the "creepers" actual email, for verification.
 
         // REDO: env variables.
         // if an e-mail is provided, implicitly it means force creeper mode. then verify creeper mode
         // with some criteria.
-        if (email && (mail === 'dcpcreeper@gmail.com' || mail.includes('@planning.nyc.gov'))) {
+        if (email && (userEmail === 'dcpcreeper@gmail.com' || userEmail.includes('@planning.nyc.gov'))) {
           validatedToken = await this._spoofToken(validatedToken, email);
         }
       }
