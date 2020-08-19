@@ -18,7 +18,7 @@
     </p>
 
     <p>
-      <strong>Project Status:</strong> {{optionset 'project' 'status' 'label' @model.statuscode}}
+      <strong>Project Status:</strong> {{optionset 'project' 'statuscode' 'label' @model.statuscode}}
       <span class="text-gray"> | </span>
       <strong>Public Status:</strong>
       <FaIcon @icon={{if @model.publicStatusGeneralPublicProject 'eye' 'eye-slash'}} @prefix="far" class="text-gray"/>

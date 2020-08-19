@@ -22,7 +22,7 @@
 
       <p class="text-large text-dark-gray">
         {{optionset 'bbl' 'boroughs' 'label' @package.project.dcpBorough}} |
-        {{optionset 'package' 'status' 'label' @package.statuscode}}
+        {{optionset 'package' 'statuscode' 'label' @package.statuscode}}
       </p>
     </section>
 
@@ -156,7 +156,7 @@
           Does the applicant plan to develop a 100% affordable housing development?
         </A.Prompt>
         <A.Field>
-          {{if @package.pasForm.dcpIsplannigondevelopingaffordablehousing "Yes" "No"}}
+          {{if @package.rwcdsForm.dcpIsplannigondevelopingaffordablehousing "Yes" "No"}}
         </A.Field>
       </Ui::Answer>
 
@@ -253,7 +253,7 @@
       )}}
         <Ui::Answer as |A|>
           <A.Prompt>
-            Why the project is the same as the propsed With-Action scenario:
+            Why the project is the same as the proposed With-Action scenario:
           </A.Prompt>
           <A.Field>
             {{@package.rwcdsForm.dcpRwcdsexplanation}}
@@ -272,7 +272,7 @@
 
       <Ui::Answer as |A|>
         <A.Prompt>
-          How With-Action scenario was determines:
+          How With-Action scenario was determined:
         </A.Prompt>
         <A.Field>
           {{@package.rwcdsForm.dcpHowdidyoudeterminethiswithactionscena}}
