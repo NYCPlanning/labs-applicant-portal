@@ -3,76 +3,92 @@
   <Crumb @text={{@model.dcpProjectname}} @current={{true}} />
 </Ui::Breadcrumbs>
 
-<div class="grid-x grid-padding-x">
-  <div class="cell large-8">
-    <h1>
-      {{@model.dcpProjectname}}
-    </h1>
+<SaveableForm
+  @model={{@model.projectApplicants}}
+  as |saveableForm|
+>
 
-    <p>
-      <strong>Project Number:</strong> {{@model.dcpName}}
-    </p>
+  <div class="grid-x grid-padding-x">
+    <div class="cell large-8">
+      <h1>
+        {{@model.dcpProjectname}}
+      </h1>
 
-    <p>
-      <strong>Primary Applicant:</strong> {{@model.dcpApplicantCustomerValue}}
-    </p>
+      <p>
+        <strong>Project Number:</strong> {{@model.dcpName}}
+      </p>
 
-    <p>
-      <strong>Project Status:</strong> {{optionset 'project' 'statuscode' 'label' @model.statuscode}}
-      <span class="text-gray"> | </span>
-      <strong>Public Status:</strong>
-      <FaIcon @icon={{if @model.publicStatusGeneralPublicProject 'eye' 'eye-slash'}} @prefix="far" class="text-gray"/>
-      {{#if @model.publicStatusGeneralPublicProject}}
-        <Ui::ExternalLink @href="https://zap.planning.nyc.gov/projects/{{@model.dcpName}}"> {{optionset 'project' 'dcpPublicstatus' 'label' @model.dcpPublicstatus}} </Ui::ExternalLink>
-      {{else}}
-        {{optionset 'project' 'dcpPublicstatus' 'label' @model.dcpPublicstatus}}
+      <p>
+        <strong>Primary Applicant:</strong> {{@model.dcpApplicantCustomerValue}}
+      </p>
+
+      <p>
+        <strong>Project Status:</strong> {{optionset 'project' 'statuscode' 'label' @model.statuscode}}
+        <span class="text-gray"> | </span>
+        <strong>Public Status:</strong>
+        <FaIcon @icon={{if @model.publicStatusGeneralPublicProject 'eye' 'eye-slash'}} @prefix="far" class="text-gray"/>
+        {{#if @model.publicStatusGeneralPublicProject}}
+          <Ui::ExternalLink @href="https://zap.planning.nyc.gov/projects/{{@model.dcpName}}"> {{optionset 'project' 'dcpPublicstatus' 'label' @model.dcpPublicstatus}} </Ui::ExternalLink>
+        {{else}}
+          {{optionset 'project' 'dcpPublicstatus' 'label' @model.dcpPublicstatus}}
+        {{/if}}
+      </p>
+
+      <p>
+        <strong>Project Brief:</strong> {{@model.dcpProjectbrief}}
+      </p>
+
+      <hr>
+
+      {{#if @model.rwcdsPackages.length}}
+        <h2>Reasonable Worst Case Development Scenario</h2>
+        <ol class="no-bullet">
+          {{#each @model.rwcdsPackages as |rwcdsPackage|}}
+            <Project::PackageListItem
+              @package={{rwcdsPackage}}
+            />
+          {{/each}}
+        </ol>
       {{/if}}
-    </p>
 
-    <p>
-      <strong>Project Brief:</strong> {{@model.dcpProjectbrief}}
-    </p>
+      {{#if @model.pasPackages.length}}
+        <h2>Pre-Application Statement</h2>
+        <ol class="no-bullet">
+          {{#each @model.pasPackages as |pasPackage|}}
+            <Project::PackageListItem
+              @package={{pasPackage}}
+            />
+          {{/each}}
+        </ol>
+      {{/if}}
 
-    <hr>
+    </div>{{! end left/main column }}
+    <div class="cell large-4 sticky-sidebar">
 
-    {{#if @model.rwcdsPackages.length}}
-      <h2>Reasonable Worst Case Development Scenario</h2>
-      <ol class="no-bullet">
-        {{#each @model.rwcdsPackages as |rwcdsPackage|}}
-          <Project::PackageListItem
-            @package={{rwcdsPackage}}
-          />
+      <h3>
+        Project Editors
+        <FaIcon @icon='users-cog' @fixedWidth={{true}} />
+      </h3>
+      <ul class="no-bullet">
+        {{#each @model.projectApplicants as |projectApplicant|}}
+          <Project::ProjectEditorListItem @projectApplicant={{projectApplicant}} />
         {{/each}}
-      </ol>
-    {{/if}}
+      </ul>
 
-    {{#if @model.pasPackages.length}}
-      <h2>Pre-Application Statement</h2>
-      <ol class="no-bullet">
-        {{#each @model.pasPackages as |pasPackage|}}
-          <Project::PackageListItem
-            @package={{pasPackage}}
-          />
-        {{/each}}
-      </ol>
-    {{/if}}
+      <Project::ProjectEditorAdder
+        @form={{saveableForm}}
+        @addApplicant={{this.addApplicant}}
+      />
 
-  </div>{{! end left/main column }}
-  <div class="cell large-4 sticky-sidebar">
-
-    <h3>
-      Project Editors
-      <FaIcon @icon='users-cog' @fixedWidth={{true}} />
-    </h3>
-    <ul class="no-bullet">
-      {{#each @model.projectApplicants as |projectApplicant|}}
-        <Project::ProjectEditorListItem @projectApplicant={{projectApplicant}} />
+      {{log "projectApplicants" saveableForm.data.projectApplicants}}
+      {{#each saveableForm.data.projectApplicants as |applicant|}}
+        {{log "peaches" applicant.dcpName}}
       {{/each}}
-    </ul>
 
-    <Messages::Assistance class="large-margin-top" />
+      <Messages::Assistance class="large-margin-top" />
 
+    </div>
   </div>
-</div>
+</SaveableForm>
 
 {{outlet}}

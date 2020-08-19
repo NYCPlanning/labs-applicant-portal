@@ -1,0 +1,32 @@
+{{#let @form as |form|}}
+  <Ui::Question
+    class="fieldset relative"
+    ...attributes
+    as |Q|
+  >
+
+  {{log "bananas" form}}
+
+    <div class="grid-x grid-margin-x">
+      <div class="cell medium-6">
+        <label>
+          Full Name
+          <form.Field @attribute="dcpName" />
+        </label>
+      </div>
+    </div>
+
+    <label>
+      Email Address
+      <form.Field @attribute="emailaddress" />
+    </label>
+  </Ui::Question>
+
+  <button
+    class="button expanded secondary no-margin"
+    type="button"
+    {{on "click" (fn @addApplicant form.data) }}
+  >
+    <strong>Add Project Editor</strong>
+  </button>
+{{/let}}
