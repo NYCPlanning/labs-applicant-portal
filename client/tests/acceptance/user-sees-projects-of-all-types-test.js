@@ -59,16 +59,4 @@ module('Acceptance | user sees projects of all types', function(hooks) {
     assert.ok(findAll('[data-test-projects-list="to-do"] [data-test-my-project-list-item]')[2].textContent.includes('Title Is B'));
     assert.ok(findAll('[data-test-projects-list="to-do"] [data-test-my-project-list-item]')[3].textContent.includes('Title Is C'));
   });
-
-  test('Page should honor creeper mode query param', async function(assert) {
-    assert.expect(1);
-
-    this.server.get('/projects', (schema, request) => {
-      assert.equal(request.queryParams.email, 'someone@mail.com');
-
-      return schema.projects.all();
-    });
-
-    await visit('/projects?email=someone@mail.com');
-  });
 });

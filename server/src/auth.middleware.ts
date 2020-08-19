@@ -20,25 +20,30 @@ export class AuthMiddleware implements NestMiddleware {
 
     req.session = false;
 
-    const { authorization = '' } = req.headers;
+    const { authorization = '', referer } = req.headers;
     const token = authorization.split(' ')[1];
 
     try {
       // this promise will throw if invalid
       let validatedToken = await this.authService.validateCurrentToken(token);
 
-      const { email } = req.query; // the query param, email, sent from the client. this is who the "Creeper" wants to be.
-      const { mail } = validatedToken; // the "creepers" actual email, for verification.
+      // the referer is the domain issuing the request. in this case, it'll be the client domain,
+      if (referer) {
+        // which includes the query params
+        const refererParams = new URL(referer);
+        const email = refererParams.searchParams.get('email'); // the query param, email, sent from the client. this is who the "Creeper" wants to be.
+        const { mail } = validatedToken; // the "creepers" actual email, for verification.
 
-      // REDO: env variables.
-      // if an e-mail is provided, implicitly it means force creeper mode. then verify creeper mode
-      // with some criteria.
-      if (email && (mail === 'dcpcreeper@gmail.com' || mail.includes('@planning.nyc.gov'))) {
-        validatedToken = await this._spoofToken(validatedToken, email);
+        // REDO: env variables.
+        // if an e-mail is provided, implicitly it means force creeper mode. then verify creeper mode
+        // with some criteria.
+        if (email && (mail === 'dcpcreeper@gmail.com' || mail.includes('@planning.nyc.gov'))) {
+          validatedToken = await this._spoofToken(validatedToken, email);
+        }
       }
 
       req.session = validatedToken;
-       
+
       next();
     } catch (e) {
       next();

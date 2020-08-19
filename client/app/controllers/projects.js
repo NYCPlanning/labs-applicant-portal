@@ -20,8 +20,6 @@ export function packageIsToDo(projectPackages) {
 }
 
 export default class ProjectsController extends Controller {
-  queryParams = ['email'];
-
   // TODO: organize this business logic as computed properties on the projects model
 
   // Projects awaiting the applicant's submission
