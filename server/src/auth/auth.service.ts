@@ -21,15 +21,11 @@ export class AuthService {
   NYCID_TOKEN_SECRET = '';
   ZAP_TOKEN_SECRET = '';
 
-  // development environment features
-  CRM_IMPOSTER_ID = '';
-
   constructor(
     private readonly config: ConfigService,
     private readonly contactService: ContactService,
   ) {
     this.NYCID_TOKEN_SECRET = this.config.get('NYCID_TOKEN_SECRET');
-    this.CRM_IMPOSTER_ID = this.config.get('CRM_IMPOSTER_ID');
     this.ZAP_TOKEN_SECRET = this.config.get('ZAP_TOKEN_SECRET');
   }
 
@@ -105,9 +101,6 @@ export class AuthService {
    * look up a Contact in CRM. It returns to the client a ZAP token holding
    * (signed with) the acquired Contact's contactid. 
    * 
-   * It also allows for looking up a contact by CRM_IMPOSTER_ID, if the
-   * environment variable exists, and SKIP_AUTH is true.
-   * 
    * @param      {string}  NYCIDToken  Token from NYCID
    * @return     {string}              String representing generated ZAP Token
    */
@@ -116,16 +109,8 @@ export class AuthService {
 
     // need the email to lookup a CRM contact.
     const { mail } = nycIdAccount;
-    const { CRM_IMPOSTER_ID } = this;
 
-    let contact = null;
-
-    // prefer finding contact by CRM_IMPOSTER_ID, if it exists
-    if (CRM_IMPOSTER_ID) {
-      contact = await this.contactService.findOneById(CRM_IMPOSTER_ID)
-    } else {
-      contact = await this.contactService.findOneByEmail(mail);
-    };
+    const contact = await this.contactService.findOneByEmail(mail);
 
     if (!contact) {
       const responseBody = {
