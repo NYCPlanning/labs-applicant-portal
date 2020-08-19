@@ -18,11 +18,11 @@
     </p>
 
     <p>
-      <strong>Project Status:</strong> {{optionset 'project' 'status' 'label' @model.statuscode}}
+      <strong>Project Status:</strong> {{optionset 'project' 'statuscode' 'label' @model.statuscode}}
       <span class="text-gray"> | </span>
       <strong>Public Status:</strong>
-      <FaIcon @icon={{if this.publicStatusGeneralPublicProjects 'eye' 'eye-slash'}} @prefix="far" class="text-gray"/>
-      {{#if this.publicStatusGeneralPublicProjects}}
+      <FaIcon @icon={{if @model.publicStatusGeneralPublicProject 'eye' 'eye-slash'}} @prefix="far" class="text-gray"/>
+      {{#if @model.publicStatusGeneralPublicProject}}
         <Ui::ExternalLink @href="https://zap.planning.nyc.gov/projects/{{@model.dcpName}}"> {{optionset 'project' 'dcpPublicstatus' 'label' @model.dcpPublicstatus}} </Ui::ExternalLink>
       {{else}}
         {{optionset 'project' 'dcpPublicstatus' 'label' @model.dcpPublicstatus}}
@@ -35,19 +35,27 @@
 
     <hr>
 
-    <h2>Reasonable Worst Case Development Scenario</h2>
-    {{#each @model.rwcdsPackages as |rwcdsPackage|}}
-      <Project::PackageListItem
-        @package={{rwcdsPackage}}
-      />
-    {{/each}}
+    {{#if @model.rwcdsPackages.length}}
+      <h2>Reasonable Worst Case Development Scenario</h2>
+      <ol class="no-bullet">
+        {{#each @model.rwcdsPackages as |rwcdsPackage|}}
+          <Project::PackageListItem
+            @package={{rwcdsPackage}}
+          />
+        {{/each}}
+      </ol>
+    {{/if}}
 
-    <h2>Pre-Application Statement</h2>
-    {{#each @model.pasPackages as |pasPackage|}}
-      <Project::PackageListItem
-        @package={{pasPackage}}
-      />
-    {{/each}}
+    {{#if @model.pasPackages.length}}
+      <h2>Pre-Application Statement</h2>
+      <ol class="no-bullet">
+        {{#each @model.pasPackages as |pasPackage|}}
+          <Project::PackageListItem
+            @package={{pasPackage}}
+          />
+        {{/each}}
+      </ol>
+    {{/if}}
 
   </div>{{! end left/main column }}
   <div class="cell large-4 sticky-sidebar">

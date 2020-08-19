@@ -27,9 +27,14 @@ export default class ProjectModel extends Model {
   @hasMany('package', { async: false })
   packages;
 
+  get publicStatusGeneralPublicProject() {
+    const isGeneralPublic = this.dcpVisibility === optionset(['project', 'dcpVisibility', 'code', 'GENERAL_PUBLIC']);
+    return this.dcpPublicstatus && isGeneralPublic;
+  }
+
   get pasPackages() {
     const pasPackages = this.packages
-      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'type', 'code', 'PAS_PACKAGE']))
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'PAS_PACKAGE']))
       .sortBy('dcpPackageversion')
       .reverse();
 
@@ -38,7 +43,7 @@ export default class ProjectModel extends Model {
 
   get rwcdsPackages() {
     const rwcdsPackages = this.packages
-      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'type', 'code', 'RWCDS']))
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'RWCDS']))
       .sortBy('dcpPackageversion')
       .reverse();
 

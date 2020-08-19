@@ -138,7 +138,10 @@
           @options={{optionset 'rwcdsForm' 'dcpIsrwcdsscenario' 'list'}}
           @onChange={{fn (mut @form.data.dcpRwcdsexplanation) ""}} as |value|
         >
-          {{#if value}}
+          {{#if (eq
+            value
+            (optionset 'rwcdsForm' 'dcpIsrwcdsscenario' 'code' 'YES')
+          )}}
             <Ui::Question @required={{true}} as |Q|>
               <Q.Label>
                 Explain why the project is the same as the proposed With-Action Scenario.

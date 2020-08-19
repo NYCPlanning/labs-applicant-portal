@@ -1,5 +1,8 @@
 import { Factory, trait } from 'ember-cli-mirage';
-import { PACKAGE_STATUS, PACKAGE_VISIBILITY } from '../../optionsets/package';
+import {
+  STATUSCODE,
+  DCPVISIBILITY,
+} from '../../optionsets/package';
 
 export default Factory.extend({
   dcpStatusdate: new Date('December 17, 1995 03:24:00'),
@@ -58,7 +61,7 @@ export default Factory.extend({
   toDo: trait({
     statuscode(i) {
       const statuses = [
-        PACKAGE_STATUS.PACKAGE_PREPARATION.code,
+        STATUSCODE.PACKAGE_PREPARATION.code,
       ];
 
       return statuses[i % statuses.length];
@@ -66,8 +69,8 @@ export default Factory.extend({
 
     dcpVisibility(i) {
       const visibility = [
-        PACKAGE_VISIBILITY.APPLICANT_ONLY.code,
-        PACKAGE_VISIBILITY.GENERAL_PUBLIC.code,
+        DCPVISIBILITY.APPLICANT_ONLY.code,
+        DCPVISIBILITY.GENERAL_PUBLIC.code,
       ];
 
       return visibility[i % visibility.length];
@@ -80,13 +83,13 @@ export default Factory.extend({
   done: trait({
     statuscode(i) {
       const statuses = [
-        PACKAGE_STATUS.CERTIFIED.code,
-        PACKAGE_STATUS.FINAL_APPROVAL.code,
-        PACKAGE_STATUS.REVIEWED_NO_REVISIONS_REQUIRED.code,
-        PACKAGE_STATUS.REVIEWED_REVISIONS_REQUIRED.code,
-        PACKAGE_STATUS.WITHDRAWN.code,
-        PACKAGE_STATUS.SUBMITTED.code,
-        PACKAGE_STATUS.UNDER_REVIEW.code,
+        STATUSCODE.CERTIFIED.code,
+        STATUSCODE.FINAL_APPROVAL.code,
+        STATUSCODE.REVIEWED_NO_REVISIONS_REQUIRED.code,
+        STATUSCODE.REVIEWED_REVISIONS_REQUIRED.code,
+        STATUSCODE.WITHDRAWN.code,
+        STATUSCODE.SUBMITTED.code,
+        STATUSCODE.UNDER_REVIEW.code,
       ];
 
       return statuses[i % statuses.length];
@@ -94,11 +97,11 @@ export default Factory.extend({
 
     dcpVisibility(i) {
       const visibility = [
-        PACKAGE_VISIBILITY.INTERNAL_DCP_ONLY.code,
-        PACKAGE_VISIBILITY.CPC_ONLY.code,
-        PACKAGE_VISIBILITY.APPLICANT_ONLY.code,
-        PACKAGE_VISIBILITY.GENERAL_PUBLIC.code,
-        PACKAGE_VISIBILITY.LUP.code,
+        DCPVISIBILITY.INTERNAL_DCP_ONLY.code,
+        DCPVISIBILITY.CPC_ONLY.code,
+        DCPVISIBILITY.APPLICANT_ONLY.code,
+        DCPVISIBILITY.GENERAL_PUBLIC.code,
+        DCPVISIBILITY.LUP.code,
       ];
 
       return visibility[i % visibility.length];

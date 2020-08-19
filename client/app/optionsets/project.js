@@ -17,7 +17,7 @@ export const DCPPUBLICSTATUS = {
   },
 };
 
-export const PROJECT_VISIBILITY = {
+export const DCPVISIBILITY = {
   APPLICANT_ONLY: {
     code: 717170002,
     label: 'Applicant Only',
@@ -40,7 +40,7 @@ export const PROJECT_VISIBILITY = {
   },
 };
 
-export const PROJECT_STATUS = {
+export const STATUSCODE = {
   ACTIVE: {
     code: 1,
     label: 'Active',
@@ -70,3 +70,11 @@ export const PROJECT_STATUS = {
     label: 'Withdrawn-Other',
   },
 };
+
+const PROJECT_OPTIONSETS = {
+  DCPPUBLICSTATUS,
+  DCPVISIBILITY,
+  STATUSCODE,
+};
+
+export default PROJECT_OPTIONSETS;

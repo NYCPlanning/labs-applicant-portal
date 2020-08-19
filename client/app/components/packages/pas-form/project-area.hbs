@@ -117,7 +117,10 @@
           @options={{optionset 'pasForm' 'dcpProjectareaindustrialbusinesszone' 'list'}}
           @onChange={{fn (mut @form.data.dcpProjectareaindutrialzonename) ""}} as |value|
         >
-          {{#if value}}
+          {{#if (eq
+            value
+            (optionset 'pasForm' 'dcpProjectareaindustrialbusinesszone' 'code' 'YES')
+          )}}
             <Ui::Question @required={{true}} as |Q|>
               <Q.Label>
                 Name of Industrial Business Zone
@@ -149,7 +152,10 @@
           @options={{optionset 'pasForm' 'dcpIsprojectarealandmark' 'list'}}
           @onChange={{fn (mut @form.data.dcpProjectarealandmarkname) ""}} as |value|
         >
-          {{#if value}}
+          {{#if (eq
+            value
+            (optionset 'pasForm' 'dcpIsprojectarealandmark' 'code' 'YES')
+          )}}
             <Ui::Question @required={{true}} as |Q|>
               <Q.Label>
                 Name of Landmark or Historic District
@@ -212,7 +218,10 @@
           @options={{optionset 'pasForm' 'dcpRestrictivedeclaration' 'list'}}
           @onChange={{fn (mut @form.data.dcpCityregisterfilenumber) null}} as |value|
         >
-          {{#if value}}
+          {{#if (eq
+            value
+            (optionset 'pasForm' 'dcpRestrictivedeclaration' 'code' 'YES')
+          )}}
             <Ui::Question as |Q|>
               <Q.Label>
                 City Register file number or other identifier

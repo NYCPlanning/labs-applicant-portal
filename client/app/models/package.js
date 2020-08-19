@@ -2,9 +2,9 @@ import Model, { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import FileManager from '../services/file-manager';
 import {
-  PACKAGE_STATUS,
-  PACKAGE_STATE,
-  PACKAGE_TYPE,
+  STATUSCODE,
+  STATECODE,
+  DCPPACKAGETYPE,
 } from '../optionsets/package';
 
 export default class PackageModel extends Model {
@@ -19,6 +19,7 @@ export default class PackageModel extends Model {
         this.documents,
         [],
         fileQueue,
+        this.session,
       );
     }
   }
@@ -26,6 +27,9 @@ export default class PackageModel extends Model {
   refreshExistingDocuments() {
     this.fileManager.existingFiles = this.documents;
   }
+
+  @service
+  session;
 
   @service
   fileQueue;
@@ -61,16 +65,16 @@ export default class PackageModel extends Model {
   documents;
 
   setAttrsForSubmission() {
-    this.statuscode = PACKAGE_STATUS.SUBMITTED.code;
-    this.statecode = PACKAGE_STATE.INACTIVE.code;
+    this.statuscode = STATUSCODE.SUBMITTED.code;
+    this.statecode = STATECODE.INACTIVE.code;
   }
 
   async save() {
     await this.fileManager.save();
-    if (this.dcpPackagetype === PACKAGE_TYPE.PAS_PACKAGE.code) {
+    if (this.dcpPackagetype === DCPPACKAGETYPE.PAS_PACKAGE.code) {
       await this.pasForm.save();
     }
-    if (this.dcpPackagetype === PACKAGE_TYPE.RWCDS.code) {
+    if (this.dcpPackagetype === DCPPACKAGETYPE.RWCDS.code) {
       await this.rwcdsForm.save();
     }
     await super.save();
@@ -86,13 +90,13 @@ export default class PackageModel extends Model {
     const isPackageDirty = this.hasDirtyAttributes
       || this.fileManager.isDirty;
 
-    if (this.dcpPackagetype === PACKAGE_TYPE.PAS_PACKAGE.code) {
+    if (this.dcpPackagetype === DCPPACKAGETYPE.PAS_PACKAGE.code) {
       return isPackageDirty
         || this.pasForm.hasDirtyAttributes
         || this.pasForm.isBblsDirty
         || this.pasForm.isApplicantsDirty;
     }
-    if (this.dcpPackagetype === PACKAGE_TYPE.RWCDS.code) {
+    if (this.dcpPackagetype === DCPPACKAGETYPE.RWCDS.code) {
       return isPackageDirty
         || this.rwcdsForm.hasDirtyAttributes
         || this.rwcdsForm.isAffectedZoningResolutionsDirty;

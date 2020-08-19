@@ -43,16 +43,24 @@ export class PasFormService {
           dcp_pasform
       `);
 
-      // if pasA is of a higher version than pasB, it should come first
-      const [{ dcp_pasform: latestPasForm }] = pasPackages.sort((pasA, pasB) => {
-        return pasB.dcp_packageversion - pasA.dcp_packageversion;
-      });
+      if (pasPackages.length > 0) {
+        // if pasA is of a higher version than pasB, it should come first
+        const [{ dcp_pasform: latestPasForm }] = pasPackages.sort((pasA, pasB) => {
+          return pasB.dcp_packageversion - pasA.dcp_packageversion;
+        });
 
-      return latestPasForm;
+        return latestPasForm;
+      }
+
+      return null;
     } catch (e) {
-      const errorMessage = `Error finding a PAS Form on given Project. ${e.message}`;
-      console.log(errorMessage);
-      throw new HttpException(errorMessage, HttpStatus.UNAUTHORIZED);
+      const error = {
+        code: `LATEST_PAS_ERROR`,
+        title: `Error finding PAS form`,
+        detail: `Error finding the latest PAS Form on given Project. ${e.message}`,
+      };
+      console.log(error);
+      throw new HttpException(error, HttpStatus.UNAUTHORIZED);
     }
   }
 }
