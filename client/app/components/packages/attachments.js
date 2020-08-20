@@ -13,6 +13,8 @@ export default class PackagesAttachmentsComponent extends Component {
   @action
   markFileForDeletion(file) {
     this.fileManager.markFileForDeletion(file);
+
+    this.args.package.documents = this.fileManager.existingFiles;
   }
 
   @action
@@ -28,6 +30,8 @@ export default class PackagesAttachmentsComponent extends Component {
   @action
   trackFileForUpload() {
     this.fileManager.trackFileForUpload();
+
+    this.args.package.documents = [...this.args.package.documents, ...this.fileManager.filesToUpload.files];
   }
 
   @action

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 import { ConfigService } from '../config/config.service';
 import { CrmService } from '../crm/crm.service';
 import { ADAL } from '../_utils/adal';
@@ -276,5 +276,36 @@ async getParentSiteLocation() {
         }
       });
     });
+  }
+
+  // We retrieve documents from the Sharepoint folder (`folderIdentifier` in the
+  // code below) that holds both documents from past revisions and the current
+  // revision. CRM automatically carries over documents from past revisions into
+  // this folder, and we deliberately upload documents for the latest/current
+  // revision into this folder.
+  async findPackageSharepointDocuments(packageName, id: string) {
+    try {
+      const strippedPackageName = packageName.replace(/-/g, '').replace(/\s+/g, '').replace(/'+/g, '');
+      const folderIdentifier = `${strippedPackageName}_${id.toUpperCase()}`;
+
+      const { value: documents } = await this.crmService.getSharepointFolderFiles(`dcp_package/${folderIdentifier}`);
+
+      return documents;
+    } catch (e) {
+      // Relay errors from crmService 
+      if (e instanceof HttpException) {
+        throw e;
+      } else {
+        throw new HttpException({
+          code: 'SHAREPOINT_FOLDER_ERROR',
+          title: 'Bad Sharepoint folder lookup',
+          detail: `An error occured while constructing and looking up folder for package. Perhaps the package name or id is wrong.`,
+          meta: {
+            packageName: packageName,
+            packageId: id,
+          }
+        }, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    }
   }
 }

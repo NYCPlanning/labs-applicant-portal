@@ -22,10 +22,8 @@
 {{/let}}
 
 {{#if (and this.error (not @hideError))}}
-  <span
-    class="form-error is-visible"
-    data-test-validation-message={{@attribute}}
-  >
-    {{this.error.validation}}
-  </span>
+  <SaveableForm::FieldValidationMessage
+    @attribute={{@attribute}}
+    @validation={{this.error.validation}}
+  />
 {{/if}}
