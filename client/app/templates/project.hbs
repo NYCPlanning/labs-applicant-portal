@@ -3,11 +3,6 @@
   <Crumb @text={{@model.dcpProjectname}} @current={{true}} />
 </Ui::Breadcrumbs>
 
-<SaveableForm
-  @model={{@model.projectApplicants}}
-  as |saveableForm|
->
-
   <div class="grid-x grid-padding-x">
     <div class="cell large-8">
       <h1>
@@ -75,20 +70,23 @@
         {{/each}}
       </ul>
 
-      <Project::ProjectEditorAdder
-        @form={{saveableForm}}
-        @addApplicant={{this.addApplicant}}
-      />
+        <Project::ProjectEditorAdder @contacts={{this.contacts}} @buttonOpen={{this.buttonOpen}}/>
 
-      {{log "projectApplicants" saveableForm.data.projectApplicants}}
-      {{#each saveableForm.data.projectApplicants as |applicant|}}
-        {{log "peaches" applicant.dcpName}}
+        <button
+          class="button expanded secondary no-margin"
+          type="button"
+          {{on "click" (fn this.saveContact) }}
+        >
+          <strong>Save Contact</strong>
+        </button>
+
+      {{#each this.contacts as |contact|}}
+        {{log "cherries" contact.firstname}}
       {{/each}}
 
       <Messages::Assistance class="large-margin-top" />
 
     </div>
   </div>
-</SaveableForm>
 
 {{outlet}}

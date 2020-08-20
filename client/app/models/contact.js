@@ -6,4 +6,10 @@ export default class UserModel extends Model {
 
   @attr
   emailaddress1;
+
+  @attr
+  firstname;
+
+  @attr
+  lastname;
 }

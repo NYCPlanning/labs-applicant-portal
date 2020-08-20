@@ -13,4 +13,10 @@ export default class ProjectRoute extends Route.extend(AuthenticatedRouteMixin) 
 
     return project;
   }
+
+  setupController(controller) {
+    this.store.findAll('contact').then(function(contacts) {
+      controller.set('contacts', contacts);
+    });
+  }
 }

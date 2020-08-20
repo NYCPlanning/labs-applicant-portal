@@ -5,27 +5,53 @@
     as |Q|
   >
 
-  {{log "bananas" form}}
-
     <div class="grid-x grid-margin-x">
       <div class="cell medium-6">
-        <label>
-          Full Name
-          <form.Field @attribute="dcpName" />
-        </label>
+        <Q.Label class="middle">
+          First Name
+        </Q.Label>
+        {{input
+          type="text"
+          maxlength=200
+          autocomplete="off"
+          value=this.firstName
+        }}
       </div>
     </div>
 
-    <label>
-      Email Address
-      <form.Field @attribute="emailaddress" />
-    </label>
+    <div class="grid-x grid-margin-x">
+      <div class="cell medium-6">
+        <Q.Label class="middle">
+          Last Name
+        </Q.Label>
+        {{input
+          type="text"
+          maxlength=200
+          autocomplete="off"
+          value=this.lastName
+        }}
+      </div>
+    </div>
+
+    <div class="grid-x grid-margin-x">
+      <div class="cell medium-6">
+        <Q.Label class="middle">
+          Email Address
+        </Q.Label>
+        {{input
+          type="text"
+          maxlength=200
+          autocomplete="off"
+          value=this.emailAddress
+        }}
+      </div>
+    </div>
   </Ui::Question>
 
   <button
     class="button expanded secondary no-margin"
     type="button"
-    {{on "click" (fn @addApplicant form.data) }}
+    {{on "click" (fn this.addApplicant this.firstName this.lastName this.emailAddress) }}
   >
     <strong>Add Project Editor</strong>
   </button>
