@@ -3,7 +3,9 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
+import { pick } from 'underscore';
 import { CrmService } from '../crm/crm.service';
+import { CONTACT_ATTRS } from './contacts.attrs';
 
 const ACTIVE_CODE = 1;
 
@@ -61,5 +63,21 @@ export class ContactService {
       console.log(errorMessage);
       throw new HttpException(errorMessage, HttpStatus.UNAUTHORIZED);
     }
+  }
+
+  async createContact(email, body) {
+    const allowedAttrs = pick(body, CONTACT_ATTRS);
+    const currentContact = await this.findOneByEmail(email);
+
+    if(currentContact) {
+      // update dcp_projectapplicant?
+    } else {
+      console.log('swampy');
+      return this.crmService.create(
+        `contacts`, {
+          ...allowedAttrs,
+        });
+      // update dcp_projectapplicant?
+    } 
   }
 }
