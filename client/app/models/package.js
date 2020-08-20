@@ -24,10 +24,6 @@ export default class PackageModel extends Model {
     }
   }
 
-  refreshExistingDocuments() {
-    this.fileManager.existingFiles = this.documents;
-  }
-
   @service
   session;
 
@@ -78,12 +74,22 @@ export default class PackageModel extends Model {
       await this.rwcdsForm.save();
     }
     await super.save();
+
+    this._synchronizeDocuments();
   }
 
   async submit() {
     this.setAttrsForSubmission();
 
     await this.save();
+  }
+
+  // deprecate
+  // filemanager does not actually mutate the package directly. instead, it pushes files into the API
+  // and, upon save, the API then detects more documents and sends back the list of documents which
+  // this model then sees. This hack is to refresh the in-memory fileManager with those documents.
+  _synchronizeDocuments() {
+    this.fileManager.existingFiles = this.documents;
   }
 
   get isDirty() {
