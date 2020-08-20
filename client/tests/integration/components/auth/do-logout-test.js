@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, waitFor } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
 module('Integration | Component | auth/do-logout', function(hooks) {
@@ -11,6 +11,7 @@ module('Integration | Component | auth/do-logout', function(hooks) {
     // Handle any actions with this.set('myAction', function(val) { ... });
 
     await render(hbs`<Auth::DoLogout />`);
+    await waitFor('[data-iframe-did-load="true"]');
 
     assert.equal(this.element.textContent.trim(), '');
   });

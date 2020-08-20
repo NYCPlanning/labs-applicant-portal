@@ -28,7 +28,7 @@
 
     <section class="form-section">
       <h2 class="section-header">
-        <span id="" class="section-anchor"></span>
+        <span id="project-description" class="section-anchor"></span>
         Project Description
       </h2>
 
@@ -98,7 +98,7 @@
 
     <section class="form-section">
       <h2 class="section-header">
-        <span id="" class="section-anchor"></span>
+        <span id="proposed-actions" class="section-anchor"></span>
         Proposed Actions
       </h2>
 
@@ -109,38 +109,47 @@
             'label'
             affectedZoningResolution.dcpZoningresolutiontype)
           as |zrTypeLabel|}}
-          <div
-            class="ruled-adjacent grid-x"
-          >
-            <div
-              class="text-weight-bold cell auto large-padding-right"
-            >
-              {{~zrTypeLabel~}}
-              {{#if (lookup-action-type zrTypeLabel)}}
-                <LabsUi::IconTooltip
-                  @tip={{lookup-action-type zrTypeLabel}}
-                  @icon="info-circle"
-                  @side="bottom"
-                  @transform="shrink-4 up-2"
-                  @fixedWidth={{true}}
-                />
-              {{/if}}
-              {{affectedZoningResolution.dcpZrsectiontitle}}
-            </div>
-            <div
-              class="cell large-3"
-            >
+
+          <h3 class="large-margin-top small-margin-bottom">{{zrTypeLabel}}</h3>
+
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              Modifying Zoning Resolution sections:
+            </A.Prompt>
+            <A.Field>
               {{affectedZoningResolution.dcpModifiedzrsectionnumber}}
-              {{#if (eq affectedZoningResolution.dcpZoningresolutiontype (optionset 'affectedZoningResolution' 'actions' 'code' 'ZR'))}}
+            </A.Field>
+          </Ui::Answer>
+
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              Pursuant to Zoning Resolution section:
+            </A.Prompt>
+            <A.Field>
+              {{affectedZoningResolution.dcpZrsectiontitle}}
+            </A.Field>
+          </Ui::Answer>
+
+          {{#if (eq
+            affectedZoningResolution.dcpZoningresolutiontype
+            (optionset 'affectedZoningResolution' 'actions' 'code' 'ZR')
+          )}}
+            <Ui::Answer @beside={{true}} as |A|>
+              <A.Prompt>
+                Includes MIH:
+              </A.Prompt>
+              <A.Field>
                 {{if (eq
-                @package.rwcdsForm.dcpIncludezoningtextamendment
-                (optionset 'rwcdsForm' 'dcpIncludezoningtextamendment' 'code' 'YES')
-                ) "includes" "does not include"}} MIH.
-              {{/if}}
-            </div>
-          </div>
+                  @package.rwcdsForm.dcpIncludezoningtextamendment
+                  (optionset 'rwcdsForm' 'dcpIncludezoningtextamendment' 'code' 'YES')
+                ) "Yes" "No"}}
+              </A.Field>
+            </Ui::Answer>
+          {{/if}}
         {{/let}}
       {{/each}}
+
+      <h3 class="large-margin-top small-margin-bottom">All Actions</h3>
 
       <Ui::Answer as |A|>
         <A.Prompt>
@@ -186,7 +195,7 @@
 
     <section class="form-section">
       <h2 class="section-header">
-        <span id="" class="section-anchor"></span>
+        <span id="analysis" class="section-anchor"></span>
         Analysis
       </h2>
 
@@ -199,7 +208,7 @@
         </A.Field>
       </Ui::Answer>
 
-      <h3>
+      <h3 class="large-margin-top small-margin-bottom">
         No-Action Scenario
       </h3>
 
@@ -234,7 +243,7 @@
         </Ui::Answer>
       {{/if}}
 
-      <h3>
+      <h3 class="large-margin-top small-margin-bottom">
         With-Action Scenario
       </h3>
 
@@ -282,7 +291,7 @@
 
     <section class="form-section">
       <h2 class="section-header">
-        <span id="" class="section-anchor"></span>
+        <span id="attachments" class="section-anchor"></span>
         Attachments
       </h2>
 
