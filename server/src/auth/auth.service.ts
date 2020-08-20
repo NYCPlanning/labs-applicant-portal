@@ -2,7 +2,6 @@ import {
   Injectable, 
   HttpException,
   HttpStatus,
-  BadRequestException,
 } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
 import * as moment from 'moment';
@@ -75,7 +74,13 @@ export class AuthService {
     try {
       return jwt.verify(token, secret);
     } catch (e) {
-      throw new HttpException(`Could not verify token. ${e}`, HttpStatus.UNAUTHORIZED);
+      const error = {
+        code: "INVALID_TOKEN",
+        title: "Invalid token",
+        detail: `Could not verify token. ${e}`,
+      };
+      console.log(error);
+      throw new HttpException(error, HttpStatus.UNAUTHORIZED);
     }
   }
 
@@ -91,7 +96,13 @@ export class AuthService {
     try {
       return this.verifyToken(token, NYCID_TOKEN_SECRET);
     } catch (e) {
-      throw new BadRequestException(`Could not verify NYCID Token: ${e}`);
+      const error = {
+        code: "INVALID_NYCID_TOKEN",
+        title: "Invalid NYCID token",
+        detail: "The acquired NYCID token is invalid."
+      };
+      console.log(error);
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -113,12 +124,13 @@ export class AuthService {
     const contact = await this.contactService.findOneByEmail(mail);
 
     if (!contact) {
-      const responseBody = {
-        "code": "NO_CONTACT_FOUND",
-        "message": `CRM Contact not found for given email or ID: ${mail}`,
+      const error = {
+        code: "CONTACT_NOT_FOUND",
+        title: "Contact not found",
+        detail: `CRM Contact not found for given email or ID: ${mail}`,
       }
-
-      throw new HttpException(responseBody, HttpStatus.UNAUTHORIZED);
+      console.log(error);
+      throw new HttpException(error, HttpStatus.UNAUTHORIZED);
     }
 
     return this.signNewToken(contact.contactid, nycIdAccount);
@@ -131,25 +143,37 @@ export class AuthService {
    */
   public validateCurrentToken(token: string) {
     try {
-      return this.verifyCRMToken(token);
+      return this.verifyZapToken(token);
     } catch (e) {
-      throw new BadRequestException(e);
+      const error = {
+        code: "INVALID_ZAP_TOKEN",
+        title: "Invalid login token provided",
+        detail: "The provided ZAP token is invalid."
+      };
+      console.log(error);
+      throw new HttpException(error, HttpStatus.UNAUTHORIZED);
     }
   }
 
   /**
-   * Verifies a JWT with the CRM signing secret. Returns a token object.
+   * Verifies a JWT with the ZAP signing secret. Returns a token object.
    *
    * @param      {string}  token   The token
    * @return     {any}     { mail: 'string', exp: 'string' }
    */
-  private verifyCRMToken(token): any {
+  private verifyZapToken(token): any {
     const { ZAP_TOKEN_SECRET } = this;
 
     try {
       return this.verifyToken(token, ZAP_TOKEN_SECRET);
     } catch (e) {
-      throw new BadRequestException(e);
+      const error = {
+        code: "VERIFY_ZAP_TOKEN_ERROR",
+        title: "Error verifying ZAP token",
+        detail: "Perhaps the provided ZAP token is invalid."
+      };
+      console.log(error);
+      throw new HttpException(error, HttpStatus.UNAUTHORIZED);
     }
   }
 }

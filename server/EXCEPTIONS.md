@@ -1,7 +1,23 @@
 # Exception handling in our backend
 
+## Quickstart example
+```ts
+// services/my-project.service.ts
+public async getProject(){
+  try {
+    return myProject = this.get('dcp_project', ...);
+  } catch (e) {
+    const error = {
+      code: 'NO_PROJECT_FOR_ID',
+      title: 'No project for id',
+      detail: `Failed to find a project for given id. ${e.message}`,
+    };
+    console.log(error); // for backend log records
+    throw new HttpException(error, HttpStatus.NOT_FOUND);
+  }
+}
+```
 ## Quickstart
-
 To generate errors in the backend that will be passed to the
 frontend, throw a [Nest-defined HttpException](https://docs.nestjs.com/exception-filters#throwing-standard-exceptions), <u>_generally within a service_</u>:
 
@@ -51,6 +67,20 @@ Generally, when generating errors as described above, <u>*do so within Nest serv
 Services are usually quite close to the actual CRM requests and contain
 specific backend business logic. We can provide better error details if we
 try to scope try-catch to more specifc areas of business logic.
+
+Lastly, we want to log out the `responseBody` argument so that our backend logs
+will have a record of thrown exceptions from each layer in the stack trace:
+
+```ts
+} catch (e) {
+  const error = {
+    code: 'NO_PROJECT_FOR_ID',
+    detail: `Failed to find a project for given id. ${e.message}`,
+  };
+  console.log(error);
+  throw new HttpException(error, HttpStatus.NOT_FOUND);
+}
+```
 
 ## Relaying Errors
 
