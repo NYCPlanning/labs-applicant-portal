@@ -1,10 +1,20 @@
 <FaIcon @icon="user-circle" @prefix="fas" @size="2x" class="auth--icon" />
 <div>
   <span class="auth--name">
-    <a href={{this.userProfileURI}} rel="noopener noreferrer">
+    <span class="auth--name">
       {{this.session.data.authenticated.emailaddress1}}
-    </a>
+    </span>
   </span>
+</div>
+<EmberPopover @spacing={{-15}} @tooltipClass="auth--menu" as |popover|>
+  <a
+    href={{this.userProfileURI}}
+    rel="noopener noreferrer"
+    class="auth--nycid-profile-button"
+    data-test-auth="nycid-profile"
+  >
+    NYC.ID Profile<sup>&#8239;<FaIcon @icon="external-link-alt" @prefix="fas" /></sup>
+  </a>
   <button
     type="button"
     class="auth--logout-button"
@@ -13,4 +23,4 @@
   >
     Sign Out
   </button>
-</div>
+</EmberPopover>

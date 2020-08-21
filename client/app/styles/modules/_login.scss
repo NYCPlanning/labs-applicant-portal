@@ -20,17 +20,23 @@
   font-weight: normal;
 }
 
-.site-header .menu .auth--logout-button {
-  display: inline-block;
-  padding: 0;
-  color: #ae561f;
-  background-color: transparent;
-  font-size: 0.75rem;
+.auth--menu {
+  padding: 0.5rem;
 }
 
-.site-header .menu .auth--logout-button:hover {
-  color:#8b4519;
-  background-color:transparent
+.site-header .menu {
+  .auth--nycid-profile-button,
+  .auth--logout-button {
+    display: block;
+    color: #ae561f;
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
+    width: 100%;
+
+    &:hover {
+      color:#8b4519;
+    }
+  }
 }
 
 .nyc-id-logout-iframe {
