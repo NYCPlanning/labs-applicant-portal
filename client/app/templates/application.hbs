@@ -13,13 +13,9 @@
   <banner.nav>
     <ul class="menu vertical medium-horizontal">
       {{#if this.session.isAuthenticated}}
-        <li class="auth--container">
-          <Auth::UserBadge />
-        </li>
+        <Auth::UserBadge />
       {{else}}
-        <li>
-          <Auth::SignInButton />
-        </li>
+        <Auth::SignInButton />
       {{/if}}
     </ul>
   </banner.nav>

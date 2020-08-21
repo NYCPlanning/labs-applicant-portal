@@ -1,26 +1,29 @@
-<FaIcon @icon="user-circle" @prefix="fas" @size="2x" class="auth--icon" />
-<div>
-  <span class="auth--name">
+<li>
+  <button
+    class="auth--menu-button"
+    data-test-auth="menu-button"
+  >
+    <FaIcon @icon="user-circle" @prefix="fas" @size="2x" class="auth--icon" />
     <span class="auth--name">
       {{this.session.data.authenticated.emailaddress1}}
     </span>
-  </span>
-</div>
-<EmberPopover @spacing={{-15}} @tooltipClass="auth--menu">
-  <a
-    href={{this.userProfileURI}}
-    rel="noopener noreferrer"
-    class="auth--nycid-profile-button"
-    data-test-auth="nycid-profile"
-  >
-    NYC.ID Profile<sup>&#8239;<FaIcon @icon="external-link-alt" @prefix="fas" /></sup>
-  </a>
-  <button
-    type="button"
-    class="auth--logout-button"
-    {{on "click" this.doLogout}}
-    data-test-auth="logout"
-  >
-    Sign Out
   </button>
-</EmberPopover>
+  <EmberPopover @spacing={{-15}} @tooltipClass="auth--menu-popover">
+    <a
+      href={{this.userProfileURI}}
+      rel="noopener noreferrer"
+      class="auth--nycid-profile-button"
+      data-test-auth="nycid-profile"
+    >
+      NYC.ID Profile<sup>&#8239;<FaIcon @icon="external-link-alt" @prefix="fas" /></sup>
+    </a>
+    <button
+      type="button"
+      class="auth--logout-button"
+      {{on "click" this.doLogout}}
+      data-test-auth="logout"
+    >
+      Sign Out
+    </button>
+  </EmberPopover>
+</li>

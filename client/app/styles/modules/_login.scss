@@ -1,6 +1,6 @@
 /* Module: Login */
 
-.auth--container {
+.auth--menu-button {
   display: flex;
   align-items: center;
   line-height: 1.2;
@@ -10,17 +10,18 @@
   min-height: rem-calc(75);
 }
 
-.auth--container .auth--icon {
+.auth--menu-button .auth--icon {
   margin-right: 0.375rem;
 }
 
-.auth--container .auth--name {
+.auth--menu-button .auth--name {
   display: block;
   color: #393c41;
   font-weight: normal;
+  padding-left: 0;
 }
 
-.auth--menu {
+.auth--menu-popover {
   padding: 0.5rem;
 }
 
