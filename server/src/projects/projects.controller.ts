@@ -16,6 +16,7 @@ import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 import { AuthenticateGuard } from '../authenticate.guard';
 import { PROJECT_ATTRS } from './projects.attrs';
 import { PACKAGE_ATTRS } from '../packages/packages.attrs';
+import { PROJECTAPPLICANT_ATTRS } from './project-applicants/project-applicants.attrs';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('projects', {
   id: 'dcp_projectid',
@@ -23,11 +24,18 @@ import { PACKAGE_ATTRS } from '../packages/packages.attrs';
     ...PROJECT_ATTRS,
 
     'packages',
+    'project-applicants',
   ],
   packages: {
     ref: 'dcp_packageid',
     attributes: [
       ...PACKAGE_ATTRS,
+    ],
+  },
+  'project-applicants': {
+    ref: 'dcp_projectapplicantid',
+    attributes: [
+      ...PROJECTAPPLICANT_ATTRS,
     ],
   },
 
@@ -38,6 +46,7 @@ import { PACKAGE_ATTRS } from '../packages/packages.attrs';
       return {
         ...project,
         packages: project.dcp_dcp_project_dcp_package_project,
+        'project-applicants': project.dcp_dcp_project_dcp_projectapplicant_Project,
       };
     } catch(e) {
       if (e instanceof HttpException) {
@@ -66,14 +75,8 @@ export class ProjectsController {
   }
 
   @Get('/projects')
-  async listOfCurrentUserProjects(@Session() session, @Query('email') email) {
-    let { contactId } = session;
-
-    if (email) {
-      ({ contactid: contactId } = await this.contactService.findOneByEmail(
-        email,
-      ));
-    }
+  async listOfCurrentUserProjects(@Session() session) {
+    const { contactId } = session;
 
     try {
       if (contactId) {
@@ -93,19 +96,9 @@ export class ProjectsController {
   }
 
   @Get('/projects/:id')
-  async projectById(@Session() session, @Param('id') id, @Query('email') email) {
-    let { contactId } = session;
-
-    if (email) {
-      ({ contactid: contactId } = await this.contactService.findOneByEmail(
-        email,
-      ));
-    }
-
+  async projectById(@Param('id') id) {
     try {
-      if (contactId) {
-        return await this.projectsService.getProject(id, contactId);
-      }
+      return await this.projectsService.getProject(id);
     } catch (e) {
       if (e instanceof HttpException) {
         throw e;

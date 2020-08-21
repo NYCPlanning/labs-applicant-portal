@@ -1,18 +1,20 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, waitFor } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | auth/do-logout', function(hooks) {
+module('Integration | Component | saveable-form/field-validation-message', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<Auth::DoLogout />`);
-    await waitFor('[data-iframe-did-load="true"]');
+    await render(hbs`<SaveableForm::FieldValidationMessage
+      @attribute='something'
+      @validation='is not right'
+    />`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.equal(this.element.textContent.trim(), 'is not right');
   });
 });

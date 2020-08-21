@@ -3,9 +3,14 @@
     Please attach the following required documents. (Additional materials that help to explain the proposed project may also be submitted.)
   </p>
 
+  <SaveableForm::FieldValidationMessage
+    @attribute='documents'
+    @validation={{@form.errors.documents.validation}}
+  />
+
   <Packages::Attachments
-    @package={{@model.package}}
-    @fileManager={{@model.package.fileManager}}
+    @package={{@form.data}}
+    @fileManager={{@model.fileManager}}
     data-test-section="attachments"
   />
 

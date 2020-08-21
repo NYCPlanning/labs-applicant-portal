@@ -4,13 +4,14 @@ import { PackagesService } from './packages.service';
 import { CrmModule } from '../crm/crm.module';
 import { PasFormService } from './pas-form/pas-form.service';
 import { RwcdsFormService } from './rwcds-form/rwcds-form.service';
+import { DocumentModule } from '../document/document.module';
 
 describe('Packages Controller', () => {
   let controller: PackagesController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [CrmModule],
+      imports: [CrmModule, DocumentModule],
       providers: [PackagesService, PasFormService, RwcdsFormService],
       controllers: [PackagesController],
     }).compile();

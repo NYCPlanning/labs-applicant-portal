@@ -14,20 +14,7 @@
     <ul class="menu vertical medium-horizontal">
       {{#if this.session.isAuthenticated}}
         <li class="auth--container">
-          <FaIcon @icon="user-circle" @prefix="fas" @size="2x" class="auth--icon" />
-          <div>
-            <span class="auth--name">
-              {{this.session.data.authenticated.emailaddress1}}
-            </span>
-            <button
-              type="button"
-              class="auth--logout-button"
-              {{on "click" this.doLogout}}
-              data-test-auth="logout"
-            >
-              Sign Out
-            </button>
-          </div>
+          <Auth::UserBadge />
         </li>
       {{else}}
         <li>

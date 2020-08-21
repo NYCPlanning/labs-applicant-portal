@@ -66,14 +66,13 @@ export class ProjectsService {
    * @param      {string}  contactId   CRM Contact contactid
    * @return     {any}     { ...Project Attributes }
    */
-  public async getProject(projectId: string, contactId: string) {
+  public async getProject(projectId: string) {
     try {
       const { records } = await this.crmService.get('dcp_projects', `
         $filter=
           dcp_dcp_project_dcp_projectapplicant_Project/
             any(o:
-              o/_dcp_applicant_customer_value eq '${contactId}'
-              and o/statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
+              o/statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
             )
           and (
             dcp_visibility eq ${PROJECT_VISIBILITY_APPLICANT_ONLY}
@@ -82,6 +81,9 @@ export class ProjectsService {
           and statecode eq ${PROJECT_ACTIVE_STATE_CODE}
           and dcp_projectid eq '${projectId}'
         &$expand=
+          dcp_dcp_project_dcp_projectapplicant_Project(
+            $filter= statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
+          ),
           dcp_dcp_project_dcp_package_project(
             $filter= 
             (
@@ -102,15 +104,25 @@ export class ProjectsService {
       `);
 
       const [ project ] = this.overwriteCodesWithLabels(records);
+
+      if (!project) {
+        const errorMessage = `Could not find requested project ${projectId}.`;
+        console.log(errorMessage);
+
+        throw new HttpException({
+          "code": "PROJECT_NOT_FOUND",
+          "title": "Project not found",
+          "detail": errorMessage,
+        }, HttpStatus.NOT_FOUND);
+      }
+
       return project;
     } catch(e) {
-      const errorMessage = `Could not find requested project ${projectId}.`;
-      console.log(errorMessage);
       throw new HttpException({
-        "code": "PROJECT_NOT_FOUND",
-        "title": "Project not found",
-        "detail": errorMessage,
-      }, HttpStatus.NOT_FOUND);
+        "code": "PROJECTS_SERVICE_FAILURE",
+        "title": "Could not lookup projects. Something went wrong.",
+        "detail": e,
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
