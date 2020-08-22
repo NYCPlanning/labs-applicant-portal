@@ -65,8 +65,8 @@
       <FaIcon @icon='users-cog' @fixedWidth={{true}} />
     </h3>
     <ul class="no-bullet">
-      {{#each @model.projectApplicants as |projectApplicant|}}
-        <Project::ProjectEditorListItem @projectApplicant={{projectApplicant}} />
+      {{#each @model.contacts as |contact|}}
+        <Project::ProjectEditorListItem @contact={{contact}} />
       {{/each}}
     </ul>
 
