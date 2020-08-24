@@ -30,7 +30,8 @@ export class ContactService {
   public async findOneById(contactId: string) {
     try  {
       const { records: [firstRecord] } = await this.crmService.get('contacts', `
-        $filter=contactid eq ${contactId}
+        $select=${CONTACT_ATTRS.join(',')}
+        &$filter=contactid eq ${contactId}
           and statuscode eq ${ACTIVE_CODE}
         &$top=1
       `);
@@ -56,7 +57,8 @@ export class ContactService {
   public async findOneByEmail(email: string) {
     try {
       const { records: [firstRecord] } = await this.crmService.get('contacts', `
-        $filter=startswith(emailaddress1, '${email}')
+        $select=${CONTACT_ATTRS.join(',')}
+        &$filter=startswith(emailaddress1, '${email}')
           and statuscode eq ${ACTIVE_CODE}
         &$top=1
       `);
