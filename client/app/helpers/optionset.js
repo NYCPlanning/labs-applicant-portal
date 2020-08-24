@@ -22,6 +22,9 @@ import {
   DCPHOUSINGUNITTYPE,
 } from '../optionsets/pas-form';
 import PROJECT_OPTIONSETS from '../optionsets/project';
+import {
+  DCPAPPLICANTROLE,
+} from '../optionsets/project-applicant';
 
 const OPTIONSET_LOOKUP = {
   applicant: {
@@ -30,6 +33,9 @@ const OPTIONSET_LOOKUP = {
   },
   bbl: {
     boroughs: BOROUGHS,
+  },
+  projectApplicant: {
+    applicantrole: DCPAPPLICANTROLE,
   },
   package: {
     statecode: PACKAGE_OPTIONSETS.STATECODE,

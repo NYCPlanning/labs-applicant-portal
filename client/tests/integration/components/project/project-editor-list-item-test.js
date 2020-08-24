@@ -7,15 +7,17 @@ module('Integration | Component | project/project-editor-list-item', function(ho
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    this.contact = {
-      firstname: 'Bugs',
-      lastname: 'Bunny',
-      emailaddress1: 'bugs@bunny.com',
+    this.projectApplicant = {
+      dcpName: 'Bugs Bunny',
+      emailaddress: 'bugs@bunny.com',
     };
 
     // Template block usage:
     await render(hbs`
-      <Project::ProjectEditorListItem @contact={{this.contact}}/>
+      <Project::ProjectEditorListItem
+        @name={{this.projectApplicant.dcpName}}
+        @emailAddress={{this.projectApplicant.emailaddress}}
+      />
     `);
 
     assert.dom(this.element).includesText('Bugs Bunny');

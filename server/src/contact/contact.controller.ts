@@ -2,6 +2,7 @@ import { Controller, Session, Get, UseInterceptors, HttpException, HttpStatus } 
 import { ContactService } from './contact.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 
+
 @UseInterceptors(new JsonApiSerializeInterceptor('contacts', {
   attributes: ['contactid', 'emailaddress1'],
   id: 'contactid',

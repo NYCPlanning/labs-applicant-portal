@@ -7,6 +7,11 @@ export default class ProjectApplicantModel extends Model {
 
   @attr dcpApplicantrole;
 
-  @belongsTo('project')
+  @attr statuscode;
+
+  @belongsTo('project', { async: false })
   project;
+
+  @belongsTo('contact', { async: false })
+  contact;
 }
