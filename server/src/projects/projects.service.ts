@@ -103,6 +103,13 @@ export class ProjectsService {
           )
       `);
 
+      const projectApplicantsWithContacts = await this.crmService.get('dcp_projectapplicants', `
+        $filter=
+          _dcp_project_value eq ${projectId}
+        &$expand=
+          dcp_applicant_customer_contact
+      `);
+
       const [ project ] = this.overwriteCodesWithLabels(records);
 
       if (!project) {
@@ -116,7 +123,12 @@ export class ProjectsService {
         }, HttpStatus.NOT_FOUND);
       }
 
-      return project;
+      const projectWithContacts = {
+        ...project,
+        contacts: projectApplicantsWithContacts.records.map(applicant => applicant.dcp_applicant_customer_contact),
+      };
+
+      return projectWithContacts;
     } catch(e) {
       throw new HttpException({
         "code": "PROJECTS_SERVICE_FAILURE",

@@ -17,6 +17,7 @@ import { AuthenticateGuard } from '../authenticate.guard';
 import { PROJECT_ATTRS } from './projects.attrs';
 import { PACKAGE_ATTRS } from '../packages/packages.attrs';
 import { PROJECTAPPLICANT_ATTRS } from './project-applicants/project-applicants.attrs';
+import { CONTACT_ATTRS } from '../contact/contacts.attrs';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('projects', {
   id: 'dcp_projectid',
@@ -25,6 +26,7 @@ import { PROJECTAPPLICANT_ATTRS } from './project-applicants/project-applicants.
 
     'packages',
     'project-applicants',
+    'contacts',
   ],
   packages: {
     ref: 'dcp_packageid',
@@ -38,6 +40,12 @@ import { PROJECTAPPLICANT_ATTRS } from './project-applicants/project-applicants.
       ...PROJECTAPPLICANT_ATTRS,
     ],
   },
+  'contacts': {
+    ref: 'contactid',
+    attributes: [
+      ...CONTACT_ATTRS,
+    ],
+  },
 
   // remap verbose navigation link names to
   // more concise names
@@ -47,6 +55,7 @@ import { PROJECTAPPLICANT_ATTRS } from './project-applicants/project-applicants.
         ...project,
         packages: project.dcp_dcp_project_dcp_package_project,
         'project-applicants': project.dcp_dcp_project_dcp_projectapplicant_Project,
+        'contacts': project.contacts,
       };
     } catch(e) {
       if (e instanceof HttpException) {
