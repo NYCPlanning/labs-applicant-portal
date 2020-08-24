@@ -1,6 +1,9 @@
-import { Controller, Session, Get, UseInterceptors, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Session, Get, UseInterceptors, HttpException, HttpStatus, Post, Body } from '@nestjs/common';
+import { pick } from 'underscore';
 import { ContactService } from './contact.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
+import { CONTACT_ATTRS } from './contacts.attrs';
+
 
 @UseInterceptors(new JsonApiSerializeInterceptor('contacts', {
   attributes: ['contactid', 'emailaddress1'],

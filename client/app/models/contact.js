@@ -1,11 +1,11 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 
 export default class UserModel extends Model {
-  @belongsTo('project')
+  @belongsTo('project', { async: false })
   project;
 
-  @attr
-  contactid;
+  @belongsTo('project-applicant', { async: false })
+  projectApplicant;
 
   @attr
   emailaddress1;

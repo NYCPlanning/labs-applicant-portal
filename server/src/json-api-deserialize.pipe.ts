@@ -24,6 +24,12 @@ export class JsonApiDeserializePipe implements PipeTransform {
         projects: {
           valueForRelationship: relationship => relationship.id,
         },
+        'project-applicants': {
+          valueForRelationship: relationship => relationship.id,
+        },
+        contacts: {
+          valueForRelationship: relationship => relationship.id,
+        },
       }).deserialize(value);
     }
 

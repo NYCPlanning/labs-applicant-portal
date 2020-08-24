@@ -5,6 +5,7 @@ import { ProjectsService } from './projects.service';
 import { ConfigModule } from '../config/config.module';
 import { AuthModule } from '../auth/auth.module';
 import { ProjectsController } from './projects.controller';
+import { ProjectApplicantController } from './project-applicants/project-applicant.controller';
 
 @Module({
   imports: [
@@ -15,6 +16,6 @@ import { ProjectsController } from './projects.controller';
   ],
   providers: [ProjectsService],
   exports: [ProjectsService],
-  controllers: [ProjectsController],
+  controllers: [ProjectsController, ProjectApplicantController],
 })
 export class ProjectsModule {}
