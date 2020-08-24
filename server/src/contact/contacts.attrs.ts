@@ -3,5 +3,5 @@ export const CONTACT_ATTRS = [
   'lastname',
   'emailaddress1',
   'contactid',
+  'dcp_nycid_guid',
 ];
-  

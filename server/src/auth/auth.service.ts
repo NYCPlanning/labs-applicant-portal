@@ -119,7 +119,7 @@ export class AuthService {
     const nycIdAccount = this.verifyNYCIDToken(NYCIDToken);
 
     // need the email to lookup a CRM contact.
-    const { mail } = nycIdAccount;
+    const { mail, nycExtEmailValidationFlag, GUID } = nycIdAccount;
 
     const contact = await this.contactService.findOneByEmail(mail);
 
@@ -131,6 +131,13 @@ export class AuthService {
       }
       console.log(error);
       throw new HttpException(error, HttpStatus.UNAUTHORIZED);
+    }
+
+    // if their e-mail is validated, associate the NYCID guid
+    if (nycExtEmailValidationFlag && !contact.dcp_nycid_guid) {
+      await this.contactService.update(contact.contactid, {
+        dcp_nycid_guid: GUID,
+      });
     }
 
     return this.signNewToken(contact.contactid, nycIdAccount);
