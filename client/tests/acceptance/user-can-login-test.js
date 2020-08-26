@@ -1,6 +1,10 @@
 import { module, test } from 'qunit';
 import {
-  visit, click, currentURL, find,
+  click,
+  currentURL,
+  find,
+  focus,
+  visit,
 } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import window, { setupWindowMock } from 'ember-window-mock';
@@ -34,6 +38,7 @@ module('Acceptance | user can login', function(hooks) {
 
     window.location.hash = '#access_token=a-valid-jwt';
     await visit('/login');
+    await focus('[data-test-auth="menu-button"]');
     await click('[data-test-auth="logout"]');
 
     assert.equal(currentURL(), '/logout');
@@ -73,7 +78,8 @@ module('Acceptance | user can login', function(hooks) {
     assert.equal(currentURL(), '/projects');
 
     // user logs out
-    await click('[data-test-auth="logout"');
+    await focus('[data-test-auth="menu-button"]');
+    await click('[data-test-auth="logout"]');
 
     // because user is logged out, route should not redirect
     await visit('/');
