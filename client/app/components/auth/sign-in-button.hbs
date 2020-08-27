@@ -1,6 +1,6 @@
 <li>
-  <button {{on 'click' this.handleLogin}}
-    href="#"
+  <a
+    href={{this.loginLocation}}
     type="button"
     data-test-login="do-login"
   >
@@ -9,5 +9,5 @@
       @prefix="fas"
       class="text-light-gray tiny-margin-right"
     /> Sign In
-  </button>
+  </a>
 </li>

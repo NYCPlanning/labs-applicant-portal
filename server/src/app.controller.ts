@@ -22,6 +22,7 @@ export class AppController {
     try {
       const ZAPToken = await this.authService.generateNewToken(NYCIDToken);
       const { contactId } = await this.authService.validateCurrentToken(ZAPToken);
+      console.log(contactId);
       const { emailaddress1 } = await this.contactService.findOneById(contactId);
 
       res.send({
@@ -43,4 +44,3 @@ export class AppController {
     }
   }
 }
-
