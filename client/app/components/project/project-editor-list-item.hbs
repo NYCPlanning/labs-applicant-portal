@@ -6,4 +6,24 @@
     <div class="text-weight-bold">{{@name}}</div>
     <div class="text-small"><a href="mailto:{{@emailAddress}}">{{@emailAddress}}</a></div>
   </div>
+  {{#unless (or
+    (eq
+      @role
+      (optionset 'projectApplicant' 'applicantrole' 'code' 'PRIMARY_CONTACT')
+    )
+    (eq
+      @role
+      (optionset 'projectApplicant' 'applicantrole' 'code' 'PRIMARY_APPLICANT')
+    )
+  )}}
+    <div class="cell shrink medium-padding-left">
+      <button
+        type="button"
+        class="text-red-dark"
+        {{on "click" @onDelete}}
+      >
+        <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
+      </button>
+    </div>
+  {{/unless}}
 </li>

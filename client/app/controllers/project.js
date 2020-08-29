@@ -27,6 +27,11 @@ export default class ProjectController extends Controller {
   }
 
   @action
+  removeEditor(applicant) {
+    applicant.destroyRecord();
+  }
+
+  @action
   async saveEditor() {
     this.modalOpen = false;
     if (!this.matchingCurrentApplicant) {

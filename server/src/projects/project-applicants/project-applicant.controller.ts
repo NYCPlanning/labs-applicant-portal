@@ -7,7 +7,11 @@ import { JsonApiDeserializePipe } from '../../json-api-deserialize.pipe';
 import { PROJECTAPPLICANT_ATTRS } from './project-applicants.attrs';
 import { CONTACT_ATTRS } from '../../contact/contacts.attrs';
 
-const ACTIVE_CODE = 1;
+const ACTIVE_STATUSCODE = 1;
+const INACTIVE_STATUSCODE = 2;
+
+const ACTIVE_STATECODE = 0;
+const INACTIVE_STATECODE = 1;
 
 @UseInterceptors(new JsonApiSerializeInterceptor('project-applicants', {
   id: 'dcp_projectapplicantid',
@@ -41,7 +45,7 @@ export class ProjectApplicantController {
     const { records } = await this.crmService.get('contacts', `
       $select=${CONTACT_ATTRS.join(',')}
       &$filter=startswith(emailaddress1, '${email}')
-        and statuscode eq ${ACTIVE_CODE}
+        and statuscode eq ${ACTIVE_STATUSCODE}
       &$top=1
     `);
 
@@ -80,6 +84,27 @@ export class ProjectApplicantController {
     return {
       ...newProjectApplicant,
        contact: newContact,
+    }
+  }
+
+  @Delete('/:id')
+  async deactivate(@Param('id') id) {
+    try {
+      await this.crmService.update('dcp_projectapplicants', id, {
+        statuscode: INACTIVE_STATUSCODE,
+        statecode: INACTIVE_STATECODE,
+      });
+
+      return {
+        id,
+      };
+    } catch (e) {
+      console.log(e);
+      throw new HttpException({
+        code: 'PROJECT_APPLICANT_DEACTIVATE_FAILED',
+        title: 'Failed to deactivate project applicant',
+        detail: `${e}`,
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }

@@ -69,6 +69,8 @@
         <Project::ProjectEditorListItem 
           @name={{applicant.dcpName}}
           @emailAddress={{applicant.emailaddress}}
+          @role={{applicant.dcpApplicantrole}}
+          @onDelete={{fn this.removeEditor applicant}}
         />
       {{/each}}
     </ul>
