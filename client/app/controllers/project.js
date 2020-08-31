@@ -3,6 +3,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { optionset } from '../helpers/optionset';
+import { STATECODE, STATUSCODE } from '../optionsets/contact';
 
 export default class ProjectController extends Controller {
   @tracked modalOpen;
@@ -19,6 +20,14 @@ export default class ProjectController extends Controller {
   get matchingCurrentApplicant() {
     const currentApplicants = this.project.projectApplicants;
     return currentApplicants.find((applicant) => applicant.emailaddress === this.emailAddress);
+  }
+
+  get contactActiveStatusCode() {
+    return STATUSCODE.ACTIVE.code;
+  }
+
+  get contactActiveStateCode() {
+    return STATECODE.ACTIVE.code;
   }
 
   @action

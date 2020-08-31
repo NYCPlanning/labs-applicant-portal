@@ -12,4 +12,10 @@ export default class UserModel extends Model {
 
   @attr
   lastname;
+
+  @attr
+  statuscode;
+
+  @attr
+  statecode;
 }

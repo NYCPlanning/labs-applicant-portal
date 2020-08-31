@@ -7,6 +7,7 @@ import {
   YES_NO_DONT_KNOW,
 } from '../optionsets/common';
 import APPLICANT_OPTIONSETS from '../optionsets/applicant';
+import CONTACT_OPTIONSETS from '../optionsets/contact';
 import {
   BOROUGHS,
 } from '../optionsets/bbl';
@@ -36,6 +37,10 @@ const OPTIONSET_LOOKUP = {
   },
   projectApplicant: {
     applicantrole: DCPAPPLICANTROLE,
+  },
+  contact: {
+    statuscode: CONTACT_OPTIONSETS.STATUSCODE,
+    statecode: CONTACT_OPTIONSETS.STATECODE,
   },
   package: {
     statecode: PACKAGE_OPTIONSETS.STATECODE,

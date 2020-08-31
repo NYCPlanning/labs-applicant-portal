@@ -7,7 +7,11 @@ import { JsonApiDeserializePipe } from '../../json-api-deserialize.pipe';
 import { PROJECTAPPLICANT_ATTRS } from './project-applicants.attrs';
 import { CONTACT_ATTRS } from '../../contact/contacts.attrs';
 
-const ACTIVE_CODE = 1;
+const ACTIVE_CONTACT_STATUSCODE = 1;
+const INACTIVE_CONTACT_STATUSCODE = 2;
+
+const ACTIVE_CONTACT_STATECODE = 0;
+const INACTIVE_CONTACT_STATECODE = 1;
 
 @UseInterceptors(new JsonApiSerializeInterceptor('project-applicants', {
   id: 'dcp_projectapplicantid',
@@ -48,7 +52,6 @@ export class ProjectApplicantController {
     const { records } = await this.crmService.get('contacts', `
       $select=${CONTACT_ATTRS.join(',')}
       &$filter=startswith(emailaddress1, '${email}')
-        and statuscode eq ${ACTIVE_CODE}
       &$top=1
     `);
 
@@ -60,6 +63,13 @@ export class ProjectApplicantController {
 
     if (records.length > 0) {
       contactId = records[0].contactid;
+      // if contact record is deactivated, reactive it
+      if (records[0].statuscode === INACTIVE_CONTACT_STATUSCODE && records[0].statecode === INACTIVE_CONTACT_STATECODE) {
+        this.crmService.update('contacts', contactId, {
+          statuscode: ACTIVE_CONTACT_STATUSCODE,
+          statecode: ACTIVE_CONTACT_STATECODE,
+        });
+      }
     } else {
       newContact = await this.crmService.create(`contacts`, {
         'emailaddress1': email,
