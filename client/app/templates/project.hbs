@@ -65,10 +65,93 @@
       <FaIcon @icon='users-cog' @fixedWidth={{true}} />
     </h3>
     <ul class="no-bullet">
-      {{#each @model.contacts as |contact|}}
-        <Project::ProjectEditorListItem @contact={{contact}} />
+      {{#each this.project.projectApplicants as |applicant|}}
+        {{#if (and (eq applicant.contact.statuscode this.contactActiveStatusCode) (eq applicant.contact.statecode this.contactActiveStateCode))}}
+          <Project::ProjectEditorListItem 
+            @name={{if applicant.contact.lastname (concat applicant.contact.firstname " " applicant.contact.lastname) applicant.dcpName}}
+            @emailAddress={{if applicant.contact.emailaddress1 applicant.contact.emailaddress1 applicant.emailaddress}}
+          />
+        {{/if}}
       {{/each}}
     </ul>
+
+    <Ui::Question
+      class="fieldset relative"
+      ...attributes
+      as |Q|
+    >
+
+      <div class="grid-x grid-margin-x">
+        <div class="cell medium-6">
+          <Q.Label class="middle">
+            First Name
+          </Q.Label>
+          <Input
+            @type="text"
+            autocomplete="off"
+            @value={{this.firstName}}
+          />
+        </div>
+      </div>
+
+      <div class="grid-x grid-margin-x">
+        <div class="cell medium-6">
+          <Q.Label class="middle">
+            Last Name
+          </Q.Label>
+          <Input
+            @type="text"
+            autocomplete="off"
+            @value={{this.lastName}}
+          />
+        </div>
+      </div>
+
+      <div class="grid-x grid-margin-x">
+        <div class="cell medium-6">
+          <Q.Label class="middle">
+            Email Address
+          </Q.Label>
+          <Input
+            @type="text"
+            autocomplete="off"
+            @value={{this.emailAddress}}
+          />
+        </div>
+      </div>
+    </Ui::Question>
+
+    <button
+      class="button expanded secondary no-margin"
+      type="button"
+      {{on "click" (fn this.addEditor) }}
+    >
+      <strong>Add Project Editor</strong>
+    </button>
+
+    <Ui::ConfirmationModal
+      @show={{this.modalOpen}}
+      @toggle={{fn this.saveEditor}}
+      @cancelButtonText="Cancel"
+    >
+      {{#if this.matchingCurrentApplicant}}
+        <h4>A Project Editor with the email address you entered already exists on this project.</h4>
+      {{else}}
+        <h4>Are you sure you want to add...</h4>
+        <Project::ProjectEditorListItem 
+          @name="{{this.firstName}} {{this.lastName}}"
+          @emailAddress={{this.emailAddress}}
+        />
+        <p>If you add this Editor, they will be able to view and edit this Project.</p>
+        <button
+          class="button expanded no-margin"
+          type="button"
+          {{on "click" (fn this.saveEditor) }}
+        >
+          <strong>Add Editor</strong>
+        </button>
+      {{/if}}
+    </Ui::ConfirmationModal>
 
     <Messages::Assistance class="large-margin-top" />
 
