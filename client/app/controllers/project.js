@@ -5,7 +5,7 @@ import { tracked } from '@glimmer/tracking';
 import { optionset } from '../helpers/optionset';
 
 export default class ProjectController extends Controller {
-  @tracked modalOpen;
+  @tracked addEditorModalOpen;
 
   @tracked emailAddress;
 
@@ -23,7 +23,7 @@ export default class ProjectController extends Controller {
 
   @action
   addEditor() {
-    this.modalOpen = true;
+    this.addEditorModalOpen = true;
   }
 
   @action
@@ -33,7 +33,7 @@ export default class ProjectController extends Controller {
 
   @action
   async saveEditor() {
-    this.modalOpen = false;
+    this.addEditorModalOpen = false;
     if (!this.matchingCurrentApplicant) {
       const newApplicant = await this.store.createRecord('project-applicant', {
         dcpName: `${this.firstName} ${this.lastName}`,
