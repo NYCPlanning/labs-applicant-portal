@@ -35,9 +35,15 @@ export class ProjectApplicantController {
   @Post('/')
   async create(@Body() body) {
     const allowedAttrs = pick(body, PROJECTAPPLICANT_ATTRS);
+    // NOTE: dcp_name field in projectApplicant entity is automatically filled with...
+    // the firstname and lastname fields in the contact entity. In order to get accurate
+    // firstname and lastname values, we have "fake" firstname and lastname attributes in 
+    // the frontend project-applicant model so we can send to backend. 
     const {
       emailaddress: email,
       project: projectId,
+      firstname,
+      lastname,
     } = body;
 
     if (!email || !projectId) {
@@ -57,12 +63,13 @@ export class ProjectApplicantController {
 
     let contactId;
 
-    let newContact = {
+    let currentContact = {
       contactid: null,
     };
 
     if (records.length > 0) {
       contactId = records[0].contactid;
+      currentContact = records[0];
       // if contact record is deactivated, reactive it
       if (records[0].statuscode === INACTIVE_CONTACT_STATUSCODE && records[0].statecode === INACTIVE_CONTACT_STATECODE) {
         this.crmService.update('contacts', contactId, {
@@ -71,10 +78,12 @@ export class ProjectApplicantController {
         });
       }
     } else {
-      newContact = await this.crmService.create(`contacts`, {
-        'emailaddress1': email,
+      currentContact = await this.crmService.create(`contacts`, {
+        firstname: firstname,
+        lastname: lastname,
+        emailaddress1: email,
       });
-      contactId = newContact.contactid;
+      contactId = currentContact.contactid;
     }
 
     const newProjectApplicant = await this.crmService.create('dcp_projectapplicants', {
@@ -88,7 +97,7 @@ export class ProjectApplicantController {
     });
     return {
       ...newProjectApplicant,
-       contact: newContact,
+       contact: currentContact,
     }
   }
 }

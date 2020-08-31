@@ -41,6 +41,8 @@ export default class ProjectController extends Controller {
     if (!this.matchingCurrentApplicant) {
       const newApplicant = await this.store.createRecord('project-applicant', {
         dcpName: `${this.firstName} ${this.lastName}`,
+        firstname: this.firstName,
+        lastname: this.lastName,
         emailaddress: this.emailAddress,
         dcpApplicantrole: optionset(['projectApplicant', 'applicantrole', 'code', 'Other']),
         project: this.project,
