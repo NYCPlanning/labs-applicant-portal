@@ -23,5 +23,10 @@ Router.map(function() {
     this.route('edit');
     this.route('show', { path: '/' });
   });
+
+  this.route('landuse-form', { path: 'landuse-form/:id' }, function () {
+    this.route('edit');
+    this.route('show', { path: '/' });
+  });
   this.route('project', { path: 'projects/:id' });
 });

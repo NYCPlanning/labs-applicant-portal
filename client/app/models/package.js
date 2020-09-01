@@ -39,6 +39,9 @@ export default class PackageModel extends Model {
   @belongsTo('rwcds-form', { async: false })
   rwcdsForm;
 
+  @belongsTo('landuse-form', { async: false })
+  landuseForm;
+
   @attr('number')
   statuscode;
 
