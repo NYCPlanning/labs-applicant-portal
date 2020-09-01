@@ -1,21 +1,30 @@
+<LinkTo
+  @route="index"
+  class="button secondary small medium-margin-top"
+>
+  {{!-- TODO: make email dynamic from user-entered address --}}
+  emailaddress@example.org
+  <FaIcon @icon="caret-down" />
+</LinkTo>
+
 <p>
-  It looks like this email isn't registered. Be sure to use the email address that’s associated
-  with this system to register:
+  An NYC.ID account with this email address was not found. Please
+  create an NYC.ID account to proceed. When creating an account, be
+  sure to use the email address that’s associated with this system.
 </p>
 
 <a
   href="{{get-env-variable 'NYCIDDomain'}}/account/register.htm?emailAddress={{this.loginEmail}}&hideSecurityQuestionFields=true&target={{nycid-target url=(get-env-variable 'NYCIDLocation')}}"
-  class="button secondary no-margin"
+  class="button text-weight-bold"
   target="_blank"
   rel="noreferrer noopener"
 >
   Register NYC.ID account
   &nbsp;
-  <FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} />
+  <FaIcon @icon="external-link-alt" />
 </a>
 
-<p>
-  If you're unsure which email address to use, please contact City Planning at <a
-    href="mailto:ZAP_feedback_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a> or <a href="tel:212-720-3300"
-    class="nowrap">212-720-3300</a>.
+<p class="text-small text-dark-gray">
+  If you're unsure which email address to use, contact City Planning at
+  <a href="mailto:ZAP_feedback_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a> or <a href="tel:212-720-3300" class="nowrap">212-720-3300</a>.
 </p>
