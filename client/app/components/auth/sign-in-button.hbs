@@ -1,13 +1,11 @@
-<li>
-  <a
-    href={{this.loginLocation}}
-    type="button"
-    data-test-login="do-login"
-  >
-    <FaIcon
-      @icon="user-circle"
-      @prefix="fas"
-      class="text-light-gray tiny-margin-right"
-    /> Sign In
-  </a>
-</li>
+<a
+  href={{this.loginLocation}}
+  type="button"
+  class="button text-weight-bold"
+  rel="noreferrer noopener"
+  data-test-login="do-login"
+>
+  Sign in with NYC.ID
+  &nbsp;
+  <FaIcon @icon="external-link-alt" />
+</a>

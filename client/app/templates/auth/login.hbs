@@ -1,14 +1,56 @@
-<p>
-  We checked, and you have NYC.ID account. Sign in and you’ll be redirected back to this site, where you’ll see your list
-  of projects.
-</p>
+<LinkTo
+  @route="index"
+  class="button secondary small medium-margin-top"
+>
+  {{!-- TODO: make email dynamic from user-entered address --}}
+  emailaddress@example.org
+  <FaIcon @icon="caret-down" />
+</LinkTo>
 
 {{#if this.isCityEmployee}}
-  <h3>NYC Employees</h3>
+  <h3 class="small-margin-bottom">
+    As an NYC Employee&hellip;
+  </h3>
 
+  <ul class="no-bullet">
+    <li class="grid-x">
+      <span class="cell shrink">
+        <FaIcon @icon="ban" @fixedWidth={{true}} class="text-fuchsia small-margin-right" />
+      </span>
+      <span class="cell auto">
+        Do not create an NYC.ID account
+      </span>
+    </li>
+    <li class="grid-x">
+      <span class="cell shrink">
+        <FaIcon @icon="ban" @fixedWidth={{true}} class="text-fuchsia small-margin-right" />
+      </span>
+      <span class="cell auto">
+        Do not use your nyc.gov email in the default login form
+      </span>
+    </li>
+    <li class="grid-x">
+      <span class="cell shrink">
+        <FaIcon @icon="check" @fixedWidth={{true}} class="text-green-dim small-margin-right" />
+      </span>
+      <span class="cell auto">
+        <b>Select the "NYC Employees" option</b>
+        (as shown in the image below),
+        then sign in with your nyc.gov network credentials
+      </span>
+    </li>
+  </ul>
+
+
+  <img
+    src="/img/nycid-login-nyc-employees.png"
+    alt="NYC.ID login screen"
+    class="medium-margin-bottom"
+  >
+{{else}}
   <p>
-    NYC employees do not need to create NYC.ID accounts. You can sign in with your nyc.gov credentials by select the "NYC
-    Employees" option.
+    Looks like you have a valid NYC.ID account. Sign in and you’ll be
+    redirected back to this site, where you’ll see your list of projects.
   </p>
 {{/if}}
 
