@@ -26,7 +26,7 @@ $small-font-size: 81.25%; // TODO: update Style Guide so that <small> matches .t
 @include foundation-reveal;
 @include foundation-float-classes;
 @include foundation-visibility-classes;
-
+@include foundation-flex-classes;
 
 // Style Guide components
 @import 'modules/nyc-planning-all-modules'; // or a subset
