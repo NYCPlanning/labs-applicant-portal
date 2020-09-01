@@ -3,20 +3,21 @@
     Email Address
   </Q.Label>
 
-  <Input @type="text" @value={{this.email}} />
+  <Input @type="text" @value={{this.email}} id={{Q.questionId}} />
 
   <div class="grid-x grid-margin-x">
-    <div class="cell medium-10">
-      <p>
-        If you're unsure which email address to use, contact City Planning.
-      </p>
-    </div>
-    <div class="cell medium-2">
-      <button href="#" class="button secondary"
+    <div class="cell medium-3 medium-order-2">
+      <button class="button secondary expanded text-weight-bold"
         {{on 'click' (fn this.startLogin this.email)}}
       >
         Next
       </button>
+    </div>
+    <div class="cell auto medium-order-1">
+      <p class="text-small text-dark-gray">
+        If you're unsure which email address to use, contact City Planning at
+        <a href="mailto:ZAP_feedback_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a> or <a href="tel:212-720-3300" class="nowrap">212-720-3300</a>.
+      </p>
     </div>
   </div>
 </Ui::Question>
