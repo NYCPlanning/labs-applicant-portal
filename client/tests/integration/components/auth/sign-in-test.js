@@ -1,26 +1,49 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import Service from '@ember/service';
 
 module('Integration | Component | auth/sign-in', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+  test('it routes', async function(assert) {
+    assert.expect(3);
 
-    await render(hbs`<Auth::SignIn />`);
+    class FakeRouter extends Service {
+      transitionTo() { assert.ok(true); }
+    }
 
-    assert.equal(this.element.textContent.trim(), '');
+    this.owner.register('service:router', FakeRouter);
 
-    // Template block usage:
+    this.set('searchContacts', () => ({
+      isNycidValidated: true,
+      isNycidEmailRegistered: true,
+      isCityEmployee: true,
+    }));
+
     await render(hbs`
-      <Auth::SignIn>
-        template block text
-      </Auth::SignIn>
+      <Auth::SignIn
+        @searchContacts={{this.searchContacts}}
+      />
     `);
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    await click('[data-test-sign-in="next"]');
+
+    this.set('searchContacts', () => ({
+      isNycidValidated: null,
+      isNycidEmailRegistered: true,
+      isCityEmployee: true,
+    }));
+
+    await click('[data-test-sign-in="next"]');
+
+    this.set('searchContacts', () => ({
+      isNycidValidated: null,
+      isNycidEmailRegistered: false,
+      isCityEmployee: true,
+    }));
+
+    await click('[data-test-sign-in="next"]');
   });
 });

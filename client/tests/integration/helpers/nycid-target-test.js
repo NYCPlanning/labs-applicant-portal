@@ -7,11 +7,11 @@ module('Integration | Helper | nycid-target', function(hooks) {
   setupRenderingTest(hooks);
 
   // Replace this with your real tests.
-  test('it renders', async function(assert) {
+  test('it generates nycid "target" param, encoded', async function(assert) {
     this.set('inputValue', '1234');
 
     await render(hbs`{{nycid-target inputValue}}`);
 
-    assert.equal(this.element.textContent.trim(), '1234');
+    assert.equal(this.element.textContent.trim(), btoa('1234'));
   });
 });
