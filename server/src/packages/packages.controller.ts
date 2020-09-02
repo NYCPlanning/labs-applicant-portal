@@ -15,6 +15,7 @@ import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 import { JsonApiDeserializePipe } from '../json-api-deserialize.pipe';
 import { PackageAccessGuard } from './package-access.guard';
 import { pick } from 'underscore';
+import { LANDUSE_FORM_ATTRS } from './landuse-form/landuse-form.attrs';
 import { RWCDS_FORM_ATTRS } from './rwcds-form/rwcds-form.attrs';
 import { PAS_FORM_ATTRS, PAS_FORM_PROJECTADDRESS_ATTRS } from './pas-form/pas-form.attrs';
 import { PACKAGE_ATTRS } from './packages.attrs';
@@ -35,6 +36,7 @@ import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
     // entity relationships
     'pas-form',
     'rwcds-form',
+    'landuse-form',
     'project',
   ],
   project: {
@@ -86,6 +88,12 @@ import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
       ],
     },
   },
+  'landuse-form': {
+    ref: 'dcp_landuseid',
+    attributes: [
+      ...LANDUSE_FORM_ATTRS,
+    ],
+  },
 
   // Transform here should only be used for remapping
   // navigation links into cleaner names as well as
@@ -99,7 +107,8 @@ import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
     try {
       const {
         dcp_pasform: pasForm,
-        dcp_rwcdsform: rwcdsForm
+        dcp_rwcdsform: rwcdsForm,
+        dcp_landuse: landuseForm
       } = projectPackage;
   
       if (pasForm) {
@@ -133,6 +142,13 @@ import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
           'rwcds-form': {
             ...rwcdsForm,
             'affected-zoning-resolutions': rwcdsForm.dcp_rwcdsform_dcp_affectedzoningresolution_rwcdsform,
+          }
+        }
+      } else if (landuseForm) {
+        return {
+          ...projectPackage,
+          'landuse-form': {
+            ...landuseForm,
           }
         }
       } else {
