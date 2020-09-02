@@ -1,0 +1,15 @@
+<p>
+  We checked, and you have NYC.ID account. Sign in and you’ll be redirected back to this site, where you’ll see your list
+  of projects.
+</p>
+
+{{#if this.isCityEmployee}}
+  <h3>NYC Employees</h3>
+
+  <p>
+    NYC employees do not need to create NYC.ID accounts. You can sign in with your nyc.gov credentials by select the "NYC
+    Employees" option.
+  </p>
+{{/if}}
+
+<Auth::SignInButton />

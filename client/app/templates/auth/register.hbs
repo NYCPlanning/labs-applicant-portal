@@ -1,0 +1,21 @@
+<p>
+  It looks like this email isn't registered. Be sure to use the email address that’s associated
+  with this system to register:
+</p>
+
+<a
+  href="{{get-env-variable 'NYCIDDomain'}}/account/register.htm?emailAddress={{this.loginEmail}}&hideSecurityQuestionFields=true&target={{nycid-target url=(get-env-variable 'NYCIDLocation')}}"
+  class="button secondary no-margin"
+  target="_blank"
+  rel="noreferrer noopener"
+>
+  Register NYC.ID account
+  &nbsp;
+  <FaIcon @icon="external-link-alt" @prefix="fas" @fixedWidth={{true}} />
+</a>
+
+<p>
+  If you're unsure which email address to use, please contact City Planning at <a
+    href="mailto:ZAP_feedback_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a> or <a href="tel:212-720-3300"
+    class="nowrap">212-720-3300</a>.
+</p>
