@@ -57,9 +57,9 @@ export class CrmService {
       };
     } catch (e) {
       throw new HttpException({
-        code: 'ENTITY_NOT_FOUND',
-        title: `Could not find entity`,
-        detail: `Could not find entity "${entity}" for given query ${query.substring(0,10)}`,
+        code: 'QUERY_FAILED',
+        title: 'Could not find entity',
+        detail: e,
       }, HttpStatus.NOT_FOUND);
     }
   }
