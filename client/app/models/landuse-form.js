@@ -78,4 +78,69 @@ export default class LanduseFormModel extends Model {
   @attr dcpTypecategory;
 
   @attr dcpDeterminationdate;
+
+  async save() {
+    await this.saveDirtyLanduseActions();
+    await this.saveDirtyRelatedActions();
+    await this.saveDirtyApplicants();
+    await this.saveDirtyBbls();
+    await super.save();
+  }
+
+  async saveDirtyRelatedActions() {
+    return Promise.all(
+      this.relatedActions
+        .filter((action) => action.hasDirtyAttributes)
+        .map((action) => action.save()),
+    );
+  }
+
+  async saveDirtyLanduseActions() {
+    return Promise.all(
+      this.landuseActions
+        .filter((action) => action.hasDirtyAttributes)
+        .map((action) => action.save()),
+    );
+  }
+
+  async saveDirtyBbls() {
+    return Promise.all(
+      this.bbls
+        .filter((bbl) => bbl.hasDirtyAttributes)
+        .map((bbl) => bbl.save()),
+    );
+  }
+
+  async saveDirtyApplicants() {
+    return Promise.all(
+      this.applicants
+        .filter((applicant) => applicant.hasDirtyAttributes)
+        .map((applicant) => applicant.save()),
+    );
+  }
+
+  get isLanduseActionsDirty() {
+    const dirtyLanduseActions = this.landuseActions.filter((action) => action.hasDirtyAttributes);
+
+    return dirtyLanduseActions.length > 0;
+  }
+
+
+  get isRelatedActionsDirty() {
+    const dirtyRelatedActions = this.relatedActions.filter((action) => action.hasDirtyAttributes);
+
+    return dirtyRelatedActions.length > 0;
+  }
+
+  get isBblsDirty() {
+    const dirtyBbls = this.bbls.filter((bbl) => bbl.hasDirtyAttributes);
+
+    return dirtyBbls.length > 0;
+  }
+
+  get isApplicantsDirty() {
+    const dirtyApplicants = this.applicants.filter((applicant) => applicant.hasDirtyAttributes);
+
+    return dirtyApplicants.length > 0;
+  }
 }
