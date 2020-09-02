@@ -240,7 +240,6 @@ export class CrmService {
 
     return new Promise((resolve, reject) => {
       Request.post(options, (error, response, body) => {
-
         const encoding = response.headers['content-encoding'];
 
         if (error || (response.statusCode != 200 && response.statusCode != 201 && response.statusCode != 204 && response.statusCode != 1223)) {

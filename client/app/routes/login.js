@@ -27,15 +27,11 @@ export default class LoginRoute extends Route {
 
     await this.session.authenticate('authenticator:zap-api-authenticator', _parseResponse(window.location.hash));
 
-    try {
-      // redirect
-      const contact = await this.store.queryRecord('contact', { me: true });
+    // redirect
+    const contact = await this.store.queryRecord('contact', { me: true });
 
-      if (!contact.isNycidValidated) {
-        this.transitionTo('auth.validate', { queryParams: { loginEmail: contact.emailaddress1 } });
-      }
-    } catch(e) {
-      console.log(e);
+    if (!contact.isNycidValidated) {
+      this.transitionTo('auth.validate', { queryParams: { loginEmail: contact.emailaddress1 } });
     }
   }
 
