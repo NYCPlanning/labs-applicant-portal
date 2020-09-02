@@ -15,6 +15,9 @@ export class LanduseFormService {
       $select=${LANDUSE_FORM_ATTRS.join(',')}
       &$filter=
         dcp_landuseid eq ${id}
+      &$expand=
+        dcp_dcp_applicantinformation_dcp_landuse,
+        dcp_dcp_applicantrepinformation_dcp_landuse
     `);
 
     return {

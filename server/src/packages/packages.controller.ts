@@ -92,7 +92,16 @@ import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
     ref: 'dcp_landuseid',
     attributes: [
       ...LANDUSE_FORM_ATTRS,
+
+      'applicants',
     ],
+    applicants: {
+      ref: 'dcp_applicantinformationid',
+      attributes: [
+        ...APPLICANT_ATTRS,
+        'target_entity', // custom attribute to handle the two applicant crm entities
+      ],
+    },
   },
 
   // Transform here should only be used for remapping
@@ -149,6 +158,22 @@ import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
           ...projectPackage,
           'landuse-form': {
             ...landuseForm,
+            applicants: [
+              ...landuseForm.dcp_dcp_applicantinformation_dcp_landuse,
+              ...landuseForm.dcp_dcp_applicantrepinformation_dcp_landuse.map((applicant) => {
+                // map this array to handle the slight differences in schemas between these two entities
+                // that we treat as one applicants array on the frontend
+  
+                // define target_entity for the frontend (defaults to dcp_applicantinformation)
+                applicant['target_entity'] = 'dcp_applicantrepresentativeinformation'
+  
+                return {
+                ...applicant,
+                // FIXME: this is ensuring the Ember Data relationships work (with a unique ref)
+                // but this is hacky because dcp_applicantinformationid doesn't exist on this entity
+                dcp_applicantinformationid: `representative-${applicant.dcp_applicantrepresentativeinformationid}`
+              }}),
+            ],
           }
         }
       } else {
