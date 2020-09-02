@@ -11,6 +11,13 @@
           Land Use
         </h1>
       </section>
+
+      <Packages::ApplicantTeam
+        @form={{saveableForm}}
+        @addApplicant={{this.addApplicant}}
+        @removeApplicant={{this.removeApplicant}}
+        @validations={{this.validations}}
+      />
     </div>
     <div class="cell large-4 sticky-sidebar">
       <saveableForm.PageNav>
