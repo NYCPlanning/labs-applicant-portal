@@ -8,7 +8,7 @@ module('Integration | Component | auth/sign-in', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it routes', async function(assert) {
-    assert.expect(3);
+    assert.expect(4);
 
     class FakeRouter extends Service {
       transitionTo() { assert.ok(true); }
@@ -41,6 +41,14 @@ module('Integration | Component | auth/sign-in', function(hooks) {
     this.set('searchContacts', () => ({
       isNycidValidated: null,
       isNycidEmailRegistered: false,
+      isCityEmployee: true,
+    }));
+
+    await click('[data-test-sign-in="next"]');
+
+    this.set('searchContacts', () => ({
+      isNycidValidated: false,
+      isNycidEmailRegistered: true,
       isCityEmployee: true,
     }));
 
