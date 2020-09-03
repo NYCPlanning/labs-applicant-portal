@@ -6,6 +6,7 @@ import { PasFormController } from './pas-form/pas-form.controller';
 import { ApplicantsController } from './pas-form/applicants/applicants.controller';
 import { BblsController } from './bbls/bbls.controller';
 import { AffectedZoningResolutionsController } from './rwcds-form/affected-zoning-resolution/affected-zoning-resolutions.controller';
+import { RelatedActionsController } from './landuse-form/related-actions/related-actions.controller';
 import { RwcdsFormController } from './rwcds-form/rwcds-form.controller';
 import { LanduseFormController } from './landuse-form/landuse-form.controller';
 import { PasFormService } from './pas-form/pas-form.service';
@@ -24,7 +25,8 @@ import { DocumentModule } from '../document/document.module';
     LanduseFormController,
     ApplicantsController,
     BblsController,
-    AffectedZoningResolutionsController
+    AffectedZoningResolutionsController,
+    RelatedActionsController,
   ],
 })
 export class PackagesModule {}

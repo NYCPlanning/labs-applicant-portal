@@ -3,6 +3,7 @@
   @validators={{array this.validations.SaveableLanduseFormValidations this.validations.SubmittableLanduseFormValidations}}
   as |saveableForm|
 >
+
   <div class="grid-x grid-margin-x">
     <div class="cell large-8">
 
@@ -21,6 +22,13 @@
 
       <Packages::LanduseForm::ProjectTaxLots
         @form={{saveableForm}}
+      />
+
+      <Packages::RelatedAction
+        @form={{saveableForm}}
+        @addRelatedAction={{this.addRelatedAction}}
+        @removeRelatedAction={{this.removeRelatedAction}}
+        @validations={{this.validations}}
       />
     </div>
     <div class="cell large-4 sticky-sidebar">
