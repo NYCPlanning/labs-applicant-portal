@@ -139,6 +139,7 @@ export default class LanduseFormModel extends Model {
   }
 
   get isApplicantsDirty() {
+    console.log('star wars', this.relatedActions);
     const dirtyApplicants = this.applicants.filter((applicant) => applicant.hasDirtyAttributes);
 
     return dirtyApplicants.length > 0;

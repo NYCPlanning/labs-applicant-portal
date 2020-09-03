@@ -3,6 +3,8 @@
   @validators={{array this.validations.SaveableLanduseFormValidations this.validations.SubmittableLanduseFormValidations}}
   as |saveableForm|
 >
+{{log "beep" saveableForm.data.applicants}}
+{{log "our id" saveableForm.data.relatedActions}}
   <div class="grid-x grid-margin-x">
     <div class="cell large-8">
 
