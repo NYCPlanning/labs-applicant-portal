@@ -57,8 +57,17 @@ export class NycidService {
       errors = e.response.body.ERRORS;
     }
 
+    const hasUnknownEmail = errors.hasOwnProperty('cpui.unknownEmail');
+
+    // this implies that an e-mail exists in the system. however, because NYC.ID
+    // does not enable this feature for users who are authenticated through OAUTH,
+    // it returns an "unauthorized" error: The search is unauthorized. This means that
+    // the user exists in the system, but searching for them isn't allowed.
+    const hasUnauthorizedSearch = errors.hasOwnProperty('cpui.unauthorized');
+    const is_nycid_email_registered = !hasUnknownEmail && hasUnauthorizedSearch;
+
     return {
-      is_nycid_email_registered: !errors.hasOwnProperty('cpui.unknownEmail'),
+      is_nycid_email_registered,
     };
   }
 
