@@ -57,9 +57,9 @@ export class CrmService {
       };
     } catch (e) {
       throw new HttpException({
-        code: 'ENTITY_NOT_FOUND',
-        title: `Could not find entity`,
-        detail: `Could not find entity "${entity}" for given query ${query.substring(0,10)}`,
+        code: 'QUERY_FAILED',
+        title: 'Could not find entity',
+        detail: e,
       }, HttpStatus.NOT_FOUND);
     }
   }
@@ -240,7 +240,6 @@ export class CrmService {
 
     return new Promise((resolve, reject) => {
       Request.post(options, (error, response, body) => {
-
         const encoding = response.headers['content-encoding'];
 
         if (error || (response.statusCode != 200 && response.statusCode != 201 && response.statusCode != 204 && response.statusCode != 1223)) {

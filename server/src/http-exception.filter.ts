@@ -10,6 +10,7 @@ export function unfoldedStackTrace(response, status) {
     code:   response.code,
     title:  response.title,
     detail: response.detail,
+    meta: response.meta || {},
     status,
   };
 

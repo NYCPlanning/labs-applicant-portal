@@ -1,6 +1,7 @@
 [build]
   base= "client/"
   command = "yarn build --environment=production"
+  ignore = "/bin/false"
 
 # production
 [context.master]
