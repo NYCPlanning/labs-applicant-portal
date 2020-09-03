@@ -53,7 +53,6 @@ export class NycidService {
         email,
       });
     } catch (e) {
-      console.log(e);
       errors = e.response.body.ERRORS;
     }
 
