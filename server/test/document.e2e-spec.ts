@@ -5,6 +5,8 @@ import * as nock from 'nock';
 import * as mockedEnvPkg from 'mocked-env';
 import { doLogin } from './helpers/do-login';
 import { extractJWT } from './helpers/extract-jwt';
+import { oauthMock } from './helpers/mocks/oauth';
+import { v4 as uuidv4 } from 'uuid';
 
 const { 'default': mockedEnv } = mockedEnvPkg;
 
@@ -37,18 +39,7 @@ describe('DocumentController (e2e)', () => {
   })
 
   beforeAll(async() => {
-    nock('https://login.microsoftonline.com:443')
-      .post(uri => uri.includes('oauth2/token'))
-      .reply(200, {
-        token_type: 'Bearer',
-        expires_in: '3600',
-        ext_expires_in: '3600',
-        expires_on: '1573159181',
-        not_before: '1573155281',
-        resource: 'https://dcppfsuat2.crm9.dynamics.com',
-        access_token: 'test'
-      })
-      .persist();
+    oauthMock(nock);
 
     const scope = nock('https://dcppfsuat2.crm9.dynamics.com');
 
@@ -60,6 +51,14 @@ describe('DocumentController (e2e)', () => {
           contactid: 'test',
           emailaddress1: 'labs_dl@planning.nyc.gov',
         }], '@odata.context': ''
+      })
+      .persist();
+
+    // mock a dummy contact throughout to support doLogin()
+    scope
+      .post(uri => uri.includes('api/data/v9.1/contacts'))
+      .reply(201, function(uri, requestBody: Record<string, any>) {
+        return { ...requestBody, contactid: uuidv4() };
       })
       .persist();
 

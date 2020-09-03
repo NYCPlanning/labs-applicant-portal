@@ -37,7 +37,8 @@
     "rimraf": "^3.0.2",
     "rxjs": "6.5.4",
     "superagent": "^5.2.2",
-    "underscore": "^1.10.2"
+    "underscore": "^1.10.2",
+    "utf8": "^3.0.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.0.0",
