@@ -7,6 +7,7 @@ import {
   YES_NO_DONT_KNOW,
 } from '../optionsets/common';
 import APPLICANT_OPTIONSETS from '../optionsets/applicant';
+import CONTACT_OPTIONSETS from '../optionsets/contact';
 import {
   BOROUGHS,
 } from '../optionsets/bbl';
@@ -22,6 +23,9 @@ import {
   DCPHOUSINGUNITTYPE,
 } from '../optionsets/pas-form';
 import PROJECT_OPTIONSETS from '../optionsets/project';
+import {
+  DCPAPPLICANTROLE,
+} from '../optionsets/project-applicant';
 
 const OPTIONSET_LOOKUP = {
   applicant: {
@@ -30,6 +34,13 @@ const OPTIONSET_LOOKUP = {
   },
   bbl: {
     boroughs: BOROUGHS,
+  },
+  projectApplicant: {
+    applicantrole: DCPAPPLICANTROLE,
+  },
+  contact: {
+    statuscode: CONTACT_OPTIONSETS.STATUSCODE,
+    statecode: CONTACT_OPTIONSETS.STATECODE,
   },
   package: {
     statecode: PACKAGE_OPTIONSETS.STATECODE,

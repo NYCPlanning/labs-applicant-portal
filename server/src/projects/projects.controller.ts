@@ -38,13 +38,15 @@ import { CONTACT_ATTRS } from '../contact/contacts.attrs';
     ref: 'dcp_projectapplicantid',
     attributes: [
       ...PROJECTAPPLICANT_ATTRS,
+
+      'contact'
     ],
-  },
-  'contacts': {
-    ref: 'contactid',
-    attributes: [
-      ...CONTACT_ATTRS,
-    ],
+    contact: {
+      ref: 'contactid',
+      attributes: [
+        ...CONTACT_ATTRS,
+      ],
+    },
   },
 
   // remap verbose navigation link names to
@@ -54,8 +56,7 @@ import { CONTACT_ATTRS } from '../contact/contacts.attrs';
       return {
         ...project,
         packages: project.dcp_dcp_project_dcp_package_project,
-        'project-applicants': project.dcp_dcp_project_dcp_projectapplicant_Project,
-        'contacts': project.contacts,
+        projectApplicants: project['project-applicants'],
       };
     } catch(e) {
       if (e instanceof HttpException) {
