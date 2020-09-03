@@ -5,6 +5,8 @@ import SaveableLanduseFormValidations from '../../../validations/saveable-landus
 import SubmittableLanduseFormValidations from '../../../validations/submittable-landuse-form';
 import SaveableApplicantFormValidations from '../../../validations/saveable-applicant-form';
 import SubmittableApplicantFormValidations from '../../../validations/submittable-applicant-form';
+import SaveableRelatedActionFormValidations from '../../../validations/saveable-related-action-form';
+import SubmittableRelatedActionFormValidations from '../../../validations/submittable-related-action-form';
 import { addToHasMany, removeFromHasMany } from '../../../utils/ember-changeset';
 
 export default class PasFormComponent extends Component {
@@ -13,6 +15,8 @@ export default class PasFormComponent extends Component {
     SubmittableLanduseFormValidations,
     SaveableApplicantFormValidations,
     SubmittableApplicantFormValidations,
+    SaveableRelatedActionFormValidations,
+    SubmittableRelatedActionFormValidations,
   };
 
   @service
@@ -57,5 +61,21 @@ export default class PasFormComponent extends Component {
     removeFromHasMany(changeset, 'applicants', applicant);
 
     applicant.deleteRecord();
+  }
+
+  @action
+  addRelatedAction(changeset) {
+    const newRelatedAction = this.store.createRecord('related-action', {
+      landuseForm: this.landuseForm,
+    });
+
+    addToHasMany(changeset, 'relatedActions', newRelatedAction);
+  }
+
+  @action
+  removeRelatedAction(relatedAction, changeset) {
+    removeFromHasMany(changeset, 'relatedActions', relatedAction);
+
+    relatedAction.deleteRecord();
   }
 }

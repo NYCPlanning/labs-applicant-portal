@@ -62,6 +62,16 @@ export default function() {
   this.patch('/packages/:id');
   this.post('/applicants');
 
+  this.patch('/landuse-forms');
+  this.post('/landuse-forms');
+  this.patch('/landuse-forms/:id');
+
+  this.get('/related-actions');
+  this.get('/related-actions/:id');
+  this.patch('/related-actions/:id');
+  this.del('/related-actions/:id');
+  this.post('/related-actions');
+
   this.post('/documents', function(schema, request) {
     // requestBody should be a FormData object
     const { requestBody } = request;

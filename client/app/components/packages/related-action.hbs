@@ -1,0 +1,50 @@
+{{#let @form as |form|}}
+  <form.Section @title="Related Actions">
+    <p>
+      List all site-specific Actions within the Project Area by the City, State, or Federal Government that have been approved or will be sought. Remember to describe them in more detail in the attached Project Description.
+    </p>
+
+    {{#if form.errors.relatedActions}}
+      {{#each form.errors.relatedActions.validation as |message|}}
+        <div class="callout alert" data-test-validation-message="has-related-actions">{{message}}</div>
+      {{/each}}
+    {{/if}}
+
+    <ul class="no-bullet">
+      {{#each (filter-by 'isDeleted' false @form.data.relatedActions) as |relatedAction relatedActionIndex|}}
+        <li class="scale-fade-in">
+          <form.SaveableForm
+            @model={{relatedAction}}
+            @validators={{array @validations.SaveableRelatedActionFormValidations @validations.SubmittableRelatedActionFormValidations}}
+            as |relatedActionForm|
+          >
+            <Packages::RelatedActionFieldset
+              @form={{relatedActionForm}}
+              @removeRelatedAction={{fn @removeRelatedAction relatedAction @form.data}}
+              data-test-related-action-fieldset={{relatedActionIndex}}
+            />
+          </form.SaveableForm>
+        </li>
+      {{/each}}
+    </ul>
+
+    {{!-- buttons for user to add new related actions --}}
+    <div class="fieldset-adder">
+      <h5 class="small-margin-bottom">
+        Add a Related Action:
+      </h5>
+      <div class="grid-x">
+        <div class="cell large-6 small-padding-right">
+          <button
+            class="button expanded secondary no-margin"
+            type="button"
+            {{on "click" (fn @addRelatedAction @form.data) }}
+            data-test-add-related-action-button
+          >
+            <strong>Add Related Action</strong>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form.Section>
+{{/let}}

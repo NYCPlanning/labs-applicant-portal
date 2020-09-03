@@ -18,6 +18,13 @@
         @removeApplicant={{this.removeApplicant}}
         @validations={{this.validations}}
       />
+
+      <Packages::RelatedAction
+        @form={{saveableForm}}
+        @addRelatedAction={{this.addRelatedAction}}
+        @removeRelatedAction={{this.removeRelatedAction}}
+        @validations={{this.validations}}
+      />
     </div>
     <div class="cell large-4 sticky-sidebar">
       <saveableForm.PageNav>
