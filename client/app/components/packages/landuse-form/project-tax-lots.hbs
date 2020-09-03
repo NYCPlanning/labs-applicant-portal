@@ -1,0 +1,15 @@
+{{#let @form as |form|}}
+  <form.Section @title="Project Area Tax Lots">
+    <p>
+      Review and edit the Tax Lots listed below.
+    </p>
+
+    <div data-test-section="project-tax-lots">
+      <Packages::ProjectGeography
+        @form={{@form}}
+        @bbls={{@form.data.bbls}}
+        @project={{@form.data.package.project}}
+      />
+    </div>
+  </form.Section>
+{{/let}}
