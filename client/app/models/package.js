@@ -76,6 +76,9 @@ export default class PackageModel extends Model {
     if (this.dcpPackagetype === DCPPACKAGETYPE.RWCDS.code) {
       await this.rwcdsForm.save();
     }
+    if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code) {
+      await this.landuseForm.save();
+    }
     await super.save();
 
     await this.reload();
@@ -111,6 +114,14 @@ export default class PackageModel extends Model {
       return isPackageDirty
         || this.rwcdsForm.hasDirtyAttributes
         || this.rwcdsForm.isAffectedZoningResolutionsDirty;
+    }
+    if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code) {
+      return isPackageDirty
+        || this.landuseForm.hasDirtyAttributes
+        || this.landuseForm.isBblsDirty
+        || this.landuseForm.isApplicantsDirty
+        || this.landuseForm.isLanduseActionsDirty
+        || this.landuseForm.isRelatedActionsDirty;
     }
 
     return isPackageDirty;
