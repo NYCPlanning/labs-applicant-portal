@@ -30,7 +30,7 @@ export class LanduseFormController {
   async update(@Body() body, @Param('id') id) {
     const allowedAttrs = pick(body, LANDUSE_FORM_ATTRS);
 
-    await this.crmService.update('dcp_landuse', id, allowedAttrs);
+    await this.crmService.update('dcp_landuses', id, allowedAttrs);
 
     return {
       dcp_landuseid: id,
