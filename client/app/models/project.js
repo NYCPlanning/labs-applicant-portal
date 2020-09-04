@@ -27,11 +27,8 @@ export default class ProjectModel extends Model {
   @hasMany('package', { async: false })
   packages;
 
-  @hasMany('project-applicant', { async: true })
+  @hasMany('project-applicant', { async: false })
   projectApplicants;
-
-  @hasMany('contact', { async: true })
-  contacts;
 
   get publicStatusGeneralPublicProject() {
     const isGeneralPublic = this.dcpVisibility === optionset(['project', 'dcpVisibility', 'code', 'GENERAL_PUBLIC']);

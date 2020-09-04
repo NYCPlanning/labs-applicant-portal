@@ -23,18 +23,21 @@ describe('HttpExceptionFilter', () => {
         code: 1,
         title: "1 title",
         detail: "1 detail",
+        meta: {},
         status: 400,
       },
       {
         code: 2,
         title: "2 title",
         detail: "2 detail",
+        meta: {},
         status: 400,
       },
       {
         code: 3,
         title: "3 title",
         detail: "3 detail",
+        meta: {},
         status: 400,
       }
     ]);

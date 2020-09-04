@@ -66,12 +66,14 @@
     </h3>
     <ul class="no-bullet">
       {{#each this.project.projectApplicants as |applicant|}}
-        <Project::ProjectEditorListItem 
-          @name={{applicant.dcpName}}
-          @emailAddress={{applicant.emailaddress}}
-          @role={{applicant.dcpApplicantrole}}
-          @onDelete={{fn this.removeEditor applicant}}
-        />
+        {{#if (and (eq applicant.contact.statuscode this.contactActiveStatusCode) (eq applicant.contact.statecode this.contactActiveStateCode))}}
+          <Project::ProjectEditorListItem 
+            @name={{if applicant.contact.lastname (concat applicant.contact.firstname " " applicant.contact.lastname) applicant.dcpName}}
+            @emailAddress={{if applicant.contact.emailaddress1 applicant.contact.emailaddress1 applicant.emailaddress}}
+            @role={{applicant.dcpApplicantrole}}
+            @onDelete={{fn this.removeEditor applicant}}
+          />
+        {{/if}}
       {{/each}}
     </ul>
 
@@ -135,16 +137,16 @@
       @continueButtonTitle="Cancel"
     >
       {{#if this.matchingCurrentApplicant}}
-        <h4>The applicant you entered already exists on this project.</h4>
+        <h4>A Project Editor with the email address you entered already exists on this project.</h4>
       {{else}}
         <h4>Are you sure you want to add...</h4>
         <Project::ProjectEditorListItem 
           @name="{{this.firstName}} {{this.lastName}}"
           @emailAddress={{this.emailAddress}}
         />
-        <p>If you add this editor, they will be able to view and edit this project.</p>
+        <p>If you add this Editor, they will be able to view and edit this Project.</p>
         <button
-          class="button expanded secondary no-margin"
+          class="button expanded no-margin"
           type="button"
           {{on "click" (fn this.saveEditor) }}
         >

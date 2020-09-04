@@ -1,4 +1,4 @@
-import { Controller, Patch, Body, Param, Post, UseInterceptors, UseGuards, UsePipes, Delete, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Body, Param, Post, UseInterceptors, UseGuards, UsePipes, Delete, HttpException, HttpStatus } from '@nestjs/common';
 import { pick } from 'underscore';
 import { CrmService } from '../../crm/crm.service';
 import { JsonApiSerializeInterceptor } from '../../json-api-serialize.interceptor';
@@ -35,42 +35,56 @@ export class ProjectApplicantController {
   @Post('/')
   async create(@Body() body) {
     const allowedAttrs = pick(body, PROJECTAPPLICANT_ATTRS);
-    const email = body.emailaddress;
-    const projectId = body.project;
-    const fullName = body.dcp_name;
+    // NOTE: dcp_name field in projectApplicant entity is automatically filled with...
+    // the firstname and lastname fields in the contact entity. In order to get accurate
+    // firstname and lastname values, we have "fake" firstname and lastname attributes in 
+    // the frontend project-applicant model so we can send to backend. 
+    const {
+      emailaddress: email,
+      project: projectId,
+      firstname,
+      lastname,
+    } = body;
 
-    let contactId;
+    if (!email || !projectId) {
+      throw new HttpException({
+        code: 'ADD_PROJECT_APPLICANT_ERROR',
+        title: 'Add Project Applicant failed',
+        detail: 'Cannot add project applicant because missing email or project id',
+      }, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
 
     // check if contact already exists for this email address
     const { records } = await this.crmService.get('contacts', `
       $select=${CONTACT_ATTRS.join(',')}
       &$filter=startswith(emailaddress1, '${email}')
-        and statuscode eq ${ACTIVE_STATUSCODE}
       &$top=1
     `);
 
-    let newContact = {
+    let contactId;
+
+    let currentContact = {
       contactid: null,
     };
 
     if (records.length > 0) {
       contactId = records[0].contactid;
+      currentContact = records[0];
+      // if contact record is deactivated, reactive it
+      if (records[0].statuscode === INACTIVE_STATUSCODE && records[0].statecode === INACTIVE_STATECODE) {
+        this.crmService.update('contacts', contactId, {
+          statuscode: ACTIVE_STATUSCODE,
+          statecode: ACTIVE_STATECODE,
+        });
+      }
     } else {
-      const regex = /^([\w\-]+)/g;
-      const firstName = fullName.match(regex)[0];
-      const lastName = fullName.replace(`${firstName} `, '');
-      newContact = await this.crmService.create(`contacts`, {
-        'emailaddress1': email,
-        'firstname': firstName,
-        'lastname': lastName,
+      currentContact = await this.crmService.create(`contacts`, {
+        firstname: firstname,
+        lastname: lastname,
+        emailaddress1: email,
       });
-      contactId = newContact.contactid;
+      contactId = currentContact.contactid;
     }
-
-    if (!body.emailaddress || !body.project) throw new HttpException(
-      'Missing email address or project id',
-      HttpStatus.UNPROCESSABLE_ENTITY,
-    );
 
     const newProjectApplicant = await this.crmService.create('dcp_projectapplicants', {
       ...allowedAttrs,
@@ -78,12 +92,12 @@ export class ProjectApplicantController {
       // Dy365 syntax for associating a newly-created record
       // with an existing record.
       // see: https://docs.microsoft.com/en-us/powerapps/developer/common-data-service/webapi/create-entity-web-api#associate-entity-records-on-create
-      ...(body.project ? { 'dcp_Project@odata.bind': `/dcp_projects(${projectId})` } : {}),
+      ...(projectId ? { 'dcp_Project@odata.bind': `/dcp_projects(${projectId})` } : {}),
       "dcp_applicant_customer_contact@odata.bind": `/contacts(${contactId})`,
     });
     return {
       ...newProjectApplicant,
-       contact: newContact,
+      contact: currentContact,
     }
   }
 

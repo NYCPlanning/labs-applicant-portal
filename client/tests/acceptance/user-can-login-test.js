@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import {
   click,
+  currentRouteName,
   currentURL,
   find,
   focus,
@@ -93,5 +94,21 @@ module('Acceptance | user can login', function(hooks) {
 
     assert.dom('[data-test-error-key="detail"][data-test-error-idx="0"]')
       .hasText('detail: Invalid auth params - "access_token" missing.');
+  });
+
+  test('User is sent to validation instructions if their account is invalid', async function (assert) {
+    this.server.create('contact', {
+      isNycidValidated: false,
+      isNycidEmailRegistered: true,
+    });
+
+    window.location.hash = '#access_token=a-valid-jwt';
+    try {
+      await visit('/login');
+    } catch (e) {
+      // the promise rejects because the route intentionally aborts the transition if the email isn't validated.
+    }
+
+    assert.equal(currentRouteName(), 'auth.validate');
   });
 });

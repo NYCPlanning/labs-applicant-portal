@@ -7,7 +7,7 @@ export default class ProjectRoute extends Route.extend(AuthenticatedRouteMixin) 
   async model(params) {
     const project = await this.store.findRecord('project', params.id, {
       reload: true,
-      include: 'packages.pasForm,packages.rwcdsForm,contacts,projectApplicants',
+      include: 'packages.pasForm,packages.rwcdsForm,projectApplicants.contacts',
       ...params,
     });
 

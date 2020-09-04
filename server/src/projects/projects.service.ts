@@ -97,18 +97,18 @@ export class ProjectsService {
               or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_NO_REVISIONS_REQUIRED}
               or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_REVISION_REQUIRED}
             )
-          ),
-          dcp_dcp_project_dcp_projectapplicant_Project(
-            $filter= statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
           )
       `);
 
-      const projectApplicantsWithContacts = await this.crmService.get('dcp_projectapplicants', `
+      const projectApplicants = await this.crmService.get('dcp_projectapplicants', `
         $filter=
           _dcp_project_value eq ${projectId}
+          and statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
         &$expand=
           dcp_applicant_customer_contact
       `);
+
+      const projectApplicantsWithContacts = projectApplicants.records.map(applicant => ({ ...applicant, contact: applicant.dcp_applicant_customer_contact }));
 
       const [ project ] = this.overwriteCodesWithLabels(records);
 
@@ -125,7 +125,7 @@ export class ProjectsService {
 
       const projectWithContacts = {
         ...project,
-        contacts: projectApplicantsWithContacts.records.map(applicant => applicant.dcp_applicant_customer_contact),
+        'project-applicants': projectApplicantsWithContacts,
       };
 
       return projectWithContacts;
