@@ -23,6 +23,7 @@ import { PROJECT_ATTRS } from '../projects/projects.attrs';
 import { BBL_ATTRS } from './bbls/bbls.attrs';
 import { AFFECTEDZONINGRESOLUTION_ATTRS } from './rwcds-form/affected-zoning-resolution/affected-zoning-resolutions.attrs';
 import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
+import { RELATED_ACTION_ATTRS } from './landuse-form/related-actions/related-actions.attrs';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('packages', {
   id: 'dcp_packageid',
@@ -95,6 +96,7 @@ import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
 
       'applicants',
       'bbls',
+      'related-actions',
     ],
     applicants: {
       ref: 'dcp_applicantinformationid',
@@ -107,6 +109,12 @@ import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
       ref: 'dcp_projectbblid',
       attributes: [
         ...BBL_ATTRS,
+      ],
+    },
+    'related-actions': {
+      ref: 'dcp_relatedactionsid',
+      attributes: [
+        ...RELATED_ACTION_ATTRS,
       ],
     },
   },
@@ -182,6 +190,7 @@ import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
               }}),
             ],
             bbls: landuseForm.dcp_dcp_projectbbl_dcp_landuse,
+            'related-actions': landuseForm.dcp_dcp_landuse_dcp_relatedactions,
           }
         }
       } else {
