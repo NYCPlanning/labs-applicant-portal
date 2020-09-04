@@ -46,6 +46,7 @@ export class ContactService {
       `);
 
       return {
+        has_crm_contact: true,
         ...firstRecord, // how can this be ghost and still return an emailaddress1
         ...await this.nycid.getNycidStatus(firstRecord.emailaddress1, firstRecord.dcp_nycid_guid),
       };
@@ -78,6 +79,7 @@ export class ContactService {
       `);
 
       return {
+        has_crm_contact: true,
         ...firstRecord,
         ...await this.nycid.getNycidStatus(email, firstRecord.dcp_nycid_guid),
       };
@@ -109,6 +111,7 @@ export class ContactService {
       `);
 
       return {
+        has_crm_contact: true,
         ...firstRecord,
         ...await this.nycid.getNycidStatus(firstRecord.emailaddress1, firstRecord.dcp_nycid_guid),
       };
