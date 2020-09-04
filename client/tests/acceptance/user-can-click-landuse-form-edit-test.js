@@ -141,4 +141,31 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
 
     assert.dom('[data-test-related-action-fieldset="0"]').doesNotExist();
   });
+
+  test('User can update the primary contact information on the landuse form', async function(assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'toDo', 'landuseForm')],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    // filling out necessary information in order to save
+    await click('[data-test-add-applicant-button]');
+    await fillIn('[data-test-input="dcpFirstname"]', 'Tess');
+    await fillIn('[data-test-input="dcpLastname"]', 'Ter');
+    await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
+
+    // filling out the primary contact information
+    await fillIn('[data-test-input="dcpContactname"]', 'contact name');
+    await fillIn('[data-test-input="dcpContactphone"]', '1112223333');
+    await fillIn('[data-test-input="dcpContactemail"]', 'contact@email.com');
+
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.landuseForms.firstObject.dcpContactname, 'contact name');
+    assert.equal(this.server.db.landuseForms.firstObject.dcpContactphone, '1112223333');
+    assert.equal(this.server.db.landuseForms.firstObject.dcpContactemail, 'contact@email.com');
+
+    assert.equal(currentURL(), '/landuse-form/1/edit');
+  });
 });
