@@ -25,6 +25,32 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     });
   });
 
+  test('User can edit Site Information on the landuse form', async function(assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'toDo', 'landuseForm')],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    await fillIn('[data-test-input="dcpSitedataadress"]', 'Some value');
+    await fillIn('[data-test-input="dcpCitycouncil"]', 'Some value');
+    await fillIn('[data-test-input="dcpSitedatacommunitydistrict"]', 'Some value');
+    await fillIn('[data-test-input="dcpSitedatazoningsectionnumbers"]', 'Some value');
+    await fillIn('[data-test-input="dcpSitedataexistingzoningdistrict"]', 'Some value');
+    await fillIn('[data-test-input="dcpSpecialdistricts"]', 'Some value');
+
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.landuseForms.firstObject.dcpSitedataadress, 'Some value');
+    assert.equal(this.server.db.landuseForms.firstObject.dcpCitycouncil, 'Some value');
+    assert.equal(this.server.db.landuseForms.firstObject.dcpSitedatacommunitydistrict, 'Some value');
+    assert.equal(this.server.db.landuseForms.firstObject.dcpSitedatazoningsectionnumbers, 'Some value');
+    assert.equal(this.server.db.landuseForms.firstObject.dcpSitedataexistingzoningdistrict, 'Some value');
+    assert.equal(this.server.db.landuseForms.firstObject.dcpSpecialdistricts, 'Some value');
+
+    assert.equal(currentURL(), '/landuse-form/1/edit');
+  });
+
   test('User can add an applicant on the landuse form', async function(assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
