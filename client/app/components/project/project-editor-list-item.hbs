@@ -6,18 +6,17 @@
     <div class="text-weight-bold">{{@name}}</div>
     <div class="text-small"><a href="mailto:{{@emailAddress}}">{{@emailAddress}}</a></div>
   </div>
+
   {{#unless @disableDelete}}
-    {{#unless this.isPrimaryApplicantOrContact}}
-      <div class="cell shrink medium-padding-left">
-        <button
-          type="button"
-          class="text-red-dark"
-          {{on "click" this.tryRemoveEditor}}
-        >
-          <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
-        </button>
-      </div>
-    {{/unless}}
+    <div class="cell shrink medium-padding-left">
+      <button
+        type="button"
+        class="text-red-dark"
+        {{on "click" this.tryRemoveEditor}}
+      >
+        <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
+      </button>
+    </div>
   {{/unless}}
 </li>
 

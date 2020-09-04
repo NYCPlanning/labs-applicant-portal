@@ -70,7 +70,7 @@
           <Project::ProjectEditorListItem 
             @name={{if applicant.contact.lastname (concat applicant.contact.firstname " " applicant.contact.lastname) applicant.dcpName}}
             @emailAddress={{if applicant.contact.emailaddress1 applicant.contact.emailaddress1 applicant.emailaddress}}
-            @role={{applicant.dcpApplicantrole}}
+            @disableDelete={{applicant.isPrimaryApplicantOrContact}}
             @onDelete={{fn this.removeEditor applicant}}
           />
         {{/if}}
