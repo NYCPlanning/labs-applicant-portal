@@ -20,7 +20,7 @@ import { RWCDS_FORM_ATTRS } from './rwcds-form/rwcds-form.attrs';
 import { PAS_FORM_ATTRS, PAS_FORM_PROJECTADDRESS_ATTRS } from './pas-form/pas-form.attrs';
 import { PACKAGE_ATTRS } from './packages.attrs';
 import { PROJECT_ATTRS } from '../projects/projects.attrs';
-import { BBL_ATTRS } from './pas-form/bbls/bbls.attrs';
+import { BBL_ATTRS } from './bbls/bbls.attrs';
 import { AFFECTEDZONINGRESOLUTION_ATTRS } from './rwcds-form/affected-zoning-resolution/affected-zoning-resolutions.attrs';
 import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
 
@@ -94,12 +94,19 @@ import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
       ...LANDUSE_FORM_ATTRS,
 
       'applicants',
+      'bbls',
     ],
     applicants: {
       ref: 'dcp_applicantinformationid',
       attributes: [
         ...APPLICANT_ATTRS,
         'target_entity', // custom attribute to handle the two applicant crm entities
+      ],
+    },
+    bbls: {
+      ref: 'dcp_projectbblid',
+      attributes: [
+        ...BBL_ATTRS,
       ],
     },
   },
@@ -174,6 +181,7 @@ import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
                 dcp_applicantinformationid: `representative-${applicant.dcp_applicantrepresentativeinformationid}`
               }}),
             ],
+            bbls: landuseForm.dcp_dcp_projectbbl_dcp_landuse,
           }
         }
       } else {

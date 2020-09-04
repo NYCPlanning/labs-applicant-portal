@@ -6,6 +6,8 @@ import {
 import { CrmService } from '../../crm/crm.service';
 import { LANDUSE_FORM_ATTRS } from './landuse-form.attrs';
 
+const ACTIVE_STATECODE = 0;
+
 @Injectable()
 export class LanduseFormService {
   constructor(private readonly crmService: CrmService) {}
@@ -17,7 +19,8 @@ export class LanduseFormService {
         dcp_landuseid eq ${id}
       &$expand=
         dcp_dcp_applicantinformation_dcp_landuse,
-        dcp_dcp_applicantrepinformation_dcp_landuse
+        dcp_dcp_applicantrepinformation_dcp_landuse,
+        dcp_dcp_projectbbl_dcp_landuse($filter=statecode eq ${ACTIVE_STATECODE})
     `);
 
     return {
