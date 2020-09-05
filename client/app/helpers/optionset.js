@@ -58,6 +58,10 @@ const OPTIONSET_LOOKUP = {
   },
   landuseForm: {
     dcpCeqrtype: CEQR_TYPE,
+    dcpWholecity: YES_NO,
+    dcpEntiretyboroughs: YES_NO,
+    dcpEntiretycommunity: YES_NO,
+    dcpNotaxblock: YES_NO,
   },
   rwcdsForm: {
     dcpHasprojectchangedsincesubmissionofthepas: YES_NO,
