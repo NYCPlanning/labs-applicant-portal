@@ -84,6 +84,7 @@ export default class LanduseFormModel extends Model {
     await this.saveDirtyRelatedActions();
     await this.saveDirtyApplicants();
     await this.saveDirtyBbls();
+    await this.saveDirtyProject();
     await super.save();
   }
 
@@ -109,6 +110,12 @@ export default class LanduseFormModel extends Model {
         .filter((bbl) => bbl.hasDirtyAttributes)
         .map((bbl) => bbl.save()),
     );
+  }
+
+  async saveDirtyProject() {
+    if (this.isProjectDirty) {
+      this.package.project.save();
+    }
   }
 
   async saveDirtyApplicants() {
@@ -142,5 +149,9 @@ export default class LanduseFormModel extends Model {
     const dirtyApplicants = this.applicants.filter((applicant) => applicant.hasDirtyAttributes);
 
     return dirtyApplicants.length > 0;
+  }
+
+  get isProjectDirty() {
+    return this.package.project.hasDirtyAttributes;
   }
 }

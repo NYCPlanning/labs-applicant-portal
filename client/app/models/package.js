@@ -121,7 +121,8 @@ export default class PackageModel extends Model {
         || this.landuseForm.isBblsDirty
         || this.landuseForm.isApplicantsDirty
         || this.landuseForm.isLanduseActionsDirty
-        || this.landuseForm.isRelatedActionsDirty;
+        || this.landuseForm.isRelatedActionsDirty
+        || this.landuseForm.isProjectDirty;
     }
 
     return isPackageDirty;
