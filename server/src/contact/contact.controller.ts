@@ -1,7 +1,8 @@
 import { Controller, Session, Get, UseInterceptors, HttpException, HttpStatus, Query } from '@nestjs/common';
-import { CONTACT_ATTRS } from './contacts.attrs';
 import { ContactService } from './contact.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
+import { CONTACT_ATTRS } from './contacts.attrs';
+
 
 
 @UseInterceptors(new JsonApiSerializeInterceptor('contacts', {

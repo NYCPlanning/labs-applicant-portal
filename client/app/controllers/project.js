@@ -6,7 +6,7 @@ import { optionset } from '../helpers/optionset';
 import { STATECODE, STATUSCODE } from '../optionsets/contact';
 
 export default class ProjectController extends Controller {
-  @tracked modalOpen;
+  @tracked addEditorModalOpen;
 
   @tracked emailAddress;
 
@@ -22,6 +22,16 @@ export default class ProjectController extends Controller {
     return currentApplicants.find((applicant) => applicant.emailaddress === this.emailAddress);
   }
 
+  @action
+  addEditor() {
+    this.addEditorModalOpen = true;
+  }
+
+  @action
+  removeEditor(applicant) {
+    applicant.destroyRecord();
+  }
+
   get contactActiveStatusCode() {
     return STATUSCODE.ACTIVE.code;
   }
@@ -31,13 +41,8 @@ export default class ProjectController extends Controller {
   }
 
   @action
-  addEditor() {
-    this.modalOpen = true;
-  }
-
-  @action
   async saveEditor() {
-    this.modalOpen = false;
+    this.addEditorModalOpen = false;
     if (!this.matchingCurrentApplicant) {
       const newApplicant = await this.store.createRecord('project-applicant', {
         dcpName: `${this.firstName} ${this.lastName}`,

@@ -1,4 +1,4 @@
-import { Controller, Body, Post, UseInterceptors, UseGuards, UsePipes, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Body, Param, Post, UseInterceptors, UseGuards, UsePipes, Delete, HttpException, HttpStatus } from '@nestjs/common';
 import { pick } from 'underscore';
 import { CrmService } from '../../crm/crm.service';
 import { JsonApiSerializeInterceptor } from '../../json-api-serialize.interceptor';
@@ -7,11 +7,11 @@ import { JsonApiDeserializePipe } from '../../json-api-deserialize.pipe';
 import { PROJECTAPPLICANT_ATTRS } from './project-applicants.attrs';
 import { CONTACT_ATTRS } from '../../contact/contacts.attrs';
 
-const ACTIVE_CONTACT_STATUSCODE = 1;
-const INACTIVE_CONTACT_STATUSCODE = 2;
+const ACTIVE_STATUSCODE = 1;
+const INACTIVE_STATUSCODE = 2;
 
-const ACTIVE_CONTACT_STATECODE = 0;
-const INACTIVE_CONTACT_STATECODE = 1;
+const ACTIVE_STATECODE = 0;
+const INACTIVE_STATECODE = 1;
 
 @UseInterceptors(new JsonApiSerializeInterceptor('project-applicants', {
   id: 'dcp_projectapplicantid',
@@ -71,10 +71,10 @@ export class ProjectApplicantController {
       contactId = records[0].contactid;
       currentContact = records[0];
       // if contact record is deactivated, reactive it
-      if (records[0].statuscode === INACTIVE_CONTACT_STATUSCODE && records[0].statecode === INACTIVE_CONTACT_STATECODE) {
+      if (records[0].statuscode === INACTIVE_STATUSCODE && records[0].statecode === INACTIVE_STATECODE) {
         this.crmService.update('contacts', contactId, {
-          statuscode: ACTIVE_CONTACT_STATUSCODE,
-          statecode: ACTIVE_CONTACT_STATECODE,
+          statuscode: ACTIVE_STATUSCODE,
+          statecode: ACTIVE_STATECODE,
         });
       }
     } else {
@@ -97,7 +97,28 @@ export class ProjectApplicantController {
     });
     return {
       ...newProjectApplicant,
-       contact: currentContact,
+      contact: currentContact,
+    }
+  }
+
+  @Delete('/:id')
+  async deactivate(@Param('id') id) {
+    try {
+      await this.crmService.update('dcp_projectapplicants', id, {
+        statuscode: INACTIVE_STATUSCODE,
+        statecode: INACTIVE_STATECODE,
+      });
+
+      return {
+        id,
+      };
+    } catch (e) {
+      console.log(e);
+      throw new HttpException({
+        code: 'PROJECT_APPLICANT_DEACTIVATE_FAILED',
+        title: 'Failed to deactivate project applicant',
+        detail: `${e}`,
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }
