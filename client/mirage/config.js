@@ -23,7 +23,6 @@ export default function() {
   this.get('/projects');
   this.get('/contacts', (schema) => schema.contacts.first());
   this.patch('/projects/:id');
-  this.get('/contacts');
 
   this.get('/projects/:id');
 
