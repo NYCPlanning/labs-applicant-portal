@@ -32,16 +32,16 @@ export default class ProjectApplicantModel extends Model {
   get displayName() {
     if (this.contact.lastname) {
       return `${this.contact.firstname} ${this.contact.lastname}`;
-    } else {
-      return this.dcpName;
     }
+
+    return this.dcpName;
   }
 
   get email() {
     if (this.contact.emailaddress1) {
-      return this.contact.emailaddress1
-    } else {
-      return this.emailaddress;
+      return this.contact.emailaddress1;
     }
+
+    return this.emailaddress;
   }
 }

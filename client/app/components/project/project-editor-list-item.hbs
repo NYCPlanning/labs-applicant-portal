@@ -10,7 +10,10 @@
     </p>
 
     {{#if @isRegistered}}
-      <button class="button secondary tiny no-margin" {{on 'click' (toggle 'inviteTeamMemberModal' this)}}>
+      <button
+        class="button secondary tiny no-margin" {{on 'click' (toggle 'inviteTeamMemberModal' this)}}
+        type="button"
+      >
         <FaIcon @icon="envelope" @prefix="fas" @fixedWidth={{true}} />
         SEND INVITATION
       </button>
@@ -93,9 +96,9 @@ You’ve been added as an editor of the project, {{@projectName}}. To access thi
       <CopyButton
         @clipboardTarget="#textarea"
         @success={{this.showCopied}}
-        class='button expanded large {{if isCopied 'success'}}'
+        class='button expanded large {{if this.isCopied 'success'}}'
       >
-        {{#if isCopied}}
+        {{#if this.isCopied}}
           <FaIcon @icon='clipboard-check' @fixedWidth={{true}} />
           Copied
         {{else}}
