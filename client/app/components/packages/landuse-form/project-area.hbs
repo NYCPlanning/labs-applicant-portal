@@ -18,6 +18,7 @@
       >
         <DcpWholeCityRadioGroup
           @options={{optionset 'landuseForm' 'dcpWholecity' 'list'}}
+          @onChange={{fn this.resetDependentFields this.dcpWholecity}}
         as |dcpWholecity|>
           {{#if (eq
             dcpWholecity
@@ -37,6 +38,7 @@
               as |DcpEntiretyboroughsRadioGroup|>
                 <DcpEntiretyboroughsRadioGroup
                   @options={{optionset 'landuseForm' 'dcpEntiretyboroughs' 'list'}}
+                  @onChange={{fn this.resetDependentFields this.dcpEntiretyboroughs}}
                 as |dcpEntiretyboroughs|>
                   {{#if (eq
                     dcpEntiretyboroughs
@@ -74,6 +76,7 @@
                       as |DcpEntiretycommunityRadioGroup|>
                         <DcpEntiretycommunityRadioGroup
                           @options={{optionset 'landuseForm' 'dcpEntiretycommunity' 'list'}}
+                          @onChange={{fn this.resetDependentFields this.dcpEntiretycommunity}}
                         as |dcpEntiretycommunity|>
                           {{#if (eq
                             dcpEntiretycommunity
@@ -112,6 +115,7 @@
                               as |DcpNotaxblockRadioGroup|>
                                 <DcpNotaxblockRadioGroup
                                   @options={{optionset 'landuseForm' 'dcpNotaxblock' 'list'}}
+                                  @onChange={{fn this.resetDependentFields this.dcpNotaxblock}}
                                 as |dcpNotaxblock|>
                                   {{#if (eq
                                     dcpNotaxblock
