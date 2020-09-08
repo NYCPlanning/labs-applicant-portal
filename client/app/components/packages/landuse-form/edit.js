@@ -11,7 +11,7 @@ import SaveableRelatedActionFormValidations from '../../../validations/saveable-
 import SubmittableRelatedActionFormValidations from '../../../validations/submittable-related-action-form';
 import { addToHasMany, removeFromHasMany } from '../../../utils/ember-changeset';
 
-export default class PasFormComponent extends Component {
+export default class LandUseFormComponent extends Component {
   validations = {
     SaveableProjectFormValidations,
     SubmittableProjectFormValidations,

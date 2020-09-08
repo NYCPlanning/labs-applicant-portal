@@ -1,0 +1,156 @@
+{{#let @form as |form|}}
+  <form.Section @title="Proposed Project Area">
+    <p>
+      The <b>Project Area</b> is the entirety of all land parcels
+      that are affected by all actions being sought.
+    </p>
+
+    <Ui::Question
+    as |dcpWholecityQ|>
+      <dcpWholecityQ.Label>
+        Do <em>all</em> Actions being sought apply to the whole City?
+      </dcpWholecityQ.Label>
+
+      <form.Field
+        @attribute="dcpWholecity"
+        @type="radio-group"
+        as |DcpWholeCityRadioGroup|
+      >
+        <DcpWholeCityRadioGroup
+          @options={{optionset 'landuseForm' 'dcpWholecity' 'list'}}
+          @onChange={{fn this.resetDependentFields this.dcpWholecity}}
+        as |dcpWholecity|>
+          {{#if (eq
+            dcpWholecity
+            (optionset 'landuseForm' 'dcpWholecity' 'code' 'NO')
+          )}}
+
+            <Ui::Question
+            as |dcpEntiretyboroughsQ|>
+              <dcpEntiretyboroughsQ.Label>
+                Do <em>all</em> Actions being sought apply to the entirety of one or
+                more Boroughs?
+              </dcpEntiretyboroughsQ.Label>
+
+              <form.Field
+                @attribute="dcpEntiretyboroughs"
+                @type="radio-group"
+              as |DcpEntiretyboroughsRadioGroup|>
+                <DcpEntiretyboroughsRadioGroup
+                  @options={{optionset 'landuseForm' 'dcpEntiretyboroughs' 'list'}}
+                  @onChange={{fn this.resetDependentFields this.dcpEntiretyboroughs}}
+                as |dcpEntiretyboroughs|>
+                  {{#if (eq
+                    dcpEntiretyboroughs
+                    (optionset 'landuseForm' 'dcpEntiretyboroughs' 'code' 'YES')
+                  )}}
+                    <Ui::Question
+                      @required={{true}}
+                    as |dcpBoroughsQ|>
+                      <dcpBoroughsQ.Label>
+                        Which Boroughs?
+                      </dcpBoroughsQ.Label>
+
+                      <form.Field
+                        @attribute="dcpBoroughs"
+                        @maxLength="75"
+                        @showCounter={{true}}
+                        id={{dcpBoroughsQ.questionId}}
+                      />
+                    </Ui::Question>
+                  {{/if}}
+                  {{#if (eq
+                    dcpEntiretyboroughs
+                    (optionset 'landuseForm' 'dcpEntiretyboroughs' 'code' 'NO')
+                  )}}
+                    <Ui::Question
+                    as |dcpEntiretycommunityQ|>
+                      <dcpEntiretycommunityQ.Label>
+                        Do <em>all</em> Actions being sought apply to the entirety of one or
+                        more Community District(s)?
+                      </dcpEntiretycommunityQ.Label>
+
+                      <form.Field
+                        @attribute="dcpEntiretycommunity"
+                        @type="radio-group"
+                      as |DcpEntiretycommunityRadioGroup|>
+                        <DcpEntiretycommunityRadioGroup
+                          @options={{optionset 'landuseForm' 'dcpEntiretycommunity' 'list'}}
+                          @onChange={{fn this.resetDependentFields this.dcpEntiretycommunity}}
+                        as |dcpEntiretycommunity|>
+                          {{#if (eq
+                            dcpEntiretycommunity
+                            (optionset 'landuseForm' 'dcpEntiretycommunity' 'code' 'YES')
+                          )}}
+                            <Ui::Question
+                              @required={{true}}
+                            as |dcpCommunityQ|>
+                                <dcpCommunityQ.Label>
+                                  Which Community District(s)?
+                                </dcpCommunityQ.Label>
+
+                                <form.Field
+                                  @attribute="dcpCommunity"
+                                  @maxLength="175"
+                                  @showCounter={{true}}
+                                  id={{dcpCommunityQ.questionId}}
+                                />
+                            </Ui::Question>
+                          {{/if}}
+                          {{#if (eq
+                            dcpEntiretycommunity
+                            (optionset 'landuseForm' 'dcpEntiretycommunity' 'code' 'NO')
+                          )}}
+                            <Ui::Question
+                            as |dcpNotaxblockQ|>
+                              <dcpNotaxblockQ.Label>
+                                Do <em>all</em> Actions being sought apply to
+                                land or land underwater that is not associated
+                                with a Tax Block or Lot?
+                              </dcpNotaxblockQ.Label>
+
+                              <form.Field
+                                @attribute="dcpNotaxblock"
+                                @type="radio-group"
+                              as |DcpNotaxblockRadioGroup|>
+                                <DcpNotaxblockRadioGroup
+                                  @options={{optionset 'landuseForm' 'dcpNotaxblock' 'list'}}
+                                  @onChange={{fn this.resetDependentFields this.dcpNotaxblock}}
+                                as |dcpNotaxblock|>
+                                  {{#if (eq
+                                    dcpNotaxblock
+                                    (optionset 'landuseForm' 'dcpNotaxblock' 'code' 'YES')
+                                  )}}
+                                    <Ui::Question
+                                    as |dcpSitedatapropertydescriptionQ|>
+                                        <dcpSitedatapropertydescriptionQ.Label>
+                                          Describe Non-Tax Lots by cross streets
+                                          bounding streets, dimensions, etc.
+                                        </dcpSitedatapropertydescriptionQ.Label>
+
+                                        <form.Field
+                                          @type="text-area"
+                                          @attribute="dcpSitedatapropertydescription"
+                                          @maxlength="500"
+                                          @showCounter={{true}}
+                                          id={{dcpSitedatapropertydescriptionQ.questionId}}
+                                        />
+                                    </Ui::Question>
+                                  {{/if}}
+                                </DcpNotaxblockRadioGroup>
+                              </form.Field>
+                            </Ui::Question>
+                          {{/if}}
+                        </DcpEntiretycommunityRadioGroup>
+                      </form.Field>
+                    </Ui::Question>
+                  {{/if}}
+                </DcpEntiretyboroughsRadioGroup>
+              </form.Field>
+            </Ui::Question>
+          {{/if}}
+        </DcpWholeCityRadioGroup>
+      </form.Field>
+    </Ui::Question>
+  </form.Section>
+{{/let}}

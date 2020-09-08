@@ -51,6 +51,111 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
 
+  test('User can reveal Project Area conditional questions', async function(assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'toDo', 'landuseForm')],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    assert.dom('[data-test-radio="dcpEntiretyboroughs"]').doesNotExist();
+
+    await click('[data-test-radio="dcpWholecity"][data-test-radio-option="Yes"]');
+
+    assert.dom('[data-test-radio="dcpEntiretyboroughs"]').doesNotExist();
+
+    await click('[data-test-radio="dcpWholecity"][data-test-radio-option="No"]');
+
+    assert.dom('[data-test-radio="dcpEntiretyboroughs"]').exists();
+
+
+    assert.dom('[data-test-input="dcpBoroughs"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpEntiretycommunity"]').doesNotExist();
+
+    await click('[data-test-radio="dcpEntiretyboroughs"][data-test-radio-option="Yes"]');
+
+    assert.dom('[data-test-input="dcpBoroughs"]').exists();
+    assert.dom('[data-test-radio="dcpEntiretycommunity"]').doesNotExist();
+
+    await click('[data-test-radio="dcpEntiretyboroughs"][data-test-radio-option="No"]');
+
+    assert.dom('[data-test-input="dcpBoroughs"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpEntiretycommunity"]').exists();
+
+
+    assert.dom('[data-test-input="dcpCommunity"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpNotaxblock"]').doesNotExist();
+
+    await click('[data-test-radio="dcpEntiretycommunity"][data-test-radio-option="Yes"]');
+
+    assert.dom('[data-test-input="dcpCommunity"]').exists();
+    assert.dom('[data-test-radio="dcpNotaxblock"]').doesNotExist();
+
+    await click('[data-test-radio="dcpEntiretycommunity"][data-test-radio-option="No"]');
+
+    assert.dom('[data-test-input="dcpCommunity"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpNotaxblock"]').exists();
+
+
+    assert.dom('[data-test-input="dcpSitedatapropertydescription"]').doesNotExist();
+
+    await click('[data-test-radio="dcpNotaxblock"][data-test-radio-option="Yes"]');
+
+    assert.dom('[data-test-input="dcpSitedatapropertydescription"]').exists();
+
+    await click('[data-test-radio="dcpNotaxblock"][data-test-radio-option="No"]');
+
+    assert.dom('[data-test-input="dcpSitedatapropertydescription"]').doesNotExist();
+
+    assert.equal(currentURL(), '/landuse-form/1/edit');
+  });
+
+  test('User resets values of all radio descendants when changing radio answer', async function(assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'toDo', 'landuseForm')],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    await click('[data-test-radio="dcpWholecity"][data-test-radio-option="No"]');
+    await click('[data-test-radio="dcpEntiretyboroughs"][data-test-radio-option="No"]');
+    await click('[data-test-radio="dcpEntiretycommunity"][data-test-radio-option="No"]');
+    await click('[data-test-radio="dcpNotaxblock"][data-test-radio-option="Yes"]');
+    await fillIn('[data-test-input="dcpSitedatapropertydescription"]', 'Planning');
+
+    await assert.dom('[data-test-input="dcpSitedatapropertydescription"]').hasValue('Planning');
+
+    await click('[data-test-radio="dcpNotaxblock"][data-test-radio-option="No"]');
+    await click('[data-test-radio="dcpNotaxblock"][data-test-radio-option="Yes"]');
+
+    await assert.dom('[data-test-input="dcpSitedatapropertydescription"]').hasNoValue();
+
+    await fillIn('[data-test-input="dcpSitedatapropertydescription"]', 'Planning');
+
+    await assert.dom('[data-test-input="dcpSitedatapropertydescription"]').hasValue('Planning');
+
+    await click('[data-test-radio="dcpWholecity"][data-test-radio-option="Yes"]');
+    await click('[data-test-radio="dcpWholecity"][data-test-radio-option="No"]');
+
+    assert.dom('[data-test-radio="dcpEntiretycommunity"]').doesNotExist();
+
+    await click('[data-test-radio="dcpEntiretyboroughs"][data-test-radio-option="No"]');
+
+    assert.dom('[data-test-radio="dcpNotaxblock"]').doesNotExist();
+
+    await click('[data-test-radio="dcpEntiretycommunity"][data-test-radio-option="No"]');
+
+    assert.dom('[data-test-input="dcpSitedatapropertydescription"]').doesNotExist();
+
+    await click('[data-test-radio="dcpNotaxblock"][data-test-radio-option="Yes"]');
+
+    assert.dom('[data-test-input="dcpSitedatapropertydescription"]').exists();
+
+    await assert.dom('[data-test-input="dcpSitedatapropertydescription"]').hasNoValue();
+
+    assert.equal(currentURL(), '/landuse-form/1/edit');
+  });
+
   test('User can add an applicant on the landuse form', async function(assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
