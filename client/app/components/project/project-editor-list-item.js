@@ -11,6 +11,8 @@ export default class ProjectEditorListComponent extends Component {
 
   @tracked inviteTeamMemberModal = false;
 
+  @tracked isCopied = false
+
   @action
   tryRemoveEditor() {
     this.removeEditorModalOpen = true;
@@ -25,5 +27,16 @@ export default class ProjectEditorListComponent extends Component {
   @action
   cancelRemoveEditor() {
     this.removeEditorModalOpen = false;
+  }
+
+  @action
+  showCopied() {
+    this.isCopied = true;
+  }
+
+  @action
+  closeInviteTeamMemberModal() {
+    this.inviteTeamMemberModal = false;
+    this.isCopied = false;
   }
 }
