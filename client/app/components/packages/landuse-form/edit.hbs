@@ -11,6 +11,11 @@
         <h1 class="header-large">
           Land Use
         </h1>
+
+        <Packages::LanduseForm::ProjectInformation
+          @form={{saveableForm}}
+          @validations={{this.validations}}
+        />
       </section>
 
       <Packages::LanduseForm::PrimaryContact

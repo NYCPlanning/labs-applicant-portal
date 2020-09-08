@@ -1,6 +1,8 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import SaveableProjectFormValidations from '../../../validations/saveable-project-form';
+import SubmittableProjectFormValidations from '../../../validations/submittable-project-form';
 import SaveableLanduseFormValidations from '../../../validations/saveable-landuse-form';
 import SubmittableLanduseFormValidations from '../../../validations/submittable-landuse-form';
 import SaveableApplicantFormValidations from '../../../validations/saveable-applicant-form';
@@ -11,6 +13,8 @@ import { addToHasMany, removeFromHasMany } from '../../../utils/ember-changeset'
 
 export default class PasFormComponent extends Component {
   validations = {
+    SaveableProjectFormValidations,
+    SubmittableProjectFormValidations,
     SaveableLanduseFormValidations,
     SubmittableLanduseFormValidations,
     SaveableApplicantFormValidations,
