@@ -1,0 +1,13 @@
+{{#let @form as |form|}}
+  <form.Section @title="Attached Documents">
+    <p>
+      Please attach the following required documents. (Additional materials that help to explain the proposed project may also be submitted.)
+    </p>
+
+    <Packages::Attachments
+      @package={{@model.package}}
+      @fileManager={{@model.package.fileManager}}
+      data-test-section="attachments"
+    />
+  </form.Section>
+{{/let}}

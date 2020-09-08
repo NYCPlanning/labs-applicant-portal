@@ -38,6 +38,11 @@
         @removeRelatedAction={{this.removeRelatedAction}}
         @validations={{this.validations}}
       />
+
+      <Packages::LanduseForm::AttachedDocuments
+        @form={{saveableForm}}
+        @model={{@package.landuseForm}}
+      />
     </div>
     <div class="cell large-4 sticky-sidebar">
       <saveableForm.PageNav>
