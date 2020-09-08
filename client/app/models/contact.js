@@ -19,6 +19,12 @@ export default class ContactModel extends Model {
   @attr
   statecode;
 
+  // we can use this to assume whether they have logged in once
+  @attr
+  dcpNycidGuid;
+
+  // unreliable: these do not necessarily come back from the contacts
+  // endpoint. do not rely on these virtual properties
   @attr('boolean', { allowNull: true })
   isNycidValidated;
 

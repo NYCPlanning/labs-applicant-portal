@@ -65,13 +65,15 @@
       <FaIcon @icon='users-cog' @fixedWidth={{true}} />
     </h3>
     <ul class="no-bullet">
-      {{#each this.project.projectApplicants as |applicant|}}
-        {{#if (and (eq applicant.contact.statuscode this.contactActiveStatusCode) (eq applicant.contact.statecode this.contactActiveStateCode))}}
+      {{#each this.project.projectApplicants as |projectApplicant|}}
+        {{#if (and (eq projectApplicant.contact.statuscode this.contactActiveStatusCode) (eq projectApplicant.contact.statecode this.contactActiveStateCode))}}
           <Project::ProjectEditorListItem 
-            @name={{if applicant.contact.lastname (concat applicant.contact.firstname " " applicant.contact.lastname) applicant.dcpName}}
-            @emailAddress={{if applicant.contact.emailaddress1 applicant.contact.emailaddress1 applicant.emailaddress}}
-            @disableDelete={{applicant.isPrimaryApplicantOrContact}}
-            @onDelete={{fn this.removeEditor applicant}}
+            @name={{projectApplicant.displayName}}
+            @emailAddress={{projectApplicant.email}}
+            @isRegistered={{projectApplicant.contact.dcpNycidGuid}}
+            @projectName={{this.project.dcpProjectname}}
+            @canDelete={{not projectApplicant.isPrimaryApplicantOrContact}}
+            @onDelete={{fn this.removeEditor projectApplicant}}
           />
         {{/if}}
       {{/each}}

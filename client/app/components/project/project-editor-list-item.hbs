@@ -3,40 +3,117 @@
     <FaIcon @icon='user' @fixedWidth={{true}} @transform='down-1' class="text-gray" />
   </div>
   <div class="cell auto">
-    <div class="text-weight-bold">{{@name}}</div>
-    <div class="text-small"><a href="mailto:{{@emailAddress}}">{{@emailAddress}}</a></div>
+    <h5 class="no-margin">{{@name}}</h5>
+
+    <p class="text-small tiny-margin-bottom">
+      <a href="mailto:{{@emailAddress}}">{{@emailAddress}}</a>
+    </p>
+
+    {{#if @isRegistered}}
+      <button
+        class="button secondary tiny no-margin" {{on 'click' (toggle 'inviteTeamMemberModal' this)}}
+        type="button"
+      >
+        <FaIcon @icon="envelope" @prefix="fas" @fixedWidth={{true}} />
+        SEND INVITATION
+      </button>
+    {{/if}}
   </div>
 
-  {{#unless @disableDelete}}
+  {{#if @canDelete}}
     <div class="cell shrink medium-padding-left">
       <button
         type="button"
-        class="text-red-dark"
+        class="text-red-dim"
         {{on "click" this.tryRemoveEditor}}
       >
         <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
       </button>
     </div>
-  {{/unless}}
+  {{/if}}
 </li>
 
-<Ui::ConfirmationModal
+<Ui::GenericModal
   @show={{this.removeEditorModalOpen}}
-  @toggle={{this.cancelRemoveEditor}}
-  @continueButtonTitle="Cancel"
+  @closeButtonAction={{this.cancelRemoveEditor}}
 >
-    <h4>Are you sure you want to remove...</h4>
-    <Project::ProjectEditorListItem
-      @name={{@name}}
-      @emailAddress={{@emailAddress}}
-      @disableDelete={{true}}
-    />
-    <p>If you remove this editor, they will not be able to view and edit this project.</p>
-    <button
-      class="button expanded no-margin"
-      type="button"
-      {{on "click" this.confirmRemoveEditor}}
-    >
-      <strong>Remove Editor</strong>
-    </button>
-</Ui::ConfirmationModal>
+  <h3>Are you sure you want to remove...</h3>
+
+  <Project::ProjectEditorListItem
+    @name={{@name}}
+    @emailAddress={{@emailAddress}}
+    @disableDelete={{true}}
+  />
+
+  <p class="text-red">
+    If you remove this Editor, they will not be able to view or edit this Project.
+  </p>
+
+  <div class="grid-x">
+    <div class="cell large-6 small-padding-right">
+      <button
+        type="button"
+        class="button expanded large alert"
+        {{on "click" this.confirmRemoveEditor}}
+        >
+        <FaIcon @icon='user-times' @fixedWidth={{true}} />
+        Remove Editor
+      </button>
+    </div>
+    <div class="cell large-6 small-padding-left">
+      <button
+        type="button"
+        class="button expanded large secondary"
+        {{on "click" this.cancelRemoveEditor}}
+        >
+        Cancel
+      </button>
+    </div>
+  </div>
+</Ui::GenericModal>
+
+<Ui::GenericModal
+  @show={{this.inviteTeamMemberModal}}
+  @closeButtonAction={{this.closeInviteTeamMemberModal}}
+>
+  <h3>Send Invitation</h3>
+
+  <p>
+    {{@name}} does not have a valid account.
+    Send this invitation to <a href="mailto:{{@emailAddress}}">{{@emailAddress}}</a>:
+  </p>
+
+  <textarea id="textarea" cols="30" rows="10">
+{{@name}},
+
+You’ve been added as an editor of the project, {{@projectName}}. To access this projects, you’ll need to create an NYC.ID account with the email address {{@emailAddress}}.
+
+{{get-env-variable 'NYCIDDomain'}}/account/register.htm?disableEmail=true&emailAddress={{@emailAddress}}&hideSecurityQuestionFields=true&target={{nycid-target url=(get-env-variable 'NYCIDLocation')}}
+  </textarea>
+
+  <div class="grid-x">
+    <div class="cell large-6 small-padding-right">
+      <CopyButton
+        @clipboardTarget="#textarea"
+        @success={{this.showCopied}}
+        class='button expanded large {{if this.isCopied 'success'}}'
+      >
+        {{#if this.isCopied}}
+          <FaIcon @icon='clipboard-check' @fixedWidth={{true}} />
+          Copied
+        {{else}}
+          Copy Message
+        {{/if}}
+      </CopyButton>
+    </div>
+    <div class="cell large-6 small-padding-left">
+      <button
+        type="button"
+        class="button expanded large secondary"
+        {{on "click" this.closeInviteTeamMemberModal}}
+        >
+        Cancel
+      </button>
+    </div>
+  </div>
+</Ui::GenericModal>

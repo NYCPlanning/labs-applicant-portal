@@ -3,11 +3,15 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class ProjectEditorListComponent extends Component {
-  get disableDelete() {
-    return this.args.disableDelete ?? false;
+  get canDelete() {
+    return this.args.canDelete ?? false;
   }
 
   @tracked removeEditorModalOpen = false;
+
+  @tracked inviteTeamMemberModal = false;
+
+  @tracked isCopied = false
 
   @action
   tryRemoveEditor() {
@@ -23,5 +27,16 @@ export default class ProjectEditorListComponent extends Component {
   @action
   cancelRemoveEditor() {
     this.removeEditorModalOpen = false;
+  }
+
+  @action
+  showCopied() {
+    this.isCopied = true;
+  }
+
+  @action
+  closeInviteTeamMemberModal() {
+    this.inviteTeamMemberModal = false;
+    this.isCopied = false;
   }
 }

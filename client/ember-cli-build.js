@@ -10,6 +10,10 @@ module.exports = function(defaults) {
       onlyIncluded: true,
       sourceMap: false,
     },
+
+    'ember-composable-helpers': {
+      only: ['toggle'],
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated
