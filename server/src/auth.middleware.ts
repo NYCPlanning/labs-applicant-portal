@@ -12,7 +12,9 @@ export class AuthMiddleware implements NestMiddleware {
 
   async use(req: any, res: any, next: () => void) {
     // skip for the login route
-    if (req.originalUrl.includes('login')) {
+    const authAllowList = req.originalUrl.includes('login') || req.originalUrl.includes('contacts?email');
+
+    if (authAllowList) {
       next();
 
       return;

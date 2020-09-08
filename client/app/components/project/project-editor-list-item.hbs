@@ -6,4 +6,37 @@
     <div class="text-weight-bold">{{@name}}</div>
     <div class="text-small"><a href="mailto:{{@emailAddress}}">{{@emailAddress}}</a></div>
   </div>
+
+  {{#unless @disableDelete}}
+    <div class="cell shrink medium-padding-left">
+      <button
+        type="button"
+        class="text-red-dark"
+        {{on "click" this.tryRemoveEditor}}
+      >
+        <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
+      </button>
+    </div>
+  {{/unless}}
 </li>
+
+<Ui::ConfirmationModal
+  @show={{this.removeEditorModalOpen}}
+  @toggle={{this.cancelRemoveEditor}}
+  @continueButtonTitle="Cancel"
+>
+    <h4>Are you sure you want to remove...</h4>
+    <Project::ProjectEditorListItem
+      @name={{@name}}
+      @emailAddress={{@emailAddress}}
+      @disableDelete={{true}}
+    />
+    <p>If you remove this editor, they will not be able to view and edit this project.</p>
+    <button
+      class="button expanded no-margin"
+      type="button"
+      {{on "click" this.confirmRemoveEditor}}
+    >
+      <strong>Remove Editor</strong>
+    </button>
+</Ui::ConfirmationModal>

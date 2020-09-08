@@ -20,12 +20,11 @@ export default function() {
     this.passthrough(`${ENV.host}/**`);
   }
 
-  this.get('/projects');
   this.get('/contacts', (schema) => schema.contacts.first());
-  this.patch('/projects/:id');
-  this.get('/contacts');
 
+  this.get('/projects');
   this.get('/projects/:id');
+  this.patch('/projects/:id');
 
   this.get('/login', () => ({ ok: true }));
   this.get('/logout');
