@@ -9,6 +9,8 @@ export default class ProjectEditorListComponent extends Component {
 
   @tracked removeEditorModalOpen = false;
 
+  @tracked inviteTeamMemberModal = false;
+
   @action
   tryRemoveEditor() {
     this.removeEditorModalOpen = true;

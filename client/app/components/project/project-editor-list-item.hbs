@@ -5,6 +5,12 @@
   <div class="cell auto">
     <div class="text-weight-bold">{{@name}}</div>
     <div class="text-small"><a href="mailto:{{@emailAddress}}">{{@emailAddress}}</a></div>
+
+    {{#if @isRegistered}}
+      <button class="button secondary" {{on 'click' (toggle 'inviteTeamMemberModal' this)}}>
+        Send Invitation
+      </button>
+    {{/if}}
   </div>
 
   {{#if @canDelete}}
@@ -39,4 +45,36 @@
     >
       <strong>Remove Editor</strong>
     </button>
+</Ui::ConfirmationModal>
+
+<Ui::ConfirmationModal
+  @show={{this.inviteTeamMemberModal}}
+  @toggle={{toggle 'inviteTeamMemberModal' this}}
+  @continueButtonTitle="Cancel"
+>
+  <h1>
+    Send Invitation
+  </h1>
+
+  <p>
+    {{@name}} does not have a valid account.
+    Send this invitation to <div class="text-small"><a href="mailto:{{@emailAddress}}">{{@emailAddress}}</a></div>
+
+    <textarea id="textarea" cols="30" rows="10">
+      {{@name}},
+
+      You’ve been added as an editor of the project, {{@projectName}}. To access this projects, you’ll need to create an NYC.ID
+      account with the email address {{@emailAddress}}.
+ 
+      {{get-env-variable 'NYCIDDomain'}}/account/register.htm?disableEmail=true&emailAddress={{@emailAddress}}&hideSecurityQuestionFields=true&target={{nycid-target url=(get-env-variable 'NYCIDLocation')}}
+    </textarea>
+  </p>
+
+  <CopyButton
+    @clipboardTarget="#textarea"
+    @tagName='button'
+    class='button secondary'
+  >
+    Copy Message
+  </CopyButton>
 </Ui::ConfirmationModal>
