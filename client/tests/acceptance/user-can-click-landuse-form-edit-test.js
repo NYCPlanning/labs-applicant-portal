@@ -191,4 +191,31 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
 
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
+
+  test('User can update the environmental review information on the landuse form', async function(assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'toDo', 'landuseForm')],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    // filling out necessary information in order to save
+    await click('[data-test-add-applicant-button]');
+    await fillIn('[data-test-input="dcpFirstname"]', 'Tess');
+    await fillIn('[data-test-input="dcpLastname"]', 'Ter');
+    await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
+
+    // filling out the primary contact information
+    await fillIn('[data-test-input="dcpCeqrnumber"]', '12345');
+    await click('[data-test-radio="dcpCeqrtype"][data-test-radio-option="Type II"]');
+    await fillIn('[data-test-input="dcpTypecategory"]', 'type category');
+
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.landuseForms.firstObject.dcpCeqrnumber, '12345');
+    assert.equal(this.server.db.landuseForms.firstObject.dcpCeqrtype, 717170001);
+    assert.equal(this.server.db.landuseForms.firstObject.dcpTypecategory, 'type category');
+
+    assert.equal(currentURL(), '/landuse-form/1/edit');
+  });
 });

@@ -16,6 +16,9 @@ import {
 } from '../optionsets/affected-zoning-resolution';
 import PACKAGE_OPTIONSETS from '../optionsets/package';
 import {
+  CEQR_TYPE,
+} from '../optionsets/landuse-form';
+import {
   DCPCONSTRUCTIONPHASING,
 } from '../optionsets/rwcds-form';
 import {
@@ -52,6 +55,9 @@ const OPTIONSET_LOOKUP = {
     dcpPublicstatus: PROJECT_OPTIONSETS.DCPPUBLICSTATUS,
     dcpVisibility: PROJECT_OPTIONSETS.DCPVISIBILITY,
     statuscode: PROJECT_OPTIONSETS.STATUSCODE,
+  },
+  landuseForm: {
+    dcpCeqrtype: CEQR_TYPE,
   },
   rwcdsForm: {
     dcpHasprojectchangedsincesubmissionofthepas: YES_NO,
