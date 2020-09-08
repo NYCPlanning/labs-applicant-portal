@@ -7,7 +7,7 @@
     <div class="text-small"><a href="mailto:{{@emailAddress}}">{{@emailAddress}}</a></div>
   </div>
 
-  {{#unless @disableDelete}}
+  {{#if @canDelete}}
     <div class="cell shrink medium-padding-left">
       <button
         type="button"
@@ -17,7 +17,7 @@
         <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
       </button>
     </div>
-  {{/unless}}
+  {{/if}}
 </li>
 
 <Ui::ConfirmationModal

@@ -3,8 +3,8 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class ProjectEditorListComponent extends Component {
-  get disableDelete() {
-    return this.args.disableDelete ?? false;
+  get canDelete() {
+    return this.args.canDelete ?? false;
   }
 
   @tracked removeEditorModalOpen = false;
