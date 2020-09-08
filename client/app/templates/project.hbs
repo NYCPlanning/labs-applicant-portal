@@ -81,6 +81,8 @@
           <Project::ProjectEditorListItem 
             @name={{if applicant.contact.lastname (concat applicant.contact.firstname " " applicant.contact.lastname) applicant.dcpName}}
             @emailAddress={{if applicant.contact.emailaddress1 applicant.contact.emailaddress1 applicant.emailaddress}}
+            @disableDelete={{applicant.isPrimaryApplicantOrContact}}
+            @onDelete={{fn this.removeEditor applicant}}
           />
         {{/if}}
       {{/each}}
@@ -141,9 +143,9 @@
     </button>
 
     <Ui::ConfirmationModal
-      @show={{this.modalOpen}}
+      @show={{this.addEditorModalOpen}}
       @toggle={{fn this.saveEditor}}
-      @cancelButtonText="Cancel"
+      @continueButtonTitle="Cancel"
     >
       {{#if this.matchingCurrentApplicant}}
         <h4>A Project Editor with the email address you entered already exists on this project.</h4>

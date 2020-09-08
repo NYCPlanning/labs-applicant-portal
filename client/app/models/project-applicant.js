@@ -1,4 +1,5 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
+import { optionset } from '../helpers/optionset';
 
 export default class ProjectApplicantModel extends Model {
   @attr dcpName;
@@ -22,4 +23,9 @@ export default class ProjectApplicantModel extends Model {
 
   @belongsTo('contact', { async: false })
   contact;
+
+  get isPrimaryApplicantOrContact() {
+    return this.dcpApplicantrole === optionset(['projectApplicant', 'applicantrole', 'code', 'PRIMARY_CONTACT'])
+      || this.dcpApplicantrole === optionset(['projectApplicant', 'applicantrole', 'code', 'PRIMARY_APPLICANT']);
+  }
 }

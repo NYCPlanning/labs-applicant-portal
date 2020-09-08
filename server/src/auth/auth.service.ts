@@ -106,7 +106,6 @@ export class AuthService {
     }
   }
 
-
   /**
    * This function extracts the email from an NYCIDToken and uses it to
    * look up a Contact in CRM. It returns to the client a ZAP token holding
@@ -121,17 +120,21 @@ export class AuthService {
     // need the email to lookup a CRM contact.
     const { mail, nycExtEmailValidationFlag, GUID } = nycIdAccount;
 
-    const contact = await this.contactService.findOneByEmail(mail);
+    // REDO: all of this "has_crm_contact" stuff is confusing. these methods should just return null
+    // if not found, and we need to find a better way to deal with missing crm records + nycid status
+    // need to first lookup contact by nycIdGUID, and prefer that.
+    let query = await this.contactService.findOneByNycidGuid(GUID);
 
-    if (!contact) {
-      const error = {
-        code: "CONTACT_NOT_FOUND",
-        title: "Contact not found",
-        detail: `CRM Contact not found for given email or ID: ${mail}`,
-      }
-      console.log(error);
-      throw new HttpException(error, HttpStatus.UNAUTHORIZED);
+    // if it's not a CRM contact, prefer an e-mail lookup
+    if (!query.has_crm_contact) {
+      query = await this.contactService.findOneByEmail(mail);
     }
+
+    // if _that_ doesn't exist, create a new contact
+    const contact = query.has_crm_contact ? query : await this.contactService.create({
+      emailaddress1: mail,
+      dcp_nycid_guid: GUID,
+    });
 
     // if their e-mail is validated, associate the NYCID guid
     if (nycExtEmailValidationFlag && !contact.dcp_nycid_guid) {
