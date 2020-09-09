@@ -110,7 +110,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
 
-  test('User resets values of all radio descendants when changing radio answer', async function(assert) {
+  test('User resets values of all radio descendants when changing radio answers in Project Area', async function(assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
     });
@@ -154,6 +154,45 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     await assert.dom('[data-test-input="dcpSitedatapropertydescription"]').hasNoValue();
 
     assert.equal(currentURL(), '/landuse-form/1/edit');
+  });
+
+  test('User is required to fill out Proposed Development Site conditional fields', async function(assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'toDo', 'landuseForm')],
+    });
+
+    await visit('/landuse-form/1/edit');
+    assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
+
+    await click('[data-test-radio="dcp500kpluszone"][data-test-radio-option="No"]');
+
+    assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
+    assert.dom('[data-test-validation-message="dcpDevsize"]').doesNotExist();
+
+    await click('[data-test-radio="dcp500kpluszone"][data-test-radio-option="Yes"]');
+
+    assert.dom('[data-test-submit-button]').hasAttribute('disabled');
+    assert.dom('[data-test-validation-message="dcpDevsize"]').containsText('required');
+
+    await click('[data-test-radio="dcpDevsize"][data-test-radio-option="500,000 to 999,999 zoning sq ft"]');
+
+    assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
+    assert.dom('[data-test-validation-message="dcpDevsize"]').doesNotExist();
+
+    await click('[data-test-radio="dcpSitedatasiteisinnewyorkcity"][data-test-radio-option="No"]');
+
+    assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
+    assert.dom('[data-test-validation-message="dcpSitedataidentifylandmark"]').doesNotExist();
+
+    await click('[data-test-radio="dcpSitedatasiteisinnewyorkcity"][data-test-radio-option="Yes"]');
+
+    assert.dom('[data-test-submit-button]').hasAttribute('disabled');
+    assert.dom('[data-test-validation-message="dcpSitedataidentifylandmark"]').exists();
+
+    await fillIn('[data-test-input="dcpSitedataidentifylandmark"]', 'Douglas Fir');
+
+    assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
+    assert.dom('[data-test-validation-message="dcpSitedataidentifylandmark"]').doesNotExist();
   });
 
   test('User can add an applicant on the landuse form', async function(assert) {
