@@ -1,7 +1,8 @@
-import Component from '@glimmer/component';
+import Component from '@ember/component';
+import { action } from '@ember/object';
 import ENV from '../../config/environment';
 
-export default class DoLogoutComponent extends Component {
+export default class DoLogout extends Component {
   get nycIDHost() {
     const { origin } = new URL(ENV.NYCIDLocation || 'https://accounts-nonprd.nyc.gov');
 
@@ -9,4 +10,11 @@ export default class DoLogoutComponent extends Component {
   }
 
   origin = window.location.origin;
+
+  iFrameDidLoad = false;
+
+  @action
+  didLogoutNycId() {
+    this.set('iFrameDidLoad', true);
+  }
 }

@@ -28,10 +28,9 @@ module('Acceptance | user can login', function(hooks) {
   });
 
   test('User can logout', async function (assert) {
-    assert.expect(3);
+    assert.expect(2);
 
     this.server.create('contact');
-    this.server.get('/logout', () => assert.ok(true));
 
     window.location.hash = '#access_token=a-valid-jwt';
     await visit('/login');
@@ -46,10 +45,8 @@ module('Acceptance | user can login', function(hooks) {
     this.server.create('contact');
     this.server.get('/login', () => new Response(401, { some: 'header' }, {
       errors: [{
-        response: {
-          code: 'NO_CONTACT_FOUND',
-          message: 'This message is nice but does not affect frontend logic',
-        },
+        code: 'NO_CONTACT_FOUND',
+        title: 'This message is nice but does not affect frontend logic',
         status: 401,
       }],
     }));
@@ -58,7 +55,7 @@ module('Acceptance | user can login', function(hooks) {
     await visit('/login');
 
     assert.ok(find('[data-test-applicant-error-message="contact-not-assigned"'));
-    assert.dom('[data-test-error-response="code0"]')
+    assert.dom('[data-test-error-key="code"]')
       .hasText('code: NO_CONTACT_FOUND', 'It displays the correct error code');
   });
 
@@ -88,7 +85,7 @@ module('Acceptance | user can login', function(hooks) {
 
     await visit('/login');
 
-    assert.dom('[data-test-error-response="code0"]')
-      .hasText('code: NO_TOKEN_PRESENT');
+    assert.dom('[data-test-error-key="detail"][data-test-error-idx="0"]')
+      .hasText('detail: Invalid auth params - "access_token" missing.');
   });
 });

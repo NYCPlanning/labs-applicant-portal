@@ -8,34 +8,12 @@
       />
         There was a problem saving your information.
     </h5>
-      {{#each @package.rwcdsForm.adapterError.errors as |error|}}
-        <p class="font-mono text-red-dark bg-red-white small-padding text-small" data-test-error-message>
-          Message: {{error.message}} <br>
-          Status: {{error.status}} <br>
-          Response:
-          <ul>
-            {{#each-in error.response as |key value|}}
-              <li class="display-block">
-                {{key}}: {{value}}
-              </li>
-            {{/each-in}}
-          </ul>
-        </p>
-      {{/each}}
-      {{#each @package.adapterError.errors as |error|}}
-        <p class="font-mono text-red-dark bg-red-white small-padding text-small" data-test-error-message>
-          Message: {{error.message}} <br>
-          Status: {{error.status}} <br>
-          Response:
-          <ul>
-            {{#each-in error.response as |key value|}}
-              <li class="display-block">
-                {{key}}: {{value}}
-              </li>
-            {{/each-in}}
-          </ul>
-        </p>
-      {{/each}}
+      <Errors::List
+        @errors={{@package.rwcdsForm.adapterError.errors}}
+      />
+      <Errors::List
+        @errors={{@package.adapterError.errors}}
+      />
       <p class="text-red-dark text-small">
         Please try again. If the problem persists, please contact City Planning at <a href="mailto:ZAP_feedback_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a> or <a href="tel:212-720-3300" class="nowrap">212-720-3300</a>.
       </p>

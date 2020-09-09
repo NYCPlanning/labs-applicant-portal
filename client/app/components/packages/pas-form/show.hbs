@@ -37,7 +37,7 @@
             {{#if applicant.dcpAddress}}
               <div>
                 <FaIcon @icon="map-marker-alt" class="text-gray" @fixedWidth={{true}} />
-                {{applicant.dcpAddress}}, {{applicant.dcpCity}}, {{optionset 'applicant' 'state' 'label' applicant.dcpState}} {{applicant.dcpZipcode}}
+                {{applicant.dcpAddress}}, {{applicant.dcpCity}}, {{optionset 'applicant' 'dcpState' 'label' applicant.dcpState}} {{applicant.dcpZipcode}}
               </div>
             {{/if}}
             {{#if applicant.dcpPhone}}

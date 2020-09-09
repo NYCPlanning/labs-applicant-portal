@@ -1,8 +1,19 @@
-import { Controller, Get, Param, UseInterceptors, Patch, Body, UsePipes, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  Patch,
+  UseInterceptors,
+  UseGuards,
+  UsePipes,
+} from '@nestjs/common';
 import { PackagesService } from './packages.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 import { JsonApiDeserializePipe } from '../json-api-deserialize.pipe';
-import { AuthenticateGuard } from '../authenticate.guard';
+import { PackageAccessGuard } from './package-access.guard';
 import { pick } from 'underscore';
 import { RWCDS_FORM_ATTRS } from './rwcds-form/rwcds-form.attrs';
 import { PAS_FORM_ATTRS, PAS_FORM_PROJECTADDRESS_ATTRS } from './pas-form/pas-form.attrs';
@@ -85,71 +96,107 @@ import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
     // form, or some other solution, to avoid the
     // forking logic within the package controller/service
     // that handles the indiosyncracies of each form.
-    const {
-      dcp_pasform: pasForm,
-      dcp_rwcdsform: rwcdsForm
-    } = projectPackage;
-
-    if (pasForm) {
-      return {
-        ...projectPackage,
-        'pas-form': {
-          ...pasForm,
-          'project-addresses': pasForm.dcp_dcp_projectaddress_dcp_pasform,
-          applicants: [
-            ...pasForm.dcp_dcp_applicantinformation_dcp_pasform,
-            ...pasForm.dcp_dcp_applicantrepinformation_dcp_pasform.map((applicant) => {
-              // map this array to handle the slight differences in schemas between these two entities
-              // that we treat as one applicants array on the frontend
-
-              // define target_entity for the frontend (defaults to dcp_applicantinformation)
-              applicant['target_entity'] = 'dcp_applicantrepresentativeinformation'
-
-              return {
-              ...applicant,
-              // FIXME: this is ensuring the Ember Data relationships work (with a unique ref)
-              // but this is hacky because dcp_applicantinformationid doesn't exist on this entity
-              dcp_applicantinformationid: `representative-${applicant.dcp_applicantrepresentativeinformationid}`
-            }}),
-          ],
-          bbls: pasForm.dcp_dcp_projectbbl_dcp_pasform,
-        },
-      }
-    } else if (rwcdsForm) {
-      return {
-        ...projectPackage,
-        'rwcds-form': {
-          ...rwcdsForm,
-          'affected-zoning-resolutions': rwcdsForm.dcp_rwcdsform_dcp_affectedzoningresolution_rwcdsform,
+    try {
+      const {
+        dcp_pasform: pasForm,
+        dcp_rwcdsform: rwcdsForm
+      } = projectPackage;
+  
+      if (pasForm) {
+        return {
+          ...projectPackage,
+          'pas-form': {
+            ...pasForm,
+            'project-addresses': pasForm.dcp_dcp_projectaddress_dcp_pasform,
+            applicants: [
+              ...pasForm.dcp_dcp_applicantinformation_dcp_pasform,
+              ...pasForm.dcp_dcp_applicantrepinformation_dcp_pasform.map((applicant) => {
+                // map this array to handle the slight differences in schemas between these two entities
+                // that we treat as one applicants array on the frontend
+  
+                // define target_entity for the frontend (defaults to dcp_applicantinformation)
+                applicant['target_entity'] = 'dcp_applicantrepresentativeinformation'
+  
+                return {
+                ...applicant,
+                // FIXME: this is ensuring the Ember Data relationships work (with a unique ref)
+                // but this is hacky because dcp_applicantinformationid doesn't exist on this entity
+                dcp_applicantinformationid: `representative-${applicant.dcp_applicantrepresentativeinformationid}`
+              }}),
+            ],
+            bbls: pasForm.dcp_dcp_projectbbl_dcp_pasform,
+          },
         }
+      } else if (rwcdsForm) {
+        return {
+          ...projectPackage,
+          'rwcds-form': {
+            ...rwcdsForm,
+            'affected-zoning-resolutions': rwcdsForm.dcp_rwcdsform_dcp_affectedzoningresolution_rwcdsform,
+          }
+        }
+      } else {
+        return {
+          ...projectPackage,
+        };
       }
-    } else {
-      return {
-        ...projectPackage,
-      };
+    } catch (e) {
+      if (e instanceof HttpException) {
+        throw e;
+      } else {
+        throw new HttpException({
+          code: 'PACKAGES_ERROR',
+          title: 'Failed to load package(s)',
+          detail: `An error occurred while loading one or more packages. ${e.message}`,
+        }, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
     }
   },
 }))
 @UsePipes(JsonApiDeserializePipe)
-@UseGuards(AuthenticateGuard)
+@UseGuards(PackageAccessGuard)
 @Controller('packages')
 export class PackagesController {
   constructor(private readonly packagesService: PackagesService) {}
 
   @Get('/:id')
   getPackage(@Param('id') id) {
-    return this.packagesService.getPackage(id);
+    try {
+      return this.packagesService.getPackage(id);
+    } catch (e) {
+      if (e instanceof HttpException) {
+        throw e;
+      } else {
+        throw new HttpException({
+          code: 'FIND_PACKAGED_FAILED',
+          title: 'Failed getting a package',
+          detail: `An unknown server error occured while finding a package by ID. ${e.message}`,
+        }, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    }
   }
 
   @Patch('/:id')
   async patchPackage(@Body() body, @Param('id') id) {
-    const allowedAttrs = pick(body, PACKAGE_ATTRS);
+    try {
+      const allowedAttrs = pick(body, PACKAGE_ATTRS);
 
-    await this.packagesService.update(id, allowedAttrs);
+      await this.packagesService.update(id, allowedAttrs);
 
-    return {
-      dcp_packageid: id,
-      ...allowedAttrs,
-    };
+      return {
+        dcp_packageid: id,
+        ...allowedAttrs,
+      };
+    } catch (e) {
+      if (e instanceof HttpException) {
+        throw e;
+      } else {
+        throw new HttpException({
+          code: 'PATCH_PROJECT_FAILED',
+          title: 'Failed patching package',
+          detail: `An unknown server error occured while patching a package. ${e.message}`,
+        }, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    }
   }
 }

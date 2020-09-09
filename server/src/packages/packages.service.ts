@@ -5,6 +5,7 @@ import { pick } from 'underscore';
 import { RwcdsFormService } from './rwcds-form/rwcds-form.service';
 import { PACKAGE_ATTRS } from './packages.attrs';
 import { PROJECT_ATTRS } from '../projects/projects.attrs';
+import { DocumentService } from '../document/document.service';
 
 export const PACKAGE_TYPE_OPTIONSET = {
   INFORMATION_MEETING: {
@@ -75,6 +76,7 @@ export class PackagesService {
     private readonly crmService: CrmService,
     private readonly pasFormService: PasFormService,
     private readonly rwcdsFormService: RwcdsFormService,
+    private readonly documentService: DocumentService,
   ) {}
 
   // this is starting to do way more than get a package. It gets a package, gets related
@@ -99,93 +101,100 @@ export class PackagesService {
     // Double network request approach
 
     // Get package
-    const { records: [firstPackage] } = await this.crmService.get('dcp_packages', `
-      $select=${PACKAGE_ATTRS.join(',')}
-      &$filter=dcp_packageid eq ${packageId}
-      &$expand=dcp_project($select=${PROJECT_ATTRS.join(',')})
-    `);
+    try {
+        const { records: [firstPackage] } = await this.crmService.get('dcp_packages', `
+        $select=${PACKAGE_ATTRS.join(',')}
+        &$filter=dcp_packageid eq ${packageId}
+        &$expand=dcp_project($select=${PROJECT_ATTRS.join(',')})
+      `);
 
-    if (!firstPackage) {
-      return new HttpException('Package not found. Is it the right id?', HttpStatus.NOT_FOUND);
+      if (!firstPackage) {
+        throw new HttpException({
+          code: 'PACKAGE_NOT_FOUND',
+          title: 'Package not found',
+          detail: 'Package not found for given ID',
+        }, HttpStatus.NOT_FOUND);
+      }
+
+      const {
+        dcp_project,
+        dcp_packageid,
+        dcp_name,
+      } = firstPackage;
+
+      // drive-by redefine because the sharepoint lookup
+      // is failing for some reason and we don't want it
+      // to take the entire system down with it.
+      //
+      // TODO: Why does it need to be this? We should check to see if this is still
+      // flakey given current configuration
+      let documents = [];
+      documents = await this.documentService.findPackageSharepointDocuments(dcp_name, dcp_packageid);
+
+      const formData = await this.fetchPackageForm(firstPackage);
+
+      return {
+        ...firstPackage,
+        ...formData,
+
+        project: dcp_project,
+        documents: documents.map(document => ({
+          name: document['Name'],
+          timeCreated: document['TimeCreated'],
+          serverRelativeUrl: document['ServerRelativeUrl'],
+        })),
+      };
+    } catch (e) {
+      // relay lower-level exceptions, like from crmServce.get(),
+      // or sharepoint document retrieval.
+      if (e instanceof HttpException) {
+        throw e;
+      } else {
+        throw new HttpException({
+          code: 'LOAD_PACKAGE_FAILED',
+          title: 'Could not load package',
+          detail: `An unknown error occured while loading package ${packageId}`,
+        }, HttpStatus.NOT_FOUND);
+      }
     }
-
-    const {
-      dcp_project,
-      dcp_packageid,
-      dcp_name,
-    } = firstPackage;
-
-    // drive-by redefine because the sharepoint lookup
-    // is failing for some reason and we don't want it
-    // to take the entire system down with it.
-    //
-    // TODO: Why does it need to be this? We should check to see if this is still
-    // flakey given current configuration
-    let documents = [];
-    documents = await this.tryFindPackageSharepointDocuments(dcp_name, dcp_packageid);
-
-    const formData = await this.fetchPackageForm(firstPackage);
-
-    return {
-      ...firstPackage,
-      ...formData,
-
-      project: dcp_project,
-      documents: documents.map(document => ({
-        name: document['Name'],
-        timeCreated: document['TimeCreated'],
-        serverRelativeUrl: document['ServerRelativeUrl'],
-      })),
-    };
   }
 
   // packages have a dcp_packagetype which indicates the type of form it will have
   async fetchPackageForm(dcpPackage) {
-    if (dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['PAS_PACKAGE'].code) {
-      return {
-        dcp_pasform: await this.pasFormService.find(dcpPackage._dcp_pasform_value)
-      };
-    }
+    try {
+      if (dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['PAS_PACKAGE'].code) {
+        return {
+          dcp_pasform: await this.pasFormService.find(dcpPackage._dcp_pasform_value)
+        };
+      }
 
-    if (dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['RWCDS'].code) {
-      return {
-        dcp_rwcdsform: await this.rwcdsFormService.find(dcpPackage._dcp_rwcdsform_value)
-      };
-    }
+      if (dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['RWCDS'].code) {
+        return {
+          dcp_rwcdsform: await this.rwcdsFormService.find(dcpPackage._dcp_rwcdsform_value)
+        };
+      }
 
-    throw new HttpException({
-      "code": "INVALID_PACKAGE_TYPE",
-      "message": 'Requested package has invalid type.',
-    }, HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException({
+        code: "INVALID_PACKAGE_TYPE",
+        title: 'Invalid package type',
+        detail: 'Requested package has invalid type.',
+      }, HttpStatus.BAD_REQUEST);
+    } catch (e) {
+      if (e instanceof HttpException) {
+        throw e;
+      } else {
+        throw new HttpException({
+          code: 'PACKAGE_FORM_ERROR',
+          title: 'Error loading package forms',
+          detail: `Error while acquiring ${dcpPackage} forms attached to the package ${dcpPackage.dcp_packageid}`,
+        }, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    }
   }
 
   async update(id, body) {
     const allowedAttrs = pick(body, PACKAGE_ATTRS);
 
     return this.crmService.update('dcp_packages', id, allowedAttrs);
-  }
-
-  // We retrieve documents from the Sharepoint folder (`folderIdentifier` in the
-  // code below) that holds both documents from past revisions and the current
-  // revision. CRM automatically carries over documents from past revisions into
-  // this folder, and we deliberately upload documents for the latest/current
-  // revision into this folder.
-  async findPackageSharepointDocuments(packageName, id:string) {
-    const strippedPackageName = packageName.replace(/-/g, '').replace(/\s+/g, '').replace(/'+/g,'');
-    const folderIdentifier = `${strippedPackageName}_${id.toUpperCase()}`;
-
-    return this.crmService.getSharepointFolderFiles(`dcp_package/${folderIdentifier}`);
-  }
-
-  async tryFindPackageSharepointDocuments(dcp_name, dcp_packageid){
-    try {
-      const { value } = await this.findPackageSharepointDocuments(
-        dcp_name,
-        dcp_packageid,
-      );
-      return value;
-    } catch (e) {
-      console.log('Sharepoint request failed:', e);
-    }
   }
 }

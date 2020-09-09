@@ -1,142 +1,11 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import FileManager from '../services/file-manager';
-
-export const PACKAGE_STATUS_OPTIONSET = {
-  PACKAGE_PREPARATION: {
-    code: 1,
-    label: 'Package Preparation',
-  },
-  SUBMITTED: {
-    code: 717170012,
-    label: 'Submitted',
-  },
-  UNDER_REVIEW: {
-    code: 717170013,
-    label: 'Under Review',
-  },
-  REVIEWED_NO_REVISIONS_REQUIRED: {
-    code: 717170009,
-    label: 'Reviewed - No Revisions Required',
-  },
-  CERTIFIED: {
-    code: 717170005,
-    label: 'Certified',
-  },
-  REVIEWED_REVISIONS_REQUIRED: {
-    code: 717170010,
-    label: 'Reviewed - Revisions Required',
-  },
-  FINAL_APPROVAL: {
-    code: 717170008,
-    label: 'Final Approval',
-  },
-  WITHDRAWN: {
-    code: 717170011,
-    label: 'Withdrawn',
-  },
-  MISTAKE: {
-    code: 717170014,
-    label: 'Mistake',
-  },
-};
-
-export const PACKAGE_VISIBILITY_OPTIONSET = {
-  INTERNAL_DCP_ONLY: {
-    code: 717170000,
-    label: 'Internal DCP Only',
-  },
-  CPC_ONLY: {
-    code: 717170001,
-    label: 'CPC Only',
-  },
-  APPLICANT_ONLY: {
-    code: 717170002,
-    label: 'Applicant Only',
-  },
-  GENERAL_PUBLIC: {
-    code: 717170003,
-    label: 'General Public',
-  },
-  LUP: {
-    code: 717170004,
-    label: 'LUP',
-  },
-};
-
-export const PACKAGE_STATE_OPTIONSET = {
-  ACTIVE: {
-    code: 0,
-    label: 'Active',
-  },
-  INACTIVE: {
-    code: 1,
-    label: 'Inactive',
-  },
-};
-
-export const PACKAGE_TYPE_OPTIONSET = {
-  INFORMATION_MEETING: {
-    code: 717170014,
-    label: 'Information Meeting',
-  },
-  PAS_PACKAGE: {
-    code: 717170000,
-    label: 'PAS Package',
-  },
-  DRAFT_LU_PACKAGE: {
-    code: 717170001,
-    label: 'Draft LU Package',
-  },
-  FILED_LU_PACKAGE: {
-    code: 717170011,
-    label: 'Filed LU Package',
-  },
-  DRAFT_EAS: {
-    code: 717170002,
-    label: 'Draft EAS',
-  },
-  FILED_EAS: {
-    code: 717170012,
-    label: 'Filed EAS',
-  },
-  EIS: {
-    code: 717170003,
-    label: 'EIS',
-  },
-  PDEIS: {
-    code: 717170013,
-    label: 'PDEIS',
-  },
-  RWCDS: {
-    code: 717170004,
-    label: 'RWCDS',
-  },
-  LEGAL: {
-    code: 717170005,
-    label: 'Legal',
-  },
-  WRP_PACKAGE: {
-    code: 717170006,
-    label: 'WRP Package',
-  },
-  TECHNICAL_MEMO: {
-    code: 717170007,
-    label: 'Technical Memo',
-  },
-  DRAFT_SCOPE_OF_WORK: {
-    code: 717170008,
-    label: 'Draft Scope of Work',
-  },
-  FINAL_SCOPE_OF_WORK: {
-    code: 717170009,
-    label: 'Final Scope of Work',
-  },
-  WORKING_PACKAGE: {
-    code: 717170010,
-    label: 'Working Package',
-  },
-};
+import {
+  STATUSCODE,
+  STATECODE,
+  DCPPACKAGETYPE,
+} from '../optionsets/package';
 
 export default class PackageModel extends Model {
   createFileQueue() {
@@ -150,13 +19,13 @@ export default class PackageModel extends Model {
         this.documents,
         [],
         fileQueue,
+        this.session,
       );
     }
   }
 
-  refreshExistingDocuments() {
-    this.fileManager.existingFiles = this.documents;
-  }
+  @service
+  session;
 
   @service
   fileQueue;
@@ -172,6 +41,9 @@ export default class PackageModel extends Model {
 
   @attr('number')
   statuscode;
+
+  @attr('date')
+  dcpStatusdate;
 
   @attr('number')
   statecode;
@@ -189,19 +61,21 @@ export default class PackageModel extends Model {
   documents;
 
   setAttrsForSubmission() {
-    this.statuscode = PACKAGE_STATUS_OPTIONSET.SUBMITTED.code;
-    this.statecode = PACKAGE_STATE_OPTIONSET.INACTIVE.code;
+    this.statuscode = STATUSCODE.SUBMITTED.code;
+    this.statecode = STATECODE.INACTIVE.code;
   }
 
   async save() {
     await this.fileManager.save();
-    if (this.dcpPackagetype === PACKAGE_TYPE_OPTIONSET.PAS_PACKAGE.code) {
+    if (this.dcpPackagetype === DCPPACKAGETYPE.PAS_PACKAGE.code) {
       await this.pasForm.save();
     }
-    if (this.dcpPackagetype === PACKAGE_TYPE_OPTIONSET.RWCDS.code) {
+    if (this.dcpPackagetype === DCPPACKAGETYPE.RWCDS.code) {
       await this.rwcdsForm.save();
     }
     await super.save();
+
+    this._synchronizeDocuments();
   }
 
   async submit() {
@@ -210,17 +84,25 @@ export default class PackageModel extends Model {
     await this.save();
   }
 
+  // deprecate
+  // filemanager does not actually mutate the package directly. instead, it pushes files into the API
+  // and, upon save, the API then detects more documents and sends back the list of documents which
+  // this model then sees. This hack is to refresh the in-memory fileManager with those documents.
+  _synchronizeDocuments() {
+    this.fileManager.existingFiles = this.documents;
+  }
+
   get isDirty() {
     const isPackageDirty = this.hasDirtyAttributes
       || this.fileManager.isDirty;
 
-    if (this.dcpPackagetype === PACKAGE_TYPE_OPTIONSET.PAS_PACKAGE.code) {
+    if (this.dcpPackagetype === DCPPACKAGETYPE.PAS_PACKAGE.code) {
       return isPackageDirty
         || this.pasForm.hasDirtyAttributes
         || this.pasForm.isBblsDirty
         || this.pasForm.isApplicantsDirty;
     }
-    if (this.dcpPackagetype === PACKAGE_TYPE_OPTIONSET.RWCDS.code) {
+    if (this.dcpPackagetype === DCPPACKAGETYPE.RWCDS.code) {
       return isPackageDirty
         || this.rwcdsForm.hasDirtyAttributes
         || this.rwcdsForm.isAffectedZoningResolutionsDirty;

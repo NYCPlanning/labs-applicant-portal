@@ -16,14 +16,7 @@
         as |RadioGroup|
       >
         <RadioGroup
-          @options={{array
-            (hash
-              code=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'code' 'YES')
-              label=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'label' 'YES'))
-            (hash
-              code=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'code' 'NO')
-              label=(optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'label' 'NO'))
-          }}
+          @options={{optionset 'rwcdsForm' 'dcpHasprojectchangedsincesubmissionofthepas' 'list'}}
         />
       </form.Field>
     </Ui::Question>
@@ -82,17 +75,7 @@
         as |RadioGroup|
       >
         <RadioGroup
-          @options={{array
-            (hash
-              code=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'code' 'SINGLE')
-              label=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'label' 'SINGLE'))
-            (hash
-              code=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'code' 'MULTIPLE')
-              label=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'label' 'MULTIPLE'))
-            (hash
-              code=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'code' 'NOT_APPLICABLE')
-              label=(optionset 'rwcdsForm' 'dcpConstructionphasing' 'label' 'NOT_APPLICABLE'))
-          }}
+          @options={{optionset 'rwcdsForm' 'dcpConstructionphasing' 'list'}}
         />
       </form.Field>
     </Ui::Question>

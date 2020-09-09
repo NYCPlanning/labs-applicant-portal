@@ -43,6 +43,28 @@ const ZONING_RESOLUTION_TYPES = [
   { label: "BD", code: 717170038 },
 ];
 
+export const INCLUDE_ZONING_TEXT_AMENDMENT_OPTIONSET = {
+  YES: {
+    code: 717170000,
+    label: 'Yes',
+  },
+  NO: {
+    code: 717170001,
+    label: 'No',
+  },
+  DONT_KNOW: {
+    code: 717170002,
+    label: 'Don\u2019t Know',
+  },
+}
+
+export const ACTION_VALUE_OPTIONSET = {
+  ZR: {
+    code: '886ede3a-dad0-e711-8125-1458d04e2f18',
+    label: 'ZR',
+  }
+}
+
 @Injectable()
 export class RwcdsFormService {
   constructor(
@@ -110,17 +132,24 @@ export class RwcdsFormService {
       rwcdsForm.dcp_projectsitedescription === null
       || rwcdsForm.dcp_proposedprojectdevelopmentdescription === null
     ) {
-      const {
-        dcp_projectdescriptionproposedarea,
-        dcp_projectdescriptionproposeddevelopment,
-      } = await this.pasFormService.getLatestPasForm(_dcp_projectid_value);
+     const latestPasForm = await this.pasFormService.getLatestPasForm(_dcp_projectid_value);
 
-      if (rwcdsForm.dcp_projectsitedescription === null) {
-        rwcdsForm.dcp_projectsitedescription = dcp_projectdescriptionproposedarea;
-      }
+     if (latestPasForm) {
+        const {
+          dcp_projectdescriptionproposedarea,
+          dcp_projectdescriptionproposeddevelopment,
+        } = latestPasForm;
 
-      if (rwcdsForm.dcp_proposedprojectdevelopmentdescription === null) {
-        rwcdsForm.dcp_proposedprojectdevelopmentdescription = dcp_projectdescriptionproposeddevelopment;
+        // It is possible that only one of dcp_projectsitedescription
+        // or dcp_proposedprojectdevelopmentdescription is not yet
+        // edited on the RWCDs form
+        if (rwcdsForm.dcp_projectsitedescription === null) {
+          rwcdsForm.dcp_projectsitedescription = dcp_projectdescriptionproposedarea;
+        }
+
+        if (rwcdsForm.dcp_proposedprojectdevelopmentdescription === null) {
+          rwcdsForm.dcp_proposedprojectdevelopmentdescription = dcp_projectdescriptionproposeddevelopment;
+        }
       }
     }
 
@@ -130,7 +159,12 @@ export class RwcdsFormService {
   // The syncActions method queries for project actions (dcp_projectaction) associated
   // with the rwcds form's related project. 
   // Then, it posts each of the project actions to dcp_affectedzoningresolution.
-  // This occurs every time that the rwcds-form endpoint is hit
+  // This occurs every time that the rwcds-form endpoint is hit.
+
+  // dcp_projectaction entity --> dcp_affectedzoningresolution entity attribute mapping:
+  // `_dcp_action_value@OData.Community.Display.V1.FormattedValue`  --> `dcp_zoningresolutiontype`
+  // `ZoningResolution.dcp_zoningresolution` --> `dcp_zrsectionnumeber`
+  // `dcp_zrmodifyingzrtxt` --> `dcp_modifiedzrsectionnumber`
   async syncActions(rwcdsForm) {
     const {
       dcp_rwcdsform_dcp_affectedzoningresolution_rwcdsform: affectedZoningResolutions,
@@ -143,22 +177,61 @@ export class RwcdsFormService {
       &$expand=dcp_ZoningResolution
     `);
 
+    await this.updateIncludeZoningTextAmendment(dcp_rwcdsformid, projectActions);
+
     await Promise.all(projectActions.map(action => {
       const projectActionLabel = action['_dcp_action_value@OData.Community.Display.V1.FormattedValue'];
 
       // Lookup: dcp_affectedzoningresolutions asks for a ZR type,
-      const { label, code } = ZONING_RESOLUTION_TYPES.filter((zr) => zr.label === projectActionLabel)[0] || { label: '', code: null };
+      const { label, code } = ZONING_RESOLUTION_TYPES.find((zr) => zr.label === projectActionLabel) || { label: '', code: null };
+      const matchingZr = affectedZoningResolutions.find(zr => zr.dcp_zoningresolutiontype === code);
+      // action attribute that matches dcp_zrsectionnumber on dcp_affectedzoningresolution
+      const currentActionZoningResolution = action.dcp_ZoningResolution ? action.dcp_ZoningResolution.dcp_zoningresolution : null
 
       if (!label) console.log(`Could not find Affected ZR Type for ${projectActionLabel}`);
 
-      if (!zrTypes.includes(label) && label) {
+      // IF the action.ZoningResolution.dcp_zoningresolution value has changed since the initial POST,
+      // then PATCH the new value to dcp_zrsectionnumber on dcp_affectedzoningresolution entity
+      // NOTE: dcp_modifiedzrsectionnumber not included here because it's updated by applicant on rwcds-form
+      if (matchingZr && matchingZr.dcp_zrsectionnumber !== currentActionZoningResolution) {
+        return this.crmService.update('dcp_affectedzoningresolutions', matchingZr.dcp_affectedzoningresolutionid, {
+          dcp_zrsectionnumber: currentActionZoningResolution,
+        });
+      }
+
+      // IF the zr type does not exist yet, then POST the action
+      // NOTE: Some actions that exist in dcp_projectaction SHOULD NOT be copied over.
+      // The ZONING_RESOLUTION_TYPES lookup also functions as a list of actions that SHOULD be
+      // copied over from dcp_projectaction, which is why we check that `code` exists here.
+      if (!matchingZr && code) {
         return this.crmService.create(`dcp_affectedzoningresolutions`, {
-          'dcp_zoningresolutiontype': code, // this is a coded value
-          'dcp_zrsectionnumber': action.dcp_ZoningResolution ? action.dcp_ZoningResolution.dcp_zoningresolution : null,
+          'dcp_zoningresolutiontype': code, // coded value
+          'dcp_zrsectionnumber': currentActionZoningResolution,
           'dcp_modifiedzrsectionnumber': action.dcp_zrmodifyingzrtxt,
           'dcp_rwcdsform@odata.bind': `/dcp_pasforms(${dcp_rwcdsformid})`,
         });
       }
     }));
+  }
+
+  async updateIncludeZoningTextAmendment(dcp_rwcdsformid, projectActions) {
+    // dcp_includezoningtextamendment is a field on the rwcds-form that should be "Yes" (717170000) if...
+    // there exists a "ZR" action and that action's dcp_ZoningResolution.dcp_zoningresolution is "AppendixF"
+    const includeZoningTextAmendmentAction = projectActions.find(action =>
+      action._dcp_action_value === ACTION_VALUE_OPTIONSET['ZR'].code
+      && action.dcp_ZoningResolution.dcp_zoningresolution === 'AppendixF'
+    );
+
+    if (includeZoningTextAmendmentAction) {
+      await this.crmService.update('dcp_rwcdsforms', dcp_rwcdsformid, {
+        // set to "Yes"
+        dcp_includezoningtextamendment: INCLUDE_ZONING_TEXT_AMENDMENT_OPTIONSET['YES'].code,
+      });
+    } else {
+      await this.crmService.update('dcp_rwcdsforms', dcp_rwcdsformid, {
+        // set to "No"
+        dcp_includezoningtextamendment: INCLUDE_ZONING_TEXT_AMENDMENT_OPTIONSET['NO'].code,
+      });
+    }
   }
 }

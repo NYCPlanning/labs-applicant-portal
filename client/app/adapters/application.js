@@ -1,15 +1,20 @@
 import JSONAPIAdapter from '@ember-data/adapter/json-api';
+import { inject as service } from '@ember/service';
 import ENV from '../config/environment';
 
 export default class ApplicationAdapter extends JSONAPIAdapter {
+  @service
+  session;
+
   host = ENV.host;
 
-  // TODO: find better approach, this is a private method.
-  // see https://github.com/emberjs/data/issues/6413
-  // we must override so it includes the cookie
-  _fetchRequest(options) {
-    options.credentials = 'include';
+  get headers() {
+    if (this.session.isAuthenticated) {
+      return {
+        Authorization: `Bearer ${this.session.data.authenticated.access_token}`,
+      };
+    }
 
-    return fetch(options.url, options);
+    return {};
   }
 }

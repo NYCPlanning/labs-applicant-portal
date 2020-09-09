@@ -2,7 +2,6 @@ import {
   Injectable, 
   HttpException,
   HttpStatus,
-  BadRequestException,
 } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
 import * as moment from 'moment';
@@ -21,39 +20,67 @@ export class AuthService {
   NYCID_TOKEN_SECRET = '';
   ZAP_TOKEN_SECRET = '';
 
-  // development environment features
-  CRM_IMPOSTER_ID = '';
-
   constructor(
     private readonly config: ConfigService,
     private readonly contactService: ContactService,
   ) {
     this.NYCID_TOKEN_SECRET = this.config.get('NYCID_TOKEN_SECRET');
-    this.CRM_IMPOSTER_ID = this.config.get('CRM_IMPOSTER_ID');
     this.ZAP_TOKEN_SECRET = this.config.get('ZAP_TOKEN_SECRET');
   }
 
   /**
-   * Generates a new ZAP token, including the contact id
+   * Generates a new app token, using NYC.ID's expiration, and including the CRM contact id
    *
    * @param      {string}  contactId  The CRM contactid
    * @param      {string}  exp        A string coercable to a Date
+   * @param      {object}  exp        Metadata about the nyc ID user
    * @return     {string}             String representing ZAP token
    */
   private signNewToken(
     contactId: string,
-    expiration: number = moment().add(1, 'days').unix(),
+    nycIdAccount: any = {},
   ): string {
     const { ZAP_TOKEN_SECRET } = this;
+    const {
+      nycExtTOUVersion,
+      mail,
+      scope,
+      nycExtEmailValidationFlag,
+      GUID,
+      userType,
+      exp,
+      jti,
+    } = nycIdAccount;
 
-    return jwt.sign({ contactId, expiration }, ZAP_TOKEN_SECRET);
+    return jwt.sign({
+      // JWT standard name for expiration - see https://github.com/auth0/node-jsonwebtoken#token-expiration-exp-claim
+      exp,
+
+      // CRM id — added to this app's JWT for later queries
+      contactId,
+
+      // additional NYC.ID account information
+      nycExtTOUVersion,
+      mail,
+      scope,
+      nycExtEmailValidationFlag,
+      GUID,
+      userType,
+      jti,
+    }, ZAP_TOKEN_SECRET);
   }
 
   private verifyToken(token, secret): string | {} {
     try {
       return jwt.verify(token, secret);
     } catch (e) {
-      throw new HttpException(`Could not verify token. ${e}`, HttpStatus.UNAUTHORIZED);
+      const error = {
+        code: "INVALID_TOKEN",
+        title: "Invalid token",
+        detail: `Could not verify token. ${e}`,
+      };
+      console.log(error);
+      throw new HttpException(error, HttpStatus.UNAUTHORIZED);
     }
   }
 
@@ -69,7 +96,13 @@ export class AuthService {
     try {
       return this.verifyToken(token, NYCID_TOKEN_SECRET);
     } catch (e) {
-      throw new BadRequestException(`Could not verify NYCID Token: ${e}`);
+      const error = {
+        code: "INVALID_NYCID_TOKEN",
+        title: "Invalid NYCID token",
+        detail: "The acquired NYCID token is invalid."
+      };
+      console.log(error);
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -79,36 +112,28 @@ export class AuthService {
    * look up a Contact in CRM. It returns to the client a ZAP token holding
    * (signed with) the acquired Contact's contactid. 
    * 
-   * It also allows for looking up a contact by CRM_IMPOSTER_ID, if the
-   * environment variable exists, and SKIP_AUTH is true.
-   * 
    * @param      {string}  NYCIDToken  Token from NYCID
    * @return     {string}              String representing generated ZAP Token
    */
   public async generateNewToken(NYCIDToken: string): Promise<string> {
-    const { mail, exp } = this.verifyNYCIDToken(NYCIDToken);
-    const { CRM_IMPOSTER_ID } = this;
+    const nycIdAccount = this.verifyNYCIDToken(NYCIDToken);
 
-    let contact = null;
+    // need the email to lookup a CRM contact.
+    const { mail } = nycIdAccount;
 
-    // prefer finding contact by CRM_IMPOSTER_ID, if it exists
-    if (CRM_IMPOSTER_ID) {
-      contact = await this.contactService.findOneById(CRM_IMPOSTER_ID)
-    } else {
-      contact = await this.contactService.findOneByEmail(mail);
-    };
+    const contact = await this.contactService.findOneByEmail(mail);
 
     if (!contact) {
-
-      const responseBody = {
-        "code": "NO_CONTACT_FOUND",
-        "message": `CRM Contact not found for given email or ID: ${mail}`,
+      const error = {
+        code: "CONTACT_NOT_FOUND",
+        title: "Contact not found",
+        detail: `CRM Contact not found for given email or ID: ${mail}`,
       }
-
-      throw new HttpException(responseBody, HttpStatus.UNAUTHORIZED);
+      console.log(error);
+      throw new HttpException(error, HttpStatus.UNAUTHORIZED);
     }
 
-    return this.signNewToken(contact.contactid, exp);
+    return this.signNewToken(contact.contactid, nycIdAccount);
   }
 
   /**
@@ -118,25 +143,37 @@ export class AuthService {
    */
   public validateCurrentToken(token: string) {
     try {
-      return this.verifyCRMToken(token);
+      return this.verifyZapToken(token);
     } catch (e) {
-      throw new BadRequestException(e);
+      const error = {
+        code: "INVALID_ZAP_TOKEN",
+        title: "Invalid login token provided",
+        detail: "The provided ZAP token is invalid."
+      };
+      console.log(error);
+      throw new HttpException(error, HttpStatus.UNAUTHORIZED);
     }
   }
 
   /**
-   * Verifies a JWT with the CRM signing secret. Returns a token object.
+   * Verifies a JWT with the ZAP signing secret. Returns a token object.
    *
    * @param      {string}  token   The token
    * @return     {any}     { mail: 'string', exp: 'string' }
    */
-  private verifyCRMToken(token): any {
+  private verifyZapToken(token): any {
     const { ZAP_TOKEN_SECRET } = this;
 
     try {
       return this.verifyToken(token, ZAP_TOKEN_SECRET);
     } catch (e) {
-      throw new BadRequestException(e);
+      const error = {
+        code: "VERIFY_ZAP_TOKEN_ERROR",
+        title: "Error verifying ZAP token",
+        detail: "Perhaps the provided ZAP token is invalid."
+      };
+      console.log(error);
+      throw new HttpException(error, HttpStatus.UNAUTHORIZED);
     }
   }
 }

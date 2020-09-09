@@ -23,6 +23,8 @@ export default function() {
   this.get('/projects');
   this.get('/contacts', (schema) => schema.contacts.first());
 
+  this.get('/projects/:id');
+
   this.get('/login', () => ({ ok: true }));
   this.get('/logout');
 
