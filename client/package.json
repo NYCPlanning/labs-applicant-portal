@@ -90,5 +90,8 @@
   },
   "ember": {
     "edition": "octane"
+  },
+  "dependencies": {
+    "jwt-decode": "^3.0.0-beta.2"
   }
 }
