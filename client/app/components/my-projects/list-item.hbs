@@ -1,0 +1,36 @@
+<li
+  class="large-margin-bottom"
+  data-test-project-name={{@project.dcpProjectname}}
+  data-test-my-project-list-item
+>
+  <h3 class="no-margin">
+    <LinkTo
+      @route='project'
+      @model={{@project.id}}
+      data-test-project-link={{@project.id}}
+    >
+      {{@project.dcpProjectname}}
+      <small class="text-weight-normal text-dark-gray">{{@project.dcpName}}</small>
+    </LinkTo>
+  </h3>
+
+  <p class="tiny-margin-bottom">
+    <strong>Primary Applicant:</strong>
+    {{@project.dcpApplicantCustomerValue}}
+  </p>
+
+  <p>
+    <strong>Project Status:</strong>
+    {{optionset 'project' 'statuscode' 'label' @project.statuscode}}
+
+    <span class="text-gray"> | </span>
+
+    <strong>Public Status:</strong>
+    <FaIcon @icon={{if @project.publicStatusGeneralPublicProject 'eye' 'eye-slash'}} @prefix="far" class="text-gray"/>
+    {{#if @project.publicStatusGeneralPublicProject}}
+      <Ui::ExternalLink @href="https://zap.planning.nyc.gov/projects/{{@project.dcpName}}"> {{optionset 'project' 'dcpPublicstatus' 'label' @project.dcpPublicstatus}} </Ui::ExternalLink>
+    {{else}}
+      {{optionset 'project' 'dcpPublicstatus' 'label' @project.dcpPublicstatus}}
+    {{/if}}
+  </p>
+</li>

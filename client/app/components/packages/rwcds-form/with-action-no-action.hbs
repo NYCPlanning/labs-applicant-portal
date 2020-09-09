@@ -54,13 +54,10 @@
         as |RadioGroup|
       >
         <RadioGroup
-          @options={{array
-            (hash label='Yes' code=true)
-            (hash label='No' code=false)
-          }}
+          @options={{optionset 'rwcdsForm' 'dcpExistingconditions' 'list'}}
           @onChange={{fn (mut @form.data.dcpHowdidyoudeterminethenoactionscenario) ""}} as |value|
         >
-          {{#if (eq value false)}}
+          {{#if (eq value (optionset 'rwcdsForm' 'dcpExistingconditions' 'code' 'NO'))}}
             <Ui::Question as |Q|>
               <Q.Label>
                 How did you determine this No-Action scenario?
@@ -138,13 +135,13 @@
         as |RadioGroup|
       >
         <RadioGroup
-          @options={{array
-            (hash label='Yes' code=true)
-            (hash label='No' code=false)
-          }}
+          @options={{optionset 'rwcdsForm' 'dcpIsrwcdsscenario' 'list'}}
           @onChange={{fn (mut @form.data.dcpRwcdsexplanation) ""}} as |value|
         >
-          {{#if value}}
+          {{#if (eq
+            value
+            (optionset 'rwcdsForm' 'dcpIsrwcdsscenario' 'code' 'YES')
+          )}}
             <Ui::Question @required={{true}} as |Q|>
               <Q.Label>
                 Explain why the project is the same as the proposed With-Action Scenario.

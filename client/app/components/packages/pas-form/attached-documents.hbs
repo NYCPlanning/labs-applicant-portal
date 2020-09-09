@@ -3,9 +3,14 @@
     Please attach the following required documents. (Additional materials that help to explain the proposed project may also be submitted.)
   </p>
 
+  <SaveableForm::FieldValidationMessage
+    @attribute='documents'
+    @validation={{@form.errors.documents.validation}}
+  />
+
   <Packages::Attachments
-    @package={{@model.package}}
-    @fileManager={{@model.package.fileManager}}
+    @package={{@form.data}}
+    @fileManager={{@model.fileManager}}
     data-test-section="attachments"
   />
 
@@ -51,12 +56,12 @@
         </li>
       </ul>
 
-      <h5>For Staten Island or Bronx projects in South Richmond, Special Hillsides Preservation, or Special Natural Resources Districts: </h5>
+      <h5>For Staten Island or Bronx projects in South Richmond, Special Hillsides Preservation, or Special Natural Areas Districts: </h5>
       <ul class="text-small">
         <li class="small-margin-bottom">Site Survey &mdash; Existing Conditions (required if there have been changes to previous submissions)</li>
         <li class="small-margin-bottom">Site Plan &mdash; Proposed Conditions</li>
         <li class="small-margin-bottom">Zoning Calculations: Tree Calculations</li>
-        <li class="small-margin-bottom">Zoning Calculations: Average Percent (%) of Slope (Special Hillsides Preservation and Special Natural Resources Districts)</li>
+        <li class="small-margin-bottom">Zoning Calculations: Average Percent (%) of Slope (Special Hillsides Preservation and Special Natural Areas Districts)</li>
       </ul>
     </div>
   </div>

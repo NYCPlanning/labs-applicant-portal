@@ -18,20 +18,38 @@ export default class ProjectModel extends Model {
   // e.g. 'Prefiled', 'Filed', 'In Public Review', 'Completed'
   @attr dcpPublicstatus;
 
+  @attr dcpVisibility;
+
   @attr dcpApplicantCustomerValue;
+
+  @attr dcpProjectbrief;
 
   @hasMany('package', { async: false })
   packages;
 
+  @hasMany('project-applicant', { async: true })
+  projectApplicants;
+
+  get publicStatusGeneralPublicProject() {
+    const isGeneralPublic = this.dcpVisibility === optionset(['project', 'dcpVisibility', 'code', 'GENERAL_PUBLIC']);
+    return this.dcpPublicstatus && isGeneralPublic;
+  }
+
   get pasPackages() {
-    const [firstPackage] = this.packages
-      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'type', 'code', 'PAS_PACKAGE']))
+    const pasPackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'PAS_PACKAGE']))
       .sortBy('dcpPackageversion')
       .reverse();
 
-    if (firstPackage) {
-      return [firstPackage];
-    }
-    return [];
+    return pasPackages;
+  }
+
+  get rwcdsPackages() {
+    const rwcdsPackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'RWCDS']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    return rwcdsPackages;
   }
 }

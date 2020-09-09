@@ -9,11 +9,13 @@ export default class FileManager {
     existingFiles,
     filesToDelete,
     filesToUpload, // EmberFileUpload Queue Object
+    session,
   ) {
     this.packageId = packageId;
     this.existingFiles = existingFiles || [];
     this.filesToDelete = filesToDelete || [];
     this.filesToUpload = filesToUpload; // EmberFileUpload QUEUE Object
+    this.session = session;
   }
 
   @tracked existingFiles;
@@ -58,7 +60,9 @@ export default class FileManager {
   uploadFiles() {
     return Promise.all(this.filesToUpload.files.map((file) => file.upload(`${ENV.host}/documents`, {
       fileKey: 'file',
-      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${this.session.data.authenticated.access_token}`,
+      },
       data: {
         instanceId: this.packageId,
         // Todo: `entityName` shouldn't be necessary.
@@ -82,6 +86,7 @@ export default class FileManager {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.session.data.authenticated.access_token}`,
         },
       },
     )));

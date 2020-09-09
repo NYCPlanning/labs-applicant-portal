@@ -1,5 +1,4 @@
 import { Module, MiddlewareConsumer } from '@nestjs/common';
-import * as cookieparser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
 import * as compression from 'compression';
 import { AppController } from './app.controller';
@@ -26,10 +25,6 @@ import { DocumentModule } from './document/document.module';
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(cookieparser())
-      .forRoutes('*');
-
     consumer
       .apply(AuthMiddleware)
       .forRoutes('*');

@@ -16,20 +16,9 @@
           </p>
         {{/if}}
 
-        {{#each @model.errors as |error idx|}}
-          {{#if error.detail}}
-            <code class="callout display-block text-left red-muted" data-test-error-message={{idx}}>{{error.detail}}</code>
-          {{else}}
-            {{#each-in error.response as |key value|}}
-              <code class="callout display-block text-left red-muted" data-test-error-response={{concat key idx}}>
-                {{key}}: {{value}}
-              </code>
-            {{/each-in}}
-            <code class="callout display-block text-left red-muted">
-              status: {{error.status}}
-            </code>
-          {{/if}}
-        {{/each}}
+        <Errors::List
+          @errors={{@model.errors}}
+        />
 
         <Auth::DoLogout />
 

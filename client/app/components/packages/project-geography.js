@@ -2,17 +2,17 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { bblBreakup } from '../../helpers/bbl-breakup';
-import { BOROUGHS_OPTIONSET } from '../../models/bbl';
+import { BOROUGHS } from '../../optionsets/bbl';
 
 // zap search provides bbls as 1-5-4 digits. the first part of the bbl,
 // the borough, is represented as a number. this object maps those
 // numbers to their respective CRM code.
 const NUMERIC_BOROUGH_MAPPING = {
-  1: BOROUGHS_OPTIONSET.MANHATTAN.code,
-  2: BOROUGHS_OPTIONSET.BRONX.code,
-  3: BOROUGHS_OPTIONSET.BROOKLYN.code,
-  4: BOROUGHS_OPTIONSET.QUEENS.code,
-  5: BOROUGHS_OPTIONSET.STATEN_ISLAND.code,
+  1: BOROUGHS.MANHATTAN.code,
+  2: BOROUGHS.BRONX.code,
+  3: BOROUGHS.BROOKLYN.code,
+  4: BOROUGHS.QUEENS.code,
+  5: BOROUGHS.STATEN_ISLAND.code,
 };
 
 export default class ProjectGeographyComponent extends Component {

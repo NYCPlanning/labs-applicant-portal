@@ -1,8 +1,8 @@
 export const extractJWT = (response): string => {
-  try {
-    const { header: { 'set-cookie': [token] } } = response;
+  const { access_token } = response.body;
 
-    return token;
+  try {
+    return access_token;
   } catch (e) {
     console.log(e);
 

@@ -24,4 +24,15 @@ module('Unit | Model | project', function(hooks) {
 
     assert.ok(model);
   });
+
+  test('rwcdsPackages works when no packages available', function(assert) {
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('project', {
+      packages: [],
+    });
+
+    assert.equal(model.rwcdsPackages.length, 0);
+
+    assert.ok(model);
+  });
 });

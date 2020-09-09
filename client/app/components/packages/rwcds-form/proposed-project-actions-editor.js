@@ -10,10 +10,12 @@ export default class ProposedActionsComponent extends Component {
     'ZA', 'ZS', 'SD', 'SA', 'RA', 'RS',
   ];
 
-  get zrTypeLabel() {
-    const zrTypeCode = this.args.zrForm.data.dcpZoningresolutiontype;
+  get zrTypeCode() {
+    return this.args.zrForm.data.dcpZoningresolutiontype;
+  }
 
-    return optionset(['affectedZoningResolution', 'actions', 'label', zrTypeCode]);
+  get zrTypeLabel() {
+    return optionset(['affectedZoningResolution', 'actions', 'label', this.zrTypeCode]);
   }
 
   get zrAppendixF() {
@@ -38,5 +40,11 @@ export default class ProposedActionsComponent extends Component {
   get hasZrSectionTitleQuestion() {
     const zrTypeInArray = this.actionsWithSectionNumberAndSectionTitle.includes(this.zrTypeLabel);
     return zrTypeInArray || this.zrAppendixF;
+  }
+
+  get isActionWithAdditionalInformation() {
+    return this.hasModifiedZrSectionNumberQuestion
+    || this.hasZrSectionTitleQuestion
+    || this.zrTypeCode === optionset(['affectedZoningResolution', 'actions', 'code', 'ZR']);
   }
 }

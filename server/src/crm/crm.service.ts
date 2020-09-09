@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable
+} from '@nestjs/common';
 import * as zlib from 'zlib';
 import * as Request from 'request';
 import { ConfigService } from '../config/config.service';
@@ -39,17 +43,25 @@ export class CrmService {
   }
 
   async get(entity: string, query: string, ...options) {
-    const sanitizedQuery = query.replace(/^\s+|\s+$/g, '');
-    const response = await this._get(`${entity}?${sanitizedQuery}`, ...options);
-    const {
-      value: records,
-      '@odata.count': count,
-    } = response;
+    try {
+      const sanitizedQuery = query.replace(/^\s+|\s+$/g, '');
+      const response = await this._get(`${entity}?${sanitizedQuery}`, ...options);
+      const {
+        value: records,
+        '@odata.count': count,
+      } = response;
 
-    return {
-      count,
-      records,
-    };
+      return {
+        count,
+        records,
+      };
+    } catch (e) {
+      throw new HttpException({
+        code: 'ENTITY_NOT_FOUND',
+        title: `Could not find entity`,
+        detail: `Could not find entity "${entity}" for given query ${query.substring(0,10)}`,
+      }, HttpStatus.NOT_FOUND);
+    }
   }
 
   async create(query, data, headers = {}) {
@@ -431,33 +443,50 @@ export class CrmService {
     })
   }
 
+  // Retrieves a list of files in a given Sharepoint folder
   async getSharepointFolderFiles(folderIdentifier): Promise<any> {
-    const { access_token } = await this.generateSharePointAccessToken();
-    const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
+    try {
+      const { access_token } = await this.generateSharePointAccessToken();
+      const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
 
-    // Escape apostrophes by duplicating any apostrophes.
-    // See https://sharepoint.stackexchange.com/a/165224
-    const formattedFolderIdentifier = folderIdentifier.replace("'", "''");
-    const url = encodeURI(`https://nyco365.sharepoint.com/sites/${SHAREPOINT_CRM_SITE}/_api/web/GetFolderByServerRelativeUrl('/sites/${SHAREPOINT_CRM_SITE}/${formattedFolderIdentifier}')/Files`);
-    
-    const options = {
-      url,
-      headers: {
-        'Authorization': `Bearer ${access_token}`,
-        Accept: 'application/json',
-      },
-    };
+      // Escape apostrophes by duplicating any apostrophes.
+      // See https://sharepoint.stackexchange.com/a/165224
+      const formattedFolderIdentifier = folderIdentifier.replace("'", "''");
+      const url = encodeURI(`https://nyco365.sharepoint.com/sites/${SHAREPOINT_CRM_SITE}/_api/web/GetFolderByServerRelativeUrl('/sites/${SHAREPOINT_CRM_SITE}/${formattedFolderIdentifier}')/Files`);
 
-    return new Promise(resolve => {
-      Request.post(options, (error, response, body) => {
-        const stringifiedBody = body.toString('utf-8');
-        if (response.statusCode >= 400) {
-          console.log('error', stringifiedBody);
-        }
+      const options = {
+        url,
+        headers: {
+          'Authorization': `Bearer ${access_token}`,
+          Accept: 'application/json',
+        },
+      };
 
-        resolve(JSON.parse(stringifiedBody));
-      });
-    })
+      return new Promise(resolve => {
+        Request.post(options, (error, response, body) => {
+          const stringifiedBody = body.toString('utf-8');
+          if (response.statusCode >= 400) {
+            throw new HttpException({
+              code: 'LOAD_FOLDER_FAILED',
+              title: 'Error loading sharepoint files',
+              detail: `Could not load file list from Sharepoint folder "${formattedFolderIdentifier}". ${stringifiedBody}`,
+            }, HttpStatus.NOT_FOUND);;
+          }
+
+          resolve(JSON.parse(stringifiedBody));
+        });
+      })
+    } catch (e) {
+      if (e instanceof HttpException) {
+        throw e;
+      } else {
+        throw new HttpException({
+          code: 'REQUEST_FOLDER_FAILED',
+          title: 'Error requesting sharepoint files',
+          detail: `Error while constructing request for Sharepoint folder files`,
+        }, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    }
   }
 
   async getSharepointFile(serverRelativeUrl): Promise<any> {

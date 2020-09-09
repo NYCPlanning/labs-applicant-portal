@@ -5,9 +5,9 @@
 <div class="text-center xlarge-padding-top xlarge-padding-bottom xlarge-margin-top xlarge-margin-bottom">
   <span>Hmm, something went wrong:</span>
 
-  {{#each this.model.errors as |error|}}
-    <span>{{error.message}}</span>
-  {{/each}}
+  <Errors::List
+    @errors={{this.model.errors}}
+  />
 
   {{!-- If there's an error, try to logout --}}
   <Auth::DoLogout />
