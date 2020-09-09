@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 import SaveablePasFormValidations from '../../../validations/saveable-pas-form';
 import SubmittablePasFormValidations from '../../../validations/submittable-pas-form';
 
@@ -21,6 +22,8 @@ export default class PasFormComponent extends Component {
     SubmittablePackageFormValidations,
   };
 
+  @tracked recordsToDelete = [];
+
   @service
   router;
 
@@ -38,7 +41,7 @@ export default class PasFormComponent extends Component {
   @action
   async savePackage() {
     try {
-      await this.args.package.save();
+      await this.args.package.save(this.recordsToDelete);
     } catch (error) {
       console.log('Save PAS package error:', error);
     }
@@ -64,6 +67,8 @@ export default class PasFormComponent extends Component {
   @action
   removeApplicant(applicant, changeset) {
     removeFromHasMany(changeset, 'applicants', applicant);
+
+    this.recordsToDelete.push(applicant);
 
     applicant.deleteRecord();
   }

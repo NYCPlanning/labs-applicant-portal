@@ -1,3 +1,6 @@
+import {
+  validateLength,
+} from 'ember-changeset-validations/validators';
 import SaveableLanduseForm from './saveable-landuse-form';
 import validatePresenceIf from '../validators/required-if-selected';
 
@@ -36,6 +39,12 @@ export default {
       on: 'dcpSitedatasiteisinnewyorkcity',
       withValue: true,
       message: 'This field is required',
+    }),
+  ],
+  applicants: [
+    validateLength({
+      min: 1,
+      message: 'One or more applicant team members is required.',
     }),
   ],
 };
