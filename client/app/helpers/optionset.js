@@ -17,6 +17,7 @@ import {
 import PACKAGE_OPTIONSETS from '../optionsets/package';
 import {
   CEQR_TYPE,
+  DCPDEVSIZE,
 } from '../optionsets/landuse-form';
 import {
   DCPCONSTRUCTIONPHASING,
@@ -62,6 +63,9 @@ const OPTIONSET_LOOKUP = {
     dcpEntiretyboroughs: YES_NO,
     dcpEntiretycommunity: YES_NO,
     dcpNotaxblock: YES_NO,
+    dcp500kpluszone: YES_NO,
+    dcpDevsize: DCPDEVSIZE,
+    dcpSitedatasiteisinnewyorkcity: YES_NO,
   },
   rwcdsForm: {
     dcpHasprojectchangedsincesubmissionofthepas: YES_NO,
