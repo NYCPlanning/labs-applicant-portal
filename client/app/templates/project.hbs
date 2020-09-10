@@ -159,6 +159,31 @@
 
     <Messages::Assistance class="large-margin-top" />
 
+    <h3>
+      City Planning Staff
+    </h3>
+    <ul class="no-bullet">
+      {{#each this.project.teamMembers as |teamMember|}}
+        <li class="grid-x medium-margin-bottom">
+          <div class="cell shrink small-padding-right">
+            <FaIcon @icon='user' @fixedWidth={{true}} @transform='down-1' class="text-gray" />
+          </div>
+          <div class="cell auto">
+            <h5 class="no-margin">{{teamMember.name}}</h5>
+            <p class="text-small tiny-margin-bottom">
+              <i>{{teamMember.role}}</i>
+            </p>
+            <p class="text-small tiny-margin-bottom">
+              <a href="mailto:{{teamMember.email}}">{{teamMember.email}}</a>
+            </p>
+            <p class="text-small tiny-margin-bottom">
+              {{teamMember.phone}}
+            </p>
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+
   </div>
 </div>
 
