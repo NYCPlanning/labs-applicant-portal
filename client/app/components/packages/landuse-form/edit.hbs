@@ -76,6 +76,31 @@
           data-test-submit-button
         />
       </saveableForm.PageNav>
+
+      <saveableForm.ConfirmationModal
+        @action={{component saveableForm.SubmitButton
+          onClick=this.submitPackage
+          isEnabled=saveableForm.isSubmittable
+          class="no-margin"
+        }}
+        @footer={{component 'packages/landuse-form/landuse-form-error'
+          package=@package
+        }}
+        @continueButtonTitle="Continue Editing"
+        data-test-confirm-submit-button={{true}}
+      >
+        <h6>Confirm Draft Land Use Form Submission</h6>
+        <p class="header-large medium-margin-top small-margin-bottom">
+          Are you sure?
+        </p>
+        <p>
+          Before submitting, ensure that your answers are accurate and complete,
+          and that necessary attachments have been uploaded.
+          If NYC Planning does not receive enough accurate information,
+          the Lead Planner will notify you and request that this form be
+          resubmitted with necessary materials, corrections, or clarifications.
+        </p>
+      </saveableForm.ConfirmationModal>
     </div>
   </div>
 </SaveableForm>

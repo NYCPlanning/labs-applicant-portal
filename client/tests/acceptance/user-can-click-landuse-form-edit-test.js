@@ -5,6 +5,7 @@ import {
   currentURL,
   settled,
   fillIn,
+  waitFor,
 } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -23,6 +24,30 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     authenticateSession({
       emailaddress1: 'me@me.com',
     });
+  });
+
+  test('User can edit, save and submit landuse form', async function(assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'toDo', 'landuseForm')],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    await click('[data-test-add-applicant-button]');
+    await fillIn('[data-test-input="dcpFirstname"]', 'Tess');
+    await fillIn('[data-test-input="dcpLastname"]', 'Ter');
+    await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
+    await click('[data-test-save-button]');
+
+    await waitFor('[data-test-submit-button]:not([disabled])');
+    await click('[data-test-submit-button]');
+    await click('[data-test-confirm-submit-button]');
+
+    await settled();
+
+    await waitFor('[data-test-show="dcpProjectname"]');
+
+    assert.equal(currentURL(), '/landuse-form/1');
   });
 
   test('User can edit Site Information on the landuse form', async function(assert) {
