@@ -68,15 +68,17 @@ export default class PackageModel extends Model {
     this.statecode = STATECODE.INACTIVE.code;
   }
 
-  async save() {
+  async save(recordsToDelete) {
     await this.fileManager.save();
     if (this.dcpPackagetype === DCPPACKAGETYPE.PAS_PACKAGE.code) {
+      await this.saveDeletedRecords(recordsToDelete);
       await this.pasForm.save();
     }
     if (this.dcpPackagetype === DCPPACKAGETYPE.RWCDS.code) {
       await this.rwcdsForm.save();
     }
     if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code) {
+      await this.saveDeletedRecords(recordsToDelete);
       await this.landuseForm.save();
     }
     await super.save();
@@ -90,6 +92,15 @@ export default class PackageModel extends Model {
     this.setAttrsForSubmission();
 
     await this.save();
+  }
+
+  async saveDeletedRecords(recordsToDelete) {
+    if (recordsToDelete) {
+      return Promise.all(
+        recordsToDelete
+          .map((record) => record.save()),
+      );
+    }
   }
 
   // deprecate

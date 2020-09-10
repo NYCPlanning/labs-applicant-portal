@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 import SaveableProjectFormValidations from '../../../validations/saveable-project-form';
 import SubmittableProjectFormValidations from '../../../validations/submittable-project-form';
 import SaveableLanduseFormValidations from '../../../validations/saveable-landuse-form';
@@ -23,6 +24,8 @@ export default class LandUseFormComponent extends Component {
     SubmittableRelatedActionFormValidations,
   };
 
+  @tracked recordsToDelete = [];
+
   @service
   store;
 
@@ -34,10 +37,15 @@ export default class LandUseFormComponent extends Component {
     return this.package.landuseForm || {};
   }
 
+  get packageIsDirtyOrRecordsDeleted() {
+    return this.package.isDirty || this.recordsToDelete.length > 0;
+  }
+
   @action
   async savePackage() {
     try {
-      await this.args.package.save();
+      await this.args.package.save(this.recordsToDelete);
+      this.recordsToDelete = [];
     } catch (error) {
       console.log('Save Landuse package error:', error);
     }
@@ -64,6 +72,8 @@ export default class LandUseFormComponent extends Component {
   removeApplicant(applicant, changeset) {
     removeFromHasMany(changeset, 'applicants', applicant);
 
+    this.recordsToDelete.push(applicant);
+
     applicant.deleteRecord();
   }
 
@@ -80,6 +90,15 @@ export default class LandUseFormComponent extends Component {
   removeRelatedAction(relatedAction, changeset) {
     removeFromHasMany(changeset, 'relatedActions', relatedAction);
 
+    this.recordsToDelete.push(relatedAction);
+
     relatedAction.deleteRecord();
+  }
+
+  @action
+  removeBbl(bbl) {
+    bbl.deleteRecord();
+    this.recordsToDelete.push(bbl);
+    this.args.package.landuseForm.bbls.removeObject(bbl);
   }
 }

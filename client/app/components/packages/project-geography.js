@@ -50,12 +50,4 @@ export default class ProjectGeographyComponent extends Component {
     // bottom of the screen where they will be unable to see it
     this.args.bbls.unshiftObject(bblObjectToPush);
   }
-
-  // Remove bbl object from list of bbls
-  @action
-  removeBbl(bblObjectToBeRemoved) {
-    // this.store.deleteRecord(bblObjectToBeRemoved);
-    bblObjectToBeRemoved.destroyRecord();
-    this.args.bbls.removeObject(bblObjectToBeRemoved);
-  }
 }
