@@ -21,4 +21,21 @@ export default {
       message: 'This field is required',
     }),
   ],
+  dcpDevsize: [
+    validatePresenceIf({
+      presence: true,
+      on: 'dcp500kpluszone',
+      withValue: true,
+      message: 'This field is required',
+    }),
+  ],
+  dcpSitedataidentifylandmark: [
+    ...SaveableLanduseForm.dcpSitedataidentifylandmark,
+    validatePresenceIf({
+      presence: true,
+      on: 'dcpSitedatasiteisinnewyorkcity',
+      withValue: true,
+      message: 'This field is required',
+    }),
+  ],
 };
