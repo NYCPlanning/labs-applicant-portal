@@ -128,9 +128,23 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
 
     assert.dom('[data-test-input="dcpSitedatapropertydescription"]').exists();
 
+    assert.dom('[data-test-input="dcpZonesspecialdistricts"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpStateczm"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpHistoricdistrict"]').doesNotExist();
+    assert.dom('[data-test-input="dcpSitedatarenewalarea"]').doesNotExist();
+
     await click('[data-test-radio="dcpNotaxblock"][data-test-radio-option="No"]');
 
     assert.dom('[data-test-input="dcpSitedatapropertydescription"]').doesNotExist();
+
+    assert.dom('[data-test-input="dcpZonesspecialdistricts"]').exists();
+    assert.dom('[data-test-radio="dcpStateczm"]').exists();
+    assert.dom('[data-test-radio="dcpHistoricdistrict"]').exists();
+    assert.dom('[data-test-input="dcpSitedatarenewalarea"]').doesNotExist();
+
+    await click('[data-test-radio="dcpHistoricdistrict"][data-test-radio-option="Yes"]');
+
+    assert.dom('[data-test-input="dcpSitedatarenewalarea"]').exists();
 
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
@@ -401,12 +415,19 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
 
-  test('User only sees Proposed Development Site and Project Tax Lots when project applies to partial area', async function(assert) {
+  test('User only sees last questions under Project Area, Proposed Development Site, Project Tax Lots when project applies to partial area', async function(assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
     });
 
     await visit('/landuse-form/1/edit');
+
+    assert.dom('[data-test-input="dcpZonesspecialdistricts"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpStateczm"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpHistoricdistrict"]').doesNotExist();
+    assert.dom('[data-test-input="dcpSitedatarenewalarea"]').doesNotExist();
+    assert.dom('[data-test-section="proposed-development-site"]').doesNotExist();
+    assert.dom('[data-test-section="project-area-tax-lots"]').doesNotExist();
 
     assert.dom('[data-test-section="proposed-development-site"]').doesNotExist();
     assert.dom('[data-test-section="project-area-tax-lots"]').doesNotExist();
@@ -415,12 +436,25 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     await click('[data-test-radio="dcpEntiretyboroughs"][data-test-radio-option="No"]');
     await click('[data-test-radio="dcpEntiretycommunity"][data-test-radio-option="No"]');
 
+    assert.dom('[data-test-input="dcpZonesspecialdistricts"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpStateczm"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpHistoricdistrict"]').doesNotExist();
+    assert.dom('[data-test-input="dcpSitedatarenewalarea"]').doesNotExist();
     assert.dom('[data-test-section="proposed-development-site"]').doesNotExist();
     assert.dom('[data-test-section="project-area-tax-lots"]').doesNotExist();
 
     await click('[data-test-radio="dcpNotaxblock"][data-test-radio-option="No"]');
 
+    assert.dom('[data-test-input="dcpZonesspecialdistricts"]').exists();
+    assert.dom('[data-test-radio="dcpStateczm"]').exists();
+    assert.dom('[data-test-radio="dcpHistoricdistrict"]').exists();
     assert.dom('[data-test-section="proposed-development-site"]').exists();
     assert.dom('[data-test-section="project-area-tax-lots"]').exists();
+
+    assert.dom('[data-test-input="dcpSitedatarenewalarea"]').doesNotExist();
+
+    await click('[data-test-radio="dcpHistoricdistrict"][data-test-radio-option="Yes"]');
+
+    assert.dom('[data-test-input="dcpSitedatarenewalarea"]').exists();
   });
 });
