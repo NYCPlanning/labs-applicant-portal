@@ -4,9 +4,6 @@ export default class ApplicantModel extends Model {
   @belongsTo('pas-form')
   pasForm;
 
-  @belongsTo('landuse-form')
-  landuseForm;
-
   // only exists on dcp_applicantinformation CRM entity
   // either 'Applicant' or 'Authorized Applicant Representative'
   // either 717170000 or 717170001

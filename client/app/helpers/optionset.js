@@ -16,10 +16,6 @@ import {
 } from '../optionsets/affected-zoning-resolution';
 import PACKAGE_OPTIONSETS from '../optionsets/package';
 import {
-  CEQR_TYPE,
-  DCPDEVSIZE,
-} from '../optionsets/landuse-form';
-import {
   DCPCONSTRUCTIONPHASING,
 } from '../optionsets/rwcds-form';
 import {
@@ -56,16 +52,6 @@ const OPTIONSET_LOOKUP = {
     dcpPublicstatus: PROJECT_OPTIONSETS.DCPPUBLICSTATUS,
     dcpVisibility: PROJECT_OPTIONSETS.DCPVISIBILITY,
     statuscode: PROJECT_OPTIONSETS.STATUSCODE,
-  },
-  landuseForm: {
-    dcpCeqrtype: CEQR_TYPE,
-    dcpWholecity: YES_NO,
-    dcpEntiretyboroughs: YES_NO,
-    dcpEntiretycommunity: YES_NO,
-    dcpNotaxblock: YES_NO,
-    dcp500kpluszone: YES_NO,
-    dcpDevsize: DCPDEVSIZE,
-    dcpSitedatasiteisinnewyorkcity: YES_NO,
   },
   rwcdsForm: {
     dcpHasprojectchangedsincesubmissionofthepas: YES_NO,

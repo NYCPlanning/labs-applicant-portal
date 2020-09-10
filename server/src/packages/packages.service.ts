@@ -3,7 +3,6 @@ import { CrmService } from '../crm/crm.service';
 import { PasFormService } from './pas-form/pas-form.service';
 import { pick } from 'underscore';
 import { RwcdsFormService } from './rwcds-form/rwcds-form.service';
-import { LanduseFormService } from './landuse-form/landuse-form.service';
 import { PACKAGE_ATTRS } from './packages.attrs';
 import { PROJECT_ATTRS } from '../projects/projects.attrs';
 import { DocumentService } from '../document/document.service';
@@ -77,7 +76,6 @@ export class PackagesService {
     private readonly crmService: CrmService,
     private readonly pasFormService: PasFormService,
     private readonly rwcdsFormService: RwcdsFormService,
-    private readonly landuseFormService: LanduseFormService,
     private readonly documentService: DocumentService,
   ) {}
 
@@ -173,12 +171,6 @@ export class PackagesService {
       if (dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['RWCDS'].code) {
         return {
           dcp_rwcdsform: await this.rwcdsFormService.find(dcpPackage._dcp_rwcdsform_value)
-        };
-      }
-
-      if (dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['DRAFT_LU_PACKAGE'].code) {
-        return {
-          dcp_landuse: await this.landuseFormService.find(dcpPackage._dcp_landuseapplication_value)
         };
       }
 

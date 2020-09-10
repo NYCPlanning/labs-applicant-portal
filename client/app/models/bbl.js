@@ -7,9 +7,6 @@ export default class BblModel extends Model {
   @belongsTo('project')
   project;
 
-  @belongsTo('landuse-form')
-  landuseForm;
-
   @attr
   dcpBblnumber;
 

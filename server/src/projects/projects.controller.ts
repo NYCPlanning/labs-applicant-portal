@@ -1,25 +1,19 @@
 import {
   Controller,
   Get,
-  Patch,
-  Body,
   Query,
   HttpException,
   HttpStatus,
   Session,
   UseInterceptors,
   UseGuards,
-  UsePipes,
   Param,
 } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { ConfigService } from '../config/config.service';
 import { ContactService } from '../contact/contact.service';
-import { CrmService } from '../crm/crm.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 import { AuthenticateGuard } from '../authenticate.guard';
-import { JsonApiDeserializePipe } from '../json-api-deserialize.pipe';
-import { pick } from 'underscore';
 import { PROJECT_ATTRS } from './projects.attrs';
 import { PACKAGE_ATTRS } from '../packages/packages.attrs';
 import { PROJECTAPPLICANT_ATTRS } from './project-applicants/project-applicants.attrs';
@@ -78,8 +72,7 @@ import { CONTACT_ATTRS } from '../contact/contacts.attrs';
   },
 }))
 @UseGuards(AuthenticateGuard)
-@UsePipes(JsonApiDeserializePipe)
-@Controller('projects')
+@Controller()
 export class ProjectsController {
   CRM_IMPOSTER_ID = '';
 
@@ -87,12 +80,11 @@ export class ProjectsController {
     private readonly projectsService: ProjectsService,
     private readonly contactService: ContactService,
     private readonly config: ConfigService,
-    private readonly crmService: CrmService,
   ) {
     this.CRM_IMPOSTER_ID = this.config.get('CRM_IMPOSTER_ID');
   }
 
-  @Get('/')
+  @Get('/projects')
   async listOfCurrentUserProjects(@Session() session) {
     const { contactId } = session;
 
@@ -113,7 +105,7 @@ export class ProjectsController {
     }
   }
 
-  @Get('/:id')
+  @Get('/projects/:id')
   async projectById(@Param('id') id) {
     try {
       return await this.projectsService.getProject(id);
@@ -128,17 +120,5 @@ export class ProjectsController {
         }, HttpStatus.INTERNAL_SERVER_ERROR);
       }
     }
-  }
-
-  @Patch('/:id')
-  async update(@Body() body, @Param('id') id) {
-    const allowedAttrs = pick(body, PROJECT_ATTRS);
-
-    await this.crmService.update('dcp_projects', id, allowedAttrs);
-
-    return {
-      dcp_projectid: id,
-      ...body
-    };
   }
 }

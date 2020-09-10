@@ -15,9 +15,6 @@ export class JsonApiDeserializePipe implements PipeTransform {
         'pas-forms': {
           valueForRelationship: relationship => relationship.id,
         },
-        'landuse-forms': {
-          valueForRelationship: relationship => relationship.id,
-        },
         bbls: {
           valueForRelationship: relationship => relationship.id,
         },
@@ -31,9 +28,6 @@ export class JsonApiDeserializePipe implements PipeTransform {
           valueForRelationship: relationship => relationship.id,
         },
         contacts: {
-          valueForRelationship: relationship => relationship.id,
-        },
-        'related-actions': {
           valueForRelationship: relationship => relationship.id,
         },
       }).deserialize(value);

@@ -94,13 +94,6 @@ export class ApplicantsController {
             `/dcp_pasforms(${body.pas_form})`,
           ],
         });
-      } else if (body.landuse_form) {
-        return this.crmService.create('dcp_applicantinformations', {
-          ...allowedAttrs,
-          'dcp_dcp_applicantinformation_dcp_landuse@odata.bind': [
-            `/dcp_landuses(${body.landuse_form})`,
-          ],
-        });
       } else {
         return this.crmService.create(
           `dcp_applicantinformations`,
@@ -123,13 +116,6 @@ export class ApplicantsController {
             ],
           },
         );
-      } else if (body.landuse_form) {
-        return this.crmService.create('dcp_applicantinformations', {
-          ...allowedAttrs,
-          'dcp_dcp_applicantrepinformation_dcp_landuse@odata.bind': [
-            `/dcp_landuses(${body.landuse_form})`,
-          ],
-        });
       } else {
         return this.crmService.create(
           `dcp_applicantrepresentativeinformations`,

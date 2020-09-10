@@ -15,15 +15,13 @@ import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 import { JsonApiDeserializePipe } from '../json-api-deserialize.pipe';
 import { PackageAccessGuard } from './package-access.guard';
 import { pick } from 'underscore';
-import { LANDUSE_FORM_ATTRS } from './landuse-form/landuse-form.attrs';
 import { RWCDS_FORM_ATTRS } from './rwcds-form/rwcds-form.attrs';
 import { PAS_FORM_ATTRS, PAS_FORM_PROJECTADDRESS_ATTRS } from './pas-form/pas-form.attrs';
 import { PACKAGE_ATTRS } from './packages.attrs';
 import { PROJECT_ATTRS } from '../projects/projects.attrs';
-import { BBL_ATTRS } from './bbls/bbls.attrs';
+import { BBL_ATTRS } from './pas-form/bbls/bbls.attrs';
 import { AFFECTEDZONINGRESOLUTION_ATTRS } from './rwcds-form/affected-zoning-resolution/affected-zoning-resolutions.attrs';
 import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
-import { RELATED_ACTION_ATTRS } from './landuse-form/related-actions/related-actions.attrs';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('packages', {
   id: 'dcp_packageid',
@@ -37,7 +35,6 @@ import { RELATED_ACTION_ATTRS } from './landuse-form/related-actions/related-act
     // entity relationships
     'pas-form',
     'rwcds-form',
-    'landuse-form',
     'project',
   ],
   project: {
@@ -89,35 +86,6 @@ import { RELATED_ACTION_ATTRS } from './landuse-form/related-actions/related-act
       ],
     },
   },
-  'landuse-form': {
-    ref: 'dcp_landuseid',
-    attributes: [
-      ...LANDUSE_FORM_ATTRS,
-
-      'applicants',
-      'bbls',
-      'related-actions',
-    ],
-    applicants: {
-      ref: 'dcp_applicantinformationid',
-      attributes: [
-        ...APPLICANT_ATTRS,
-        'target_entity', // custom attribute to handle the two applicant crm entities
-      ],
-    },
-    bbls: {
-      ref: 'dcp_projectbblid',
-      attributes: [
-        ...BBL_ATTRS,
-      ],
-    },
-    'related-actions': {
-      ref: 'dcp_relatedactionsid',
-      attributes: [
-        ...RELATED_ACTION_ATTRS,
-      ],
-    },
-  },
 
   // Transform here should only be used for remapping
   // navigation links into cleaner names as well as
@@ -131,8 +99,7 @@ import { RELATED_ACTION_ATTRS } from './landuse-form/related-actions/related-act
     try {
       const {
         dcp_pasform: pasForm,
-        dcp_rwcdsform: rwcdsForm,
-        dcp_landuse: landuseForm
+        dcp_rwcdsform: rwcdsForm
       } = projectPackage;
   
       if (pasForm) {
@@ -166,31 +133,6 @@ import { RELATED_ACTION_ATTRS } from './landuse-form/related-actions/related-act
           'rwcds-form': {
             ...rwcdsForm,
             'affected-zoning-resolutions': rwcdsForm.dcp_rwcdsform_dcp_affectedzoningresolution_rwcdsform,
-          }
-        }
-      } else if (landuseForm) {
-        return {
-          ...projectPackage,
-          'landuse-form': {
-            ...landuseForm,
-            applicants: [
-              ...landuseForm.dcp_dcp_applicantinformation_dcp_landuse,
-              ...landuseForm.dcp_dcp_applicantrepinformation_dcp_landuse.map((applicant) => {
-                // map this array to handle the slight differences in schemas between these two entities
-                // that we treat as one applicants array on the frontend
-  
-                // define target_entity for the frontend (defaults to dcp_applicantinformation)
-                applicant['target_entity'] = 'dcp_applicantrepresentativeinformation'
-  
-                return {
-                ...applicant,
-                // FIXME: this is ensuring the Ember Data relationships work (with a unique ref)
-                // but this is hacky because dcp_applicantinformationid doesn't exist on this entity
-                dcp_applicantinformationid: `representative-${applicant.dcp_applicantrepresentativeinformationid}`
-              }}),
-            ],
-            bbls: landuseForm.dcp_dcp_projectbbl_dcp_landuse,
-            'related-actions': landuseForm.dcp_dcp_landuse_dcp_relatedactions,
           }
         }
       } else {
