@@ -17,6 +17,7 @@ import { AuthenticateGuard } from '../authenticate.guard';
 import { PROJECT_ATTRS } from './projects.attrs';
 import { PACKAGE_ATTRS } from '../packages/packages.attrs';
 import { PROJECTAPPLICANT_ATTRS } from './project-applicants/project-applicants.attrs';
+import { TEAMMEMBER_ATTRS } from './team-members/team-members.attrs';
 import { CONTACT_ATTRS } from '../contact/contacts.attrs';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('projects', {
@@ -26,6 +27,7 @@ import { CONTACT_ATTRS } from '../contact/contacts.attrs';
 
     'packages',
     'project-applicants',
+    'team-members',
     'contacts',
   ],
   packages: {
@@ -47,6 +49,12 @@ import { CONTACT_ATTRS } from '../contact/contacts.attrs';
         ...CONTACT_ATTRS,
       ],
     },
+  },
+  'team-members': {
+    ref: 'dcp_dcpprojectteamid',
+    attributes: [
+      ...TEAMMEMBER_ATTRS,
+    ],
   },
 
   // remap verbose navigation link names to
