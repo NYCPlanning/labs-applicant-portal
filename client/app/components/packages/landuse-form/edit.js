@@ -27,6 +27,9 @@ export default class LandUseFormComponent extends Component {
   @tracked recordsToDelete = [];
 
   @service
+  router;
+
+  @service
   store;
 
   get package() {
@@ -55,7 +58,7 @@ export default class LandUseFormComponent extends Component {
   async submitPackage() {
     await this.args.package.submit();
 
-    this.router.transitionTo('land-use.show', this.args.package.id);
+    this.router.transitionTo('landuse-form.show', this.args.package.id);
   }
 
   @action
