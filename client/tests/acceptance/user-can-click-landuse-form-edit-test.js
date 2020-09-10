@@ -162,6 +162,14 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     });
 
     await visit('/landuse-form/1/edit');
+
+    // fill out other necessary fields for saving
+    await click('[data-test-add-applicant-button]');
+    await fillIn('[data-test-input="dcpFirstname"]', 'Tess');
+    await fillIn('[data-test-input="dcpLastname"]', 'Ter');
+    await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
+    await click('[data-test-save-button]');
+
     assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
 
     await click('[data-test-radio="dcp500kpluszone"][data-test-radio-option="No"]');
