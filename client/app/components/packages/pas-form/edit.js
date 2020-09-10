@@ -38,10 +38,15 @@ export default class PasFormComponent extends Component {
     return this.package.pasForm || {};
   }
 
+  get packageIsDirtyOrRecordsDeleted() {
+    return this.package.isDirty || this.recordsToDelete.length > 0;
+  }
+
   @action
   async savePackage() {
     try {
       await this.args.package.save(this.recordsToDelete);
+      this.recordsToDelete = [];
     } catch (error) {
       console.log('Save PAS package error:', error);
     }
@@ -71,5 +76,12 @@ export default class PasFormComponent extends Component {
     this.recordsToDelete.push(applicant);
 
     applicant.deleteRecord();
+  }
+
+  @action
+  removeBbl(bbl) {
+    bbl.deleteRecord();
+    this.recordsToDelete.push(bbl);
+    this.args.package.pasForm.bbls.removeObject(bbl);
   }
 }
