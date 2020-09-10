@@ -65,13 +65,15 @@
       <FaIcon @icon='users-cog' @fixedWidth={{true}} />
     </h3>
     <ul class="no-bullet">
-      {{#each this.project.projectApplicants as |applicant|}}
-        {{#if (and (eq applicant.contact.statuscode this.contactActiveStatusCode) (eq applicant.contact.statecode this.contactActiveStateCode))}}
+      {{#each this.project.projectApplicants as |projectApplicant|}}
+        {{#if (and (eq projectApplicant.contact.statuscode this.contactActiveStatusCode) (eq projectApplicant.contact.statecode this.contactActiveStateCode))}}
           <Project::ProjectEditorListItem 
-            @name={{if applicant.contact.lastname (concat applicant.contact.firstname " " applicant.contact.lastname) applicant.dcpName}}
-            @emailAddress={{if applicant.contact.emailaddress1 applicant.contact.emailaddress1 applicant.emailaddress}}
-            @disableDelete={{applicant.isPrimaryApplicantOrContact}}
-            @onDelete={{fn this.removeEditor applicant}}
+            @name={{projectApplicant.displayName}}
+            @emailAddress={{projectApplicant.email}}
+            @isRegistered={{projectApplicant.contact.dcpNycidGuid}}
+            @projectName={{this.project.dcpProjectname}}
+            @canDelete={{not projectApplicant.isPrimaryApplicantOrContact}}
+            @onDelete={{fn this.removeEditor projectApplicant}}
           />
         {{/if}}
       {{/each}}
@@ -156,6 +158,31 @@
     </Ui::ConfirmationModal>
 
     <Messages::Assistance class="large-margin-top" />
+
+    <h3>
+      City Planning Staff
+    </h3>
+    <ul class="no-bullet">
+      {{#each this.project.teamMembers as |teamMember|}}
+        <li class="grid-x medium-margin-bottom">
+          <div class="cell shrink small-padding-right">
+            <FaIcon @icon='user' @fixedWidth={{true}} @transform='down-1' class="text-gray" />
+          </div>
+          <div class="cell auto">
+            <h5 class="no-margin">{{teamMember.name}}</h5>
+            <p class="text-small tiny-margin-bottom">
+              <i>{{teamMember.role}}</i>
+            </p>
+            <p class="text-small tiny-margin-bottom">
+              <a href="mailto:{{teamMember.email}}">{{teamMember.email}}</a>
+            </p>
+            <p class="text-small tiny-margin-bottom">
+              {{teamMember.phone}}
+            </p>
+          </div>
+        </li>
+      {{/each}}
+    </ul>
 
   </div>
 </div>

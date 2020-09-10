@@ -28,4 +28,20 @@ export default class ProjectApplicantModel extends Model {
     return this.dcpApplicantrole === optionset(['projectApplicant', 'applicantrole', 'code', 'PRIMARY_CONTACT'])
       || this.dcpApplicantrole === optionset(['projectApplicant', 'applicantrole', 'code', 'PRIMARY_APPLICANT']);
   }
+
+  get displayName() {
+    if (this.contact.lastname) {
+      return `${this.contact.firstname} ${this.contact.lastname}`;
+    }
+
+    return this.dcpName;
+  }
+
+  get email() {
+    if (this.contact.emailaddress1) {
+      return this.contact.emailaddress1;
+    }
+
+    return this.emailaddress;
+  }
 }
