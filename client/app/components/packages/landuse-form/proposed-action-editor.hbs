@@ -1,0 +1,71 @@
+{{#let @landuseActionForm as |landuseActionForm|}}
+  <fieldset class="fieldset">
+    <Ui::Legend>
+      <span class="label">
+        {{#if (lookup-action-type landuseActionForm.data.dcpActioncode)}}
+          <LabsUi::IconTooltip
+            @tip={{lookup-action-type landuseActionForm.data.dcpActioncode}}
+            @icon="info-circle"
+            @side="bottom"
+            @transform="shrink-4 up-2"
+            @fixedWidth={{true}}
+          />
+        {{/if}}
+        {{~landuseActionForm.data.dcpActioncode~}}
+      </span>
+    </Ui::Legend>
+
+    <div>
+      <h5 class="small-margin-bottom">
+        If this is a follow-up Action, indicate the previous approval Action Code
+      </h5>
+
+      <label data-test-dcpPreviouslyapprovedactioncode-picker="{{landuseActionForm.data.dcpActioncode}}">
+        <PowerSelect
+          triggerClass="previouslyapprovedactions-dropdown"
+          supportsDataTestProperties={{true}}
+          @placeholder={{this.selectedActionPlaceholder}}
+          @searchEnabled={{false}}
+          @options={{optionset 'landuseAction' 'dcpPreviouslyapprovedactioncode' 'list'}}
+          @selected={{this.actionCode}}
+          @onchange={{fn (mut this.actionCode)}}
+          @onclose={{fn (mut landuseActionForm.data.dcpPreviouslyapprovedactioncode) this.actionCode.code}}
+          as |landUseAction|
+        >
+          {{landUseAction.label}}
+        </PowerSelect>
+      </label>
+    </div>
+
+    <Ui::Question
+      class="no-margin-top"
+      data-test-dcpapplicantispublicagencyactions-radio-group
+      as |Q|
+    >
+
+      <Q.Legend>
+        Is this an action where the applicant is solely a public agency?
+      </Q.Legend>
+
+      <landuseActionForm.Field
+        @attribute="dcpApplicantispublicagencyactions"
+        @type="radio"
+        as |RadioButton|
+      >
+        <RadioButton
+          @targetValue={{true}}
+          data-test-dcpapplicantispublicagencyactions-true="{{landuseActionForm.data.dcpActioncode}}"
+        >
+          Yes
+        </RadioButton>
+        <RadioButton
+          @targetValue={{false}}
+          data-test-dcpapplicantispublicagencyactions-false="{{landuseActionForm.data.dcpActioncode}}"
+        >
+          No
+        </RadioButton>
+      </landuseActionForm.Field>
+
+    </Ui::Question>
+  </fieldset>
+{{/let}}

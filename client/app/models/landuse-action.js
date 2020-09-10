@@ -8,5 +8,6 @@ export default class LanduseActionModel extends Model {
 
   @attr dcpPreviouslyapprovedactioncode;
 
-  @attr dcpApplicantispublicagencyactions;
+  @attr('boolean', { allowNull: true })
+  dcpApplicantispublicagencyactions;
 }

@@ -10,6 +10,7 @@ import {
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { authenticateSession } from 'ember-simple-auth/test-support';
+import { selectChoose } from 'ember-power-select/test-support';
 
 const saveForm = async () => {
   await click('[data-test-save-button]');
@@ -37,6 +38,11 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     await fillIn('[data-test-input="dcpFirstname"]', 'Tess');
     await fillIn('[data-test-input="dcpLastname"]', 'Ter');
     await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
+
+    // filling out the proposed actions section
+    await click('[data-test-dcpapplicantispublicagencyactions-true="ZC"]');
+    await click('[data-test-dcpapplicantispublicagencyactions-false="ZA"]');
+
     await click('[data-test-save-button]');
 
     await waitFor('[data-test-submit-button]:not([disabled])');
@@ -207,6 +213,8 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     await fillIn('[data-test-input="dcpFirstname"]', 'Tess');
     await fillIn('[data-test-input="dcpLastname"]', 'Ter');
     await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
+    await click('[data-test-dcpapplicantispublicagencyactions-true="ZC"]');
+    await click('[data-test-dcpapplicantispublicagencyactions-false="ZA"]');
     await click('[data-test-save-button]');
 
     assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
@@ -480,5 +488,34 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     await click('[data-test-radio="dcpHistoricdistrict"][data-test-radio-option="Yes"]');
 
     assert.dom('[data-test-input="dcpSitedatarenewalarea"]').exists();
+  });
+
+  test('User can update proposed actions section', async function(assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'toDo', 'landuseForm')],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    // filling out necessary information in order to save
+    await click('[data-test-add-applicant-button]');
+    await fillIn('[data-test-input="dcpFirstname"]', 'Tess');
+    await fillIn('[data-test-input="dcpLastname"]', 'Ter');
+    await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
+
+    // filling out the proposed actions section
+    await selectChoose('[data-test-dcpPreviouslyapprovedactioncode-picker="ZC"]', 'BF');
+    await selectChoose('[data-test-dcpPreviouslyapprovedactioncode-picker="ZA"]', 'LD');
+    await click('[data-test-dcpapplicantispublicagencyactions-true="ZC"]');
+    await click('[data-test-dcpapplicantispublicagencyactions-false="ZA"]');
+
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.landuseActions[0].dcpPreviouslyapprovedactioncode, 717170016);
+    assert.equal(this.server.db.landuseActions[1].dcpPreviouslyapprovedactioncode, 717170013);
+    assert.equal(this.server.db.landuseActions[0].dcpApplicantispublicagencyactions, true);
+    assert.equal(this.server.db.landuseActions[1].dcpApplicantispublicagencyactions, false);
+
+    assert.equal(currentURL(), '/landuse-form/1/edit');
   });
 });

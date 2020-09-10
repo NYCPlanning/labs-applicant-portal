@@ -57,6 +57,11 @@
         @form={{saveableForm}}
       />
 
+      <Packages::LanduseForm::ProposedActions
+        @form={{saveableForm}}
+        @validations={{this.validations}}
+      />
+
       <Packages::RelatedAction
         @form={{saveableForm}}
         @addRelatedAction={{this.addRelatedAction}}
