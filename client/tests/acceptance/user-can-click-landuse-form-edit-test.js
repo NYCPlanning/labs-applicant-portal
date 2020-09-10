@@ -197,6 +197,11 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
 
     assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
 
+    await click('[data-test-radio="dcpWholecity"][data-test-radio-option="No"]');
+    await click('[data-test-radio="dcpEntiretyboroughs"][data-test-radio-option="No"]');
+    await click('[data-test-radio="dcpEntiretycommunity"][data-test-radio-option="No"]');
+    await click('[data-test-radio="dcpNotaxblock"][data-test-radio-option="No"]');
+
     await click('[data-test-radio="dcp500kpluszone"][data-test-radio-option="No"]');
 
     assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
@@ -394,5 +399,28 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.equal(this.server.db.landuseForms.firstObject.dcpTypecategory, 'type category');
 
     assert.equal(currentURL(), '/landuse-form/1/edit');
+  });
+
+  test('User only sees Proposed Development Site and Project Tax Lots when project applies to partial area', async function(assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'toDo', 'landuseForm')],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    assert.dom('[data-test-section="proposed-development-site"]').doesNotExist();
+    assert.dom('[data-test-section="project-area-tax-lots"]').doesNotExist();
+
+    await click('[data-test-radio="dcpWholecity"][data-test-radio-option="No"]');
+    await click('[data-test-radio="dcpEntiretyboroughs"][data-test-radio-option="No"]');
+    await click('[data-test-radio="dcpEntiretycommunity"][data-test-radio-option="No"]');
+
+    assert.dom('[data-test-section="proposed-development-site"]').doesNotExist();
+    assert.dom('[data-test-section="project-area-tax-lots"]').doesNotExist();
+
+    await click('[data-test-radio="dcpNotaxblock"][data-test-radio-option="No"]');
+
+    assert.dom('[data-test-section="proposed-development-site"]').exists();
+    assert.dom('[data-test-section="project-area-tax-lots"]').exists();
   });
 });
