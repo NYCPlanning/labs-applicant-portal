@@ -37,10 +37,15 @@ export default class LandUseFormComponent extends Component {
     return this.package.landuseForm || {};
   }
 
+  get packageIsDirtyOrRecordsDeleted() {
+    return this.package.isDirty || this.recordsToDelete.length > 0;
+  }
+
   @action
   async savePackage() {
     try {
       await this.args.package.save(this.recordsToDelete);
+      this.recordsToDelete = [];
     } catch (error) {
       console.log('Save Landuse package error:', error);
     }
@@ -88,5 +93,12 @@ export default class LandUseFormComponent extends Component {
     this.recordsToDelete.push(relatedAction);
 
     relatedAction.deleteRecord();
+  }
+
+  @action
+  removeBbl(bbl) {
+    bbl.deleteRecord();
+    this.recordsToDelete.push(bbl);
+    this.args.package.landuseForm.bbls.removeObject(bbl);
   }
 }

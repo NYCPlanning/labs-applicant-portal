@@ -43,6 +43,7 @@
 
       <Packages::LanduseForm::ProjectTaxLots
         @form={{saveableForm}}
+        @removeBbl={{this.removeBbl}}
       />
 
       <Packages::LanduseForm::EnvironmentalReview
@@ -64,7 +65,7 @@
     <div class="cell large-4 sticky-sidebar">
       <saveableForm.PageNav>
         <saveableForm.SaveButton
-          @isEnabled={{or @package.isDirty saveableForm.isSaveable}}
+          @isEnabled={{or this.packageIsDirtyOrRecordsDeleted saveableForm.isSaveable}}
           @onClick={{this.savePackage}}
           data-test-save-button
         />
