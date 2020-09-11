@@ -156,6 +156,7 @@ export class AuthService {
       await this.contactService.update(contact.contactid, {
         firstname: givenName,
         lastname: sn,
+        adx_identity_emailaddress1confirmed: true, // "enables for portal" field in CRM
       });
     }
 
