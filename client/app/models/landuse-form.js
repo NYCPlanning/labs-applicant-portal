@@ -69,6 +69,16 @@ export default class LanduseFormModel extends Model {
 
   @attr dcpSitedataidentifylandmark;
 
+  @attr dcpDesignation;
+
+  @attr dcpProjecthousingplanudaap;
+
+  @attr dcpDisposition;
+
+  @attr dcpMannerofdisposition;
+
+  @attr dcpRestrictandcondition;
+
   @attr dcpLeadagency;
 
   @attr dcpCeqrnumber;

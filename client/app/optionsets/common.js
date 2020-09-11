@@ -38,3 +38,11 @@ export const YES_NO_DONT_KNOW = {
     label: 'Don\u2019t Know',
   },
 };
+
+const COMMON_OPTIONSETS = {
+  YES_NO,
+  YES_NO_UNSURE,
+  YES_NO_DONT_KNOW,
+};
+
+export default COMMON_OPTIONSETS;

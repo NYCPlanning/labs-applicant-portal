@@ -292,6 +292,30 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.equal(this.server.db.relatedActions.firstObject.dcpReferenceapplicationno, '12345678');
   });
 
+  test('User can fill out and save first part of Housing Plans', async function(assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'toDo', 'landuseForm')],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    await click('[data-test-radio="dcpDesignation"][data-test-radio-option="No (HC, HD, HO, HP, possibly HU)"]');
+    await click('[data-test-radio="dcpDesignation"][data-test-radio-option="Yes (HA, HN, HG, possibly HU)"]');
+
+    await click('[data-test-radio="dcpProjecthousingplanudaap"][data-test-radio-option="No (HC, HD, HO, HP, HU)"]');
+    await click('[data-test-radio="dcpProjecthousingplanudaap"][data-test-radio-option="Yes (HA, HN, HG)"]');
+
+    await click('[data-test-radio="dcpDisposition"][data-test-radio-option="No (HC, HD, HG, HN, HO, HP, HU)"]');
+
+    assert.dom('[data-test-radio="dcpMannerofdisposition"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpRestrictandcondition"]').doesNotExist();
+
+    await click('[data-test-radio="dcpDisposition"][data-test-radio-option="Yes (HA, HD)"]');
+
+    assert.dom('[data-test-radio="dcpMannerofdisposition"]').exists();
+    assert.dom('[data-test-radio="dcpRestrictandcondition"]').exists();
+  });
+
   test('user can remove applicants on landuse form', async function(assert) {
     const project = this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
