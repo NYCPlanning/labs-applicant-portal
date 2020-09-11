@@ -9,7 +9,7 @@
       <a href="mailto:{{@emailAddress}}">{{@emailAddress}}</a>
     </p>
 
-    {{#if @isRegistered}}
+    {{#unless @isRegistered}}
       <button
         class="button secondary tiny no-margin" {{on 'click' (toggle 'inviteTeamMemberModal' this)}}
         type="button"
@@ -17,7 +17,7 @@
         <FaIcon @icon="envelope" @prefix="fas" @fixedWidth={{true}} />
         SEND INVITATION
       </button>
-    {{/if}}
+    {{/unless}}
   </div>
 
   {{#if @canDelete}}
