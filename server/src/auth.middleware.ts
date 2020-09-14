@@ -12,7 +12,9 @@ export class AuthMiddleware implements NestMiddleware {
 
   async use(req: any, res: any, next: () => void) {
     // skip for the login route
-    if (req.originalUrl.includes('login')) {
+    const authAllowList = req.originalUrl.includes('login') || req.originalUrl.includes('contacts?email');
+
+    if (authAllowList) {
       next();
 
       return;
@@ -59,6 +61,10 @@ export class AuthMiddleware implements NestMiddleware {
     // these simulate the flow of authentication for the app
     const spoofedNycIdToken = jwt.sign({
       ...validatedToken,
+      // because #generateNewToken uses GUID to search for a user first, we should
+      // make this null so that the method then opts for e-mail-based search
+      // REDO: Remove implicit contact-search behavior from auth into separate methods
+      GUID: null,
       mail: creeperEmail,
     }, NYCID_TOKEN_SECRET);
     const spoofedZapToken = await this.authService.generateNewToken(spoofedNycIdToken);

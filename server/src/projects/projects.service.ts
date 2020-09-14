@@ -23,6 +23,11 @@ const PACKAGE_STATUSCODE = {
   REVIEWED_REVISION_REQUIRED: 717170010,
 }
 
+const DCP_PROJECTROLES = {
+  LEAD_PLANNER: 717170026,
+  BOROUGH_TEAM_LEADER: 717170000,
+};
+
 @Injectable()
 export class ProjectsService {
   constructor(
@@ -84,6 +89,7 @@ export class ProjectsService {
           dcp_dcp_project_dcp_projectapplicant_Project(
             $filter= statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
           ),
+          dcp_dcp_project_dcp_dcpprojectteam_project,
           dcp_dcp_project_dcp_package_project(
             $filter= 
             (
@@ -97,11 +103,34 @@ export class ProjectsService {
               or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_NO_REVISIONS_REQUIRED}
               or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_REVISION_REQUIRED}
             )
-          ),
-          dcp_dcp_project_dcp_projectapplicant_Project(
-            $filter= statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
           )
       `);
+
+      const projectApplicants = await this.crmService.get('dcp_projectapplicants', `
+        $filter=
+          _dcp_project_value eq ${projectId}
+          and statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
+        &$expand=
+          dcp_applicant_customer_contact
+      `);
+
+      const { records: projectTeamMembers } = await this.crmService.get('dcp_dcpprojectteams', `
+        $select=
+          dcp_projectrole,
+          dcp_name
+        &$filter=
+          _dcp_project_value eq ${projectId}
+          and (
+            dcp_projectrole eq ${DCP_PROJECTROLES.BOROUGH_TEAM_LEADER}
+            or dcp_projectrole eq ${DCP_PROJECTROLES.LEAD_PLANNER}
+          )
+        &$expand=
+          dcp_user(
+            $select=internalemailaddress,address1_telephone1
+          )
+      `);
+
+      const projectApplicantsWithContacts = projectApplicants.records.map(applicant => ({ ...applicant, contact: applicant.dcp_applicant_customer_contact }));
 
       const [ project ] = this.overwriteCodesWithLabels(records);
 
@@ -116,8 +145,22 @@ export class ProjectsService {
         }, HttpStatus.NOT_FOUND);
       }
 
-      return project;
+      const projectWithContacts = {
+        ...project,
+        'project-applicants': projectApplicantsWithContacts,
+        'team-members': projectTeamMembers.map(member => ({
+          dcp_dcpprojectteamid: member.dcp_dcpprojectteamid,
+          name: member.dcp_name,
+          role: member['dcp_projectrole@OData.Community.Display.V1.FormattedValue'],
+          email: member.dcp_user.internalemailaddress,
+          phone: member.dcp_user.address1_telephone1,
+        })),
+      };
+
+      return projectWithContacts;
     } catch(e) {
+      console.log(e);
+
       throw new HttpException({
         "code": "PROJECTS_SERVICE_FAILURE",
         "title": "Could not lookup projects. Something went wrong.",

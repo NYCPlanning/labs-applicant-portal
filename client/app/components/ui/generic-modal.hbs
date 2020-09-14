@@ -1,0 +1,34 @@
+<Ui::Modal
+  @open={{@show}}
+  @container="reveal-modal-container"
+>
+  <div class="reveal-overlay">
+    <div
+      class="reveal-overlay-target"
+      role="button"
+      data-test-opaque-overlay
+      {{on "click" @closeButtonAction}}
+    />
+    <div
+      class="reveal"
+      role="dialog"
+      aria-hidden="false"
+      tabindex="-1"
+      data-test-reveal-modal
+    >
+      {{yield}}
+
+      {{#if @closeButtonAction}}
+        <button
+          type="button"
+          class="close-button"
+          aria-label="Close modal"
+          data-test-close-button
+          {{on "click" @closeButtonAction}}
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      {{/if}}
+    </div>
+  </div>
+</Ui::Modal>

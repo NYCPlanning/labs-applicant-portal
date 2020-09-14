@@ -5,7 +5,8 @@ module.exports = function(environment) {
     rootURL: '/',
     locationType: 'auto',
     host: getHost(environment),
-    NYCIDLocation: getOAuthHost(environment),
+    NYCIDDomain: getOAuthDomain(environment),
+    NYCIDLocation: getOAuthLoginEndpoint(environment),
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -77,23 +78,49 @@ function getHost(environment) {
   return '';
 }
 
-function getOAuthHost(environment) {
-  const { NYCID_CLIENT_ID, HOST } = process.env;
+function getOAuthDomain(environment) {
+  const { HOST } = process.env;
 
   // plain local development, no local backing server
   if (environment === 'development' && !HOST) {
-    return 'http://localhost:4200/login#access_token=test';
+    return 'http://localhost:4200';
+  }
+
+  // if we're running locally and a HOST is provided
+  if (environment === 'development' && HOST) {
+    return 'https://accounts-nonprd.nyc.gov';
+  }
+
+  if (environment === 'production') {
+    return 'https://accounts-nonprd.nyc.gov';
+  }
+
+  if (environment === 'test') {
+    return '';
+  }
+
+  return '';
+}
+
+function getOAuthLoginEndpoint(environment) {
+  const { NYCID_CLIENT_ID, HOST } = process.env;
+
+  const DOMAIN = getOAuthDomain(environment);
+
+  // plain local development, no local backing server
+  if (environment === 'development' && !HOST) {
+    return `${DOMAIN}/login#access_token=test`;
   }
 
   // if we're running locally and a HOST is provided
   if (environment === 'development' && HOST) {
     const NYCID_CLIENT_ID_LOCAL = 'applicant-portal-local';
 
-    return `https://accounts-nonprd.nyc.gov/account/api/oauth/authorize.htm?response_type=token&client_id=${NYCID_CLIENT_ID_LOCAL}`;
+    return `${DOMAIN}/account/api/oauth/authorize.htm?response_type=token&client_id=${NYCID_CLIENT_ID_LOCAL}`;
   }
 
   if (environment === 'production') {
-    return `https://accounts-nonprd.nyc.gov/account/api/oauth/authorize.htm?response_type=token&client_id=${NYCID_CLIENT_ID}`;
+    return `${DOMAIN}/account/api/oauth/authorize.htm?response_type=token&client_id=${NYCID_CLIENT_ID}`;
   }
 
   if (environment === 'test') {

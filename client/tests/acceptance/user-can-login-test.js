@@ -1,6 +1,11 @@
 import { module, test } from 'qunit';
 import {
-  visit, click, currentURL, find,
+  click,
+  currentRouteName,
+  currentURL,
+  find,
+  focus,
+  visit,
 } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import window, { setupWindowMock } from 'ember-window-mock';
@@ -34,6 +39,7 @@ module('Acceptance | user can login', function(hooks) {
 
     window.location.hash = '#access_token=a-valid-jwt';
     await visit('/login');
+    await focus('[data-test-auth="menu-button"]');
     await click('[data-test-auth="logout"]');
 
     assert.equal(currentURL(), '/logout');
@@ -73,7 +79,8 @@ module('Acceptance | user can login', function(hooks) {
     assert.equal(currentURL(), '/projects');
 
     // user logs out
-    await click('[data-test-auth="logout"');
+    await focus('[data-test-auth="menu-button"]');
+    await click('[data-test-auth="logout"]');
 
     // because user is logged out, route should not redirect
     await visit('/');
@@ -87,5 +94,21 @@ module('Acceptance | user can login', function(hooks) {
 
     assert.dom('[data-test-error-key="detail"][data-test-error-idx="0"]')
       .hasText('detail: Invalid auth params - "access_token" missing.');
+  });
+
+  test('User is sent to validation instructions if their account is invalid', async function (assert) {
+    this.server.create('contact', {
+      isNycidValidated: false,
+      isNycidEmailRegistered: true,
+    });
+
+    window.location.hash = '#access_token=a-valid-jwt';
+    try {
+      await visit('/login');
+    } catch (e) {
+      // the promise rejects because the route intentionally aborts the transition if the email isn't validated.
+    }
+
+    assert.equal(currentRouteName(), 'auth.validate');
   });
 });
