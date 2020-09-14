@@ -58,79 +58,75 @@
     {{/if}}
 
   </div>{{! end left/main column }}
-  <div class="cell large-4 sticky-sidebar">
+  <div class="cell large-4">
 
     <h3>
       Project Editors
       <FaIcon @icon='users-cog' @fixedWidth={{true}} />
     </h3>
+
     <ul class="no-bullet">
       {{#each this.project.projectApplicants as |projectApplicant|}}
         {{#if (and (eq projectApplicant.contact.statuscode this.contactActiveStatusCode) (eq projectApplicant.contact.statecode this.contactActiveStateCode))}}
-          <Project::ProjectEditorListItem 
+          <Project::ProjectEditorListItem
             @name={{projectApplicant.displayName}}
             @emailAddress={{projectApplicant.email}}
             @isRegistered={{projectApplicant.contact.dcpNycidGuid}}
             @projectName={{this.project.dcpProjectname}}
-            @canDelete={{not projectApplicant.isPrimaryApplicantOrContact}}
+            @canDelete={{and (not projectApplicant.isPrimaryApplicantOrContact) this.contactMgmtOpen}}
             @onDelete={{fn this.removeEditor projectApplicant}}
           />
         {{/if}}
       {{/each}}
     </ul>
 
-    <Ui::Question
-      class="fieldset relative"
-      ...attributes
-      as |Q|
-    >
+    {{#if this.contactMgmtOpen}}
+      <h4>Add Project Editor:</h4>
 
-      <div class="grid-x grid-margin-x">
-        <div class="cell medium-6">
-          <Q.Label class="middle">
-            First Name
-          </Q.Label>
+      <fieldset class="--fieldset">
+        <label>
+          First Name
           <Input
             @type="text"
             autocomplete="off"
             @value={{this.firstName}}
           />
-        </div>
-      </div>
+        </label>
 
-      <div class="grid-x grid-margin-x">
-        <div class="cell medium-6">
-          <Q.Label class="middle">
-            Last Name
-          </Q.Label>
+        <label>
+          Last Name
           <Input
             @type="text"
             autocomplete="off"
             @value={{this.lastName}}
           />
-        </div>
-      </div>
+        </label>
 
-      <div class="grid-x grid-margin-x">
-        <div class="cell medium-6">
-          <Q.Label class="middle">
-            Email Address
-          </Q.Label>
+        <label>
+          Email Address
           <Input
             @type="text"
             autocomplete="off"
             @value={{this.emailAddress}}
           />
-        </div>
-      </div>
-    </Ui::Question>
+        </label>
+
+        <button
+          class="button expanded text-weight-bold"
+          type="button"
+          {{on "click" (fn this.addEditor) }}
+        >
+          Add Project Editor
+        </button>
+      </fieldset>
+    {{/if}}
 
     <button
-      class="button expanded secondary no-margin"
       type="button"
-      {{on "click" (fn this.addEditor) }}
+      class="button expanded secondary"
+      {{on "click" (fn this.toggleContactMgmt) }}
     >
-      <strong>Add Project Editor</strong>
+      {{if this.contactMgmtOpen 'Cancel' 'Manage Project Editors'}}
     </button>
 
     <Ui::ConfirmationModal
@@ -142,7 +138,7 @@
         <h4>A Project Editor with the email address you entered already exists on this project.</h4>
       {{else}}
         <h4>Are you sure you want to add...</h4>
-        <Project::ProjectEditorListItem 
+        <Project::ProjectEditorListItem
           @name="{{this.firstName}} {{this.lastName}}"
           @emailAddress={{this.emailAddress}}
         />

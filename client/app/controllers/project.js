@@ -6,6 +6,8 @@ import { optionset } from '../helpers/optionset';
 import { STATECODE, STATUSCODE } from '../optionsets/contact';
 
 export default class ProjectController extends Controller {
+  @tracked contactMgmtOpen = false;
+
   @tracked addEditorModalOpen;
 
   @tracked emailAddress;
@@ -20,6 +22,11 @@ export default class ProjectController extends Controller {
   get matchingCurrentApplicant() {
     const currentApplicants = this.project.projectApplicants;
     return currentApplicants.find((applicant) => applicant.emailaddress === this.emailAddress);
+  }
+
+  @action
+  toggleContactMgmt() {
+    this.contactMgmtOpen = !this.contactMgmtOpen;
   }
 
   @action
