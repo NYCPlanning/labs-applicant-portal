@@ -13,4 +13,9 @@ export default class IndexController extends Controller {
   handleLogin() {
     window.location.href = this.loginLocation;
   }
+
+  @action
+  queryContacts(email) {
+    return this.store.queryRecord('contact', { email });
+  }
 }

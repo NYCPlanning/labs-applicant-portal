@@ -75,6 +75,8 @@ export default class PackageModel extends Model {
     }
     await super.save();
 
+    await this.reload();
+
     this._synchronizeDocuments();
   }
 

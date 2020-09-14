@@ -17,6 +17,8 @@ import { AuthenticateGuard } from '../authenticate.guard';
 import { PROJECT_ATTRS } from './projects.attrs';
 import { PACKAGE_ATTRS } from '../packages/packages.attrs';
 import { PROJECTAPPLICANT_ATTRS } from './project-applicants/project-applicants.attrs';
+import { TEAMMEMBER_ATTRS } from './team-members/team-members.attrs';
+import { CONTACT_ATTRS } from '../contact/contacts.attrs';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('projects', {
   id: 'dcp_projectid',
@@ -25,6 +27,8 @@ import { PROJECTAPPLICANT_ATTRS } from './project-applicants/project-applicants.
 
     'packages',
     'project-applicants',
+    'team-members',
+    'contacts',
   ],
   packages: {
     ref: 'dcp_packageid',
@@ -36,6 +40,20 @@ import { PROJECTAPPLICANT_ATTRS } from './project-applicants/project-applicants.
     ref: 'dcp_projectapplicantid',
     attributes: [
       ...PROJECTAPPLICANT_ATTRS,
+
+      'contact'
+    ],
+    contact: {
+      ref: 'contactid',
+      attributes: [
+        ...CONTACT_ATTRS,
+      ],
+    },
+  },
+  'team-members': {
+    ref: 'dcp_dcpprojectteamid',
+    attributes: [
+      ...TEAMMEMBER_ATTRS,
     ],
   },
 
@@ -46,7 +64,7 @@ import { PROJECTAPPLICANT_ATTRS } from './project-applicants/project-applicants.
       return {
         ...project,
         packages: project.dcp_dcp_project_dcp_package_project,
-        'project-applicants': project.dcp_dcp_project_dcp_projectapplicant_Project,
+        projectApplicants: project['project-applicants'],
       };
     } catch(e) {
       if (e instanceof HttpException) {

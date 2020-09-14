@@ -112,23 +112,27 @@
 
           <h3 class="large-margin-top small-margin-bottom">{{zrTypeLabel}}</h3>
 
-          <Ui::Answer @beside={{true}} as |A|>
-            <A.Prompt>
-              Modifying Zoning Resolution sections:
-            </A.Prompt>
-            <A.Field>
-              {{affectedZoningResolution.dcpModifiedzrsectionnumber}}
-            </A.Field>
-          </Ui::Answer>
+          {{#if affectedZoningResolution.dcpModifiedzrsectionnumber}}
+            <Ui::Answer @beside={{true}} as |A|>
+              <A.Prompt>
+                Modifying Zoning Resolution sections:
+              </A.Prompt>
+              <A.Field>
+                {{affectedZoningResolution.dcpModifiedzrsectionnumber}}
+              </A.Field>
+            </Ui::Answer>
+          {{/if}}
 
-          <Ui::Answer @beside={{true}} as |A|>
-            <A.Prompt>
-              Pursuant to Zoning Resolution section:
-            </A.Prompt>
-            <A.Field>
-              {{affectedZoningResolution.dcpZrsectiontitle}}
-            </A.Field>
-          </Ui::Answer>
+          {{#if affectedZoningResolution.dcpZrsectiontitle}}
+            <Ui::Answer @beside={{true}} as |A|>
+              <A.Prompt>
+                Pursuant to Zoning Resolution section:
+              </A.Prompt>
+              <A.Field>
+                {{affectedZoningResolution.dcpZrsectiontitle}}
+              </A.Field>
+            </Ui::Answer>
+          {{/if}}
 
           {{#if (eq
             affectedZoningResolution.dcpZoningresolutiontype
@@ -145,6 +149,13 @@
                 ) "Yes" "No"}}
               </A.Field>
             </Ui::Answer>
+          {{else}}
+            {{#if (and
+              (not affectedZoningResolution.dcpModifiedzrsectionnumber)
+              (not affectedZoningResolution.dcpZrsectiontitle)
+            )}}
+              <span class="text-dark-gray text-small">No additional information for this Action</span>
+            {{/if}}
           {{/if}}
         {{/let}}
       {{/each}}

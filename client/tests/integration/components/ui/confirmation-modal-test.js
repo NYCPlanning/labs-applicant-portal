@@ -18,6 +18,7 @@ module('Integration | Component | ui/confirmation-modal', function(hooks) {
       <Ui::ConfirmationModal
         @show={{this.show}}
         @toggle={{this.toggle}}
+        @continueButtonTitle="Continue Editing"
       >
         template block text
       </Ui::ConfirmationModal>
