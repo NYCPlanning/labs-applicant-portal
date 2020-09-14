@@ -24,6 +24,7 @@
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
     "@nestjs/platform-express": "^7.0.0",
+    "@types/utf8": "^2.1.6",
     "adal-node": "^0.2.1",
     "compression": "^1.7.4",
     "dotenv": "^8.1.0",

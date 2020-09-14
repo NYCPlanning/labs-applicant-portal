@@ -118,7 +118,13 @@ export class AuthService {
     const nycIdAccount = this.verifyNYCIDToken(NYCIDToken);
 
     // need the email to lookup a CRM contact.
-    const { mail, nycExtEmailValidationFlag, GUID } = nycIdAccount;
+    const {
+      mail,
+      nycExtEmailValidationFlag,
+      GUID,
+      givenName,
+      sn,
+    } = nycIdAccount;
 
     // REDO: all of this "has_crm_contact" stuff is confusing. these methods should just return null
     // if not found, and we need to find a better way to deal with missing crm records + nycid status
@@ -140,6 +146,17 @@ export class AuthService {
     if (nycExtEmailValidationFlag && !contact.dcp_nycid_guid) {
       await this.contactService.update(contact.contactid, {
         dcp_nycid_guid: GUID,
+        firstname: givenName,
+        lastname: sn,
+      });
+    }
+
+    // if the GUIDs match, prefer NYC.ID profile information
+    if (contact.dcp_nycid_guid === GUID && givenName && sn) {
+      await this.contactService.update(contact.contactid, {
+        firstname: givenName,
+        lastname: sn,
+        adx_identity_emailaddress1confirmed: true, // "enables for portal" field in CRM
       });
     }
 

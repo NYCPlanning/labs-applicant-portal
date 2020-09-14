@@ -42,28 +42,7 @@ export class PackageAccessGuard implements CanActivate {
     }
 
     if (contactId) {
-      const { records } = await this.crmService.get('dcp_projects', `
-        $filter=
-          dcp_dcp_project_dcp_package_project/
-            any(o:
-              o/dcp_packageid eq '${packageId}'
-            )
-          and
-          dcp_dcp_project_dcp_projectapplicant_Project/
-            any(o:
-              o/_dcp_applicant_customer_value eq '${contactId}'
-              and o/statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
-            )
-          and (
-            dcp_visibility eq ${PROJECT_VISIBILITY_APPLICANT_ONLY}
-            or dcp_visibility eq ${PROJECT_VISIBILITY_GENERAL_PUBLIC}
-          )
-          and statecode eq ${PROJECT_ACTIVE_STATE_CODE}
-        `)
-
-      if (records.length > 0) {
-        return true;
-      }
+      return this.isOnApplicantTeam(packageId, contactId);
     }
 
     throw new HttpException({
@@ -71,5 +50,32 @@ export class PackageAccessGuard implements CanActivate {
       title: "No access to package",
       detail: "Access to the requested package is forbidden."
     }, HttpStatus.FORBIDDEN);
+  }
+
+  async isOnApplicantTeam(packageId, contactId) {
+    const { records } = await this.crmService.get('dcp_projects', `
+      $filter=
+        dcp_dcp_project_dcp_package_project/
+          any(o:
+            o/dcp_packageid eq '${packageId}'
+          )
+        and
+        dcp_dcp_project_dcp_projectapplicant_Project/
+          any(o:
+            o/_dcp_applicant_customer_value eq '${contactId}'
+            and o/statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
+          )
+        and (
+          dcp_visibility eq ${PROJECT_VISIBILITY_APPLICANT_ONLY}
+          or dcp_visibility eq ${PROJECT_VISIBILITY_GENERAL_PUBLIC}
+        )
+        and statecode eq ${PROJECT_ACTIVE_STATE_CODE}
+      `);
+
+    if (records.length > 0) {
+      return true;
+    }
+
+    return false;
   }
 }
