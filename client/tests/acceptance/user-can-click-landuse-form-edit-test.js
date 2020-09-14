@@ -301,8 +301,23 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
   });
 
   test('User can fill out and save first part of Housing Plans', async function(assert) {
-    this.server.create('project', 1, {
-      packages: [this.server.create('package', 'toDo', 'landuseForm')],
+    // Create a land use form with housing-related actions
+    this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', {
+          dcpPackagetype: 717170001,
+          landuseForm: this.server.create('landuse-form', {
+            landuseActions: [
+              this.server.create('landuse-action', {
+                dcpActioncode: 'ZC',
+              }),
+              this.server.create('landuse-action', {
+                dcpActioncode: 'HO',
+              }),
+            ],
+          }),
+        }),
+      ],
     });
 
     await visit('/landuse-form/1/edit');
@@ -322,6 +337,45 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
 
     assert.dom('[data-test-radio="dcpMannerofdisposition"]').exists();
     assert.dom('[data-test-radio="dcpRestrictandcondition"]').exists();
+  });
+
+  test('Housing sections only appear if Project contains housing-related Land Use Actions', async function(assert) {
+    // The Package Factory's landuseForm trait creates a Land Use Form
+    // with only the ZC and ZA Land Use Actions, which in the list of
+    // housing-related actions
+    const projectWithoutHousingAction = this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', 'landuseForm'),
+      ],
+    });
+
+    // The housing-related Land Use Actions are
+    // 'HA', 'HC', 'HD', 'HG', 'HN', 'HO', 'HP', 'HU'
+    const projectWithHousingAction = this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', {
+          dcpPackagetype: 717170001,
+          landuseForm: this.server.create('landuse-form', {
+            landuseActions: [
+              this.server.create('landuse-action', {
+                dcpActioncode: 'ZC',
+              }),
+              this.server.create('landuse-action', {
+                dcpActioncode: 'HO',
+              }),
+            ],
+          }),
+        }),
+      ],
+    });
+
+    await visit(`/landuse-form/${projectWithoutHousingAction.id}/edit`);
+
+    assert.dom('[data-test-section="housing-plans"]').doesNotExist();
+
+    await visit(`/landuse-form/${projectWithHousingAction.id}/edit`);
+
+    assert.dom('[data-test-section="housing-plans"]').exists();
   });
 
   test('user can remove applicants on landuse form', async function(assert) {
