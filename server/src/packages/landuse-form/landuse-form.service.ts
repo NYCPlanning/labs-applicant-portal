@@ -21,7 +21,8 @@ export class LanduseFormService {
         dcp_dcp_applicantinformation_dcp_landuse,
         dcp_dcp_applicantrepinformation_dcp_landuse,
         dcp_dcp_projectbbl_dcp_landuse($filter=statecode eq ${ACTIVE_STATECODE}),
-        dcp_dcp_landuse_dcp_relatedactions
+        dcp_dcp_landuse_dcp_relatedactions,
+        dcp_dcp_landuse_dcp_landuseaction
     `);
 
     return {

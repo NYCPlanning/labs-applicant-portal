@@ -10,6 +10,7 @@ import SaveableApplicantFormValidations from '../../../validations/saveable-appl
 import SubmittableApplicantFormValidations from '../../../validations/submittable-applicant-form';
 import SaveableRelatedActionFormValidations from '../../../validations/saveable-related-action-form';
 import SubmittableRelatedActionFormValidations from '../../../validations/submittable-related-action-form';
+import SubmittableLanduseActionFormValidations from '../../../validations/submittable-landuse-action-form';
 import { addToHasMany, removeFromHasMany } from '../../../utils/ember-changeset';
 
 export default class LandUseFormComponent extends Component {
@@ -22,6 +23,7 @@ export default class LandUseFormComponent extends Component {
     SubmittableApplicantFormValidations,
     SaveableRelatedActionFormValidations,
     SubmittableRelatedActionFormValidations,
+    SubmittableLanduseActionFormValidations,
   };
 
   @tracked recordsToDelete = [];

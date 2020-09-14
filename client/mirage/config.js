@@ -72,6 +72,9 @@ export default function() {
   this.del('/related-actions/:id');
   this.post('/related-actions');
 
+  this.get('/landuse-actions');
+  this.patch('/landuse-actions/:id');
+
   this.post('/documents', function(schema, request) {
     // requestBody should be a FormData object
     const { requestBody } = request;
