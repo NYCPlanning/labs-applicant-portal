@@ -41,10 +41,14 @@ export class PackageAccessGuard implements CanActivate {
       return true;
     }
 
+    // note that this could return either true or false — false would
+    // trigger the default Nest HTTP exception
     if (contactId) {
       return this.isOnApplicantTeam(packageId, contactId);
     }
 
+    // If for some reason, there is no contact ID, it will throw this exception, which is
+    // incorrect — implicitly, no contact ID means it's unauthenticated, not unauthorized
     throw new HttpException({
       code: "NO_PACKAGE_ACCESS",
       title: "No access to package",

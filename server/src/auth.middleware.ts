@@ -1,4 +1,4 @@
-import { Injectable, NestMiddleware } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NestMiddleware } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
 import { AuthService } from './auth/auth.service';
 import { ConfigService } from './config/config.service';
@@ -48,7 +48,13 @@ export class AuthMiddleware implements NestMiddleware {
 
       next();
     } catch (e) {
-      next();
+      const error = {
+        code: "INVALID_TOKEN",
+        title: "Invalid token",
+        detail: `Could not verify token. ${e}`,
+      };
+      console.log(error);
+      throw new HttpException(error, HttpStatus.UNAUTHORIZED);
     }
   }
 
