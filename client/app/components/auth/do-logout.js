@@ -1,8 +1,11 @@
 import Component from '@ember/component';
 import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 import ENV from '../../config/environment';
 
 export default class DoLogout extends Component {
+  @service session;
+
   get nycIDHost() {
     const { origin } = new URL(ENV.NYCIDLocation || 'https://accounts-nonprd.nyc.gov');
 
@@ -15,6 +18,8 @@ export default class DoLogout extends Component {
 
   @action
   didLogoutNycId() {
+    this.session.invalidate(); // also logout of the current session
+
     this.set('iFrameDidLoad', true);
   }
 }
