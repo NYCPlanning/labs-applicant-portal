@@ -14,9 +14,7 @@ import {
 import {
   AFFECTED_ZONING_RESOLUTION_ACTION,
 } from '../optionsets/affected-zoning-resolution';
-import {
-  DCPPREVIOUSLYAPPROVEDACTIONCODE,
-} from '../optionsets/landuse-action';
+import LANDUSE_ACTION_OPTIONSETS from '../optionsets/landuse-action';
 import PACKAGE_OPTIONSETS from '../optionsets/package';
 import LANDUSE_FORM_OPTIONSETS from '../optionsets/landuse-form';
 import {
@@ -103,7 +101,7 @@ const OPTIONSET_LOOKUP = {
   },
   landuseAction: {
     dcpApplicantispublicagencyactions: YES_NO,
-    dcpPreviouslyapprovedactioncode: DCPPREVIOUSLYAPPROVEDACTIONCODE,
+    dcpPreviouslyapprovedactioncode: LANDUSE_ACTION_OPTIONSETS.DCPPREVIOUSLYAPPROVEDACTIONCODE,
   },
 };
 
