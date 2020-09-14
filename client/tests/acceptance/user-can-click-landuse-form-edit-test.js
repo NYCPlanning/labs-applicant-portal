@@ -40,8 +40,8 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
 
     // filling out the proposed actions section
-    await click('[data-test-dcpapplicantispublicagencyactions-true="ZC"]');
-    await click('[data-test-dcpapplicantispublicagencyactions-false="ZA"]');
+    await click('[data-test-radio="dcpApplicantispublicagencyactions"][data-test-action="ZC"][data-test-radio-option="Yes"]');
+    await click('[data-test-radio="dcpApplicantispublicagencyactions"][data-test-action="ZA"][data-test-radio-option="No"]');
 
     await click('[data-test-save-button]');
 
@@ -213,8 +213,8 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     await fillIn('[data-test-input="dcpFirstname"]', 'Tess');
     await fillIn('[data-test-input="dcpLastname"]', 'Ter');
     await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
-    await click('[data-test-dcpapplicantispublicagencyactions-true="ZC"]');
-    await click('[data-test-dcpapplicantispublicagencyactions-false="ZA"]');
+    await click('[data-test-radio="dcpApplicantispublicagencyactions"][data-test-action="ZC"][data-test-radio-option="Yes"]');
+    await click('[data-test-radio="dcpApplicantispublicagencyactions"][data-test-action="ZA"][data-test-radio-option="No"]');
     await click('[data-test-save-button]');
 
     assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
@@ -506,8 +506,8 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     // filling out the proposed actions section
     await selectChoose('[data-test-dcpPreviouslyapprovedactioncode-picker="ZC"]', 'BF');
     await selectChoose('[data-test-dcpPreviouslyapprovedactioncode-picker="ZA"]', 'LD');
-    await click('[data-test-dcpapplicantispublicagencyactions-true="ZC"]');
-    await click('[data-test-dcpapplicantispublicagencyactions-false="ZA"]');
+    await click('[data-test-radio="dcpApplicantispublicagencyactions"][data-test-action="ZC"][data-test-radio-option="Yes"]');
+    await click('[data-test-radio="dcpApplicantispublicagencyactions"][data-test-action="ZA"][data-test-radio-option="No"]');
 
     await click('[data-test-save-button]');
 

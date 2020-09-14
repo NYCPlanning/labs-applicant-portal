@@ -42,28 +42,18 @@
       data-test-dcpapplicantispublicagencyactions-radio-group
       as |Q|
     >
-
       <Q.Legend>
         Is this an action where the applicant is solely a public agency?
       </Q.Legend>
 
       <landuseActionForm.Field
         @attribute="dcpApplicantispublicagencyactions"
-        @type="radio"
-        as |RadioButton|
-      >
-        <RadioButton
-          @targetValue={{true}}
-          data-test-dcpapplicantispublicagencyactions-true="{{landuseActionForm.data.dcpActioncode}}"
-        >
-          Yes
-        </RadioButton>
-        <RadioButton
-          @targetValue={{false}}
-          data-test-dcpapplicantispublicagencyactions-false="{{landuseActionForm.data.dcpActioncode}}"
-        >
-          No
-        </RadioButton>
+        @type="radio-group"
+      as |DcpApplicantispublicagencyactionsRadioGroup|>
+        <DcpApplicantispublicagencyactionsRadioGroup
+          @options={{optionset 'landuseAction' 'dcpApplicantispublicagencyactions' 'list'}}
+          data-test-action="{{landuseActionForm.data.dcpActioncode}}"
+        />
       </landuseActionForm.Field>
 
     </Ui::Question>
