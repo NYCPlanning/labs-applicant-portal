@@ -66,6 +66,8 @@ const OPTIONSET_LOOKUP = {
     dcp500kpluszone: YES_NO,
     dcpDevsize: DCPDEVSIZE,
     dcpSitedatasiteisinnewyorkcity: YES_NO,
+    dcpStateczm: YES_NO,
+    dcpHistoricdistrict: YES_NO,
   },
   rwcdsForm: {
     dcpHasprojectchangedsincesubmissionofthepas: YES_NO,

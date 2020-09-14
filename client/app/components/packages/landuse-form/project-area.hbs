@@ -152,5 +152,80 @@
         </DcpWholeCityRadioGroup>
       </form.Field>
     </Ui::Question>
+
+    {{#if (and
+      (eq form.data.dcpWholecity (optionset 'landuseForm' 'dcpWholecity' 'code' 'NO'))
+      (eq form.data.dcpEntiretyboroughs (optionset 'landuseForm' 'dcpEntiretyboroughs' 'code' 'NO'))
+      (eq form.data.dcpEntiretycommunity (optionset 'landuseForm' 'dcpEntiretycommunity' 'code' 'NO'))
+      (eq form.data.dcpNotaxblock (optionset 'landuseForm' 'dcpNotaxblock' 'code' 'NO'))
+    )}}
+      <Ui::Question
+      as |dcpZonesspecialdistrictsQ|>
+        <dcpZonesspecialdistrictsQ.Label>
+          What are the existing Zoning Districts and Special Districts?
+        </dcpZonesspecialdistrictsQ.Label>
+
+        <form.Field
+          @attribute="dcpZonesspecialdistricts"
+          @maxlength="300"
+          @showCounter={{true}}
+          id={{dcpZonesspecialdistrictsQ.questionId}}
+        />
+      </Ui::Question>
+
+      <Ui::Question
+      as |dcpStateczmQ|>
+        <dcpStateczmQ.Label>
+          Is any portion of the proposed Project Area located
+          within the State Designated Coastal Zone Management
+          (CZM) Area?
+        </dcpStateczmQ.Label>
+
+        <form.Field
+          @attribute="dcpStateczm"
+          @type="radio-group"
+        as |DcpStateczmRadioGroup|>
+          <DcpStateczmRadioGroup
+            @options={{optionset 'landuseForm' 'dcpStateczm' 'list'}}
+          />
+        </form.Field>
+      </Ui::Question>
+
+      <Ui::Question
+      as |dcpHistoricdistrictQ|>
+        <dcpHistoricdistrictQ.Legend>
+          Is any portion of the Proposed Project Area located within a Historic District?
+        </dcpHistoricdistrictQ.Legend>
+
+        <form.Field
+          @attribute="dcpHistoricdistrict"
+          @type="radio-group"
+        as |DcpHistoricdistrictRadioGroup|>
+          <DcpHistoricdistrictRadioGroup
+            @options={{optionset 'landuseForm' 'dcpHistoricdistrict' 'list'}}
+            @onChange={{fn (mut @form.data.dcpSitedatarenewalarea) ""}}
+          as |dcpHistoricdistrict|>
+            {{#if (eq
+              dcpHistoricdistrict
+              (optionset 'landuseForm' 'dcpHistoricdistrict' 'code' 'YES')
+            )}}
+              <Ui::Question
+              as |dcpSitedatarenewalareaQ|>
+                <dcpSitedatarenewalareaQ.Label>
+                  Historic District Name
+                </dcpSitedatarenewalareaQ.Label>
+
+                <form.Field
+                  @attribute="dcpSitedatarenewalarea"
+                  @maxlength="60"
+                  @showCounter={{true}}
+                  id={{dcpSitedatarenewalareaQ.questionId}}
+                />
+              </Ui::Question>
+            {{/if}}
+          </DcpHistoricdistrictRadioGroup>
+        </form.Field>
+      </Ui::Question>
+    {{/if}}
   </form.Section>
 {{/let}}
