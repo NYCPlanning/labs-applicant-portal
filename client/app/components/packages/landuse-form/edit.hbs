@@ -69,9 +69,16 @@
         @validations={{this.validations}}
       />
 
-      <Packages::LanduseForm::HousingPlans
-        @form={{saveableForm}}
-      />
+      {{#let (intersect
+        (map-by "dcpActioncode" this.landuseForm.landuseActions)
+        (array 'HA' 'HC' 'HD' 'HG' 'HN' 'HO' 'HP' 'HU')
+      ) as |projectHousingActions|}}
+        {{#if (gt projectHousingActions.length 0)}}
+          <Packages::LanduseForm::HousingPlans
+            @form={{saveableForm}}
+          />
+        {{/if}}
+      {{/let}}
 
       <Packages::LanduseForm::AttachedDocuments
         @form={{saveableForm}}
