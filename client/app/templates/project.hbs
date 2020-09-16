@@ -132,7 +132,7 @@
 
     <Ui::ConfirmationModal
       @show={{this.addEditorModalOpen}}
-      @toggle={{fn this.saveEditor}}
+      @toggle={{fn (mut this.addEditorModalOpen) false}}
       @continueButtonTitle="Cancel"
     >
       {{#if this.matchingCurrentApplicant}}
