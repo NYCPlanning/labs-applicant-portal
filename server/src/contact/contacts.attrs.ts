@@ -6,4 +6,5 @@ export const CONTACT_ATTRS = [
   'dcp_nycid_guid',
   'statuscode',
   'statecode',
+  'telephone1',
 ];

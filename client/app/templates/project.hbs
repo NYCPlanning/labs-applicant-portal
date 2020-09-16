@@ -71,6 +71,7 @@
           <Project::ProjectEditorListItem
             @name={{projectApplicant.displayName}}
             @emailAddress={{projectApplicant.email}}
+            @phone={{projectApplicant.contact.telephone1}}
             @isRegistered={{projectApplicant.contact.dcpNycidGuid}}
             @projectName={{this.project.dcpProjectname}}
             @canDelete={{and (not projectApplicant.isPrimaryApplicantOrContact) this.contactMgmtOpen}}

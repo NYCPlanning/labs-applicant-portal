@@ -7,7 +7,7 @@ export default class DoLogout extends Component {
   @service session;
 
   get nycIDHost() {
-    const { origin } = new URL(ENV.NYCIDLocation || 'https://accounts-nonprd.nyc.gov');
+    const { origin } = new URL(ENV.NYCIDLocation || this.origin);
 
     return `${origin}/account/idpLogout.htm?x-frames-allow-from=${this.origin}`;
   }
