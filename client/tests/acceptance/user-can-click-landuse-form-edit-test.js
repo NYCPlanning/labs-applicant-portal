@@ -100,7 +100,6 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
 
     assert.dom('[data-test-radio="dcpEntiretyboroughs"]').exists();
 
-
     assert.dom('[data-test-input="dcpBoroughs"]').doesNotExist();
     assert.dom('[data-test-radio="dcpEntiretycommunity"]').doesNotExist();
 
@@ -114,7 +113,6 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.dom('[data-test-input="dcpBoroughs"]').doesNotExist();
     assert.dom('[data-test-radio="dcpEntiretycommunity"]').exists();
 
-
     assert.dom('[data-test-input="dcpCommunity"]').doesNotExist();
     assert.dom('[data-test-radio="dcpNotaxblock"]').doesNotExist();
 
@@ -127,7 +125,6 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
 
     assert.dom('[data-test-input="dcpCommunity"]').doesNotExist();
     assert.dom('[data-test-radio="dcpNotaxblock"]').exists();
-
 
     assert.dom('[data-test-input="dcpSitedatapropertydescription"]').doesNotExist();
 
