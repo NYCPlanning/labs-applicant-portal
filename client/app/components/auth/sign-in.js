@@ -13,7 +13,9 @@ export default class AuthSignInComponent extends Component {
   searchContacts = this.args.searchContacts || noop;
 
   @action
-  async startLogin(loginEmail) {
+  async startLogin(loginEmail, event) {
+    event.preventDefault();
+
     const {
       isNycidValidated,
       isNycidEmailRegistered,

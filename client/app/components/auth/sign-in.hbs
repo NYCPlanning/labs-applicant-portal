@@ -1,32 +1,32 @@
-<Ui::Question as |Q|>
-  <Q.Label>
-    Email Address
-  </Q.Label>
+<form {{on 'submit' (fn this.startLogin this.email)}}>
+  <Ui::Question as |Q|>
+    <Q.Label>
+      Email Address
+    </Q.Label>
 
-  <Input
-    @type="text"
-    @value={{this.email}}
-    @enter={{fn this.startLogin this.email}}
-    id={{Q.questionId}}
-  />
+    <Input
+      @type="text"
+      @value={{this.email}}
+      id={{Q.questionId}}
+    />
 
-  <div class="grid-x grid-margin-x">
-    <div class="cell medium-3 medium-order-2">
-      <button
-        class="button secondary expanded text-weight-bold"
-        type="button"
-        data-test-sign-in="next"
-        {{on 'click' (fn this.startLogin this.email)}}
-      >
-        Next
-        <FaIcon @icon="arrow-right" @fixedWidth={{true}} />
-      </button>
+    <div class="grid-x grid-margin-x">
+      <div class="cell medium-3 medium-order-2">
+        <button
+          class="button secondary expanded text-weight-bold"
+          type="submit"
+          data-test-sign-in="next"
+        >
+          Next
+          <FaIcon @icon="arrow-right" @fixedWidth={{true}} />
+        </button>
+      </div>
+      <div class="cell auto medium-order-1">
+        <p class="text-small text-dark-gray">
+          If you're unsure which email address to use, contact City Planning at
+          <a href="mailto:ZAP_feedback_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a> or <a href="tel:212-720-3300" class="nowrap">212-720-3300</a>.
+        </p>
+      </div>
     </div>
-    <div class="cell auto medium-order-1">
-      <p class="text-small text-dark-gray">
-        If you're unsure which email address to use, contact City Planning at
-        <a href="mailto:ZAP_feedback_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a> or <a href="tel:212-720-3300" class="nowrap">212-720-3300</a>.
-      </p>
-    </div>
-  </div>
-</Ui::Question>
+  </Ui::Question>
+</form>
