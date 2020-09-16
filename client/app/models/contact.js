@@ -19,6 +19,9 @@ export default class ContactModel extends Model {
   @attr
   statecode;
 
+  @attr
+  telephone1;
+
   // we can use this to assume whether they have logged in once
   @attr
   dcpNycidGuid;
