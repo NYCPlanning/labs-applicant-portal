@@ -10,6 +10,12 @@ import { CrmService } from '../crm/crm.service';
 import { NycidService } from './nycid/nycid.service';
 
 const ACTIVE_CODE = 1;
+
+// /api/data/v9.1/EntityDefinitions(LogicalName=%27contact%27)/Attributes(8c1618e2-a387-4c54-9054-3b97126c89f8)/Microsoft.Dynamics.CRM.PicklistAttributeMetadata?$select=LogicalName&$expand=OptionSet($select=Options),GlobalOptionSet($select=Options)
+const DCP_CONTACTSTATUSES = {
+  ACTIVE: 717170000
+};
+
 const GHOST_CONTACT = {
   // if no contact is found, still return something, but
   // denote that this is not a real contact.
@@ -136,6 +142,9 @@ export class ContactService {
   public async create(body: object) {
     const allowedAttrs = pick(body, CONTACT_ATTRS);
 
-    return this.crmService.create('contacts', allowedAttrs);
+    return this.crmService.create('contacts', {
+      ...allowedAttrs,
+      dcp_contactstatus: DCP_CONTACTSTATUSES.ACTIVE,
+    });
   }
 }
