@@ -1,15 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import * as puppeteer from 'puppeteer';
-import { promises as fs } from 'fs';
 import * as superagent from 'superagent';
 import { ConfigService } from '../config/config.service';
 import { CrmService } from '../crm/crm.service';
 
-const MSApplicantPortalCookieName = '.AspNet.ApplicationCookie'
-const MSApplicantPortalLogin = 'https://nycdcppfs.dynamics365portals.us/SignIn';
-const MSApplicantPortalToken = 'https://nycdcppfs.dynamics365portals.us/_services/auth/token';
-const MSApplicantPortalCartKey = 'https://appservicedcpzapprod.azurewebsites.net/api/payment/getcartkey';
-const CityPayLink = 'https://a836-citypay.nyc.gov/citypay/retail/dcp-zap/processPreparedRetail';
+const MAX_RETRIES = 5;
+const MS_APPLICANT_PORTAL = {
+  COOKIE_NAME: '.AspNet.ApplicationCookie',
+  SIGN_IN_PAGE: 'https://nycdcppfs.dynamics365portals.us/SignIn',
+  TOKEN_API: 'https://nycdcppfs.dynamics365portals.us/_services/auth/token',
+  CART_KEY_API: 'https://appservicedcpzapprod.azurewebsites.net/api/payment/getcartkey',
+}
+
+const CITY_PAY_LINK = 'https://a836-citypay.nyc.gov/citypay/retail/dcp-zap/processPreparedRetail';
 
 @Injectable()
 export class CitypayService {
@@ -17,31 +20,56 @@ export class CitypayService {
     private readonly config: ConfigService,
     private readonly crmService: CrmService,
   ) {
-    // this.generateCartKey('4100e89f-26f8-ea11-a813-001dd8309076');
+    this.findOrCreateCartKey('4100e89f-26f8-ea11-a813-001dd8309076')
+      .then(key => console.log(key))
+      .catch(e => console.log(e));
   }
 
-  async detectExistingCartKey(packageId) {
-    const { records: [projectInvoice = {}] } = await this.crmService.get('dcp_projectinvoices', `
-      $filter=_dcp_package_value eq ${packageId}
+  async findOrCreateCartKey(packageId) {
+    const latestCartKey = await this.findLatestCartKey(packageId);
+
+    // TODO: this finds the latest one, but if an invoice is deleted,
+    // it won't detect that and won't re-gen the cart
+    if (latestCartKey) {
+      console.log('Found existing key!');
+
+      return this.createCartLink(latestCartKey.dcp_cartkey);
+    } else {
+      console.log('Generating new key...');
+      const newCartKey = await this.generateCartKey(packageId);
+
+      return this.createCartLink(newCartKey);
+    }
+  }
+
+  async findLatestCartKey(packageId) {
+    const { records: [projectInvoice] } = await this.crmService.get('dcp_projectinvoices', `
+      $filter=
+        _dcp_package_value eq ${packageId}
       &$expand=dcp_cartkeylup
+      &$orderby=createdon desc
     `);
 
-    console.log(projectInvoice.dcp_cartkeylup);
-    // https://nycdcppfs.crm9.dynamics.com/api/data/v9.1/dcp_projectinvoices(BDD802B2-26F8-EA11-A813-001DD8309076)?$expand=dcp_cartkeylup,dcp_package
+    return projectInvoice?.dcp_cartkeylup;
+  }
+
+  private createCartLink(CartKey) {
+    return `${CITY_PAY_LINK}?cartKey=${CartKey}`;
   }
 
   // generates cookies by headless login to MS Applicant Portal
-  private async stealCookies() {
+  private async stealCookies(retries = MAX_RETRIES) {
     const browserPromise = puppeteer.launch();
+
     try {
       const browser = await browserPromise;
       const page = await browser.newPage();
 
-      await page.goto(MSApplicantPortalLogin);
+      await page.goto(MS_APPLICANT_PORTAL.SIGN_IN_PAGE);
       await page.type('#Username', this.config.get('MS_APPLICANT_PORTAL_USERNAME'));
       await page.type('#Password', this.config.get('MS_APPLICANT_PORTAL_PASSWORD'));
       await page.click('#submit-signin-local');
-      await page.waitForResponse(response => response.url().includes(MSApplicantPortalLogin));
+      await page.waitForResponse(response => response.url().includes(MS_APPLICANT_PORTAL.SIGN_IN_PAGE));
 
       return page.cookies();
     } catch (e) {
@@ -50,7 +78,11 @@ export class CitypayService {
       // can't stop, won't stop...
       // sometimes MS applicant portal is slow
       // and puppeteer times out.
-      return this.stealCookies();
+      if (retries) {
+        return this.stealCookies(retries - 1);
+      } else {
+        throw new Error(`Could not create cookie, maybe something is wrong with the username/password? ${e.toString()}`);
+      }
     } finally {
       const browser = await browserPromise;
 
@@ -58,32 +90,36 @@ export class CitypayService {
     }
   }
 
-  async generateCartKey(packageId) {
+  async generateCartKey(packageId, retries = 5) {
     try {
       const cookies = await this.stealCookies();
-      const microsoftPortalCookie = cookies.find(cookie => cookie.name === MSApplicantPortalCookieName)
+      const microsoftPortalCookie = cookies.find(cookie => cookie.name === MS_APPLICANT_PORTAL.COOKIE_NAME)
 
       // fetch the JWT to sign the next req
       const MSPortalJWTRequest = await superagent
-        .get(MSApplicantPortalToken)
+        .get(MS_APPLICANT_PORTAL.TOKEN_API)
         .query({ client_id: '29f7ab7e-e9bb-4b20-9b8f-4760a8313b28' })
         .withCredentials()
-        .set('Cookie', `${MSApplicantPortalCookieName}=${microsoftPortalCookie.value}`)
+        .set('Cookie', `${MS_APPLICANT_PORTAL.COOKIE_NAME}=${microsoftPortalCookie.value}`)
         .set('Accept-Encoding', 'gzip, deflate, br');
       const cartKeyJWT = MSPortalJWTRequest.body.toString();
 
       // fetch the CartKey used to identify the transaction on CityPay
       const { body: { CartKey } } = await superagent
-        .post(MSApplicantPortalCartKey)
+        .post(MS_APPLICANT_PORTAL.CART_KEY_API)
         .set('Authorization', `Bearer ${cartKeyJWT}`)
         .send(`id=${packageId}`);
 
-      const cityPayCart = `${CityPayLink}?cartKey=${CartKey}`;
-      console.log(cityPayCart);
-
-      return cityPayCart;
+      return CartKey;
     } catch (e) {
       console.log(`There was a problem: ${e.toString()}`);
+      console.log('Trying again...');
+
+      if (retries) {
+        return this.generateCartKey(packageId, retries - 1);
+      } else {
+        throw new Error(`Could not generate the key for some reason: ${e.toString}`);
+      }
     }
   }
 }
