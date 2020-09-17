@@ -103,6 +103,9 @@ const OPTIONSET_LOOKUP = {
     dcpApplicantispublicagencyactions: YES_NO,
     dcpPreviouslyapprovedactioncode: LANDUSE_ACTION_OPTIONSETS.DCPPREVIOUSLYAPPROVEDACTIONCODE,
   },
+  sitedatahForm: {
+    dcpSitetobedisposed: YES_NO,
+  },
 };
 
 /**

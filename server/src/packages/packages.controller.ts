@@ -25,6 +25,7 @@ import { AFFECTEDZONINGRESOLUTION_ATTRS } from './rwcds-form/affected-zoning-res
 import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
 import { RELATED_ACTION_ATTRS } from './landuse-form/related-actions/related-actions.attrs';
 import { LANDUSE_ACTION_ATTRS } from './landuse-form/landuse-actions/landuse-actions.attrs';
+import { SITEDATAH_FORM_ATTRS } from './landuse-form/sitedatah-forms/sitedatah-form.attrs';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('packages', {
   id: 'dcp_packageid',
@@ -99,6 +100,7 @@ import { LANDUSE_ACTION_ATTRS } from './landuse-form/landuse-actions/landuse-act
       'bbls',
       'related-actions',
       'landuse-actions',
+      'sitedatah-forms',
     ],
     applicants: {
       ref: 'dcp_applicantinformationid',
@@ -123,6 +125,12 @@ import { LANDUSE_ACTION_ATTRS } from './landuse-form/landuse-actions/landuse-act
       ref: 'dcp_landuseactionid',
       attributes: [
         ...LANDUSE_ACTION_ATTRS,
+      ],
+    },
+    'sitedatah-forms': {
+      ref: 'dcp_sitedatahformid',
+      attributes: [
+        ...SITEDATAH_FORM_ATTRS,
       ],
     },
   },
@@ -200,6 +208,7 @@ import { LANDUSE_ACTION_ATTRS } from './landuse-form/landuse-actions/landuse-act
             bbls: landuseForm.dcp_dcp_projectbbl_dcp_landuse,
             'related-actions': landuseForm.dcp_dcp_landuse_dcp_relatedactions,
             'landuse-actions': landuseForm.dcp_dcp_landuse_dcp_landuseaction,
+            'sitedatah-forms': landuseForm.dcp_dcp_landuse_dcp_sitedatahform_landuseform,
           }
         }
       } else {

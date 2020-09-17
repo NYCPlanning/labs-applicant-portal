@@ -7,6 +7,7 @@ import { ApplicantsController } from './pas-form/applicants/applicants.controlle
 import { BblsController } from './bbls/bbls.controller';
 import { AffectedZoningResolutionsController } from './rwcds-form/affected-zoning-resolution/affected-zoning-resolutions.controller';
 import { RelatedActionsController } from './landuse-form/related-actions/related-actions.controller';
+import { SitedatahFormsController } from './landuse-form/sitedatah-forms/sitedatah-forms.controller';
 import { LanduseActionsController } from './landuse-form/landuse-actions/landuse-actions.controller';
 import { RwcdsFormController } from './rwcds-form/rwcds-form.controller';
 import { LanduseFormController } from './landuse-form/landuse-form.controller';
@@ -28,6 +29,7 @@ import { DocumentModule } from '../document/document.module';
     BblsController,
     AffectedZoningResolutionsController,
     RelatedActionsController,
+    SitedatahFormsController,
     LanduseActionsController,
   ],
 })
