@@ -23,7 +23,7 @@ import { PROJECT_ATTRS } from '../projects/projects.attrs';
 import { BBL_ATTRS } from './pas-form/bbls/bbls.attrs';
 import { AFFECTEDZONINGRESOLUTION_ATTRS } from './rwcds-form/affected-zoning-resolution/affected-zoning-resolutions.attrs';
 import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
-import { CitypayService } from 'src/citypay/citypay.service';
+import { CitypayService } from '../citypay/citypay.service';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('packages', {
   id: 'dcp_packageid',

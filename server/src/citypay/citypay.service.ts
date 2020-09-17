@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import * as puppeteer from 'puppeteer';
 import * as superagent from 'superagent';
 import { ConfigService } from '../config/config.service';
-import { CrmService } from '../crm/crm.service';
 
 const MAX_RETRIES = 5;
 const MS_APPLICANT_PORTAL = {
@@ -10,6 +9,9 @@ const MS_APPLICANT_PORTAL = {
   SIGN_IN_PAGE: 'https://nycdcppfs.dynamics365portals.us/SignIn',
   TOKEN_API: 'https://nycdcppfs.dynamics365portals.us/_services/auth/token',
   CART_KEY_API: 'https://appservicedcpzapprod.azurewebsites.net/api/payment/getcartkey',
+
+   // security measure — they sign forms with this token
+  MICROSOFT_SIGN_IN_REQUEST_TOKEN: 'https://nycdcppfs.dynamics365portals.us/_layout/tokenhtml'
 }
 
 const CITY_PAY_LINK = 'https://a836-citypay.nyc.gov/citypay/retail/dcp-zap/processPreparedRetail';
@@ -18,7 +20,6 @@ const CITY_PAY_LINK = 'https://a836-citypay.nyc.gov/citypay/retail/dcp-zap/proce
 export class CitypayService {
   constructor(
     private readonly config: ConfigService,
-    private readonly crmService: CrmService,
   ) {}
 
   async generateCityPayLink(packageId) {
@@ -32,40 +33,9 @@ export class CitypayService {
     return `${CITY_PAY_LINK}?cartKey=${CartKey}`;
   }
 
-  // generates cookies by headless login to MS Applicant Portal
-  private async stealCookies(retries = MAX_RETRIES) {
-    const browserPromise = puppeteer.launch();
+  private async generateCartKey(packageId, retries = MAX_RETRIES) {
+    console.log('getting cart key...');
 
-    try {
-      const browser = await browserPromise;
-      const page = await browser.newPage();
-
-      await page.goto(MS_APPLICANT_PORTAL.SIGN_IN_PAGE);
-      await page.type('#Username', this.config.get('MS_APPLICANT_PORTAL_USERNAME'));
-      await page.type('#Password', this.config.get('MS_APPLICANT_PORTAL_PASSWORD'));
-      await page.click('#submit-signin-local');
-      await page.waitForResponse(response => response.url().includes(MS_APPLICANT_PORTAL.SIGN_IN_PAGE));
-
-      return page.cookies();
-    } catch (e) {
-      console.log(`having trouble... ${e}`);
-
-      // can't stop, won't stop...
-      // sometimes MS applicant portal is slow
-      // and puppeteer times out.
-      if (retries) {
-        return this.stealCookies(retries - 1);
-      } else {
-        throw new Error(`Could not create cookie, maybe something is wrong with the username/password? ${e.toString()}`);
-      }
-    } finally {
-      const browser = await browserPromise;
-
-      browser.close();
-    }
-  }
-
-  private async generateCartKey(packageId, retries = 5) {
     try {
       const cookies = await this.stealCookies();
       const microsoftPortalCookie = cookies.find(cookie => cookie.name === MS_APPLICANT_PORTAL.COOKIE_NAME)
@@ -95,6 +65,48 @@ export class CitypayService {
       } else {
         throw new Error(`Could not generate the key for some reason: ${e.toString}`);
       }
+    }
+  }
+
+  // generates cookies by headless login to MS Applicant Portal
+  private async stealCookies(retries = MAX_RETRIES) {
+    const browserPromise = puppeteer.launch();
+
+    try {
+      const browser = await browserPromise;
+      const page = await browser.newPage();
+
+      await page.goto(MS_APPLICANT_PORTAL.SIGN_IN_PAGE);
+
+      // this gets dynamically inserted after a handshake event with MS
+      await page.waitForSelector('[action="/SignIn"]');
+
+      // enter credentials
+      await page.type('#Username', this.config.get('MS_APPLICANT_PORTAL_USERNAME'));
+      await page.type('#Password', this.config.get('MS_APPLICANT_PORTAL_PASSWORD'));
+
+      // click signin, but await for the response with cookies
+      page.click('#submit-signin-local');
+
+      await page.waitForNavigation({
+        waitUntil: 'networkidle0'
+      });
+
+      return page.cookies();
+    } catch (e) {
+      console.log(`having trouble... ${e}`);
+
+      // can't stop, won't stop...
+      // sometimes puppeteer times out.
+      if (retries) {
+        return this.stealCookies(retries - 1);
+      } else {
+        throw new Error(`Could not create cookie, maybe something is wrong with the username/password? ${e.toString()}`);
+      }
+    } finally {
+      const browser = await browserPromise;
+
+      browser.close();
     }
   }
 }
