@@ -19,38 +19,13 @@ export class CitypayService {
   constructor(
     private readonly config: ConfigService,
     private readonly crmService: CrmService,
-  ) {
-    this.findOrCreateCartKey('4100e89f-26f8-ea11-a813-001dd8309076')
-      .then(key => console.log(key))
-      .catch(e => console.log(e));
-  }
+  ) {}
 
-  async findOrCreateCartKey(packageId) {
-    const latestCartKey = await this.findLatestCartKey(packageId);
+  async generateCityPayLink(packageId) {
+    console.log('Generating new key...');
+    const newCartKey = await this.generateCartKey(packageId);
 
-    // TODO: this finds the latest one, but if an invoice is deleted,
-    // it won't detect that and won't re-gen the cart
-    if (latestCartKey) {
-      console.log('Found existing key!');
-
-      return this.createCartLink(latestCartKey.dcp_cartkey);
-    } else {
-      console.log('Generating new key...');
-      const newCartKey = await this.generateCartKey(packageId);
-
-      return this.createCartLink(newCartKey);
-    }
-  }
-
-  async findLatestCartKey(packageId) {
-    const { records: [projectInvoice] } = await this.crmService.get('dcp_projectinvoices', `
-      $filter=
-        _dcp_package_value eq ${packageId}
-      &$expand=dcp_cartkeylup
-      &$orderby=createdon desc
-    `);
-
-    return projectInvoice?.dcp_cartkeylup;
+    return this.createCartLink(newCartKey);
   }
 
   private createCartLink(CartKey) {
@@ -90,7 +65,7 @@ export class CitypayService {
     }
   }
 
-  async generateCartKey(packageId, retries = 5) {
+  private async generateCartKey(packageId, retries = 5) {
     try {
       const cookies = await this.stealCookies();
       const microsoftPortalCookie = cookies.find(cookie => cookie.name === MS_APPLICANT_PORTAL.COOKIE_NAME)
