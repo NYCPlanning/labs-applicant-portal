@@ -13,6 +13,8 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { currentSession } from 'ember-simple-auth/test-support';
 import { Response } from 'ember-cli-mirage';
 
+const DUMMY_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+
 module('Acceptance | user can login', function(hooks) {
   setupApplicationTest(hooks);
   setupWindowMock(hooks);
@@ -23,10 +25,10 @@ module('Acceptance | user can login', function(hooks) {
 
     this.server.create('contact');
     this.server.get('/login', (schema, request) => {
-      assert.equal(request.queryParams.accessToken, 'a-valid-jwt');
+      assert.equal(request.queryParams.accessToken, DUMMY_TOKEN);
     });
 
-    window.location.hash = '#access_token=a-valid-jwt';
+    window.location.hash = `#access_token=${DUMMY_TOKEN}`;
     await visit('/login');
 
     assert.equal(currentSession().isAuthenticated, true);
@@ -37,7 +39,7 @@ module('Acceptance | user can login', function(hooks) {
 
     this.server.create('contact');
 
-    window.location.hash = '#access_token=a-valid-jwt';
+    window.location.hash = `#access_token=${DUMMY_TOKEN}`;
     await visit('/login');
     await focus('[data-test-auth="menu-button"]');
     await click('[data-test-auth="logout"]');
@@ -47,7 +49,7 @@ module('Acceptance | user can login', function(hooks) {
   });
 
   test('User sees error message if no CRM contact is found for their email', async function (assert) {
-    const accessToken = 'a-valid-jwt';
+    const accessToken = DUMMY_TOKEN;
     this.server.create('contact');
     this.server.get('/login', () => new Response(401, { some: 'header' }, {
       errors: [{
@@ -69,9 +71,9 @@ module('Acceptance | user can login', function(hooks) {
     // user logs in
     this.server.create('contact');
     this.server.get('/login', (schema, request) => {
-      assert.equal(request.queryParams.accessToken, 'a-valid-jwt');
+      assert.equal(request.queryParams.accessToken, DUMMY_TOKEN);
     });
-    window.location.hash = '#access_token=a-valid-jwt';
+    window.location.hash = `#access_token=${DUMMY_TOKEN}`;
     await visit('/login');
 
     // because user is already logged in, route should redirect to /projects
@@ -102,7 +104,7 @@ module('Acceptance | user can login', function(hooks) {
       isNycidEmailRegistered: true,
     });
 
-    window.location.hash = '#access_token=a-valid-jwt';
+    window.location.hash = `#access_token=${DUMMY_TOKEN}`;
     try {
       await visit('/login');
     } catch (e) {
