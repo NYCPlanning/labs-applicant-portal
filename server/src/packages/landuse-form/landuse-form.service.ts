@@ -25,8 +25,18 @@ export class LanduseFormService {
         dcp_dcp_landuse_dcp_landuseaction
     `);
 
+    // We make a second request to accommodate additional hasMany expands.
+    // A CRM get can only have max of 5 expands.
+    const { records: [landuseFormPg2] } = await this.crmService.get('dcp_landuses', `
+      $filter=
+        dcp_landuseid eq ${id}
+      &$expand=
+        dcp_dcp_landuse_dcp_sitedatahform_landuseform
+    `);
+
     return {
       ...landuseForm,
+      ...landuseFormPg2,
     };
   }
 }

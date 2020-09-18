@@ -10,6 +10,7 @@ import SaveableApplicantFormValidations from '../../../validations/saveable-appl
 import SubmittableApplicantFormValidations from '../../../validations/submittable-applicant-form';
 import SaveableRelatedActionFormValidations from '../../../validations/saveable-related-action-form';
 import SubmittableRelatedActionFormValidations from '../../../validations/submittable-related-action-form';
+import SaveableSitedatahFormValidations from '../../../validations/saveable-sitedatah-form';
 import SubmittableLanduseActionFormValidations from '../../../validations/submittable-landuse-action-form';
 import { addToHasMany, removeFromHasMany } from '../../../utils/ember-changeset';
 
@@ -23,6 +24,7 @@ export default class LandUseFormComponent extends Component {
     SubmittableApplicantFormValidations,
     SaveableRelatedActionFormValidations,
     SubmittableRelatedActionFormValidations,
+    SaveableSitedatahFormValidations,
     SubmittableLanduseActionFormValidations,
   };
 
@@ -52,7 +54,7 @@ export default class LandUseFormComponent extends Component {
       await this.args.package.save(this.recordsToDelete);
       this.recordsToDelete = [];
     } catch (error) {
-      console.log('Save Landuse package error:', error);
+      console.log('Save Landuse package error:', error); //eslint-disable-line
     }
   }
 
@@ -98,6 +100,24 @@ export default class LandUseFormComponent extends Component {
     this.recordsToDelete.push(relatedAction);
 
     relatedAction.deleteRecord();
+  }
+
+  @action
+  addSitedatahForm(changeset) {
+    const newSitedatahForm = this.store.createRecord('sitedatah-form', {
+      landuseForm: this.landuseForm,
+    });
+
+    addToHasMany(changeset, 'sitedatahForms', newSitedatahForm);
+  }
+
+  @action
+  removeSitedatahForm(sitedatahForm, changeset) {
+    removeFromHasMany(changeset, 'sitedatahForms', sitedatahForm);
+
+    this.recordsToDelete.push(sitedatahForm);
+
+    sitedatahForm.deleteRecord();
   }
 
   @action

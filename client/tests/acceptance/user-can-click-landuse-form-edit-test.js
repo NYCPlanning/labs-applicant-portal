@@ -572,4 +572,60 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
 
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
+
+  test('User can add, fill out, save and remove Subject Sites subsections', async function(assert) {
+    // Create a LU form w housing-related actions
+    this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', {
+          dcpPackagetype: 717170001,
+          landuseForm: this.server.create('landuse-form', {
+            landuseActions: [
+              this.server.create('landuse-action', {
+                dcpActioncode: 'ZC',
+              }),
+              this.server.create('landuse-action', {
+                dcpActioncode: 'HO',
+              }),
+            ],
+          }),
+        }),
+      ],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    await click('[data-test-add-sitedatah-form-button]');
+
+    assert.dom('[data-test-subject-site-title]').exists();
+
+    await fillIn('[data-test-input="dcpUrsitenumber"]', '12345');
+    await fillIn('[data-test-input="dcpBorough"]', '12345');
+    await fillIn('[data-test-input="dcpBlocknumbertext"]', '12345');
+    await fillIn('[data-test-input="dcpLotnumberstring"]', '12345');
+    await fillIn('[data-test-input="dcpOwner"]', '12345');
+    await fillIn('[data-test-input="dcpAddress"]', '12345');
+    await fillIn('[data-test-input="dcpZoning"]', '12345');
+    await fillIn('[data-test-input="dcpBuildings"]', '12345');
+    await fillIn('[data-test-input="dcpExistingstories"]', '12345');
+    await fillIn('[data-test-input="dcpExistinguses"]', '12345');
+    await fillIn('[data-test-input="dcpCommoccup"]', '12345');
+    await fillIn('[data-test-input="dcpDwellingcup"]', '12345');
+    await fillIn('[data-test-input="dcpVacant"]', '12345');
+    await fillIn('[data-test-input="dcpDwellingvacant"]', '12345');
+    await fillIn('[data-test-input="dcpNoofemp"]', '12345');
+    await click('[data-test-radio="dcpSitetobedisposed"][data-test-radio-option="Yes"]');
+    await click('[data-test-radio="dcpSitetobedisposed"][data-test-radio-option="No"]');
+    await fillIn('[data-test-input="dcpProposeduses"]', '12345');
+
+    assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
+
+    saveForm();
+
+    await click('[data-test-remove-sitedatah-form-button]');
+
+    saveForm();
+
+    assert.dom('[data-test-subject-site-title]').doesNotExist();
+  });
 });

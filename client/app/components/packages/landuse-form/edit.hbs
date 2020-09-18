@@ -77,6 +77,13 @@
           <Packages::LanduseForm::HousingPlans
             @form={{saveableForm}}
           />
+
+          <Packages::LanduseForm::SubjectSites
+            @form={{saveableForm}}
+            @addSitedatahForm={{this.addSitedatahForm}}
+            @removeSitedatahForm={{this.removeSitedatahForm}}
+            @validations={{this.validations}}
+          />
         {{/if}}
       {{/let}}
 
