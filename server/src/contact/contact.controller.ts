@@ -1,9 +1,10 @@
-import { Controller, Session, Get, UseInterceptors, HttpException, HttpStatus, Query } from '@nestjs/common';
+import { Controller, Session, Get, UseInterceptors, HttpException, HttpStatus, Query, Patch, UseGuards, UsePipes, Body, Param } from '@nestjs/common';
 import { ContactService } from './contact.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 import { CONTACT_ATTRS } from './contacts.attrs';
-
-
+import { AuthenticateGuard } from '../authenticate.guard';
+import { JsonApiDeserializePipe } from '../json-api-deserialize.pipe';
+import { NycidService } from './nycid/nycid.service';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('contacts', {
   attributes: [
@@ -19,7 +20,10 @@ import { CONTACT_ATTRS } from './contacts.attrs';
 }))
 @Controller('contacts')
 export class ContactController {
-  constructor(private readonly contactService: ContactService) {}
+  constructor(
+    private readonly contactService: ContactService,
+    private readonly nycidService: NycidService,
+  ) {}
 
   @Get('/')
   async getContact(@Session() session, @Query('me') me, @Query('email') email) {
@@ -38,5 +42,20 @@ export class ContactController {
     } else {
       return this.contactService.findOneByEmail(email);
     }
+  }
+
+  @UseGuards(AuthenticateGuard)
+  @UsePipes(JsonApiDeserializePipe)
+  @Patch('/:id')
+  async update(@Param('id') id, @Session() session, @Body() body) {
+    const { NYCIDToken } = session;
+
+    return this.contactService.synchronize(id, NYCIDToken);
+  }
+
+  @UseGuards(AuthenticateGuard)
+  @Get('/:id')
+  async find(@Param('id') id) {
+    return this.contactService.findOneById(id);
   }
 }
