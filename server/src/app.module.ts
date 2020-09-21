@@ -10,6 +10,8 @@ import { CrmModule } from './crm/crm.module';
 import { ProjectsModule } from './projects/projects.module';
 import { PackagesModule } from './packages/packages.module';
 import { DocumentModule } from './document/document.module';
+import { CitypayService } from './citypay/citypay.service';
+import { CitypayModule } from './citypay/citypay.module';
 
 @Module({
   imports: [
@@ -20,8 +22,10 @@ import { DocumentModule } from './document/document.module';
     ProjectsModule,
     PackagesModule,
     DocumentModule,
+    CitypayModule,
   ],
   controllers: [AppController],
+  providers: [CitypayService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

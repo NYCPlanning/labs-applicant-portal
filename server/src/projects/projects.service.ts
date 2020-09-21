@@ -128,6 +128,7 @@ export class ProjectsService {
           dcp_user(
             $select=internalemailaddress,address1_telephone1
           )
+        &$orderby=dcp_name asc
       `);
 
       const projectApplicantsWithContacts = projectApplicants.records.map(applicant => ({ ...applicant, contact: applicant.dcp_applicant_customer_contact }));

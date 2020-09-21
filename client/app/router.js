@@ -34,5 +34,6 @@ Router.map(function() {
     this.route('login');
     this.route('register');
     this.route('validate');
+    this.route('sync');
   });
 });

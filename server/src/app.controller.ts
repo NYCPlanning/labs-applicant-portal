@@ -27,6 +27,7 @@ export class AppController {
       res.send({
         access_token: ZAPToken,
         emailaddress1,
+        contactId,
       });
     } catch (e) {
       if (e instanceof HttpException) {

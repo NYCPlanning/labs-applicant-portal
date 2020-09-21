@@ -4,7 +4,6 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
-import * as moment from 'moment';
 import { ConfigService } from '../config/config.service';
 import { ContactService } from '../contact/contact.service';
 
@@ -41,16 +40,7 @@ export class AuthService {
     nycIdAccount: any = {},
   ): string {
     const { ZAP_TOKEN_SECRET } = this;
-    const {
-      nycExtTOUVersion,
-      mail,
-      scope,
-      nycExtEmailValidationFlag,
-      GUID,
-      userType,
-      exp,
-      jti,
-    } = nycIdAccount;
+    const { exp, ...everythingElse } = nycIdAccount;
 
     return jwt.sign({
       // JWT standard name for expiration - see https://github.com/auth0/node-jsonwebtoken#token-expiration-exp-claim
@@ -60,13 +50,7 @@ export class AuthService {
       contactId,
 
       // additional NYC.ID account information
-      nycExtTOUVersion,
-      mail,
-      scope,
-      nycExtEmailValidationFlag,
-      GUID,
-      userType,
-      jti,
+      ...everythingElse
     }, ZAP_TOKEN_SECRET);
   }
 
@@ -160,7 +144,10 @@ export class AuthService {
       });
     }
 
-    return this.signNewToken(contact.contactid, nycIdAccount);
+    return this.signNewToken(contact.contactid, {
+      NYCIDToken, // include the token for later authorization
+      ...nycIdAccount,
+    });
   }
 
   /**
