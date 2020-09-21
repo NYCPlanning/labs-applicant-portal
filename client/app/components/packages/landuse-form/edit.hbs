@@ -69,6 +69,10 @@
         @validations={{this.validations}}
       />
 
+      <Packages::LanduseForm::ChangeCityMap
+        @form={{saveableForm}}
+      />
+
       {{#let (intersect
         (map-by "dcpActioncode" this.landuseForm.landuseActions)
         (array 'HA' 'HC' 'HD' 'HG' 'HN' 'HO' 'HP' 'HU')
