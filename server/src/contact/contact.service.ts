@@ -139,6 +139,18 @@ export class ContactService {
     return this.crmService.update('contacts', id, allowedAttrs);
   }
 
+  public async synchronize(contactId, accessToken) {
+    const {
+      firstName,
+      lastName,
+    } = await this.nycid.getNycidOAuthUser(accessToken);
+
+    return this.update(contactId, {
+      firstname: firstName,
+      lastname: lastName,
+    });
+  }
+
   public async create(body: object) {
     const allowedAttrs = pick(body, CONTACT_ATTRS);
 

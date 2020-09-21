@@ -9,6 +9,7 @@ import {
   UseInterceptors,
   UseGuards,
   UsePipes,
+  Redirect
 } from '@nestjs/common';
 import { PackagesService } from './packages.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
@@ -26,6 +27,7 @@ import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
 import { RELATED_ACTION_ATTRS } from './landuse-form/related-actions/related-actions.attrs';
 import { LANDUSE_ACTION_ATTRS } from './landuse-form/landuse-actions/landuse-actions.attrs';
 import { SITEDATAH_FORM_ATTRS } from './landuse-form/sitedatah-forms/sitedatah-form.attrs';
+import { CitypayService } from '../citypay/citypay.service';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('packages', {
   id: 'dcp_packageid',
@@ -41,6 +43,9 @@ import { SITEDATAH_FORM_ATTRS } from './landuse-form/sitedatah-forms/sitedatah-f
     'rwcds-form',
     'landuse-form',
     'project',
+
+    // pay link - not a relationship
+    'city_pay_url',
   ],
   project: {
     ref: 'dcp_projectid',
@@ -233,7 +238,10 @@ import { SITEDATAH_FORM_ATTRS } from './landuse-form/sitedatah-forms/sitedatah-f
 @UseGuards(PackageAccessGuard)
 @Controller('packages')
 export class PackagesController {
-  constructor(private readonly packagesService: PackagesService) {}
+  constructor(
+    private readonly packagesService: PackagesService,
+    private readonly cityPay: CitypayService
+  ) {}
 
   @Get('/:id')
   getPackage(@Param('id') id) {
@@ -274,5 +282,12 @@ export class PackagesController {
         }, HttpStatus.INTERNAL_SERVER_ERROR);
       }
     }
+  }
+
+  @Get('/pay/:id')
+  async generatePaymentLink(@Param('id') id) {
+    return { 
+      city_pay_url: await this.cityPay.generateCityPayLink(id),
+    };
   }
 }
