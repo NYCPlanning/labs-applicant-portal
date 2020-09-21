@@ -6,6 +6,7 @@ import {
   settled,
   fillIn,
   waitFor,
+  triggerKeyEvent,
 } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -627,5 +628,104 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     saveForm();
 
     assert.dom('[data-test-subject-site-title]').doesNotExist();
+  });
+
+  test('user can search and add new bbls', async function (assert) {
+    const project = this.server.create('project', 1, {
+      packages: [this.server.create('package', 'toDo', 'landuseForm')],
+    });
+    const { landuseForm } = project.packages.models[0];
+
+    this.server.create('bbl', {
+      dcpBblnumber: '3071590111',
+      dcpDevelopmentsite: null,
+      dcpPartiallot: null,
+      landuseForm,
+    });
+
+    this.server.create('bbl', {
+      dcpBblnumber: '3071590115',
+      dcpDevelopmentsite: null,
+      dcpPartiallot: null,
+      landuseForm,
+    });
+
+    this.bbls = [
+      await this.owner.lookup('service:store').findRecord('bbl', 1),
+      await this.owner.lookup('service:store').findRecord('bbl', 2),
+    ];
+
+    await visit('/landuse-form/1/edit');
+
+    await click('[data-test-radio="dcpWholecity"][data-test-radio-option="No"]');
+    await click('[data-test-radio="dcpEntiretyboroughs"][data-test-radio-option="No"]');
+    await click('[data-test-radio="dcpEntiretycommunity"][data-test-radio-option="No"]');
+    await click('[data-test-radio="dcpNotaxblock"][data-test-radio-option="No"]');
+
+    // labs-ember-search class for search input
+    await fillIn('.map-search-input', '1000120001');
+    await triggerKeyEvent('.labs-geosearch', 'keypress', 13);
+
+    assert.dom(this.element).includesText('1 Bowling Green, Manhattan');
+
+    assert.dom('[data-test-bbl-title="1000120001"]').exists();
+
+    // test that user can add more than one bbl
+    await fillIn('.map-search-input', '1000030001');
+    await triggerKeyEvent('.labs-geosearch', 'keypress', 13);
+
+    assert.dom(this.element).includesText('10 Battery Park, Manhattan');
+
+    assert.dom('[data-test-bbl-title="1000030001"]').exists();
+  });
+
+  test('user can remove a bbl', async function (assert) {
+    const project = this.server.create('project', 1, {
+      packages: [this.server.create('package', 'toDo', 'landuseForm')],
+    });
+    const { landuseForm } = project.packages.models[0];
+
+    this.server.create('bbl', {
+      dcpBblnumber: '3071590111',
+      dcpDevelopmentsite: null,
+      dcpPartiallot: null,
+      landuseForm,
+    });
+
+    this.server.create('bbl', {
+      dcpBblnumber: '3071590115',
+      dcpDevelopmentsite: null,
+      dcpPartiallot: null,
+      landuseForm,
+    });
+
+    this.bbls = [
+      await this.owner.lookup('service:store').findRecord('bbl', 1),
+      await this.owner.lookup('service:store').findRecord('bbl', 2),
+    ];
+
+    await visit('/landuse-form/1/edit');
+
+    await click('[data-test-radio="dcpWholecity"][data-test-radio-option="No"]');
+    await click('[data-test-radio="dcpEntiretyboroughs"][data-test-radio-option="No"]');
+    await click('[data-test-radio="dcpEntiretycommunity"][data-test-radio-option="No"]');
+    await click('[data-test-radio="dcpNotaxblock"][data-test-radio-option="No"]');
+
+    // labs-ember-search class for search input
+    await fillIn('.map-search-input', '1000120001');
+    await triggerKeyEvent('.labs-geosearch', 'keypress', 13);
+
+    assert.dom('[data-test-bbl-title="3071590115"]').exists();
+    assert.dom('[data-test-bbl-title="1000120001"]').exists();
+
+    await click('[data-test-button-remove-bbl="1000120001"]');
+
+    assert.dom('[data-test-bbl-title="3071590115"]').exists();
+    assert.dom('[data-test-bbl-title="1000120001"]').doesNotExist();
+
+    await click('[data-test-button-remove-bbl="3071590115"]');
+
+    assert.dom('[data-test-bbl-title="3071590115"]').doesNotExist();
+    assert.dom('[data-test-bbl-title="1000120001"]').doesNotExist();
   });
 });
