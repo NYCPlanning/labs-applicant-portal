@@ -30,6 +30,7 @@ export default class LanduseFormModel extends Model {
 
   @attr dcpContactemail;
 
+  // Site Information attrs
   @attr dcpSitedataadress;
 
   @attr dcpCitycouncil;
@@ -42,6 +43,7 @@ export default class LanduseFormModel extends Model {
 
   @attr dcpSpecialdistricts;
 
+  // Proposed Project Area attrs
   @attr dcpWholecity;
 
   @attr dcpEntiretyboroughs;
@@ -64,6 +66,7 @@ export default class LanduseFormModel extends Model {
 
   @attr dcpSitedatarenewalarea;
 
+  // Proposed Development Site attrs
   @attr dcp500kpluszone;
 
   @attr dcpDevsize;
@@ -72,6 +75,18 @@ export default class LanduseFormModel extends Model {
 
   @attr dcpSitedataidentifylandmark;
 
+  // Environmental Review attrs
+  @attr dcpLeadagency;
+
+  @attr dcpCeqrnumber;
+
+  @attr dcpCeqrtype;
+
+  @attr dcpTypecategory;
+
+  @attr dcpDeterminationdate;
+
+  // Housing Plans attrs
   @attr dcpDesignation;
 
   @attr dcpProjecthousingplanudaap;
@@ -82,15 +97,42 @@ export default class LanduseFormModel extends Model {
 
   @attr dcpRestrictandcondition;
 
-  @attr dcpLeadagency;
+  // public facilities attrs
+  @attr dcpOfficespaceleaseopt;
 
-  @attr dcpCeqrnumber;
+  @attr dcpAcquisitionopt;
 
-  @attr dcpCeqrtype;
+  @attr dcpSiteselectionopt;
 
-  @attr dcpTypecategory;
+  @attr dcpIndicatetypeoffacility;
 
-  @attr dcpDeterminationdate;
+  @attr dcpExistingfacilityproposedtoremainopt;
+
+  @attr dcpExistingfacilityproposedtoremainandexpand;
+
+  @attr dcpHowlonghasexistingfacilitybeenatthislocat;
+
+  @attr dcpTextexistingfacility;
+
+  @attr dcpExistingfacilityreplacementinanewlocation;
+
+  @attr dcpCurrentfacilitylocation;
+
+  @attr dcpNewfacilityopt;
+
+  @attr dcpIsprojectlistedinstatementofneedsopt;
+
+  @attr dcpIndicatefiscalyears;
+
+  @attr dcpIndicatepgno;
+
+  @attr dcpDidboroughpresidentproposealternativesite;
+
+  @attr dcpWhatsite;
+
+  @attr dcpCapitalbudgetline;
+
+  @attr dcpForfiscalyrs;
 
   async save() {
     await this.saveDirtyLanduseActions();

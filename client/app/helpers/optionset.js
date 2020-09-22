@@ -1,7 +1,7 @@
 import { helper } from '@ember/component/helper';
 // Register Option Sets by importing them and then adding
 // an entry to the OPTIONSET_LOOKUP object.
-import {
+import COMMON_OPTIONSETS, {
   YES_NO,
   YES_NO_UNSURE,
   YES_NO_DONT_KNOW,
@@ -71,6 +71,16 @@ const OPTIONSET_LOOKUP = {
     dcpProjecthousingplanudaap: LANDUSE_FORM_OPTIONSETS.DCPPROJECTHOUSINGPLANUDAAP,
     dcpMannerofdisposition: LANDUSE_FORM_OPTIONSETS.DCPMANNEROFDISPOSITION,
     dcpRestrictandcondition: LANDUSE_FORM_OPTIONSETS.DCPRESTRICTANDCONDITION,
+    dcpOfficespaceleaseopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpAcquisitionopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpSiteselectionopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpIndicatetypeoffacility: LANDUSE_FORM_OPTIONSETS.DCPINDICATETYPEOFFACILITY,
+    dcpExistingfacilityproposedtoremainopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpExistingfacilityproposedtoremainandexpand: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpExistingfacilityreplacementinanewlocation: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpNewfacilityopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpIsprojectlistedinstatementofneedsopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpDidboroughpresidentproposealternativesite: COMMON_OPTIONSETS.YES_NO_INTEGER,
   },
   rwcdsForm: {
     dcpHasprojectchangedsincesubmissionofthepas: YES_NO,

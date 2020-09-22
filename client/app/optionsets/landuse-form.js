@@ -85,6 +85,17 @@ export const DCPDISPOSITION = {
   },
 };
 
+export const DCPINDICATETYPEOFFACILITY = {
+  LOCAL_NEIGHBORHOOD: {
+    code: 804810000,
+    label: 'Local/Neighborhood',
+  },
+  REGIONAL_CITYWIDE: {
+    code: 717170001,
+    label: 'Regional/Citywide',
+  },
+};
+
 const LANDUSE_FORM_OPTIONSETS = {
   CEQR_TYPE,
   DCPDEVSIZE,
@@ -93,6 +104,7 @@ const LANDUSE_FORM_OPTIONSETS = {
   DCPDESIGNATION,
   DCPPROJECTHOUSINGPLANUDAAP,
   DCPDISPOSITION,
+  DCPINDICATETYPEOFFACILITY,
 };
 
 export default LANDUSE_FORM_OPTIONSETS;

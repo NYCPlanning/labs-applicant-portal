@@ -137,4 +137,52 @@ export default {
       message: 'Text is too long (max {max} characters)',
     }),
   ],
+  dcpTextexistingfacility: [
+    validateLength({
+      min: 0,
+      max: 100,
+    }),
+  ],
+  dcpHowlonghasexistingfacilitybeenatthislocat: [
+    validateLength({
+      min: 0,
+      max: 2000,
+    }),
+  ],
+  dcpCurrentfacilitylocation: [
+    validateLength({
+      min: 0,
+      max: 50,
+    }),
+  ],
+  dcpIndicatefiscalyears: [
+    validateLength({
+      min: 0,
+      max: 100,
+    }),
+  ],
+  dcpIndicatepgno: [
+    validateLength({
+      min: 0,
+      max: 100,
+    }),
+  ],
+  dcpWhatsite: [
+    validateLength({
+      min: 0,
+      max: 100,
+    }),
+  ],
+  dcpCapitalbudgetline: [
+    validateLength({
+      min: 0,
+      max: 100,
+    }),
+  ],
+  dcpForfiscalyrs: [
+    validateLength({
+      min: 0,
+      max: 100,
+    }),
+  ],
 };
