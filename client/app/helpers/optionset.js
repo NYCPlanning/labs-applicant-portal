@@ -81,6 +81,7 @@ const OPTIONSET_LOOKUP = {
     dcpNewfacilityopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpIsprojectlistedinstatementofneedsopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpDidboroughpresidentproposealternativesite: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpLegalinstrument: LANDUSE_FORM_OPTIONSETS.DCPLEGALINSTRUMENT,
   },
   rwcdsForm: {
     dcpHasprojectchangedsincesubmissionofthepas: YES_NO,
