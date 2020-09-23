@@ -728,4 +728,149 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.dom('[data-test-bbl-title="3071590115"]').doesNotExist();
     assert.dom('[data-test-bbl-title="1000120001"]').doesNotExist();
   });
+
+  test('User can fill out Public Facilities section', async function(assert) {
+    // Create a LU form w public-facilities-related actions
+    this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', {
+          dcpPackagetype: 717170001,
+          landuseForm: this.server.create('landuse-form', {
+            landuseActions: [
+              this.server.create('landuse-action', {
+                dcpActioncode: 'PS',
+              }),
+              this.server.create('landuse-action', {
+                dcpActioncode: 'PX',
+              }),
+            ],
+          }),
+        }),
+      ],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    await click('[data-test-checkbox="dcpOfficespaceleaseopt"]');
+    await click('[data-test-checkbox="dcpAcquisitionopt"]');
+    await click('[data-test-checkbox="dcpSiteselectionopt"]');
+    await click('[data-test-radio="dcpIndicatetypeoffacility"][data-test-radio-option="Local/Neighborhood"]');
+
+    assert.dom('[data-test-input="dcpTextexistingfacility"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"]').doesNotExist();
+
+    await click('[data-test-radio="dcpExistingfacilityproposedtoremainopt"][data-test-radio-option="Yes"]');
+
+    assert.dom('[data-test-input="dcpTextexistingfacility"]').exists();
+    assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"]').doesNotExist();
+
+    await fillIn('[data-test-input="dcpTextexistingfacility"]', 'A while.');
+
+    await click('[data-test-radio="dcpExistingfacilityproposedtoremainopt"][data-test-radio-option="No"]');
+
+    assert.dom('[data-test-input="dcpTextexistingfacility"]').doesNotExist();
+
+    assert.dom('[data-test-input="dcpCurrentfacilitylocation"]').doesNotExist();
+
+    await click('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"][data-test-radio-option="Yes"]');
+
+    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').doesNotExist();
+    await fillIn('[data-test-input="dcpCurrentfacilitylocation"]', 'Vibrant streets');
+
+    await click('[data-test-radio="dcpExistingfacilityproposedtoremainandexpand"][data-test-radio-option="Yes"]');
+
+    await fillIn('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]', 'More than a while.');
+
+    await click('[data-test-radio="dcpNewfacilityopt"][data-test-radio-option="Yes"]');
+    await click('[data-test-radio="dcpIsprojectlistedinstatementofneedsopt"][data-test-radio-option="Yes"]');
+
+    await fillIn('[data-test-input="dcpIndicatefiscalyears"]', '1997 - 2020');
+    await fillIn('[data-test-input="dcpIndicatepgno"]', 'Page 19');
+    await click('[data-test-radio="dcpDidboroughpresidentproposealternativesite"][data-test-radio-option="No"]');
+    await fillIn('[data-test-input="dcpWhatsite"]', 'Over the hills');
+    await fillIn('[data-test-input="dcpCapitalbudgetline"]', 'Line 9001');
+    await fillIn('[data-test-input="dcpForfiscalyrs"]', '2010 - 2015');
+
+    assert.ok(true);
+  });
+
+  test('Nested (i.e. Cascading, descendant) questions in Public Facilities reset when parent question values change', async function(assert) {
+    // Create a LU form w public-facilities-related actions
+    this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', {
+          dcpPackagetype: 717170001,
+          landuseForm: this.server.create('landuse-form', {
+            landuseActions: [
+              this.server.create('landuse-action', {
+                dcpActioncode: 'PS',
+              }),
+              this.server.create('landuse-action', {
+                dcpActioncode: 'PX',
+              }),
+            ],
+          }),
+        }),
+      ],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    // Test clearing dependents of dcpExistingfacilityproposedtoremainopt
+    await click('[data-test-radio="dcpExistingfacilityproposedtoremainopt"][data-test-radio-option="Yes"]');
+
+    await fillIn('[data-test-input="dcpTextexistingfacility"]', 'A while.');
+
+    assert.dom('[data-test-input="dcpTextexistingfacility"]').hasValue('A while.');
+
+    await click('[data-test-radio="dcpExistingfacilityproposedtoremainopt"][data-test-radio-option="No"]');
+
+    await click('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"][data-test-radio-option="Yes"]');
+
+    assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"][data-test-radio-option="Yes"]').hasAria('checked', 'true');
+    assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"][data-test-radio-option="No"]').hasAria('checked', 'false');
+
+    await fillIn('[data-test-input="dcpCurrentfacilitylocation"]', 'A hip warehouse.');
+    assert.dom('[data-test-input="dcpCurrentfacilitylocation"]').hasValue('A hip warehouse.');
+
+    await click('[data-test-radio="dcpExistingfacilityproposedtoremainopt"][data-test-radio-option="Yes"]');
+
+    assert.dom('[data-test-input="dcpTextexistingfacility"]').hasNoValue();
+
+    await click('[data-test-radio="dcpExistingfacilityproposedtoremainopt"][data-test-radio-option="No"]');
+
+    assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"][data-test-radio-option="Yes"]').hasAria('checked', 'false');
+    assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"][data-test-radio-option="No"]').hasAria('checked', 'false');
+
+    await click('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"][data-test-radio-option="Yes"]');
+    assert.dom('[data-test-input="dcpCurrentfacilitylocation"]').hasNoValue();
+
+    // Test clearing dependents of dcpExistingfacilityproposedtoremainandexpand
+    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').doesNotExist();
+
+    await click('[data-test-radio="dcpExistingfacilityproposedtoremainandexpand"][data-test-radio-option="Yes"]');
+
+    await fillIn('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]', 'Many decades.');
+    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').hasValue('Many decades.');
+
+    await click('[data-test-radio="dcpExistingfacilityproposedtoremainandexpand"][data-test-radio-option="No"]');
+    await click('[data-test-radio="dcpExistingfacilityproposedtoremainandexpand"][data-test-radio-option="Yes"]');
+
+    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').hasNoValue();
+
+    // Test clearing dependents of dcpIsprojectlistedinstatementofneedsopt
+    assert.dom('[data-test-input="dcpIndicatefiscalyears"]').doesNotExist();
+
+    await click('[data-test-radio="dcpIsprojectlistedinstatementofneedsopt"][data-test-radio-option="Yes"]');
+
+    await fillIn('[data-test-input="dcpIndicatefiscalyears"]', 'Many decades.');
+    assert.dom('[data-test-input="dcpIndicatefiscalyears"]').hasValue('Many decades.');
+
+    await click('[data-test-radio="dcpIsprojectlistedinstatementofneedsopt"][data-test-radio-option="No"]');
+    await click('[data-test-radio="dcpIsprojectlistedinstatementofneedsopt"][data-test-radio-option="Yes"]');
+
+    assert.dom('[data-test-input="dcpIndicatefiscalyears"]').hasNoValue();
+
+    await visit('/landuse-form/1/edit');
+  });
 });

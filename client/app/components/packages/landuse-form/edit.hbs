@@ -87,6 +87,10 @@
         {{/if}}
       {{/let}}
 
+      <Packages::LanduseForm::PublicFacilities
+        @form={{saveableForm}}
+      />
+
       <Packages::LanduseForm::AttachedDocuments
         @form={{saveableForm}}
         @model={{@package.landuseForm}}
