@@ -36,6 +36,17 @@
 
     </section>
 
+    {{#if @model.landusePackages.length}}
+      <h2>Draft Land Use Form</h2>
+      <ol class="no-bullet">
+        {{#each @model.landusePackages as |landusePackage|}}
+          <Project::PackageListItem
+            @package={{landusePackage}}
+          />
+        {{/each}}
+      </ol>
+    {{/if}}
+
     {{#if @model.rwcdsPackages.length}}
       <section class="large-padding-top large-margin-bottom ruled-adjacent">
         <h2>Reasonable Worst Case Development Scenario</h2>

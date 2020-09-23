@@ -1,0 +1,35 @@
+<div class="grid-x grid-margin-x">
+  <div class="cell large-8">
+
+    <section class="form-section">
+      <h1 class="header-large">
+        <span id="project-info" class="section-anchor"></span>
+        Draft Land Use Form
+        <small class="text-weight-normal">
+          {{if @package.dcpPackageversion (concat '(V' @package.dcpPackageversion ')')}}
+        </small>
+      </h1>
+
+      <h2
+        class="no-margin"
+        data-test-show="dcpProjectname"
+      >
+        {{@package.landuseForm.dcpProjectname}}
+        <small class="text-weight-normal">
+          {{if @package.project.dcpName (concat '(' @package.project.dcpName ')')}}
+        </small>
+      </h2>
+
+      <p class="text-large text-dark-gray">
+        {{optionset 'bbl' 'boroughs' 'label' @package.project.dcpBorough}} |
+        {{optionset 'package' 'statuscode' 'label' @package.statuscode}}
+      </p>
+    </section>
+
+  </div>{{! end left/main column }}
+  <div class="cell large-4 sticky-sidebar">
+
+  </div>{{! end right/sidebar column }}
+</div>
+
+{{yield}}

@@ -21,11 +21,11 @@ export default function() {
     this.passthrough(`${ENV.host}/**`);
   }
 
-  this.get('/projects');
   this.get('/contacts', (schema) => schema.contacts.first());
-  // this.get('/contacts');
 
+  this.get('/projects');
   this.get('/projects/:id');
+  this.patch('/projects/:id');
 
   this.get('/login', () => ({ ok: true }));
   this.get('/logout');
@@ -62,6 +62,19 @@ export default function() {
   this.post('/packages');
   this.patch('/packages/:id');
   this.post('/applicants');
+
+  this.patch('/landuse-forms');
+  this.post('/landuse-forms');
+  this.patch('/landuse-forms/:id');
+
+  this.get('/related-actions');
+  this.get('/related-actions/:id');
+  this.patch('/related-actions/:id');
+  this.del('/related-actions/:id');
+  this.post('/related-actions');
+
+  this.get('/landuse-actions');
+  this.patch('/landuse-actions/:id');
 
   this.post('/documents', function(schema, request) {
     // requestBody should be a FormData object

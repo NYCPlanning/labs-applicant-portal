@@ -1,0 +1,17 @@
+{{#let @form as |form|}}
+  <form.Section @title="Proposed Actions">
+    <div data-test-section="proposed-actions">
+      {{#each @form.data.landuseActions as |landuseAction|}}
+        <form.SaveableForm
+          @model={{landuseAction}}
+           @validators={{array (hash) @validations.SubmittableLanduseActionFormValidations}}
+          as |landuseActionForm|
+        >
+          <Packages::LanduseForm::ProposedActionEditor
+            @landuseActionForm={{landuseActionForm}}
+          />
+        </form.SaveableForm>
+      {{/each}}
+    </div>
+  </form.Section>
+{{/let}}

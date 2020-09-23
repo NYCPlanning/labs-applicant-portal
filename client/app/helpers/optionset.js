@@ -1,7 +1,7 @@
 import { helper } from '@ember/component/helper';
 // Register Option Sets by importing them and then adding
 // an entry to the OPTIONSET_LOOKUP object.
-import {
+import COMMON_OPTIONSETS, {
   YES_NO,
   YES_NO_UNSURE,
   YES_NO_DONT_KNOW,
@@ -14,7 +14,9 @@ import {
 import {
   AFFECTED_ZONING_RESOLUTION_ACTION,
 } from '../optionsets/affected-zoning-resolution';
+import LANDUSE_ACTION_OPTIONSETS from '../optionsets/landuse-action';
 import PACKAGE_OPTIONSETS from '../optionsets/package';
+import LANDUSE_FORM_OPTIONSETS from '../optionsets/landuse-form';
 import {
   DCPCONSTRUCTIONPHASING,
 } from '../optionsets/rwcds-form';
@@ -53,6 +55,33 @@ const OPTIONSET_LOOKUP = {
     dcpVisibility: PROJECT_OPTIONSETS.DCPVISIBILITY,
     statuscode: PROJECT_OPTIONSETS.STATUSCODE,
   },
+  landuseForm: {
+    dcpCeqrtype: LANDUSE_FORM_OPTIONSETS.CEQR_TYPE,
+    dcpWholecity: YES_NO,
+    dcpEntiretyboroughs: YES_NO,
+    dcpEntiretycommunity: YES_NO,
+    dcpNotaxblock: YES_NO,
+    dcp500kpluszone: YES_NO,
+    dcpDevsize: LANDUSE_FORM_OPTIONSETS.DCPDEVSIZE,
+    dcpSitedatasiteisinnewyorkcity: YES_NO,
+    dcpStateczm: YES_NO,
+    dcpHistoricdistrict: YES_NO,
+    dcpDesignation: LANDUSE_FORM_OPTIONSETS.DCPDESIGNATION,
+    dcpDisposition: LANDUSE_FORM_OPTIONSETS.DCPDISPOSITION,
+    dcpProjecthousingplanudaap: LANDUSE_FORM_OPTIONSETS.DCPPROJECTHOUSINGPLANUDAAP,
+    dcpMannerofdisposition: LANDUSE_FORM_OPTIONSETS.DCPMANNEROFDISPOSITION,
+    dcpRestrictandcondition: LANDUSE_FORM_OPTIONSETS.DCPRESTRICTANDCONDITION,
+    dcpOfficespaceleaseopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpAcquisitionopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpSiteselectionopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpIndicatetypeoffacility: LANDUSE_FORM_OPTIONSETS.DCPINDICATETYPEOFFACILITY,
+    dcpExistingfacilityproposedtoremainopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpExistingfacilityproposedtoremainandexpand: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpExistingfacilityreplacementinanewlocation: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpNewfacilityopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpIsprojectlistedinstatementofneedsopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpDidboroughpresidentproposealternativesite: COMMON_OPTIONSETS.YES_NO_INTEGER,
+  },
   rwcdsForm: {
     dcpHasprojectchangedsincesubmissionofthepas: YES_NO,
     dcpConstructionphasing: DCPCONSTRUCTIONPHASING,
@@ -79,6 +108,13 @@ const OPTIONSET_LOOKUP = {
   },
   affectedZoningResolution: {
     actions: AFFECTED_ZONING_RESOLUTION_ACTION,
+  },
+  landuseAction: {
+    dcpApplicantispublicagencyactions: YES_NO,
+    dcpPreviouslyapprovedactioncode: LANDUSE_ACTION_OPTIONSETS.DCPPREVIOUSLYAPPROVEDACTIONCODE,
+  },
+  sitedatahForm: {
+    dcpSitetobedisposed: YES_NO,
   },
 };
 

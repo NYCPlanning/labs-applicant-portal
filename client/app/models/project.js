@@ -55,4 +55,13 @@ export default class ProjectModel extends Model {
 
     return rwcdsPackages;
   }
+
+  get landusePackages() {
+    const landusePackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'DRAFT_LU_PACKAGE']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    return landusePackages;
+  }
 }

@@ -25,6 +25,15 @@
       <strong>Version {{@package.dcpPackageversion}}</strong>
     </LinkTo>
   {{/if}}
+  {{#if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))}}
+    <LinkTo
+      @route={{if (eq @package.statuscode (optionset 'package' 'statuscode' 'code' 'PACKAGE_PREPARATION')) 'landuse-form.edit' 'landuse-form.show'}}
+      @model={{@package.id}}
+      data-test-package-link={{@package.id}}
+    >
+      <strong>Version {{@package.dcpPackageversion}}</strong>
+    </LinkTo>
+  {{/if}}
   <span class="text-gray">| {{if (eq @package.statuscode (optionset 'package' 'statuscode' 'code' 'PACKAGE_PREPARATION')) 'Editable since ' 'Submitted '}}
     <Ui::DateDisplay @date={{@package.dcpStatusdate}} @outputFormat="MM/D/YYYY" @errorMessage="Date Unknown"/>
   </span>

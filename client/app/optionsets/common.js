@@ -9,6 +9,20 @@ export const YES_NO = {
   },
 };
 
+// Ideally we can remove this
+// After CRM is updated so all YES/NO
+// optionsets use True/False values
+export const YES_NO_INTEGER = {
+  YES: {
+    code: 1,
+    label: 'Yes',
+  },
+  NO: {
+    code: 0,
+    label: 'No',
+  },
+};
+
 export const YES_NO_UNSURE = {
   YES: {
     code: 717170000,
@@ -38,3 +52,12 @@ export const YES_NO_DONT_KNOW = {
     label: 'Don\u2019t Know',
   },
 };
+
+const COMMON_OPTIONSETS = {
+  YES_NO,
+  YES_NO_UNSURE,
+  YES_NO_DONT_KNOW,
+  YES_NO_INTEGER,
+};
+
+export default COMMON_OPTIONSETS;
