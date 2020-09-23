@@ -1,3 +1,7 @@
+let { CONTACT_MGMT_ENABLED = false } = process.env;
+
+CONTACT_MGMT_ENABLED = JSON.parse(CONTACT_MGMT_ENABLED);
+
 module.exports = function(environment) {
   const ENV = {
     modulePrefix: 'client',
@@ -28,7 +32,7 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-      contactMgmtEnabled: true,
+      contactMgmtEnabled: CONTACT_MGMT_ENABLED,
     },
 
     'labs-search': {
@@ -62,7 +66,6 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     // here you can enable a production-specific feature
-    ENV.APP.contactMgmtEnabled = false;
   }
 
   return ENV;
