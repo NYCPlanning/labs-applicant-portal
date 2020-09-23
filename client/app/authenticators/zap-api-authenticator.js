@@ -17,15 +17,12 @@ export default class ZAPAuthenticator extends OAuth2ImplicitGrantAuthenticator {
     }
 
     let attemptedLoginEmail = '';
+    const NYCIDUser = jwtDecode(accessToken);
 
     // attempt to decode the token to include email address for debugging
-    try {
-      const { mail } = jwtDecode(accessToken);
+    const { mail } = NYCIDUser;
 
-      attemptedLoginEmail = mail;
-    } catch (e) {
-      console.log('Failed to decode the JWT', e);
-    }
+    attemptedLoginEmail = mail;
 
     // Pass the NYCIDToken to backend /login endpoint.
     // Server should provide an access_token used for signing
@@ -39,6 +36,9 @@ export default class ZAPAuthenticator extends OAuth2ImplicitGrantAuthenticator {
     // Returning the session data's "authenticated" property and marks
     // the session as authenticated.
     // See: https://ember-simple-auth.com/api/classes/SessionService.html
-    return body;
+    return {
+      ...body,
+      ...NYCIDUser,
+    };
   }
 }
