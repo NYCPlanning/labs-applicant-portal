@@ -1,0 +1,26 @@
+name: (PR) develop -> landuse-form
+on:
+  repository_dispatch: 
+    types: [pr]
+  schedule:
+    - cron: 0 0 * * *
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: pull-request
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: develop
+          destination_branch: landuse-form
+          pr_title: "Sync develop -> landuse-form"
+          pr_body: |
+            this is the body for this PR, please customize
+          pr_reviewer: sptkl
+          pr_assignee: sptkl
+          pr_label: review
+          pr_draft: false
+          pr_allow_empty: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}

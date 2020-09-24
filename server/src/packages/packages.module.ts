@@ -10,9 +10,10 @@ import { RwcdsFormController } from './rwcds-form/rwcds-form.controller';
 import { PasFormService } from './pas-form/pas-form.service';
 import { RwcdsFormService } from './rwcds-form/rwcds-form.service';
 import { DocumentModule } from '../document/document.module';
+import { CitypayModule } from '../citypay/citypay.module';
 
 @Module({
-  imports: [CrmModule, DocumentModule],
+  imports: [CrmModule, DocumentModule, CitypayModule],
   exports: [PackagesService],
   providers: [PackagesService, PasFormService, RwcdsFormService],
   controllers: [PackagesController, PasFormController, RwcdsFormController, ApplicantsController, BblsController, AffectedZoningResolutionsController],

@@ -1,6 +1,17 @@
 <li class="grid-x medium-margin-bottom">
   <div class="cell shrink small-padding-right">
-    <FaIcon @icon='user' @fixedWidth={{true}} @transform='down-1' class="text-gray" />
+    {{#if @canDelete}}
+      <button
+        type="button"
+        class="text-red-dim"
+        {{on "click" this.tryRemoveEditor}}
+      >
+        <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
+        <EmberTooltip @isShown={{true}} @duration={{1000}} @side="left">Remove</EmberTooltip>
+      </button>
+    {{else}}
+      <FaIcon @icon='user' @fixedWidth={{true}} @transform='down-1' class="text-gray" />
+    {{/if}}
   </div>
   <div class="cell auto">
     <h5 class="no-margin">{{@name}}</h5>
@@ -8,6 +19,12 @@
     <p class="text-small tiny-margin-bottom">
       <a href="mailto:{{@emailAddress}}">{{@emailAddress}}</a>
     </p>
+
+    {{#if @phone}}
+      <p class="text-small tiny-margin-bottom">
+        <a href="tel:{{@phone}}">{{format-phone @phone}}</a>
+      </p>
+    {{/if}}
 
     {{#unless @isRegistered}}
       <button
@@ -19,18 +36,6 @@
       </button>
     {{/unless}}
   </div>
-
-  {{#if @canDelete}}
-    <div class="cell shrink medium-padding-left">
-      <button
-        type="button"
-        class="text-red-dim"
-        {{on "click" this.tryRemoveEditor}}
-      >
-        <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
-      </button>
-    </div>
-  {{/if}}
 </li>
 
 <Ui::GenericModal

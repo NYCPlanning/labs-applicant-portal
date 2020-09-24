@@ -4,8 +4,11 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { optionset } from '../helpers/optionset';
 import { STATECODE, STATUSCODE } from '../optionsets/contact';
+import ENV from '../config/environment';
 
 export default class ProjectController extends Controller {
+  @tracked contactMgmtOpen = false;
+
   @tracked addEditorModalOpen;
 
   @tracked emailAddress;
@@ -14,12 +17,19 @@ export default class ProjectController extends Controller {
 
   @tracked lastName;
 
+  contactMgmtEnabled = ENV.APP.contactMgmtEnabled;
+
   @service
   store;
 
   get matchingCurrentApplicant() {
     const currentApplicants = this.project.projectApplicants;
     return currentApplicants.find((applicant) => applicant.emailaddress === this.emailAddress);
+  }
+
+  @action
+  toggleContactMgmt() {
+    this.contactMgmtOpen = !this.contactMgmtOpen;
   }
 
   @action

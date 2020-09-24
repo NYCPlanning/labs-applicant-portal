@@ -6,6 +6,7 @@ import { AuthenticateGuard } from '../../authenticate.guard';
 import { JsonApiDeserializePipe } from '../../json-api-deserialize.pipe';
 import { PROJECTAPPLICANT_ATTRS } from './project-applicants.attrs';
 import { CONTACT_ATTRS } from '../../contact/contacts.attrs';
+import { ContactService } from '../../contact/contact.service';
 
 const ACTIVE_STATUSCODE = 1;
 const INACTIVE_STATUSCODE = 2;
@@ -30,7 +31,10 @@ const INACTIVE_STATECODE = 1;
 @UsePipes(JsonApiDeserializePipe)
 @Controller('project-applicants')
 export class ProjectApplicantController {
-  constructor(private readonly crmService: CrmService) {}
+  constructor(
+    private readonly crmService: CrmService,
+    private readonly contactService: ContactService
+  ) {}
 
   @Post('/')
   async create(@Body() body) {
@@ -78,11 +82,12 @@ export class ProjectApplicantController {
         });
       }
     } else {
-      currentContact = await this.crmService.create(`contacts`, {
+      currentContact = await this.contactService.create({
         firstname: firstname,
         lastname: lastname,
         emailaddress1: email,
       });
+
       contactId = currentContact.contactid;
     }
 
