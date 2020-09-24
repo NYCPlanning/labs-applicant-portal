@@ -558,7 +558,22 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     await fillIn('[data-test-input="dcpLastname"]', 'Ter');
     await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
 
+    // filling out Zoning Special Permit, Authorization, and Certification section
+    await click('[data-test-checkbox="dcpOwnersubjectproperty"]');
+    await click('[data-test-checkbox="dcpLeesseesubjectproperty"]');
+
+    await click('[data-test-dcpotherparties="true"]');
+
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.landuseForms.firstObject.dcpOwnersubjectproperty, true);
+    assert.equal(this.server.db.landuseForms.firstObject.dcpLeesseesubjectproperty, true);
+    assert.equal(this.server.db.landuseForms.firstObject.dcpIsother, undefined);
+    assert.equal(this.server.db.landuseForms.firstObject.dcpLeaseorbuy, undefined);
+    assert.equal(this.server.db.landuseForms.firstObject.dcpOtherparties, true);
+
     // filling out the proposed actions section
+    await click('[data-test-radio="dcpLegalinstrument"][data-test-radio-option="Yes"]');
     await selectChoose('[data-test-dcpPreviouslyapprovedactioncode-picker="ZC"]', 'BF');
     await selectChoose('[data-test-dcpPreviouslyapprovedactioncode-picker="ZA"]', 'LD');
     await click('[data-test-radio="dcpApplicantispublicagencyactions"][data-test-action="ZC"][data-test-radio-option="Yes"]');
@@ -566,6 +581,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
 
     await click('[data-test-save-button]');
 
+    assert.equal(this.server.db.landuseForms.firstObject.dcpLegalinstrument, 717170000);
     assert.equal(this.server.db.landuseActions[0].dcpPreviouslyapprovedactioncode, 717170016);
     assert.equal(this.server.db.landuseActions[1].dcpPreviouslyapprovedactioncode, 717170013);
     assert.equal(this.server.db.landuseActions[0].dcpApplicantispublicagencyactions, true);

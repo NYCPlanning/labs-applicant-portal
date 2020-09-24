@@ -134,6 +134,18 @@ export default class LanduseFormModel extends Model {
 
   @attr dcpForfiscalyrs;
 
+  @attr dcpOwnersubjectproperty;
+
+  @attr dcpLeesseesubjectproperty;
+
+  @attr dcpLeaseorbuy;
+
+  @attr dcpIsother;
+
+  @attr dcpOtherparties;
+
+  @attr dcpLegalinstrument;
+
   async save() {
     await this.saveDirtyLanduseActions();
     await this.saveDirtyRelatedActions();

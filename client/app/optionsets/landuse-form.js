@@ -96,6 +96,17 @@ export const DCPINDICATETYPEOFFACILITY = {
   },
 };
 
+export const DCPLEGALINSTRUMENT = {
+  YES: {
+    code: 717170000,
+    label: 'Yes',
+  },
+  NO: {
+    code: 717170001,
+    label: 'No',
+  },
+};
+
 const LANDUSE_FORM_OPTIONSETS = {
   CEQR_TYPE,
   DCPDEVSIZE,
@@ -105,6 +116,7 @@ const LANDUSE_FORM_OPTIONSETS = {
   DCPPROJECTHOUSINGPLANUDAAP,
   DCPDISPOSITION,
   DCPINDICATETYPEOFFACILITY,
+  DCPLEGALINSTRUMENT,
 };
 
 export default LANDUSE_FORM_OPTIONSETS;
