@@ -4,6 +4,9 @@ export default class LanduseFormModel extends Model {
   @belongsTo('package', { async: false })
   package;
 
+  @belongsTo('lead-agency', { async: false })
+  leadAgency;
+
   @hasMany('applicant', { async: false })
   applicants;
 
