@@ -18,6 +18,21 @@ export class NycidService {
     private readonly config: ConfigService,
   ) {}
 
+  public async getNycidStatus(email = '', dcp_nycid_guid) {
+    const isNycidEmailRegistered = await this.isNycidEmailRegistered(email);
+    const isNycidValidated = await this.isNycidValidated(dcp_nycid_guid);
+
+    return {
+      // check if the e-mail is registered with nyc.id at all
+      ...isNycidEmailRegistered,
+
+      // check if the e-mail is validated in nyc.id's system
+      ...isNycidValidated,
+
+      is_city_employee: isNycidEmailRegistered && isNycidValidated && email.endsWith('nyc.gov'),
+    };
+  }
+
   // problematic because we can't know if they're validated unless they've logged in once.
   // if there's no id passed, it's probably because there isn't one to provide (it's not on the contact record)
   private async isNycidValidated(id) {
@@ -70,22 +85,17 @@ export class NycidService {
     };
   }
 
-  public async getNycidStatus(email = '', dcp_nycid_guid) {
-    const isNycidEmailRegistered = await this.isNycidEmailRegistered(email);
-    const isNycidValidated = await this.isNycidValidated(dcp_nycid_guid);
+  public async getNycidOAuthUser(accessToken) {
+    try {
+      const { body: user } = await this.makeNycidRequest('GET', '/account/api/oauth/user.htm', {}, accessToken);
 
-    return {
-      // check if the e-mail is registered with nyc.id at all
-      ...isNycidEmailRegistered,
-
-      // check if the e-mail is validated in nyc.id's system
-      ...isNycidValidated,
-
-      is_city_employee: isNycidEmailRegistered && isNycidValidated && email.endsWith('nyc.gov'),
-    };
+      return user;
+    } catch (e) {
+      console.log(e);
+    }
   }
 
-  private makeNycidRequest(method, path, query) {
+  private makeNycidRequest(method, path, query, accessToken?: string) {
     const NYCID_SERVICE_ACCOUNT_USERNAME = this.config.get('NYCID_SERVICE_ACCOUNT_USERNAME') || 'applicant-portal-local';
 
     // Alphabetize query values: https://www1.nyc.gov/assets/nyc4d/html/services-nycid/web-services.shtml#signature
@@ -99,10 +109,12 @@ export class NycidService {
       method,
       path,
       ...queryValues,
+      accessToken ? `Bearer ${accessToken}` : '',
     );
 
     return superagent
       .get(`https://accounts-nonprd.nyc.gov${path}`)
+      .set({ ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}) })
       .query({
         signature,
         userName: NYCID_SERVICE_ACCOUNT_USERNAME,
