@@ -127,7 +127,7 @@ export class AuthService {
     });
 
     // if their e-mail is validated, associate the NYCID guid
-    if (nycExtEmailValidationFlag && !contact.dcp_nycid_guid) {
+    if (nycExtEmailValidationFlag && contact.dcp_nycid_guid !== GUID) {
       await this.contactService.update(contact.contactid, {
         dcp_nycid_guid: GUID,
         firstname: givenName,
