@@ -1,0 +1,105 @@
+{{#let @form as |form|}}
+  <Ui::Question
+    class="fieldset relative"
+    ...attributes
+  as |proposedSiteFieldset|>
+    <proposedSiteFieldset.Legend
+      data-test-proposed-site-title
+    >
+      Proposed Site
+    </proposedSiteFieldset.Legend>
+
+        {{!-- <Ui::Question
+      class="no-margin-top"
+    as |dcpUrsitenumberQ|>
+      <dcpUrsitenumberQ.Label>
+        Site Number
+      </dcpUrsitenumberQ.Label>
+
+      <form.Field
+        @attribute="dcpUrsitenumber"
+        @maxlength="100"
+        @showCounter={{true}}
+        id={{dcpUrsitenumberQ.id}}
+      />
+    </Ui::Question> --}}
+
+    {{!-- <div class="grid-x grid-margin-x">
+      <div class="cell auto">
+        <Ui::Question
+        as |dcpBoroughQ|>
+          <dcpBoroughQ.Label>
+            Borough
+          </dcpBoroughQ.Label>
+
+          <form.Field
+            @attribute="dcpBorough"
+            @maxlength="100"
+            @showCounter={{true}}
+            id={{dcpBoroughQ.id}}
+          />
+        </Ui::Question>
+      </div>
+
+      <div class="cell auto">
+        <Ui::Question
+        as |dcpBlocknumbertextQ|>
+          <dcpBlocknumbertextQ.Label>
+            Block
+          </dcpBlocknumbertextQ.Label>
+
+          <form.Field
+            @attribute="dcpBlocknumbertext"
+            @maxlength="5"
+            @showCounter={{true}}
+            id={{dcpBlocknumbertextQ.id}}
+          />
+        </Ui::Question>
+      </div>
+
+      <div class="cell auto">
+        <Ui::Question
+        as |dcpLotnumberstringQ|>
+          <dcpLotnumberstringQ.Label>
+            Lot
+          </dcpLotnumberstringQ.Label>
+
+          <form.Field
+            @attribute="dcpLotnumberstring"
+            @maxlength="100"
+            @showCounter={{true}}
+            id={{dcpLotnumberstringQ.id}}
+          />
+        </Ui::Question>
+      </div>
+    </div> --}}
+
+    <Ui::Question
+    as |dcpOwnershipQ|>
+      <dcpOwnershipQ.Label>
+        Ownership
+      </dcpOwnershipQ.Label>
+
+      <form.Field
+        @attribute="dcpOwnership"
+        @maxlength="25"
+        @showCounter={{true}}
+        id={{dcpOwnershipQ.id}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpUsesonsiteQ|>
+      <dcpUsesonsiteQ.Label>
+        Uses on site
+      </dcpUsesonsiteQ.Label>
+
+      <form.Field
+        @attribute="dcpUsesonsite"
+        @maxlength="200"
+        @showCounter={{true}}
+        id={{dcpUsesonsiteQ.id}}
+      />
+    </Ui::Question>
+  </Ui::Question>
+{{/let}}

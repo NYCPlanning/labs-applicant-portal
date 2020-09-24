@@ -95,6 +95,13 @@
         @form={{saveableForm}}
       />
 
+      <Packages::LanduseForm::ProposedSiteCharacteristics
+        @form={{saveableForm}}
+        @addLanduseGeography={{this.addLanduseGeography}}
+        @removeLanduseGeography={{this.removeLanduseGeography}}
+        @validations={{this.validations}}
+      />
+
       <Packages::LanduseForm::AttachedDocuments
         @form={{saveableForm}}
         @model={{@package.landuseForm}}

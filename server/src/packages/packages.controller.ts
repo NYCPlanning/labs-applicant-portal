@@ -27,6 +27,7 @@ import { APPLICANT_ATTRS } from './pas-form/applicants/applicants.attrs';
 import { RELATED_ACTION_ATTRS } from './landuse-form/related-actions/related-actions.attrs';
 import { LANDUSE_ACTION_ATTRS } from './landuse-form/landuse-actions/landuse-actions.attrs';
 import { SITEDATAH_FORM_ATTRS } from './landuse-form/sitedatah-forms/sitedatah-form.attrs';
+import { LANDUSE_GEOGRAPHY_ATTRS } from './landuse-form/landuse-geography/landuse-geography.attrs';
 import { CitypayService } from '../citypay/citypay.service';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('packages', {
@@ -106,6 +107,7 @@ import { CitypayService } from '../citypay/citypay.service';
       'related-actions',
       'landuse-actions',
       'sitedatah-forms',
+      'landuse-geographies',
     ],
     applicants: {
       ref: 'dcp_applicantinformationid',
@@ -136,6 +138,12 @@ import { CitypayService } from '../citypay/citypay.service';
       ref: 'dcp_sitedatahformid',
       attributes: [
         ...SITEDATAH_FORM_ATTRS,
+      ],
+    },
+    'landuse-geographies': {
+      ref: 'dcp_landusegeographyid',
+      attributes: [
+        ...LANDUSE_GEOGRAPHY_ATTRS,
       ],
     },
   },
@@ -214,6 +222,7 @@ import { CitypayService } from '../citypay/citypay.service';
             'related-actions': landuseForm.dcp_dcp_landuse_dcp_relatedactions,
             'landuse-actions': landuseForm.dcp_dcp_landuse_dcp_landuseaction,
             'sitedatah-forms': landuseForm.dcp_dcp_landuse_dcp_sitedatahform_landuseform,
+            'landuse-geographies': landuseForm.dcp_dcp_landuse_dcp_landusegeography_landuseform,
           }
         }
       } else {

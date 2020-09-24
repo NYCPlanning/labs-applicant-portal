@@ -19,6 +19,9 @@ export default class LanduseFormModel extends Model {
   @hasMany('sitedatah-form', { async: false })
   sitedatahForms;
 
+  @hasMany('landuse-geography', { async: false })
+  landuseGeographies;
+
   @attr dcpVersion;
 
   // project name
@@ -187,6 +190,7 @@ export default class LanduseFormModel extends Model {
     await this.saveDirtyRelatedActions();
     await this.saveDirtyApplicants();
     await this.saveDirtySitedatahForms();
+    await this.saveDirtyLanduseGeographies();
     await this.saveDirtyBbls();
     await this.saveDirtyProject();
     await super.save();
@@ -238,6 +242,14 @@ export default class LanduseFormModel extends Model {
     );
   }
 
+  async saveDirtyLanduseGeographies() {
+    return Promise.all(
+      this.landuseGeographies
+        .filter((landuseGeography) => landuseGeography.hasDirtyAttributes)
+        .map((landuseGeography) => landuseGeography.save()),
+    );
+  }
+
   get isLanduseActionsDirty() {
     const dirtyLanduseActions = this.landuseActions.filter((action) => action.hasDirtyAttributes);
 
@@ -267,6 +279,12 @@ export default class LanduseFormModel extends Model {
     const dirtySitedatahForms = this.sitedatahForms.filter((sitedatahForm) => sitedatahForm.hasDirtyAttributes);
 
     return dirtySitedatahForms.length > 0;
+  }
+
+  get isLanduseGeographiesDirty() {
+    const dirtyLanduseGeographies = this.landuseGeographies.filter((landuseGeography) => landuseGeography.hasDirtyAttributes);
+
+    return dirtyLanduseGeographies.length > 0;
   }
 
   get isProjectDirty() {
