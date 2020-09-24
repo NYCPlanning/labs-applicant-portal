@@ -65,6 +65,9 @@ export default Factory.extend({
             server.create('landuse-action', {
               dcpActioncode: 'ZA',
             }),
+            server.create('landuse-action', {
+              dcpActioncode: 'MM',
+            }),
           ],
         });
       }

@@ -43,9 +43,9 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     // filling out the proposed actions section
     await click('[data-test-radio="dcpApplicantispublicagencyactions"][data-test-action="ZC"][data-test-radio-option="Yes"]');
     await click('[data-test-radio="dcpApplicantispublicagencyactions"][data-test-action="ZA"][data-test-radio-option="No"]');
+    await click('[data-test-radio="dcpApplicantispublicagencyactions"][data-test-action="MM"][data-test-radio-option="Yes"]');
 
     await click('[data-test-save-button]');
-
     await waitFor('[data-test-submit-button]:not([disabled])');
     await click('[data-test-submit-button]');
     await click('[data-test-confirm-submit-button]');
@@ -216,6 +216,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
     await click('[data-test-radio="dcpApplicantispublicagencyactions"][data-test-action="ZC"][data-test-radio-option="Yes"]');
     await click('[data-test-radio="dcpApplicantispublicagencyactions"][data-test-action="ZA"][data-test-radio-option="No"]');
+    await click('[data-test-radio="dcpApplicantispublicagencyactions"][data-test-action="MM"][data-test-radio-option="Yes"]');
     await click('[data-test-save-button]');
 
     assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
@@ -888,5 +889,63 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.dom('[data-test-input="dcpIndicatefiscalyears"]').hasNoValue();
 
     await visit('/landuse-form/1/edit');
+  });
+
+  test('User can update Change in City Map section', async function(assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'toDo', 'landuseForm')],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    // filling out necessary information in order to save
+    await click('[data-test-add-applicant-button]');
+    await fillIn('[data-test-input="dcpFirstname"]', 'Tess');
+    await fillIn('[data-test-input="dcpLastname"]', 'Ter');
+    await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
+
+    await click('[data-test-checkbox="dcpEstablishstreetopt"]');
+    await click('[data-test-checkbox="dcpEasement1"]');
+
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.landuseForms.firstObject.dcpEstablishstreetopt, true);
+    assert.equal(this.server.db.landuseForms.firstObject.dcpEstablishparkopt, undefined);
+    assert.equal(this.server.db.landuseForms.firstObject.dcpEstablishpublicplaceopt, undefined);
+    assert.equal(this.server.db.landuseForms.firstObject.dcpEstablishgradeopt, undefined);
+    assert.equal(this.server.db.landuseForms.firstObject.dcpEasement1, true);
+
+    await click('[data-test-checkbox="dcpEliminatestreetopt"]');
+    await click('[data-test-checkbox="dcpEasement2"]');
+
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.landuseForms.firstObject.dcpEliminatestreetopt, true);
+    assert.equal(this.server.db.landuseForms.firstObject.dcpEliminateparkopt, undefined);
+    assert.equal(this.server.db.landuseForms.firstObject.dcpEliminatepublicplaceopt, undefined);
+    assert.equal(this.server.db.landuseForms.firstObject.dcpEliminategradeopt, undefined);
+    assert.equal(this.server.db.landuseForms.firstObject.dcpEasement2, true);
+
+    await click('[data-test-checkbox="dcpChangestreetwidthopt"]');
+    await click('[data-test-checkbox="dcpEasement3"]');
+
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.landuseForms.firstObject.dcpChangestreetwidthopt, true);
+    assert.equal(this.server.db.landuseForms.firstObject.dcpChangestreetalignmentopt, undefined);
+    assert.equal(this.server.db.landuseForms.firstObject.dcpChangestreetgradeopt, undefined);
+    assert.equal(this.server.db.landuseForms.firstObject.dcpEasement3, true);
+
+    await click('[data-test-radio="dcpRelatedacquisitionofpropertyopt"][data-test-radio-option="Yes"]');
+    await click('[data-test-related-acquisition="true"]');
+    await click('[data-test-radio="dcpOnlychangetheeliminationofamappedbutunimp"][data-test-radio-option="No"]');
+
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.landuseForms.firstObject.dcpRelatedacquisitionofpropertyopt, 1);
+    assert.equal(this.server.db.landuseForms.firstObject.dcpRelatedacquisition, true);
+    assert.equal(this.server.db.landuseForms.firstObject.dcpOnlychangetheeliminationofamappedbutunimp, 717170001);
+
+    assert.equal(currentURL(), '/landuse-form/1/edit');
   });
 });

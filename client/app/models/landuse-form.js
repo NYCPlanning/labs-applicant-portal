@@ -146,6 +146,42 @@ export default class LanduseFormModel extends Model {
 
   @attr dcpLegalinstrument;
 
+  @attr dcpEstablishstreetopt;
+
+  @attr dcpEstablishparkopt;
+
+  @attr dcpEstablishpublicplaceopt;
+
+  @attr dcpEstablishgradeopt;
+
+  @attr dcpEasement1;
+
+  @attr dcpEliminatestreetopt;
+
+  @attr dcpEliminateparkopt;
+
+  @attr dcpEliminatepublicplaceopt;
+
+  @attr dcpEliminategradeopt;
+
+  @attr dcpEasement2;
+
+  @attr dcpChangestreetwidthopt;
+
+  @attr dcpChangestreetalignmentopt;
+
+  @attr dcpChangestreetgradeopt;
+
+  @attr dcpChangestreetgradeopt;
+
+  @attr dcpEasement3;
+
+  @attr dcpRelatedacquisitionofpropertyopt;
+
+  @attr dcpRelatedacquisition;
+
+  @attr dcpOnlychangetheeliminationofamappedbutunimp;
+
   async save() {
     await this.saveDirtyLanduseActions();
     await this.saveDirtyRelatedActions();
