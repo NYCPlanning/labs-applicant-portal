@@ -66,6 +66,7 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     // here you can enable a production-specific feature
+    ENV.APP.contactMgmtEnabled = false;
   }
 
   return ENV;
