@@ -1,4 +1,4 @@
-let { CONTACT_MGMT_ENABLED = false } = process.env;
+let { CONTACT_MGMT_ENABLED = true } = process.env;
 
 CONTACT_MGMT_ENABLED = JSON.parse(CONTACT_MGMT_ENABLED);
 
