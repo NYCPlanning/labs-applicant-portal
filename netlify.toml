@@ -5,20 +5,20 @@
 
 # production
 [context.master]
-  environment = { HOST="https://applicant-portal.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-production', CONTACT_MGMT_ENABLED='false' }
+  environment = { HOST="https://applicant-portal.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-production' }
 
 # staging
 [context.staging]
-  environment = { HOST="https://applicant-portal-staging.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-staging', CONTACT_MGMT_ENABLED='false' }
+  environment = { HOST="https://applicant-portal-staging.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-staging' }
 
 # qa team
 [context.qa]
-  environment = { HOST="https://applicant-portal-qa.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-qa', CONTACT_MGMT_ENABLED='true' }
+  environment = { HOST="https://applicant-portal-qa.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-qa' }
 
 # training
 [context.training]
-  environment = { HOST="https://applicant-portal-training.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-training', CONTACT_MGMT_ENABLED='true' }
+  environment = { HOST="https://applicant-portal-training.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-training' }
 
 # develop
 [context.develop]
-  environment = { HOST="https://applicant-portal-develop.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-develop', CONTACT_MGMT_ENABLED='true' }
+  environment = { HOST="https://applicant-portal-develop.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-develop' }
