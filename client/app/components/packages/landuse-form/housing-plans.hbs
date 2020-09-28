@@ -1,0 +1,103 @@
+{{#let @form as |form|}}
+  <form.Section
+    @title="Housing Plans"
+    data-test-section="housing-plans"
+  >
+    <p>
+      The following questions relate to Housing Plans,
+      Urban Renewal Areas, and Urban Development Action
+      Areas Program (UDAAP) and the follwoing Actions: HA,
+      HC, HD, HG, HN, HO, HP, HU
+
+    </p>
+
+    <Ui::Question
+    as |dcpDesignationQ|>
+      <dcpDesignationQ.Label>
+        Is a Designation being proposed?
+      </dcpDesignationQ.Label>
+
+      <form.Field
+        @attribute="dcpDesignation"
+        @type="radio-group"
+      as |DcpDesignationRadioGroup|>
+        <DcpDesignationRadioGroup
+          @options={{optionset 'landuseForm' 'dcpDesignation' 'list'}}
+        />
+      </form.Field>
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpProjecthousingplanudaapQ|>
+      <dcpProjecthousingplanudaapQ.Label>
+        Is a Housing Project Plan being proposed?
+      </dcpProjecthousingplanudaapQ.Label>
+
+      <form.Field
+        @attribute="dcpProjecthousingplanudaap"
+        @type="radio-group"
+      as |DcpProjecthousingplanudaapRadioGroup|>
+        <DcpProjecthousingplanudaapRadioGroup
+          @options={{optionset 'landuseForm' 'dcpProjecthousingplanudaap' 'list'}}
+        />
+      </form.Field>
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpDispositionQ|>
+      <dcpDispositionQ.Label>
+        Is a Disposition being proposed?
+      </dcpDispositionQ.Label>
+
+      <form.Field
+        @attribute="dcpDisposition"
+        @type="radio-group"
+      as |DcpDispositionRadioGroup|>
+        <DcpDispositionRadioGroup
+          @options={{optionset 'landuseForm' 'dcpDisposition' 'list'}}
+        as |dcpDisposition|>
+          {{#if (eq
+            dcpDisposition
+            (optionset 'landuseForm' 'dcpDisposition' 'code' 'YES')
+          )}}
+            <Ui::Question
+            as |dcpMannerofdispositionQ|>
+              <dcpMannerofdispositionQ.Label>
+                Manner of Disposition
+              </dcpMannerofdispositionQ.Label>
+
+              <form.Field
+                @attribute="dcpMannerofdisposition"
+                @type="radio-group"
+              as |DcpMannerofdispositionRadioGroup|>
+                <DcpMannerofdispositionRadioGroup
+                  @options={{optionset 'landuseForm' 'dcpMannerofdisposition' 'list'}}
+                />
+              </form.Field>
+            </Ui::Question>
+
+            <Ui::Question
+            as |dcpRestrictandconditionQ|>
+              <dcpRestrictandconditionQ.Label>
+                Restrictions and Conditions
+              </dcpRestrictandconditionQ.Label>
+              <p class="text-small">
+                If there are restrictions, attach a project description
+                in the documents section that describes the restrictions.
+              </p>
+
+              <form.Field
+                @attribute="dcpRestrictandcondition"
+                @type="radio-group"s
+              as |DcpRestrictandconditionRadioGroup|>
+                <DcpRestrictandconditionRadioGroup
+                  @options={{optionset 'landuseForm' 'dcpRestrictandcondition' 'list'}}
+                />
+              </form.Field>
+            </Ui::Question>
+          {{/if}}
+        </DcpDispositionRadioGroup>
+      </form.Field>
+    </Ui::Question>
+  </form.Section>
+{{/let}}

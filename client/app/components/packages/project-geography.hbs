@@ -84,7 +84,7 @@
         <button
           type="button"
           class="delete-fieldset"
-          {{on "click" (fn this.removeBbl bbl)}}
+          {{on "click" (fn @removeBbl bbl)}}
           data-test-button-remove-bbl="{{bbl.dcpBblnumber}}"
         >
           Delete BBL

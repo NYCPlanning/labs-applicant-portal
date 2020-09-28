@@ -1,0 +1,75 @@
+{{#let @form as |form|}}
+  <form.Section @title="Site Information">
+    <Ui::Question as |Q|>
+      <Q.Label>
+        Primary Street Address
+      </Q.Label>
+
+      <form.Field
+        @attribute="dcpSitedataadress"
+        @maxlength="250"
+        id={{Q.questionId}}
+      />
+    </Ui::Question>
+
+    <Ui::Question as |Q|>
+      <Q.Label>
+        City Council District(s)
+      </Q.Label>
+
+      <form.Field
+        @attribute="dcpCitycouncil"
+        @maxlength="100"
+        id={{Q.questionId}}
+      />
+    </Ui::Question>
+
+        <Ui::Question as |Q|>
+      <Q.Label>
+        Community District(s)
+      </Q.Label>
+
+      <form.Field
+        @attribute="dcpSitedatacommunitydistrict"
+        @maxlength="60"
+        id={{Q.questionId}}
+      />
+    </Ui::Question>
+
+    <Ui::Question as |Q|>
+      <Q.Label>
+        Zoning Sectional Map Number(s)
+      </Q.Label>
+
+      <form.Field
+        @attribute="dcpSitedatazoningsectionnumbers"
+        @maxlength="60"
+        id={{Q.questionId}}
+      />
+    </Ui::Question>
+
+    <Ui::Question as |Q|>
+      <Q.Label>
+        Existing Zoning District(s)
+      </Q.Label>
+
+      <form.Field
+        @attribute="dcpSitedataexistingzoningdistrict"
+        @maxlength="60"
+        id={{Q.questionId}}
+      />
+    </Ui::Question>
+
+    <Ui::Question as |Q|>
+      <Q.Label>
+        Special District(s)
+      </Q.Label>
+
+      <form.Field
+        @attribute="dcpSpecialdistricts"
+        @maxlength="200"
+        id={{Q.questionId}}
+      />
+    </Ui::Question>
+  </form.Section>
+{{/let}}

@@ -34,14 +34,17 @@
 
         <Packages::PasForm::ProjectInformation @form={{saveablePasForm}} />
 
-        <Packages::PasForm::ApplicantTeam
+        <Packages::ApplicantTeam
           @form={{saveablePasForm}}
           @addApplicant={{this.addApplicant}}
           @removeApplicant={{this.removeApplicant}}
           @validations={{this.validations}}
         />
 
-        <Packages::PasForm::ProjectGeography @form={{saveablePasForm}} />
+        <Packages::PasForm::ProjectGeography
+          @form={{saveablePasForm}}
+          @removeBbl={{this.removeBbl}}
+        />
 
         <Packages::PasForm::ProposedLandUseActions @form={{saveablePasForm}} />
 
@@ -61,7 +64,7 @@
 
         <saveablePasForm.PageNav>
           <saveablePackageForm.SaveButton
-            @isEnabled={{or @package.isDirty saveablePackageForm.isSaveable}}
+            @isEnabled={{or this.packageIsDirtyOrRecordsDeleted saveablePackageForm.isSaveable}}
             @onClick={{this.savePackage}}
             data-test-save-button
           />

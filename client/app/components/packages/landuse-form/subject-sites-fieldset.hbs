@@ -1,0 +1,267 @@
+{{#let @form as |form|}}
+  <Ui::Question
+    class="fieldset relative"
+    ...attributes
+  as |subjectSiteFieldset|>
+    <subjectSiteFieldset.Legend
+      data-test-subject-site-title
+    >
+      Subject Site
+    </subjectSiteFieldset.Legend>
+
+    <Ui::Question
+      class="no-margin-top"
+    as |dcpUrsitenumberQ|>
+      <dcpUrsitenumberQ.Label>
+        Site Number
+      </dcpUrsitenumberQ.Label>
+
+      <form.Field
+        @attribute="dcpUrsitenumber"
+        @maxlength="100"
+        @showCounter={{true}}
+        id={{dcpUrsitenumberQ.id}}
+      />
+    </Ui::Question>
+
+    <div class="grid-x grid-margin-x">
+      <div class="cell auto">
+        <Ui::Question
+        as |dcpBoroughQ|>
+          <dcpBoroughQ.Label>
+            Borough
+          </dcpBoroughQ.Label>
+
+          <form.Field
+            @attribute="dcpBorough"
+            @maxlength="100"
+            @showCounter={{true}}
+            id={{dcpBoroughQ.id}}
+          />
+        </Ui::Question>
+      </div>
+
+      <div class="cell auto">
+        <Ui::Question
+        as |dcpBlocknumbertextQ|>
+          <dcpBlocknumbertextQ.Label>
+            Block
+          </dcpBlocknumbertextQ.Label>
+
+          <form.Field
+            @attribute="dcpBlocknumbertext"
+            @maxlength="5"
+            @showCounter={{true}}
+            id={{dcpBlocknumbertextQ.id}}
+          />
+        </Ui::Question>
+      </div>
+
+      <div class="cell auto">
+        <Ui::Question
+        as |dcpLotnumberstringQ|>
+          <dcpLotnumberstringQ.Label>
+            Lot
+          </dcpLotnumberstringQ.Label>
+
+          <form.Field
+            @attribute="dcpLotnumberstring"
+            @maxlength="100"
+            @showCounter={{true}}
+            id={{dcpLotnumberstringQ.id}}
+          />
+        </Ui::Question>
+      </div>
+    </div>
+
+    <Ui::Question
+    as |dcpOwnerQ|>
+      <dcpOwnerQ.Label>
+        Owner
+      </dcpOwnerQ.Label>
+
+      <form.Field
+        @attribute="dcpOwner"
+        @maxlength="25"
+        @showCounter={{true}}
+        id={{dcpOwnerQ.id}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpAddressQ|>
+      <dcpAddressQ.Label>
+        Address
+      </dcpAddressQ.Label>
+
+      <form.Field
+        @attribute="dcpAddress"
+        @maxlength="200"
+        @showCounter={{true}}
+        id={{dcpAddressQ.id}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpZoningQ|>
+      <dcpZoningQ.Label>
+        Existing Zoning
+      </dcpZoningQ.Label>
+
+      <form.Field
+        @attribute="dcpZoning"
+        @maxlength="20"
+        @showCounter={{true}}
+        id={{dcpZoningQ.id}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpBuildingsQ|>
+      <dcpBuildingsQ.Label>
+        Existing number of buildings
+      </dcpBuildingsQ.Label>
+
+      <form.Field
+        @attribute="dcpBuildings"
+        @maxlength="50"
+        @showCounter={{true}}
+        id={{dcpBuildingsQ.id}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpExistingstoriesQ|>
+      <dcpExistingstoriesQ.Label>
+        Existing stories in each building
+      </dcpExistingstoriesQ.Label>
+
+      <form.Field
+        @attribute="dcpExistingstories"
+        @maxlength="30"
+        @showCounter={{true}}
+        id={{dcpExistingstoriesQ.id}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpExistingusesQ|>
+      <dcpExistingusesQ.Label>
+        Existing Uses
+      </dcpExistingusesQ.Label>
+
+      <form.Field
+        @attribute="dcpExistinguses"
+        @maxlength="100"
+        @showCounter={{true}}
+        id={{dcpExistingusesQ.id}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpCommoccupQ|>
+      <dcpCommoccupQ.Label>
+        Number of Occupied Commercial, Industrial or Institutional Facilities
+      </dcpCommoccupQ.Label>
+
+      <form.Field
+        @attribute="dcpCommoccup"
+        type="number"
+        id={{dcpCommoccupQ.id}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpDwellingcupQ|>
+      <dcpDwellingcupQ.Label>
+        Number of Occupied Dwelling Units
+      </dcpDwellingcupQ.Label>
+
+      <form.Field
+        @attribute="dcpDwellingcup"
+        type="number"
+        id={{dcpDwellingcupQ.id}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpVacantQ|>
+      <dcpVacantQ.Label>
+        Number of Vacant Commercial, Industrial or Institutional Facilities
+      </dcpVacantQ.Label>
+
+      <form.Field
+        @attribute="dcpVacant"
+        type="number"
+        id={{dcpVacantQ.id}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpDwellingvacantQ|>
+      <dcpDwellingvacantQ.Label>
+        Number of Vacant Dwelling Units
+      </dcpDwellingvacantQ.Label>
+
+      <form.Field
+        @attribute="dcpDwellingvacant"
+        type="number"
+        id={{dcpDwellingvacantQ.id}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpNoofempQ|>
+      <dcpNoofempQ.Label>
+        Number of Current Employees at Occupied Facilities
+      </dcpNoofempQ.Label>
+
+      <form.Field
+        @attribute="dcpNoofemp"
+        type="number"
+        id={{dcpNoofempQ.id}}
+      />
+    </Ui::Question>
+
+
+    <Ui::Question
+    as |dcpSitetobedisposedQ|>
+      <dcpSitetobedisposedQ.Label>
+        Is the Site to be disposed?
+      </dcpSitetobedisposedQ.Label>
+
+      <form.Field
+        @attribute="dcpSitetobedisposed"
+        @type="radio-group"
+      as |DcpSitetobedisposedRadioGroup|>
+        <DcpSitetobedisposedRadioGroup
+          @options={{optionset 'sitedatahForm' 'dcpSitetobedisposed' 'list'}}
+        />
+      </form.Field>
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpProposedusesQ|>
+      <dcpProposedusesQ.Label>
+        Proposed Uses
+      </dcpProposedusesQ.Label>
+
+      <form.Field
+        @attribute="dcpProposeduses"
+        @maxlength="100"
+        @showCounter={{true}}
+        id={{dcpProposedusesQ.id}}
+      />
+    </Ui::Question>
+
+    <button
+      type="button"
+      class="delete-fieldset"
+      {{on "click" (fn @removeSitedatahForm @sitedatahForm)}}
+      data-test-remove-sitedatah-form-button
+    >
+      Remove Subject Site
+      <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
+    </button>
+  </Ui::Question>
+{{/let}}

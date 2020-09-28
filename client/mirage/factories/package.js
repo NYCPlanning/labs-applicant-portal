@@ -52,6 +52,28 @@ export default Factory.extend({
     },
   }),
 
+  landuseForm: trait({
+    dcpPackagetype: 717170001,
+    afterCreate(projectPackage, server) {
+      if (!projectPackage.landuseForm) {
+        server.create('landuse-form', {
+          package: projectPackage,
+          landuseActions: [
+            server.create('landuse-action', {
+              dcpActioncode: 'ZC',
+            }),
+            server.create('landuse-action', {
+              dcpActioncode: 'ZA',
+            }),
+            server.create('landuse-action', {
+              dcpActioncode: 'MM',
+            }),
+          ],
+        });
+      }
+    },
+  }),
+
   withLandUseActions: trait({
     afterCreate(projectPackage, server) {
       server.create('pas-form', 'withLandUseActions', { package: projectPackage });

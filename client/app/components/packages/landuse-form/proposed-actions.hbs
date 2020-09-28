@@ -1,0 +1,102 @@
+{{#let @form as |form|}}
+  <form.Section @title="Proposed Actions">
+    <div data-test-section="proposed-actions">
+      {{#if this.projectHasRequiredActions}}
+        <h3>Zoning Special Permits, Authorizations, and Certifications</h3>
+        <p>The following questions relate to Zoning Special Permits, Authorizations and Certifications and the following Actions: [ZA, ZR].</p>
+
+        <Ui::Question as |Q|>
+          <Q.Legend>
+            Is the applicant any of the following?
+            <small class="text-weight-normal">(select all that apply)</small>
+          </Q.Legend>
+
+          <ul class="no-bullet no-margin">
+            {{#each (array
+              (hash attr="dcpOwnersubjectproperty" label="Owner of subject property")
+              (hash attr="dcpLeesseesubjectproperty" label="Lessee of subject property")
+              (hash attr="dcpLeaseorbuy" label="In a contract to lease or buy the subject property")
+              (hash attr="dcpIsother" label="Other (explain in attached project description)"))  as |type|
+            }}
+              <li>
+                <form.Field
+                  @attribute={{type.attr}}
+                  @type="checkbox"
+                  as |Checkbox|
+                >
+                  <Checkbox>
+                    {{type.label}}
+                  </Checkbox>
+                </form.Field>
+              </li>
+            {{/each}}
+          </ul>
+        </Ui::Question>
+
+        <Ui::Question
+          class="no-margin-top"
+          data-test-other-parties-radio-group
+          as |Q|
+        >
+
+        <Q.Legend>
+          Are there other owners or long-term lessees of the subject property? 
+        </Q.Legend>
+
+          <form.Field
+            @attribute="dcpOtherparties"
+            @type="radio"
+            as |RadioButton|
+          >
+            <RadioButton
+              @targetValue={{true}}
+              data-test-dcpotherparties="true"
+            >
+              Yes
+            </RadioButton>
+            <RadioButton
+              @targetValue={{false}}
+              data-test-dcpotherparties="false"
+            >
+              No
+            </RadioButton>
+          </form.Field>
+
+        </Ui::Question>
+      {{/if}}
+
+      <h3>All Proposed Project Actions</h3>
+      <Ui::Question
+        data-test-dcplegalinstrument-radio-group
+        as |Q|
+      >
+        <Q.Label>
+          Does this Project require a Legal Instrument to be recorded against the subject property?
+        </Q.Label>
+
+        <form.Field
+          @attribute="dcpLegalinstrument"
+          @type="radio-group"
+          id={{Q.questionId}}
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{optionset 'landuseForm' 'dcpLegalinstrument' 'list'}}
+          />
+        </form.Field>
+      </Ui::Question>
+
+      {{#each @form.data.landuseActions as |landuseAction|}}
+        <form.SaveableForm
+          @model={{landuseAction}}
+           @validators={{array (hash) @validations.SubmittableLanduseActionFormValidations}}
+          as |landuseActionForm|
+        >
+          <Packages::LanduseForm::ProposedActionEditor
+            @landuseActionForm={{landuseActionForm}}
+          />
+        </form.SaveableForm>
+      {{/each}}
+    </div>
+  </form.Section>
+{{/let}}
