@@ -46,6 +46,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     await click('[data-test-radio="dcpApplicantispublicagencyactions"][data-test-action="MM"][data-test-radio-option="Yes"]');
 
     await click('[data-test-save-button]');
+
     await waitFor('[data-test-submit-button]:not([disabled])');
     await click('[data-test-submit-button]');
     await click('[data-test-confirm-submit-button]');
