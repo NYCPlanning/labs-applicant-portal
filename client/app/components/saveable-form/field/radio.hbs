@@ -21,6 +21,8 @@
   <label
     class="ember-radio-button {{if checked checkedClass}} {{joinedClassNames}}"
     for={{radioId}}
+    data-test-checked={{if (eq value targetValue) "true" "false"}}
+    aria-checked={{if (eq value targetValue) "true" "false"}}
     ...attributes
   >
     {{yield}}
