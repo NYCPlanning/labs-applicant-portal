@@ -49,6 +49,12 @@ export class NycidService {
         is_nycid_validated: body.validated,
       };
     } catch (e) {
+      if (e.response.body.ERRORS['cpui.unknownGuid']) {
+        return {
+          is_nycid_validated: true,
+        }
+      }
+
       throw new HttpException({
         code: 'NYCID_REQUEST_FAILED',
         title: 'Failed getting projects',
