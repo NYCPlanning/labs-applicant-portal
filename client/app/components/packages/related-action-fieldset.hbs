@@ -1,0 +1,79 @@
+{{#let @form as |form|}}
+  <Ui::Question
+    class="fieldset relative"
+    ...attributes
+    as |Q|
+  >
+    <Q.Legend data-test-related-action-title>
+      Related Action
+    </Q.Legend>
+
+    <Ui::Question
+      class="no-margin-top"
+      data-test-action-completed-radio-group
+      as |Q|
+    >
+
+    <Q.Legend class="show-for-sr">
+      Is the action completed?
+    </Q.Legend>
+
+      <form.Field
+        @attribute="dcpDevelopmentsite"
+        @type="radio"
+        as |RadioButton|
+      >
+        <RadioButton
+          @targetValue={{true}}
+          data-test-action-completed="true"
+        >
+          Yes
+        </RadioButton>
+        <RadioButton
+          @targetValue={{false}}
+          data-test-action-completed="false"
+        >
+          No
+        </RadioButton>
+      </form.Field>
+
+    </Ui::Question>
+
+
+    <label>
+      Reference/Applicant Number (if applicable)
+      <form.Field @attribute="dcpReferenceapplicationno" />
+    </label>
+
+    <label>
+      Description
+      <form.Field @attribute="dcpApplicationdescription" />
+    </label>
+
+    <label>
+      Disposition or Status
+      <form.Field @attribute="dcpDispositionorstatus" />
+    </label>
+
+    <label>
+      Calendar Number
+      <form.Field @attribute="dcpCalendarnumbercalendarnumber" />
+    </label>
+
+    <label>
+      Date
+      <form.Field @attribute="dcpApplicationdate" />
+    </label>
+
+    <button
+      type="button"
+      class="delete-fieldset"
+      {{on "click" (fn @removeRelatedAction @relatedAction)}}
+      data-test-remove-related-action-button
+    >
+      Remove Related Action
+      <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
+    </button>
+
+  </Ui::Question>
+{{/let}}

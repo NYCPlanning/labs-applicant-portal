@@ -1,0 +1,52 @@
+{{#let @form as |form|}}
+  <form.Section @title="Environmental Review">
+
+    <Ui::Question as |Q|>
+      <Q.Label>
+        What is the CEQR number?
+      </Q.Label>
+        
+      <form.Field
+        @attribute="dcpCeqrnumber"
+        @maxlength="100"
+        id={{Q.questionId}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+      data-test-ceqr-type-radio-group
+      as |Q|
+    >
+      <Q.Label>
+        What is the CEQR type?
+      </Q.Label>
+
+      <form.Field
+        @attribute="dcpCeqrtype"
+        @type="radio-group"
+        id={{Q.questionId}}
+        as |RadioGroup|
+      >
+        <RadioGroup
+          @options={{optionset 'landuseForm' 'dcpCeqrtype' 'list'}}
+        />
+      </form.Field>
+    </Ui::Question>
+
+    <Ui::Question as |Q|>
+      <Q.Label>
+        What is the Type II Category?
+      </Q.Label>
+        
+      <form.Field
+        @attribute="dcpTypecategory"
+        @maxlength="100"
+        id={{Q.questionId}}
+      />     
+    </Ui::Question>
+
+  {{!NOTE: "What is the date of determination?" question here}}
+  {{! this will be implemented when we have a standardized date component}}
+
+  </form.Section>
+{{/let}}
