@@ -126,8 +126,14 @@ export class AuthService {
       dcp_nycid_guid: GUID,
     });
 
+    const nycIdEmailRegEx = new RegExp(`^${mail}$`, 'gi');
+
     // if their e-mail is validated, associate the NYCID guid
-    if (nycExtEmailValidationFlag && contact.dcp_nycid_guid !== GUID) {
+    if (
+      nycExtEmailValidationFlag
+      && contact.dcp_nycid_guid !== GUID
+      && contact.emailaddress1.match(nycIdEmailRegEx)
+    ) {
       await this.contactService.update(contact.contactid, {
         dcp_nycid_guid: GUID,
         firstname: givenName,
