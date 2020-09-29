@@ -92,7 +92,7 @@ function getOAuthDomain(environment) {
   }
 
   if (environment === 'production') {
-    return 'https://accounts-nonprd.nyc.gov';
+    return 'https://www1.nyc.gov';
   }
 
   if (environment === 'test') {
