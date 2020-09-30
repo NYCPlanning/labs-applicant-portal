@@ -15,6 +15,7 @@ import {
   AFFECTED_ZONING_RESOLUTION_ACTION,
 } from '../optionsets/affected-zoning-resolution';
 import LANDUSE_ACTION_OPTIONSETS from '../optionsets/landuse-action';
+import LANDUSE_GEOGRAPHY_OPTIONSETS from '../optionsets/landuse-geography';
 import PACKAGE_OPTIONSETS from '../optionsets/package';
 import LANDUSE_FORM_OPTIONSETS from '../optionsets/landuse-form';
 import {
@@ -129,6 +130,9 @@ const OPTIONSET_LOOKUP = {
   },
   sitedatahForm: {
     dcpSitetobedisposed: YES_NO,
+  },
+  landuseGeography: {
+    dcpIsthesiteimprovedunimprovedorpartlyimp: LANDUSE_GEOGRAPHY_OPTIONSETS.DCPISTHESITEIMPROVEDUNIMPROVEDORPARTLYIMP,
   },
 };
 

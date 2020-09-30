@@ -106,40 +106,45 @@ export default {
   dcpCommoccup: [
     validateNumber({
       lte: 2147483647,
+      gte: -2147483648,
       allowBlank: true,
-      message: 'Number is too large (max {lte})',
+      message: 'Number must be in range ({gte} - {lte})',
     }),
   ],
 
   dcpVacant: [
     validateNumber({
       lte: 2147483647,
+      gte: -2147483648,
       allowBlank: true,
-      message: 'Number is too large (max {lte})',
+      message: 'Number must be in range ({gte} - {lte})',
     }),
   ],
 
   dcpNoofemp: [
     validateNumber({
       lte: 2147483647,
+      gte: -2147483648,
       allowBlank: true,
-      message: 'Number is too large (max {lte})',
+      message: 'Number must be in range ({gte} - {lte})',
     }),
   ],
 
   dcpDwellingcup: [
     validateNumber({
       lte: 2147483647,
+      gte: -2147483648,
       allowBlank: true,
-      message: 'Number is too large (max {lte})',
+      message: 'Number must be in range ({gte} - {lte})',
     }),
   ],
 
   dcpDwellingvacant: [
     validateNumber({
       lte: 2147483647,
+      gte: -2147483648,
       allowBlank: true,
-      message: 'Number is too large (max {lte})',
+      message: 'Number must be in range ({gte} - {lte})',
     }),
   ],
 };

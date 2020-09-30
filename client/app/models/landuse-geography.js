@@ -4,7 +4,8 @@ export default class LanduseGeographyModel extends Model {
   @belongsTo('landuse-form', { async: false })
   landuseForm;
 
-  @attr dcpCommunityfacilitycommercialnooffirms;
+  @attr('number', { defaultValue: null })
+  dcpCommunityfacilitycommercialnooffirms;
 
   @attr dcpIsthesiteimprovedunimprovedorpartlyimp;
 
@@ -14,11 +15,13 @@ export default class LanduseGeographyModel extends Model {
 
   @attr dcpBorough;
 
-  @attr dcpNumberofdwellingunits;
+  @attr('number', { defaultValue: null })
+  dcpNumberofdwellingunits;
 
   @attr dcpUsesonsite;
 
-  @attr dcpBuildingsorsitetotalsquarefootage;
+  @attr('number', { defaultValue: null })
+  dcpBuildingsorsitetotalsquarefootage;
 
   @attr dcpLocationsiteinbuilding;
 
@@ -30,13 +33,15 @@ export default class LanduseGeographyModel extends Model {
 
   @attr dcpLot;
 
-  @attr dcpSquarefootagetobeacquired;
+  @attr('number', { defaultValue: null })
+  dcpSquarefootagetobeacquired;
 
   @attr dcpBlock;
 
   @attr dcpNumberoffloorsinbuilding;
 
-  @attr dcpCommunityfacilitycommercialnoofemployees;
+  @attr('number', { defaultValue: null })
+  dcpCommunityfacilitycommercialnoofemployees;
 
   @attr dcpLandusegeographyid;
 

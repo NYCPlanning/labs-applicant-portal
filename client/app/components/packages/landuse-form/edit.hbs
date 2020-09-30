@@ -91,16 +91,23 @@
         {{/if}}
       {{/let}}
 
-      <Packages::LanduseForm::PublicFacilities
-        @form={{saveableForm}}
-      />
+      {{#let (intersect
+        (map-by "dcpActioncode" this.landuseForm.landuseActions)
+        (array 'PC' 'PQ' 'PS' 'PX')
+      ) as |publicFacilitiesActions|}}
+        {{#if (gt publicFacilitiesActions.length 0)}}
+          <Packages::LanduseForm::PublicFacilities
+            @form={{saveableForm}}
+          />
 
-      <Packages::LanduseForm::ProposedSiteCharacteristics
-        @form={{saveableForm}}
-        @addLanduseGeography={{this.addLanduseGeography}}
-        @removeLanduseGeography={{this.removeLanduseGeography}}
-        @validations={{this.validations}}
-      />
+          <Packages::LanduseForm::ProposedSiteCharacteristics
+            @form={{saveableForm}}
+            @addLanduseGeography={{this.addLanduseGeography}}
+            @removeLanduseGeography={{this.removeLanduseGeography}}
+            @validations={{this.validations}}
+          />
+        {{/if}}
+      {{/let}}
 
       <Packages::LanduseForm::AttachedDocuments
         @form={{saveableForm}}
