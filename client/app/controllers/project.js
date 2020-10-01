@@ -6,6 +6,11 @@ import { optionset } from '../helpers/optionset';
 import { STATECODE, STATUSCODE } from '../optionsets/contact';
 
 export default class ProjectController extends Controller {
+  queryParams = ['editors'];
+
+  // queryParam to toggle Project Editors feature
+  @tracked editors = false;
+
   @tracked contactMgmtOpen = false;
 
   @tracked addEditorModalOpen;
