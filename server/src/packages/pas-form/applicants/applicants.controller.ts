@@ -124,7 +124,7 @@ export class ApplicantsController {
           },
         );
       } else if (body.landuse_form) {
-        return this.crmService.create('dcp_applicantinformations', {
+        return this.crmService.create('dcp_applicantrepresentativeinformations', {
           ...allowedAttrs,
           'dcp_dcp_applicantrepinformation_dcp_landuse@odata.bind': [
             `/dcp_landuses(${body.landuse_form})`,

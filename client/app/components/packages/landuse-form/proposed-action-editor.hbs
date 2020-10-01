@@ -28,8 +28,8 @@
           @searchEnabled={{false}}
           @options={{optionset 'landuseAction' 'dcpPreviouslyapprovedactioncode' 'list'}}
           @selected={{this.actionCode}}
-          @onchange={{fn (mut this.actionCode)}}
-          @onclose={{fn (mut landuseActionForm.data.dcpPreviouslyapprovedactioncode) this.actionCode.code}}
+          @onChange={{fn (mut this.actionCode)}}
+          @onClose={{fn (mut landuseActionForm.data.dcpPreviouslyapprovedactioncode) this.actionCode.code}}
           as |landUseAction|
         >
           {{landUseAction.label}}

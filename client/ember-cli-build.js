@@ -10,7 +10,11 @@ module.exports = function(defaults) {
       onlyIncluded: true,
       sourceMap: false,
     },
-
+    autoprefixer: {
+      enabled: true,
+      cascade: true,
+      sourcemap: false,
+    },
     'ember-composable-helpers': {
       only: ['toggle'],
     },
