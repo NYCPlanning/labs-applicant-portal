@@ -11,7 +11,10 @@ import SubmittableApplicantFormValidations from '../../../validations/submittabl
 import SaveableRelatedActionFormValidations from '../../../validations/saveable-related-action-form';
 import SubmittableRelatedActionFormValidations from '../../../validations/submittable-related-action-form';
 import SaveableSitedatahFormValidations from '../../../validations/saveable-sitedatah-form';
+import SubmittableSitedatahFormValidations from '../../../validations/submittable-sitedatah-form';
 import SubmittableLanduseActionFormValidations from '../../../validations/submittable-landuse-action-form';
+import SaveableLanduseGeographyValidations from '../../../validations/saveable-landuse-geography';
+import SubmittableLanduseGeographyValidations from '../../../validations/submittable-landuse-geography';
 import { addToHasMany, removeFromHasMany } from '../../../utils/ember-changeset';
 
 export default class LandUseFormComponent extends Component {
@@ -25,7 +28,10 @@ export default class LandUseFormComponent extends Component {
     SaveableRelatedActionFormValidations,
     SubmittableRelatedActionFormValidations,
     SaveableSitedatahFormValidations,
+    SubmittableSitedatahFormValidations,
     SubmittableLanduseActionFormValidations,
+    SaveableLanduseGeographyValidations,
+    SubmittableLanduseGeographyValidations,
   };
 
   @tracked recordsToDelete = [];
@@ -118,6 +124,24 @@ export default class LandUseFormComponent extends Component {
     this.recordsToDelete.push(sitedatahForm);
 
     sitedatahForm.deleteRecord();
+  }
+
+  @action
+  addLanduseGeography(changeset) {
+    const newLanduseGeography = this.store.createRecord('landuse-geography', {
+      landuseForm: this.landuseForm,
+    });
+
+    addToHasMany(changeset, 'landuseGeographies', newLanduseGeography);
+  }
+
+  @action
+  removeLanduseGeography(landuseGeography, changeset) {
+    removeFromHasMany(changeset, 'landuseGeographies', landuseGeography);
+
+    this.recordsToDelete.push(landuseGeography);
+
+    landuseGeography.deleteRecord();
   }
 
   @action

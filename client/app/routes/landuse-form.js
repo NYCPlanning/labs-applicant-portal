@@ -14,6 +14,7 @@ export default class LanduseFormRoute extends Route.extend(AuthenticatedRouteMix
         'landuse-form.related-actions',
         'landuse-form.landuse-actions',
         'landuse-form.sitedatah-forms',
+        'landuse-form.landuse-geographies',
       ].join(),
     });
 
