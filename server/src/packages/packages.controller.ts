@@ -108,6 +108,7 @@ import { CitypayService } from '../citypay/citypay.service';
       'landuse-actions',
       'sitedatah-forms',
       'landuse-geographies',
+      'lead-agency',
     ],
     applicants: {
       ref: 'dcp_applicantinformationid',
@@ -144,6 +145,13 @@ import { CitypayService } from '../citypay/citypay.service';
       ref: 'dcp_landusegeographyid',
       attributes: [
         ...LANDUSE_GEOGRAPHY_ATTRS,
+      ],
+    },
+    'lead-agency': {
+      ref: 'accountid',
+      attributes: [
+        'name',
+        'accountid',
       ],
     },
   },
@@ -223,6 +231,7 @@ import { CitypayService } from '../citypay/citypay.service';
             'landuse-actions': landuseForm.dcp_dcp_landuse_dcp_landuseaction,
             'sitedatah-forms': landuseForm.dcp_dcp_landuse_dcp_sitedatahform_landuseform,
             'landuse-geographies': landuseForm.dcp_dcp_landuse_dcp_landusegeography_landuseform,
+            'lead-agency': landuseForm.dcp_leadagency,
           }
         }
       } else {

@@ -22,6 +22,13 @@ export default class LanduseFormModel extends Model {
   @hasMany('landuse-geography', { async: false })
   landuseGeographies;
 
+  // this is just for GETting dcp_leadagency information
+  // we do not PATCH or POST directly to dcp_leadagency
+  // instead we handle sending related information to the backend
+  // through a made-up field called `chosenLeadAgencyId`
+  @belongsTo('lead-agency', { async: false })
+  leadAgency;
+
   @attr dcpVersion;
 
   // project name
@@ -79,8 +86,6 @@ export default class LanduseFormModel extends Model {
   @attr dcpSitedataidentifylandmark;
 
   // Environmental Review attrs
-  @attr dcpLeadagency;
-
   @attr dcpCeqrnumber;
 
   @attr dcpCeqrtype;
@@ -184,6 +189,10 @@ export default class LanduseFormModel extends Model {
   @attr dcpRelatedacquisition;
 
   @attr dcpOnlychangetheeliminationofamappedbutunimp;
+
+  // A made-up field so we can send an id to the backend
+  // and we can bind an account to the dcp_leadagency field
+  @attr chosenLeadAgencyId;
 
   async save() {
     await this.saveDirtyLanduseActions();

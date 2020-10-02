@@ -6,4 +6,5 @@ export default Model.extend({
   landuseActions: hasMany('landuse-action'),
   bbls: hasMany('bbl'),
   relatedActions: hasMany('related-action'),
+  leadAgency: belongsTo('lead-agency'),
 });

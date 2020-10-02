@@ -1004,4 +1004,35 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     assert.dom('[data-test-proposed-site-title]').doesNotExist();
   });
+
+  test('User can update lead-agency', async function(assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'toDo', 'landuseForm')],
+    });
+    this.server.create('account', 1, {
+      name: 'first account',
+    });
+    this.server.create('account', 2, {
+      name: 'second account',
+    });
+    this.server.create('account', 3, {
+      name: 'third account',
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    // filling out necessary information in order to save
+    await click('[data-test-add-applicant-button]');
+    await fillIn('[data-test-input="dcpFirstname"]', 'Tess');
+    await fillIn('[data-test-input="dcpLastname"]', 'Ter');
+    await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
+
+    await selectChoose('[data-test-lead-agency-picker]', 'second account');
+
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.landuseForms.firstObject.chosenLeadAgencyId, 2);
+
+    assert.equal(currentURL(), '/landuse-form/1/edit');
+  });
 });
