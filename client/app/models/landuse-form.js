@@ -244,7 +244,6 @@ export default class LanduseFormModel extends Model {
     return dirtyLanduseActions.length > 0;
   }
 
-
   get isRelatedActionsDirty() {
     const dirtyRelatedActions = this.relatedActions.filter((action) => action.hasDirtyAttributes);
 
