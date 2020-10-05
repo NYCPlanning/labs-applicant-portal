@@ -96,6 +96,7 @@ const OPTIONSET_LOOKUP = {
     dcpChangestreetwidthopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpChangestreetalignmentopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpChangestreetgradeopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpTypedisposition: LANDUSE_FORM_OPTIONSETS.DCPTYPEDISPOSITION,
   },
   rwcdsForm: {
     dcpHasprojectchangedsincesubmissionofthepas: YES_NO,

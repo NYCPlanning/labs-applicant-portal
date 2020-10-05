@@ -110,6 +110,10 @@
         {{/if}}
       {{/let}}
 
+      <Packages::LanduseForm::Disposition
+        @form={{saveableForm}}
+      />
+
       <Packages::LanduseForm::AttachedDocuments
         @form={{saveableForm}}
         @model={{@package.landuseForm}}

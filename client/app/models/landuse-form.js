@@ -194,6 +194,13 @@ export default class LanduseFormModel extends Model {
   // and we can bind an account to the dcp_leadagency field
   @attr chosenLeadAgencyId;
 
+  // Disposition attrs
+  @attr dcpTypedisposition;
+
+  @attr dcpTextcityagency;
+
+  @attr dcpTowhom;
+
   async save() {
     await this.saveDirtyLanduseActions();
     await this.saveDirtyRelatedActions();
