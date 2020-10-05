@@ -7,4 +7,5 @@ export default Model.extend({
   bbls: hasMany('bbl'),
   relatedActions: hasMany('related-action'),
   leadAgency: belongsTo('lead-agency'),
+  affectedZoningResolutions: hasMany('affected-zoning-resolution'),
 });

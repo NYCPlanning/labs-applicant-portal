@@ -1078,4 +1078,36 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     assert.dom('[data-test-disposition-dcpRestrictandcondition-helptext]').exists();
   });
+
+  test('User can add and delete a ZR Section on the landuse form', async function (assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'toDo', 'landuseForm')],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    // fill out other necessary fields for saving
+    await click('[data-test-add-applicant-button]');
+    await fillIn('[data-test-input="dcpFirstname"]', 'Tess');
+    await fillIn('[data-test-input="dcpLastname"]', 'Ter');
+    await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
+
+    // add and fill out fields for Zoning Text Amendment section
+    await click('[data-test-add-zr-section-button]');
+    assert.dom('[data-test-zr-section-fieldset="0"]').exists();
+
+    await fillIn('[data-test-input="dcpZrsectionnumber"]', 'our zr section number');
+    await fillIn('[data-test-input="dcpZrsectiontitle"]', 'our zr section title');
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.affectedZoningResolutions.firstObject.dcpZrsectionnumber, 'our zr section number');
+    assert.equal(this.server.db.affectedZoningResolutions.firstObject.dcpZrsectiontitle, 'our zr section title');
+
+    await click('[data-test-remove-zr-section-button]');
+    assert.dom('[data-test-zr-section-fieldset="0"]').doesNotExist();
+
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.affectedZoningResolutions.length, 0);
+  });
 });

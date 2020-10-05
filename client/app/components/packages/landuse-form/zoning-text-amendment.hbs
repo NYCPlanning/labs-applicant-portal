@@ -1,0 +1,51 @@
+{{#let @form as |form|}}
+  <form.Section @title="Zoning Text Amendment">
+    <p>
+      List all affected Zoning Resolution Sections, indicating their title and number. This section only applies to ZR actions.
+    </p>
+
+    {{!-- buttons for user to add new ZR sections --}}
+    <div class="fieldset-adder">
+      <h5 class="small-margin-bottom">
+        Add a ZR Section:
+      </h5>
+      <div class="grid-x">
+        <div class="cell large-6 small-padding-right">
+          <button
+            class="button expanded secondary no-margin"
+            type="button"
+            {{on "click" (fn @addZrSection @form.data) }}
+            data-test-add-zr-section-button
+          >
+            <strong>Add a ZR Section</strong>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    {{#if form.errors.affectedZoningResolution}}
+      {{#each form.errors.affectedZoningResolutions.validation as |message|}}
+        <div class="callout alert" data-test-validation-message="has-affected-zoning-resolutions">{{message}}</div>
+      {{/each}}
+    {{/if}}
+
+    <ul class="no-bullet">
+      {{#each (filter-by 'isDeleted' false @form.data.affectedZoningResolutions) as |affectedZoningResolution affectedZoningResolutionIndex|}}
+        <li class="scale-fade-in">
+          <form.SaveableForm
+            @model={{affectedZoningResolution}}
+            @validators={{array @validations.SaveableAffectedZoningResolutionFormValidations @validations.SubmittableAffectedZoningResolutionFormValidations}}
+            as |affectedZoningResolutionForm|
+          >
+            <Packages::LanduseForm::ZoningTextAmendmentFieldset
+              @zrSection={{affectedZoningResolutionForm.data}}
+              @form={{affectedZoningResolutionForm}}
+              @removeZrSection={{fn @removeZrSection affectedZoningResolution @form.data}}
+              data-test-zr-section-fieldset={{affectedZoningResolutionIndex}}
+            />
+          </form.SaveableForm>
+        </li>
+      {{/each}}
+    </ul>
+  </form.Section>
+{{/let}}

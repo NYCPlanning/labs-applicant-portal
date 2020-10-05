@@ -22,6 +22,9 @@ export default class LanduseFormModel extends Model {
   @hasMany('landuse-geography', { async: false })
   landuseGeographies;
 
+  @hasMany('affected-zoning-resolution', { async: false })
+  affectedZoningResolutions;
+
   // this is just for GETting dcp_leadagency information
   // we do not PATCH or POST directly to dcp_leadagency
   // instead we handle sending related information to the backend
@@ -209,6 +212,7 @@ export default class LanduseFormModel extends Model {
     await this.saveDirtyLanduseGeographies();
     await this.saveDirtyBbls();
     await this.saveDirtyProject();
+    await this.saveDirtyAffectedZoningResolutions();
     await super.save();
   }
 
@@ -266,6 +270,14 @@ export default class LanduseFormModel extends Model {
     );
   }
 
+  async saveDirtyAffectedZoningResolutions() {
+    return Promise.all(
+      this.affectedZoningResolutions
+        .filter((zoningResolution) => zoningResolution.hasDirtyAttributes)
+        .map((zoningResolution) => zoningResolution.save()),
+    );
+  }
+
   get isLanduseActionsDirty() {
     const dirtyLanduseActions = this.landuseActions.filter((action) => action.hasDirtyAttributes);
 
@@ -305,5 +317,11 @@ export default class LanduseFormModel extends Model {
 
   get isProjectDirty() {
     return this.package.project.hasDirtyAttributes;
+  }
+
+  get isAffectedZoningResolutionsDirty() {
+    const dirtyZrs = this.affectedZoningResolutions.filter((zr) => zr.hasDirtyAttributes);
+
+    return dirtyZrs.length > 0;
   }
 }
