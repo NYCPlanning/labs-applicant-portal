@@ -1035,4 +1035,47 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
+
+  test('User can fill out Disposition section', async function (assert) {
+    // Create a LU form w disposition-related actions
+    this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', {
+          dcpPackagetype: 717170001,
+          landuseForm: this.server.create('landuse-form', {
+            landuseActions: [
+              this.server.create('landuse-action', {
+                dcpActioncode: 'PP',
+              }),
+            ],
+          }),
+        }),
+      ],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    assert.dom('[data-test-input="dcpTextcityagency"]').doesNotExist();
+    assert.dom('[data-test-input="dcpTowhom"]').doesNotExist();
+
+    await click('[data-test-radio="dcpTypedisposition"][data-test-radio-option="General"]');
+
+    assert.dom('[data-test-input="dcpTextcityagency"]').doesNotExist();
+    assert.dom('[data-test-input="dcpTowhom"]').doesNotExist();
+
+    await click('[data-test-radio="dcpTypedisposition"][data-test-radio-option="Direct"]');
+
+    await fillIn('[data-test-input="dcpTextcityagency"]', 'text text');
+    await fillIn('[data-test-input="dcpTowhom"]', 'text text');
+
+    assert.dom('[data-test-disposition-dcpRestrictandcondition-helptext]').doesNotExist();
+
+    await click('[data-test-radio="dcpRestrictandcondition"][data-test-radio-option="None (Pursuant to Zoning)"]');
+
+    assert.dom('[data-test-disposition-dcpRestrictandcondition-helptext]').doesNotExist();
+
+    await click('[data-test-radio="dcpRestrictandcondition"][data-test-radio-option="Restricted"]');
+
+    assert.dom('[data-test-disposition-dcpRestrictandcondition-helptext]').exists();
+  });
 });
