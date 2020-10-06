@@ -1080,8 +1080,19 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   });
 
   test('User can add and delete a ZR Section on the landuse form', async function (assert) {
-    this.server.create('project', 1, {
-      packages: [this.server.create('package', 'toDo', 'landuseForm')],
+    this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', {
+          dcpPackagetype: 717170001,
+          landuseForm: this.server.create('landuse-form', {
+            landuseActions: [
+              this.server.create('landuse-action', {
+                dcpActioncode: 'ZR',
+              }),
+            ],
+          }),
+        }),
+      ],
     });
 
     await visit('/landuse-form/1/edit');

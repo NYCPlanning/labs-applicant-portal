@@ -2,20 +2,27 @@
   <Ui::Question
     class="fieldset relative"
     ...attributes
-    as |Q|
-  >
+  as |Q|>
     <Q.Legend data-test-zr-section-title>
       ZR Section
     </Q.Legend>
 
     <label>
       Zoning Section Number
-      <form.Field @attribute="dcpZrsectionnumber" />
+      <form.Field
+        @attribute="dcpZrsectionnumber"
+        @showCounter={{true}}
+        @maxlength="25"
+      />
     </label>
 
     <label>
       Zoning Section Title
-      <form.Field @attribute="dcpZrsectiontitle" />
+      <form.Field
+        @attribute="dcpZrsectiontitle"
+        @showCounter={{true}}
+        @maxlength="100"
+      />
     </label>
 
     <button
