@@ -1121,4 +1121,44 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     assert.equal(this.server.db.affectedZoningResolutions.length, 0);
   });
+
+  test('Attachment list text only shows up when one of PC, PQ, PS, or PX actions are present', async function (assert) {
+    this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', {
+          dcpPackagetype: 717170001,
+          landuseForm: this.server.create('landuse-form', {
+            landuseActions: [
+              this.server.create('landuse-action', {
+                dcpActioncode: 'PP',
+              }),
+            ],
+          }),
+        }),
+      ],
+    });
+
+    this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', {
+          dcpPackagetype: 717170001,
+          landuseForm: this.server.create('landuse-form', {
+            landuseActions: [
+              this.server.create('landuse-action', {
+                dcpActioncode: 'PC',
+              }),
+            ],
+          }),
+        }),
+      ],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    assert.dom('[data-test-landuse-attachment-list]').doesNotExist();
+
+    await visit('/landuse-form/2/edit');
+
+    assert.dom('[data-test-landuse-attachment-list]').exists();
+  });
 });
