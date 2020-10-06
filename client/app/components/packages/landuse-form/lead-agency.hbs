@@ -1,0 +1,23 @@
+{{#let @landuseForm as |landuseForm|}}
+  <div>
+    <h5 class="small-margin-bottom">
+      Who is the lead agency?
+    </h5>
+
+    <label data-test-lead-agency-picker>
+      <PowerSelect
+        triggerClass="lead-agency-dropdown"
+        supportsDataTestProperties={{true}}
+        @placeholder={{this.searchPlaceholder}}
+        @searchEnabled={{true}}
+        @options={{this.accountNames}}
+        @selected={{this.chosenAccountName}}
+        @onChange={{fn (mut this.chosenAccountName)}}
+        @onClose={{fn (mut landuseForm.data.chosenLeadAgencyId) this.chosenAccountId}}
+        as |accountName|
+      >
+        {{accountName}}
+      </PowerSelect>
+    </label>
+  </div>
+{{/let}}

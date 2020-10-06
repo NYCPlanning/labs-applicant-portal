@@ -1,0 +1,234 @@
+{{#let @form as |form|}}
+  <Ui::Question
+    class="fieldset relative"
+    ...attributes
+  as |proposedSiteFieldset|>
+    <proposedSiteFieldset.Legend
+      data-test-proposed-site-title
+    >
+      Proposed Site
+    </proposedSiteFieldset.Legend>
+
+    <div class="grid-x grid-margin-x">
+      <div class="cell auto">
+        <Ui::Question
+        as |dcpBoroughQ|>
+          <dcpBoroughQ.Label>
+            Borough
+          </dcpBoroughQ.Label>
+
+          <form.Field
+            @attribute="dcpBorough"
+            @maxlength="100"
+            @showCounter={{true}}
+            id={{dcpBoroughQ.id}}
+          />
+        </Ui::Question>
+      </div>
+
+      <div class="cell auto">
+        <Ui::Question
+        as |dcpBlockQ|>
+          <dcpBlockQ.Label>
+            Block
+          </dcpBlockQ.Label>
+
+          <form.Field
+            @attribute="dcpBlock"
+            @maxlength="100"
+            @showCounter={{true}}
+            id={{dcpBlockQ.id}}
+          />
+        </Ui::Question>
+      </div>
+
+      <div class="cell auto">
+        <Ui::Question
+        as |dcpLotQ|>
+          <dcpLotQ.Label>
+            Lot
+          </dcpLotQ.Label>
+
+          <form.Field
+            @attribute="dcpLot"
+            @maxlength="100"
+            @showCounter={{true}}
+            id={{dcpLotQ.id}}
+          />
+        </Ui::Question>
+      </div>
+    </div>
+
+    <Ui::Question
+    as |dcpOwnershipQ|>
+      <dcpOwnershipQ.Label>
+        Ownership
+      </dcpOwnershipQ.Label>
+
+      <form.Field
+        @attribute="dcpOwnership"
+        @maxlength="100"
+        id={{dcpOwnershipQ.id}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpUsesonsiteQ|>
+      <dcpUsesonsiteQ.Label>
+        Uses on site
+      </dcpUsesonsiteQ.Label>
+
+      <form.Field
+        @attribute="dcpUsesonsite"
+        @maxlength="100"
+        id={{dcpUsesonsiteQ.id}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpIsthesiteimprovedunimprovedorpartlyimpQ|>
+      <dcpIsthesiteimprovedunimprovedorpartlyimpQ.Label>
+        What is the condition of the site?
+      </dcpIsthesiteimprovedunimprovedorpartlyimpQ.Label>
+
+      <form.Field
+        @attribute="dcpIsthesiteimprovedunimprovedorpartlyimp"
+        @type="radio-group"
+      as |DcpIsthesiteimprovedunimprovedorpartlyimpRadioGroup|>
+        <DcpIsthesiteimprovedunimprovedorpartlyimpRadioGroup
+          @options={{optionset 'landuseGeography' 'dcpIsthesiteimprovedunimprovedorpartlyimp' 'list'}}
+        />
+      </form.Field>
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpNumberofdwellingunitsQ|>
+      <dcpNumberofdwellingunitsQ.Label>
+        Number of dwelling units
+      </dcpNumberofdwellingunitsQ.Label>
+
+      <form.Field
+        @attribute="dcpNumberofdwellingunits"
+        type="number"
+        id={{dcpNumberofdwellingunitsQ.id}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+      as |dcpCommunityfacilitycommercialnooffirmsQ|>
+      <dcpCommunityfacilitycommercialnooffirmsQ.Label>
+        What is the number of firms for Community Facility,
+        Commercial or Industrial Uses?
+      </dcpCommunityfacilitycommercialnooffirmsQ.Label>
+
+      <form.Field
+        @attribute="dcpCommunityfacilitycommercialnooffirms"
+        type="number"
+        id={{dcpCommunityfacilitycommercialnooffirmsQ.id}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpCommunityfacilitycommercialnoofemployeesQ|>
+      <dcpCommunityfacilitycommercialnoofemployeesQ.Label>
+        What is the number of employees for Community Facility,
+        Commercial or Industrial Uses?
+      </dcpCommunityfacilitycommercialnoofemployeesQ.Label>
+
+      <form.Field
+        @attribute="dcpCommunityfacilitycommercialnoofemployees"
+        type="number"
+        id={{dcpCommunityfacilitycommercialnoofemployeesQ.id}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpDisplacementorrelocationQ|>
+      <dcpDisplacementorrelocationQ.Label>
+        Describe any displacement or relocation
+      </dcpDisplacementorrelocationQ.Label>
+
+      <form.Field
+        @attribute="dcpDisplacementorrelocation"
+        @maxlength="100"
+        id={{dcpDisplacementorrelocationQ.id}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpVacantforlessthantwoyearsQ|>
+      <dcpVacantforlessthantwoyearsQ.Label>
+        If vacant for less than two years, describe previous use
+      </dcpVacantforlessthantwoyearsQ.Label>
+
+      <form.Field
+        @attribute="dcpVacantforlessthantwoyears"
+        @maxlength="100"
+        id={{dcpVacantforlessthantwoyearsQ.id}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpBuildingsorsitetotalsquarefootageQ|>
+      <dcpBuildingsorsitetotalsquarefootageQ.Label>
+        If there are buildings on-site, what is the square
+        footage?
+      </dcpBuildingsorsitetotalsquarefootageQ.Label>
+
+      <form.Field
+        @attribute="dcpBuildingsorsitetotalsquarefootage"
+        type="number"
+        id={{dcpBuildingsorsitetotalsquarefootageQ.id}}
+      />
+    </Ui::Question>
+    
+    <Ui::Question
+      as |dcpSquarefootagetobeacquiredQ|>
+      <dcpSquarefootagetobeacquiredQ.Label>
+        What is the square footage to be acquired?
+      </dcpSquarefootagetobeacquiredQ.Label>
+
+      <form.Field
+        @attribute="dcpSquarefootagetobeacquired"
+        type="number"
+        id={{dcpSquarefootagetobeacquiredQ.id}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+      as |dcpNumberoffloorsinbuildingQ|>
+      <dcpNumberoffloorsinbuildingQ.Label>
+        What is the number of floors in the building?
+      </dcpNumberoffloorsinbuildingQ.Label>
+
+      <form.Field
+        @attribute="dcpNumberoffloorsinbuilding"
+        @maxlength="10"
+        id={{dcpNumberoffloorsinbuildingQ.id}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpLocationsiteinbuildingQ|>
+      <dcpLocationsiteinbuildingQ.Label>
+        What is the location on site or in building?
+      </dcpLocationsiteinbuildingQ.Label>
+
+      <form.Field
+        @attribute="dcpLocationsiteinbuilding"
+        @maxlength="100"
+        id={{dcpLocationsiteinbuildingQ.id}}
+      />
+    </Ui::Question>
+
+    <button
+      type="button"
+      class="delete-fieldset"
+      {{on "click" (fn @removeLanduseGeography @landuseGeography)}}
+      data-test-remove-landuse-geography-button
+    >
+      Remove Proposed Site
+      <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
+    </button>
+  </Ui::Question>
+{{/let}}

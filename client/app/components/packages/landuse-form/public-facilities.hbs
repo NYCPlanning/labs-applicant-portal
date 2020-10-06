@@ -1,340 +1,333 @@
 {{#let @form as |form|}}
-  {{#let (intersect
-    (map-by "dcpActioncode" form.data.data.landuseActions)
-    (array 'PC' 'PQ' 'PS' 'PX')
-  ) as |publicFacilitiesActions|}}
-    {{#if (gt publicFacilitiesActions.length 0)}}
-      <form.Section @title="Public Facilities">
-        <p>
-          The following questions relate to Office Space Lease,
-          Public Facility Site Selection or Acquisition and the
-          following Actions: PC, PQ, PS, PX. These Actions require
-          additional Attachments as noted in the Attachments section.
-        </p>
+  <form.Section @title="Public Facilities">
+    <p>
+      The following questions relate to Office Space Lease,
+      Public Facility Site Selection or Acquisition and the
+      following Actions: PC, PQ, PS, PX. These Actions require
+      additional Attachments as noted in the Attachments section.
+    </p>
 
-        <Ui::Question
-        as |proposedActionsQ|>
-          <proposedActionsQ.Label>
-            Which action(s) is/are being proposed? (select all that apply)
-          </proposedActionsQ.Label>
+    <Ui::Question
+    as |proposedActionsQ|>
+      <proposedActionsQ.Label>
+        Which action(s) is/are being proposed? (select all that apply)
+      </proposedActionsQ.Label>
 
-          <Input
-            type="checkbox"
-            id="dcpOfficespaceleaseopt"
-            data-test-checkbox="dcpOfficespaceleaseopt"
-            checked={{if
-              (eq
-                form.data.dcpOfficespaceleaseopt
-                (optionset 'landuseForm' 'dcpOfficespaceleaseopt' 'code' 'Yes')
-              ) "checked"}}
-            onClick={{fn (mut form.data.dcpOfficespaceleaseopt)
-              (if form.data.dcpOfficespaceleaseopt
-                (optionset 'landuseForm' 'dcpOfficespaceleaseopt' 'code' 'No')
-                (optionset 'landuseForm' 'dcpOfficespaceleaseopt' 'code' 'Yes')
-              )
-            }}
-          />
-          <label for="dcpOfficespaceleaseopt">
-            Office Space Lease
-          </label>
+      <Input
+        type="checkbox"
+        id="dcpOfficespaceleaseopt"
+        data-test-checkbox="dcpOfficespaceleaseopt"
+        checked={{if
+          (eq
+            form.data.dcpOfficespaceleaseopt
+            (optionset 'landuseForm' 'dcpOfficespaceleaseopt' 'code' 'Yes')
+          ) "checked"}}
+        onClick={{fn (mut form.data.dcpOfficespaceleaseopt)
+          (if form.data.dcpOfficespaceleaseopt
+            (optionset 'landuseForm' 'dcpOfficespaceleaseopt' 'code' 'No')
+            (optionset 'landuseForm' 'dcpOfficespaceleaseopt' 'code' 'Yes')
+          )
+        }}
+      />
+      <label for="dcpOfficespaceleaseopt">
+        Office Space Lease
+      </label>
 
-          <br>
+      <br>
 
-          <Input
-            type="checkbox"
-            id="dcpAcquisitionopt"
-            data-test-checkbox="dcpAcquisitionopt"
-            checked={{if
-              (eq
-                form.data.dcpAcquisitionopt
-                (optionset 'landuseForm' 'dcpAcquisitionopt' 'code' 'Yes')
-              ) "checked"}}
-            onClick={{fn (mut form.data.dcpAcquisitionopt)
-              (if form.data.dcpAcquisitionopt
-                (optionset 'landuseForm' 'dcpAcquisitionopt' 'code' 'No')
-                (optionset 'landuseForm' 'dcpAcquisitionopt' 'code' 'Yes')
-              )
-            }}
-          />
-          <label for="dcpAcquisitionopt">
-            Public Facility Acquisition
-          </label>
+      <Input
+        type="checkbox"
+        id="dcpAcquisitionopt"
+        data-test-checkbox="dcpAcquisitionopt"
+        checked={{if
+          (eq
+            form.data.dcpAcquisitionopt
+            (optionset 'landuseForm' 'dcpAcquisitionopt' 'code' 'Yes')
+          ) "checked"}}
+        onClick={{fn (mut form.data.dcpAcquisitionopt)
+          (if form.data.dcpAcquisitionopt
+            (optionset 'landuseForm' 'dcpAcquisitionopt' 'code' 'No')
+            (optionset 'landuseForm' 'dcpAcquisitionopt' 'code' 'Yes')
+          )
+        }}
+      />
+      <label for="dcpAcquisitionopt">
+        Public Facility Acquisition
+      </label>
 
-          <br>
+      <br>
 
-          <Input
-            type="checkbox"
-            id="dcpSiteselectionopt"
-            data-test-checkbox="dcpSiteselectionopt"
-            checked={{if
-              (eq
-                form.data.dcpSiteselectionopt
-                (optionset 'landuseForm' 'dcpSiteselectionopt' 'code' 'Yes')
-              ) "checked"}}
-            onClick={{fn (mut form.data.dcpSiteselectionopt)
-              (if form.data.dcpSiteselectionopt
-                (optionset 'landuseForm' 'dcpSiteselectionopt' 'code' 'No')
-                (optionset 'landuseForm' 'dcpSiteselectionopt' 'code' 'Yes')
-              )
-            }}
-          />
-          <label for="dcpSiteselectionopt">
-            Public Facility Site Acquisition
-          </label>
-        </Ui::Question>
+      <Input
+        type="checkbox"
+        id="dcpSiteselectionopt"
+        data-test-checkbox="dcpSiteselectionopt"
+        checked={{if
+          (eq
+            form.data.dcpSiteselectionopt
+            (optionset 'landuseForm' 'dcpSiteselectionopt' 'code' 'Yes')
+          ) "checked"}}
+        onClick={{fn (mut form.data.dcpSiteselectionopt)
+          (if form.data.dcpSiteselectionopt
+            (optionset 'landuseForm' 'dcpSiteselectionopt' 'code' 'No')
+            (optionset 'landuseForm' 'dcpSiteselectionopt' 'code' 'Yes')
+          )
+        }}
+      />
+      <label for="dcpSiteselectionopt">
+        Public Facility Site Acquisition
+      </label>
+    </Ui::Question>
 
-        <Ui::Question
-        as |dcpIndicatetypeoffacilityQ|>
-          <dcpIndicatetypeoffacilityQ.Label>
-            What is the type of facility?
-          </dcpIndicatetypeoffacilityQ.Label>
+    <Ui::Question
+    as |dcpIndicatetypeoffacilityQ|>
+      <dcpIndicatetypeoffacilityQ.Label>
+        What is the type of facility?
+      </dcpIndicatetypeoffacilityQ.Label>
 
-          <form.Field
-            @attribute="dcpIndicatetypeoffacility"
-            @type="radio-group"
-          as |DcpIndicatetypeoffacilityRadioGroup|>
-            <DcpIndicatetypeoffacilityRadioGroup
-              @options={{optionset 'landuseForm' 'dcpIndicatetypeoffacility' 'list'}}
-            />
-          </form.Field>
-        </Ui::Question>
+      <form.Field
+        @attribute="dcpIndicatetypeoffacility"
+        @type="radio-group"
+      as |DcpIndicatetypeoffacilityRadioGroup|>
+        <DcpIndicatetypeoffacilityRadioGroup
+          @options={{optionset 'landuseForm' 'dcpIndicatetypeoffacility' 'list'}}
+        />
+      </form.Field>
+    </Ui::Question>
 
-        <Ui::Question
-        as |dcpExistingfacilityproposedtoremainoptQ|>
-          <dcpExistingfacilityproposedtoremainoptQ.Label>
-            Will the existing facility remain?
-          </dcpExistingfacilityproposedtoremainoptQ.Label>
+    <Ui::Question
+    as |dcpExistingfacilityproposedtoremainoptQ|>
+      <dcpExistingfacilityproposedtoremainoptQ.Label>
+        Will the existing facility remain?
+      </dcpExistingfacilityproposedtoremainoptQ.Label>
 
-          <form.Field
-            @attribute="dcpExistingfacilityproposedtoremainopt"
-            @type="radio-group"
-          as |DcpExistingfacilityproposedtoremainoptRadioGroup|>
-            <DcpExistingfacilityproposedtoremainoptRadioGroup
-              @options={{optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainopt' 'list'}}
-              @onChange={{fn this.resetDependentFields this.dependantsOf.dcpExistingfacilityproposedtoremainopt}}
-            as |dcpExistingfacilityproposedtoremainopt|>
-                {{#if (eq
-                  dcpExistingfacilityproposedtoremainopt
-                  (optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainopt' 'code' 'Yes')
-                )}}
-                  <Ui::Question
-                  as |dcpTextexistingfacilityQ|>
-                    <dcpTextexistingfacilityQ.Label>
-                      How long has the existing facility been at this location?
-                    </dcpTextexistingfacilityQ.Label>
+      <form.Field
+        @attribute="dcpExistingfacilityproposedtoremainopt"
+        @type="radio-group"
+      as |DcpExistingfacilityproposedtoremainoptRadioGroup|>
+        <DcpExistingfacilityproposedtoremainoptRadioGroup
+          @options={{optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainopt' 'list'}}
+          @onChange={{fn this.resetDependentFields this.dependantsOf.dcpExistingfacilityproposedtoremainopt}}
+        as |dcpExistingfacilityproposedtoremainopt|>
+            {{#if (eq
+              dcpExistingfacilityproposedtoremainopt
+              (optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainopt' 'code' 'Yes')
+            )}}
+              <Ui::Question
+              as |dcpTextexistingfacilityQ|>
+                <dcpTextexistingfacilityQ.Label>
+                  How long has the existing facility been at this location?
+                </dcpTextexistingfacilityQ.Label>
 
-                    <form.Field
-                      @attribute="dcpTextexistingfacility"
-                      @maxlength="100"
-                      @showCounter={{true}}
-                      id={{dcpTextexistingfacilityQ.id}}
-                    />
-                  </Ui::Question>
-                {{/if}}
+                <form.Field
+                  @attribute="dcpTextexistingfacility"
+                  @maxlength="100"
+                  @showCounter={{true}}
+                  id={{dcpTextexistingfacilityQ.id}}
+                />
+              </Ui::Question>
+            {{/if}}
 
-                {{#if (eq
-                  dcpExistingfacilityproposedtoremainopt
-                  (optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainopt' 'code' 'No')
-                )}}
-                  <Ui::Question
-                  as |dcpExistingfacilityreplacementinanewlocationQ|>
-                    <dcpExistingfacilityreplacementinanewlocationQ.Label>
-                      Will the existing facility be replaced in a new location?
-                    </dcpExistingfacilityreplacementinanewlocationQ.Label>
+            {{#if (eq
+              dcpExistingfacilityproposedtoremainopt
+              (optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainopt' 'code' 'No')
+            )}}
+              <Ui::Question
+              as |dcpExistingfacilityreplacementinanewlocationQ|>
+                <dcpExistingfacilityreplacementinanewlocationQ.Label>
+                  Will the existing facility be replaced in a new location?
+                </dcpExistingfacilityreplacementinanewlocationQ.Label>
 
-                    <form.Field
-                      @attribute="dcpExistingfacilityreplacementinanewlocation"
-                      @type="radio-group"
-                    as |DcpExistingfacilityreplacementinanewlocationRadioGroup|>
-                      <DcpExistingfacilityreplacementinanewlocationRadioGroup
-                        @options={{optionset 'landuseForm' 'dcpExistingfacilityreplacementinanewlocation' 'list'}}
-                      as |dcpExistingfacilityreplacementinanewlocation|>
-                        {{#if (eq
-                          dcpExistingfacilityreplacementinanewlocation
-                          (optionset 'landuseForm' 'dcpExistingfacilityreplacementinanewlocation' 'code' 'Yes')
-                        )}}
-                          <Ui::Question
-                          as |dcpCurrentfacilitylocationQ|>
-                            <dcpCurrentfacilitylocationQ.Label>
-                              Where is the current facility located?
-                            </dcpCurrentfacilitylocationQ.Label>
+                <form.Field
+                  @attribute="dcpExistingfacilityreplacementinanewlocation"
+                  @type="radio-group"
+                as |DcpExistingfacilityreplacementinanewlocationRadioGroup|>
+                  <DcpExistingfacilityreplacementinanewlocationRadioGroup
+                    @options={{optionset 'landuseForm' 'dcpExistingfacilityreplacementinanewlocation' 'list'}}
+                  as |dcpExistingfacilityreplacementinanewlocation|>
+                    {{#if (eq
+                      dcpExistingfacilityreplacementinanewlocation
+                      (optionset 'landuseForm' 'dcpExistingfacilityreplacementinanewlocation' 'code' 'Yes')
+                    )}}
+                      <Ui::Question
+                      as |dcpCurrentfacilitylocationQ|>
+                        <dcpCurrentfacilitylocationQ.Label>
+                          Where is the current facility located?
+                        </dcpCurrentfacilitylocationQ.Label>
 
-                            <form.Field
-                              @attribute="dcpCurrentfacilitylocation"
-                              @maxlength="50"
-                              @showCounter={{true}}
-                              id={{dcpCurrentfacilitylocationQ.id}}
-                            />
-                          </Ui::Question>
-                        {{/if}}
-                      </DcpExistingfacilityreplacementinanewlocationRadioGroup>
-                    </form.Field>
-                  </Ui::Question>
-                {{/if}}
-            </DcpExistingfacilityproposedtoremainoptRadioGroup>
-          </form.Field>
-        </Ui::Question>
+                        <form.Field
+                          @attribute="dcpCurrentfacilitylocation"
+                          @maxlength="50"
+                          @showCounter={{true}}
+                          id={{dcpCurrentfacilitylocationQ.id}}
+                        />
+                      </Ui::Question>
+                    {{/if}}
+                  </DcpExistingfacilityreplacementinanewlocationRadioGroup>
+                </form.Field>
+              </Ui::Question>
+            {{/if}}
+        </DcpExistingfacilityproposedtoremainoptRadioGroup>
+      </form.Field>
+    </Ui::Question>
 
-        <Ui::Question
-        as |dcpExistingfacilityproposedtoremainandexpandQ|>
-          <dcpExistingfacilityproposedtoremainandexpandQ.Label>
-            Will the existing facility remain and be expanded?
-          </dcpExistingfacilityproposedtoremainandexpandQ.Label>
+    <Ui::Question
+    as |dcpExistingfacilityproposedtoremainandexpandQ|>
+      <dcpExistingfacilityproposedtoremainandexpandQ.Label>
+        Will the existing facility remain and be expanded?
+      </dcpExistingfacilityproposedtoremainandexpandQ.Label>
 
-          <form.Field
-            @attribute="dcpExistingfacilityproposedtoremainandexpand"
-            @type="radio-group"
-          as |DcpExistingfacilityproposedtoremainandexpandRadioGroup|>
-            <DcpExistingfacilityproposedtoremainandexpandRadioGroup
-              @options={{optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainandexpand' 'list'}}
-              @onChange={{fn this.resetDependentFields this.dependantsOf.dcpExistingfacilityproposedtoremainandexpand}}
-            as |dcpExistingfacilityproposedtoremainandexpand|>
-              {{#if (eq
-                dcpExistingfacilityproposedtoremainandexpand
-                (optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainandexpand' 'code' 'Yes')
-              )}}
-                <Ui::Question
-                as |dcpHowlonghasexistingfacilitybeenatthislocatQ|>
-                  <dcpHowlonghasexistingfacilitybeenatthislocatQ.Label>
-                    How long has the existing facility been at this location?
-                  </dcpHowlonghasexistingfacilitybeenatthislocatQ.Label>
+      <form.Field
+        @attribute="dcpExistingfacilityproposedtoremainandexpand"
+        @type="radio-group"
+      as |DcpExistingfacilityproposedtoremainandexpandRadioGroup|>
+        <DcpExistingfacilityproposedtoremainandexpandRadioGroup
+          @options={{optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainandexpand' 'list'}}
+          @onChange={{fn this.resetDependentFields this.dependantsOf.dcpExistingfacilityproposedtoremainandexpand}}
+        as |dcpExistingfacilityproposedtoremainandexpand|>
+          {{#if (eq
+            dcpExistingfacilityproposedtoremainandexpand
+            (optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainandexpand' 'code' 'Yes')
+          )}}
+            <Ui::Question
+            as |dcpHowlonghasexistingfacilitybeenatthislocatQ|>
+              <dcpHowlonghasexistingfacilitybeenatthislocatQ.Label>
+                How long has the existing facility been at this location?
+              </dcpHowlonghasexistingfacilitybeenatthislocatQ.Label>
 
-                  <form.Field
-                    @attribute="dcpHowlonghasexistingfacilitybeenatthislocat"
-                    @maxlength="2000"
-                    @showCounter={{true}}
-                    id={{dcpHowlonghasexistingfacilitybeenatthislocatQ.id}}
-                  />
-                </Ui::Question>
-              {{/if}}
-            </DcpExistingfacilityproposedtoremainandexpandRadioGroup>
-          </form.Field>
-        </Ui::Question>
+              <form.Field
+                @attribute="dcpHowlonghasexistingfacilitybeenatthislocat"
+                @maxlength="2000"
+                @showCounter={{true}}
+                id={{dcpHowlonghasexistingfacilitybeenatthislocatQ.id}}
+              />
+            </Ui::Question>
+          {{/if}}
+        </DcpExistingfacilityproposedtoremainandexpandRadioGroup>
+      </form.Field>
+    </Ui::Question>
 
-        <Ui::Question
-        as |dcpNewfacilityoptQ|>
-          <dcpNewfacilityoptQ.Label>
-            Is this a new facility?
-          </dcpNewfacilityoptQ.Label>
+    <Ui::Question
+    as |dcpNewfacilityoptQ|>
+      <dcpNewfacilityoptQ.Label>
+        Is this a new facility?
+      </dcpNewfacilityoptQ.Label>
 
-          <form.Field
-            @attribute="dcpNewfacilityopt"
-            @type="radio-group"
-          as |DcpNewfacilityoptRadioGroup|>
-            <DcpNewfacilityoptRadioGroup
-              @options={{optionset 'landuseForm' 'dcpNewfacilityopt' 'list'}}
-            />
-          </form.Field>
-        </Ui::Question>
+      <form.Field
+        @attribute="dcpNewfacilityopt"
+        @type="radio-group"
+      as |DcpNewfacilityoptRadioGroup|>
+        <DcpNewfacilityoptRadioGroup
+          @options={{optionset 'landuseForm' 'dcpNewfacilityopt' 'list'}}
+        />
+      </form.Field>
+    </Ui::Question>
 
-        <Ui::Question
-        as |dcpIsprojectlistedinstatementofneedsoptQ|>
-          <dcpIsprojectlistedinstatementofneedsoptQ.Label>
-            Is project listed in Citywide Statement of Needs? 
-          </dcpIsprojectlistedinstatementofneedsoptQ.Label>
+    <Ui::Question
+    as |dcpIsprojectlistedinstatementofneedsoptQ|>
+      <dcpIsprojectlistedinstatementofneedsoptQ.Label>
+        Is project listed in Citywide Statement of Needs? 
+      </dcpIsprojectlistedinstatementofneedsoptQ.Label>
 
-          <form.Field
-            @attribute="dcpIsprojectlistedinstatementofneedsopt"
-            @type="radio-group"
-          as |DcpIsprojectlistedinstatementofneedsoptRadioGroup|>
-            <DcpIsprojectlistedinstatementofneedsoptRadioGroup
-              @options={{optionset 'landuseForm' 'dcpIsprojectlistedinstatementofneedsopt' 'list'}}
-              @onChange={{fn (mut @form.data.dcpIndicatefiscalyears) ""}}
-            as |dcpIsprojectlistedinstatementofneedsopt|>
-              {{#if (eq
-                dcpIsprojectlistedinstatementofneedsopt
-                (optionset 'landuseForm' 'dcpIsprojectlistedinstatementofneedsopt' 'code' 'Yes')
-              )}}
-                <Ui::Question
-                as |dcpIndicatefiscalyearsQ|>
-                  <dcpIndicatefiscalyearsQ.Label>
-                    In what fiscal year was the project listed in Citywide Statement?
-                  </dcpIndicatefiscalyearsQ.Label>
+      <form.Field
+        @attribute="dcpIsprojectlistedinstatementofneedsopt"
+        @type="radio-group"
+      as |DcpIsprojectlistedinstatementofneedsoptRadioGroup|>
+        <DcpIsprojectlistedinstatementofneedsoptRadioGroup
+          @options={{optionset 'landuseForm' 'dcpIsprojectlistedinstatementofneedsopt' 'list'}}
+          @onChange={{fn (mut @form.data.dcpIndicatefiscalyears) ""}}
+        as |dcpIsprojectlistedinstatementofneedsopt|>
+          {{#if (eq
+            dcpIsprojectlistedinstatementofneedsopt
+            (optionset 'landuseForm' 'dcpIsprojectlistedinstatementofneedsopt' 'code' 'Yes')
+          )}}
+            <Ui::Question
+            as |dcpIndicatefiscalyearsQ|>
+              <dcpIndicatefiscalyearsQ.Label>
+                In what fiscal year was the project listed in Citywide Statement?
+              </dcpIndicatefiscalyearsQ.Label>
 
-                  <form.Field
-                    @attribute="dcpIndicatefiscalyears"
-                    @maxlength="100"
-                    @showCounter={{true}}
-                    id={{dcpIndicatefiscalyearsQ.id}}
-                  />
-                </Ui::Question>
+              <form.Field
+                @attribute="dcpIndicatefiscalyears"
+                @maxlength="100"
+                @showCounter={{true}}
+                id={{dcpIndicatefiscalyearsQ.id}}
+              />
+            </Ui::Question>
 
-                <Ui::Question
-                as |dcpIndicatepgnoQ|>
-                  <dcpIndicatepgnoQ.Label>
-                    What page in Citywide Statement?
-                  </dcpIndicatepgnoQ.Label>
+            <Ui::Question
+            as |dcpIndicatepgnoQ|>
+              <dcpIndicatepgnoQ.Label>
+                What page in Citywide Statement?
+              </dcpIndicatepgnoQ.Label>
 
-                  <form.Field
-                    @attribute="dcpIndicatepgno"
-                    @maxlength="100"
-                    @showCounter={{true}}
-                    id={{dcpIndicatepgnoQ.id}}
-                  />
-                </Ui::Question>
-              {{/if}}
-            </DcpIsprojectlistedinstatementofneedsoptRadioGroup>
-          </form.Field>
-        </Ui::Question>
+              <form.Field
+                @attribute="dcpIndicatepgno"
+                @maxlength="100"
+                @showCounter={{true}}
+                id={{dcpIndicatepgnoQ.id}}
+              />
+            </Ui::Question>
+          {{/if}}
+        </DcpIsprojectlistedinstatementofneedsoptRadioGroup>
+      </form.Field>
+    </Ui::Question>
 
-        <Ui::Question
-        as |dcpDidboroughpresidentproposealternativesiteQ|>
-          <dcpDidboroughpresidentproposealternativesiteQ.Label>
-            Did Borough President propose alternate site pursuant to charter section 204(f) or (g)?
-          </dcpDidboroughpresidentproposealternativesiteQ.Label>
+    <Ui::Question
+    as |dcpDidboroughpresidentproposealternativesiteQ|>
+      <dcpDidboroughpresidentproposealternativesiteQ.Label>
+        Did Borough President propose alternate site pursuant to charter section 204(f) or (g)?
+      </dcpDidboroughpresidentproposealternativesiteQ.Label>
 
-          <form.Field
-            @attribute="dcpDidboroughpresidentproposealternativesite"
-            @type="radio-group"
-          as |DcpDidboroughpresidentproposealternativesiteRadioGroup|>
-            <DcpDidboroughpresidentproposealternativesiteRadioGroup
-              @options={{optionset 'landuseForm' 'dcpDidboroughpresidentproposealternativesite' 'list'}}
-            />
-          </form.Field>
-        </Ui::Question>
+      <form.Field
+        @attribute="dcpDidboroughpresidentproposealternativesite"
+        @type="radio-group"
+      as |DcpDidboroughpresidentproposealternativesiteRadioGroup|>
+        <DcpDidboroughpresidentproposealternativesiteRadioGroup
+          @options={{optionset 'landuseForm' 'dcpDidboroughpresidentproposealternativesite' 'list'}}
+        />
+      </form.Field>
+    </Ui::Question>
 
-        <Ui::Question
-        as |dcpWhatsiteQ|>
-          <dcpWhatsiteQ.Label>
-            What and where was the alternate site?
-          </dcpWhatsiteQ.Label>
+    <Ui::Question
+    as |dcpWhatsiteQ|>
+      <dcpWhatsiteQ.Label>
+        What and where was the alternate site?
+      </dcpWhatsiteQ.Label>
 
-          <form.Field
-            @attribute="dcpWhatsite"
-            @maxlength="100"
-            @showCounter={{true}}
-            id={{dcpWhatsiteQ.id}}
-          />
-        </Ui::Question>
+      <form.Field
+        @attribute="dcpWhatsite"
+        @maxlength="100"
+        @showCounter={{true}}
+        id={{dcpWhatsiteQ.id}}
+      />
+    </Ui::Question>
 
-        <Ui::Question
-        as |dcpCapitalbudgetlineQ|>
-          <dcpCapitalbudgetlineQ.Label>
-            What is the capital budget line?
-          </dcpCapitalbudgetlineQ.Label>
+    <Ui::Question
+    as |dcpCapitalbudgetlineQ|>
+      <dcpCapitalbudgetlineQ.Label>
+        What is the capital budget line?
+      </dcpCapitalbudgetlineQ.Label>
 
-          <form.Field
-            @attribute="dcpCapitalbudgetline"
-            @maxlength="100"
-            @showCounter={{true}}
-            id={{dcpCapitalbudgetlineQ.id}}
-          />
-        </Ui::Question>
+      <form.Field
+        @attribute="dcpCapitalbudgetline"
+        @maxlength="100"
+        @showCounter={{true}}
+        id={{dcpCapitalbudgetlineQ.id}}
+      />
+    </Ui::Question>
 
-        <Ui::Question
-        as |dcpForfiscalyrsQ|>
-          <dcpForfiscalyrsQ.Label>
-            For which capital budget fiscal years?
-          </dcpForfiscalyrsQ.Label>
+    <Ui::Question
+    as |dcpForfiscalyrsQ|>
+      <dcpForfiscalyrsQ.Label>
+        For which capital budget fiscal years?
+      </dcpForfiscalyrsQ.Label>
 
-          <form.Field
-            @attribute="dcpForfiscalyrs"
-            @maxlength="100"
-            @showCounter={{true}}
-            id={{dcpForfiscalyrsQ.id}}
-          />
-        </Ui::Question>
-      </form.Section>
-    {{/if}}
-  {{/let}}
+      <form.Field
+        @attribute="dcpForfiscalyrs"
+        @maxlength="100"
+        @showCounter={{true}}
+        id={{dcpForfiscalyrsQ.id}}
+      />
+    </Ui::Question>
+  </form.Section>
 {{/let}}

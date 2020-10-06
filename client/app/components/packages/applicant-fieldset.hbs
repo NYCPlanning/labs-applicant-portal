@@ -94,7 +94,7 @@
             @searchEnabled={{true}}
             @searchField="label"
             @options={{map-by 'code' (optionset 'applicant' 'dcpState' 'list')}}
-            @onchange={{fn (mut @applicant.dcpState)}}
+            @onChange={{fn (mut @applicant.dcpState)}}
           as |stateCode|>
             {{optionset 'applicant' 'dcpState' 'label' stateCode}}
           </PowerSelect>
