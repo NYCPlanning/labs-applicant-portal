@@ -4,6 +4,9 @@ export default class AffectedZoningResolutionModel extends Model {
   @belongsTo('rwcds-form')
   rwcdsForm;
 
+  @belongsTo('landuse-form')
+  landuseForm;
+
   @attr
   dcpZoningresolutiontype;
 

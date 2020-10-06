@@ -33,7 +33,8 @@ export class LanduseFormService {
       &$expand=
         dcp_dcp_landuse_dcp_sitedatahform_landuseform,
         dcp_dcp_landuse_dcp_landusegeography_landuseform,
-        dcp_leadagency
+        dcp_leadagency,
+        dcp_dcp_landuse_dcp_affectedzoningresolution_Landuseform
     `);
 
     return {

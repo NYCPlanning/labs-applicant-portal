@@ -109,6 +109,7 @@ import { CitypayService } from '../citypay/citypay.service';
       'sitedatah-forms',
       'landuse-geographies',
       'lead-agency',
+      'affected-zoning-resolutions',
     ],
     applicants: {
       ref: 'dcp_applicantinformationid',
@@ -152,6 +153,12 @@ import { CitypayService } from '../citypay/citypay.service';
       attributes: [
         'name',
         'accountid',
+      ],
+    },
+    'affected-zoning-resolutions': {
+      ref: 'dcp_affectedzoningresolutionid',
+      attributes: [
+        ...AFFECTEDZONINGRESOLUTION_ATTRS,
       ],
     },
   },
@@ -232,6 +239,7 @@ import { CitypayService } from '../citypay/citypay.service';
             'sitedatah-forms': landuseForm.dcp_dcp_landuse_dcp_sitedatahform_landuseform,
             'landuse-geographies': landuseForm.dcp_dcp_landuse_dcp_landusegeography_landuseform,
             'lead-agency': landuseForm.dcp_leadagency,
+            'affected-zoning-resolutions': landuseForm.dcp_dcp_landuse_dcp_affectedzoningresolution_Landuseform,
           }
         }
       } else {

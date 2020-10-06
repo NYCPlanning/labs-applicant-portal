@@ -47,6 +47,8 @@ export default function() {
   this.get('/affected-zoning-resolutions');
   this.get('/affected-zoning-resolutions/:id');
   this.patch('/affected-zoning-resolutions/:id');
+  this.post('/affected-zoning-resolutions');
+  this.del('/affected-zoning-resolutions/:id');
 
   this.get('/rwcds-forms');
   this.get('/rwcds-forms/:id');
