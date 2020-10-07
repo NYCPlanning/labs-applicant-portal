@@ -22,7 +22,7 @@
             @model={{sitedatahForm}}
             @validators={{array
               @validations.SaveableSitedatahFormValidations
-              (hash)
+              @validations.SubmittableSitedatahFormValidations
             }}
           as |sitedatahFormForm|>
             <Packages::LanduseForm::SubjectSitesFieldset

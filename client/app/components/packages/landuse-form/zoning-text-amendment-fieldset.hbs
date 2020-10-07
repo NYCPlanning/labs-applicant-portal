@@ -1,0 +1,39 @@
+{{#let @form as |form|}}
+  <Ui::Question
+    class="fieldset relative"
+    ...attributes
+  as |Q|>
+    <Q.Legend data-test-zr-section-title>
+      ZR Section
+    </Q.Legend>
+
+    <label>
+      Zoning Section Number
+      <form.Field
+        @attribute="dcpZrsectionnumber"
+        @showCounter={{true}}
+        @maxlength="25"
+      />
+    </label>
+
+    <label>
+      Zoning Section Title
+      <form.Field
+        @attribute="dcpZrsectiontitle"
+        @showCounter={{true}}
+        @maxlength="100"
+      />
+    </label>
+
+    <button
+      type="button"
+      class="delete-fieldset"
+      {{on "click" (fn @removeZrSection @zrSection)}}
+      data-test-remove-zr-section-button
+    >
+      Delete ZR Section
+      <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
+    </button>
+
+  </Ui::Question>
+{{/let}}

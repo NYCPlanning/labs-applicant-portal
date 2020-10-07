@@ -18,6 +18,9 @@ import { LANDUSE_FORM_ATTRS } from './landuse-form.attrs';
 @UseInterceptors(new JsonApiSerializeInterceptor('landuse-forms', {
   attributes: [
     ...LANDUSE_FORM_ATTRS,
+
+    // this is an association. before, we thought it wasn't!
+    'dcp_leadagency',
   ],
 }))
 @UseGuards(AuthenticateGuard)
@@ -30,7 +33,11 @@ export class LanduseFormController {
   async update(@Body() body, @Param('id') id) {
     const allowedAttrs = pick(body, LANDUSE_FORM_ATTRS);
 
-    await this.crmService.update('dcp_landuses', id, allowedAttrs);
+    await this.crmService.update('dcp_landuses', id, {
+      ...allowedAttrs,
+
+      ...(body.chosen_lead_agency_id ? { 'dcp_leadagency@odata.bind': `/accounts(${body.chosen_lead_agency_id})` } : {}),
+    });
 
     return {
       dcp_landuseid: id,

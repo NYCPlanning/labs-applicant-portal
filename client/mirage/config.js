@@ -47,6 +47,8 @@ export default function() {
   this.get('/affected-zoning-resolutions');
   this.get('/affected-zoning-resolutions/:id');
   this.patch('/affected-zoning-resolutions/:id');
+  this.post('/affected-zoning-resolutions');
+  this.del('/affected-zoning-resolutions/:id');
 
   this.get('/rwcds-forms');
   this.get('/rwcds-forms/:id');
@@ -75,6 +77,11 @@ export default function() {
 
   this.get('/landuse-actions');
   this.patch('/landuse-actions/:id');
+
+  this.get('/lead-agencys');
+  this.get('/lead-agencys/:id');
+  this.get('/accounts');
+  this.get('/accounts/:id');
 
   this.post('/documents', function(schema, request) {
     // requestBody should be a FormData object
