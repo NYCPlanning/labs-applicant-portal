@@ -11,29 +11,30 @@ import {
   import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
   import { AuthenticateGuard } from '../authenticate.guard';
   import { JsonApiDeserializePipe } from '../json-api-deserialize.pipe';
-  import { ACCOUNT_ATTRS } from './accounts.attrs';
+  import { ZONINGRESOLUTION_ATTRS } from './zoning-resolutions.attrs';
 
   const ACTIVE_STATUSCODE = 1;
+  const ACTIVE_STATECODE = 0;
   
-  @UseInterceptors(new JsonApiSerializeInterceptor('accounts', {
-    id: 'accountid',
+  @UseInterceptors(new JsonApiSerializeInterceptor('zoning-resolutions', {
+    id: 'dcp_zoningresolutionid',
     attributes: [
-      ...ACCOUNT_ATTRS,
+      ...ZONINGRESOLUTION_ATTRS,
     ],
   
-    transform(account) {
+    transform(zoningResolution) {
       try {
         return {
-          ...account,
+          ...zoningResolution,
         };
       } catch(e) {
         if (e instanceof HttpException) {
           throw e;
         } else {
           throw new HttpException({
-            code: 'ACCOUNTS_ERROR',
-            title: 'Failed load accounts',
-            detail: `An error occurred while loading one or more accounts. ${e.message}`,
+            code: 'ZONINGRESOLUTIONS_ERROR',
+            title: 'Failed load zoning resolutions',
+            detail: `An error occurred while loading one or more zoning resolutions. ${e.message}`,
           }, HttpStatus.INTERNAL_SERVER_ERROR);
         }
       }
@@ -41,20 +42,20 @@ import {
   }))
   @UseGuards(AuthenticateGuard)
   @UsePipes(JsonApiDeserializePipe)
-  @Controller('accounts')
-  export class AccountsController {
+  @Controller('zoning-resolutions')
+  export class ZoningResolutionsController {
     constructor(
       private readonly crmService: CrmService,
     ) {}
   
     @Get('/')
-    async accounts() {
+    async zoningResolutions() {
       try {
-        const { records } = await this.crmService.get('accounts',
-          `$select=name
+        const { records } = await this.crmService.get('dcp_zoningresolutions',
+          `$select=dcp_zoningresolution
           &$filter=
           statuscode eq ${ACTIVE_STATUSCODE}
-          and dcp_agencyceqracronym ne null
+          and statecode eq ${ACTIVE_STATECODE}
       `);
         return records;
       } catch (e) {
@@ -62,9 +63,9 @@ import {
           throw e;
         } else {
           throw new HttpException({
-            code: 'FIND_ACCOUNTS_FAILED',
-            title: 'Failed getting accounts',
-            detail: `An unknown server error occured while getting accounts. ${e.message}`,
+            code: 'FIND_ZONINGRESOLUTIONS_FAILED',
+            title: 'Failed getting zoning resolutions',
+            detail: `An unknown server error occured while getting zoning resolutions. ${e.message}`,
           }, HttpStatus.INTERNAL_SERVER_ERROR);
         }
       }

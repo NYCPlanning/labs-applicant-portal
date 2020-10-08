@@ -1,5 +1,8 @@
 {{#let @landuseActionForm as |landuseActionForm|}}
   <fieldset class="fieldset">
+    
+    <p>{{landuseActionForm.data.dcpDatadifferentiationmultipleactionsametype}}</p>
+
     <Ui::Legend>
       <span class="label">
         {{#if (lookup-action-type landuseActionForm.data.dcpActioncode)}}
@@ -14,28 +17,6 @@
         {{~landuseActionForm.data.dcpActioncode~}}
       </span>
     </Ui::Legend>
-
-    <div>
-      <h5 class="small-margin-bottom">
-        If this is a follow-up Action, indicate the previous approval Action Code
-      </h5>
-
-      <label data-test-dcpPreviouslyapprovedactioncode-picker="{{landuseActionForm.data.dcpActioncode}}">
-        <PowerSelect
-          triggerClass="previouslyapprovedactions-dropdown"
-          supportsDataTestProperties={{true}}
-          @placeholder={{this.selectedActionPlaceholder}}
-          @searchEnabled={{false}}
-          @options={{optionset 'landuseAction' 'dcpPreviouslyapprovedactioncode' 'list'}}
-          @selected={{this.actionCode}}
-          @onChange={{fn (mut this.actionCode)}}
-          @onClose={{fn (mut landuseActionForm.data.dcpPreviouslyapprovedactioncode) this.actionCode.code}}
-          as |landUseAction|
-        >
-          {{landUseAction.label}}
-        </PowerSelect>
-      </label>
-    </div>
 
     <Ui::Question
       class="no-margin-top"
@@ -57,5 +38,306 @@
       </landuseActionForm.Field>
 
     </Ui::Question>
+
+    {{#if this.projectHasRequiredActions}}
+
+      <Packages::LanduseForm::ZoningResolutionDropdown
+        @landuseForm={{form}}
+        @zoningResolutions={{@zoningResolutions}}
+      />
+    
+      <Ui::Question as |Q|>
+        <Q.Label>
+          Zoning Resolution section name
+        </Q.Label>
+
+        <landuseActionForm.Field
+          @attribute="dcpNameofzoningresolutionsection"
+          @showCounter={{true}}
+          @maxlength="25"
+          id={{Q.questionId}}
+        />
+      </Ui::Question>
+
+      <Ui::Question as |Q|>
+        <Q.Label>
+          Zoning Resolution section(s) to be modified
+        </Q.Label>
+
+        <landuseActionForm.Field
+          @attribute="dcpZoningresolutionsectionactionispursuant"
+          @showCounter={{true}}
+          @maxlength="25"
+        />
+      </Ui::Question>
+
+      <Ui::Question as |Q|>
+        <Q.Label>
+          Number of Zoning Lot(s) affected
+        </Q.Label>
+
+        <p class="q-help">
+          Provide the Zoning Resolution section number. Ex. ZR Sec. 74-711
+        </p>
+
+        <landuseActionForm.Field
+          @attribute="dcpNumberofzoninglotsaffected"
+          @showCounter={{true}}
+          @maxlength="25"
+        />
+      </Ui::Question>
+
+      <Ui::Question as |Q|>
+        <Q.Label>
+          Square footage of Zoning Lot(s) affected
+        </Q.Label>
+
+        <landuseActionForm.Field
+          @attribute="dcpSquarefootageofzoninglotsaffected"
+          @showCounter={{true}}
+          @maxlength="25"
+        />
+      </Ui::Question>
+
+      <Ui::Question as |Q|>
+        <Q.Label>
+          Square footage of Zoning Lot(s) affected
+        </Q.Label>
+
+        <landuseActionForm.Field
+          @attribute="dcpSquarefootageofzoninglotsaffected"
+          @showCounter={{true}}
+          @maxlength="25"
+        />
+      </Ui::Question>
+
+      <Ui::Question as |Q|>
+        <Q.Label>
+          Square footage of the Proposed Development
+        </Q.Label>
+
+        <landuseActionForm.Field
+          @attribute="dcpSquarefootageoftheproposeddevelopment"
+          @showCounter={{true}}
+          @maxlength="25"
+        />
+      </Ui::Question>
+
+      <Ui::Question as |Q|>
+        <Q.Label>
+          Square footage associated with transfer of Development Rights or Floor Area Bonus
+        </Q.Label>
+
+        <landuseActionForm.Field
+          @attribute="dcpSquarefootassociatedwithtransferbonus"
+          @showCounter={{true}}
+          @maxlength="25"
+        />
+      </Ui::Question>
+
+      <Ui::Question as |Q|>
+        <Q.Label>
+          Proposed number of dwelling units
+        </Q.Label>
+
+        <landuseActionForm.Field
+          @attribute="dcpNumberofdu"
+          @showCounter={{true}}
+          @maxlength="25"
+        />
+      </Ui::Question>
+
+      <Ui::Question
+        class="no-margin-top"
+        data-test-action-open-use-radio-group
+        as |Q|
+      >
+
+        <Q.Legend>
+          Is the Action to authorize or permit an open use?
+        </Q.Legend>
+
+        <landuseActionForm.Field
+          @attribute="dcpIstheactiontoauthorizeorpermitanopenuse"
+          @type="radio"
+          as |RadioButton|
+        >
+          <RadioButton
+            @targetValue={{true}}
+            data-test-action-open-use="true"
+          >
+            Yes
+          </RadioButton>
+          <RadioButton
+            @targetValue={{false}}
+            data-test-action-open-use="false"
+          >
+            No
+          </RadioButton>
+        </landuseActionForm.Field>
+
+      </Ui::Question>
+
+      <Ui::Question
+        class="no-margin-top"
+        data-test-action-commercial-radio-group
+        as |Q|
+      >
+
+        <Q.Legend>
+          Is the Action to authorize commercial or community facility use?
+        </Q.Legend>
+
+        <landuseActionForm.Field
+          @attribute="dcpIstheactiontoauthorizeacommercial"
+          @type="radio"
+          as |RadioButton|
+        >
+          <RadioButton
+            @targetValue={{true}}
+            data-test-action-commercial="true"
+          >
+            Yes
+          </RadioButton>
+          <RadioButton
+            @targetValue={{false}}
+            data-test-action-commercial="false"
+          >
+            No
+          </RadioButton>
+        </landuseActionForm.Field>
+
+      </Ui::Question>
+
+    {{/if}}
+
+    <div>
+      <h5 class="small-margin-bottom">
+        If this is a follow-up Action, indicate the previous approval Action Code
+      </h5>
+
+      <label data-test-dcpPreviouslyapprovedactioncode-picker="{{landuseActionForm.data.dcpActioncode}}">
+        <PowerSelect
+          triggerClass="previouslyapprovedactions-dropdown"
+          supportsDataTestProperties={{true}}
+          @placeholder={{this.selectedActionPlaceholder}}
+          @searchEnabled={{false}}
+          @options={{optionset 'landuseAction' 'dcpPreviouslyapprovedactioncode' 'list'}}
+          @selected={{this.actionCode}}
+          @onChange={{fn (mut this.actionCode)}}
+          @onClose={{fn this.setPreviouslyApprovedActionCodeFields this.actionCode.code}}
+          as |landUseAction|
+        >
+          {{landUseAction.label}}
+        </PowerSelect>
+      </label>
+    </div>
+
+    {{#if this.projectHasRequiredActionsAndFollowUpYes}}
+
+      <Ui::Question as |Q|>
+        <Q.Label>
+          Date of previous approval
+        </Q.Label>
+
+        <landuseActionForm.Field
+          @attribute="dcpDateofpreviousapproval"
+          @showCounter={{true}}
+          @maxlength="25"
+        />
+      </Ui::Question>
+
+      <Ui::Question as |Q|>
+        <Q.Label>
+          Lapse date of previous approval
+        </Q.Label>
+
+        <landuseActionForm.Field
+          @attribute="dcpLapsedateofpreviousapproval"
+          @showCounter={{true}}
+          @maxlength="25"
+        />
+      </Ui::Question>
+
+      <Ui::Question as |Q|>
+        <Q.Label>
+          Is this a modification subject to Section 197-c of the City Charter? 
+        </Q.Label>
+
+        <landuseActionForm.Field
+          @attribute="dcpModsubjectto197c"
+          @showCounter={{true}}
+          @maxlength="25"
+        />
+      </Ui::Question>
+
+      <Ui::Question
+        class="no-margin-top"
+        data-test-action-legal-instrument-radio-group
+        as |Q|
+      >
+
+        <Q.Legend>
+          Is the Action a modification to or pursuant to a Legal Instrument?
+        </Q.Legend>
+
+        <landuseActionForm.Field
+          @attribute="dcpIndicatewhetheractionisamodification"
+          @type="radio"
+          as |RadioButton|
+        >
+          <RadioButton
+            @targetValue={{true}}
+            data-test-action-legal-instrument="true"
+          >
+            Yes
+          </RadioButton>
+          <RadioButton
+            @targetValue={{false}}
+            data-test-action-legal-instrument="false"
+          >
+            No
+          </RadioButton>
+        </landuseActionForm.Field>
+
+      </Ui::Question>
+
+      <Ui::Question as |Q|>
+        <Q.Label>
+          Type of Legal Instrument 
+        </Q.Label>
+
+        <landuseActionForm.Field
+          @attribute="dcpTypeoflegalinstrument"
+          @showCounter={{true}}
+          @maxlength="25"
+        />
+      </Ui::Question>
+
+      <Ui::Question as |Q|>
+        <Q.Label>
+          CRFN or other tracking number for Legal Instrument 
+        </Q.Label>
+
+        <landuseActionForm.Field
+          @attribute="dcpCrfnnumber"
+          @showCounter={{true}}
+          @maxlength="25"
+        />
+      </Ui::Question>
+
+      <Ui::Question as |Q|>
+        <Q.Label>
+          Recordation date of Legal Instrument
+        </Q.Label>
+
+        <landuseActionForm.Field
+          @attribute="dcpRecordationdate"
+          @showCounter={{true}}
+          @maxlength="25"
+        />
+      </Ui::Question>
+
+    {{/if}}
   </fieldset>
 {{/let}}

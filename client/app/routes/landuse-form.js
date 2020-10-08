@@ -18,6 +18,7 @@ export default class LanduseFormRoute extends Route.extend(AuthenticatedRouteMix
         'landuse-form.landuse-geographies',
         'landuse-form.lead-agency',
         'landuse-form.affected-zoning-resolutions',
+        'landuse-form.landuse-actions.zoning-resolutions',
       ].join(),
     });
 
@@ -27,6 +28,7 @@ export default class LanduseFormRoute extends Route.extend(AuthenticatedRouteMix
     return RSVP.hash({
       package: landuseFormPackage,
       accounts: await this.store.findAll('account'),
+      zoningResolutions: await this.store.findAll('zoning-resolution'),
     });
   }
 }
