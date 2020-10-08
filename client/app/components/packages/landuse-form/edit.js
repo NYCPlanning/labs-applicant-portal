@@ -17,6 +17,8 @@ import SaveableLanduseGeographyValidations from '../../../validations/saveable-l
 import SubmittableLanduseGeographyValidations from '../../../validations/submittable-landuse-geography';
 import SaveableAffectedZoningResolutionFormValidations from '../../../validations/saveable-affected-zoning-resolution-form';
 import SubmittableAffectedZoningResolutionFormValidations from '../../../validations/submittable-affected-zoning-resolution-form';
+import SaveableZoningMapChangeValidations from '../../../validations/saveable-zoning-map-change';
+import SubmittableZoningMapChangeValidations from '../../../validations/submittable-zoning-map-change';
 import { addToHasMany, removeFromHasMany } from '../../../utils/ember-changeset';
 
 export default class LandUseFormComponent extends Component {
@@ -36,6 +38,8 @@ export default class LandUseFormComponent extends Component {
     SubmittableLanduseGeographyValidations,
     SaveableAffectedZoningResolutionFormValidations,
     SubmittableAffectedZoningResolutionFormValidations,
+    SaveableZoningMapChangeValidations,
+    SubmittableZoningMapChangeValidations,
   };
 
   @tracked recordsToDelete = [];
@@ -171,5 +175,23 @@ export default class LandUseFormComponent extends Component {
     this.recordsToDelete.push(affectedZoningResolution);
 
     affectedZoningResolution.deleteRecord();
+  }
+
+  @action
+  addZoningMapChange(changeset) {
+    const newZoningMapChange = this.store.createRecord('zoning-map-change', {
+      landuseForm: this.landuseForm,
+    });
+
+    addToHasMany(changeset, 'zoningMapChanges', newZoningMapChange);
+  }
+
+  @action
+  removeZoningMapChange(zoningMapChange, changeset) {
+    removeFromHasMany(changeset, 'zoningMapChanges', zoningMapChange);
+
+    this.recordsToDelete.push(zoningMapChange);
+
+    zoningMapChange.deleteRecord();
   }
 }

@@ -129,6 +129,41 @@ export const DCPTYPEDISPOSITION = {
   },
 };
 
+export const DCPTOTALZONINGAREATOBEREZONED = {
+  LT_10K: {
+    code: 717170000,
+    label: 'Less than 10,000 square feet',
+  },
+  LT_20K: {
+    code: 717170001,
+    label: '10,000 to 19,999 square feet',
+  },
+  LT_40K: {
+    code: 717170002,
+    label: '20,000 to 39,999 square feet',
+  },
+  LT_70K: {
+    code: 717170003,
+    label: '40,000 to 69,999 square feet',
+  },
+  LT_100K: {
+    code: 717170004,
+    label: '70,000 to 99,999 square feet',
+  },
+  LT_240K: {
+    code: 717170005,
+    label: '100,000 to 239,999 square feet',
+  },
+  LTE_500K: {
+    code: 717170006,
+    label: '240,000 to 500,000 square feet',
+  },
+  GT_500K: {
+    code: 717170007,
+    label: 'Greater than 500,000 square feet',
+  },
+};
+
 const LANDUSE_FORM_OPTIONSETS = {
   CEQR_TYPE,
   DCPDEVSIZE,
@@ -141,6 +176,7 @@ const LANDUSE_FORM_OPTIONSETS = {
   DCPLEGALINSTRUMENT,
   DCPONLYCHANGETHEELIMINATIONOFAMAPPEDBUTUNIMP,
   DCPTYPEDISPOSITION,
+  DCPTOTALZONINGAREATOBEREZONED,
 };
 
 export default LANDUSE_FORM_OPTIONSETS;

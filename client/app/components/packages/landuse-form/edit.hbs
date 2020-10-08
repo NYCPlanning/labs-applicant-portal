@@ -74,13 +74,6 @@
         @form={{saveableForm}}
       />
 
-      <Packages::LanduseForm::ZoningTextAmendment
-        @form={{saveableForm}}
-        @addZrSection={{this.addZrSection}}
-        @removeZrSection={{this.removeZrSection}}
-        @validations={{this.validations}}
-      />
-
       {{#let (intersect
         (map-by "dcpActioncode" this.landuseForm.landuseActions)
         (array 'HA' 'HC' 'HD' 'HG' 'HN' 'HO' 'HP' 'HU')
@@ -119,6 +112,20 @@
 
       <Packages::LanduseForm::Disposition
         @form={{saveableForm}}
+      />
+
+      <Packages::LanduseForm::ZoningTextAmendment
+        @form={{saveableForm}}
+        @addZrSection={{this.addZrSection}}
+        @removeZrSection={{this.removeZrSection}}
+        @validations={{this.validations}}
+      />
+
+      <Packages::LanduseForm::ZoningMapAmendment
+        @form={{saveableForm}}
+        @addZoningMapChange={{this.addZoningMapChange}}
+        @removeZoningMapChange={{this.removeZoningMapChange}}
+        @validations={{this.validations}}
       />
 
       <Packages::LanduseForm::AttachedDocuments
