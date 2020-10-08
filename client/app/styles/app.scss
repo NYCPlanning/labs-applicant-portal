@@ -33,6 +33,7 @@ $small-font-size: 81.25%; // TODO: update Style Guide so that <small> matches .t
 
 // Labs UI components
 @import 'labs-ui/all-modules'; // or a subset
+@import "ember-power-select";
 
 // Custom app components
 @import 'modules/_login';
@@ -41,8 +42,7 @@ $small-font-size: 81.25%; // TODO: update Style Guide so that <small> matches .t
 @import 'modules/_pasform';
 @import 'modules/_animations';
 
-@import "ember-power-select";
-@import 'modules/_powerselect-overrides';
+@import 'modules/_powerselect-overrides'; // TODO: move to Labs UI (if necessary)
 
 
 .site-header {

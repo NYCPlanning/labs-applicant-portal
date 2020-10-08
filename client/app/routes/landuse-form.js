@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
+import RSVP from 'rsvp';
 
 export default class LanduseFormRoute extends Route.extend(AuthenticatedRouteMixin) {
   authenticationRoute = '/';
@@ -14,12 +15,18 @@ export default class LanduseFormRoute extends Route.extend(AuthenticatedRouteMix
         'landuse-form.related-actions',
         'landuse-form.landuse-actions',
         'landuse-form.sitedatah-forms',
+        'landuse-form.landuse-geographies',
+        'landuse-form.lead-agency',
+        'landuse-form.affected-zoning-resolutions',
       ].join(),
     });
 
     // manually generate a file factory
     landuseFormPackage.createFileQueue();
 
-    return landuseFormPackage;
+    return RSVP.hash({
+      package: landuseFormPackage,
+      accounts: await this.store.findAll('account'),
+    });
   }
 }

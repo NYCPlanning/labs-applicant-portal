@@ -11,7 +11,12 @@ import SubmittableApplicantFormValidations from '../../../validations/submittabl
 import SaveableRelatedActionFormValidations from '../../../validations/saveable-related-action-form';
 import SubmittableRelatedActionFormValidations from '../../../validations/submittable-related-action-form';
 import SaveableSitedatahFormValidations from '../../../validations/saveable-sitedatah-form';
+import SubmittableSitedatahFormValidations from '../../../validations/submittable-sitedatah-form';
 import SubmittableLanduseActionFormValidations from '../../../validations/submittable-landuse-action-form';
+import SaveableLanduseGeographyValidations from '../../../validations/saveable-landuse-geography';
+import SubmittableLanduseGeographyValidations from '../../../validations/submittable-landuse-geography';
+import SaveableAffectedZoningResolutionFormValidations from '../../../validations/saveable-affected-zoning-resolution-form';
+import SubmittableAffectedZoningResolutionFormValidations from '../../../validations/submittable-affected-zoning-resolution-form';
 import { addToHasMany, removeFromHasMany } from '../../../utils/ember-changeset';
 
 export default class LandUseFormComponent extends Component {
@@ -25,7 +30,12 @@ export default class LandUseFormComponent extends Component {
     SaveableRelatedActionFormValidations,
     SubmittableRelatedActionFormValidations,
     SaveableSitedatahFormValidations,
+    SubmittableSitedatahFormValidations,
     SubmittableLanduseActionFormValidations,
+    SaveableLanduseGeographyValidations,
+    SubmittableLanduseGeographyValidations,
+    SaveableAffectedZoningResolutionFormValidations,
+    SubmittableAffectedZoningResolutionFormValidations,
   };
 
   @tracked recordsToDelete = [];
@@ -121,9 +131,45 @@ export default class LandUseFormComponent extends Component {
   }
 
   @action
+  addLanduseGeography(changeset) {
+    const newLanduseGeography = this.store.createRecord('landuse-geography', {
+      landuseForm: this.landuseForm,
+    });
+
+    addToHasMany(changeset, 'landuseGeographies', newLanduseGeography);
+  }
+
+  @action
+  removeLanduseGeography(landuseGeography, changeset) {
+    removeFromHasMany(changeset, 'landuseGeographies', landuseGeography);
+
+    this.recordsToDelete.push(landuseGeography);
+
+    landuseGeography.deleteRecord();
+  }
+
+  @action
   removeBbl(bbl) {
     bbl.deleteRecord();
     this.recordsToDelete.push(bbl);
     this.args.package.landuseForm.bbls.removeObject(bbl);
+  }
+
+  @action
+  addZrSection(changeset) {
+    const newAffectedZoningResolution = this.store.createRecord('affected-zoning-resolution', {
+      landuseForm: this.landuseForm,
+    });
+
+    addToHasMany(changeset, 'affectedZoningResolutions', newAffectedZoningResolution);
+  }
+
+  @action
+  removeZrSection(affectedZoningResolution, changeset) {
+    removeFromHasMany(changeset, 'affectedZoningResolutions', affectedZoningResolution);
+
+    this.recordsToDelete.push(affectedZoningResolution);
+
+    affectedZoningResolution.deleteRecord();
   }
 }

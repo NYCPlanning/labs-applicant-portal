@@ -19,6 +19,19 @@ export default class LanduseFormModel extends Model {
   @hasMany('sitedatah-form', { async: false })
   sitedatahForms;
 
+  @hasMany('landuse-geography', { async: false })
+  landuseGeographies;
+
+  @hasMany('affected-zoning-resolution', { async: false })
+  affectedZoningResolutions;
+
+  // this is just for GETting dcp_leadagency information
+  // we do not PATCH or POST directly to dcp_leadagency
+  // instead we handle sending related information to the backend
+  // through a made-up field called `chosenLeadAgencyId`
+  @belongsTo('lead-agency', { async: false })
+  leadAgency;
+
   @attr dcpVersion;
 
   // project name
@@ -76,8 +89,6 @@ export default class LanduseFormModel extends Model {
   @attr dcpSitedataidentifylandmark;
 
   // Environmental Review attrs
-  @attr dcpLeadagency;
-
   @attr dcpCeqrnumber;
 
   @attr dcpCeqrtype;
@@ -182,13 +193,26 @@ export default class LanduseFormModel extends Model {
 
   @attr dcpOnlychangetheeliminationofamappedbutunimp;
 
+  // A made-up field so we can send an id to the backend
+  // and we can bind an account to the dcp_leadagency field
+  @attr chosenLeadAgencyId;
+
+  // Disposition attrs
+  @attr dcpTypedisposition;
+
+  @attr dcpTextcityagency;
+
+  @attr dcpTowhom;
+
   async save() {
     await this.saveDirtyLanduseActions();
     await this.saveDirtyRelatedActions();
     await this.saveDirtyApplicants();
     await this.saveDirtySitedatahForms();
+    await this.saveDirtyLanduseGeographies();
     await this.saveDirtyBbls();
     await this.saveDirtyProject();
+    await this.saveDirtyAffectedZoningResolutions();
     await super.save();
   }
 
@@ -238,6 +262,22 @@ export default class LanduseFormModel extends Model {
     );
   }
 
+  async saveDirtyLanduseGeographies() {
+    return Promise.all(
+      this.landuseGeographies
+        .filter((landuseGeography) => landuseGeography.hasDirtyAttributes)
+        .map((landuseGeography) => landuseGeography.save()),
+    );
+  }
+
+  async saveDirtyAffectedZoningResolutions() {
+    return Promise.all(
+      this.affectedZoningResolutions
+        .filter((zoningResolution) => zoningResolution.hasDirtyAttributes)
+        .map((zoningResolution) => zoningResolution.save()),
+    );
+  }
+
   get isLanduseActionsDirty() {
     const dirtyLanduseActions = this.landuseActions.filter((action) => action.hasDirtyAttributes);
 
@@ -269,7 +309,19 @@ export default class LanduseFormModel extends Model {
     return dirtySitedatahForms.length > 0;
   }
 
+  get isLanduseGeographiesDirty() {
+    const dirtyLanduseGeographies = this.landuseGeographies.filter((landuseGeography) => landuseGeography.hasDirtyAttributes);
+
+    return dirtyLanduseGeographies.length > 0;
+  }
+
   get isProjectDirty() {
     return this.package.project.hasDirtyAttributes;
+  }
+
+  get isAffectedZoningResolutionsDirty() {
+    const dirtyZrs = this.affectedZoningResolutions.filter((zr) => zr.hasDirtyAttributes);
+
+    return dirtyZrs.length > 0;
   }
 }
