@@ -136,7 +136,8 @@ export default class PackageModel extends Model {
         || this.landuseForm.isLanduseGeographiesDirty
         || this.landuseForm.isRelatedActionsDirty
         || this.landuseForm.isProjectDirty
-        || this.landuseForm.isAffectedZoningResolutionsDirty;
+        || this.landuseForm.isAffectedZoningResolutionsDirty
+        || this.landuseForm.isZoningMapChangesDirty;
     }
 
     return isPackageDirty;

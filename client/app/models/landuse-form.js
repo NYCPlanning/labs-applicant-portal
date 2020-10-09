@@ -25,6 +25,9 @@ export default class LanduseFormModel extends Model {
   @hasMany('affected-zoning-resolution', { async: false })
   affectedZoningResolutions;
 
+  @hasMany('zoning-map-change', { async: false })
+  zoningMapChanges;
+
   // this is just for GETting dcp_leadagency information
   // we do not PATCH or POST directly to dcp_leadagency
   // instead we handle sending related information to the backend
@@ -204,6 +207,9 @@ export default class LanduseFormModel extends Model {
 
   @attr dcpTowhom;
 
+  // Zoning Map Amendment attrs
+  @attr dcpTotalzoningareatoberezoned;
+
   async save() {
     await this.saveDirtyLanduseActions();
     await this.saveDirtyRelatedActions();
@@ -213,6 +219,7 @@ export default class LanduseFormModel extends Model {
     await this.saveDirtyBbls();
     await this.saveDirtyProject();
     await this.saveDirtyAffectedZoningResolutions();
+    await this.saveZoningMapChanges();
     await super.save();
   }
 
@@ -278,6 +285,14 @@ export default class LanduseFormModel extends Model {
     );
   }
 
+  async saveZoningMapChanges() {
+    return Promise.all(
+      this.zoningMapChanges
+        .filter((zoningMapChange) => zoningMapChange.hasDirtyAttributes)
+        .map((zoningMapChange) => zoningMapChange.save()),
+    );
+  }
+
   get isLanduseActionsDirty() {
     const dirtyLanduseActions = this.landuseActions.filter((action) => action.hasDirtyAttributes);
 
@@ -323,5 +338,11 @@ export default class LanduseFormModel extends Model {
     const dirtyZrs = this.affectedZoningResolutions.filter((zr) => zr.hasDirtyAttributes);
 
     return dirtyZrs.length > 0;
+  }
+
+  get isZoningMapChanges() {
+    const dirtyZoningMapChanges = this.zoningMapChanges.filter((zoningMapChange) => zoningMapChange.hasDirtyAttributes);
+
+    return dirtyZoningMapChanges.length > 0;
   }
 }
