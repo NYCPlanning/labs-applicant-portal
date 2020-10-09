@@ -16,6 +16,7 @@ import {
 } from '../optionsets/affected-zoning-resolution';
 import LANDUSE_ACTION_OPTIONSETS from '../optionsets/landuse-action';
 import LANDUSE_GEOGRAPHY_OPTIONSETS from '../optionsets/landuse-geography';
+import ZONING_MAP_CHANGE_OPTIONSETS from '../optionsets/zoning-map-change';
 import PACKAGE_OPTIONSETS from '../optionsets/package';
 import LANDUSE_FORM_OPTIONSETS from '../optionsets/landuse-form';
 import {
@@ -97,6 +98,7 @@ const OPTIONSET_LOOKUP = {
     dcpChangestreetalignmentopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpChangestreetgradeopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpTypedisposition: LANDUSE_FORM_OPTIONSETS.DCPTYPEDISPOSITION,
+    dcpTotalzoningareatoberezoned: LANDUSE_FORM_OPTIONSETS.DCPTOTALZONINGAREATOBEREZONED,
   },
   rwcdsForm: {
     dcpHasprojectchangedsincesubmissionofthepas: YES_NO,
@@ -134,6 +136,9 @@ const OPTIONSET_LOOKUP = {
   },
   landuseGeography: {
     dcpIsthesiteimprovedunimprovedorpartlyimp: LANDUSE_GEOGRAPHY_OPTIONSETS.DCPISTHESITEIMPROVEDUNIMPROVEDORPARTLYIMP,
+  },
+  zoningMapChange: {
+    dcpExistingzoningdistrictvalue: ZONING_MAP_CHANGE_OPTIONSETS.DCPEXISTINGZONINGDISTRICTVALUE,
   },
 };
 
