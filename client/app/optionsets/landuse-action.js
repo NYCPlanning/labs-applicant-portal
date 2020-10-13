@@ -65,8 +65,24 @@ export const DCPPREVIOUSLYAPPROVEDACTIONCODE = {
   },
 };
 
+export const DCPINDICATEWHETHERACTIONISAMODIFICATION = {
+  CREATE: {
+    code: 717170000,
+    label: 'Create',
+  },
+  MODIFY: {
+    code: 717170001,
+    label: 'Modify',
+  },
+  PURSUANT_TO: {
+    code: 717170002,
+    label: 'Pursuant To',
+  },
+};
+
 const LANDUSE_ACTION_OPTIONSETS = {
   DCPPREVIOUSLYAPPROVEDACTIONCODE,
+  DCPINDICATEWHETHERACTIONISAMODIFICATION,
 };
 
 export default LANDUSE_ACTION_OPTIONSETS;
