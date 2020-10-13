@@ -1,4 +1,4 @@
-{{#let @landuseForm as |landuseForm|}}
+{{#let @landuseActionForm as |landuseActionForm|}}
   <div>
     <h5 class="small-margin-bottom">
       What Zoning Resolution section is this Action pursuant to?
@@ -8,12 +8,12 @@
       <PowerSelect
         triggerClass="zoning-resolution-dropdown"
         supportsDataTestProperties={{true}}
-        @placeholder="Search Zoning Resolution Sections..."
+        @placeholder={{this.searchPlaceholder}}
         @searchEnabled={{true}}
         @options={{this.zoningResolutionNames}}
         @selected={{this.chosenZoningResolutionName}}
         @onChange={{fn (mut this.chosenZoningResolutionName)}}
-        @onClose={{fn (mut landuseForm.data.chosenZoningResolutionId) this.chosenZoningResolutionId}}
+        @onClose={{fn (mut landuseActionForm.data.chosenZoningResolutionId) this.chosenZoningResolutionId}}
         as |zoningResolutionName|
       >
         {{zoningResolutionName}}

@@ -1,6 +1,9 @@
-import Model, { attr } from '@ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
 
 export default class ZoningResolutionModel extends Model {
+  @belongsTo('landuse-action', { async: false })
+  zoningResolution;
+
   @attr
   dcpZoningresolution;
 }

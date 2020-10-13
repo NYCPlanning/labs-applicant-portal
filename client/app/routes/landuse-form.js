@@ -18,7 +18,7 @@ export default class LanduseFormRoute extends Route.extend(AuthenticatedRouteMix
         'landuse-form.landuse-geographies',
         'landuse-form.lead-agency',
         'landuse-form.affected-zoning-resolutions',
-        'landuse-form.landuse-actions.zoning-resolutions',
+        'landuse-form.landuse-actions.zoning-resolution',
       ].join(),
     });
 

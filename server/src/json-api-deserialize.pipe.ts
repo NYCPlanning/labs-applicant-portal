@@ -39,6 +39,9 @@ export class JsonApiDeserializePipe implements PipeTransform {
         'affected-zoning-resolutions': {
           valueForRelationship: relationship => relationship.id,
         },
+        'zoning-resolutions': {
+          valueForRelationship: relationship => relationship.id,
+        },
       }).deserialize(value);
     }
 

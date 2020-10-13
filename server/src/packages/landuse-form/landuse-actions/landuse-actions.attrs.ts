@@ -16,4 +16,5 @@ export const LANDUSE_ACTION_ATTRS = [
   'dcp_dateofpreviousapproval',
   'dcp_lapsedateofpreviousapproval',
   'dcp_typeoflegalinstrument',
+  '_dcp_landuseid_value',
 ];

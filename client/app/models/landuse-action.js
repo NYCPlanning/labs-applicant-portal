@@ -4,6 +4,9 @@ export default class LanduseActionModel extends Model {
   @belongsTo('landuse-form', { async: false })
   landuseForm;
 
+  @belongsTo('zoning-resolution', { async: false })
+  zoningResolution;
+
   @attr dcpActioncode;
 
   @attr dcpPreviouslyapprovedactioncode;
@@ -38,4 +41,6 @@ export default class LanduseActionModel extends Model {
   @attr dcpLapsedateofpreviousapproval;
 
   @attr dcpTypeoflegalinstrument;
+
+  @attr chosenZoningResolutionId;
 }
