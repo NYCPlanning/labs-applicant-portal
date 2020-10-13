@@ -1264,4 +1264,36 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
+
+  test('User can search and select from zoning resolution dropdown in proposed actions section', async function (assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'toDo', 'landuseForm')],
+    });
+
+    this.server.create('zoning-resolution', 1, {
+      dcpZoningresolution: 'AppendixD',
+    });
+    this.server.create('zoning-resolution', 2, {
+      dcpZoningresolution: 'AppendixF',
+    });
+    this.server.create('zoning-resolution', 3, {
+      dcpZoningresolution: '74-116',
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    // filling out necessary information in order to save
+    await click('[data-test-add-applicant-button]');
+    await fillIn('[data-test-input="dcpFirstname"]', 'Tess');
+    await fillIn('[data-test-input="dcpLastname"]', 'Ter');
+    await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
+
+    await selectChoose('[data-test-zoning-resolution-picker="ZA"]', 'AppendixF');
+
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.landuseActions[1].chosenZoningResolutionId, 2);
+
+    assert.equal(currentURL(), '/landuse-form/1/edit');
+  });
 });

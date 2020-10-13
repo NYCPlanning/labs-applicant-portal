@@ -84,6 +84,8 @@ export default function() {
   this.get('/landuse-actions');
   this.patch('/landuse-actions/:id');
 
+  this.get('/zoning-resolutions');
+
   this.get('/lead-agencys');
   this.get('/lead-agencys/:id');
   this.get('/accounts');
