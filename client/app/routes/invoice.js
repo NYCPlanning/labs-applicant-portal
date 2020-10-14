@@ -30,11 +30,4 @@ export default class InvoiceRoute extends Route {
       dcpGrandTotal: "$160.00",
     };
   }
-  //   model() {
-  //     return [
-  //       { name: "Led Zeppelin" },
-  //       { name: "Pearl Jam" },
-  //       { name: "Foo Fighters" },
-  //     ];
-  //   }
 }
