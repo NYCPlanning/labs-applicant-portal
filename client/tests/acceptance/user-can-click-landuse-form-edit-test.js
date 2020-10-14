@@ -291,7 +291,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     // add and fill out fields for related action
     await click('[data-test-add-related-action-button]');
-    await click('[data-test-action-completed="true"]');
+    await click('[data-test-radio="dcpIscompletedaction"][data-test-radio-option="Yes"]');
     await fillIn('[data-test-input="dcpReferenceapplicationno"]', '12345678');
     await fillIn('[data-test-input="dcpApplicationdescription"]', 'applicant description');
     await fillIn('[data-test-input="dcpDispositionorstatus"]', 'disposition or status');

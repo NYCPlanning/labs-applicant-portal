@@ -140,6 +140,10 @@ const OPTIONSET_LOOKUP = {
   zoningMapChange: {
     dcpExistingzoningdistrictvalue: ZONING_MAP_CHANGE_OPTIONSETS.DCPEXISTINGZONINGDISTRICTVALUE,
   },
+  relatedAction: {
+    // Actually a boolean field in CRM, not picklist
+    dcpIscompletedaction: YES_NO,
+  },
 };
 
 /**
