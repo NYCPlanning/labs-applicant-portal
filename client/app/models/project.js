@@ -57,8 +57,26 @@ export default class ProjectModel extends Model {
   }
 
   get landusePackages() {
+    const landusePackages = [
+      ...this.filedLandusePackages,
+      ...this.draftLandusePackages,
+    ];
+
+    return landusePackages;
+  }
+
+  get draftLandusePackages() {
     const landusePackages = this.packages
       .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'DRAFT_LU_PACKAGE']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    return landusePackages;
+  }
+
+  get filedLandusePackages() {
+    const landusePackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'FILED_LU_PACKAGE']))
       .sortBy('dcpPackageversion')
       .reverse();
 
