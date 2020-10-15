@@ -6,14 +6,14 @@ export default class PackagesLanduseFormShowComponent extends Component {
   // todo: Rename projectHasRequiredActions [ask Godfrey for detail]
 
   get projectHasRequiredActions() {
-    const projectActions = this.args.package.package.landuseForm.landuseActions;
+    const projectActions = this.args.package.landuseForm.landuseActions;
     const projectActionCodes = projectActions.map((action) => action.dcpActioncode);
     const matchingActions = this.requiredActionCodes.filter((actionCode) => projectActionCodes.includes(actionCode));
     return matchingActions.length > 0;
   }
 
   get projectHasCityMapActions() {
-    const projecCityMapActions = this.args.package.package.landuseForm.landuseActions;
+    const projecCityMapActions = this.args.package.landuseForm.landuseActions;
     const projecCityMapActionsCodes = projecCityMapActions.map((action) => action.dcpActioncode);
     return projecCityMapActionsCodes.includes('ME')
     || projecCityMapActionsCodes.includes('MM')
