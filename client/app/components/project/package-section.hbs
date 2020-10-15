@@ -1,0 +1,22 @@
+<div ...attributes>
+  <h2>{{@packageType}}</h2>
+
+  <div class="grid-x grid-padding-x">
+    <div class="cell large-6">
+      <ol class="no-bullet">
+        {{#each @packages as |package|}}
+          <Project::PackageListItem
+            @package={{package}}
+          />
+        {{/each}}
+      </ol>
+    </div>
+    <div class="cell large-6">
+      <h4>Invoices</h4>
+
+      {{#each (map-by 'invoices' @packages) as |invoice|}}
+        {{log invoice}}
+      {{/each}}
+    </div>
+  </div>
+</div>

@@ -33,20 +33,14 @@
       <p>
         <strong>Project Brief:</strong> {{@model.dcpProjectbrief}}
       </p>
-
     </section>
 
     {{#if @model.landusePackages.length}}
-      <section class="large-padding-top large-margin-bottom ruled-adjacent">
-        <h2>Land Use</h2>
-        <ol class="no-bullet">
-          {{#each @model.landusePackages as |landusePackage|}}
-            <Project::PackageListItem
-              @package={{landusePackage}}
-            />
-          {{/each}}
-        </ol>
-      </section>
+      <Project::PackageSection
+        @packages={{@model.landusePackages}}
+        @packageType="Land Use"
+        class="large-padding-top large-margin-bottom ruled-adjacent"
+      />
     {{/if}}
 
     {{#if @model.easPackages.length}}
@@ -76,8 +70,8 @@
     {{/if}}
 
     {{#if @model.eisPackages.length}}
-    <section class="large-padding-top large-margin-bottom ruled-adjacent">
-      <h2>Technical Memo</h2>
+      <section class="large-padding-top large-margin-bottom ruled-adjacent">
+        <h2>Technical Memo</h2>
         <ol class="no-bullet">
           {{#each @model.technicalMemoPackages as |technicalMemoPackage|}}
             <Project::PackageListItem
@@ -89,16 +83,11 @@
     {{/if}}
 
     {{#if @model.rwcdsPackages.length}}
-      <section class="large-padding-top large-margin-bottom ruled-adjacent">
-        <h2>Reasonable Worst Case Development Scenario</h2>
-        <ol class="no-bullet">
-          {{#each @model.rwcdsPackages as |rwcdsPackage|}}
-            <Project::PackageListItem
-              @package={{rwcdsPackage}}
-            />
-          {{/each}}
-        </ol>
-      </section>
+      <Project::PackageSection
+        @packages={{@model.rwcdsPackages}}
+        @packageType="Reasonable Worst Case Development Scenario"
+        class="large-padding-top large-margin-bottom ruled-adjacent"
+      />
     {{/if}}
 
     {{#if @model.pasPackages.length}}
