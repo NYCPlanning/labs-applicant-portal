@@ -1,14 +1,14 @@
-import { module, test } from 'qunit';
-import { visit, currentURL } from '@ember/test-helpers';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { module, test } from "qunit";
+import { visit, currentURL } from "@ember/test-helpers";
+import { setupApplicationTest } from "ember-qunit";
+import { setupMirage } from "ember-cli-mirage/test-support";
 
-module('Acceptance | invoices', function(hooks) {
+module("Acceptance | invoices", function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  test('visiting /invoices', async function(assert) {
-    this.server.create('invoice', {
+  test("visiting /invoices", async function (assert) {
+    this.server.create("invoice", {
       dcpName: 1234567893,
       dcpProjectname: "305-315 Tillbert Street (CEQR)",
       dcpInvoicedate: "04/18/20",
@@ -36,10 +36,10 @@ module('Acceptance | invoices', function(hooks) {
       dcpGrandTotal: "$160.00",
     });
 
-    await visit('/invoices/1');
-    // remove after you're done! :) 
+    await visit("/invoices/1");
+    // remove after you're done! :)
     await this.pauseTest();
 
-    assert.equal(currentURL(), '/invoices/1');
+    assert.equal(currentURL(), "/invoices/1");
   });
 });
