@@ -83,6 +83,8 @@ export default function() {
   this.get('/accounts');
   this.get('/accounts/:id');
 
+  this.get('/invoices/:id');
+
   this.post('/documents', function(schema, request) {
     // requestBody should be a FormData object
     const { requestBody } = request;
