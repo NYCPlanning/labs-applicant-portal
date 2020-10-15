@@ -31,7 +31,11 @@ export class LanduseFormService {
       $filter=
         dcp_landuseid eq ${id}
       &$expand=
-        dcp_dcp_landuse_dcp_sitedatahform_landuseform
+        dcp_dcp_landuse_dcp_sitedatahform_landuseform,
+        dcp_dcp_landuse_dcp_landusegeography_landuseform,
+        dcp_leadagency,
+        dcp_dcp_landuse_dcp_affectedzoningresolution_Landuseform,
+        dcp_dcp_landuse_dcp_zoningmapchanges_LandUseForm,
     `);
 
     return {

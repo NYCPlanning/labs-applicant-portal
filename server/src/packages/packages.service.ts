@@ -176,7 +176,8 @@ export class PackagesService {
         };
       }
 
-      if (dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['DRAFT_LU_PACKAGE'].code) {
+      if (dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['DRAFT_LU_PACKAGE'].code
+      || dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['FILED_LU_PACKAGE'].code) {
         return {
           dcp_landuse: await this.landuseFormService.find(dcpPackage._dcp_landuseapplication_value)
         };

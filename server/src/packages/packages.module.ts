@@ -8,6 +8,8 @@ import { BblsController } from './bbls/bbls.controller';
 import { AffectedZoningResolutionsController } from './rwcds-form/affected-zoning-resolution/affected-zoning-resolutions.controller';
 import { RelatedActionsController } from './landuse-form/related-actions/related-actions.controller';
 import { SitedatahFormsController } from './landuse-form/sitedatah-forms/sitedatah-forms.controller';
+import { LanduseGeographyController } from './landuse-form/landuse-geography/landuse-geography.controller';
+import { ZoningMapChangesController } from './landuse-form/zoning-map-changes/zoning-map-change.controller';
 import { LanduseActionsController } from './landuse-form/landuse-actions/landuse-actions.controller';
 import { RwcdsFormController } from './rwcds-form/rwcds-form.controller';
 import { LanduseFormController } from './landuse-form/landuse-form.controller';
@@ -32,6 +34,8 @@ import { CitypayModule } from '../citypay/citypay.module';
     RelatedActionsController,
     SitedatahFormsController,
     LanduseActionsController,
+    LanduseGeographyController,
+    ZoningMapChangesController,
   ],
 })
 export class PackagesModule {}

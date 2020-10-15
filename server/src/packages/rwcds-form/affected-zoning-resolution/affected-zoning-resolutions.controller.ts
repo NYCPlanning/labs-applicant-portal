@@ -1,4 +1,4 @@
-import { Controller, Patch, Body, Param, UseGuards, UseInterceptors, UsePipes, Post } from '@nestjs/common';
+import { Controller, Patch, Body, Param, UseGuards, UseInterceptors, UsePipes, Post, Delete } from '@nestjs/common';
 import { AuthenticateGuard } from '../../../authenticate.guard';
 import { JsonApiSerializeInterceptor } from '../../../json-api-serialize.interceptor';
 import { JsonApiDeserializePipe } from '../../../json-api-deserialize.pipe';
@@ -30,6 +30,26 @@ export class AffectedZoningResolutionsController {
     return {
       dcp_affectedzoningresolutionid: id,
       ...body
+    };
+  }
+
+  @Post('/')
+  create(@Body() body) {
+    const allowedAttrs = pick(body, AFFECTEDZONINGRESOLUTION_ATTRS);
+
+    return this.crmService.create('dcp_affectedzoningresolutions', {
+      ...allowedAttrs,
+      'dcp_Landuseform@odata.bind': `/dcp_landuses(${body.landuse_form})`,
+    });
+  }
+
+  @Delete('/:id')
+  async delete(@Param('id') id) {
+
+    await this.crmService.delete('dcp_affectedzoningresolutions', id);
+
+    return {
+      id,
     };
   }
 }

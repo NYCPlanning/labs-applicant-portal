@@ -77,7 +77,8 @@ export default class PackageModel extends Model {
     if (this.dcpPackagetype === DCPPACKAGETYPE.RWCDS.code) {
       await this.rwcdsForm.save();
     }
-    if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code) {
+    if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code
+      || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code) {
       await this.saveDeletedRecords(recordsToDelete);
       await this.landuseForm.save();
     }
@@ -126,15 +127,19 @@ export default class PackageModel extends Model {
         || this.rwcdsForm.hasDirtyAttributes
         || this.rwcdsForm.isAffectedZoningResolutionsDirty;
     }
-    if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code) {
+    if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code
+      || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code) {
       return isPackageDirty
         || this.landuseForm.hasDirtyAttributes
         || this.landuseForm.isBblsDirty
         || this.landuseForm.isApplicantsDirty
         || this.landuseForm.isLanduseActionsDirty
         || this.landuseForm.isSitedatahFormsDirty
+        || this.landuseForm.isLanduseGeographiesDirty
         || this.landuseForm.isRelatedActionsDirty
-        || this.landuseForm.isProjectDirty;
+        || this.landuseForm.isProjectDirty
+        || this.landuseForm.isAffectedZoningResolutionsDirty
+        || this.landuseForm.isZoningMapChangesDirty;
     }
 
     return isPackageDirty;

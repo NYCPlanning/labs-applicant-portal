@@ -6,7 +6,7 @@
 
 {{#if @showCounter}}
   <SaveableForm::CharacterCounter
-    @string={{this.value}}
+    @string={{@value}}
     @maxlength={{if @maxlength @maxlength '250'}}
   />
 {{/if}}

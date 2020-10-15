@@ -25,12 +25,21 @@
       <strong>Version {{@package.dcpPackageversion}}</strong>
     </LinkTo>
   {{/if}}
-  {{#if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))}}
+  {{#if (or
+    (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))
+    (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'FILED_LU_PACKAGE'))
+  )}}
     <LinkTo
       @route={{if (eq @package.statuscode (optionset 'package' 'statuscode' 'code' 'PACKAGE_PREPARATION')) 'landuse-form.edit' 'landuse-form.show'}}
       @model={{@package.id}}
       data-test-package-link={{@package.id}}
     >
+      {{#if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'FILED_LU_PACKAGE'))}}
+        Filed
+      {{/if}}
+      {{#if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))}}
+        Draft
+      {{/if}}
       <strong>Version {{@package.dcpPackageversion}}</strong>
     </LinkTo>
   {{/if}}
