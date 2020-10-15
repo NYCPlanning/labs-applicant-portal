@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 
 export default class ProposedPublicFacilitiesActionListComponent extends Component {
   get proposedPublicFacilitiesActionList() {
-    const { landuseForm } = this.args;
+    const landuseForm = this.args;
 
     const actions = [
       {
