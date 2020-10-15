@@ -8,9 +8,7 @@ import COMMON_OPTIONSETS, {
 } from '../optionsets/common';
 import APPLICANT_OPTIONSETS from '../optionsets/applicant';
 import CONTACT_OPTIONSETS from '../optionsets/contact';
-import {
-  BOROUGHS,
-} from '../optionsets/bbl';
+import BBL_OPTIONSETS from '../optionsets/bbl';
 import {
   AFFECTED_ZONING_RESOLUTION_ACTION,
 } from '../optionsets/affected-zoning-resolution';
@@ -37,7 +35,9 @@ const OPTIONSET_LOOKUP = {
     dcpType: APPLICANT_OPTIONSETS.DCPTYPE,
   },
   bbl: {
-    boroughs: BOROUGHS,
+    boroughs: BBL_OPTIONSETS.BOROUGHS,
+    dcpDevelopmentsite: YES_NO,
+    dcpPartiallot: YES_NO,
   },
   projectApplicant: {
     applicantrole: DCPAPPLICANTROLE,
@@ -58,6 +58,8 @@ const OPTIONSET_LOOKUP = {
     statuscode: PROJECT_OPTIONSETS.STATUSCODE,
   },
   landuseForm: {
+    dcpOtherparties: YES_NO,
+    dcpRelatedacquisition: YES_NO,
     dcpCeqrtype: LANDUSE_FORM_OPTIONSETS.CEQR_TYPE,
     dcpWholecity: YES_NO,
     dcpEntiretyboroughs: YES_NO,
@@ -130,6 +132,7 @@ const OPTIONSET_LOOKUP = {
   landuseAction: {
     dcpApplicantispublicagencyactions: YES_NO,
     dcpPreviouslyapprovedactioncode: LANDUSE_ACTION_OPTIONSETS.DCPPREVIOUSLYAPPROVEDACTIONCODE,
+    actions: AFFECTED_ZONING_RESOLUTION_ACTION,
   },
   sitedatahForm: {
     dcpSitetobedisposed: YES_NO,
