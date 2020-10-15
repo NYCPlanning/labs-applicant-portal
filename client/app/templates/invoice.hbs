@@ -1,95 +1,89 @@
-<div class="site-main large-padding-bottom">
-    <section class="grid-container large-padding-top large-padding-bottom">
+<p class="medium-margin-bottom">
+    <img alt="NYC Planning" width="100"
+        src="https://raw.githubusercontent.com/NYCPlanning/dcp-logo/master/dcp_logo_772.png" />
+</p>
 
-        <p class="medium-margin-bottom">
-            <img alt="NYC Planning" width="100"
-                src="https://raw.githubusercontent.com/NYCPlanning/dcp-logo/master/dcp_logo_772.png" />
-        </p>
+<h1>
+    Invoice {{@model.dcpName}}
+</h1>
 
-        <h1>
-            Invoice {{@model.dcpName}}
-        </h1>
-
-        <div class="grid-x grid-margin-x">
-            <p class="cell medium-6 medium-order-2 medium-text-right">
-                Date: <br class="show-for-medium">
-                <strong class="text-large">{{@model.dcpInvoicedate}}</strong>
-            </p>
-            <p class="cell medium-6">
-                Project: <br class="show-for-medium">
-                <strong class="text-xlarge">{{@model.dcpProjectname}}</strong>
-            </p>
-        </div>
-
-        <table class="unstriped hover">
-            <thead>
-                <tr>
-                    <th class="text-charcoal">Application Number</th>
-                    <th class="text-charcoal">Action</th>
-                    <th class="text-charcoal text-right">Fee</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each @model.dcpInvoiceApplications as |dcpApplication|}}
-                <tr>
-                    <td>{{dcpApplication.dcpApplicationNumber}}</td>
-                    <td>{{dcpApplication.dcpAction}}</td>
-                    <td class="text-right font-mono">{{dcpApplication.dcpFee}}</td>
-                </tr>
-                {{/each}}
-
-
-                <tr>
-                    <td></td>
-                    <td class="text-right text-weight-bold text-charcoal">Subtotal</td>
-                    <td class="text-right font-mono">{{@model.dcpSubtotal}}</td>
-                </tr>
-                <tr>
-                    <!-- 200% Rule Applies solely to the Land Use fees -->
-                    <!-- Don't show this tr for CEQR invoices -->
-                    <td></td>
-                    <td class="text-right text-weight-bold text-charcoal">
-                        200% Rule
-                        <sup>
-                            <Ui::ExternalLink
-                                href="https://www1.nyc.gov/site/planning/applicants/applicant-portal/step4-paying-fees.page">
-
-                            </Ui::ExternalLink>
-                        </sup>
-                    </td>
-                    <td class="text-right font-mono">{{@model.dcpTwoHundredPercentRule}}</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td class="text-right text-weight-bold text-charcoal">Project Fees</td>
-                    <td class="text-right font-mono">{{@model.dcpProjectFees}}</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td class="text-right text-weight-bold text-charcoal">
-                        Supplemental Fee
-                        <sup>
-                            <Ui::ExternalLink
-                                href="https://www1.nyc.gov/site/planning/applicants/applicant-portal/step4-paying-fees.page">
-
-                            </Ui::ExternalLink>
-                        </sup>
-                    </td>
-                    <td class="text-right font-mono">{{@model.dcpSupplementalFee}}</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td class="text-right text-weight-bold text-charcoal">Total Amount Due</td>
-                    <td class="text-right font-mono text-weight-bold text-large">{{@model.dcpGrandTotal}}</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <hr class="xlarge-margin-top xlarge-margin-bottom">
-
-        <p class="text-small">
-            Online credit card payments via CityPay are subject to a 2% processing fee.
-        </p>
-
-    </section>
+<div class="grid-x grid-margin-x">
+    <p class="cell medium-6 medium-order-2 medium-text-right">
+        Date: <br class="show-for-medium">
+        <strong class="text-large">{{@model.dcpInvoicedate}}</strong>
+    </p>
+    <p class="cell medium-6">
+        Project: <br class="show-for-medium">
+        <strong class="text-xlarge">{{@model.dcpProjectname}}</strong>
+    </p>
 </div>
+
+<table class="unstriped hover">
+    <thead>
+        <tr>
+            <th class="text-charcoal">Application Number</th>
+            <th class="text-charcoal">Action</th>
+            <th class="text-charcoal text-right">Fee</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each @model.dcpInvoiceApplications as |dcpApplication|}}
+        <tr>
+            <td>{{dcpApplication.dcpApplicationNumber}}</td>
+            <td>{{dcpApplication.dcpAction}}</td>
+            <td class="text-right font-mono">{{dcpApplication.dcpFee}}</td>
+        </tr>
+        {{/each}}
+
+
+        <tr>
+            <td></td>
+            <td class="text-right text-weight-bold text-charcoal">Subtotal</td>
+            <td class="text-right font-mono">{{@model.dcpSubtotal}}</td>
+        </tr>
+        <tr>
+            <!-- 200% Rule Applies solely to the Land Use fees -->
+            <!-- Don't show this tr for CEQR invoices -->
+            <td></td>
+            <td class="text-right text-weight-bold text-charcoal">
+                200% Rule
+                <sup>
+                    <Ui::ExternalLink
+                        href="https://www1.nyc.gov/site/planning/applicants/applicant-portal/step4-paying-fees.page">
+
+                    </Ui::ExternalLink>
+                </sup>
+            </td>
+            <td class="text-right font-mono">{{@model.dcpTwoHundredPercentRule}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="text-right text-weight-bold text-charcoal">Project Fees</td>
+            <td class="text-right font-mono">{{@model.dcpProjectFees}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="text-right text-weight-bold text-charcoal">
+                Supplemental Fee
+                <sup>
+                    <Ui::ExternalLink
+                        href="https://www1.nyc.gov/site/planning/applicants/applicant-portal/step4-paying-fees.page">
+
+                    </Ui::ExternalLink>
+                </sup>
+            </td>
+            <td class="text-right font-mono">{{@model.dcpSupplementalFee}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="text-right text-weight-bold text-charcoal">Total Amount Due</td>
+            <td class="text-right font-mono text-weight-bold text-large">{{@model.dcpGrandTotal}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<hr class="xlarge-margin-top xlarge-margin-bottom">
+
+<p class="text-small">
+    Online credit card payments via CityPay are subject to a 2% processing fee.
+</p>
