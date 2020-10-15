@@ -4,17 +4,14 @@
     <section class="form-section">
       <h1 class="header-large">
         <span id="project-info" class="section-anchor"></span>
-        Draft Land Use Form
+        Land Use Information Confirmation
         <small class="text-weight-normal">
           {{if @package.dcpPackageversion (concat '(V' @package.dcpPackageversion ')')}}
         </small>
       </h1>
 
-      <h2
-        class="no-margin"
-        data-test-show="dcpProjectname"
-      >
-        {{@package.landuseForm.dcpProjectname}}
+      <h2 class="no-margin" data-test-show="dcpProjectname">
+        {{@package.project.dcpProjectname}}
         <small class="text-weight-normal">
           {{if @package.project.dcpName (concat '(' @package.project.dcpName ')')}}
         </small>
@@ -24,6 +21,1046 @@
         {{optionset 'bbl' 'boroughs' 'label' @package.project.dcpBorough}} |
         {{optionset 'package' 'statuscode' 'label' @package.statuscode}}
       </p>
+    </section>
+
+
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="project-description" class="section-anchor"></span>
+        Project Description
+      </h2>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Name
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpContactname}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Phone
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpContactphone}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Email
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpContactemail}}
+        </A.Field>
+      </Ui::Answer>
+
+    </section>
+
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="site-information" class="section-anchor"></span>
+        Site Information
+      </h2>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Primary Street Address
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpSitedataadress}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          City Council District(s)
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpCitycouncil}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Community District(s)
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpSitedatacommunitydistrict}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Zoning Sectional Map Number(s)
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpSitedatazoningsectionnumbers}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Existing Zoning District(s)
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpSitedataexistingzoningdistrict}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Special District(s)
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpSpecialdistricts}}
+        </A.Field>
+      </Ui::Answer>
+
+    </section>
+
+
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="applicant-team" class="section-anchor"></span>
+        Applicant Team
+      </h2>
+
+      <ul class="no-bullet">
+        {{#each @package.landuseForm.applicants as |applicant|}}
+        <li class="ruled-adjacent">
+          <h4 class="no-margin">
+            {{#if applicant.dcpOrganization}}
+            {{applicant.dcpOrganization}} | {{optionset 'applicant' 'dcpType' 'label' applicant.dcpType}} |
+            {{/if}}
+            {{applicant.dcpFirstname}} {{applicant.dcpLastname}}
+          </h4>
+          {{#if applicant.dcpEmail}}
+          <div>
+            <FaIcon @icon="envelope" class="text-gray" @fixedWidth={{true}} />
+            {{applicant.dcpEmail}}
+          </div>
+          {{/if}}
+          {{#if applicant.dcpAddress}}
+          <div>
+            <FaIcon @icon="map-marker-alt" class="text-gray" @fixedWidth={{true}} />
+            {{applicant.dcpAddress}}, {{applicant.dcpCity}},
+            {{optionset 'applicant' 'dcpState' 'label' applicant.dcpState}} {{applicant.dcpZipcode}}
+          </div>
+          {{/if}}
+          {{#if applicant.dcpPhone}}
+          <div>
+            <FaIcon @icon="phone-square" class="text-gray" @fixedWidth={{true}} />
+            {{applicant.dcpPhone}}
+          </div>
+          {{/if}}
+        </li>
+        {{/each}}
+      </ul>
+    </section>
+
+
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="project-area" class="section-anchor"></span>
+        Proposed Project Area
+      </h2>
+      <p>
+        The <b>Project Area</b> is the entirety of all land parcels
+        that are affected by all actions being sought.
+      </p>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Do <em>all</em> Actions being sought apply to the whole City?
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpWholecity' 'label' @package.landuseForm.dcpWholecity}}
+        </A.Field>
+      </Ui::Answer>
+      {{#if (eq
+            @package.landuseForm.dcpWholecity
+            (optionset 'landuseForm' 'dcpWholecity' 'code' 'NO')
+          )}}
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Do <em>all</em> Actions being sought apply to the entirety of one or
+          more Boroughs?
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpEntiretyboroughs' 'label' @package.landuseForm.dcpEntiretyboroughs}}
+        </A.Field>
+      </Ui::Answer>
+      {{#if (eq
+                    @package.landuseForm.dcpEntiretyboroughs
+                    (optionset 'landuseForm' 'dcpEntiretyboroughs' 'code' 'YES')
+                  )}}
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Which Boroughs?
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpBoroughs}}
+        </A.Field>
+      </Ui::Answer>
+      {{/if}}
+      {{#if (eq
+                    @package.landuseForm.dcpEntiretyboroughs
+                    (optionset 'landuseForm' 'dcpEntiretyboroughs' 'code' 'NO')
+                  )}}
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Do <em>all</em> Actions being sought apply to the entirety of one or
+          more Community District(s)?
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpEntiretycommunity' 'label' @package.landuseForm.dcpEntiretycommunity}}
+        </A.Field>
+      </Ui::Answer>
+      {{#if (eq
+                            @package.landuseForm.dcpEntiretycommunity
+                            (optionset 'landuseForm' 'dcpEntiretycommunity' 'code' 'YES')
+                          )}}
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Which Community District(s)?
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpCommunity}}
+        </A.Field>
+      </Ui::Answer>
+      {{/if}}
+      {{#if (eq
+                            @package.landuseForm.dcpEntiretycommunity
+                            (optionset 'landuseForm' 'dcpEntiretycommunity' 'code' 'NO')
+                          )}}
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Do <em>all</em> Actions being sought apply to
+          land or land underwater that is not associated
+          with a Tax Block or Lot?
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpNotaxblock' 'label' @package.landuseForm.dcpNotaxblock}}
+        </A.Field>
+      </Ui::Answer>
+      {{#if (eq
+                                    @package.landuseForm.dcpNotaxblock
+                                    (optionset 'landuseForm' 'dcpNotaxblock' 'code' 'YES')
+                                  )}}
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Describe Non-Tax Lots by cross streets
+          bounding streets, dimensions, etc.
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpSitedatapropertydescription}}
+        </A.Field>
+      </Ui::Answer>
+      {{/if}}
+      {{/if}}
+      {{/if}}
+      {{/if}}
+
+
+
+      {{#if (and
+      (eq @package.landuseForm.dcpWholecity (optionset 'landuseForm' 'dcpWholecity' 'code' 'NO'))
+      (eq @package.landuseForm.dcpEntiretyboroughs (optionset 'landuseForm' 'dcpEntiretyboroughs' 'code' 'NO'))
+      (eq @package.landuseForm.dcpEntiretycommunity (optionset 'landuseForm' 'dcpEntiretycommunity' 'code' 'NO'))
+      (eq @package.landuseForm.dcpNotaxblock (optionset 'landuseForm' 'dcpNotaxblock' 'code' 'NO'))
+    )}}
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          What are the existing Zoning Districts and Special Districts?
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpZonesspecialdistricts}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Is any portion of the proposed Project Area located
+          within the State Designated Coastal Zone Management
+          (CZM) Area?
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpStateczm' 'label' @package.landuseForm.dcpStateczm}}
+        </A.Field>
+      </Ui::Answer>
+
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Is any portion of the Proposed Project Area located within a Historic District?
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpHistoricdistrict' 'label' @package.landuseForm.dcpHistoricdistrict}}
+        </A.Field>
+      </Ui::Answer>
+      {{#if (eq
+              @package.landuseForm.dcpHistoricdistrict
+              (optionset 'landuseForm' 'dcpHistoricdistrict' 'code' 'YES')
+            )}}
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Historic District Name
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpSitedatarenewalarea}}
+        </A.Field>
+      </Ui::Answer>
+      {{/if}}
+      {{/if}}
+    </section>
+
+    {{#if (and
+      (eq @package.landuseForm.dcpWholecity (optionset 'landuseForm' 'dcpWholecity' 'code' 'NO'))
+      (eq @package.landuseForm.dcpEntiretyboroughs (optionset 'landuseForm' 'dcpEntiretyboroughs' 'code' 'NO'))
+      (eq @package.landuseForm.dcpEntiretycommunity (optionset 'landuseForm' 'dcpEntiretycommunity' 'code' 'NO'))
+      (eq @package.landuseForm.dcpNotaxblock (optionset 'landuseForm' 'dcpNotaxblock' 'code' 'NO'))
+    )}}
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="proposed-development-site" class="section-anchor"></span>
+        Proposed Development Site
+      </h2>
+      <p>
+        The <b>Development Site</b> is the specific parcel(s) that the Applicant is seeking to develop.
+        A Project Area and Development Site can be the same parcels of land or different,
+        depending on the Actions being sought. For instance, a Special District may be mapped
+        over a portion of a neighborhood (Project Area), but only certain parcels within it may
+        be proposed for immediate development by the Applicant (Development Site).
+      </p>
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Does the Application result in the development of 500,000+ ZSF of floor area?
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'landuseForm' 'dcp500kpluszone' 'label' @package.landuseForm.dcp500kpluszone}}
+        </A.Field>
+      </Ui::Answer>
+      {{#if (eq
+            @package.landuseForm.dcp500kpluszone
+            (optionset 'landuseForm' 'dcp500kpluszone' 'code' 'YES')
+          )}}
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Development size
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpDevsize' 'label' @package.landuseForm.dcpDevsize}}
+        </A.Field>
+      </Ui::Answer>
+      {{/if}}
+
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Is the Development Site a Landmark (New York City or other) or within a Historic District?
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpSitedatasiteisinnewyorkcity' 'label' @package.landuseForm.dcpSitedatasiteisinnewyorkcity}}
+        </A.Field>
+      </Ui::Answer>
+      {{#if (eq
+            @package.landuseForm.dcpSitedatasiteisinnewyorkcity
+            (optionset 'landuseForm' 'dcpSitedatasiteisinnewyorkcity' 'code' 'true')
+          )}} <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Landmark or Historic District name
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpSitedataidentifylandmark}}
+        </A.Field>
+      </Ui::Answer>
+      {{/if}}
+
+
+
+    </section>
+
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="project-area-tax-lots" class="section-anchor"></span>
+        Project Area Tax Lots
+      </h2>
+      <p>Tax Lots Included in This Project:</p>
+      <ul class="no-bullet">
+        {{#each @package.landuseForm.bbls as |bbl|}}
+        <li class="ruled-adjacent">
+          <fieldset class="fieldset">
+            <h3 class="small-margin-bottom">
+              {{bbl.dcpBblnumber}}
+            </h3>
+
+            <Ui::Answer @beside={{true}} as |A|>
+              <A.Prompt>
+                Is this BBL part of the Development Site?
+              </A.Prompt>
+              <A.Field>
+                {{optionset 'bbl' 'dcpDevelopmentsite' 'label' bbl.dcpDevelopmentsite}}
+              </A.Field>
+            </Ui::Answer>
+
+            <Ui::Answer @beside={{true}} as |A|>
+              <A.Prompt>
+                Is only a portion of this lot included in the project area?
+              </A.Prompt>
+              <A.Field>
+                {{optionset 'bbl' 'dcpPartiallot' 'label' bbl.dcpPartiallot}}
+              </A.Field>
+            </Ui::Answer>
+          </fieldset>
+        </li>
+        {{/each}}
+      </ul>
+
+    </section>
+
+    {{/if}}
+
+
+
+
+
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="environmental-review" class="section-anchor"></span>
+        Environmental Review
+      </h2>
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          What is the CEQR number?
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpCeqrnumber}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          What is the CEQR type?
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpCeqrtype' 'label' @package.landuseForm.dcpCeqrtype}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          What is the Type II Category?
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpTypecategory}}
+        </A.Field>
+      </Ui::Answer>
+
+    </section>
+
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="proposed-actions" class="section-anchor"></span>
+        Proposed Actions
+      </h2>
+      <div data-test-section="proposed-actions">
+        {{#if this.projectHasRequiredActions}}
+        <h3 class="large-margin-top">Zoning Special Permits, Authorizations, and Certifications</h3>
+        <p>The following questions relate to Zoning Special Permits, Authorizations and Certifications and the following
+          Actions: [ZA, ZR].</p>
+
+        <Ui::Answer as |A|>
+          <A.Prompt>
+            The applicant is any of the following:
+          </A.Prompt>
+
+          <A.Field>
+            <span data-test-applicantPropertyTypeList>
+              <Packages::LanduseForm::ApplicantPropertyTypeList @landuseForm={{@package.landuseForm}} />
+            </span>
+          </A.Field>
+        </Ui::Answer>
+
+        <Ui::Answer @beside={{true}} as |A|>
+
+          <A.Prompt>
+            Are there other owners or long-term lessees of the subject property?
+          </A.Prompt>
+
+          <A.Field>
+            {{optionset 'landuseForm' 'dcpOtherparties' 'label' @package.landuseForm.dcpOtherparties}}
+          </A.Field>
+        </Ui::Answer>
+        {{/if}}
+
+        <h3 class="large-margin-top">All Proposed Project Actions</h3>
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
+            Does this Project require a Legal Instrument to be recorded against the subject property?
+          </A.Prompt>
+          <A.Field>
+            {{optionset 'landuseForm' 'dcpLegalinstrument' 'label' @package.landuseForm.dcpLegalinstrument}}
+          </A.Field>
+        </Ui::Answer>
+
+        {{#each @package.landuseForm.landuseActions as |landuseAction|}}
+        <fieldset class="fieldset">
+          <h4>
+            {{~landuseAction.dcpActioncode~}}
+          </h4>
+
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              This is a follow-up Action. The previous approval Action Code:
+            </A.Prompt>
+            <A.Field>
+              {{optionset 'landuseAction' 'actions' 'label' landuseAction.dcpPreviouslyapprovedactioncode}}
+            </A.Field>
+          </Ui::Answer>
+
+
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              Is this an action where the applicant is solely a public agency?
+            </A.Prompt>
+            <A.Field>
+              {{optionset 'landuseAction' 'dcpApplicantispublicagencyactions' 'label' landuseAction.dcpApplicantispublicagencyactions}}
+            </A.Field>
+          </Ui::Answer>
+        </fieldset>
+        {{/each}}
+      </div>
+    </section>
+
+
+
+
+
+
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="related-actions" class="section-anchor"></span>
+        Related Actions
+      </h2>
+      <ul class="no-bullet">
+        {{#each @package.landuseForm.relatedActions as |relatedAction|}}
+        <li class="ruled-adjacent">
+          <h4 class="no-margin">
+            Related Action
+          </h4>
+          <div>
+            {{#if relatedAction.dcpDevelopmentsite}}
+            {{optionset 'landuseForm' 'dcpDevelopmentsite' 'label' @package.landuseForm.dcpDevelopmentsite}}
+            {{/if}}
+          </div>
+          <div>
+            {{#if relatedAction.dcpReferenceapplicationno}}
+            Reference/Applicant Number: {{relatedAction.dcpReferenceapplicationno}}
+            {{/if}}
+          </div>
+
+          <div>
+            {{#if relatedAction.dcpApplicationdescription}}
+            Description: {{relatedAction.dcpApplicationdescription}}
+            {{/if}}
+          </div>
+
+          <div>
+            {{#if relatedAction.dcpDispositionorstatus}}
+            Disposition or Status: {{relatedAction.dcpDispositionorstatus}}
+            {{/if}}
+          </div>
+
+          <div>
+            {{#if relatedAction.dcpCalendarnumbercalendarnumber}}
+            Calendar Number: {{relatedAction.dcpCalendarnumbercalendarnumber}}
+            {{/if}}
+          </div>
+          <div>
+            {{#if relatedAction.dcpApplicationdate}}
+            Date:
+            <Ui::DateDisplay @date={{relatedAction.dcpApplicationdate}} @outputFormat="MM/D/YYYY"
+              @errorMessage="Date Unknown" />
+            {{/if}}
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </section>
+
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="change-in-city-map" class="section-anchor"></span>
+        Change in City Map
+      </h2>
+      {{#if this.projectHasCityMapActions}}
+      <p>
+        The following questions relate to Change in City Map and the following Actions: MM, MY, ME
+      </p>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          The Project establishes and or delineates the following:
+        </A.Prompt>
+
+        <A.Field>
+          <span data-test-changeInCityMapEstablishDelineateList>
+            <Packages::LanduseForm::changeInCityMapEstablishDelineateList @landuseForm={{@package.landuseForm}} />
+          </span>
+        </A.Field>
+
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          The project eliminates or removes the following:
+        </A.Prompt>
+
+        <A.Field>
+          <span data-test-changeInCityMapEliminateRemoveList>
+            <Packages::LanduseForm::changeInCityMapEliminateRemoveList @landuseForm={{@package.landuseForm}} />
+          </span>
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          The project changes the following:
+        </A.Prompt>
+
+        <A.Field>
+          <span data-test-changeInCityMapEliminateRemoveList>
+            <Packages::LanduseForm::changeInCityMapProjectChangeList @landuseForm={{@package.landuseForm}} />
+          </span>
+        </A.Field>
+
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Is there a related acquisition of property?
+        </A.Prompt>
+
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpRelatedacquisitionofpropertyopt' 'label' @package.landuseForm.dcpRelatedacquisitionofpropertyopt}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Is there a related disposition of property?
+        </A.Prompt>
+
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpRelatedacquisition' 'label' @package.landuseForm.dcpRelatedacquisition}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Is the only change (requested for the City Map) the elimination of a mapped but unimproved street?
+        </A.Prompt>
+
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpOnlychangetheeliminationofamappedbutunimp' 'label' @package.landuseForm.dcpOnlychangetheeliminationofamappedbutunimp}}
+        </A.Field>
+      </Ui::Answer>
+      {{/if}}
+    </section>
+
+
+    {{#let (intersect
+        (map-by "dcpActioncode" @package.landuseForm.landuseActions)
+        (array 'HA' 'HC' 'HD' 'HG' 'HN' 'HO' 'HP' 'HU')
+      ) as |projectHousingActions|}}
+    {{#if (gt projectHousingActions.length 0)}}
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="housing-plans" class="section-anchor"></span>
+        Housing Plans
+      </h2>
+      <p>
+        The following questions relate to Housing Plans,
+        Urban Renewal Areas, and Urban Development Action
+        Areas Program (UDAAP) and the follwoing Actions: HA,
+        HC, HD, HG, HN, HO, HP, HU
+
+      </p>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Is a Designation being proposed?
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpDesignation' 'label' @package.landuseForm.dcpDesignation}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Is a Housing Project Plan being proposed?
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpProjecthousingplanudaap' 'label' @package.landuseForm.dcpProjecthousingplanudaap}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Is a Disposition being proposed?
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpDisposition' 'label' @package.landuseForm.dcpDisposition}}
+        </A.Field>
+      </Ui::Answer>
+      {{#if (eq
+            @package.landuseForm.dcpDisposition
+            (optionset 'landuseForm' 'dcpDisposition' 'code' 'YES')
+          )}}
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Manner of Disposition
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpMannerofdisposition' 'label' @package.landuseForm.dcpMannerofdisposition}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Restrictions and Conditions
+        </A.Prompt>
+        <p class="text-small">
+          If there are restrictions, attach a project description
+          in the documents section that describes the restrictions.
+        </p>
+
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpRestrictandcondition' 'label' @package.landuseForm.dcpRestrictandcondition}}
+        </A.Field>
+      </Ui::Answer>
+      {{/if}}
+
+    </section>
+
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="subject-sites" class="section-anchor"></span>
+        Subject Sites
+      </h2>
+      <ul class="no-bullet">
+        {{#each @package.landuseForm.sitedatahForms as |subjectSite|}}
+        <li class="ruled-adjacent">
+          <h4 class="no-margin">
+            Subject site
+          </h4>
+          <div>
+            {{#if subjectSite.dcpUrsitenumber}}
+            Site Number: {{subjectSite.dcpUrsitenumber}}
+            {{/if}}
+          </div>
+          <div>
+            {{#if subjectSite.dcpBorough}}
+            Borough: {{subjectSite.dcpBorough}}
+            {{/if}}
+          </div>
+          <div>
+            {{#if subjectSite.dcpBlocknumbertext}}
+            Block: {{subjectSite.dcpBlocknumbertext}}
+            {{/if}}
+          </div>
+          <div>
+            {{#if subjectSite.dcpLotnumberstring}}
+            Lot: {{subjectSite.dcpLotnumberstring}}
+            {{/if}}
+          </div>
+          <div>
+            {{#if subjectSite.dcpOwner}}
+            Owner: {{subjectSite.dcpOwner}}
+            {{/if}}
+          </div>
+          <div>
+            {{#if subjectSite.dcpAddress}}
+            Address: {{subjectSite.dcpAddress}}
+            {{/if}}
+          </div>
+          <div>
+            {{#if subjectSite.dcpZoning}}
+            Existing Zoning: {{subjectSite.dcpZoning}}
+            {{/if}}
+          </div>
+          <div>
+            {{#if subjectSite.dcpBuildings}}
+            Existing number of buildings: {{subjectSite.dcpBuildings}}
+            {{/if}}
+          </div>
+          <div>
+            {{#if subjectSite.dcpExistingstories}}
+            Existing stories in each building: {{subjectSite.dcpExistingstories}}
+            {{/if}}
+          </div>
+          <div>
+            {{#if subjectSite.dcpExistinguses}}
+            Existing Uses: {{subjectSite.dcpExistinguses}}
+            {{/if}}
+          </div>
+          <div>
+            {{#if subjectSite.dcpCommoccup}}
+            Number of Occupied Commercial, Industrial or Institutional Facilities: {{subjectSite.dcpCommoccup}}
+            {{/if}}
+          </div>
+          <div>
+            {{#if subjectSite.dcpDwellingcup}}
+            Number of Occupied Dwelling Units: {{subjectSite.dcpDwellingcup}}
+            {{/if}}
+          </div>
+          <div>
+            {{#if subjectSite.dcpVacant}}
+            Number of Vacant Commercial, Industrial or Institutional Facilities: {{subjectSite.dcpVacant}}
+            {{/if}}
+          </div>
+          <div>
+            {{#if subjectSite.dcpDwellingvacant}}
+            Number of Vacant Dwelling Units: {{subjectSite.dcpDwellingvacant}}
+            {{/if}}
+          </div>
+          <div>
+            {{#if subjectSite.dcpNoofemp}}
+            Number of Current Employees at Occupied Facilities: {{subjectSite.dcpNoofemp}}
+            {{/if}}
+          </div>
+          <div>
+            {{#if subjectSite.dcpSitetobedisposed}}
+            Is the Site to be disposed?:
+            {{optionset 'sitedatahForm' 'dcpSitetobedisposed' 'label' subjectSite.dcpSitetobedisposed}}
+            {{/if}}
+          </div>
+          <div>
+            {{#if subjectSite.dcpProposeduses}}
+            Proposed Uses: {{subjectSite.dcpProposeduses}}
+            {{/if}}
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </section>
+
+    {{/if}}
+    {{/let}}
+
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="public-facilities" class="section-anchor"></span>
+        Public Facilities
+      </h2>
+      <p>
+        The following questions relate to Office Space Lease,
+        Public Facility Site Selection or Acquisition and the
+        following Actions: PC, PQ, PS, PX. These Actions require
+        additional Attachments as noted in the Attachments section.
+      </p>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Which action(s) is/are being proposed?
+        </A.Prompt>
+        <A.Field>
+          <span data-test-proposedPublicFacilitiesActionList>
+            <Packages::LanduseForm::ProposedPublicFacilitiesActionList @landuseForm={{@package.landuseForm}} />
+          </span>
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          What is the type of facility?
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpIndicatetypeoffacility}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Will the existing facility remain?
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainopt' 'label' @package.landuseForm.dcpExistingfacilityproposedtoremainopt}}
+        </A.Field>
+      </Ui::Answer>
+      {{#if (eq
+                  @package.landuseForm.dcpExistingfacilityproposedtoremainopt
+                  (optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainopt' 'code' 'Yes')
+                )}}
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          How long has the existing facility been at this location?
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpTextexistingfacility}}
+
+        </A.Field>
+      </Ui::Answer>
+      {{/if}}
+
+      {{#if (eq
+                  @package.landuseForm.dcpExistingfacilityproposedtoremainopt
+                  (optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainopt' 'code' 'No')
+                )}}
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Will the existing facility be replaced in a new location?
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpExistingfacilityreplacementinanewlocation' 'label' @package.landuseForm.dcpExistingfacilityreplacementinanewlocation}}
+        </A.Field>
+      </Ui::Answer>
+
+      {{#if (eq
+                          @package.landuseForm.dcpExistingfacilityreplacementinanewlocation
+                          (optionset 'landuseForm' 'dcpExistingfacilityreplacementinanewlocation' 'code' 'Yes')
+                        )}}
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Where is the current facility located?
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpCurrentfacilitylocation}}
+        </A.Field>
+      </Ui::Answer>
+      {{/if}}
+
+      {{/if}}
+
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Will the existing facility remain and be expanded?
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainandexpand' 'label' @package.landuseForm.dcpExistingfacilityproposedtoremainandexpand}}
+        </A.Field>
+      </Ui::Answer>
+      {{#if (eq
+                 @package.landuseForm.dcpExistingfacilityproposedtoremainandexpand
+                (optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainandexpand' 'code' 'Yes')
+              )}}
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          How long has the existing facility been at this location?
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpHowlonghasexistingfacilitybeenatthislocat}}
+        </A.Field>
+      </Ui::Answer>
+      {{/if}}
+
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Is this a new facility?
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpNewfacilityopt' 'label' @package.landuseForm.dcpNewfacilityopt}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Is project listed in Citywide Statement of Needs?
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpIsprojectlistedinstatementofneedsopt' 'label' @package.landuseForm.dcpIsprojectlistedinstatementofneedsopt}}
+        </A.Field>
+      </Ui::Answer>
+      {{#if (eq
+                @package.landuseForm.dcpIsprojectlistedinstatementofneedsopt
+                (optionset 'landuseForm' 'dcpIsprojectlistedinstatementofneedsopt' 'code' 'Yes')
+              )}}
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          In what fiscal year was the project listed in Citywide Statement?
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpIndicatefiscalyears}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          What page in Citywide Statement?
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpIndicatepgno}}
+        </A.Field>
+      </Ui::Answer>
+      {{/if}}
+
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Did Borough President propose alternate site pursuant to charter section 204(f) or (g)?
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'landuseForm' 'dcpDidboroughpresidentproposealternativesite' 'label' @package.landuseForm.dcpDidboroughpresidentproposealternativesite}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          What and where was the alternate site?
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpWhatsite}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          What is the capital budget line?
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpCapitalbudgetline}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          For which capital budget fiscal years?
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.dcpForfiscalyrs}}
+        </A.Field>
+      </Ui::Answer>
+
+
+    </section>
+
+    <section class="form-section" id="attached-documents">
+      <h2 class="section-header">
+        <span id="attached-documents" class="section-anchor"></span>
+        Attached Documents
+      </h2>
+
+      <ul class="no-bullet">
+        {{#each @package.documents as |document|}}
+        <li class="ruled-adjacent tight">
+          <a href={{concat (get-env-variable 'host') '/documents' document.serverRelativeUrl}} target="_blank"
+            rel="noopener noreferrer">
+            <strong>
+              {{document.name}}
+            </strong>
+          </a>
+          <small class="text-gray">
+            {{document.timeCreated}}
+          </small>
+        </li>
+        {{/each}}
+      </ul>
     </section>
 
   </div>{{! end left/main column }}

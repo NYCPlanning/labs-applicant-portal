@@ -38,21 +38,12 @@
 
           <bblForm.Field
             @attribute="dcpDevelopmentsite"
-            @type="radio"
-            as |RadioButton|
+            @type="radio-group"
+            as |RadioGroup|
           >
-            <RadioButton
-              @targetValue={{true}}
-              data-test-bbl-development-site-yes={{bbl.dcpBblnumber}}
-            >
-              Yes
-            </RadioButton>
-            <RadioButton
-              @targetValue={{false}}
-              data-test-bbl-development-site-no={{bbl.dcpBblnumber}}
-            >
-              No
-            </RadioButton>
+            <RadioGroup
+                  @options={{optionset 'bbl' 'dcpDevelopmentsite' 'list'}}
+            />
           </bblForm.Field>
         </fieldset>
 
@@ -63,21 +54,11 @@
 
           <bblForm.Field
             @attribute="dcpPartiallot"
-            @type="radio"
-            as |RadioButton|
-          >
-            <RadioButton
-              @targetValue={{true}}
-              data-test-bbl-partial-lot-yes={{bbl.dcpBblnumber}}
-            >
-              Yes
-            </RadioButton>
-            <RadioButton
-              @targetValue={{false}}
-              data-test-bbl-partial-lot-no={{bbl.dcpBblnumber}}
-            >
-              No
-            </RadioButton>
+            @type="radio-group"
+            as |RadioGroup|>
+             <RadioGroup         
+                 @options={{optionset 'bbl' 'dcpPartiallot' 'list'}}
+            />
           </bblForm.Field>
         </fieldset>
 
