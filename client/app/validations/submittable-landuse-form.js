@@ -41,6 +41,32 @@ export default {
       message: 'This field is required',
     }),
   ],
+  dcpFrom: [
+    ...SaveableLanduseForm.dcpFrom,
+    // TODO: Debug why we can't use
+    // import LANDUSE_FORM_OPTIONSETS from '../optionsets/landuse-form';
+    // ...
+    // withValue: LANDUSE_FORM_OPTIONSETS.DCPMANNEROFDISPOSITION.DIRECT,
+    validatePresenceIf({
+      presence: true,
+      on: 'dcpMannerofdisposition',
+      withValue: 717170001,
+      message: 'This field is required',
+    }),
+  ],
+  dcpTo: [
+    ...SaveableLanduseForm.dcpTo,
+    // TODO: Debug why we can't use
+    // import LANDUSE_FORM_OPTIONSETS from '../optionsets/landuse-form';
+    // ...
+    // withValue: LANDUSE_FORM_OPTIONSETS.DCPMANNEROFDISPOSITION.DIRECT,
+    validatePresenceIf({
+      presence: true,
+      on: 'dcpMannerofdisposition',
+      withValue: 717170001,
+      message: 'This field is required',
+    }),
+  ],
   applicants: [
     validateLength({
       min: 1,

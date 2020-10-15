@@ -111,6 +111,10 @@ export default class LanduseFormModel extends Model {
 
   @attr dcpRestrictandcondition;
 
+  @attr dcpFrom;
+
+  @attr dcpTo;
+
   // public facilities attrs
   @attr dcpOfficespaceleaseopt;
 

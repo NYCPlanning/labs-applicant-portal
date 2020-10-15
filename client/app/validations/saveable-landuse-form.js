@@ -137,6 +137,20 @@ export default {
       message: 'Text is too long (max {max} characters)',
     }),
   ],
+  dcpFrom: [
+    validateLength({
+      min: 0,
+      max: 100,
+      message: 'Text is too long (max {max} characters)',
+    }),
+  ],
+  dcpTo: [
+    validateLength({
+      min: 0,
+      max: 100,
+      message: 'Text is too long (max {max} characters)',
+    }),
+  ],
   dcpTextexistingfacility: [
     validateLength({
       min: 0,
