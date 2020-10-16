@@ -40,7 +40,23 @@ import { CONTACT_ATTRS } from '../contact/contacts.attrs';
     ref: 'dcp_packageid',
     attributes: [
       ...PACKAGE_ATTRS,
+
+      'invoices',
     ],
+    invoices: {
+      ref: 'dcp_projectinvoiceid',
+      attributes: [
+        'dcp_invoicedate',
+        'dcp_projectname',
+        'dcp_name',
+        'dcp_subtotal',
+        'dcp_two_hundred_percent_rule',
+        'dcp_project_fees',
+        'dcp_supplemental_fee',
+        'dcp_grandtotal',
+        'dcp_invoice_applications',
+      ]
+    }
   },
   'project-applicants': {
     ref: 'dcp_projectapplicantid',
@@ -61,28 +77,6 @@ import { CONTACT_ATTRS } from '../contact/contacts.attrs';
     attributes: [
       ...TEAMMEMBER_ATTRS,
     ],
-  },
-
-  // remap verbose navigation link names to
-  // more concise names
-  transform(project) {
-    try {
-      return {
-        ...project,
-        packages: project.dcp_dcp_project_dcp_package_project,
-        projectApplicants: project['project-applicants'],
-      };
-    } catch(e) {
-      if (e instanceof HttpException) {
-        throw e;
-      } else {
-        throw new HttpException({
-          code: 'PROJECTS_ERROR',
-          title: 'Failed load project(s)',
-          detail: `An error occurred while loading one or more projects. ${e.message}`,
-        }, HttpStatus.INTERNAL_SERVER_ERROR);
-      }
-    }
   },
 }))
 @UseGuards(AuthenticateGuard)
