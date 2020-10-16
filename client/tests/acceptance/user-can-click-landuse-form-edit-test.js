@@ -303,7 +303,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     assert.equal(this.server.db.relatedActions.firstObject.dcpReferenceapplicationno, '12345678');
   });
 
-  test('User can fill out and save first part of Housing Plans', async function (assert) {
+  test('User can fill out and save Housing Plans section', async function (assert) {
     // Create a land use form with housing-related actions
     this.server.create('project', {
       packages: [
@@ -340,6 +340,36 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     assert.dom('[data-test-radio="dcpMannerofdisposition"]').exists();
     assert.dom('[data-test-radio="dcpRestrictandcondition"]').exists();
+
+    assert.dom('[data-test-radio="dcpFrom"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpTo"]').doesNotExist();
+
+    await click('[data-test-radio="dcpMannerofdisposition"][data-test-radio-option="Direct"]');
+
+    assert.dom('[data-test-input="dcpFrom"]').exists();
+    assert.dom('[data-test-input="dcpTo"]').exists();
+
+    await fillIn('[data-test-input="dcpFrom"]', exceedMaximum(100, 'String'));
+
+    assert.dom('[data-test-validation-message="dcpFrom"]').exists();
+
+    await fillIn('[data-test-input="dcpFrom"]', 'Some text');
+
+    assert.dom('[data-test-validation-message="dcpFrom"]').doesNotExist();
+
+    await fillIn('[data-test-input="dcpTo"]', exceedMaximum(100, 'String'));
+
+    assert.dom('[data-test-validation-message="dcpTo"]').exists();
+
+    await fillIn('[data-test-input="dcpTo"]', 'Some text');
+
+    assert.dom('[data-test-validation-message="dcpTo"]').doesNotExist();
+
+    await click('[data-test-radio="dcpMannerofdisposition"][data-test-radio-option="General"]');
+    await click('[data-test-radio="dcpMannerofdisposition"][data-test-radio-option="Direct"]');
+
+    assert.dom('[data-test-input="dcpFrom"]').hasNoValue();
+    assert.dom('[data-test-input="dcpTo"]').hasNoValue();
   });
 
   test('Housing sections only appear if Project contains housing-related Land Use Actions', async function (assert) {
