@@ -37,8 +37,6 @@ module("Acceptance | invoices", function (hooks) {
     });
 
     await visit("/invoices/1");
-    // remove after you're done! :)
-    await this.pauseTest();
 
     assert.equal(currentURL(), "/invoices/1");
   });
