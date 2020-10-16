@@ -31,12 +31,13 @@ import {
     @Patch('/:id')
     async update(@Body() body, @Param('id') id) {
       const allowedAttrs = pick(body, RELATED_ACTION_ATTRS);
-  
-        await this.crmService.update(
-          'dcp_relatedactionses',
-          id,
-          allowedAttrs,
-        );
+      const applicationDate = body.dcp_applicationdate[0];
+
+        await this.crmService.update('dcp_relatedactionses', id, {
+          ...allowedAttrs,
+    
+          dcp_applicationdate: applicationDate,
+        });
   
       return {
         dcp_relatedactionsid: id,

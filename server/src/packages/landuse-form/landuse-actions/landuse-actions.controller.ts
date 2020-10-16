@@ -29,11 +29,19 @@ export class LanduseActionsController {
   @Patch('/:id')
   async update(@Body() body, @Param('id') id) {
     const allowedAttrs = pick(body, LANDUSE_ACTION_ATTRS);
+    console.log('sunflower', body);
+
+    const dateOfPreviousApproval = body.dcp_dateofpreviousapproval[0];
+    const lapseDateOfPreviousApproval = body.dcp_lapsedateofpreviousapproval[0];
+    const recordationDate = body.dcp_recordationdate[0];
 
     await this.crmService.update('dcp_landuseactions', id, {
       ...allowedAttrs,
 
       ...(body.chosen_zoning_resolution_id ? { 'dcp_zoningresolutionsectionactionispursuantto@odata.bind': `/dcp_zoningresolutions(${body.chosen_zoning_resolution_id})` } : {}),
+      dcp_dateofpreviousapproval: dateOfPreviousApproval,
+      dcp_lapsedateofpreviousapproval: lapseDateOfPreviousApproval,
+      dcp_recordationdate: recordationDate,
     });
 
     return {
