@@ -12,6 +12,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { selectChoose } from 'ember-power-select/test-support';
+import exceedMaximum from '../helpers/exceed-maximum-characters';
 
 const saveForm = async () => {
   await click('[data-test-save-button]');
@@ -290,7 +291,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     // add and fill out fields for related action
     await click('[data-test-add-related-action-button]');
-    await click('[data-test-action-completed="true"]');
+    await click('[data-test-radio="dcpIscompletedaction"][data-test-radio-option="Yes"]');
     await fillIn('[data-test-input="dcpReferenceapplicationno"]', '12345678');
     await fillIn('[data-test-input="dcpApplicationdescription"]', 'applicant description');
     await fillIn('[data-test-input="dcpDispositionorstatus"]', 'disposition or status');
@@ -1160,5 +1161,58 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     await visit('/landuse-form/2/edit');
 
     assert.dom('[data-test-landuse-attachment-list]').exists();
+  });
+
+  test('User can add and delete a Zoning Map Change on the landuse form', async function (assert) {
+    this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', {
+          dcpPackagetype: 717170001,
+          landuseForm: this.server.create('landuse-form', {
+            landuseActions: [
+              this.server.create('landuse-action', {
+                dcpActioncode: 'ZM',
+              }),
+            ],
+          }),
+        }),
+      ],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    await selectChoose('[data-test-dcpTotalzoningareatoberezoned-dropdown]', '240,000 to 500,000 square feet');
+
+    // add and fill out fields for Zoning Text Amendment section
+    await click('[data-test-add-zoning-map-change-button]');
+    assert.dom('[data-test-zoning-map-change-fieldset="0"]').exists();
+
+    await fillIn('[data-test-input="dcpZoningsectionmapsnumber"]', exceedMaximum(100, 'String'));
+    assert.dom('[data-test-validation-message="dcpZoningsectionmapsnumber"]').exists();
+
+    await fillIn('[data-test-input="dcpZoningsectionmapsnumber"]', 'zoning section num 1234');
+    assert.dom('[data-test-validation-message="dcpZoningsectionmapsnumber"]').doesNotExist();
+
+    await selectChoose('[data-test-dcpExistingzoningdistrictvalue-dropdown]', 'R2A');
+
+    await fillIn('[data-test-input="dcpProposedzoningmapvalue"]', exceedMaximum(100, 'String'));
+    assert.dom('[data-test-validation-message="dcpProposedzoningmapvalue"]').exists();
+
+    await fillIn('[data-test-input="dcpProposedzoningmapvalue"]', 'some zoning map value');
+    assert.dom('[data-test-validation-message="dcpProposedzoningmapvalue"]').doesNotExist();
+
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.landuseForms.firstObject.dcpTotalzoningareatoberezoned, 717170006);
+    assert.equal(this.server.db.zoningMapChanges.firstObject.dcpZoningsectionmapsnumber, 'zoning section num 1234');
+    assert.equal(this.server.db.zoningMapChanges.firstObject.dcpExistingzoningdistrictvalue, 717170004);
+    assert.equal(this.server.db.zoningMapChanges.firstObject.dcpProposedzoningmapvalue, 'some zoning map value');
+
+    await click('[data-test-remove-zoning-map-change-button]');
+    assert.dom('[data-test-zr-section-fieldset="0"]').doesNotExist();
+
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.zoningMapChanges.length, 0);
   });
 });

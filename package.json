@@ -5,5 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "(cd server && yarn run start:dev) & (cd client && yarn run start:ssl)"
+  },
+  "devDependencies": {
+    "eslint": "^7.10.0"
   }
 }
