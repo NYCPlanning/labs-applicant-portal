@@ -22,7 +22,13 @@
         <strong>Project Status:</strong> {{optionset 'project' 'statuscode' 'label' @model.statuscode}}
         <span class="text-gray"> | </span>
         <strong>Public Status:</strong>
-        <FaIcon @icon={{if @model.publicStatusGeneralPublicProject 'eye' 'eye-slash'}} @prefix="far" class="text-gray"/>
+
+        <FaIcon
+          @icon={{if @model.publicStatusGeneralPublicProject 'eye' 'eye-slash'}}
+          @prefix="far"
+          class="text-gray"
+        />
+
         {{#if @model.publicStatusGeneralPublicProject}}
           <Ui::ExternalLink @href="https://zap.planning.nyc.gov/projects/{{@model.dcpName}}"> {{optionset 'project' 'dcpPublicstatus' 'label' @model.dcpPublicstatus}} </Ui::ExternalLink>
         {{else}}
@@ -91,18 +97,12 @@
     {{/if}}
 
     {{#if @model.pasPackages.length}}
-      <section class="large-padding-top large-margin-bottom ruled-adjacent">
-        <h2>Pre-Application Statement</h2>
-        <ol class="no-bullet">
-          {{#each @model.pasPackages as |pasPackage|}}
-            <Project::PackageListItem
-              @package={{pasPackage}}
-            />
-          {{/each}}
-        </ol>
-      </section>
+      <Project::PackageSection
+        @packages={{@model.pasPackages}}
+        @packageType="Pre-Application Statement"
+        class="large-padding-top large-margin-bottom ruled-adjacent"
+      />
     {{/if}}
-
   </div>{{! end left/main column }}
   <div class="cell large-4">
 
