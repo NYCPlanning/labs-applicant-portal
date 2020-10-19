@@ -1,6 +1,4 @@
 {{#if this.projectHasActions}}
-
-{{else}}
 {{#let @form as |form|}}
 <form.Section @title="Change in City Map">
   <p>
@@ -265,9 +263,6 @@
             dcpOnlychangetheeliminationofamappedbutunimp
             (optionset 'landuseForm' 'dcpOnlychangetheeliminationofamappedbutunimp' 'code' 'Yes')
           )}}
-        This should appear if you click yes, but it doesn't
-        {{else}}
-        Below is what I actually want to appear when you click yes
         <Ui::Question as |dcpYesmappedbutunimprovedstreetelimatedQ|>
           <dcpYesmappedbutunimprovedstreetelimatedQ.Label>
             Is it being eliminated from the property of an owner-occupied, one- or two-family residence?
@@ -281,8 +276,7 @@
           </form.Field>
         </Ui::Question>
 
-        {{!-- {{else}} --}}
-        You hit no?
+
         {{/if}}
       </DcpOnlychangetheeliminationofamappedbutunimpRadioGroup>
     </form.Field>
