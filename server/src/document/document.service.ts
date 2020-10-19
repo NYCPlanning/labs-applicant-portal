@@ -203,6 +203,8 @@ async getParentSiteLocation() {
     let docLocation = await this.findDocumentLocation(entityID, folderName);
     let docLocationID = null;
 
+    folderName = folderName.replace(/^\~|\#|\%|\&|\*|\{|\}|\\|\:|\<|\>|\?|\/|\||\"/g, '');
+
     // TODO:  Need to verify this
     if (!docLocation) {
       const parentSiteLocation = await this.getParentSiteLocation();
