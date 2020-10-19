@@ -1,6 +1,5 @@
 import Controller from '@ember/controller';
 import { sort } from '@ember/object/computed';
-import { tracked } from '@glimmer/tracking';
 import {
   STATUSCODE,
   DCPVISIBILITY,
@@ -21,9 +20,6 @@ export function packageIsToDo(projectPackages) {
 }
 
 export default class ProjectsController extends Controller {
-  queryParams = ['landuse'];
-
-  @tracked landuse = false;
   // TODO: organize this business logic as computed properties on the projects model
 
   // Projects awaiting the applicant's submission
@@ -32,7 +28,7 @@ export default class ProjectsController extends Controller {
     // Check that at least ONE of the packages is currently editable
     return this.model.filter((project) => packageIsToDo(project.pasPackages)
       || packageIsToDo(project.rwcdsPackages)
-      || (packageIsToDo(project.landusePackages) && this.landuse));
+      || (packageIsToDo(project.landusePackages)));
   }
 
   // Projects in NYC Planning's hands

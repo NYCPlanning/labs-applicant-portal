@@ -35,49 +35,39 @@
 
         <Ui::Question
           class="no-margin-top"
-          data-test-other-parties-radio-group
-          as |Q|
+          data-test-dcpOtherparties-radio-group
+          as |dcpOtherpartiesQ|
         >
-
-        <Q.Legend>
-          Are there other owners or long-term lessees of the subject property? 
-        </Q.Legend>
+          <dcpOtherpartiesQ.Legend>
+            Is this an action where the applicant is solely a public agency?
+          </dcpOtherpartiesQ.Legend>
 
           <form.Field
             @attribute="dcpOtherparties"
-            @type="radio"
-            as |RadioButton|
-          >
-            <RadioButton
-              @targetValue={{true}}
-              data-test-dcpotherparties="true"
-            >
-              Yes
-            </RadioButton>
-            <RadioButton
-              @targetValue={{false}}
-              data-test-dcpotherparties="false"
-            >
-              No
-            </RadioButton>
+            @type="radio-group"
+          as |DcpOtherpartiesRadioGroup|>
+            <DcpOtherpartiesRadioGroup
+              @options={{optionset 'landuseForm' 'dcpOtherparties' 'list'}}
+            />
           </form.Field>
 
         </Ui::Question>
-      {{/if}}
+
+        {{/if}}
 
       <h3>All Proposed Project Actions</h3>
       <Ui::Question
         data-test-dcplegalinstrument-radio-group
-        as |Q|
+        as |dcpLegalinstrumentQ|
       >
-        <Q.Label>
+        <dcpLegalinstrumentQ.Label>
           Does this Project require a Legal Instrument to be recorded against the subject property?
-        </Q.Label>
+        </dcpLegalinstrumentQ.Label>
 
         <form.Field
           @attribute="dcpLegalinstrument"
           @type="radio-group"
-          id={{Q.questionId}}
+          id={{dcpLegalinstrumentQ.questionId}}
           as |RadioGroup|
         >
           <RadioGroup
@@ -89,7 +79,7 @@
       {{#each @form.data.landuseActions as |landuseAction|}}
         <form.SaveableForm
           @model={{landuseAction}}
-           @validators={{array (hash) @validations.SubmittableLanduseActionFormValidations}}
+          @validators={{array (hash) @validations.SaveableLanduseFormValidations @validations.SubmittableLanduseActionFormValidations}}
           as |landuseActionForm|
         >
           <Packages::LanduseForm::ProposedActionEditor

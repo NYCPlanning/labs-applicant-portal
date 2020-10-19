@@ -33,8 +33,14 @@ export class PackageAccessGuard implements CanActivate {
       session: {
         contactId,
         isCreeper = false,
+        ...theRest
       }
     } = context.switchToHttp().getRequest();
+
+    // permit internal staff to view
+    if (theRest.mail === 'dcpcreeper@gmail.com' || theRest.mail.includes('@planning.nyc.gov')) {
+      return true;
+    }
 
     // because creeper mode allows authorization on all resources, skip this layer
     if (isCreeper) {
