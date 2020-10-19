@@ -88,6 +88,7 @@ const OPTIONSET_LOOKUP = {
     dcpLegalinstrument: LANDUSE_FORM_OPTIONSETS.DCPLEGALINSTRUMENT,
     dcpRelatedacquisitionofpropertyopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpOnlychangetheeliminationofamappedbutunimp: LANDUSE_FORM_OPTIONSETS.DCPONLYCHANGETHEELIMINATIONOFAMAPPEDBUTUNIMP,
+    dcpYesmappedbutunimprovedstreetelimated: COMMON_OPTIONSETS.YES_NO,
     dcpEstablishstreetopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpEstablishparkopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpEstablishpublicplaceopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
@@ -131,10 +132,6 @@ const OPTIONSET_LOOKUP = {
   },
   landuseAction: {
     dcpApplicantispublicagencyactions: YES_NO,
-    dcpIstheactiontoauthorizeorpermitanopenuse: YES_NO,
-    dcpIstheactiontoauthorizeacommercial: YES_NO,
-    dcpIndicatewhetheractionisamodification: LANDUSE_ACTION_OPTIONSETS.DCPINDICATEWHETHERACTIONISAMODIFICATION,
-    dcpModsubjectto197c: YES_NO,
     dcpPreviouslyapprovedactioncode: LANDUSE_ACTION_OPTIONSETS.DCPPREVIOUSLYAPPROVEDACTIONCODE,
     actions: AFFECTED_ZONING_RESOLUTION_ACTION,
   },
