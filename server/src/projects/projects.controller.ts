@@ -25,6 +25,7 @@ import { PACKAGE_ATTRS } from '../packages/packages.attrs';
 import { PROJECTAPPLICANT_ATTRS } from './project-applicants/project-applicants.attrs';
 import { TEAMMEMBER_ATTRS } from './team-members/team-members.attrs';
 import { CONTACT_ATTRS } from '../contact/contacts.attrs';
+import { INVOICE_ATTRS } from '../invoices/invoices.attrs';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('projects', {
   id: 'dcp_projectid',
@@ -46,15 +47,7 @@ import { CONTACT_ATTRS } from '../contact/contacts.attrs';
     invoices: {
       ref: 'dcp_projectinvoiceid',
       attributes: [
-        'dcp_invoicedate',
-        'dcp_projectname',
-        'dcp_name',
-        'dcp_subtotal',
-        'dcp_two_hundred_percent_rule',
-        'dcp_project_fees',
-        'dcp_supplemental_fee',
-        'dcp_grandtotal',
-        'dcp_invoice_applications',
+        ...INVOICE_ATTRS,
       ]
     }
   },
