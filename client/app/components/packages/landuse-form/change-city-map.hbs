@@ -268,16 +268,16 @@
         This should appear if you click yes, but it doesn't
         {{else}}
         Below is what I actually want to appear when you click yes
-        <Ui::Question as |dcpIsitbeingeliminatedfromthepropertyofQ|>
-          <dcpIsitbeingeliminatedfromthepropertyofQ.Label>
+        <Ui::Question as |dcpYesmappedbutunimprovedstreetelimatedQ|>
+          <dcpYesmappedbutunimprovedstreetelimatedQ.Label>
             Is it being eliminated from the property of an owner-occupied, one- or two-family residence?
-          </dcpIsitbeingeliminatedfromthepropertyofQ.Label>
+          </dcpYesmappedbutunimprovedstreetelimatedQ.Label>
 
-          <form.Field @attribute="dcpIsitbeingeliminatedfromthepropertyof" @type="radio-group" as
-            |DcpIsitbeingeliminatedfromthepropertyofRadioGroup|>
-            <DcpIsitbeingeliminatedfromthepropertyofRadioGroup
+          <form.Field @attribute="dcpYesmappedbutunimprovedstreetelimated" @type="radio-group" as
+            |DcpYesmappedbutunimprovedstreetelimatedRadioGroup|>
+            <DcpYesmappedbutunimprovedstreetelimatedRadioGroup
               @options={{optionset 'landuseForm' 'dcpOnlychangetheeliminationofamappedbutunimp' 'list'}}>
-            </DcpIsitbeingeliminatedfromthepropertyofRadioGroup>
+            </DcpYesmappedbutunimprovedstreetelimatedRadioGroup>
           </form.Field>
         </Ui::Question>
 
