@@ -259,7 +259,8 @@
     <form.Field @attribute="dcpOnlychangetheeliminationofamappedbutunimp" @type="radio-group" as
       |DcpOnlychangetheeliminationofamappedbutunimpRadioGroup|>
       <DcpOnlychangetheeliminationofamappedbutunimpRadioGroup
-        @options={{optionset 'landuseForm' 'dcpOnlychangetheeliminationofamappedbutunimp' 'list'}}>
+        @options={{optionset 'landuseForm' 'dcpOnlychangetheeliminationofamappedbutunimp' 'list'}} as
+        |dcpOnlychangetheeliminationofamappedbutunimp|>
         {{#if (eq
             dcpOnlychangetheeliminationofamappedbutunimp
             (optionset 'landuseForm' 'dcpOnlychangetheeliminationofamappedbutunimp' 'code' 'Yes')
