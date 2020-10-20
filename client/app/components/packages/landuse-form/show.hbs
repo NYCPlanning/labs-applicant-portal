@@ -369,7 +369,7 @@
       </Ui::Answer>
       {{#if (eq
             @package.landuseForm.dcpSitedatasiteisinnewyorkcity
-            (optionset 'landuseForm' 'dcpSitedatasiteisinnewyorkcity' 'code' 'true')
+            (optionset 'landuseForm' 'dcpSitedatasiteisinnewyorkcity' 'code' 'Yes')
           )}} <Ui::Answer @beside={{true}} as |A|>
         <A.Prompt>
           Landmark or Historic District name
@@ -433,6 +433,16 @@
         <span id="environmental-review" class="section-anchor"></span>
         Environmental Review
       </h2>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
+          Who is the lead agency?
+        </A.Prompt>
+        <A.Field>
+          {{@package.landuseForm.leadAgency.name}}
+        </A.Field>
+      </Ui::Answer>
+
       <Ui::Answer @beside={{true}} as |A|>
         <A.Prompt>
           What is the CEQR number?
@@ -509,9 +519,118 @@
 
         {{#each @package.landuseForm.landuseActions as |landuseAction|}}
         <fieldset class="fieldset">
-          <h4>
-            {{~landuseAction.dcpActioncode~}}
-          </h4>
+
+          {{#if landuseAction.dcpDatadifferentiationmultipleactionsametype}}
+          <p>{{landuseAction.dcpDatadifferentiationmultipleactionsametype}}. This information differentiates multiple
+            Actions with the same Action Code.</p>
+          {{/if}}
+
+          <Ui::Legend>
+            <span class="label">
+              {{#if (lookup-action-type landuseAction.dcpActioncode)}}
+              <LabsUi::IconTooltip @tip={{lookup-action-type landuseAction.dcpActioncode}} @icon="info-circle"
+                @side="bottom" @transform="shrink-4 up-2" @fixedWidth={{true}} />
+              {{/if}}
+              {{~landuseAction.dcpActioncode~}}
+            </span>
+          </Ui::Legend>
+
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              Is this an action where the applicant is solely a public agency?
+            </A.Prompt>
+            <A.Field>
+              {{optionset 'landuseAction' 'dcpApplicantispublicagencyactions' 'label' landuseAction.dcpApplicantispublicagencyactions}}
+            </A.Field>
+          </Ui::Answer>
+
+          {{#if this.projectHasRequiredActions}}
+
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              Zoning Resolution section name
+            </A.Prompt>
+            <A.Field>
+              {{landuseAction.dcpNameofzoningresolutionsectionQ.questionId}}
+            </A.Field>
+
+
+          </Ui::Answer>
+
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              Zoning Resolution section(s) to be modified
+            </A.Prompt>
+            <A.Field>
+              {{landuseAction.dcpZoningresolutionsectionactionispursuant}}
+            </A.Field>
+          </Ui::Answer>
+
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              Number of Zoning Lot(s) affected
+            </A.Prompt>
+            <A.Field>
+              {{landuseAction.dcpNumberofzoninglotsaffected}}
+            </A.Field>
+          </Ui::Answer>
+
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              Square footage of Zoning Lot(s) affected
+            </A.Prompt>
+            <A.Field>
+              {{landuseAction.dcpSquarefootageofzoninglotsaffected}}
+            </A.Field>
+          </Ui::Answer>
+
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              Square footage of the Proposed Development
+            </A.Prompt>
+            <A.Field>
+              {{landuseAction.dcpSquarefootageoftheproposeddevelopment}}
+            </A.Field>
+          </Ui::Answer>
+
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              Square footage associated with transfer of Development Rights or Floor Area Bonus
+            </A.Prompt>
+            <A.Field>
+              {{landuseAction.dcpSquarefootassociatedwithtransferbonus}}
+            </A.Field>
+          </Ui::Answer>
+
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              Proposed number of dwelling units
+            </A.Prompt>
+            <A.Field>
+              {{landuseAction.dcpNumberofdu}}
+            </A.Field>
+          </Ui::Answer>
+
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              Is the Action to authorize or permit an open use?
+            </A.Prompt>
+            <A.Field>
+              {{landuseAction.dcpistheactiontoauthorizeorpermitanopenuse}}
+            </A.Field>
+          </Ui::Answer>
+
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              Is the Action to authorize commercial or community facility use?
+            </A.Prompt>
+            <A.Field>
+              {{landuseAction.dcpIstheactiontoauthorizeacommercial}}
+            </A.Field>
+          </Ui::Answer>
+
+
+          {{/if}}
 
           <Ui::Answer @beside={{true}} as |A|>
             <A.Prompt>
@@ -522,23 +641,81 @@
             </A.Field>
           </Ui::Answer>
 
+          {{#if this.projectHasRequiredActionsAndFollowUpYes}}
 
           <Ui::Answer @beside={{true}} as |A|>
             <A.Prompt>
-              Is this an action where the applicant is solely a public agency?
+              Date of previous approval
             </A.Prompt>
             <A.Field>
-              {{optionset 'landuseAction' 'dcpApplicantispublicagencyactions' 'label' landuseAction.dcpApplicantispublicagencyactions}}
+              {{landuseAction.dcpDateofpreviousapproval}}
             </A.Field>
           </Ui::Answer>
+
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              Lapse date of previous approval
+            </A.Prompt>
+            <A.Field>
+              {{landuseAction.dcpLapsedateofpreviousapproval}}
+            </A.Field>
+          </Ui::Answer>
+
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              Is this a modification subject to Section 197-c of the City Charter?
+            </A.Prompt>
+            <A.Field>
+              {{optionset 'landuseAction' 'dcpModsubjectto197c' 'label' landuseAction.dcpModsubjectto197c}}
+            </A.Field>
+          </Ui::Answer>
+
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              Is the Action a modification to or pursuant to a Legal Instrument?
+            </A.Prompt>
+            <A.Field>
+              {{optionset 'landuseAction' 'dcpIndicatewhetheractionisamodification' 'label' landuseAction.dcpDateofpreviousapproval}}
+            </A.Field>
+          </Ui::Answer>
+
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              Type of Legal Instrument
+            </A.Prompt>
+            <A.Field>
+              {{landuseAction.dcpTypeoflegalinstrument}}
+            </A.Field>
+          </Ui::Answer>
+
+
+
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              CRFN or other tracking number for Legal Instrument
+            </A.Prompt>
+            <A.Field>
+              {{landuseAction.dcpCrfnnumber}}
+            </A.Field>
+          </Ui::Answer>
+
+
+
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              Recordation date of Legal Instrument
+            </A.Prompt>
+            <A.Field>
+              {{landuseAction.dcpRecordationdate}}
+            </A.Field>
+          </Ui::Answer>
+
+
+          {{/if}}
         </fieldset>
         {{/each}}
       </div>
     </section>
-
-
-
-
 
 
     <section class="form-section">
@@ -556,6 +733,10 @@
             {{#if relatedAction.dcpDevelopmentsite}}
             {{optionset 'landuseForm' 'dcpDevelopmentsite' 'label' @package.landuseForm.dcpDevelopmentsite}}
             {{/if}}
+          </div>
+          <div>
+            Is the action completed:
+            {{optionset 'relatedAction' 'dcpIscompletedaction' 'label' relatedAction.dcpIscompletedaction}}
           </div>
           <div>
             {{#if relatedAction.dcpReferenceapplicationno}}
@@ -592,12 +773,14 @@
       </ul>
     </section>
 
+
+    {{#if this.projectHasCityMapActions}}
     <section class="form-section">
       <h2 class="section-header">
         <span id="change-in-city-map" class="section-anchor"></span>
         Change in City Map
       </h2>
-      {{#if this.projectHasCityMapActions}}
+
       <p>
         The following questions relate to Change in City Map and the following Actions: MM, MY, ME
       </p>
@@ -669,9 +852,9 @@
           {{optionset 'landuseForm' 'dcpOnlychangetheeliminationofamappedbutunimp' 'label' @package.landuseForm.dcpOnlychangetheeliminationofamappedbutunimp}}
         </A.Field>
       </Ui::Answer>
-      {{/if}}
-    </section>
 
+    </section>
+    {{/if}}
 
     {{#let (intersect
         (map-by "dcpActioncode" @package.landuseForm.landuseActions)
@@ -852,6 +1035,11 @@
     {{/if}}
     {{/let}}
 
+    {{#let (intersect
+        (map-by "dcpActioncode" this.landuseForm.landuseActions)
+        (array 'PC' 'PQ' 'PS' 'PX')
+      ) as |publicFacilitiesActions|}}
+    {{#if (gt publicFacilitiesActions.length 0)}}
     <section class="form-section">
       <h2 class="section-header">
         <span id="public-facilities" class="section-anchor"></span>
@@ -870,9 +1058,7 @@
         </A.Prompt>
         <A.Field>
           <span data-test-proposedPublicFacilitiesActionList>
-            <Packages::LanduseForm::ProposedPublicFacilitiesActionList
-              @landuseForm={{@package.landuseForm}}
-            />
+            <Packages::LanduseForm::ProposedPublicFacilitiesActionList @landuseForm={{@package.landuseForm}} />
           </span>
         </A.Field>
       </Ui::Answer>
@@ -1039,8 +1225,40 @@
         </A.Field>
       </Ui::Answer>
 
-
     </section>
+
+  <section class="form-section">
+      <h2 class="section-header">
+        <span id="proposed-site-characteristics" class="section-anchor"></span>
+        Proposed Site Characteristics [place holder]
+      </h2>
+  </section>
+    
+    {{/if}}
+    {{/let}}
+
+
+  <section class="form-section">
+      <h2 class="section-header">
+        <span id="disposition" class="section-anchor"></span>
+        Disposition [place holder]
+      </h2>
+  </section>
+
+
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="zoning-text-amendment" class="section-anchor"></span>
+        Zoning Text Amendment [place holder]
+      </h2>
+  </section>
+
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="zoning-map-amendment" class="section-anchor"></span>
+        Zoning Map Amendment [place holder]
+      </h2> 
+  </section>
 
     <section class="form-section" id="attached-documents">
       <h2 class="section-header">
