@@ -6,8 +6,6 @@ import { optionset } from '../helpers/optionset';
 import { STATECODE, STATUSCODE } from '../optionsets/contact';
 
 export default class ProjectController extends Controller {
-  queryParams = ['landuse'];
-
   @tracked landuse = false;
 
   @tracked contactMgmtOpen = false;

@@ -1,11 +1,11 @@
 <Ui::Breadcrumbs as |Crumb|>
   <Crumb @text="My Projects" @route='projects' />
-  <Crumb @text={{@model.project.dcpProjectname}} @disabled={{true}} />
+  <Crumb @text={{@model.package.project.dcpProjectname}} @disabled={{true}} />
   <Crumb @text="Land Use" @disabled={{true}} />
 </Ui::Breadcrumbs>
 
 <Packages::LanduseForm::Show
-  @package={{@model}}
+  @package={{@model.package}}
 />
 
 {{outlet}}

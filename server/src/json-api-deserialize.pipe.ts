@@ -1,5 +1,6 @@
 import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
 import { Deserializer } from 'jsonapi-serializer';
+import { underscore } from 'inflected';
 
 @Injectable()
 export class JsonApiDeserializePipe implements PipeTransform {
@@ -8,7 +9,16 @@ export class JsonApiDeserializePipe implements PipeTransform {
 
     if (type === 'body') {
       return new Deserializer({
-        keyForAttribute: 'snake_case',
+        keyForAttribute: (attribute) => {
+          // One-off deserialization for any properties should happen here.
+          // Add another if statement.
+          // See https://github.com/NYCPlanning/labs-applicant-portal/pull/771
+          // TODO: Extract out and modularize the set of one-offs if it grows
+          // beyond 2.
+          if (attribute === 'dcp500kpluszone')
+            return 'dcp_500kpluszone';
+          return underscore(attribute);
+        },
         packages: {
           valueForRelationship: relationship => relationship.id,
         },
@@ -37,6 +47,12 @@ export class JsonApiDeserializePipe implements PipeTransform {
           valueForRelationship: relationship => relationship.id,
         },
         'affected-zoning-resolutions': {
+          valueForRelationship: relationship => relationship.id,
+        },
+        'zoning-map-changes': {
+          valueForRelationship: relationship => relationship.id,
+        },
+        'zoning-resolutions': {
           valueForRelationship: relationship => relationship.id,
         },
       }).deserialize(value);

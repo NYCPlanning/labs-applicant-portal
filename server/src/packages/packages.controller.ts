@@ -28,6 +28,8 @@ import { RELATED_ACTION_ATTRS } from './landuse-form/related-actions/related-act
 import { LANDUSE_ACTION_ATTRS } from './landuse-form/landuse-actions/landuse-actions.attrs';
 import { SITEDATAH_FORM_ATTRS } from './landuse-form/sitedatah-forms/sitedatah-form.attrs';
 import { LANDUSE_GEOGRAPHY_ATTRS } from './landuse-form/landuse-geography/landuse-geography.attrs';
+import { ZONINGRESOLUTION_ATTRS } from '../zoning-resolutions/zoning-resolutions.attrs';
+import { ZONING_MAP_CHANGE_ATTRS } from './landuse-form/zoning-map-changes/zoning-map-change.attrs';
 import { CitypayService } from '../citypay/citypay.service';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('packages', {
@@ -110,6 +112,7 @@ import { CitypayService } from '../citypay/citypay.service';
       'landuse-geographies',
       'lead-agency',
       'affected-zoning-resolutions',
+      'zoning-map-changes',
     ],
     applicants: {
       ref: 'dcp_applicantinformationid',
@@ -134,7 +137,15 @@ import { CitypayService } from '../citypay/citypay.service';
       ref: 'dcp_landuseactionid',
       attributes: [
         ...LANDUSE_ACTION_ATTRS,
+
+        'zoning-resolution',
       ],
+      'zoning-resolution': {
+        ref: 'dcp_zoningresolutionid',
+        attributes: [
+          ...ZONINGRESOLUTION_ATTRS,
+        ],
+      },
     },
     'sitedatah-forms': {
       ref: 'dcp_sitedatahformid',
@@ -159,6 +170,12 @@ import { CitypayService } from '../citypay/citypay.service';
       ref: 'dcp_affectedzoningresolutionid',
       attributes: [
         ...AFFECTEDZONINGRESOLUTION_ATTRS,
+      ],
+    },
+    'zoning-map-changes': {
+      ref: 'dcp_zoningmapchangesid',
+      attributes: [
+        ...ZONING_MAP_CHANGE_ATTRS,
       ],
     },
   },
@@ -235,11 +252,17 @@ import { CitypayService } from '../citypay/citypay.service';
             ],
             bbls: landuseForm.dcp_dcp_projectbbl_dcp_landuse,
             'related-actions': landuseForm.dcp_dcp_landuse_dcp_relatedactions,
-            'landuse-actions': landuseForm.dcp_dcp_landuse_dcp_landuseaction,
+            'landuse-actions': landuseForm.landuseActions.map(action => {
+              return {
+                ...action,
+                'zoning-resolution': action.dcp_zoningresolutionsectionactionispursuantto,
+              }
+            }),
             'sitedatah-forms': landuseForm.dcp_dcp_landuse_dcp_sitedatahform_landuseform,
             'landuse-geographies': landuseForm.dcp_dcp_landuse_dcp_landusegeography_landuseform,
             'lead-agency': landuseForm.dcp_leadagency,
             'affected-zoning-resolutions': landuseForm.dcp_dcp_landuse_dcp_affectedzoningresolution_Landuseform,
+            'zoning-map-changes': landuseForm.dcp_dcp_landuse_dcp_zoningmapchanges_LandUseForm,
           }
         }
       } else {

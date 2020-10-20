@@ -1,0 +1,71 @@
+{{#let @form as |form|}}
+  <Ui::Question
+    class="fieldset relative"
+    ...attributes
+  as |Q|>
+    <Q.Legend data-test-zoning-map-change-title>
+      Zoning Map Change
+    </Q.Legend>
+
+    <Ui::Question
+    as |dcpZoningsectionmapsnumberQ|>
+      <dcpZoningsectionmapsnumberQ.Label>
+        Zoning Section Map(s) Number
+      </dcpZoningsectionmapsnumberQ.Label>
+
+      <form.Field
+        @attribute="dcpZoningsectionmapsnumber"
+        @maxlength="100"
+        @showCounter={{true}}
+        id={{dcpZoningsectionmapsnumberQ.id}}
+      />
+    </Ui::Question>
+
+
+    <Ui::Question
+    as |dcpExistingzoningdistrictvalueQ|>
+      <dcpExistingzoningdistrictvalueQ.Label
+        data-test-applicant-state-dropdown
+      >
+        Existing Zoning District(s)
+      </dcpExistingzoningdistrictvalueQ.Label>
+      
+      <label data-test-dcpExistingzoningdistrictvalue-dropdown>
+        <PowerSelect
+          supportsDataTestProperties={{true}}
+          @selected={{form.data.dcpExistingzoningdistrictvalue}}
+          @placeholder="-- select --"
+          @options={{map-by 'code' (optionset 'zoningMapChange' 'dcpExistingzoningdistrictvalue' 'list')}}
+          @onChange={{fn (mut form.data.dcpExistingzoningdistrictvalue)}}
+        as |dcpExistingzoningdistrictvalue|>
+          {{optionset 'zoningMapChange' 'dcpExistingzoningdistrictvalue' 'label' dcpExistingzoningdistrictvalue}}
+        </PowerSelect>
+      </label>
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpProposedzoningmapvalueQ|>
+      <dcpProposedzoningmapvalueQ.Label>
+        Proposed Zoning District(s)
+      </dcpProposedzoningmapvalueQ.Label>
+
+      <form.Field
+        @attribute="dcpProposedzoningmapvalue"
+        @maxlength="100"
+        @showCounter={{true}}
+        id={{dcpProposedzoningmapvalueQ.id}}
+      />
+    </Ui::Question>
+
+    <button
+      type="button"
+      class="delete-fieldset"
+      {{on "click" (fn @removeZoningMapChange form.data)}}
+      data-test-remove-zoning-map-change-button
+    >
+      Delete Zoning Map Change
+      <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
+    </button>
+
+  </Ui::Question>
+{{/let}}

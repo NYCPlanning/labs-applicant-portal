@@ -61,6 +61,7 @@
       <Packages::LanduseForm::ProposedActions
         @form={{saveableForm}}
         @validations={{this.validations}}
+        @zoningResolutions={{@zoningResolutions}}
       />
 
       <Packages::RelatedAction
@@ -72,13 +73,6 @@
 
       <Packages::LanduseForm::ChangeCityMap
         @form={{saveableForm}}
-      />
-
-      <Packages::LanduseForm::ZoningTextAmendment
-        @form={{saveableForm}}
-        @addZrSection={{this.addZrSection}}
-        @removeZrSection={{this.removeZrSection}}
-        @validations={{this.validations}}
       />
 
       {{#let (intersect
@@ -119,6 +113,20 @@
 
       <Packages::LanduseForm::Disposition
         @form={{saveableForm}}
+      />
+
+      <Packages::LanduseForm::ZoningTextAmendment
+        @form={{saveableForm}}
+        @addZrSection={{this.addZrSection}}
+        @removeZrSection={{this.removeZrSection}}
+        @validations={{this.validations}}
+      />
+
+      <Packages::LanduseForm::ZoningMapAmendment
+        @form={{saveableForm}}
+        @addZoningMapChange={{this.addZoningMapChange}}
+        @removeZoningMapChange={{this.removeZoningMapChange}}
+        @validations={{this.validations}}
       />
 
       <Packages::LanduseForm::AttachedDocuments
