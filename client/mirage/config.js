@@ -84,10 +84,14 @@ export default function() {
   this.get('/landuse-actions');
   this.patch('/landuse-actions/:id');
 
+  this.get('/zoning-resolutions');
+
   this.get('/lead-agencys');
   this.get('/lead-agencys/:id');
   this.get('/accounts');
   this.get('/accounts/:id');
+
+  this.get('/invoices/:id');
 
   this.post('/documents', function(schema, request) {
     // requestBody should be a FormData object
