@@ -55,7 +55,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     await waitFor('[data-test-show="dcpProjectname"]');
 
-    assert.equal(currentURL(), '/landuse-form/1');
+    assert.equal(currentURL(), '/landuse-form/1?header=true');
   });
 
   test('User can edit Site Information on the landuse form', async function (assert) {

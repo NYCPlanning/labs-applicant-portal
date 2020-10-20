@@ -44,7 +44,7 @@ module('Acceptance | user can login', function(hooks) {
     await focus('[data-test-auth="menu-button"]');
     await click('[data-test-auth="logout"]');
 
-    assert.equal(currentURL(), '/logout');
+    assert.equal(currentURL(), '/logout?header=true');
     assert.equal(currentSession().isAuthenticated, false);
   });
 
