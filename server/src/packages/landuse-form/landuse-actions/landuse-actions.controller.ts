@@ -30,11 +30,11 @@ export class LanduseActionsController {
   async update(@Body() body, @Param('id') id) {
     const allowedAttrs = pick(body, LANDUSE_ACTION_ATTRS);
 
-      await this.crmService.update(
-        'dcp_landuseactions',
-        id,
-        allowedAttrs,
-      );
+    await this.crmService.update('dcp_landuseactions', id, {
+      ...allowedAttrs,
+
+      ...(body.chosen_zoning_resolution_id ? { 'dcp_zoningresolutionsectionactionispursuantto@odata.bind': `/dcp_zoningresolutions(${body.chosen_zoning_resolution_id})` } : {}),
+    });
 
     return {
       dcp_landuseactionid: id,

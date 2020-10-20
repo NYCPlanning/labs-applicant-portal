@@ -36,4 +36,6 @@ Router.map(function() {
     this.route('validate');
     this.route('sync');
   });
+
+  this.route('invoice', { path: 'invoices/:id' });
 });
