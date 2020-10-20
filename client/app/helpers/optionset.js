@@ -132,6 +132,10 @@ const OPTIONSET_LOOKUP = {
   },
   landuseAction: {
     dcpApplicantispublicagencyactions: YES_NO,
+    dcpIstheactiontoauthorizeorpermitanopenuse: YES_NO,
+    dcpIstheactiontoauthorizeacommercial: YES_NO,
+    dcpIndicatewhetheractionisamodification: LANDUSE_ACTION_OPTIONSETS.DCPINDICATEWHETHERACTIONISAMODIFICATION,
+    dcpModsubjectto197c: YES_NO,
     dcpPreviouslyapprovedactioncode: LANDUSE_ACTION_OPTIONSETS.DCPPREVIOUSLYAPPROVEDACTIONCODE,
     actions: AFFECTED_ZONING_RESOLUTION_ACTION,
   },
