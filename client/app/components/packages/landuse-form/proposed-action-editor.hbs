@@ -42,6 +42,11 @@
     </Ui::Question>
 
     {{#if this.projectHasRequiredActions}}
+
+      <Packages::LanduseForm::ZoningResolutionDropdown
+        @landuseActionForm={{landuseActionForm}}
+        @zoningResolutions={{@zoningResolutions}}
+      />
     
       <Ui::Question as |dcpNameofzoningresolutionsectionQ|>
         <dcpNameofzoningresolutionsectionQ.Label>
