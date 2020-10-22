@@ -101,6 +101,56 @@
       {{/if}}
     </LinkTo>
   {{/if}}
+ {{#if (or
+    (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_EAS'))
+    (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'FILED_EAS'))
+  )}}
+    {{!-- TODO: When setting up Filed EAS, add filed-eas.edit and filed-eas.show as the false condition in route below
+    e.g.
+    (if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_EAS')) 'draft-eas.edit' 'draft-eas.edit') --}}
+    <LinkTo
+      @route={{if (eq @package.statuscode (optionset 'package' 'statuscode' 'code' 'PACKAGE_PREPARATION'))
+        (if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_EAS')) 'draft-eas.edit')
+        (if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_EAS')) 'draft-eas.show')
+      }}
+      @model={{@package.id}}
+      data-test-package-link={{@package.id}}
+    >
+      {{#if (eq @package.statuscode (optionset 'package' 'statuscode' 'code' 'PACKAGE_PREPARATION'))}}
+        <button
+          type="button"
+          class="button no-margin"
+        >
+          <FaIcon @icon="edit" />
+          <strong>
+            {{#if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'FILED_EAS'))}}
+              Filed
+            {{/if}}
+            {{#if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_EAS'))}}
+              Draft
+            {{/if}}
+            EAS
+            <small>
+              Version {{@package.dcpPackageversion}}
+            </small>
+          </strong>
+        </button>
+      {{else}}
+        <strong>
+          {{#if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'FILED_EAS'))}}
+            Filed
+          {{/if}}
+          {{#if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_EAS'))}}
+            Draft
+          {{/if}}
+          EAS
+          <small>
+            Version {{@package.dcpPackageversion}}
+          </small>
+        </strong>
+      {{/if}}
+    </LinkTo>
+  {{/if}}
   <br>
   {{#if (eq @package.dcpVisibility (optionset 'package' 'dcpVisibility' 'code' 'GENERAL_PUBLIC'))}}
     <FaIcon @icon="eye" @prefix="far" class="text-orange" />

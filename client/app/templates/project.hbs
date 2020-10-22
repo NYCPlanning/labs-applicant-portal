@@ -47,6 +47,17 @@
       </ol>
     {{/if}}
 
+    {{#if @model.easPackages.length}}
+      <h2>Environmental Assessment Statement (EAS)</h2>
+      <ol class="no-bullet">
+        {{#each @model.easPackages as |easPackage|}}
+          <Project::PackageListItem
+            @package={{easPackage}}
+          />
+        {{/each}}
+      </ol>
+    {{/if}}
+
     {{#if @model.rwcdsPackages.length}}
       <section class="large-padding-top large-margin-bottom ruled-adjacent">
         <h2>Reasonable Worst Case Development Scenario</h2>

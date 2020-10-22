@@ -82,4 +82,31 @@ export default class ProjectModel extends Model {
 
     return landusePackages;
   }
+
+  get easPackages() {
+    const easPackages = [
+      ...this.filedEasPackages,
+      ...this.draftEasPackages,
+    ];
+
+    return easPackages;
+  }
+
+  get draftEasPackages() {
+    const easPackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'DRAFT_EAS']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    return easPackages;
+  }
+
+  get filedEasPackages() {
+    const easPackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'FILED_EAS']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    return easPackages;
+  }
 }
