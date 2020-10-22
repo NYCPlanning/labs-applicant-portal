@@ -37,25 +37,42 @@
     </section>
 
     {{#if @model.landusePackages.length}}
-      <h2>Land Use</h2>
-      <ol class="no-bullet">
-        {{#each @model.landusePackages as |landusePackage|}}
-          <Project::PackageListItem
-            @package={{landusePackage}}
-          />
-        {{/each}}
-      </ol>
+      <section class="large-padding-top large-margin-bottom ruled-adjacent">
+        <h2>Land Use</h2>
+        <ol class="no-bullet">
+          {{#each @model.landusePackages as |landusePackage|}}
+            <Project::PackageListItem
+              @package={{landusePackage}}
+            />
+          {{/each}}
+        </ol>
+      </section>
     {{/if}}
 
     {{#if @model.easPackages.length}}
-      <h2>Environmental Assessment Statement (EAS)</h2>
-      <ol class="no-bullet">
-        {{#each @model.easPackages as |easPackage|}}
-          <Project::PackageListItem
-            @package={{easPackage}}
-          />
-        {{/each}}
-      </ol>
+      <section class="large-padding-top large-margin-bottom ruled-adjacent">
+        <h2>Environmental Assessment Statement (EAS)</h2>
+        <ol class="no-bullet">
+          {{#each @model.easPackages as |easPackage|}}
+            <Project::PackageListItem
+              @package={{easPackage}}
+              />
+          {{/each}}
+        </ol>
+      </section>
+    {{/if}} 
+  
+    {{#if @model.eisPackages.length}}
+    <section class="large-padding-top large-margin-bottom ruled-adjacent">
+      <h2>Environmental Impact Statement (EIS)</h2>
+        <ol class="no-bullet">
+          {{#each @model.eisPackages as |eisPackage|}}
+            <Project::PackageListItem
+              @package={{eisPackage}}
+            />
+          {{/each}}
+        </ol>
+      </section>
     {{/if}}
 
     {{#if @model.rwcdsPackages.length}}

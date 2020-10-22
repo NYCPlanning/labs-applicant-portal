@@ -109,4 +109,31 @@ export default class ProjectModel extends Model {
 
     return easPackages;
   }
+
+  get eisPackages() {
+    const eisPackages = [
+      ...this.deisPackages,
+      ...this.feisPackages,
+    ];
+
+    return eisPackages;
+  }
+
+  get deisPackages() {
+    const eisPackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'PDEIS']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    return eisPackages;
+  }
+
+  get feisPackages() {
+    const eisPackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'EIS']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    return eisPackages;
+  }
 }
