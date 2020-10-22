@@ -28,7 +28,8 @@ export default class ProjectsController extends Controller {
     // Check that at least ONE of the packages is currently editable
     return this.model.filter((project) => packageIsToDo(project.pasPackages)
       || packageIsToDo(project.rwcdsPackages)
-      || (packageIsToDo(project.landusePackages)));
+      || (packageIsToDo(project.landusePackages))
+      || (packageIsToDo(project.easPackages)));
   }
 
   // Projects in NYC Planning's hands
