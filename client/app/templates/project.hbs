@@ -22,11 +22,13 @@
         <strong>Project Status:</strong> {{optionset 'project' 'statuscode' 'label' @model.statuscode}}
         <span class="text-gray"> | </span>
         <strong>Public Status:</strong>
-        <FaIcon @icon={{if @model.publicStatusGeneralPublicProject 'eye' 'eye-slash'}} @prefix="far" class="text-gray"/>
+        <FaIcon @icon={{if @model.publicStatusGeneralPublicProject 'eye' 'eye-slash'}} @prefix="far"
+          class="text-gray" />
         {{#if @model.publicStatusGeneralPublicProject}}
-          <Ui::ExternalLink @href="https://zap.planning.nyc.gov/projects/{{@model.dcpName}}"> {{optionset 'project' 'dcpPublicstatus' 'label' @model.dcpPublicstatus}} </Ui::ExternalLink>
+        <Ui::ExternalLink @href="https://zap.planning.nyc.gov/projects/{{@model.dcpName}}">
+          {{optionset 'project' 'dcpPublicstatus' 'label' @model.dcpPublicstatus}} </Ui::ExternalLink>
         {{else}}
-          {{optionset 'project' 'dcpPublicstatus' 'label' @model.dcpPublicstatus}}
+        {{optionset 'project' 'dcpPublicstatus' 'label' @model.dcpPublicstatus}}
         {{/if}}
       </p>
 
@@ -37,51 +39,54 @@
     </section>
 
     {{#if @model.landusePackages.length}}
-      <h2>Land Use</h2>
-      <ol class="no-bullet">
-        {{#each @model.landusePackages as |landusePackage|}}
-          <Project::PackageListItem
-            @package={{landusePackage}}
-          />
-        {{/each}}
-      </ol>
+    <h2>Land Use</h2>
+    <ol class="no-bullet">
+      {{#each @model.landusePackages as |landusePackage|}}
+      <Project::PackageListItem @package={{landusePackage}} />
+      {{/each}}
+    </ol>
     {{/if}}
 
     {{#if @model.easPackages.length}}
-      <h2>Environmental Assessment Statement (EAS)</h2>
+    <h2>Environmental Assessment Statement (EAS)</h2>
+    <ol class="no-bullet">
+      {{#each @model.easPackages as |easPackage|}}
+      <Project::PackageListItem @package={{easPackage}} />
+      {{/each}}
+    </ol>
+    {{/if}}
+
+    {{#if @model.eisPackages.length}}
+    <section class="large-padding-top large-margin-bottom ruled-adjacent">
+      <h2>Environmental Impact Statement (EIS)</h2>
       <ol class="no-bullet">
-        {{#each @model.easPackages as |easPackage|}}
-          <Project::PackageListItem
-            @package={{easPackage}}
-          />
+        {{#each @model.eisPackages as |eisPackage|}}
+        <Project::PackageListItem @package={{eisPackage}} />
         {{/each}}
       </ol>
+    </section>
     {{/if}}
 
     {{#if @model.rwcdsPackages.length}}
-      <section class="large-padding-top large-margin-bottom ruled-adjacent">
-        <h2>Reasonable Worst Case Development Scenario</h2>
-        <ol class="no-bullet">
-          {{#each @model.rwcdsPackages as |rwcdsPackage|}}
-            <Project::PackageListItem
-              @package={{rwcdsPackage}}
-            />
-          {{/each}}
-        </ol>
-      </section>
+    <section class="large-padding-top large-margin-bottom ruled-adjacent">
+      <h2>Reasonable Worst Case Development Scenario</h2>
+      <ol class="no-bullet">
+        {{#each @model.rwcdsPackages as |rwcdsPackage|}}
+        <Project::PackageListItem @package={{rwcdsPackage}} />
+        {{/each}}
+      </ol>
+    </section>
     {{/if}}
 
     {{#if @model.pasPackages.length}}
-      <section class="large-padding-top large-margin-bottom ruled-adjacent">
-        <h2>Pre-Application Statement</h2>
-        <ol class="no-bullet">
-          {{#each @model.pasPackages as |pasPackage|}}
-            <Project::PackageListItem
-              @package={{pasPackage}}
-            />
-          {{/each}}
-        </ol>
-      </section>
+    <section class="large-padding-top large-margin-bottom ruled-adjacent">
+      <h2>Pre-Application Statement</h2>
+      <ol class="no-bullet">
+        {{#each @model.pasPackages as |pasPackage|}}
+        <Project::PackageListItem @package={{pasPackage}} />
+        {{/each}}
+      </ol>
+    </section>
     {{/if}}
 
   </div>{{! end left/main column }}
@@ -91,11 +96,8 @@
 
       <h3 class="clearfix">
         Project Editors
-        <button
-          type="button"
-          class="button secondary small float-right no-margin"
-          {{on "click" (fn this.toggleContactMgmt) }}
-        >
+        <button type="button" class="button secondary small float-right no-margin"
+          {{on "click" (fn this.toggleContactMgmt) }}>
           {{if this.contactMgmtOpen 'Cancel' 'Manage'}}
           <FaIcon @icon='users-cog' @fixedWidth={{true}} />
         </button>
@@ -103,102 +105,70 @@
 
       <ul class="no-bullet">
         {{#each this.project.projectApplicants as |projectApplicant|}}
-          {{#if (and (eq projectApplicant.contact.statuscode this.contactActiveStatusCode) (eq projectApplicant.contact.statecode this.contactActiveStateCode))}}
-            <Project::ProjectEditorListItem
-              @name={{projectApplicant.displayName}}
-              @emailAddress={{projectApplicant.email}}
-              @phone={{projectApplicant.contact.telephone1}}
-              @isRegistered={{projectApplicant.contact.dcpNycidGuid}}
-              @projectName={{this.project.dcpProjectname}}
-              @canDelete={{and (not projectApplicant.isPrimaryApplicantOrContact) this.contactMgmtOpen}}
-              @onDelete={{fn this.removeEditor projectApplicant}}
-            />
-          {{/if}}
+        {{#if (and (eq projectApplicant.contact.statuscode this.contactActiveStatusCode) (eq projectApplicant.contact.statecode this.contactActiveStateCode))}}
+        <Project::ProjectEditorListItem @name={{projectApplicant.displayName}} @emailAddress={{projectApplicant.email}}
+          @phone={{projectApplicant.contact.telephone1}} @isRegistered={{projectApplicant.contact.dcpNycidGuid}}
+          @projectName={{this.project.dcpProjectname}}
+          @canDelete={{and (not projectApplicant.isPrimaryApplicantOrContact) this.contactMgmtOpen}}
+          @onDelete={{fn this.removeEditor projectApplicant}} />
+        {{/if}}
         {{/each}}
       </ul>
 
       {{#if this.contactMgmtOpen}}
-        <fieldset class="fieldset">
-          <legend class="text-weight-bold">
-            <FaIcon @icon='user-plus' @fixedWidth={{true}} @transform='down-1' class="text-gray" />
-            Add Project Editor
-          </legend>
+      <fieldset class="fieldset">
+        <legend class="text-weight-bold">
+          <FaIcon @icon='user-plus' @fixedWidth={{true}} @transform='down-1' class="text-gray" />
+          Add Project Editor
+        </legend>
 
-          <div class="grid-x grid-margin-x">
-            <div class="cell medium-6">
-              <label class="text-small">
-                First Name
-                <Input
-                  @type="text"
-                  autocomplete="off"
-                  @value={{this.firstName}}
-                />
-              </label>
-            </div>
-            <div class="cell medium-6">
-              <label class="text-small">
-                Last Name
-                <Input
-                  @type="text"
-                  autocomplete="off"
-                  @value={{this.lastName}}
-                />
-              </label>
-            </div>
+        <div class="grid-x grid-margin-x">
+          <div class="cell medium-6">
+            <label class="text-small">
+              First Name
+              <Input @type="text" autocomplete="off" @value={{this.firstName}} />
+            </label>
           </div>
+          <div class="cell medium-6">
+            <label class="text-small">
+              Last Name
+              <Input @type="text" autocomplete="off" @value={{this.lastName}} />
+            </label>
+          </div>
+        </div>
 
-          <label class="text-small">
-            Email Address
-            <Input
-              @type="text"
-              autocomplete="off"
-              @value={{this.emailAddress}}
-            />
-          </label>
+        <label class="text-small">
+          Email Address
+          <Input @type="text" autocomplete="off" @value={{this.emailAddress}} />
+        </label>
 
-          <button
-            class="button expanded no-margin text-weight-bold"
-            type="button"
-            {{on "click" (fn this.addEditor) }}
-          >
-            Add Project Editor
-          </button>
-        </fieldset>
+        <button class="button expanded no-margin text-weight-bold" type="button" {{on "click" (fn this.addEditor) }}>
+          Add Project Editor
+        </button>
+      </fieldset>
       {{/if}}
 
-      <Ui::GenericModal
-        @show={{this.addEditorModalOpen}}
-        @closeButtonAction={{fn (mut this.addEditorModalOpen) false}}
-      >
+      <Ui::GenericModal @show={{this.addEditorModalOpen}} @closeButtonAction={{fn (mut this.addEditorModalOpen) false}}>
         {{#if this.matchingCurrentApplicant}}
-          <h4>A Project Editor with the email address you entered already exists on this project.</h4>
+        <h4>A Project Editor with the email address you entered already exists on this project.</h4>
         {{else}}
-          <h4>Are you sure you want to add...</h4>
-          <Project::ProjectEditorListItem
-            @name="{{this.firstName}} {{this.lastName}}"
-            @emailAddress={{this.emailAddress}}
-          />
-          <p>If you add this Editor, they will be able to view and edit this Project.</p>
-          <div class="grid-x">
-            <div class="cell large-6 small-padding-right">
-              <button
-                class="button expanded large"
-                type="button"
-                {{on "click" (fn this.saveEditor) }}
-              >
-                <strong>Add Editor</strong>
-              </button>
-            </div>
-            <div class="cell large-6 small-padding-left">
-              <button
-                type="button"
-                class="button expanded large secondary"
-                {{on "click" (fn (mut this.addEditorModalOpen) false)}}
-                >
-                Cancel
-              </button>
-            </div>
+        <h4>Are you sure you want to add...</h4>
+        <Project::ProjectEditorListItem @name="{{this.firstName}} {{this.lastName}}"
+          @emailAddress={{this.emailAddress}} />
+        <p>If you add this Editor, they will be able to view and edit this Project.</p>
+        <div class="grid-x">
+          <div class="cell large-6 small-padding-right">
+            <button class="button expanded large" type="button" {{on "click" (fn this.saveEditor) }}>
+              <strong>Add Editor</strong>
+            </button>
           </div>
+          <div class="cell large-6 small-padding-left">
+            <button type="button" class="button expanded large secondary"
+              {{on "click" (fn (mut this.addEditorModalOpen) false)}}>
+              Cancel
+            </button>
+          </div>
+        </div>
         {{/if}}
       </Ui::GenericModal>
 
@@ -210,23 +180,23 @@
       </h3>
       <ul class="no-bullet">
         {{#each this.project.teamMembers as |teamMember|}}
-          <li class="grid-x medium-margin-bottom">
-            <div class="cell shrink small-padding-right">
-              <FaIcon @icon='user' @fixedWidth={{true}} @transform='down-1' class="text-gray" />
-            </div>
-            <div class="cell auto">
-              <h5 class="no-margin">{{teamMember.name}}</h5>
-              <p class="text-small tiny-margin-bottom">
-                <i>{{teamMember.role}}</i>
-              </p>
-              <p class="text-small tiny-margin-bottom">
-                <a href="mailto:{{teamMember.email}}">{{teamMember.email}}</a>
-              </p>
-              <p class="text-small tiny-margin-bottom">
-                {{teamMember.phone}}
-              </p>
-            </div>
-          </li>
+        <li class="grid-x medium-margin-bottom">
+          <div class="cell shrink small-padding-right">
+            <FaIcon @icon='user' @fixedWidth={{true}} @transform='down-1' class="text-gray" />
+          </div>
+          <div class="cell auto">
+            <h5 class="no-margin">{{teamMember.name}}</h5>
+            <p class="text-small tiny-margin-bottom">
+              <i>{{teamMember.role}}</i>
+            </p>
+            <p class="text-small tiny-margin-bottom">
+              <a href="mailto:{{teamMember.email}}">{{teamMember.email}}</a>
+            </p>
+            <p class="text-small tiny-margin-bottom">
+              {{teamMember.phone}}
+            </p>
+          </div>
+        </li>
         {{/each}}
       </ul>
     </section>

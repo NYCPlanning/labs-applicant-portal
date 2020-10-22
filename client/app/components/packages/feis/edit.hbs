@@ -1,0 +1,25 @@
+<div class="grid-x grid-margin-x">
+  <div class="cell large-8">
+
+    <section class="form-section">
+      <h1 class="header-large">
+        Environmental Impact Statement (EIS)
+        <small class="text-weight-normal">
+          {{if @package.dcpPackageversion (concat '(V' @package.dcpPackageversion ')')}}
+        </small>
+      </h1>
+
+      <h2 class="no-margin">
+        {{@package.project.dcpProjectname}}
+        <small class="text-weight-normal">
+          {{if @package.project.dcpName (concat '(' @package.project.dcpName ')')}}
+        </small>
+      </h2>
+
+      <p class="text-large text-dark-gray">
+        {{optionset 'bbl' 'boroughs' 'label' @package.project.dcpBorough}} |
+        {{optionset 'package' 'statuscode' 'label' @package.statuscode}}
+      </p>
+    </section>
+  </div>
+</div>

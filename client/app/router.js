@@ -34,6 +34,11 @@ Router.map(function() {
     this.route('show', { path: '/' });
   });
 
+  this.route('feis', { path: 'feis/:id' }, function () {
+    this.route('edit');
+    this.route('show', { path: '/' });
+  });
+
   this.route('project', { path: 'projects/:id' });
 
   this.route('auth', function() {

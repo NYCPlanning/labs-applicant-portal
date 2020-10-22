@@ -1,0 +1,9 @@
+<Ui::Breadcrumbs as |Crumb|>
+  <Crumb @text="My Projects" @route='projects' />
+  <Crumb @text={{@model.package.project.dcpProjectname}} @disabled={{true}} />
+  <Crumb @text="Final EIS" @disabled={{true}} />
+</Ui::Breadcrumbs>
+
+<Packages::FinalEisForm::Show @package={{@model.package}} />
+
+{{outlet}}
