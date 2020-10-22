@@ -28,6 +28,12 @@ Router.map(function() {
     this.route('edit');
     this.route('show', { path: '/' });
   });
+
+  this.route('draft-eas', { path: 'draft-eas/:id' }, function () {
+    this.route('edit');
+    this.route('show', { path: '/' });
+  });
+
   this.route('project', { path: 'projects/:id' });
 
   this.route('auth', function() {

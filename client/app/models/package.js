@@ -60,6 +60,9 @@ export default class PackageModel extends Model {
   @attr('number')
   dcpPackageversion
 
+  @attr('string')
+  dcpPackagenotes;
+
   @attr({ defaultValue: () => [] })
   documents;
 
