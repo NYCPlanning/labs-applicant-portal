@@ -10,16 +10,9 @@
       <h1 class="header-large">
         Draft Environmental Assessment Statement (EAS)
         <small class="text-weight-normal">
-        {{if @package.dcpPackageversion (concat '(V' @package.dcpPackageversion ')')}}
-      </small>
-      </h1>
-
-      <h2 class="no-margin">
-        {{@package.project.dcpProjectname}}
-        <small class="text-weight-normal">
-          {{if @package.project.dcpName (concat '(' @package.project.dcpName ')')}}
+          {{if @package.dcpPackageversion (concat '(V' @package.dcpPackageversion ')')}}
         </small>
-        </h1>
+      </h1>
 
         <h2 class="no-margin">
           {{@package.project.dcpProjectname}}
@@ -33,6 +26,11 @@
           {{optionset 'package' 'statuscode' 'label' @package.statuscode}}
         </p>
       </section>
+
+      <Packages::DraftEas::AttachedDocuments
+        @form={{saveableForm}}
+        @model={{@package}}
+      />
     </div>
 
     <div class="cell large-4 sticky-sidebar">
