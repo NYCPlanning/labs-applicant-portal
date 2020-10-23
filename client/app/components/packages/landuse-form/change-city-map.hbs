@@ -1,286 +1,286 @@
 {{#if this.projectHasActions}}
-{{#let @form as |form|}}
-<form.Section @title="Change in City Map">
-  <p>
-    The following questions relate to Change in City Map and the following Actions: MM, MY, ME
-  </p>
+  {{#let @form as |form|}}
+    <form.Section @title="Change in City Map">
+      <p>
+        The following questions relate to Change in City Map and the following Actions: MM, MY, ME
+      </p>
 
-  <Ui::Question as |Q|>
-    <Q.Legend>
-      Does the Project establish and or delineate any of the following?
-      <small class="text-weight-normal">(select all that apply)</small>
-    </Q.Legend>
+      <Ui::Question as |Q|>
+        <Q.Legend>
+          Does the Project establish and or delineate any of the following?
+          <small class="text-weight-normal">(select all that apply)</small>
+        </Q.Legend>
 
-    <Input type="checkbox" id="dcpEstablishstreetopt" data-test-checkbox="dcpEstablishstreetopt" checked={{if
-            (eq
-              form.data.dcpEstablishstreetopt
-              (optionset 'landuseForm' 'dcpEstablishstreetopt' 'code' 'Yes')
-            ) "checked"}} onClick={{fn (mut form.data.dcpEstablishstreetopt)
-            (if form.data.dcpEstablishstreetopt
-              (optionset 'landuseForm' 'dcpEstablishstreetopt' 'code' 'No')
-              (optionset 'landuseForm' 'dcpEstablishstreetopt' 'code' 'Yes')
-            )
-          }} />
-    <label for="dcpEstablishstreetopt">
-      Street
-    </label>
+        <Input type="checkbox" id="dcpEstablishstreetopt" data-test-checkbox="dcpEstablishstreetopt" checked={{if
+                (eq
+                  form.data.dcpEstablishstreetopt
+                  (optionset 'landuseForm' 'dcpEstablishstreetopt' 'code' 'Yes')
+                ) "checked"}} onClick={{fn (mut form.data.dcpEstablishstreetopt)
+                (if form.data.dcpEstablishstreetopt
+                  (optionset 'landuseForm' 'dcpEstablishstreetopt' 'code' 'No')
+                  (optionset 'landuseForm' 'dcpEstablishstreetopt' 'code' 'Yes')
+                )
+              }} />
+        <label for="dcpEstablishstreetopt">
+          Street
+        </label>
 
-    <br>
+        <br>
 
-    <Input type="checkbox" id="dcpEstablishparkopt" data-test-checkbox="dcpEstablishparkopt" checked={{if
-            (eq
-              form.data.dcpEstablishparkopt
-              (optionset 'landuseForm' 'dcpEstablishparkopt' 'code' 'Yes')
-            ) "checked"}} onClick={{fn (mut form.data.dcpEstablishparkopt)
-            (if form.data.dcpEstablishparkopt
-              (optionset 'landuseForm' 'dcpEstablishparkopt' 'code' 'No')
-              (optionset 'landuseForm' 'dcpEstablishparkopt' 'code' 'Yes')
-            )
-          }} />
-    <label for="dcpEstablishparkopt">
-      Park
-    </label>
+        <Input type="checkbox" id="dcpEstablishparkopt" data-test-checkbox="dcpEstablishparkopt" checked={{if
+                (eq
+                  form.data.dcpEstablishparkopt
+                  (optionset 'landuseForm' 'dcpEstablishparkopt' 'code' 'Yes')
+                ) "checked"}} onClick={{fn (mut form.data.dcpEstablishparkopt)
+                (if form.data.dcpEstablishparkopt
+                  (optionset 'landuseForm' 'dcpEstablishparkopt' 'code' 'No')
+                  (optionset 'landuseForm' 'dcpEstablishparkopt' 'code' 'Yes')
+                )
+              }} />
+        <label for="dcpEstablishparkopt">
+          Park
+        </label>
 
-    <br>
+        <br>
 
-    <Input type="checkbox" id="dcpEstablishpublicplaceopt" data-test-checkbox="dcpEstablishpublicplaceopt" checked={{if
-            (eq
-              form.data.dcpEstablishpublicplaceopt
-              (optionset 'landuseForm' 'dcpEstablishpublicplaceopt' 'code' 'Yes')
-            ) "checked"}} onClick={{fn (mut form.data.dcpEstablishpublicplaceopt)
-            (if form.data.dcpEstablishpublicplaceopt
-              (optionset 'landuseForm' 'dcpEstablishpublicplaceopt' 'code' 'No')
-              (optionset 'landuseForm' 'dcpEstablishpublicplaceopt' 'code' 'Yes')
-            )
-          }} />
-    <label for="dcpEstablishpublicplaceopt">
-      Public Place
-    </label>
+        <Input type="checkbox" id="dcpEstablishpublicplaceopt" data-test-checkbox="dcpEstablishpublicplaceopt" checked={{if
+                (eq
+                  form.data.dcpEstablishpublicplaceopt
+                  (optionset 'landuseForm' 'dcpEstablishpublicplaceopt' 'code' 'Yes')
+                ) "checked"}} onClick={{fn (mut form.data.dcpEstablishpublicplaceopt)
+                (if form.data.dcpEstablishpublicplaceopt
+                  (optionset 'landuseForm' 'dcpEstablishpublicplaceopt' 'code' 'No')
+                  (optionset 'landuseForm' 'dcpEstablishpublicplaceopt' 'code' 'Yes')
+                )
+              }} />
+        <label for="dcpEstablishpublicplaceopt">
+          Public Place
+        </label>
 
-    <br>
+        <br>
 
-    <Input type="checkbox" id="dcpEstablishgradeopt" data-test-checkbox="dcpEstablishgradeopt" checked={{if
-            (eq
-              form.data.dcpEstablishgradeopt
-              (optionset 'landuseForm' 'dcpEstablishgradeopt' 'code' 'Yes')
-            ) "checked"}} onClick={{fn (mut form.data.dcpEstablishgradeopt)
-            (if form.data.dcpEstablishgradeopt
-              (optionset 'landuseForm' 'dcpEstablishgradeopt' 'code' 'No')
-              (optionset 'landuseForm' 'dcpEstablishgradeopt' 'code' 'Yes')
-            )
-          }} />
-    <label for="dcpEstablishgradeopt">
-      Grade
-    </label>
+        <Input type="checkbox" id="dcpEstablishgradeopt" data-test-checkbox="dcpEstablishgradeopt" checked={{if
+                (eq
+                  form.data.dcpEstablishgradeopt
+                  (optionset 'landuseForm' 'dcpEstablishgradeopt' 'code' 'Yes')
+                ) "checked"}} onClick={{fn (mut form.data.dcpEstablishgradeopt)
+                (if form.data.dcpEstablishgradeopt
+                  (optionset 'landuseForm' 'dcpEstablishgradeopt' 'code' 'No')
+                  (optionset 'landuseForm' 'dcpEstablishgradeopt' 'code' 'Yes')
+                )
+              }} />
+        <label for="dcpEstablishgradeopt">
+          Grade
+        </label>
 
-    <br>
+        <br>
 
-    <form.Field @attribute="dcpEasement1" @type="checkbox" as |Checkbox|>
-      <Checkbox>
-        Easement
-      </Checkbox>
-    </form.Field>
+        <form.Field @attribute="dcpEasement1" @type="checkbox" as |Checkbox|>
+          <Checkbox>
+            Easement
+          </Checkbox>
+        </form.Field>
 
-  </Ui::Question>
+      </Ui::Question>
 
-  <Ui::Question as |Q|>
-    <Q.Legend>
-      Does the project eliminate or remove any of the following?
-      <small class="text-weight-normal">(select all that apply)</small>
-    </Q.Legend>
+      <Ui::Question as |Q|>
+        <Q.Legend>
+          Does the project eliminate or remove any of the following?
+          <small class="text-weight-normal">(select all that apply)</small>
+        </Q.Legend>
 
-    <Input type="checkbox" id="dcpEliminatestreetopt" data-test-checkbox="dcpEliminatestreetopt" checked={{if
-            (eq
-              form.data.dcpEliminatestreetopt
-              (optionset 'landuseForm' 'dcpEliminatestreetopt' 'code' 'Yes')
-            ) "checked"}} onClick={{fn (mut form.data.dcpEliminatestreetopt)
-            (if form.data.dcpEliminatestreetopt
-              (optionset 'landuseForm' 'dcpEliminatestreetopt' 'code' 'No')
-              (optionset 'landuseForm' 'dcpEliminatestreetopt' 'code' 'Yes')
-            )
-          }} />
-    <label for="dcpEliminatestreetopt">
-      Street
-    </label>
+        <Input type="checkbox" id="dcpEliminatestreetopt" data-test-checkbox="dcpEliminatestreetopt" checked={{if
+                (eq
+                  form.data.dcpEliminatestreetopt
+                  (optionset 'landuseForm' 'dcpEliminatestreetopt' 'code' 'Yes')
+                ) "checked"}} onClick={{fn (mut form.data.dcpEliminatestreetopt)
+                (if form.data.dcpEliminatestreetopt
+                  (optionset 'landuseForm' 'dcpEliminatestreetopt' 'code' 'No')
+                  (optionset 'landuseForm' 'dcpEliminatestreetopt' 'code' 'Yes')
+                )
+              }} />
+        <label for="dcpEliminatestreetopt">
+          Street
+        </label>
 
-    <br>
+        <br>
 
-    <Input type="checkbox" id="dcpEliminateparkopt" data-test-checkbox="dcpEliminateparkopt" checked={{if
-            (eq
-              form.data.dcpEliminateparkopt
-              (optionset 'landuseForm' 'dcpEliminateparkopt' 'code' 'Yes')
-            ) "checked"}} onClick={{fn (mut form.data.dcpEliminateparkopt)
-            (if form.data.dcpEliminateparkopt
-              (optionset 'landuseForm' 'dcpEliminateparkopt' 'code' 'No')
-              (optionset 'landuseForm' 'dcpEliminateparkopt' 'code' 'Yes')
-            )
-          }} />
-    <label for="dcpEliminateparkopt">
-      Park
-    </label>
+        <Input type="checkbox" id="dcpEliminateparkopt" data-test-checkbox="dcpEliminateparkopt" checked={{if
+                (eq
+                  form.data.dcpEliminateparkopt
+                  (optionset 'landuseForm' 'dcpEliminateparkopt' 'code' 'Yes')
+                ) "checked"}} onClick={{fn (mut form.data.dcpEliminateparkopt)
+                (if form.data.dcpEliminateparkopt
+                  (optionset 'landuseForm' 'dcpEliminateparkopt' 'code' 'No')
+                  (optionset 'landuseForm' 'dcpEliminateparkopt' 'code' 'Yes')
+                )
+              }} />
+        <label for="dcpEliminateparkopt">
+          Park
+        </label>
 
-    <br>
+        <br>
 
-    <Input type="checkbox" id="dcpEliminatepublicplaceopt" data-test-checkbox="dcpEliminatepublicplaceopt" checked={{if
-            (eq
-              form.data.dcpEliminatepublicplaceopt
-              (optionset 'landuseForm' 'dcpEliminatepublicplaceopt' 'code' 'Yes')
-            ) "checked"}} onClick={{fn (mut form.data.dcpEliminatepublicplaceopt)
-            (if form.data.dcpEliminatepublicplaceopt
-              (optionset 'landuseForm' 'dcpEliminatepublicplaceopt' 'code' 'No')
-              (optionset 'landuseForm' 'dcpEliminatepublicplaceopt' 'code' 'Yes')
-            )
-          }} />
-    <label for="dcpEliminatepublicplaceopt">
-      Public Place
-    </label>
+        <Input type="checkbox" id="dcpEliminatepublicplaceopt" data-test-checkbox="dcpEliminatepublicplaceopt" checked={{if
+                (eq
+                  form.data.dcpEliminatepublicplaceopt
+                  (optionset 'landuseForm' 'dcpEliminatepublicplaceopt' 'code' 'Yes')
+                ) "checked"}} onClick={{fn (mut form.data.dcpEliminatepublicplaceopt)
+                (if form.data.dcpEliminatepublicplaceopt
+                  (optionset 'landuseForm' 'dcpEliminatepublicplaceopt' 'code' 'No')
+                  (optionset 'landuseForm' 'dcpEliminatepublicplaceopt' 'code' 'Yes')
+                )
+              }} />
+        <label for="dcpEliminatepublicplaceopt">
+          Public Place
+        </label>
 
-    <br>
+        <br>
 
-    <Input type="checkbox" id="dcpEliminategradeopt" data-test-checkbox="dcpEliminategradeopt" checked={{if
-            (eq
-              form.data.dcpEliminategradeopt
-              (optionset 'landuseForm' 'dcpEliminategradeopt' 'code' 'Yes')
-            ) "checked"}} onClick={{fn (mut form.data.dcpEliminategradeopt)
-            (if form.data.dcpEliminategradeopt
-              (optionset 'landuseForm' 'dcpEliminategradeopt' 'code' 'No')
-              (optionset 'landuseForm' 'dcpEliminategradeopt' 'code' 'Yes')
-            )
-          }} />
-    <label for="dcpEliminategradeopt">
-      Grade
-    </label>
+        <Input type="checkbox" id="dcpEliminategradeopt" data-test-checkbox="dcpEliminategradeopt" checked={{if
+                (eq
+                  form.data.dcpEliminategradeopt
+                  (optionset 'landuseForm' 'dcpEliminategradeopt' 'code' 'Yes')
+                ) "checked"}} onClick={{fn (mut form.data.dcpEliminategradeopt)
+                (if form.data.dcpEliminategradeopt
+                  (optionset 'landuseForm' 'dcpEliminategradeopt' 'code' 'No')
+                  (optionset 'landuseForm' 'dcpEliminategradeopt' 'code' 'Yes')
+                )
+              }} />
+        <label for="dcpEliminategradeopt">
+          Grade
+        </label>
 
-    <br>
+        <br>
 
-    <form.Field @attribute="dcpEasement2" @type="checkbox" as |Checkbox|>
-      <Checkbox>
-        Easement
-      </Checkbox>
-    </form.Field>
+        <form.Field @attribute="dcpEasement2" @type="checkbox" as |Checkbox|>
+          <Checkbox>
+            Easement
+          </Checkbox>
+        </form.Field>
 
-  </Ui::Question>
+      </Ui::Question>
 
-  <Ui::Question as |Q|>
-    <Q.Legend>
-      Does the project change any of the following?
-      <small class="text-weight-normal">(select all that apply)</small>
-    </Q.Legend>
+      <Ui::Question as |Q|>
+        <Q.Legend>
+          Does the project change any of the following?
+          <small class="text-weight-normal">(select all that apply)</small>
+        </Q.Legend>
 
-    <Input type="checkbox" id="dcpChangestreetwidthopt" data-test-checkbox="dcpChangestreetwidthopt" checked={{if
-            (eq
-              form.data.dcpChangestreetwidthopt
-              (optionset 'landuseForm' 'dcpChangestreetwidthopt' 'code' 'Yes')
-            ) "checked"}} onClick={{fn (mut form.data.dcpChangestreetwidthopt)
-            (if form.data.dcpChangestreetwidthopt
-              (optionset 'landuseForm' 'dcpChangestreetwidthopt' 'code' 'No')
-              (optionset 'landuseForm' 'dcpChangestreetwidthopt' 'code' 'Yes')
-            )
-          }} />
-    <label for="dcpChangestreetwidthopt">
-      Street width
-    </label>
+        <Input type="checkbox" id="dcpChangestreetwidthopt" data-test-checkbox="dcpChangestreetwidthopt" checked={{if
+                (eq
+                  form.data.dcpChangestreetwidthopt
+                  (optionset 'landuseForm' 'dcpChangestreetwidthopt' 'code' 'Yes')
+                ) "checked"}} onClick={{fn (mut form.data.dcpChangestreetwidthopt)
+                (if form.data.dcpChangestreetwidthopt
+                  (optionset 'landuseForm' 'dcpChangestreetwidthopt' 'code' 'No')
+                  (optionset 'landuseForm' 'dcpChangestreetwidthopt' 'code' 'Yes')
+                )
+              }} />
+        <label for="dcpChangestreetwidthopt">
+          Street width
+        </label>
 
-    <br>
+        <br>
 
-    <Input type="checkbox" id="dcpChangestreetalignmentopt" data-test-checkbox="dcpChangestreetalignmentopt" checked={{if
-            (eq
-              form.data.dcpChangestreetalignmentopt
-              (optionset 'landuseForm' 'dcpChangestreetalignmentopt' 'code' 'Yes')
-            ) "checked"}} onClick={{fn (mut form.data.dcpChangestreetalignmentopt)
-            (if form.data.dcpChangestreetalignmentopt
-              (optionset 'landuseForm' 'dcpChangestreetalignmentopt' 'code' 'No')
-              (optionset 'landuseForm' 'dcpChangestreetalignmentopt' 'code' 'Yes')
-            )
-          }} />
-    <label for="dcpChangestreetalignmentopt">
-      Street alignment
-    </label>
+        <Input type="checkbox" id="dcpChangestreetalignmentopt" data-test-checkbox="dcpChangestreetalignmentopt" checked={{if
+                (eq
+                  form.data.dcpChangestreetalignmentopt
+                  (optionset 'landuseForm' 'dcpChangestreetalignmentopt' 'code' 'Yes')
+                ) "checked"}} onClick={{fn (mut form.data.dcpChangestreetalignmentopt)
+                (if form.data.dcpChangestreetalignmentopt
+                  (optionset 'landuseForm' 'dcpChangestreetalignmentopt' 'code' 'No')
+                  (optionset 'landuseForm' 'dcpChangestreetalignmentopt' 'code' 'Yes')
+                )
+              }} />
+        <label for="dcpChangestreetalignmentopt">
+          Street alignment
+        </label>
 
-    <br>
+        <br>
 
-    <Input type="checkbox" id="dcpChangestreetgradeopt" data-test-checkbox="dcpChangestreetgradeopt" checked={{if
-            (eq
-              form.data.dcpChangestreetgradeopt
-              (optionset 'landuseForm' 'dcpChangestreetgradeopt' 'code' 'Yes')
-            ) "checked"}} onClick={{fn (mut form.data.dcpChangestreetgradeopt)
-            (if form.data.dcpChangestreetgradeopt
-              (optionset 'landuseForm' 'dcpChangestreetgradeopt' 'code' 'No')
-              (optionset 'landuseForm' 'dcpChangestreetgradeopt' 'code' 'Yes')
-            )
-          }} />
-    <label for="dcpChangestreetgradeopt">
-      Street grade
-    </label>
+        <Input type="checkbox" id="dcpChangestreetgradeopt" data-test-checkbox="dcpChangestreetgradeopt" checked={{if
+                (eq
+                  form.data.dcpChangestreetgradeopt
+                  (optionset 'landuseForm' 'dcpChangestreetgradeopt' 'code' 'Yes')
+                ) "checked"}} onClick={{fn (mut form.data.dcpChangestreetgradeopt)
+                (if form.data.dcpChangestreetgradeopt
+                  (optionset 'landuseForm' 'dcpChangestreetgradeopt' 'code' 'No')
+                  (optionset 'landuseForm' 'dcpChangestreetgradeopt' 'code' 'Yes')
+                )
+              }} />
+        <label for="dcpChangestreetgradeopt">
+          Street grade
+        </label>
 
-    <br>
+        <br>
 
-    <form.Field @attribute="dcpEasement3" @type="checkbox" as |Checkbox|>
-      <Checkbox>
-        Easement
-      </Checkbox>
-    </form.Field>
+        <form.Field @attribute="dcpEasement3" @type="checkbox" as |Checkbox|>
+          <Checkbox>
+            Easement
+          </Checkbox>
+        </form.Field>
 
-  </Ui::Question>
+      </Ui::Question>
 
-  <Ui::Question as |Q|>
-    <Q.Legend>
-      Is there a related acquisition of property?
-    </Q.Legend>
+      <Ui::Question as |Q|>
+        <Q.Legend>
+          Is there a related acquisition of property?
+        </Q.Legend>
 
-    <form.Field @attribute="dcpRelatedacquisitionofpropertyopt" @type="radio-group" as |RadioGroup|>
-      <RadioGroup @options={{optionset 'landuseForm' 'dcpRelatedacquisitionofpropertyopt' 'list'}} />
-    </form.Field>
-  </Ui::Question>
+        <form.Field @attribute="dcpRelatedacquisitionofpropertyopt" @type="radio-group" as |RadioGroup|>
+          <RadioGroup @options={{optionset 'landuseForm' 'dcpRelatedacquisitionofpropertyopt' 'list'}} />
+        </form.Field>
+      </Ui::Question>
 
-  <Ui::Question class="no-margin-top" data-test-related-acquisition-radio-group as |Q|>
-    <Q.Legend>
-      Is there a related disposition of property?
-    </Q.Legend>
+      <Ui::Question class="no-margin-top" data-test-related-acquisition-radio-group as |Q|>
+        <Q.Legend>
+          Is there a related disposition of property?
+        </Q.Legend>
 
-    <form.Field @attribute="dcpRelatedacquisition" @type="radio" as |RadioButton|>
-      <RadioButton @targetValue={{true}} data-test-related-acquisition="true">
-        Yes
-      </RadioButton>
-      <RadioButton @targetValue={{false}} data-test-action-related-acquisition="false">
-        No
-      </RadioButton>
-    </form.Field>
+        <form.Field @attribute="dcpRelatedacquisition" @type="radio" as |RadioButton|>
+          <RadioButton @targetValue={{true}} data-test-related-acquisition="true">
+            Yes
+          </RadioButton>
+          <RadioButton @targetValue={{false}} data-test-action-related-acquisition="false">
+            No
+          </RadioButton>
+        </form.Field>
 
-  </Ui::Question>
+      </Ui::Question>
 
-  <Ui::Question as |dcpOnlychangetheeliminationofamappedbutunimpQ|>
-    <dcpOnlychangetheeliminationofamappedbutunimpQ.Legend>
-      Is the only change (requested for the City Map) the elimination of a mapped but unimproved street?
-    </dcpOnlychangetheeliminationofamappedbutunimpQ.Legend>
+      <Ui::Question as |dcpOnlychangetheeliminationofamappedbutunimpQ|>
+        <dcpOnlychangetheeliminationofamappedbutunimpQ.Legend>
+          Is the only change (requested for the City Map) the elimination of a mapped but unimproved street?
+        </dcpOnlychangetheeliminationofamappedbutunimpQ.Legend>
 
-    <form.Field @attribute="dcpOnlychangetheeliminationofamappedbutunimp" @type="radio-group" as
-      |DcpOnlychangetheeliminationofamappedbutunimpRadioGroup|>
-      <DcpOnlychangetheeliminationofamappedbutunimpRadioGroup
-        @options={{optionset 'landuseForm' 'dcpOnlychangetheeliminationofamappedbutunimp' 'list'}} as
-        |dcpOnlychangetheeliminationofamappedbutunimp|>
-        {{#if (eq
-            dcpOnlychangetheeliminationofamappedbutunimp
-            (optionset 'landuseForm' 'dcpOnlychangetheeliminationofamappedbutunimp' 'code' 'Yes')
-          )}}
-        <Ui::Question as |dcpYesmappedbutunimprovedstreetelimatedQ|>
-          <dcpYesmappedbutunimprovedstreetelimatedQ.Label>
-            Is it being eliminated from the property of an owner-occupied, one- or two-family residence?
-          </dcpYesmappedbutunimprovedstreetelimatedQ.Label>
+        <form.Field @attribute="dcpOnlychangetheeliminationofamappedbutunimp" @type="radio-group" as
+          |DcpOnlychangetheeliminationofamappedbutunimpRadioGroup|>
+          <DcpOnlychangetheeliminationofamappedbutunimpRadioGroup
+            @options={{optionset 'landuseForm' 'dcpOnlychangetheeliminationofamappedbutunimp' 'list'}} as
+            |dcpOnlychangetheeliminationofamappedbutunimp|>
+            {{#if (eq
+                dcpOnlychangetheeliminationofamappedbutunimp
+                (optionset 'landuseForm' 'dcpOnlychangetheeliminationofamappedbutunimp' 'code' 'Yes')
+              )}}
+            <Ui::Question as |dcpYesmappedbutunimprovedstreetelimatedQ|>
+              <dcpYesmappedbutunimprovedstreetelimatedQ.Label>
+                Is it being eliminated from the property of an owner-occupied, one- or two-family residence?
+              </dcpYesmappedbutunimprovedstreetelimatedQ.Label>
 
-          <form.Field @attribute="dcpYesmappedbutunimprovedstreetelimated" @type="radio-group" as
-            |DcpYesmappedbutunimprovedstreetelimatedRadioGroup|>
-            <DcpYesmappedbutunimprovedstreetelimatedRadioGroup
-              @options={{optionset 'landuseForm' 'dcpYesmappedbutunimprovedstreetelimated' 'list'}}>
-            </DcpYesmappedbutunimprovedstreetelimatedRadioGroup>
-          </form.Field>
-        </Ui::Question>
+              <form.Field @attribute="dcpYesmappedbutunimprovedstreetelimated" @type="radio-group" as
+                |DcpYesmappedbutunimprovedstreetelimatedRadioGroup|>
+                <DcpYesmappedbutunimprovedstreetelimatedRadioGroup
+                  @options={{optionset 'landuseForm' 'dcpYesmappedbutunimprovedstreetelimated' 'list'}}>
+                </DcpYesmappedbutunimprovedstreetelimatedRadioGroup>
+              </form.Field>
+            </Ui::Question>
 
 
-        {{/if}}
-      </DcpOnlychangetheeliminationofamappedbutunimpRadioGroup>
-    </form.Field>
-  </Ui::Question>
-</form.Section>
-{{/let}}
+            {{/if}}
+          </DcpOnlychangetheeliminationofamappedbutunimpRadioGroup>
+        </form.Field>
+      </Ui::Question>
+    </form.Section>
+  {{/let}}
 {{/if}}
