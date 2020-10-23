@@ -29,7 +29,8 @@ export default class ProjectsController extends Controller {
     return this.model.filter((project) => packageIsToDo(project.pasPackages)
       || packageIsToDo(project.rwcdsPackages)
       || (packageIsToDo(project.landusePackages))
-      || (packageIsToDo(project.easPackages)));
+      || (packageIsToDo(project.easPackages))
+      || (packageIsToDo(project.eisPackages)));
   }
 
   // Projects in NYC Planning's hands

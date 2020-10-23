@@ -149,6 +149,58 @@
       {{/if}}
     </LinkTo>
   {{/if}}
+
+  {{#if (or
+    (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'PDEIS'))
+    (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'EIS'))
+  )}}
+    {{!-- TODO: When setting up FEIS, add feis.edit and feis.show as the false condition in route below
+    e.g.
+    (if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'PDEIS')) 'deis.edit' 'feis.edit') --}}
+    <LinkTo
+      @route={{if (eq @package.statuscode (optionset 'package' 'statuscode' 'code' 'PACKAGE_PREPARATION'))
+        (if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'PDEIS')) 'deis.edit')
+        (if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'PDEIS')) 'deis.show')
+      }}
+      @model={{@package.id}}
+      data-test-package-link={{@package.id}}
+    >
+      {{#if (eq @package.statuscode (optionset 'package' 'statuscode' 'code' 'PACKAGE_PREPARATION'))}}
+        <button
+          type="button"
+          class="button no-margin"
+        >
+          <FaIcon @icon="edit" />
+          <strong>
+            {{#if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'EIS'))}}
+              Final
+            {{/if}}
+            {{#if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'PDEIS'))}}
+              Draft
+            {{/if}}
+            EIS
+            <small>
+              Version {{@package.dcpPackageversion}}
+            </small>
+          </strong>
+        </button>
+      {{else}}
+        <strong>
+          {{#if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'EIS'))}}
+            Filed
+          {{/if}}
+          {{#if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'PDEIS'))}}
+            Draft
+          {{/if}}
+          EAS
+          <small>
+            Version {{@package.dcpPackageversion}}
+          </small>
+        </strong>
+      {{/if}}
+    </LinkTo>
+  {{/if}}
+  
   <br>
   {{#if (eq @package.dcpVisibility (optionset 'package' 'dcpVisibility' 'code' 'GENERAL_PUBLIC'))}}
     <FaIcon @icon="eye" @prefix="far" class="text-orange" />

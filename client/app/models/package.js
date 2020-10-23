@@ -61,7 +61,7 @@ export default class PackageModel extends Model {
   dcpPackageversion
 
   @attr('string')
-  dcpPackagenotes;
+  dcpPackagenotes
 
   @attr({ defaultValue: () => [] })
   documents;
