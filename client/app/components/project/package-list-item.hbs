@@ -105,13 +105,11 @@
     (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_EAS'))
     (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'FILED_EAS'))
   )}}
-    {{!-- TODO: When setting up Filed EAS, add filed-eas.edit and filed-eas.show as the false condition in route below
-    e.g.
-    (if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_EAS')) 'draft-eas.edit' 'draft-eas.edit') --}}
     <LinkTo
       @route={{if (eq @package.statuscode (optionset 'package' 'statuscode' 'code' 'PACKAGE_PREPARATION'))
-        (if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_EAS')) 'draft-eas.edit')
-        (if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_EAS')) 'draft-eas.show')
+        (if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_EAS')) 'draft-eas.edit' 'filed-eas.edit')
+
+        (if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_EAS')) 'draft-eas.show' 'filed-eas.show')
       }}
       @model={{@package.id}}
       data-test-package-link={{@package.id}}
