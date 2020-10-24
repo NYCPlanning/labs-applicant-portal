@@ -63,12 +63,25 @@
     {{/if}} 
   
     {{#if @model.eisPackages.length}}
-    <section class="large-padding-top large-margin-bottom ruled-adjacent">
-      <h2>Environmental Impact Statement (EIS)</h2>
+      <section class="large-padding-top large-margin-bottom ruled-adjacent">
+        <h2>Environmental Impact Statement (EIS)</h2>
         <ol class="no-bullet">
           {{#each @model.eisPackages as |eisPackage|}}
             <Project::PackageListItem
               @package={{eisPackage}}
+            />
+          {{/each}}
+        </ol>
+      </section>
+    {{/if}}
+
+    {{#if @model.eisPackages.length}}
+    <section class="large-padding-top large-margin-bottom ruled-adjacent">
+      <h2>Technical Memo</h2>
+        <ol class="no-bullet">
+          {{#each @model.technicalMemoPackages as |technicalMemoPackage|}}
+            <Project::PackageListItem
+              @package={{technicalMemoPackage}}
             />
           {{/each}}
         </ol>
