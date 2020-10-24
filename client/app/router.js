@@ -39,7 +39,13 @@ Router.map(function() {
     this.route('show', { path: '/' });
   });
 
+  // REDO: Consider renaming this to draft-eis, final eis
   this.route('deis', { path: 'deis/:id' }, function () {
+    this.route('edit');
+    this.route('show', { path: '/' });
+  });
+
+  this.route('technical-memo', { path: 'technical-memo/:id' }, function () {
     this.route('edit');
     this.route('show', { path: '/' });
   });

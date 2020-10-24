@@ -200,6 +200,35 @@
       {{/if}}
     </LinkTo>
   {{/if}}
+  {{#if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'TECHNICAL_MEMO'))}}
+    <LinkTo
+      @route={{if (eq @package.statuscode (optionset 'package' 'statuscode' 'code' 'PACKAGE_PREPARATION')) 'technical-memo.edit' 'technical-memo.show'}}
+      @model={{@package.id}}
+      data-test-package-link={{@package.id}}
+    >
+      {{#if (eq @package.statuscode (optionset 'package' 'statuscode' 'code' 'PACKAGE_PREPARATION'))}}
+        <button
+          type="button"
+          class="button no-margin"
+        >
+          <FaIcon @icon="edit" />
+          <strong>
+            Technical Memo
+            <small>
+              Version {{@package.dcpPackageversion}}
+            </small>
+          </strong>
+        </button>
+      {{else}}
+        <strong>
+          Technical Memo
+          <small>
+            Version {{@package.dcpPackageversion}}
+          </small>
+        </strong>
+      {{/if}}
+    </LinkTo>
+  {{/if}}
   
   <br>
   {{#if (eq @package.dcpVisibility (optionset 'package' 'dcpVisibility' 'code' 'GENERAL_PUBLIC'))}}

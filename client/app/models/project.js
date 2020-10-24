@@ -136,4 +136,13 @@ export default class ProjectModel extends Model {
 
     return eisPackages;
   }
+
+  get technicalMemoPackages() {
+    const technicalMemoPackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'TECHNICAL_MEMO']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    return technicalMemoPackages;
+  }
 }
