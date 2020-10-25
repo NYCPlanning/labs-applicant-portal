@@ -21,5 +21,15 @@
         {{optionset 'package' 'statuscode' 'label' @package.statuscode}}
       </p>
     </section>
+
+    {{#if @package.dcpPackagenotes}}
+      <section class="form-section">
+        <p>
+          <strong>Package Notes from City Planning Staff:</strong>
+          <br>
+          {{@package.dcpPackagenotes}}
+        </p>
+      </section>
+    {{/if}}
   </div>
 </div>
