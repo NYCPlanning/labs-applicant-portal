@@ -41,68 +41,41 @@
       </p>
     </section>
 
-    {{#if @model.landusePackages.length}}
       <Project::PackageSection
         @packages={{@model.landusePackages}}
         @packageType="Land Use"
         class="large-padding-top large-margin-bottom ruled-adjacent"
       />
-    {{/if}}
 
-    {{#if @model.easPackages.length}}
-      <section class="large-padding-top large-margin-bottom ruled-adjacent">
-        <h2>Environmental Assessment Statement (EAS)</h2>
-        <ol class="no-bullet">
-          {{#each @model.easPackages as |easPackage|}}
-            <Project::PackageListItem
-              @package={{easPackage}}
-              />
-          {{/each}}
-        </ol>
-      </section>
-    {{/if}} 
+      <Project::PackageSection
+        @packages={{@model.easPackages}}
+        @packageType="Environmental Assessment Statement (EAS)"
+        class="large-padding-top large-margin-bottom ruled-adjacent"
+      />
   
-    {{#if @model.eisPackages.length}}
-      <section class="large-padding-top large-margin-bottom ruled-adjacent">
-        <h2>Environmental Impact Statement (EIS)</h2>
-        <ol class="no-bullet">
-          {{#each @model.eisPackages as |eisPackage|}}
-            <Project::PackageListItem
-              @package={{eisPackage}}
-            />
-          {{/each}}
-        </ol>
-      </section>
-    {{/if}}
+      <Project::PackageSection
+        @packages={{@model.eisPackages}}
+        @packageType="Environmental Impact Statement (EIS)"
+        class="large-padding-top large-margin-bottom ruled-adjacent"
+      />
 
-    {{#if @model.technicalMemoPackages.length}}
-      <section class="large-padding-top large-margin-bottom ruled-adjacent">
-        <h2>Technical Memo</h2>
-        <ol class="no-bullet">
-          {{#each @model.technicalMemoPackages as |technicalMemoPackage|}}
-            <Project::PackageListItem
-              @package={{technicalMemoPackage}}
-            />
-          {{/each}}
-        </ol>
-      </section>
-    {{/if}}
+      <Project::PackageSection
+        @packages={{@model.technicalMemoPackages}}
+        @packageType="Technical Memo"
+        class="large-padding-top large-margin-bottom ruled-adjacent"
+      />
 
-    {{#if @model.rwcdsPackages.length}}
       <Project::PackageSection
         @packages={{@model.rwcdsPackages}}
         @packageType="Reasonable Worst Case Development Scenario"
         class="large-padding-top large-margin-bottom ruled-adjacent"
       />
-    {{/if}}
 
-    {{#if @model.pasPackages.length}}
       <Project::PackageSection
         @packages={{@model.pasPackages}}
         @packageType="Pre-Application Statement"
         class="large-padding-top large-margin-bottom ruled-adjacent"
       />
-    {{/if}}
   </div>{{! end left/main column }}
   <div class="cell large-4">
 
