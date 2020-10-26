@@ -79,7 +79,7 @@
 
                       <form.Field @attribute="dcpNotaxblock" @type="radio-group" as |DcpNotaxblockRadioGroup|>
                         <DcpNotaxblockRadioGroup @options={{optionset 'landuseForm' 'dcpNotaxblock' 'list'}}
-                          @onChange={{fn this.resetDependentFields this.dcpNotaxblock}} as |dcpNotaxblock| />
+                          @onChange={{fn this.resetDependentFields this.dcpNotaxblock}} />
                       </form.Field>
                     </Ui::Question>
                     {{/if}}
