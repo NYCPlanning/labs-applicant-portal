@@ -13,14 +13,5 @@ module('Integration | Component | project/package-section', function(hooks) {
     await render(hbs`<Project::PackageSection />`);
 
     assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      <Project::PackageSection>
-        template block text
-      </Project::PackageSection>
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
   });
 });

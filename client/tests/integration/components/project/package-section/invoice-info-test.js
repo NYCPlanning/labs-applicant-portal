@@ -12,15 +12,8 @@ module('Integration | Component | project/package-section/invoice-info', functio
 
     await render(hbs`<Project::PackageSection::InvoiceInfo />`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.equal(this.element.textContent.trim(), `$
 
-    // Template block usage:
-    await render(hbs`
-      <Project::PackageSection::InvoiceInfo>
-        template block text
-      </Project::PackageSection::InvoiceInfo>
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
+2020-10-26`);
   });
 });
