@@ -16,7 +16,7 @@ module.exports = function(defaults) {
       sourcemap: false,
     },
     'ember-composable-helpers': {
-      only: ['toggle'],
+      only: ['toggle', 'map-by', 'reduce'],
     },
   });
 

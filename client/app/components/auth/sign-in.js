@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 const noop = async () => {};
 
@@ -12,9 +13,14 @@ export default class AuthSignInComponent extends Component {
 
   searchContacts = this.args.searchContacts || noop;
 
+  @tracked
+  isLoginStarted = false;
+
   @action
   async startLogin(loginEmail, event) {
     event.preventDefault();
+
+    this.isLoginStarted = true;
 
     const {
       isNycidValidated,
