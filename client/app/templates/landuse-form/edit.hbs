@@ -1,13 +1,19 @@
 <Ui::Breadcrumbs as |Crumb|>
   <Crumb @text="My Projects" @route='projects' />
   <Crumb @text={{@model.package.project.dcpProjectname}} @disabled={{true}} />
-  <Crumb @text="Land Use" @disabled={{true}} />
+  <Crumb @text="{{if (eq @model.package.dcpPackagetype
+      (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))
+      "Draft" "Filed"
+    }} Land Use"
+    @disabled={{true}}
+  />
   <Crumb @text="Edit" @current={{true}} />
 </Ui::Breadcrumbs>
 
 <Packages::LanduseForm::Edit
   @package={{@model.package}}
   @accounts={{@model.accounts}}
+  @zoningResolutions={{@model.zoningResolutions}}
 />
 
 {{outlet}}

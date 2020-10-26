@@ -63,7 +63,7 @@ export class CitypayService {
       if (retries) {
         return this.generateCartKey(packageId, retries - 1);
       } else {
-        throw new Error(`Could not generate the key for some reason: ${e.toString}`);
+        throw new Error(`Could not generate the key for some reason: ${e.toString()}`);
       }
     }
   }

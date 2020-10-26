@@ -7,6 +7,9 @@
 
       <section class="form-section">
         <h1 class="header-large">
+          {{if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))
+            "Draft" "Filed"
+          }}
           Land Use
         </h1>
 
@@ -42,7 +45,11 @@
 
       <Packages::LanduseForm::EnvironmentalReview @form={{saveableForm}} @accounts={{@accounts}} />
 
-      <Packages::LanduseForm::ProposedActions @form={{saveableForm}} @validations={{this.validations}} />
+      <Packages::LanduseForm::ProposedActions
+        @form={{saveableForm}}
+        @validations={{this.validations}}
+        @zoningResolutions={{@zoningResolutions}}
+      />
 
       <Packages::RelatedAction @form={{saveableForm}} @addRelatedAction={{this.addRelatedAction}}
         @removeRelatedAction={{this.removeRelatedAction}} @validations={{this.validations}} />

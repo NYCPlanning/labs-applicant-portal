@@ -133,7 +133,16 @@ export class PackagesService {
       let documents = [];
       documents = await this.documentService.findPackageSharepointDocuments(dcp_name, dcp_packageid);
 
-      const formData = await this.fetchPackageForm(firstPackage);
+      let formData = {};
+
+      if (
+        firstPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['PAS_PACKAGE'].code
+        || firstPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['RWCDS'].code
+        || firstPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['DRAFT_LU_PACKAGE'].code
+        || firstPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['FILED_LU_PACKAGE'].code
+      ) {
+        formData = await this.fetchPackageForm(firstPackage);
+      }
 
       return {
         ...firstPackage,

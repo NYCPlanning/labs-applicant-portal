@@ -13,6 +13,8 @@ import { PackagesModule } from './packages/packages.module';
 import { DocumentModule } from './document/document.module';
 import { CitypayService } from './citypay/citypay.service';
 import { CitypayModule } from './citypay/citypay.module';
+import { ZoningResolutionsModule } from './zoning-resolutions/zoning-resolutions.module';
+import { InvoicesModule } from './invoices/invoices.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { CitypayModule } from './citypay/citypay.module';
     PackagesModule,
     DocumentModule,
     CitypayModule,
+    ZoningResolutionsModule,
+    InvoicesModule,
   ],
   controllers: [AppController],
   providers: [CitypayService],

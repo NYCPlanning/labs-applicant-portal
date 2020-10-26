@@ -8,6 +8,7 @@
       @type="text"
       @value={{this.email}}
       id={{Q.questionId}}
+      disabled={{if this.isLoginStarted "disabled"}}
     />
 
     <div class="grid-x grid-margin-x">
@@ -16,9 +17,14 @@
           class="button secondary expanded text-weight-bold"
           type="submit"
           data-test-sign-in="next"
+          disabled={{if this.isLoginStarted "disabled"}}
         >
-          Next
-          <FaIcon @icon="arrow-right" @fixedWidth={{true}} />
+          {{#if this.isLoginStarted}}
+            <FaIcon @icon="spinner" @spin={{true}} @pulse={{true}} class="small-margin-right" />
+          {{else}}
+            Next
+            <FaIcon @icon="arrow-right" @fixedWidth={{true}} />
+          {{/if}}
         </button>
       </div>
       <div class="cell auto medium-order-1">

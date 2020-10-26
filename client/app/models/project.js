@@ -82,4 +82,67 @@ export default class ProjectModel extends Model {
 
     return landusePackages;
   }
+
+  get easPackages() {
+    const easPackages = [
+      ...this.filedEasPackages,
+      ...this.draftEasPackages,
+    ];
+
+    return easPackages;
+  }
+
+  get draftEasPackages() {
+    const easPackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'DRAFT_EAS']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    return easPackages;
+  }
+
+  get filedEasPackages() {
+    const easPackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'FILED_EAS']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    return easPackages;
+  }
+
+  get eisPackages() {
+    const eisPackages = [
+      ...this.deisPackages,
+      ...this.feisPackages,
+    ];
+
+    return eisPackages;
+  }
+
+  get deisPackages() {
+    const eisPackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'PDEIS']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    return eisPackages;
+  }
+
+  get feisPackages() {
+    const eisPackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'EIS']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    return eisPackages;
+  }
+
+  get technicalMemoPackages() {
+    const technicalMemoPackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'TECHNICAL_MEMO']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    return technicalMemoPackages;
+  }
 }
