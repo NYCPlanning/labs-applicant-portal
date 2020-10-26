@@ -112,8 +112,8 @@ export default class ProjectModel extends Model {
 
   get eisPackages() {
     const eisPackages = [
-      ...this.deisPackages,
       ...this.feisPackages,
+      ...this.deisPackages,
     ];
 
     return eisPackages;
