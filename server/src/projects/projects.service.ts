@@ -3,6 +3,7 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
+import { NycidService } from '../contact/nycid/nycid.service';
 import { CrmService } from '../crm/crm.service';
 import { overwriteCodesWithLabels } from '../_utils/overwrite-codes-with-labels';
 
@@ -32,6 +33,7 @@ const DCP_PROJECTROLES = {
 export class ProjectsService {
   constructor(
     private readonly crmService: CrmService,
+    private readonly nycidService: NycidService,
   ) {}
 
   public async findManyByContactId(contactId: string) {
@@ -134,7 +136,17 @@ export class ProjectsService {
         &$expand=dcp_dcp_package_dcp_projectinvoice_package
       `);
 
-      const projectApplicantsWithContacts = projectApplicants.map(applicant => ({ ...applicant, contact: applicant.dcp_applicant_customer_contact }));
+      const projectApplicantsWithContacts = await Promise.all(projectApplicants.map(async applicant => {
+        const { is_nycid_email_registered } = await this.nycidService.isNycidEmailRegistered(applicant.dcp_applicant_customer_contact.emailaddress1)
+
+        return {
+          ...applicant,
+          contact: {
+            ...applicant.dcp_applicant_customer_contact,
+            is_nycid_email_registered,
+          },
+        }
+      }));
 
       const [ project ] = this.overwriteCodesWithLabels(records);
 
