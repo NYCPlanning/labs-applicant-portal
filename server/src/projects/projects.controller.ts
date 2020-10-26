@@ -25,6 +25,7 @@ import { PACKAGE_ATTRS } from '../packages/packages.attrs';
 import { PROJECTAPPLICANT_ATTRS } from './project-applicants/project-applicants.attrs';
 import { TEAMMEMBER_ATTRS } from './team-members/team-members.attrs';
 import { CONTACT_ATTRS } from '../contact/contacts.attrs';
+import { INVOICE_ATTRS } from '../invoices/invoices.attrs';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('projects', {
   id: 'dcp_projectid',
@@ -40,7 +41,15 @@ import { CONTACT_ATTRS } from '../contact/contacts.attrs';
     ref: 'dcp_packageid',
     attributes: [
       ...PACKAGE_ATTRS,
+
+      'invoices',
     ],
+    invoices: {
+      ref: 'dcp_projectinvoiceid',
+      attributes: [
+        ...INVOICE_ATTRS,
+      ]
+    }
   },
   'project-applicants': {
     ref: 'dcp_projectapplicantid',
@@ -61,28 +70,6 @@ import { CONTACT_ATTRS } from '../contact/contacts.attrs';
     attributes: [
       ...TEAMMEMBER_ATTRS,
     ],
-  },
-
-  // remap verbose navigation link names to
-  // more concise names
-  transform(project) {
-    try {
-      return {
-        ...project,
-        packages: project.dcp_dcp_project_dcp_package_project,
-        projectApplicants: project['project-applicants'],
-      };
-    } catch(e) {
-      if (e instanceof HttpException) {
-        throw e;
-      } else {
-        throw new HttpException({
-          code: 'PROJECTS_ERROR',
-          title: 'Failed load project(s)',
-          detail: `An error occurred while loading one or more projects. ${e.message}`,
-        }, HttpStatus.INTERNAL_SERVER_ERROR);
-      }
-    }
   },
 }))
 @UseGuards(AuthenticateGuard)

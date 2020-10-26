@@ -1,4 +1,4 @@
-import Model, { attr, belongsTo } from '@ember-data/model';
+import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import FileManager from '../services/file-manager';
 import {
@@ -41,6 +41,9 @@ export default class PackageModel extends Model {
 
   @belongsTo('landuse-form', { async: false })
   landuseForm;
+
+  @hasMany('invoice', { async: false })
+  invoices;
 
   @attr('number')
   statuscode;

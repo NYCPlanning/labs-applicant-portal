@@ -154,13 +154,11 @@
     (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'PDEIS'))
     (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'EIS'))
   )}}
-    {{!-- TODO: When setting up FEIS, add feis.edit and feis.show as the false condition in route below
-    e.g.
-    (if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'PDEIS')) 'deis.edit' 'feis.edit') --}}
-    <LinkTo
+   
+   <LinkTo
       @route={{if (eq @package.statuscode (optionset 'package' 'statuscode' 'code' 'PACKAGE_PREPARATION'))
-        (if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'PDEIS')) 'deis.edit')
-        (if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'PDEIS')) 'deis.show')
+        (if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'PDEIS')) 'deis.edit' 'feis.edit')
+        (if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'PDEIS')) 'deis.show' 'feis.show')
       }}
       @model={{@package.id}}
       data-test-package-link={{@package.id}}
@@ -187,12 +185,12 @@
       {{else}}
         <strong>
           {{#if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'EIS'))}}
-            Filed
+            Final
           {{/if}}
           {{#if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'PDEIS'))}}
             Draft
           {{/if}}
-          EAS
+          EIS
           <small>
             Version {{@package.dcpPackageversion}}
           </small>
