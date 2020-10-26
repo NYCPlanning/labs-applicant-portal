@@ -1,0 +1,93 @@
+<div ...attributes>
+  <h2>{{@packageType}}</h2>
+
+  <div class="grid-x grid-padding-x">
+    <div class="cell large-6">
+      <ol class="no-bullet">
+        {{#each @packages as |package|}}
+          <Project::PackageListItem
+            @package={{package}}
+          />
+        {{/each}}
+      </ol>
+    </div>
+    <div class="cell large-6">
+      {{#let (flatten (map-by 'invoices' @packages)) as |invoices|}}
+        {{#if invoices}}
+          <h4>Invoices</h4>
+
+          {{#each invoices as |invoice|}}
+            <Project::PackageSection::InvoiceInfo
+              @invoice={{invoice}}
+            />
+          {{/each}}
+
+          <br/>
+          <br/>
+          <button
+            type="button"
+            class="secondary button"
+            {{on 'click' (fn this.beginPayment)}}
+          >
+            Pay
+          </button>
+
+          <Ui::GenericModal
+            @show={{this.isPaying}}
+            @closeButtonAction={{fn (mut this.isPaying) false}}
+          >
+            <h3>Invoices to be paid</h3>
+
+            {{#each invoices as |invoice|}}
+              <Project::PackageSection::InvoiceInfo
+                @invoice={{invoice}}
+              />
+            {{/each}}
+
+            <br/>
+            <br/>
+            <h3>Total: ${{reduce (fn this.sum) 0 (map-by 'dcpGrandtotal' invoices)}}</h3>
+
+            <p>
+              The following link will direct you to the CityPay website for payment processing. Before proceeding, be ready with
+              payment information such as routing numbers, account number, or credit card numbers. Credit card payments via CityPay
+              are subject to a 2% processing fee.
+            </p>
+
+            <p>
+              Upon payment, this Project will be considered “Filed” and appear in public searches on <a href="https://zap.planning.nyc.gov/" rel="noreferrer noopener">https://zap.planning.nyc.gov/</a>.
+            </p>
+
+            <div class="grid-x">
+              <div class="cell large-6 small-padding-right">
+                <a
+                  class="button expanded large {{unless this.paymentLink 'disabled'}}"
+                  href={{this.paymentLink}}
+                  rel="noreferrer noopener"
+                  target="_blank"
+                >
+                  {{#if this.paymentLink}}
+                    <strong>
+                      Go To CityPay <FaIcon @icon="external-link-alt" />
+                    </strong>
+                  {{else}}
+                    <FaIcon @icon="spinner" @spin={{true}} @pulse={{true}} class="text-silver" />
+                  {{/if}}
+                </a>
+              </div>
+              <div class="cell large-6 small-padding-left">
+                <button
+                  type="button"
+                  class="button expanded large secondary"
+                  {{on "click" (fn (mut this.isPaying) false)}}
+                  >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </Ui::GenericModal>
+        {{/if}}
+      {{/let}}
+    </div>
+  </div>
+</div>
