@@ -137,12 +137,20 @@ export class ProjectsService {
       `);
 
       const projectApplicantsWithContacts = await Promise.all(projectApplicants.map(async applicant => {
-        const { is_nycid_email_registered } = await this.nycidService.isNycidEmailRegistered(applicant.dcp_applicant_customer_contact.emailaddress1)
+        const contact = applicant.dcp_applicant_customer_contact;
+        let is_nycid_email_registered;
+
+        // If there's already a nycid GUID, they've already logged in, so their e-mail is registered.
+        if (contact.dcp_nycid_guid) {
+          is_nycid_email_registered = true;
+        } else {
+          ({ is_nycid_email_registered } = await this.nycidService.isNycidEmailRegistered(contact.emailaddress1));
+        }
 
         return {
           ...applicant,
           contact: {
-            ...applicant.dcp_applicant_customer_contact,
+            ...contact,
             is_nycid_email_registered,
           },
         }
