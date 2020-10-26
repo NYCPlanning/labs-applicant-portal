@@ -2,8 +2,8 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import ENV from '../../config/environment';
 import fetch from 'fetch';
+import ENV from '../../config/environment';
 
 export default class ProjectPackageSectionComponent extends Component {
   @service
@@ -16,7 +16,7 @@ export default class ProjectPackageSectionComponent extends Component {
   paymentLink;
 
   get payablePackage() {
-    const [payablePackage] = this.args.packages.filter(pkg => pkg.invoices.length > 0);
+    const [payablePackage] = this.args.packages.filter((pkg) => pkg.invoices.length > 0);
 
     return payablePackage;
   }
@@ -27,7 +27,7 @@ export default class ProjectPackageSectionComponent extends Component {
 
     if (!this.paymentLink) {
       try {
-        const response = await fetch(ENV.host + `/packages/pay/${this.payablePackage.id}`, {
+        const response = await fetch(`${ENV.host}/packages/pay/${this.payablePackage.id}`, {
           headers: {
             Authorization: `Bearer ${this.session.data.authenticated.access_token}`,
           },
