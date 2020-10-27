@@ -10,10 +10,14 @@ module('Integration | Component | project/package-section/invoice-info', functio
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<Project::PackageSection::InvoiceInfo />`);
+    await render(hbs`
+      <Project::PackageSection::InvoiceInfo
+        @invoice={{hash dcpInvoicedate=1603810916000}}
+      />
+    `);
 
     assert.equal(this.element.textContent.trim(), `$
 
-2020-10-26`);
+2020-10-27`);
   });
 });

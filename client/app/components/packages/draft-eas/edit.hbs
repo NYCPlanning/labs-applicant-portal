@@ -27,6 +27,12 @@
         </p>
       </section>
 
+      {{#if @package.dcpPackagenotes}}
+        <saveableForm.Section @title="Package Notes from City Planning Staff">
+          {{@package.dcpPackagenotes}}
+        </saveableForm.Section>
+      {{/if}}
+
       <Packages::DraftEas::AttachedDocuments
         @form={{saveableForm}}
         @model={{@package}}
