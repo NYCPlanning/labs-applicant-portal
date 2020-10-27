@@ -1,6 +1,6 @@
-<SaveableForm 
-  @model={{@package}} 
-  @validators={{array (hash) (hash)}} 
+<SaveableForm
+  @model={{@package}}
+  @validators={{array (hash) (hash)}}
   as |saveableForm|
 >
 
@@ -9,7 +9,7 @@
 
       <section class="form-section">
         <h1 class="header-large">
-          Draft Environmental Impact Statement (DEIS)
+          Final Environmental Impact Statement (FEIS)
           <small class="text-weight-normal">
             {{if @package.dcpPackageversion (concat '(V' @package.dcpPackageversion ')')}}
           </small>
@@ -28,12 +28,8 @@
         </p>
       </section>
 
-      <Packages::Deis::AttachedDocuments
-        @form={{saveableForm}}
-        @model={{@package}}
-      />
     </div>
-    
+
     <div class="cell large-4 sticky-sidebar">
       <saveableForm.PageNav>
         <saveableForm.SaveButton 
@@ -42,5 +38,6 @@
         data-test-save-button />
       </saveableForm.PageNav>
     </div>
+
   </div>
 </SaveableForm>

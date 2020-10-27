@@ -45,6 +45,11 @@ Router.map(function() {
     this.route('show', { path: '/' });
   });
 
+  this.route('feis', { path: 'feis/:id' }, function () {
+    this.route('edit');
+    this.route('show', { path: '/' });
+  });
+
   this.route('technical-memo', { path: 'technical-memo/:id' }, function () {
     this.route('edit');
     this.route('show', { path: '/' });
