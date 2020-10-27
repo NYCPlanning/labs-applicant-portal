@@ -23,7 +23,7 @@ export default class InvoiceModel extends Model {
   dcpSupplementalFee;
 
   @attr()
-  dcpGrandTotal;
+  dcpGrandtotal;
 
   @attr()
   dcpInvoiceApplications;

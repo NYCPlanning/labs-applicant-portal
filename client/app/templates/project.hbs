@@ -22,7 +22,13 @@
         <strong>Project Status:</strong> {{optionset 'project' 'statuscode' 'label' @model.statuscode}}
         <span class="text-gray"> | </span>
         <strong>Public Status:</strong>
-        <FaIcon @icon={{if @model.publicStatusGeneralPublicProject 'eye' 'eye-slash'}} @prefix="far" class="text-gray"/>
+
+        <FaIcon
+          @icon={{if @model.publicStatusGeneralPublicProject 'eye' 'eye-slash'}}
+          @prefix="far"
+          class="text-gray"
+        />
+
         {{#if @model.publicStatusGeneralPublicProject}}
           <Ui::ExternalLink @href="https://zap.planning.nyc.gov/projects/{{@model.dcpName}}"> {{optionset 'project' 'dcpPublicstatus' 'label' @model.dcpPublicstatus}} </Ui::ExternalLink>
         {{else}}
@@ -33,46 +39,43 @@
       <p>
         <strong>Project Brief:</strong> {{@model.dcpProjectbrief}}
       </p>
-
     </section>
 
-    {{#if @model.landusePackages.length}}
-      <h2>Land Use</h2>
-      <ol class="no-bullet">
-        {{#each @model.landusePackages as |landusePackage|}}
-          <Project::PackageListItem
-            @package={{landusePackage}}
-          />
-        {{/each}}
-      </ol>
-    {{/if}}
+      <Project::PackageSection
+        @packages={{@model.landusePackages}}
+        @packageType="Land Use"
+        class="large-padding-top large-margin-bottom ruled-adjacent"
+      />
 
-    {{#if @model.rwcdsPackages.length}}
-      <section class="large-padding-top large-margin-bottom ruled-adjacent">
-        <h2>Reasonable Worst Case Development Scenario</h2>
-        <ol class="no-bullet">
-          {{#each @model.rwcdsPackages as |rwcdsPackage|}}
-            <Project::PackageListItem
-              @package={{rwcdsPackage}}
-            />
-          {{/each}}
-        </ol>
-      </section>
-    {{/if}}
+      <Project::PackageSection
+        @packages={{@model.easPackages}}
+        @packageType="Environmental Assessment Statement (EAS)"
+        class="large-padding-top large-margin-bottom ruled-adjacent"
+      />
+  
+      <Project::PackageSection
+        @packages={{@model.eisPackages}}
+        @packageType="Environmental Impact Statement (EIS)"
+        class="large-padding-top large-margin-bottom ruled-adjacent"
+      />
 
-    {{#if @model.pasPackages.length}}
-      <section class="large-padding-top large-margin-bottom ruled-adjacent">
-        <h2>Pre-Application Statement</h2>
-        <ol class="no-bullet">
-          {{#each @model.pasPackages as |pasPackage|}}
-            <Project::PackageListItem
-              @package={{pasPackage}}
-            />
-          {{/each}}
-        </ol>
-      </section>
-    {{/if}}
+      <Project::PackageSection
+        @packages={{@model.technicalMemoPackages}}
+        @packageType="Technical Memo"
+        class="large-padding-top large-margin-bottom ruled-adjacent"
+      />
 
+      <Project::PackageSection
+        @packages={{@model.rwcdsPackages}}
+        @packageType="Reasonable Worst Case Development Scenario"
+        class="large-padding-top large-margin-bottom ruled-adjacent"
+      />
+
+      <Project::PackageSection
+        @packages={{@model.pasPackages}}
+        @packageType="Pre-Application Statement"
+        class="large-padding-top large-margin-bottom ruled-adjacent"
+      />
   </div>{{! end left/main column }}
   <div class="cell large-4">
 

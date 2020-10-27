@@ -6,8 +6,8 @@ module('Unit | Model | landuse form', function(hooks) {
 
   // Replace this with your real tests.
   test('it exists', function(assert) {
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('landuse-form', {});
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('landuse-form', {});
     assert.ok(model);
   });
 });

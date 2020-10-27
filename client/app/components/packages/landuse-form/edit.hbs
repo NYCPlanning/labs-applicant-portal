@@ -9,6 +9,9 @@
 
       <section class="form-section">
         <h1 class="header-large">
+          {{if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))
+            "Draft" "Filed"
+          }}
           Land Use
         </h1>
 

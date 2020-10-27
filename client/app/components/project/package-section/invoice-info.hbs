@@ -1,0 +1,12 @@
+<FaIcon @icon="shopping-cart" class="light-gray" />
+<LinkTo
+  @route="invoice"
+  @model={{@invoice}}
+  @query={{hash header=false}}
+>
+  {{@invoice.dcpName}}
+</LinkTo>
+
+<strong>${{@invoice.dcpGrandtotal}}</strong>
+
+<em>{{moment-format (utc @invoice.dcpInvoicedate) 'YYYY-MM-DD'}}</em>

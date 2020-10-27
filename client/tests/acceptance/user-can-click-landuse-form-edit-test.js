@@ -808,12 +808,12 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     await click('[data-test-radio="dcpIndicatetypeoffacility"][data-test-radio-option="Local/Neighborhood"]');
 
     assert.dom('[data-test-input="dcpTextexistingfacility"]').doesNotExist();
-    assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"]').exists();
 
     await click('[data-test-radio="dcpExistingfacilityproposedtoremainopt"][data-test-radio-option="Yes"]');
 
     assert.dom('[data-test-input="dcpTextexistingfacility"]').exists();
-    assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"]').exists();
 
     await fillIn('[data-test-input="dcpTextexistingfacility"]', 'A while.');
 

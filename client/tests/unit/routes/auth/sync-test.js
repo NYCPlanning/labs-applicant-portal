@@ -5,7 +5,7 @@ module('Unit | Route | auth/sync', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let route = this.owner.lookup('route:auth/sync');
+    const route = this.owner.lookup('route:auth/sync');
     assert.ok(route);
   });
 });
