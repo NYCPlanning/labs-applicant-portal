@@ -106,23 +106,23 @@
       as |DcpExistingfacilityproposedtoremainoptRadioGroup|>
         <DcpExistingfacilityproposedtoremainoptRadioGroup
           @options={{optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainopt' 'list'}}
-          @onChange={{fn this.resetDependentFields this.dependantsOf.dcpExistingfacilityproposedtoremainopt}}
+          @onChange={{fn (mut @form.data.dcpHowlonghasexistingfacilitybeenatthislocat) ""}}
         as |dcpExistingfacilityproposedtoremainopt|>
             {{#if (eq
               dcpExistingfacilityproposedtoremainopt
               (optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainopt' 'code' 'Yes')
             )}}
               <Ui::Question
-              as |dcpTextexistingfacilityQ|>
-                <dcpTextexistingfacilityQ.Label>
+              as |dcpHowlonghasexistingfacilitybeenatthislocatQ|>
+                <dcpHowlonghasexistingfacilitybeenatthislocatQ.Label>
                   How long has the existing facility been at this location?
-                </dcpTextexistingfacilityQ.Label>
+                </dcpHowlonghasexistingfacilitybeenatthislocatQ.Label>
 
                 <form.Field
-                  @attribute="dcpTextexistingfacility"
+                  @attribute="dcpHowlonghasexistingfacilitybeenatthislocat"
                   @maxlength="100"
                   @showCounter={{true}}
-                  id={{dcpTextexistingfacilityQ.id}}
+                  id={{dcpHowlonghasexistingfacilitybeenatthislocatQ.id}}
                 />
               </Ui::Question>
             {{/if}}
@@ -177,23 +177,23 @@
       as |DcpExistingfacilityproposedtoremainandexpandRadioGroup|>
         <DcpExistingfacilityproposedtoremainandexpandRadioGroup
           @options={{optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainandexpand' 'list'}}
-          @onChange={{fn this.resetDependentFields this.dependantsOf.dcpExistingfacilityproposedtoremainandexpand}}
+          @onChange={{fn (mut @form.data.dcpTextexistingfacility) ""}}
         as |dcpExistingfacilityproposedtoremainandexpand|>
           {{#if (eq
             dcpExistingfacilityproposedtoremainandexpand
             (optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainandexpand' 'code' 'Yes')
           )}}
             <Ui::Question
-            as |dcpHowlonghasexistingfacilitybeenatthislocatQ|>
-              <dcpHowlonghasexistingfacilitybeenatthislocatQ.Label>
+            as |dcpTextexistingfacilityQ|>
+              <dcpTextexistingfacilityQ.Label>
                 How long has the existing facility been at this location?
-              </dcpHowlonghasexistingfacilitybeenatthislocatQ.Label>
+              </dcpTextexistingfacilityQ.Label>
 
               <form.Field
-                @attribute="dcpHowlonghasexistingfacilitybeenatthislocat"
+                @attribute="dcpTextexistingfacility"
                 @maxlength="2000"
                 @showCounter={{true}}
-                id={{dcpHowlonghasexistingfacilitybeenatthislocatQ.id}}
+                id={{dcpTextexistingfacilityQ.id}}
               />
             </Ui::Question>
           {{/if}}
