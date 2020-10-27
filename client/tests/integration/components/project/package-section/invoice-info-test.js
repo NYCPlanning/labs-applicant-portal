@@ -12,8 +12,11 @@ module('Integration | Component | project/package-section/invoice-info', functio
 
     await render(hbs`<Project::PackageSection::InvoiceInfo />`);
 
-    assert.equal(this.element.textContent.trim(), `$
+    const formattedYmd = new Date().toISOString().slice(0, 10);
+    const extratext = `$
 
-2020-10-26`);
+`;
+    const reformattedYmd = extratext.concat(formattedYmd);
+    assert.equal(this.element.textContent.trim(), reformattedYmd);
   });
 });
