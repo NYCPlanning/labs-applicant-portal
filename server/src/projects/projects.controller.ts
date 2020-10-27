@@ -62,6 +62,8 @@ import { INVOICE_ATTRS } from '../invoices/invoices.attrs';
       ref: 'contactid',
       attributes: [
         ...CONTACT_ATTRS,
+
+        'is_nycid_email_registered',
       ],
     },
   },

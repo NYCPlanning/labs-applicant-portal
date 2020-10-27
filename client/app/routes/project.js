@@ -5,16 +5,10 @@ export default class ProjectRoute extends Route.extend(AuthenticatedRouteMixin) 
   authenticationRoute = '/';
 
   async model(params) {
-    const project = await this.store.findRecord('project', params.id, {
+    return this.store.findRecord('project', params.id, {
       reload: true,
       include: 'packages.pasForm,packages.rwcdsForm,packages.landuseForm,projectApplicants.contacts,teamMembers',
       ...params,
     });
-
-    return project;
-  }
-
-  setupController(controller, model) {
-    controller.set('project', model);
   }
 }
