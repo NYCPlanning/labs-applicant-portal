@@ -89,7 +89,18 @@ export class ProjectsController {
 
   @Get('/')
   async listOfCurrentUserProjects(@Session() session) {
-    const { contactId } = session;
+    let { contactId, creeperTargetEmail } = session;
+
+    // if this needs to be in other parts of the app, consider a pipe or interceptor
+    if (creeperTargetEmail) {
+      try {
+        const { contactid } = await this.contactService.findOneByEmail(creeperTargetEmail);
+
+        contactId = contactid
+      } catch (e) {
+        throw e;
+      }
+    }
 
     try {
       if (contactId) {
