@@ -127,45 +127,40 @@
               </Ui::Question>
             {{/if}}
 
-            {{#if (eq
-              dcpExistingfacilityproposedtoremainopt
-              (optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainopt' 'code' 'No')
-            )}}
-              <Ui::Question
-              as |dcpExistingfacilityreplacementinanewlocationQ|>
-                <dcpExistingfacilityreplacementinanewlocationQ.Label>
-                  Will the existing facility be replaced in a new location?
-                </dcpExistingfacilityreplacementinanewlocationQ.Label>
+            <Ui::Question
+            as |dcpExistingfacilityreplacementinanewlocationQ|>
+              <dcpExistingfacilityreplacementinanewlocationQ.Label>
+                Will the existing facility be replaced in a new location?
+              </dcpExistingfacilityreplacementinanewlocationQ.Label>
 
-                <form.Field
-                  @attribute="dcpExistingfacilityreplacementinanewlocation"
-                  @type="radio-group"
-                as |DcpExistingfacilityreplacementinanewlocationRadioGroup|>
-                  <DcpExistingfacilityreplacementinanewlocationRadioGroup
-                    @options={{optionset 'landuseForm' 'dcpExistingfacilityreplacementinanewlocation' 'list'}}
-                  as |dcpExistingfacilityreplacementinanewlocation|>
-                    {{#if (eq
-                      dcpExistingfacilityreplacementinanewlocation
-                      (optionset 'landuseForm' 'dcpExistingfacilityreplacementinanewlocation' 'code' 'Yes')
-                    )}}
-                      <Ui::Question
-                      as |dcpCurrentfacilitylocationQ|>
-                        <dcpCurrentfacilitylocationQ.Label>
-                          Where is the current facility located?
-                        </dcpCurrentfacilitylocationQ.Label>
+              <form.Field
+                @attribute="dcpExistingfacilityreplacementinanewlocation"
+                @type="radio-group"
+              as |DcpExistingfacilityreplacementinanewlocationRadioGroup|>
+                <DcpExistingfacilityreplacementinanewlocationRadioGroup
+                  @options={{optionset 'landuseForm' 'dcpExistingfacilityreplacementinanewlocation' 'list'}}
+                as |dcpExistingfacilityreplacementinanewlocation|>
+                  {{#if (eq
+                    dcpExistingfacilityreplacementinanewlocation
+                    (optionset 'landuseForm' 'dcpExistingfacilityreplacementinanewlocation' 'code' 'Yes')
+                  )}}
+                    <Ui::Question
+                    as |dcpCurrentfacilitylocationQ|>
+                      <dcpCurrentfacilitylocationQ.Label>
+                        Where is the current facility located?
+                      </dcpCurrentfacilitylocationQ.Label>
 
-                        <form.Field
-                          @attribute="dcpCurrentfacilitylocation"
-                          @maxlength="50"
-                          @showCounter={{true}}
-                          id={{dcpCurrentfacilitylocationQ.id}}
-                        />
-                      </Ui::Question>
-                    {{/if}}
-                  </DcpExistingfacilityreplacementinanewlocationRadioGroup>
-                </form.Field>
-              </Ui::Question>
-            {{/if}}
+                      <form.Field
+                        @attribute="dcpCurrentfacilitylocation"
+                        @maxlength="50"
+                        @showCounter={{true}}
+                        id={{dcpCurrentfacilitylocationQ.id}}
+                      />
+                    </Ui::Question>
+                  {{/if}}
+                </DcpExistingfacilityreplacementinanewlocationRadioGroup>
+              </form.Field>
+            </Ui::Question>
         </DcpExistingfacilityproposedtoremainoptRadioGroup>
       </form.Field>
     </Ui::Question>
