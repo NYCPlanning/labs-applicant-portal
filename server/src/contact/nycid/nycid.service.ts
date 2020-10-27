@@ -64,7 +64,7 @@ export class NycidService {
     }
   }
 
-  private async isNycidEmailRegistered(email) {
+  public async isNycidEmailRegistered(email) {
     let errors = {};
 
     // This method infers a lot from the error-responses from NYC.ID

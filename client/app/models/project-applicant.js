@@ -38,7 +38,7 @@ export default class ProjectApplicantModel extends Model {
   }
 
   get email() {
-    if (this.contact.emailaddress1) {
+    if (this.contact?.emailaddress1) {
       return this.contact.emailaddress1;
     }
 
