@@ -106,7 +106,7 @@
       as |DcpExistingfacilityproposedtoremainoptRadioGroup|>
         <DcpExistingfacilityproposedtoremainoptRadioGroup
           @options={{optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainopt' 'list'}}
-          @onChange={{fn this.resetDependentFields this.dependantsOf.dcpExistingfacilityproposedtoremainopt}}
+          @onChange={{fn (mut @form.data.dcpHowlonghasexistingfacilitybeenatthislocat) ""}}
         as |dcpExistingfacilityproposedtoremainopt|>
             {{#if (eq
               dcpExistingfacilityproposedtoremainopt
@@ -177,7 +177,7 @@
       as |DcpExistingfacilityproposedtoremainandexpandRadioGroup|>
         <DcpExistingfacilityproposedtoremainandexpandRadioGroup
           @options={{optionset 'landuseForm' 'dcpExistingfacilityproposedtoremainandexpand' 'list'}}
-          @onChange={{fn this.resetDependentFields this.dependantsOf.dcpExistingfacilityproposedtoremainandexpand}}
+          @onChange={{fn (mut @form.data.dcpTextexistingfacility) ""}}
         as |dcpExistingfacilityproposedtoremainandexpand|>
           {{#if (eq
             dcpExistingfacilityproposedtoremainandexpand
