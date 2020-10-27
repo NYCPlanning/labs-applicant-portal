@@ -10,13 +10,14 @@ module('Integration | Component | project/package-section/invoice-info', functio
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<Project::PackageSection::InvoiceInfo />`);
+    await render(hbs`
+      <Project::PackageSection::InvoiceInfo
+        @invoice={{hash dcpInvoicedate=1603810916000}}
+      />
+    `);
 
-    const formattedYmd = new Date().toISOString().slice(0, 10);
-    const extratext = `$
+    assert.equal(this.element.textContent.trim(), `$
 
-`;
-    const reformattedYmd = extratext.concat(formattedYmd);
-    assert.equal(this.element.textContent.trim(), reformattedYmd);
+2020-10-27`);
   });
 });
