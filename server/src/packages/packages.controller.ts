@@ -30,7 +30,9 @@ import { SITEDATAH_FORM_ATTRS } from './landuse-form/sitedatah-forms/sitedatah-f
 import { LANDUSE_GEOGRAPHY_ATTRS } from './landuse-form/landuse-geography/landuse-geography.attrs';
 import { ZONINGRESOLUTION_ATTRS } from '../zoning-resolutions/zoning-resolutions.attrs';
 import { ZONING_MAP_CHANGE_ATTRS } from './landuse-form/zoning-map-changes/zoning-map-change.attrs';
+import { CEQR_INVOICE_QUESTIONNAIRE_ATTRS } from './ceqr-invoice-questionnaires/ceqr-invoice-questionnaires.attrs';
 import { CitypayService } from '../citypay/citypay.service';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('packages', {
   id: 'dcp_packageid',
@@ -40,6 +42,8 @@ import { CitypayService } from '../citypay/citypay.service';
     // not a relationship proper, just an array of objects
     // REDO: make this a rel
     'documents',
+
+    'ceqr-invoice-questionnaires',
 
     // entity relationships
     'pas-form',
@@ -54,6 +58,12 @@ import { CitypayService } from '../citypay/citypay.service';
     ref: 'dcp_projectid',
     attributes: [
       ...PROJECT_ATTRS
+    ],
+  },
+  'ceqr-invoice-questionnaires': {
+    ref: 'dcp_ceqrinvoicequestionnaireid',
+    attributes: [
+      ...CEQR_INVOICE_QUESTIONNAIRE_ATTRS,
     ],
   },
   'pas-form': {
@@ -193,7 +203,7 @@ import { CitypayService } from '../citypay/citypay.service';
       const {
         dcp_pasform: pasForm,
         dcp_rwcdsform: rwcdsForm,
-        dcp_landuse: landuseForm
+        dcp_landuse: landuseForm,
       } = projectPackage;
   
       if (pasForm) {
@@ -268,6 +278,7 @@ import { CitypayService } from '../citypay/citypay.service';
       } else {
         return {
           ...projectPackage,
+          'ceqr-invoice-questionnaires': projectPackage.dcp_package_dcp_ceqrinvoicequestionnaire_Package,
         };
       }
     } catch (e) {
