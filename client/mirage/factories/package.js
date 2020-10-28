@@ -80,6 +80,10 @@ export default Factory.extend({
     dcpPackagetype: 717170002,
   }),
 
+  filedEas: trait({
+    dcpPackagetype: 717170012,
+  }),
+
   deis: trait({
     dcpPackagetype: 717170013,
   }),
