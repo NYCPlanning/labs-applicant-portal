@@ -6,7 +6,6 @@
 
   <div class="grid-x grid-margin-x">
     <div class="cell large-8">
-
       <section class="form-section">
         <h1 class="header-large">
           Filed Environmental Assessment Statement (EAS)
@@ -49,6 +48,20 @@
           {{@package.dcpPackagenotes}}
         </saveableForm.Section>
       {{/if}}
+
+      {{#let saveableForm.data.singleCeqrInvoiceQuestionnaire as |ceqrInvoiceQuestionnaire|}}
+        <saveableForm.Section @title="Ceqr Invoice Questionnaire">
+          <saveableForm.SaveableForm
+            @model={{ceqrInvoiceQuestionnaire}}
+            @validators={{array (hash) this.validations.SubmittableCeqrInvoiceQuestionnaireFormValidations}}
+            as |ceqrInvoiceQuestionnaireForm|
+          >
+            <Packages::FiledEas::CeqrInvoiceQuestionnaire
+              @form={{ceqrInvoiceQuestionnaireForm}}
+            />
+          </saveableForm.SaveableForm>
+        </saveableForm.Section>
+      {{/let}}
 
       <Packages::FiledEas::AttachedDocuments
         @form={{saveableForm}}

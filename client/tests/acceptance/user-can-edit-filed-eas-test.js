@@ -11,6 +11,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { selectFiles } from 'ember-file-upload/test-support';
+import { selectChoose } from 'ember-power-select/test-support';
 
 const saveForm = async () => {
   await click('[data-test-save-button]');
@@ -99,6 +100,9 @@ module('Acceptance | user can edit Filed EAS Packages', function (hooks) {
 
     await visit('/filed-eas/1/edit');
 
+    // filling out necessary fields for submit
+    await click('[data-test-radio="dcpIsthesoleaapplicantagovtagency"][data-test-radio-option="Yes"]');
+
     const file = new File(['foo'], 'Zoning Application.pdf', { type: 'text/plain' });
 
     await selectFiles('#FileUploader1 > input', file);
@@ -135,5 +139,25 @@ module('Acceptance | user can edit Filed EAS Packages', function (hooks) {
 
     assert.dom('[data-test-document-name="0"]').containsText('PAS Form.pdf');
     assert.dom('[data-test-document-name="1"]').containsText('Action Changes.excel');
+  });
+
+  test('User can click through Ceqr Invoice Questionnaire section on Filed Eas', async function (assert) {
+    this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', 'filedEas'),
+      ],
+    });
+
+    await visit('/filed-eas/1/edit');
+
+    await click('[data-test-radio="dcpIsthesoleaapplicantagovtagency"][data-test-radio-option="Yes"]');
+    await click('[data-test-radio="dcpProjectspolelyconsistactionsnotmeasurable"][data-test-radio-option="No"]');
+    await selectChoose('[data-test-dcpsquarefeet-picker]', 'less than 10,000 square feet');
+    await click('[data-test-radio="dcpProjectmodificationtoapreviousapproval"][data-test-radio-option="No"]');
+    await click('[data-test-radio="dcpRespectivedecrequired"][data-test-radio-option="Yes"]');
+
+    await click('[data-test-save-button]');
+
+    assert.equal(currentURL(), '/filed-eas/1/edit');
   });
 });
