@@ -80,6 +80,14 @@ export default Factory.extend({
     dcpPackagetype: 717170002,
   }),
 
+  deis: trait({
+    dcpPackagetype: 717170013,
+  }),
+
+  feis: trait({
+    dcpPackagetype: 717170003,
+  }),
+
   withLandUseActions: trait({
     afterCreate(projectPackage, server) {
       server.create('pas-form', 'withLandUseActions', { package: projectPackage });
