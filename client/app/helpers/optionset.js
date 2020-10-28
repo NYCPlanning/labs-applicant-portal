@@ -88,6 +88,7 @@ const OPTIONSET_LOOKUP = {
     dcpLegalinstrument: LANDUSE_FORM_OPTIONSETS.DCPLEGALINSTRUMENT,
     dcpRelatedacquisitionofpropertyopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpOnlychangetheeliminationofamappedbutunimp: LANDUSE_FORM_OPTIONSETS.DCPONLYCHANGETHEELIMINATIONOFAMAPPEDBUTUNIMP,
+    dcpYesmappedbutunimprovedstreetelimated: COMMON_OPTIONSETS.YES_NO,
     dcpEstablishstreetopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpEstablishparkopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpEstablishpublicplaceopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
