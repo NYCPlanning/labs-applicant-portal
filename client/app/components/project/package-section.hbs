@@ -1,5 +1,8 @@
 {{#if @packages.length}}
-  <div ...attributes>
+  <div
+    ...attributes
+    data-test-package-section={{@packageType}}
+  >
     <h2>{{@packageType}}</h2>
 
     <div class="grid-x grid-padding-x">
