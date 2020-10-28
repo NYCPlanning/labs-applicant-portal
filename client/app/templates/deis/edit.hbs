@@ -1,0 +1,12 @@
+<Ui::Breadcrumbs as |Crumb|>
+  <Crumb @text="My Projects" @route='projects' />
+  <Crumb @text={{@model.project.dcpProjectname}} @disabled={{true}} />
+  <Crumb @text="DEIS" @disabled={{true}} />
+  <Crumb @text="Edit" @current={{true}} />
+</Ui::Breadcrumbs>
+
+<Packages::Deis::Edit
+  @package={{@model}}
+/>
+
+{{outlet}}

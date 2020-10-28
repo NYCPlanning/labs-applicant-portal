@@ -1,6 +1,5 @@
-# Big Picture Summary
+### Summary
 
-### Which major feature does this fit into?
-### What was wrong and how does this fix the problem?
+#### Task/Bug Number
 
-## Technical Explanation — How does it work?
+### Technical Explanation

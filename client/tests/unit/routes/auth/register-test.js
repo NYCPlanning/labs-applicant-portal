@@ -5,7 +5,7 @@ module('Unit | Route | auth/register', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let route = this.owner.lookup('route:auth/register');
+    const route = this.owner.lookup('route:auth/register');
     assert.ok(route);
   });
 });

@@ -1,0 +1,40 @@
+<@form.Section @title="Attached Documents"
+  data-test-attached-documents
+>
+  <p>
+    To complete this submission, attach a CEQR form (either short or full)
+    filled in as appropriate based on the Reasonable Worst Case Development Scenario,
+    CEQR Technical manual, and directions from the EARD Lead Planner assigned to this project.
+    Attach the EAS Analysis Sections and back up materials needed based on the above.
+    If the project requires Waterfront Revitalization Program Consistency review,
+    attach the Consistency Assessment Form with any supporting documentation
+    and written assessments as needed.
+  </p>
+
+  <ul>
+    <li>
+      <Ui::ExternalLink @href="https://www1.nyc.gov/site/oec/environmental-quality-review/ceqr-forms-templates.page">
+        CEQR Form
+      </Ui::ExternalLink>
+    </li>
+    <li>
+      <Ui::ExternalLink @href="https://www1.nyc.gov/site/oec/environmental-quality-review/technical-manual.page">
+        CEQR Manual
+      </Ui::ExternalLink>
+    </li>
+    <li>
+      <Ui::ExternalLink @href="https://www1.nyc.gov/assets/planning/download/pdf/planning-level/waterfront/wrp/wrpform2016.pdf?r=1">
+        WRP Form
+      </Ui::ExternalLink>
+    </li>
+  </ul>
+
+  <Packages::Attachments
+    @package={{@model}}
+    @fileManager={{@model.fileManager}}
+    data-test-section="attachments"
+  />
+</@form.Section>
+
+
+
