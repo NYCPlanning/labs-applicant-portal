@@ -19,6 +19,7 @@ import SaveableAffectedZoningResolutionFormValidations from '../../../validation
 import SubmittableAffectedZoningResolutionFormValidations from '../../../validations/submittable-affected-zoning-resolution-form';
 import SaveableZoningMapChangeValidations from '../../../validations/saveable-zoning-map-change';
 import SubmittableZoningMapChangeValidations from '../../../validations/submittable-zoning-map-change';
+import SubmittablePackageFormValidations from '../../../validations/submittable-package';
 import { addToHasMany, removeFromHasMany } from '../../../utils/ember-changeset';
 
 export default class LandUseFormComponent extends Component {
@@ -40,6 +41,7 @@ export default class LandUseFormComponent extends Component {
     SubmittableAffectedZoningResolutionFormValidations,
     SaveableZoningMapChangeValidations,
     SubmittableZoningMapChangeValidations,
+    SubmittablePackageFormValidations,
   };
 
   @tracked recordsToDelete = [];
