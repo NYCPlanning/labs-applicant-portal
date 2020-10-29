@@ -14,4 +14,11 @@ export default class PackagesDeisEditComponent extends Component {
       console.log('Save Draft EIS package error:', error);
     }
   }
+
+  @action
+  async submitPackage() {
+    await this.args.package.submit();
+
+    this.router.transitionTo('deis.show', this.args.package.id);
+  }
 }
