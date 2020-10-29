@@ -34,7 +34,7 @@
     </p>
 
     {{#let (intersect
-        (map-by "dcpActioncode" form.data.data.landuseActions)
+        (map-by "dcpActioncode" form.data.landuseForm.landuseActions)
         (array 'PC' 'PQ' 'PS' 'PX')
       ) as |attachmentListActions|}}
       {{#if (gt attachmentListActions.length 0)}}
