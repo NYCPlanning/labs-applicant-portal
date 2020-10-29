@@ -14,4 +14,11 @@ export default class PackagesFeisEditComponent extends Component {
       console.log('Save Final EIS package error:', error);
     }
   }
+
+  @action
+  async submitPackage() {
+    await this.args.package.submit();
+
+    this.router.transitionTo('feis.show', this.args.package.id);
+  }
 }

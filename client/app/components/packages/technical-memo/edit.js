@@ -14,4 +14,11 @@ export default class PackagesTechnicalMemoEditComponent extends Component {
       console.log('Save Technical Memo package error:', error);
     }
   }
+
+  @action
+  async submitPackage() {
+    await this.args.package.submit();
+
+    this.router.transitionTo('technical-memo.show', this.args.package.id);
+  }
 }
