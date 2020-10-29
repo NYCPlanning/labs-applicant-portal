@@ -14,4 +14,11 @@ export default class PackagesFiledEasEditComponent extends Component {
       console.log('Save Filed EAS package error:', error);
     }
   }
+
+  @action
+  async submitPackage() {
+    await this.args.package.submit();
+
+    this.router.transitionTo('filed-eas.show', this.args.package.id);
+  }
 }
