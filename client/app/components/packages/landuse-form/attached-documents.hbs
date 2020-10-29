@@ -69,6 +69,11 @@
       {{/if}}
     {{/let}}
 
+    <SaveableForm::FieldValidationMessage
+      @attribute='documents'
+      @validation={{@form.errors.documents.validation}}
+    />
+
     <Packages::Attachments
       @package={{@model.package}}
       @fileManager={{@model.package.fileManager}}

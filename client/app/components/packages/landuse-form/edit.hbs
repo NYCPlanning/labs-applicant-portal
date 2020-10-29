@@ -150,6 +150,8 @@
             data-test-save-button
           />
 
+          <Packages::LanduseForm::LanduseFormError @package={{@package}} />
+
           <saveablePackageForm.SubmitButton
             @isEnabled={{saveablePackageForm.isSubmittable}}
             class="secondary"
@@ -181,6 +183,9 @@
             resubmitted with necessary materials, corrections, or clarifications.
           </p>
         </saveablePackageForm.ConfirmationModal>
+
+        <Messages::Assistance class="large-margin-top" />
+        
       </div>
     </div>
   </saveablePackageForm.SaveableForm>
