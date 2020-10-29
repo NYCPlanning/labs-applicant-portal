@@ -4,10 +4,18 @@ import {
   click,
   findAll,
   currentURL,
+  settled,
+  waitFor,
 } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { authenticateSession } from 'ember-simple-auth/test-support';
+import { selectFiles } from 'ember-file-upload/test-support';
+
+const saveForm = async () => {
+  await click('[data-test-save-button]');
+  await settled();
+};
 
 module('Acceptance | user can edit Technical Memo Packages', function (hooks) {
   setupApplicationTest(hooks);
@@ -80,5 +88,53 @@ module('Acceptance | user can edit Technical Memo Packages', function (hooks) {
     assert.dom('[data-test-package-notes]').containsText('Some instructions from Planners');
 
     assert.dom('[data-test-attached-documents]').exists();
+  });
+
+
+  test('User can submit Technical Memo and see Package info and Attached Documents section', async function (assert) {
+    this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', 'technicalMemo'),
+      ],
+    });
+
+    await visit('/technical-memo/1/edit');
+
+    const file = new File(['foo'], 'Zoning Application.pdf', { type: 'text/plain' });
+
+    await selectFiles('#FileUploader1 > input', file);
+
+    await assert.dom('[data-test-document-to-be-uploaded-name]').exists();
+
+    saveForm();
+
+    await waitFor('[data-test-document-name="0"');
+
+    await assert.dom('[data-test-document-to-be-uploaded-name]').doesNotExist();
+
+    await click('[data-test-submit-button]');
+
+    await click('[data-test-confirm-submit-button]');
+
+    await settled();
+
+    await waitFor('[data-test-project-dcpProjectname]');
+
+    assert.equal(currentURL(), '/technical-memo/1?header=true');
+
+    assert.dom('[data-test-attached-documents]').exists();
+  });
+
+  test('User sees Attached Documents on the Technical Memo Show page', async function (assert) {
+    this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', 'withExistingDocuments', 'technicalMemo'),
+      ],
+    });
+
+    await visit('/technical-memo/1');
+
+    assert.dom('[data-test-document-name="0"]').containsText('PAS Form.pdf');
+    assert.dom('[data-test-document-name="1"]').containsText('Action Changes.excel');
   });
 });
