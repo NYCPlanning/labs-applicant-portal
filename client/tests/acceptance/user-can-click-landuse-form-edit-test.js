@@ -5,7 +5,7 @@ import {
   currentURL,
   settled,
   fillIn,
-  waitFor,
+  // waitFor,
   triggerKeyEvent,
 } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
@@ -1202,7 +1202,6 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     // await this.pauseTest();
 
     assert.dom('[data-test-landuse-attachment-list]').exists();
-    
     // assert.dom('[data-test-section="attachments"]').exists();
   });
 
