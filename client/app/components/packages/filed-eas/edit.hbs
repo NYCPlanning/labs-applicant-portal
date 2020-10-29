@@ -63,7 +63,39 @@
           @onClick={{this.savePackage}}
           data-test-save-button
         />
+
+        <saveableForm.SubmitButton
+          @isEnabled={{saveableForm.isSubmittable}}
+          class="secondary"
+          data-test-submit-button
+        />
       </saveableForm.PageNav>
+
+      <saveableForm.ConfirmationModal
+        @action={{component saveableForm.SubmitButton
+          onClick=this.submitPackage
+          isEnabled=saveableForm.isSubmittable
+          class="no-margin"
+        }}
+        @footer={{component 'packages/filed-eas/filed-eas-error'
+          package=@package
+        }}
+        @continueButtonTitle="Continue Editing"
+        data-test-confirm-submit-button={{true}}
+      >
+        <h6>Confirm Filed EAS Submission</h6>
+
+        <p class="header-large medium-margin-top small-margin-bottom">
+          Are you sure?
+        </p>
+
+        <p>
+          Before submitting, ensure that necessary attachments have been uploaded.
+          If NYC Planning does not receive enough accurate information,
+          the Lead Planner will notify you and request that this form be resubmitted
+          with necessary materials, corrections, or clarifications.
+        </p>
+      </saveableForm.ConfirmationModal>
     </div>
   </div>
 
