@@ -92,6 +92,10 @@ export default Factory.extend({
     dcpPackagetype: 717170003,
   }),
 
+  technicalMemo: trait({
+    dcpPackagetype: 717170007,
+  }),
+
   withLandUseActions: trait({
     afterCreate(projectPackage, server) {
       server.create('pas-form', 'withLandUseActions', { package: projectPackage });
