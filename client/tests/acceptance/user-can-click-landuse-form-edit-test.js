@@ -807,30 +807,30 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     await click('[data-test-checkbox="dcpSiteselectionopt"]');
     await click('[data-test-radio="dcpIndicatetypeoffacility"][data-test-radio-option="Local/Neighborhood"]');
 
-    assert.dom('[data-test-input="dcpTextexistingfacility"]').doesNotExist();
+    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').doesNotExist();
     assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"]').exists();
 
     await click('[data-test-radio="dcpExistingfacilityproposedtoremainopt"][data-test-radio-option="Yes"]');
 
-    assert.dom('[data-test-input="dcpTextexistingfacility"]').exists();
+    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').exists();
     assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"]').exists();
 
-    await fillIn('[data-test-input="dcpTextexistingfacility"]', 'A while.');
+    await fillIn('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]', 'A while.');
 
     await click('[data-test-radio="dcpExistingfacilityproposedtoremainopt"][data-test-radio-option="No"]');
 
-    assert.dom('[data-test-input="dcpTextexistingfacility"]').doesNotExist();
+    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').doesNotExist();
 
     assert.dom('[data-test-input="dcpCurrentfacilitylocation"]').doesNotExist();
 
     await click('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"][data-test-radio-option="Yes"]');
 
-    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').doesNotExist();
+    assert.dom('[data-test-input="dcpTextexistingfacility"]').doesNotExist();
     await fillIn('[data-test-input="dcpCurrentfacilitylocation"]', 'Vibrant streets');
 
     await click('[data-test-radio="dcpExistingfacilityproposedtoremainandexpand"][data-test-radio-option="Yes"]');
 
-    await fillIn('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]', 'More than a while.');
+    await fillIn('[data-test-input="dcpTextexistingfacility"]', 'More than a while.');
 
     await click('[data-test-radio="dcpNewfacilityopt"][data-test-radio-option="Yes"]');
     await click('[data-test-radio="dcpIsprojectlistedinstatementofneedsopt"][data-test-radio-option="Yes"]');
@@ -870,9 +870,9 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     // Test clearing dependents of dcpExistingfacilityproposedtoremainopt
     await click('[data-test-radio="dcpExistingfacilityproposedtoremainopt"][data-test-radio-option="Yes"]');
 
-    await fillIn('[data-test-input="dcpTextexistingfacility"]', 'A while.');
+    await fillIn('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]', 'A while.');
 
-    assert.dom('[data-test-input="dcpTextexistingfacility"]').hasValue('A while.');
+    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').hasValue('A while.');
 
     await click('[data-test-radio="dcpExistingfacilityproposedtoremainopt"][data-test-radio-option="No"]');
 
@@ -886,28 +886,29 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     await click('[data-test-radio="dcpExistingfacilityproposedtoremainopt"][data-test-radio-option="Yes"]');
 
-    assert.dom('[data-test-input="dcpTextexistingfacility"]').hasNoValue();
+    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').hasNoValue();
 
     await click('[data-test-radio="dcpExistingfacilityproposedtoremainopt"][data-test-radio-option="No"]');
 
-    assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"][data-test-radio-option="Yes"]').hasAria('checked', 'false');
-    assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"][data-test-radio-option="No"]').hasAria('checked', 'false');
+    // Removing these tests as changes to other variables should not reset this field
+    // assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"][data-test-radio-option="Yes"]').hasAria('checked', 'false');
+    // assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"][data-test-radio-option="No"]').hasAria('checked', 'false');
 
-    await click('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"][data-test-radio-option="Yes"]');
-    assert.dom('[data-test-input="dcpCurrentfacilitylocation"]').hasNoValue();
+    // await click('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"][data-test-radio-option="Yes"]');
+    // assert.dom('[data-test-input="dcpCurrentfacilitylocation"]').hasNoValue();
 
     // Test clearing dependents of dcpExistingfacilityproposedtoremainandexpand
-    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').doesNotExist();
+    assert.dom('[data-test-input="dcpTextexistingfacility"]').doesNotExist();
 
     await click('[data-test-radio="dcpExistingfacilityproposedtoremainandexpand"][data-test-radio-option="Yes"]');
 
-    await fillIn('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]', 'Many decades.');
-    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').hasValue('Many decades.');
+    await fillIn('[data-test-input="dcpTextexistingfacility"]', 'Many decades.');
+    assert.dom('[data-test-input="dcpTextexistingfacility"]').hasValue('Many decades.');
 
     await click('[data-test-radio="dcpExistingfacilityproposedtoremainandexpand"][data-test-radio-option="No"]');
     await click('[data-test-radio="dcpExistingfacilityproposedtoremainandexpand"][data-test-radio-option="Yes"]');
 
-    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').hasNoValue();
+    assert.dom('[data-test-input="dcpTextexistingfacility"]').hasNoValue();
 
     // Test clearing dependents of dcpIsprojectlistedinstatementofneedsopt
     assert.dom('[data-test-input="dcpIndicatefiscalyears"]').doesNotExist();

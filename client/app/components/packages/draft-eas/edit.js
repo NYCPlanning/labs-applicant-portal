@@ -14,4 +14,11 @@ export default class PackagesDraftEasEditComponent extends Component {
       console.log('Save Draft EAS package error:', error);
     }
   }
+
+  @action
+  async submitPackage() {
+    await this.args.package.submit();
+
+    this.router.transitionTo('draft-eas.show', this.args.package.id);
+  }
 }

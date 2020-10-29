@@ -30,7 +30,8 @@ export default class ProjectsController extends Controller {
       || packageIsToDo(project.rwcdsPackages)
       || (packageIsToDo(project.landusePackages))
       || (packageIsToDo(project.easPackages))
-      || (packageIsToDo(project.eisPackages)));
+      || (packageIsToDo(project.eisPackages))
+      || (packageIsToDo(project.technicalMemoPackages)));
   }
 
   // Projects in NYC Planning's hands

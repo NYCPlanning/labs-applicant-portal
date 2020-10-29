@@ -200,6 +200,8 @@ export default class LanduseFormModel extends Model {
 
   @attr dcpOnlychangetheeliminationofamappedbutunimp;
 
+  @attr dcpYesmappedbutunimprovedstreetelimated;
+
   // A made-up field so we can send an id to the backend
   // and we can bind an account to the dcp_leadagency field
   @attr chosenLeadAgencyId;
