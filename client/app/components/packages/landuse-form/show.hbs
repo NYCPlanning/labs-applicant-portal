@@ -1017,7 +1017,7 @@
     {{/let}}
 
     {{#let (intersect
-        (map-by "dcpActioncode" this.landuseForm.landuseActions)
+        (map-by "dcpActioncode" @package.landuseForm.landuseActions)
         (array 'PC' 'PQ' 'PS' 'PX')
       ) as |publicFacilitiesActions|}}
     {{#if (gt publicFacilitiesActions.length 0)}}
@@ -1049,7 +1049,7 @@
             What is the type of facility?
           </A.Prompt>
           <A.Field>
-            {{@package.landuseForm.dcpIndicatetypeoffacility}}
+            {{optionset 'landuseForm' 'dcpIndicatetypeoffacility' 'label' @package.landuseForm.dcpIndicatetypeoffacility}}
           </A.Field>
         </Ui::Answer>
 
@@ -1209,8 +1209,149 @@
       <section class="form-section">
         <h2 class="section-header">
           <span id="proposed-site-characteristics" class="section-anchor"></span>
-          Proposed Site Characteristics [place holder]
+          Proposed Site Characteristic and Conditions
         </h2>
+      {{#each
+        (filter-by 'isDeleted' false @package.landuseForm.landuseGeographies)
+      as |landuseGeography landuseGeographyIndex|}}
+
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
+            Borough
+          </A.Prompt>
+          <A.Field>
+            {{landuseGeography.dcpBorough}}
+          </A.Field>
+        </Ui::Answer>
+
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
+            Block
+          </A.Prompt>
+          <A.Field>
+            {{landuseGeography.dcpBlock}}
+          </A.Field>
+        </Ui::Answer>
+
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
+            Lot
+          </A.Prompt>
+          <A.Field>
+            {{landuseGeography.dcpLot}}
+          </A.Field>
+        </Ui::Answer>
+
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
+            Ownership
+          </A.Prompt>
+          <A.Field>
+            {{landuseGeography.dcpOwnership}}
+          </A.Field>
+        </Ui::Answer>
+
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
+            Uses on site
+          </A.Prompt>
+          <A.Field>
+            {{landuseGeography.dcpUsesonsite}}
+          </A.Field>
+        </Ui::Answer>
+
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
+            What is the condition of the site?
+          </A.Prompt>
+          <A.Field>
+            {{optionset 'landuseGeography' 'dcpIsthesiteimprovedunimprovedorpartlyimp' 'label' landuseGeography.dcpIsthesiteimprovedunimprovedorpartlyimp}}
+          </A.Field>
+        </Ui::Answer>
+
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
+            Number of dwelling units
+          </A.Prompt>
+          <A.Field>
+            {{landuseGeography.dcpNumberofdwellingunits}}
+          </A.Field>
+        </Ui::Answer>
+
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
+            What is the number of firms for Community Facility, Commercial or Industrial Uses?
+          </A.Prompt>
+          <A.Field>
+            {{landuseGeography.dcpCommunityfacilitycommercialnooffirms}}
+          </A.Field>
+        </Ui::Answer>
+
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
+            What is the number of employees for Community Facility, Commercial or Industrial Uses?
+          </A.Prompt>
+          <A.Field>
+            {{landuseGeography.dcpCommunityfacilitycommercialnoofemployees}}
+          </A.Field>
+        </Ui::Answer>
+
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
+            Describe any displacement or relocation
+          </A.Prompt>
+          <A.Field>
+            {{landuseGeography.dcpDisplacementorrelocation}}
+          </A.Field>
+        </Ui::Answer>
+
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
+            If vacant for less than two years, describe previous use
+          </A.Prompt>
+          <A.Field>
+            {{landuseGeography.dcpVacantforlessthantwoyears}}
+          </A.Field>
+        </Ui::Answer>
+
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
+            If there are buildings on-site, what is the square footage?
+          </A.Prompt>
+          <A.Field>
+            {{landuseGeography.dcpBuildingsorsitetotalsquarefootage}}
+          </A.Field>
+        </Ui::Answer>
+
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
+            What is the square footage to be acquired?
+          </A.Prompt>
+          <A.Field>
+            {{landuseGeography.dcpSquarefootagetobeacquired}}
+          </A.Field>
+        </Ui::Answer>
+
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
+            What is the number of floors in the building?
+          </A.Prompt>
+          <A.Field>
+            {{landuseGeography.dcpNumberoffloorsinbuilding}}
+          </A.Field>
+        </Ui::Answer>
+
+        <Ui::Answer @beside={{true}} as |A|>
+          <A.Prompt>
+            What is the location on site or in building?
+          </A.Prompt>
+          <A.Field>
+            {{landuseGeography.dcpLocationsiteinbuilding}}
+          </A.Field>
+        </Ui::Answer>
+
+
+      {{/each}}
       </section>
 
     {{/if}}
