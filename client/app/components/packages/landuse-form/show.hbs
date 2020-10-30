@@ -1403,7 +1403,6 @@
       {{/if}}
     {{/let}}
 
-{{!-- NEED TO FIND A ZONING TEXT AMENDMENT AND CHECK THIS --}}
     {{#let (intersect
         (map-by "dcpActioncode" @package.landuseForm.landuseActions)
         (array 'ZR')
@@ -1419,10 +1418,10 @@
             <fieldset class="fieldset">
 
               <Ui::Legend>
-              <span class="label">
-                ZR Section
-              </span>
-            </Ui::Legend>
+                <span class="label">
+                  ZR Section
+                </span>
+              </Ui::Legend>
 
               <Ui::Answer @beside={{true}} as |A|>
                 <A.Prompt>
@@ -1464,9 +1463,48 @@
               What is the total area of all Zoning Lots in the area to the be rezoned?
             </A.Prompt>
             <A.Field>
-              {{@package.landuseForm.dcpTotalzoningareatoberezoned}}
+              {{optionset 'landuseForm' 'dcpTotalzoningareatoberezoned' 'label' @package.landuseForm.dcpTotalzoningareatoberezoned}}
             </A.Field>
           </Ui::Answer>
+
+          {{#each (filter-by 'isDeleted' false @package.landuseForm.zoningMapChanges) as |zoningMapChange zoningMapChangeIndex|}}
+            <fieldset class="fieldset">
+
+              <Ui::Legend>
+                <span class="label">
+                  Zoning Map Change
+                </span>
+              </Ui::Legend>
+
+              <Ui::Answer @beside={{true}} as |A|>
+                <A.Prompt>
+                  Zoning Section Map(s) Number
+                </A.Prompt>
+                <A.Field>
+                  {{zoningMapChange.dcpZoningsectionmapsnumber}}
+                </A.Field>
+              </Ui::Answer>
+
+              <Ui::Answer @beside={{true}} as |A|>
+                <A.Prompt>
+                  Existing Zoning District(s)
+                </A.Prompt>
+                <A.Field>
+                  {{zoningMapChange.dcpExistingzoningdistrictvalue}}
+                </A.Field>
+              </Ui::Answer>
+
+              <Ui::Answer @beside={{true}} as |A|>
+                <A.Prompt>
+                  Proposed Zoning District(s)
+                </A.Prompt>
+                <A.Field>
+                  {{zoningMapChange.dcpProposedzoningmapvalue}}
+                </A.Field>
+              </Ui::Answer>
+
+            </fieldset>
+          {{/each}}
 
         </section>
       {{/if}}
