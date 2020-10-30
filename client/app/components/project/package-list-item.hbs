@@ -149,7 +149,35 @@
       {{/if}}
     </LinkTo>
   {{/if}}
-
+  {{#if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_SCOPE_OF_WORK'))}}
+    <LinkTo
+      @route={{if (eq @package.statuscode (optionset 'package' 'statuscode' 'code' 'PACKAGE_PREPARATION')) 'scope-of-work-draft.edit' 'scope-of-work-draft.show'}}
+      @model={{@package.id}}
+      data-test-package-link={{@package.id}}
+    >
+      {{#if (eq @package.statuscode (optionset 'package' 'statuscode' 'code' 'PACKAGE_PREPARATION'))}}
+        <button
+          type="button"
+          class="button no-margin"
+        >
+          <FaIcon @icon="edit" />
+          <strong>
+            Draft SOW
+            <small>
+              Version {{@package.dcpPackageversion}}
+            </small>
+          </strong>
+        </button>
+      {{else}}
+        <strong>
+          Draft SOW
+          <small>
+            Version {{@package.dcpPackageversion}}
+          </small>
+        </strong>
+      {{/if}}
+    </LinkTo>
+  {{/if}}
   {{#if (or
     (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'PDEIS'))
     (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'EIS'))
