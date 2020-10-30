@@ -1403,19 +1403,74 @@
       {{/if}}
     {{/let}}
 
-    <section class="form-section">
-      <h2 class="section-header">
-        <span id="zoning-text-amendment" class="section-anchor"></span>
-        Zoning Text Amendment [place holder]
-      </h2>
-    </section>
+{{!-- NEED TO FIND A ZONING TEXT AMENDMENT AND CHECK THIS --}}
+    {{#let (intersect
+        (map-by "dcpActioncode" @package.landuseForm.landuseActions)
+        (array 'ZR')
+      ) as |publicFacilitiesActions|}}
+      {{#if (gt publicFacilitiesActions.length 0)}}
+        
+        <section class="form-section">
+          <h2 class="section-header">
+            <span id="zoning-text-amendment" class="section-anchor"></span>
+            Zoning Text Amendment
+          </h2>
+          {{#each (filter-by 'isDeleted' false @package.landuseForm.affectedZoningResolutions) as |affectedZoningResolution affectedZoningResolutionIndex|}}
+            <fieldset class="fieldset">
 
-    <section class="form-section">
-      <h2 class="section-header">
-        <span id="zoning-map-amendment" class="section-anchor"></span>
-        Zoning Map Amendment [place holder]
-      </h2>
-    </section>
+              <Ui::Legend>
+              <span class="label">
+                ZR Section
+              </span>
+            </Ui::Legend>
+
+              <Ui::Answer @beside={{true}} as |A|>
+                <A.Prompt>
+                  Zoning Section Number
+                </A.Prompt>
+                <A.Field>
+                  {{affectedZoningResolution.dcpZrsectionnumber}}
+                </A.Field>
+              </Ui::Answer>
+
+              <Ui::Answer @beside={{true}} as |A|>
+                <A.Prompt>
+                  Zoning Section Title
+                </A.Prompt>
+                <A.Field>
+                  {{affectedZoningResolution.dcpZrsectiontitle}}
+                </A.Field>
+              </Ui::Answer>
+
+            </fieldset>
+          {{/each}}
+        </section>
+      {{/if}}
+    {{/let}}
+
+    {{#let (intersect
+        (map-by "dcpActioncode" @package.landuseForm.landuseActions)
+        (array 'ZM')
+      ) as |publicFacilitiesActions|}}
+      {{#if (gt publicFacilitiesActions.length 0)}}
+        <section class="form-section">
+          <h2 class="section-header">
+            <span id="zoning-map-amendment" class="section-anchor"></span>
+            Zoning Map Amendment
+          </h2>
+
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              What is the total area of all Zoning Lots in the area to the be rezoned?
+            </A.Prompt>
+            <A.Field>
+              {{@package.landuseForm.dcpTotalzoningareatoberezoned}}
+            </A.Field>
+          </Ui::Answer>
+
+        </section>
+      {{/if}}
+    {{/let}}
 
     <section class="form-section" id="attached-documents">
       <h2 class="section-header">
