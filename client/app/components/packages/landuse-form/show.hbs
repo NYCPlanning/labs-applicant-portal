@@ -1071,7 +1071,6 @@
             </A.Prompt>
             <A.Field>
               {{@package.landuseForm.dcpTextexistingfacility}}
-
             </A.Field>
           </Ui::Answer>
         {{/if}}
@@ -1357,13 +1356,52 @@
     {{/if}}
     {{/let}}
 
+    {{#let (intersect
+        (map-by "dcpActioncode" @package.landuseForm.landuseActions)
+        (array 'PP')
+      ) as |publicFacilitiesActions|}}
+      {{#if (gt publicFacilitiesActions.length 0)}}
+        <section class="form-section">
+          <h2 class="section-header">
+            <span id="disposition" class="section-anchor"></span>
+            Disposition
+          </h2>
 
-    <section class="form-section">
-      <h2 class="section-header">
-        <span id="disposition" class="section-anchor"></span>
-        Disposition [place holder]
-      </h2>
-    </section>
+          <Ui::Answer @beside={{true}} as |A|>
+            <A.Prompt>
+              What is the type of disposition?
+            </A.Prompt>
+            <A.Field>
+              {{optionset 'landuseForm' 'dcpTypedisposition' 'label' @package.landuseForm.dcpTypedisposition}}
+            </A.Field>
+          </Ui::Answer>
+
+          {{#if (eq
+              @package.landuseForm.dcpTypedisposition
+              (optionset 'landuseForm' 'dcpTypedisposition' 'code' 'DIRECT')
+            )}}
+            <Ui::Answer @beside={{true}} as |A|>
+              <A.Prompt>
+                From which agency?
+              </A.Prompt>
+              <A.Field>
+                {{@package.landuseForm.dcpTextcityagency}}
+              </A.Field>
+            </Ui::Answer>
+
+            <Ui::Answer @beside={{true}} as |A|>
+              <A.Prompt>
+                To whom?
+              </A.Prompt>
+              <A.Field>
+                {{@package.landuseForm.dcpTowhom}}
+              </A.Field>
+            </Ui::Answer>
+          {{/if}}
+
+        </section>
+      {{/if}}
+    {{/let}}
 
     <section class="form-section">
       <h2 class="section-header">
