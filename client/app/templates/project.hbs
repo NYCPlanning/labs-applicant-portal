@@ -52,7 +52,13 @@
         @packageType="Environmental Assessment Statement (EAS)"
         class="large-padding-top large-margin-bottom ruled-adjacent"
       />
-  
+
+      <Project::PackageSection
+        @packages={{@model.scopeOfWorkDraftPackages}}
+        @packageType="Scope of Work (SOW)"
+        class="large-padding-top large-margin-bottom ruled-adjacent"
+      />
+
       <Project::PackageSection
         @packages={{@model.eisPackages}}
         @packageType="Environmental Impact Statement (EIS)"
