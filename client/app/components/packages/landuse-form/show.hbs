@@ -1210,9 +1210,7 @@
           <span id="proposed-site-characteristics" class="section-anchor"></span>
           Proposed Site Characteristic and Conditions
         </h2>
-      {{#each
-        (filter-by 'isDeleted' false @package.landuseForm.landuseGeographies)
-      as |landuseGeography|}}
+      {{#each @package.landuseForm.landuseGeographies as |landuseGeography|}}
 
         <Ui::Answer @beside={{true}} as |A|>
           <A.Prompt>
@@ -1414,7 +1412,7 @@
             <span id="zoning-text-amendment" class="section-anchor"></span>
             Zoning Text Amendment
           </h2>
-          {{#each (filter-by 'isDeleted' false @package.landuseForm.affectedZoningResolutions) as |affectedZoningResolution|}}
+          {{#each @package.landuseForm.affectedZoningResolutions as |affectedZoningResolution|}}
             <fieldset class="fieldset">
 
               <Ui::Legend>
@@ -1467,7 +1465,7 @@
             </A.Field>
           </Ui::Answer>
 
-          {{#each (filter-by 'isDeleted' false @package.landuseForm.zoningMapChanges) as |zoningMapChange|}}
+          {{#each @package.landuseForm.zoningMapChanges as |zoningMapChange|}}
             <fieldset class="fieldset">
 
               <Ui::Legend>
