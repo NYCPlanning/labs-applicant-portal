@@ -110,6 +110,15 @@ export default class ProjectModel extends Model {
     return easPackages;
   }
 
+  get scopeOfWorkDraftPackages() {
+    const scopeOfWorkDraftPackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'DRAFT_SCOPE_OF_WORK']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    return scopeOfWorkDraftPackages;
+  }
+
   get eisPackages() {
     const eisPackages = [
       ...this.feisPackages,

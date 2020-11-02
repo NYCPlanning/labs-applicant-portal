@@ -30,6 +30,7 @@ export default class ProjectsController extends Controller {
       || packageIsToDo(project.rwcdsPackages)
       || (packageIsToDo(project.landusePackages))
       || (packageIsToDo(project.easPackages))
+      || (packageIsToDo(project.scopeOfWorkDraftPackages))
       || (packageIsToDo(project.eisPackages))
       || (packageIsToDo(project.technicalMemoPackages)));
   }

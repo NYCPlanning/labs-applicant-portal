@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
-export default class PackagesDeisEditComponent extends Component {
+export default class PackagesScopeOfWorkDraftEditComponent extends Component {
   @service
   router;
 
@@ -11,7 +11,7 @@ export default class PackagesDeisEditComponent extends Component {
     try {
       await this.args.package.save();
     } catch (error) {
-      console.log('Save Draft EIS package error:', error);
+      console.log('Save Draft SOW package error:', error);
     }
   }
 
@@ -19,6 +19,6 @@ export default class PackagesDeisEditComponent extends Component {
   async submitPackage() {
     await this.args.package.submit();
 
-    this.router.transitionTo('deis.show', this.args.package.id);
+    this.router.transitionTo('scope-of-work-draft.show', this.args.package.id);
   }
 }

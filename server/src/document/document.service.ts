@@ -288,7 +288,7 @@ async getParentSiteLocation() {
   async findPackageSharepointDocuments(packageName, id: string) {
     try {
       const strippedPackageName = packageName.replace(/-/g, '').replace(/\s+/g, '').replace(/'+/g, '').replace(/^\~|\#|\%|\&|\*|\{|\}|\\|\:|\<|\>|\?|\/|\||\"/g, '');
-      const folderIdentifier = `${strippedPackageName}_${id.toUpperCase()}`;
+      const folderIdentifier = `${strippedPackageName}_${id.toUpperCase().replace(/-/g, '')}`;
 
       const { value: documents } = await this.crmService.getSharepointFolderFiles(`dcp_package/${folderIdentifier}`);
 

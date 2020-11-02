@@ -17,7 +17,7 @@ const saveForm = async () => {
   await settled();
 };
 
-module('Acceptance | user can edit Technical Memo Packages', function (hooks) {
+module('Acceptance | user can edit Draft SOW Packages', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
@@ -27,17 +27,17 @@ module('Acceptance | user can edit Technical Memo Packages', function (hooks) {
     });
   });
 
-  test('User sees Project under Awaiting Submission if it has an active Technical Memo', async function (assert) {
+  test('User sees Project under Awaiting Submission if it has an active Draft SOW', async function (assert) {
     this.server.create('project', {
       packages: [
-        this.server.create('package', 'toDo', 'technicalMemo'),
-        this.server.create('package', 'done', 'technicalMemo'),
+        this.server.create('package', 'toDo', 'scopeOfWorkDraft'),
+        this.server.create('package', 'done', 'scopeOfWorkDraft'),
       ],
     });
 
     this.server.create('project', {
       packages: [
-        this.server.create('package', 'done', 'technicalMemo'),
+        this.server.create('package', 'done', 'scopeOfWorkDraft'),
       ],
     });
 
@@ -47,25 +47,25 @@ module('Acceptance | user can edit Technical Memo Packages', function (hooks) {
     assert.equal(findAll('[data-test-projects-list="done"] [data-test-my-project-list-item]').length, 1);
   });
 
-  test('User sees Technical Memo Packages section on Project page when one exists', async function (assert) {
+  test('User sees Draft SOW Packages section on Project page when one exists', async function (assert) {
     this.server.create('project', {
       packages: [
-        this.server.create('package', 'toDo', 'technicalMemo'),
-        this.server.create('package', 'toDo', 'technicalMemo'),
+        this.server.create('package', 'toDo', 'scopeOfWorkDraft'),
+        this.server.create('package', 'toDo', 'scopeOfWorkDraft'),
       ],
     });
 
     await visit('/projects/1');
 
-    assert.dom('[data-test-package-section="Technical Memo"]').exists();
+    assert.dom('[data-test-package-section="Scope of Work (SOW)"]').exists();
 
     assert.equal(findAll('[data-test-package-link]').length, 2);
   });
 
-  test('User can click into Technical Memo and see Package info, Package notes, and Attachments', async function (assert) {
+  test('User can click into Draft SOW and see Package info, Package notes, and Attachments', async function (assert) {
     this.server.create('project', {
       packages: [
-        this.server.create('package', 'toDo', 'technicalMemo'),
+        this.server.create('package', 'toDo', 'scopeOfWorkDraft'),
       ],
     });
 
@@ -73,7 +73,7 @@ module('Acceptance | user can edit Technical Memo Packages', function (hooks) {
 
     await click('[data-test-package-link="1"]');
 
-    assert.equal(currentURL(), '/technical-memo/1/edit');
+    assert.equal(currentURL(), '/scope-of-work-draft/1/edit');
 
     assert.dom('[data-test-package-dcpPackageversion]').hasText('(V1)');
 
@@ -90,15 +90,14 @@ module('Acceptance | user can edit Technical Memo Packages', function (hooks) {
     assert.dom('[data-test-attached-documents]').exists();
   });
 
-
-  test('User can submit Technical Memo and see Package info and Attached Documents section', async function (assert) {
+  test('User can submit Draft SOW and see Package info and Attached Documents section', async function (assert) {
     this.server.create('project', {
       packages: [
-        this.server.create('package', 'toDo', 'technicalMemo'),
+        this.server.create('package', 'toDo', 'scopeOfWorkDraft'),
       ],
     });
 
-    await visit('/technical-memo/1/edit');
+    await visit('/scope-of-work-draft/1/edit');
 
     const file = new File(['foo'], 'Zoning Application.pdf', { type: 'text/plain' });
 
@@ -120,19 +119,19 @@ module('Acceptance | user can edit Technical Memo Packages', function (hooks) {
 
     await waitFor('[data-test-project-dcpProjectname]');
 
-    assert.equal(currentURL(), '/technical-memo/1?header=true');
+    assert.equal(currentURL(), '/scope-of-work-draft/1?header=true');
 
     assert.dom('[data-test-attached-documents]').exists();
   });
 
-  test('User sees Attached Documents on the Technical Memo Show page', async function (assert) {
+  test('User sees Attached Documents on the Draft SOW Show page', async function (assert) {
     this.server.create('project', {
       packages: [
-        this.server.create('package', 'toDo', 'withExistingDocuments', 'technicalMemo'),
+        this.server.create('package', 'toDo', 'withExistingDocuments', 'scopeOfWorkDraft'),
       ],
     });
 
-    await visit('/technical-memo/1');
+    await visit('/scope-of-work-draft/1');
 
     assert.dom('[data-test-document-name="0"]').containsText('PAS Form.pdf');
     assert.dom('[data-test-document-name="1"]').containsText('Action Changes.excel');

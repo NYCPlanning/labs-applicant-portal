@@ -1,6 +1,6 @@
-<SaveableForm
-  @model={{@package}}
-  @validators={{array (hash) (hash)}}
+<SaveableForm 
+  @model={{@package}} 
+  @validators={{array (hash) (hash)}} 
   as |saveableForm|
 >
 
@@ -9,30 +9,26 @@
 
       <section class="form-section">
         <h1 class="header-large">
-          Filed Environmental Assessment Statement (EAS)
-          <small
-            class="text-weight-normal"
+          Draft Scope of Work (SOW)
+          <small class="text-weight-normal"
             data-test-package-dcpPackageversion
           >
             {{if @package.dcpPackageversion (concat '(V' @package.dcpPackageversion ')')}}
           </small>
         </h1>
 
-        <h2
-          class="no-margin"
+        <h2 class="no-margin"
           data-test-project-dcpProjectname
         >
           {{@package.project.dcpProjectname}}
-          <small
-            class="text-weight-normal"
+          <small class="text-weight-normal"
             data-test-project-dcpName
           >
             {{if @package.project.dcpName (concat '(' @package.project.dcpName ')')}}
           </small>
         </h2>
 
-        <p
-          class="text-large text-dark-gray"
+        <p class="text-large text-dark-gray"
           data-test-project-dcpBorough
           data-test-package-statuscode
         >
@@ -40,30 +36,29 @@
           {{optionset 'package' 'statuscode' 'label' @package.statuscode}}
         </p>
       </section>
-
-      {{#if @package.dcpPackagenotes}}
-        <saveableForm.Section
-          @title="Package Notes from City Planning Staff"
+      
+      {{#if @package.dcpPackagenotes}}          
+        <saveableForm.Section @title="Package Notes from City Planning Staff"
           data-test-package-notes
         >
           {{@package.dcpPackagenotes}}
         </saveableForm.Section>
       {{/if}}
 
-      <Packages::FiledEas::AttachedDocuments
+      <Packages::ScopeOfWorkDraft::AttachedDocuments
         @form={{saveableForm}}
         @model={{@package}}
       />
     </div>
-
+    
     <div class="cell large-4 sticky-sidebar">
       <saveableForm.PageNav>
-        <saveableForm.SaveButton
-          @isEnabled={{or @package.isDirty saveableForm.isSaveable}}
-          @onClick={{this.savePackage}}
-          data-test-save-button
-        />
-
+        <saveableForm.SaveButton 
+        @isEnabled={{or @package.isDirty saveableForm.isSaveable}}
+        @onClick={{this.savePackage}} 
+        data-test-save-button 
+      />
+        
         <saveableForm.SubmitButton
           @isEnabled={{saveableForm.isSubmittable}}
           class="secondary"
@@ -77,19 +72,20 @@
           isEnabled=saveableForm.isSubmittable
           class="no-margin"
         }}
-        @footer={{component 'packages/filed-eas/filed-eas-error'
+        @footer={{component 'packages/scope-of-work-draft/scope-of-work-draft-error'
           package=@package
         }}
         @continueButtonTitle="Continue Editing"
         data-test-confirm-submit-button={{true}}
       >
-        <h6>Confirm Filed EAS Submission</h6>
+        <h6>Confirm Draft Scope of Work (SOW) Submission</h6>
 
         <p class="header-large medium-margin-top small-margin-bottom">
           Are you sure?
         </p>
 
         <p>
+          {{!-- TODO: EDIT MESSAGE HERE --}}
           Before submitting, ensure that necessary attachments have been uploaded.
           If NYC Planning does not receive enough accurate information,
           the Lead Planner will notify you and request that this form be resubmitted
@@ -98,5 +94,4 @@
       </saveableForm.ConfirmationModal>
     </div>
   </div>
-
 </SaveableForm>

@@ -84,6 +84,10 @@ export default Factory.extend({
     dcpPackagetype: 717170012,
   }),
 
+  scopeOfWorkDraft: trait({
+    dcpPackagetype: 717170008,
+  }),
+
   deis: trait({
     dcpPackagetype: 717170013,
   }),

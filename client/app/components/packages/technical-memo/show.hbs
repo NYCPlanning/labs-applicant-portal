@@ -1,0 +1,71 @@
+<div class="grid-x grid-margin-x">
+  <div class="cell large-8">
+    <section class="form-section">
+      <h1 class="header-large">
+        Technical Memo Information Confirmation
+        <small
+          class="text-weight-normal"
+          data-test-package-dcpPackageversion
+        >
+          {{if @package.dcpPackageversion (concat '(V' @package.dcpPackageversion ')')}}
+        </small>
+      </h1>
+
+      <h2 class="no-margin"
+        data-test-project-dcpProjectname
+      >
+        {{@package.project.dcpProjectname}}
+        <small
+          class="text-weight-normal"
+          data-test-project-dcpName
+        >
+          {{if @package.project.dcpName (concat '(' @package.project.dcpName ')')}}
+        </small>
+      </h2>
+
+      <p
+        class="text-large text-dark-gray"
+        data-test-project-dcpBorough
+        data-test-package-statuscode
+      >
+        {{optionset 'bbl' 'boroughs' 'label' @package.project.dcpBorough}} |
+        {{optionset 'package' 'statuscode' 'label' @package.statuscode}}
+      </p>
+    </section>
+
+    <section class="form-section"
+      data-test-attached-documents
+    >
+      <h2 class="section-header">
+        <span id="attachments" class="section-anchor"></span>
+        Attached Documents
+      </h2>
+
+      <ul class="no-bullet">
+        {{#each @package.documents as |document idx|}}
+          <li class="ruled-adjacent tight">
+            <a
+              href={{concat (get-env-variable 'host') '/documents' document.serverRelativeUrl}}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-test-document-name={{idx}}
+            >
+              <strong>
+                {{document.name}}
+              </strong>
+            </a>
+            <small class="text-gray">
+              {{document.timeCreated}}
+            </small>
+          </li>
+        {{/each}}
+      </ul>
+    </section>
+  </div>
+
+  <div class="cell large-4 sticky-sidebar">
+    <Messages::Assistance class="large-margin-top" />
+  </div>
+</div>
+
+{{yield}}

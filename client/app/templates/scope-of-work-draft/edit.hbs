@@ -1,10 +1,11 @@
 <Ui::Breadcrumbs as |Crumb|>
   <Crumb @text="My Projects" @route='projects' />
   <Crumb @text={{@model.project.dcpProjectname}} @disabled={{true}} />
-  <Crumb @text="Filed EAS" @disabled={{true}} />
+  <Crumb @text="Draft Scope of Work" @disabled={{true}} />
+  <Crumb @text="Edit" @current={{true}} />
 </Ui::Breadcrumbs>
 
-<Packages::FiledEas::Show
+<Packages::ScopeOfWorkDraft::Edit
   @package={{@model}}
 />
 
