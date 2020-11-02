@@ -1212,7 +1212,7 @@
         </h2>
       {{#each
         (filter-by 'isDeleted' false @package.landuseForm.landuseGeographies)
-      as |landuseGeography landuseGeographyIndex|}}
+      as |landuseGeography|}}
 
         <Ui::Answer @beside={{true}} as |A|>
           <A.Prompt>
@@ -1414,7 +1414,7 @@
             <span id="zoning-text-amendment" class="section-anchor"></span>
             Zoning Text Amendment
           </h2>
-          {{#each (filter-by 'isDeleted' false @package.landuseForm.affectedZoningResolutions) as |affectedZoningResolution affectedZoningResolutionIndex|}}
+          {{#each (filter-by 'isDeleted' false @package.landuseForm.affectedZoningResolutions) as |affectedZoningResolution|}}
             <fieldset class="fieldset">
 
               <Ui::Legend>
@@ -1467,7 +1467,7 @@
             </A.Field>
           </Ui::Answer>
 
-          {{#each (filter-by 'isDeleted' false @package.landuseForm.zoningMapChanges) as |zoningMapChange zoningMapChangeIndex|}}
+          {{#each (filter-by 'isDeleted' false @package.landuseForm.zoningMapChanges) as |zoningMapChange|}}
             <fieldset class="fieldset">
 
               <Ui::Legend>
