@@ -11,7 +11,7 @@ export default class PackagesScopeOfWorkDraftEditComponent extends Component {
     try {
       await this.args.package.save();
     } catch (error) {
-      console.log('Save Draft SOW package error:', error);
+      console.log('Save Draft Scope of Work (DSOW) package error:', error);
     }
   }
 
