@@ -63,7 +63,7 @@ export class DocumentController {
     // from current and past revisions. When retrieving documents, we can then
     // only look up this one folder, instead of two separate folders (one for
     // previous revision documents and one for current revision documents).
-    const folderName = `${strippedPackageName}_${instanceId.toUpperCase()}`;
+    const folderName = `${strippedPackageName}_${instanceId.toUpperCase().replace(/-/g, '')}`;
 
     return this.documentService.uploadDocument('dcp_package',
       instanceId,
