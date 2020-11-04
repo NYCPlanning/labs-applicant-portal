@@ -70,7 +70,7 @@ export class CitypayService {
 
   // generates cookies by headless login to MS Applicant Portal
   private async stealCookies(retries = MAX_RETRIES) {
-    const browserPromise = puppeteer.launch();
+    const browserPromise = puppeteer.launch({ args: ['--no-sandbox'] });
 
     try {
       const browser = await browserPromise;
