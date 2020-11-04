@@ -1,0 +1,10 @@
+<@form.Section
+  @title="Attached Documents"
+  data-test-attached-documents
+>
+  <Packages::Attachments
+    @package={{@model}}
+    @fileManager={{@model.fileManager}}
+    data-test-section="attachments"
+  />
+</@form.Section>

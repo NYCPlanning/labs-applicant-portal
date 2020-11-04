@@ -3,6 +3,7 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
+import { NycidService } from '../contact/nycid/nycid.service';
 import { CrmService } from '../crm/crm.service';
 import { overwriteCodesWithLabels } from '../_utils/overwrite-codes-with-labels';
 
@@ -32,6 +33,7 @@ const DCP_PROJECTROLES = {
 export class ProjectsService {
   constructor(
     private readonly crmService: CrmService,
+    private readonly nycidService: NycidService,
   ) {}
 
   public async findManyByContactId(contactId: string) {
@@ -89,24 +91,10 @@ export class ProjectsService {
           dcp_dcp_project_dcp_projectapplicant_Project(
             $filter= statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
           ),
-          dcp_dcp_project_dcp_dcpprojectteam_project,
-          dcp_dcp_project_dcp_package_project(
-            $filter= 
-            (
-              dcp_visibility eq ${PACKAGE_VISIBILITY.APPLICANT_ONLY}
-              or dcp_visibility eq ${PACKAGE_VISIBILITY.GENERAL_PUBLIC}
-            )
-            and (
-              statuscode eq ${PACKAGE_STATUSCODE.PACKAGE_PREPARATION}
-              or statuscode eq ${PACKAGE_STATUSCODE.SUBMITTED}
-              or statuscode eq ${PACKAGE_STATUSCODE.UNDER_REVIEW}
-              or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_NO_REVISIONS_REQUIRED}
-              or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_REVISION_REQUIRED}
-            )
-          )
+          dcp_dcp_project_dcp_dcpprojectteam_project
       `);
 
-      const projectApplicants = await this.crmService.get('dcp_projectapplicants', `
+      const { records: projectApplicants } = await this.crmService.get('dcp_projectapplicants', `
         $filter=
           _dcp_project_value eq ${projectId}
           and statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
@@ -131,7 +119,42 @@ export class ProjectsService {
         &$orderby=dcp_name asc
       `);
 
-      const projectApplicantsWithContacts = projectApplicants.records.map(applicant => ({ ...applicant, contact: applicant.dcp_applicant_customer_contact }));
+      const { records: projectPackages } = await this.crmService.get('dcp_packages', `
+        $filter=
+          _dcp_project_value eq ${projectId}
+          and (
+            dcp_visibility eq ${PACKAGE_VISIBILITY.APPLICANT_ONLY}
+            or dcp_visibility eq ${PACKAGE_VISIBILITY.GENERAL_PUBLIC}
+          )
+          and (
+            statuscode eq ${PACKAGE_STATUSCODE.PACKAGE_PREPARATION}
+            or statuscode eq ${PACKAGE_STATUSCODE.SUBMITTED}
+            or statuscode eq ${PACKAGE_STATUSCODE.UNDER_REVIEW}
+            or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_NO_REVISIONS_REQUIRED}
+            or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_REVISION_REQUIRED}
+          )
+        &$expand=dcp_dcp_package_dcp_projectinvoice_package
+      `);
+
+      const projectApplicantsWithContacts = await Promise.all(projectApplicants.map(async applicant => {
+        const contact = applicant.dcp_applicant_customer_contact;
+        let is_nycid_email_registered;
+
+        // If there's already a nycid GUID, they've already logged in, so their e-mail is registered.
+        if (contact.dcp_nycid_guid) {
+          is_nycid_email_registered = true;
+        } else {
+          ({ is_nycid_email_registered } = await this.nycidService.isNycidEmailRegistered(contact.emailaddress1));
+        }
+
+        return {
+          ...applicant,
+          contact: {
+            ...contact,
+            is_nycid_email_registered,
+          },
+        }
+      }));
 
       const [ project ] = this.overwriteCodesWithLabels(records);
 
@@ -146,8 +169,13 @@ export class ProjectsService {
         }, HttpStatus.NOT_FOUND);
       }
 
-      const projectWithContacts = {
+      return {
         ...project,
+        packages: projectPackages.map(pkg => ({
+          ...pkg,
+          invoices: pkg.dcp_dcp_package_dcp_projectinvoice_package,
+        })),
+        projectApplicants: project['project-applicants'],
         'project-applicants': projectApplicantsWithContacts,
         'team-members': projectTeamMembers.map(member => ({
           dcp_dcpprojectteamid: member.dcp_dcpprojectteamid,
@@ -157,8 +185,6 @@ export class ProjectsService {
           phone: member.dcp_user.address1_telephone1,
         })),
       };
-
-      return projectWithContacts;
     } catch(e) {
       console.log(e);
 

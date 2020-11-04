@@ -1,8 +1,73 @@
 {{#let @form as |form|}}
   <form.Section @title="Attached Documents">
     <p>
-      Please attach the following required documents. (Additional materials that help to explain the proposed project may also be submitted.)
+      Land use applications consist of a land use application form and attachments
+      that clearly describe the proposed land use actions and any development that
+      may be facilitated by, or approved, as a part of the proposed actions.
     </p>
+    <p>
+      Applicants may consider using the
+      <Ui::ExternalLink
+        herf="https://applicantmaps.planning.nyc.gov/"
+      >
+        Applicant Maps Tool
+      </Ui::ExternalLink>
+      to produce some of the maps required as part of the land use applications.
+      The tool makes the production of required maps less time consuming to prepare
+      and eliminates the need for costly drafting or GIS software.
+    </p>
+    <p>
+      Note: Please be advised that all materials submitted to the
+      New York City Department of City Planning (DCP) in connection with the
+      application may be placed on the DCP website and used in DCP
+      presentations regarding the application. These materials may also be subject
+      to production by DCP pursuant to the Freedom of Information Law (FOIL)
+      in Article 6 of the Public Officers Law.
+    </p>
+    <p>
+      Applicants should also refer to the
+      <Ui::ExternalLink
+        href="https://www1.nyc.gov/site/planning/applicants/applicant-portal/step3-preparation-applications.page"
+      >
+        "Preparation of Land Use and Environmental Applications"
+      </Ui::ExternalLink> page of the DCP Website.
+    </p>
+
+    {{#let (intersect
+        (map-by "dcpActioncode" form.data.data.landuseActions)
+        (array 'PC' 'PQ' 'PS' 'PX')
+      ) as |attachmentListActions|}}
+      {{#if (gt attachmentListActions.length 0)}}
+        <p data-test-landuse-attachment-list>
+          For PC, PQ, PS, PX Actions, please contact the
+          Department of Citywide Administrative Services before
+          submitting application materials to DCP. The following is a list of
+          attachments needed for these actions:
+        </p>
+        <p>
+          <ol>
+            <li>Project description, which includes: </li>
+              <ul>
+                <li>Functions to be performed at the site; </li>
+                <li>Number of employees to be located at the site</li>
+                <li>Description of jobs/roles and work shifts of employees at the site</li>
+                <li>Type and number of facility related vehicles and parking/storage location</li>
+                <li>If applicable, reasons for moving or expansion</li>
+                <li>If applicable, process by which current occupancy of the site occurred </li>
+              </ul>
+            <li>Official Zoning Sectional maps(s) showing existing and proposed sites</li>
+            <li>Tax map(s) of proposed site</li>
+            <li>Project Area Photo(s) </li>
+            <li>Area Map</li>
+            <li>Site plan</li>
+            <li>Applicable pages of Citywide Statement of Needs</li>
+            <li>Fair share analyses (Required for PC, PS, PX) </li>
+            <li>204(g) Letter and Borough President response, if applicable</li>
+            <li>DCAS verification that no City-owned property is available (Required for PX)</li>
+          </ol>
+        </p>
+      {{/if}}
+    {{/let}}
 
     <Packages::Attachments
       @package={{@model.package}}

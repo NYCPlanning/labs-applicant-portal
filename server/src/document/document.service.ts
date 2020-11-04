@@ -200,6 +200,8 @@ async getParentSiteLocation() {
    * The `entityID` and `folderName` parameters can be acquired and constructed by making separate requests to the API.
    */
   async uploadDocument(entityName, entityID, folderName, fileName, base64File, overwriteExisting, headers) {
+    folderName = folderName.replace(/^\~|\#|\%|\&|\*|\{|\}|\\|\:|\<|\>|\?|\/|\||\"/g, '');
+
     let docLocation = await this.findDocumentLocation(entityID, folderName);
     let docLocationID = null;
 
@@ -285,8 +287,8 @@ async getParentSiteLocation() {
   // revision into this folder.
   async findPackageSharepointDocuments(packageName, id: string) {
     try {
-      const strippedPackageName = packageName.replace(/-/g, '').replace(/\s+/g, '').replace(/'+/g, '');
-      const folderIdentifier = `${strippedPackageName}_${id.toUpperCase()}`;
+      const strippedPackageName = packageName.replace(/-/g, '').replace(/\s+/g, '').replace(/'+/g, '').replace(/^\~|\#|\%|\&|\*|\{|\}|\\|\:|\<|\>|\?|\/|\||\"/g, '');
+      const folderIdentifier = `${strippedPackageName}_${id.toUpperCase().replace(/-/g, '')}`;
 
       const { value: documents } = await this.crmService.getSharepointFolderFiles(`dcp_package/${folderIdentifier}`);
 

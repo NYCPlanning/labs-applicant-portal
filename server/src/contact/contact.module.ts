@@ -11,7 +11,7 @@ import { NycidService } from './nycid/nycid.service';
     ConfigModule,
   ],
   providers: [ContactService, NycidService],
-  exports: [ContactService],
+  exports: [ContactService, NycidService],
   controllers: [ContactController],
 })
 export class ContactModule {}

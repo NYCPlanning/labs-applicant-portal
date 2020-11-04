@@ -1,0 +1,83 @@
+{{#let @form as |form|}}
+  {{#if (in-array
+    (map-by "dcpActioncode" form.data.data.landuseActions)
+    'ZM')
+  }}
+    <form.Section @title="Zoning Map Amendment">
+      {{#if form.errors.zoningMapChanges}}
+        {{#each form.errors.zoningMapChanges.validation as |message|}}
+          <div class="callout alert"
+            data-test-validation-message="has-zoningMapChanges">
+            {{message}}
+          </div>
+        {{/each}}
+      {{/if}}
+
+      <Ui::Question
+      as |dcpTotalzoningareatoberezonedQ|>
+        <dcpTotalzoningareatoberezonedQ.Label>
+          What is the total area of all Zoning Lots in the area to the be rezoned?
+        </dcpTotalzoningareatoberezonedQ.Label>
+        
+        {{!-- Todo: refactor to avoid double label for sake of PowerSelect --}}
+        <label data-test-dcpTotalzoningareatoberezoned-dropdown>
+          <PowerSelect
+            supportsDataTestProperties={{true}}
+            @selected={{form.data.dcpTotalzoningareatoberezoned}}
+            @placeholder="-- select --"
+            @options={{map-by 'code' (optionset 'landuseForm' 'dcpTotalzoningareatoberezoned' 'list')}}
+            @onChange={{fn (mut form.data.dcpTotalzoningareatoberezoned)}}
+          as |dcpTotalzoningareatoberezoned|>
+            {{optionset 'landuseForm' 'dcpTotalzoningareatoberezoned' 'label' dcpTotalzoningareatoberezoned}}
+          </PowerSelect>
+        </label>
+      </Ui::Question>
+
+      <p>
+        List all Zoning Map changes
+      </p>
+      <ul class="no-bullet">
+        {{#each
+          (filter-by 'isDeleted' false @form.data.zoningMapChanges)
+        as |zoningMapChange zoningMapChangeIndex|}}
+          <li class="scale-fade-in">
+            <form.SaveableForm
+              @model={{zoningMapChange}}
+              @validators={{array
+                @validations.SaveableZoningMapChangeValidations
+                @validations.SubmittableZoningMapChangeValidations
+              }}
+            as |zoningMapChangeForm|>
+              <Packages::LanduseForm::ZoningMapAmendmentFieldset
+                @form={{zoningMapChangeForm}}
+                @removeZoningMapChange={{fn
+                  @removeZoningMapChange
+                  zoningMapChange
+                  @form.data}}
+                data-test-zoning-map-change-fieldset={{zoningMapChangeIndex}}
+              />
+            </form.SaveableForm>
+          </li>
+        {{/each}}
+      </ul>
+
+      <div class="fieldset-adder">
+        <h5 class="small-margin-bottom">
+          Add a Zoning Map Change:
+        </h5>
+        <div class="grid-x">
+          <div class="cell large-6 small-padding-right">
+            <button
+              class="button expanded secondary no-margin"
+              type="button"
+              {{on "click" (fn @addZoningMapChange @form.data) }}
+              data-test-add-zoning-map-change-button
+            >
+              <strong>Add Zoning Map Change</strong>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form.Section>
+  {{/if}}
+{{/let}}

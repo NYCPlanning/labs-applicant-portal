@@ -2,8 +2,7 @@
   <Ui::Question
     class="fieldset relative"
     ...attributes
-    as |Q|
-  >
+  as |Q|>
     <Q.Legend data-test-related-action-title>
       Related Action
     </Q.Legend>
@@ -11,59 +10,85 @@
     <Ui::Question
       class="no-margin-top"
       data-test-action-completed-radio-group
-      as |Q|
-    >
-
-    <Q.Legend class="show-for-sr">
-      Is the action completed?
-    </Q.Legend>
+    as |dcpIscompletedactionQ|>
+      <dcpIscompletedactionQ.Label>
+        Is the action completed?
+      </dcpIscompletedactionQ.Label>
 
       <form.Field
-        @attribute="dcpDevelopmentsite"
-        @type="radio"
-        as |RadioButton|
-      >
-        <RadioButton
-          @targetValue={{true}}
-          data-test-action-completed="true"
-        >
-          Yes
-        </RadioButton>
-        <RadioButton
-          @targetValue={{false}}
-          data-test-action-completed="false"
-        >
-          No
-        </RadioButton>
+        @attribute="dcpIscompletedaction"
+        @type="radio-group"
+      as |DcpIscompletedactionRadioGroup|>
+        <DcpIscompletedactionRadioGroup
+          @options={{optionset 'relatedAction' 'dcpIscompletedaction' 'list'}}
+        />
       </form.Field>
 
     </Ui::Question>
 
+    <Ui::Question
+    as |dcpReferenceapplicationnoQ|>
+      <dcpReferenceapplicationnoQ.Label>
+        Reference/Applicant Number (if applicable)
+      </dcpReferenceapplicationnoQ.Label>
 
-    <label>
-      Reference/Applicant Number (if applicable)
-      <form.Field @attribute="dcpReferenceapplicationno" />
-    </label>
+      <form.Field
+        @attribute="dcpReferenceapplicationno"
+        @maxlength="10"
+        @showCounter={{true}}
+      />
+    </Ui::Question>
 
-    <label>
-      Description
-      <form.Field @attribute="dcpApplicationdescription" />
-    </label>
+    <Ui::Question
+    as |dcpApplicationdescriptionQ|>
+      <dcpApplicationdescriptionQ.Label>
+        Description
+      </dcpApplicationdescriptionQ.Label>
 
-    <label>
-      Disposition or Status
-      <form.Field @attribute="dcpDispositionorstatus" />
-    </label>
+      <form.Field
+        @attribute="dcpApplicationdescription"
+        @maxlength="250"
+        @showCounter={{true}}
+      />
+    </Ui::Question>
 
-    <label>
-      Calendar Number
-      <form.Field @attribute="dcpCalendarnumbercalendarnumber" />
-    </label>
+    <Ui::Question
+    as |dcpDispositionorstatusQ|>
+      <dcpDispositionorstatusQ.Label>
+        Disposition or Status
+      </dcpDispositionorstatusQ.Label>
 
-    <label>
-      Date
-      <form.Field @attribute="dcpApplicationdate" />
-    </label>
+      <form.Field
+        @attribute="dcpDispositionorstatus"
+        @maxlength="100"
+        @showCounter={{true}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpCalendarnumbercalendarnumberQ|>
+      <dcpCalendarnumbercalendarnumberQ.Label>
+        Calendar Number
+      </dcpCalendarnumbercalendarnumberQ.Label>
+
+      <form.Field
+        @attribute="dcpCalendarnumbercalendarnumber"
+        @maxlength="100"
+        @showCounter={{true}}
+      />
+    </Ui::Question>
+
+    <Ui::Question
+    as |dcpApplicationdateQ|>
+      <dcpApplicationdateQ.Label>
+        Date
+      </dcpApplicationdateQ.Label>
+
+      <form.Field
+        @attribute="dcpApplicationdate"
+        type="date"
+      />
+    </Ui::Question>
 
     <button
       type="button"
@@ -74,6 +99,5 @@
       Remove Related Action
       <FaIcon @icon="times" @prefix="fas" @fixedWidth={{true}} />
     </button>
-
   </Ui::Question>
 {{/let}}

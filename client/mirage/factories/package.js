@@ -7,6 +7,8 @@ import {
 export default Factory.extend({
   dcpStatusdate: new Date('December 17, 1995 03:24:00'),
 
+  dcpPackagenotes: 'Some instructions from Planners',
+
   dcpPackageversion(i) {
     const SAMPLE_VERSIONS = [
       1,
@@ -72,6 +74,30 @@ export default Factory.extend({
         });
       }
     },
+  }),
+
+  draftEas: trait({
+    dcpPackagetype: 717170002,
+  }),
+
+  filedEas: trait({
+    dcpPackagetype: 717170012,
+  }),
+
+  scopeOfWorkDraft: trait({
+    dcpPackagetype: 717170008,
+  }),
+
+  deis: trait({
+    dcpPackagetype: 717170013,
+  }),
+
+  feis: trait({
+    dcpPackagetype: 717170003,
+  }),
+
+  technicalMemo: trait({
+    dcpPackagetype: 717170007,
   }),
 
   withLandUseActions: trait({

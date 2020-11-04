@@ -10,7 +10,7 @@ import {
 import { setupApplicationTest } from 'ember-qunit';
 import window, { setupWindowMock } from 'ember-window-mock';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { currentSession } from 'ember-simple-auth/test-support';
+import { currentSession, authenticateSession } from 'ember-simple-auth/test-support';
 import { Response } from 'ember-cli-mirage';
 
 const DUMMY_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
@@ -44,7 +44,7 @@ module('Acceptance | user can login', function(hooks) {
     await focus('[data-test-auth="menu-button"]');
     await click('[data-test-auth="logout"]');
 
-    assert.equal(currentURL(), '/logout');
+    assert.equal(currentURL(), '/logout?header=true');
     assert.equal(currentSession().isAuthenticated, false);
   });
 
@@ -112,5 +112,18 @@ module('Acceptance | user can login', function(hooks) {
     }
 
     assert.equal(currentRouteName(), 'auth.validate');
+  });
+
+  test('Redirect an unauthenticated user', async function (assert) {
+    this.server.get('/projects', () => new Response(403, { some: 'header' }, {
+      errors: [{
+        status: 403,
+      }],
+    }));
+
+    await authenticateSession();
+    await visit('/projects');
+
+    assert.equal(currentRouteName(), 'index');
   });
 });

@@ -1,0 +1,96 @@
+<SaveableForm
+  @model={{@package}}
+  @validators={{array (hash) (hash)}}
+  as |saveableForm|
+>
+
+  <div class="grid-x grid-margin-x">
+    <div class="cell large-8">
+
+      <section class="form-section">
+        <h1 class="header-large">
+          Final Environmental Impact Statement (FEIS)
+          <small class="text-weight-normal"
+            data-test-package-dcpPackageversion
+          >
+            {{if @package.dcpPackageversion (concat '(V' @package.dcpPackageversion ')')}}
+          </small>
+        </h1>
+
+        <h2 class="no-margin"
+          data-test-project-dcpProjectname
+        >
+          {{@package.project.dcpProjectname}}
+          <small class="text-weight-normal"
+            data-test-project-dcpName
+          >
+            {{if @package.project.dcpName (concat '(' @package.project.dcpName ')')}}
+          </small>
+        </h2>
+
+         <p class="text-large text-dark-gray"
+          data-test-project-dcpBorough
+          data-test-package-statuscode
+        >
+          {{optionset 'bbl' 'boroughs' 'label' @package.project.dcpBorough}} |
+          {{optionset 'package' 'statuscode' 'label' @package.statuscode}}
+        </p>
+      </section>
+
+      {{#if @package.dcpPackagenotes}}
+        <saveableForm.Section @title="Package Notes from City Planning Staff"
+          data-test-package-notes
+        >
+          {{@package.dcpPackagenotes}}
+        </saveableForm.Section>
+      {{/if}}
+      
+      <Packages::Feis::AttachedDocuments
+        @form={{saveableForm}}
+        @model={{@package}}
+      />
+    </div>
+
+    <div class="cell large-4 sticky-sidebar">
+      <saveableForm.PageNav>
+        <saveableForm.SaveButton 
+        @isEnabled={{or @package.isDirty saveableForm.isSaveable}}
+        @onClick={{this.savePackage}} 
+        data-test-save-button 
+      />
+
+      <saveableForm.SubmitButton
+          @isEnabled={{saveableForm.isSubmittable}}
+          class="secondary"
+          data-test-submit-button
+        />
+      </saveableForm.PageNav>
+
+      <saveableForm.ConfirmationModal
+        @action={{component saveableForm.SubmitButton
+          onClick=this.submitPackage
+          isEnabled=saveableForm.isSubmittable
+          class="no-margin"
+        }}
+        @footer={{component 'packages/feis/feis-error'
+          package=@package
+        }}
+        @continueButtonTitle="Continue Editing"
+        data-test-confirm-submit-button={{true}}
+      >
+        <h6>Confirm Final Environmental Impact Statement (FEIS) Submission</h6>
+
+        <p class="header-large medium-margin-top small-margin-bottom">
+          Are you sure?
+        </p>
+
+        <p>
+          Before submitting, ensure that necessary attachments have been uploaded.
+          If NYC Planning does not receive enough accurate information,
+          the Lead Planner will notify you and request that this form be resubmitted
+          with necessary materials, corrections, or clarifications.
+        </p>
+      </saveableForm.ConfirmationModal>
+    </div>
+  </div>
+</SaveableForm>

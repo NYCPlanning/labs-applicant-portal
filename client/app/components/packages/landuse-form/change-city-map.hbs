@@ -347,21 +347,38 @@
 
         </Ui::Question>
 
-        <Ui::Question as |Q|>
-          <Q.Legend>
-            Is the only change (requested for the City Map) the elimination of a mapped but unimproved street?
-          </Q.Legend>
+      <Ui::Question as |dcpOnlychangetheeliminationofamappedbutunimpQ|>
+        <dcpOnlychangetheeliminationofamappedbutunimpQ.Legend>
+          Is the only change (requested for the City Map) the elimination of a mapped but unimproved street?
+        </dcpOnlychangetheeliminationofamappedbutunimpQ.Legend>
 
-          <form.Field
-            @attribute="dcpOnlychangetheeliminationofamappedbutunimp"
-            @type="radio-group"
-            as |RadioGroup|
-          >
-            <RadioGroup
-              @options={{optionset 'landuseForm' 'dcpOnlychangetheeliminationofamappedbutunimp' 'list'}}
-            />
-          </form.Field>
-        </Ui::Question>
+        <form.Field @attribute="dcpOnlychangetheeliminationofamappedbutunimp" @type="radio-group" as
+          |DcpOnlychangetheeliminationofamappedbutunimpRadioGroup|>
+          <DcpOnlychangetheeliminationofamappedbutunimpRadioGroup
+            @options={{optionset 'landuseForm' 'dcpOnlychangetheeliminationofamappedbutunimp' 'list'}} as
+            |dcpOnlychangetheeliminationofamappedbutunimp|>
+            {{#if (eq
+                dcpOnlychangetheeliminationofamappedbutunimp
+                (optionset 'landuseForm' 'dcpOnlychangetheeliminationofamappedbutunimp' 'code' 'Yes')
+              )}}
+            <Ui::Question as |dcpYesmappedbutunimprovedstreetelimatedQ|>
+              <dcpYesmappedbutunimprovedstreetelimatedQ.Label>
+                Is it being eliminated from the property of an owner-occupied, one- or two-family residence?
+              </dcpYesmappedbutunimprovedstreetelimatedQ.Label>
+
+              <form.Field @attribute="dcpYesmappedbutunimprovedstreetelimated" @type="radio-group" as
+                |DcpYesmappedbutunimprovedstreetelimatedRadioGroup|>
+                <DcpYesmappedbutunimprovedstreetelimatedRadioGroup
+                  @options={{optionset 'landuseForm' 'dcpYesmappedbutunimprovedstreetelimated' 'list'}}>
+                </DcpYesmappedbutunimprovedstreetelimatedRadioGroup>
+              </form.Field>
+            </Ui::Question>
+
+
+            {{/if}}
+          </DcpOnlychangetheeliminationofamappedbutunimpRadioGroup>
+        </form.Field>
+      </Ui::Question>
     </form.Section>
   {{/let}}
 {{/if}}

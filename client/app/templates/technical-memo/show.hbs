@@ -1,0 +1,11 @@
+<Ui::Breadcrumbs as |Crumb|>
+  <Crumb @text="My Projects" @route='projects' />
+  <Crumb @text={{@model.project.dcpProjectname}} @disabled={{true}} />
+  <Crumb @text="Technical Memo" @disabled={{true}} />
+</Ui::Breadcrumbs>
+
+<Packages::TechnicalMemo::Show
+  @package={{@model}}
+/>
+
+{{outlet}}

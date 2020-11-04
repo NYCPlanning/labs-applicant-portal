@@ -57,11 +57,108 @@ export default class ProjectModel extends Model {
   }
 
   get landusePackages() {
+    const landusePackages = [
+      ...this.filedLandusePackages,
+      ...this.draftLandusePackages,
+    ];
+
+    return landusePackages;
+  }
+
+  get draftLandusePackages() {
     const landusePackages = this.packages
       .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'DRAFT_LU_PACKAGE']))
       .sortBy('dcpPackageversion')
       .reverse();
 
     return landusePackages;
+  }
+
+  get filedLandusePackages() {
+    const landusePackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'FILED_LU_PACKAGE']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    return landusePackages;
+  }
+
+  get easPackages() {
+    const easPackages = [
+      ...this.filedEasPackages,
+      ...this.draftEasPackages,
+    ];
+
+    return easPackages;
+  }
+
+  get draftEasPackages() {
+    const easPackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'DRAFT_EAS']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    return easPackages;
+  }
+
+  get filedEasPackages() {
+    const easPackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'FILED_EAS']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    return easPackages;
+  }
+
+  get scopeOfWorkDraftPackages() {
+    const scopeOfWorkDraftPackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'DRAFT_SCOPE_OF_WORK']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    return scopeOfWorkDraftPackages;
+  }
+
+  get eisPackages() {
+    const eisPackages = [
+      ...this.feisPackages,
+      ...this.deisPackages,
+    ];
+
+    return eisPackages;
+  }
+
+  get deisPackages() {
+    const eisPackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'PDEIS']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    return eisPackages;
+  }
+
+  get feisPackages() {
+    const eisPackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'EIS']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    return eisPackages;
+  }
+
+  get technicalMemoPackages() {
+    const technicalMemoPackages = this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'TECHNICAL_MEMO']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+
+    return technicalMemoPackages;
+  }
+
+  get workingPackages() {
+    return this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'WORKING_PACKAGE']))
+      .sortBy('dcpPackageversion')
+      .reverse();
   }
 }

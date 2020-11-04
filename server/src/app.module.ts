@@ -8,14 +8,18 @@ import { ConfigModule } from './config/config.module';
 import { ContactModule } from './contact/contact.module';
 import { CrmModule } from './crm/crm.module';
 import { ProjectsModule } from './projects/projects.module';
+import { AccountsModule } from './accounts/accounts.module';
 import { PackagesModule } from './packages/packages.module';
 import { DocumentModule } from './document/document.module';
 import { CitypayService } from './citypay/citypay.service';
 import { CitypayModule } from './citypay/citypay.module';
+import { ZoningResolutionsModule } from './zoning-resolutions/zoning-resolutions.module';
+import { InvoicesModule } from './invoices/invoices.module';
 
 @Module({
   imports: [
     AuthModule,
+    AccountsModule,
     ConfigModule,
     ContactModule,
     CrmModule,
@@ -23,6 +27,8 @@ import { CitypayModule } from './citypay/citypay.module';
     PackagesModule,
     DocumentModule,
     CitypayModule,
+    ZoningResolutionsModule,
+    InvoicesModule,
   ],
   controllers: [AppController],
   providers: [CitypayService],

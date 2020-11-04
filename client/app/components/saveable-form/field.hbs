@@ -5,6 +5,7 @@
     data=@data
     error=@error
     attribute=@attribute
+    showCounter=@showCounter
   )) as |CurriedFieldComponent|
 }}
   {{#if hasBlock}}
@@ -16,6 +17,7 @@
     <CurriedFieldComponent
       data-test-input={{@attribute}}
       @maxlength={{@maxlength}}
+      @showCounter={{@showCounter}}
       ...attributes
     />
   {{/if}}

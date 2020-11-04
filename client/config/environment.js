@@ -79,7 +79,7 @@ function getHost(environment) {
 }
 
 function getOAuthDomain(environment) {
-  const { HOST } = process.env;
+  const { HOST, NYCID_DOMAIN } = process.env;
 
   // plain local development, no local backing server
   if (environment === 'development' && !HOST) {
@@ -92,7 +92,7 @@ function getOAuthDomain(environment) {
   }
 
   if (environment === 'production') {
-    return 'https://www1.nyc.gov';
+    return NYCID_DOMAIN || 'https://www1.nyc.gov';
   }
 
   if (environment === 'test') {

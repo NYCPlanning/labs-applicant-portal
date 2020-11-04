@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { CrmService } from '../../crm/crm.service';
 import { LANDUSE_FORM_ATTRS } from './landuse-form.attrs';
+import { LANDUSE_ACTION_ATTRS } from './landuse-actions/landuse-actions.attrs';
 
 const ACTIVE_STATECODE = 0;
 
@@ -21,8 +22,7 @@ export class LanduseFormService {
         dcp_dcp_applicantinformation_dcp_landuse,
         dcp_dcp_applicantrepinformation_dcp_landuse,
         dcp_dcp_projectbbl_dcp_landuse($filter=statecode eq ${ACTIVE_STATECODE}),
-        dcp_dcp_landuse_dcp_relatedactions,
-        dcp_dcp_landuse_dcp_landuseaction
+        dcp_dcp_landuse_dcp_relatedactions
     `);
 
     // We make a second request to accommodate additional hasMany expands.
@@ -31,8 +31,22 @@ export class LanduseFormService {
       $filter=
         dcp_landuseid eq ${id}
       &$expand=
-        dcp_dcp_landuse_dcp_sitedatahform_landuseform
+        dcp_dcp_landuse_dcp_sitedatahform_landuseform($filter=statecode eq ${ACTIVE_STATECODE}),
+        dcp_dcp_landuse_dcp_landusegeography_landuseform,
+        dcp_leadagency,
+        dcp_dcp_landuse_dcp_affectedzoningresolution_Landuseform,
+        dcp_dcp_landuse_dcp_zoningmapchanges_LandUseForm,
     `);
+
+    const { records: landuseActionsWithZr } = await this.crmService.get(`dcp_landuseactions`, `
+      $select=${LANDUSE_ACTION_ATTRS.join(',')}
+      &$filter=
+        _dcp_landuseid_value eq ${id}
+      &$expand=
+        dcp_zoningresolutionsectionactionispursuantto
+    `);
+
+    landuseForm.landuseActions = landuseActionsWithZr;
 
     return {
       ...landuseForm,

@@ -63,7 +63,7 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     // within the pas-form/edit Component submit() task
     await waitFor('[data-test-show="dcpRevisedprojectname"]');
 
-    assert.equal(currentURL(), '/pas-form/1');
+    assert.equal(currentURL(), '/pas-form/1?header=true');
   });
 
   test('Save button is enabled when file marked for deletion', async function (assert) {
