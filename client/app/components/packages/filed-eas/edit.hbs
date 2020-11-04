@@ -1,6 +1,6 @@
 <SaveableForm
   @model={{@package}}
-  @validators={{array (hash) (hash)}}
+  @validators={{array (hash) this.validations.SubmittablePackageFormValidations}}
   as |saveableForm|
 >
 
