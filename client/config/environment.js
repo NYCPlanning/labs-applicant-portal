@@ -92,8 +92,6 @@ function getOAuthDomain(environment) {
   }
 
   if (environment === 'production') {
-    // prefer the environment variable.
-    // "staging" and "develop" deploys need a different non-production form of this.
     return NYCID_DOMAIN || 'https://www1.nyc.gov';
   }
 
