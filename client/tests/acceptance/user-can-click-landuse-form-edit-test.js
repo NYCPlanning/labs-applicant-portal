@@ -12,13 +12,14 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { selectChoose } from 'ember-power-select/test-support';
+import exceedMaximum from '../helpers/exceed-maximum-characters';
 
 const saveForm = async () => {
   await click('[data-test-save-button]');
   await settled();
 };
 
-module('Acceptance | user can click landuse form edit', function(hooks) {
+module('Acceptance | user can click landuse form edit', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
@@ -28,7 +29,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     });
   });
 
-  test('User can edit, save and submit landuse form', async function(assert) {
+  test('User can edit, save and submit landuse form', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
     });
@@ -54,10 +55,10 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
 
     await waitFor('[data-test-show="dcpProjectname"]');
 
-    assert.equal(currentURL(), '/landuse-form/1');
+    assert.equal(currentURL(), '/landuse-form/1?header=true');
   });
 
-  test('User can edit Site Information on the landuse form', async function(assert) {
+  test('User can edit Site Information on the landuse form', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
     });
@@ -83,7 +84,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
 
-  test('User can reveal Project Area conditional questions', async function(assert) {
+  test('User can reveal Project Area conditional questions', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
     });
@@ -156,7 +157,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
 
-  test('User resets values of all radio descendants when changing radio answers in Project Area', async function(assert) {
+  test('User resets values of all radio descendants when changing radio answers in Project Area', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
     });
@@ -202,7 +203,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
 
-  test('User is required to fill out Proposed Development Site conditional fields', async function(assert) {
+  test('User is required to fill out Proposed Development Site conditional fields', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
     });
@@ -257,7 +258,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.dom('[data-test-validation-message="dcpSitedataidentifylandmark"]').doesNotExist();
   });
 
-  test('User can add an applicant on the landuse form', async function(assert) {
+  test('User can add an applicant on the landuse form', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
     });
@@ -275,7 +276,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
 
-  test('User can add and a related action on the landuse form', async function(assert) {
+  test('User can add and a related action on the landuse form', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
     });
@@ -290,7 +291,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
 
     // add and fill out fields for related action
     await click('[data-test-add-related-action-button]');
-    await click('[data-test-action-completed="true"]');
+    await click('[data-test-radio="dcpIscompletedaction"][data-test-radio-option="Yes"]');
     await fillIn('[data-test-input="dcpReferenceapplicationno"]', '12345678');
     await fillIn('[data-test-input="dcpApplicationdescription"]', 'applicant description');
     await fillIn('[data-test-input="dcpDispositionorstatus"]', 'disposition or status');
@@ -302,7 +303,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.equal(this.server.db.relatedActions.firstObject.dcpReferenceapplicationno, '12345678');
   });
 
-  test('User can fill out and save first part of Housing Plans', async function(assert) {
+  test('User can fill out and save Housing Plans section', async function (assert) {
     // Create a land use form with housing-related actions
     this.server.create('project', {
       packages: [
@@ -339,9 +340,39 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
 
     assert.dom('[data-test-radio="dcpMannerofdisposition"]').exists();
     assert.dom('[data-test-radio="dcpRestrictandcondition"]').exists();
+
+    assert.dom('[data-test-radio="dcpFrom"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpTo"]').doesNotExist();
+
+    await click('[data-test-radio="dcpMannerofdisposition"][data-test-radio-option="Direct"]');
+
+    assert.dom('[data-test-input="dcpFrom"]').exists();
+    assert.dom('[data-test-input="dcpTo"]').exists();
+
+    await fillIn('[data-test-input="dcpFrom"]', exceedMaximum(100, 'String'));
+
+    assert.dom('[data-test-validation-message="dcpFrom"]').exists();
+
+    await fillIn('[data-test-input="dcpFrom"]', 'Some text');
+
+    assert.dom('[data-test-validation-message="dcpFrom"]').doesNotExist();
+
+    await fillIn('[data-test-input="dcpTo"]', exceedMaximum(100, 'String'));
+
+    assert.dom('[data-test-validation-message="dcpTo"]').exists();
+
+    await fillIn('[data-test-input="dcpTo"]', 'Some text');
+
+    assert.dom('[data-test-validation-message="dcpTo"]').doesNotExist();
+
+    await click('[data-test-radio="dcpMannerofdisposition"][data-test-radio-option="General"]');
+    await click('[data-test-radio="dcpMannerofdisposition"][data-test-radio-option="Direct"]');
+
+    assert.dom('[data-test-input="dcpFrom"]').hasNoValue();
+    assert.dom('[data-test-input="dcpTo"]').hasNoValue();
   });
 
-  test('Housing sections only appear if Project contains housing-related Land Use Actions', async function(assert) {
+  test('Housing sections only appear if Project contains housing-related Land Use Actions', async function (assert) {
     // The Package Factory's landuseForm trait creates a Land Use Form
     // with only the ZC and ZA Land Use Actions, which in the list of
     // housing-related actions
@@ -380,7 +411,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.dom('[data-test-section="housing-plans"]').exists();
   });
 
-  test('user can remove applicants on landuse form', async function(assert) {
+  test('user can remove applicants on landuse form', async function (assert) {
     const project = this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
     });
@@ -403,7 +434,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.dom('[data-test-applicant-fieldset="0"]').doesNotExist();
   });
 
-  test('user can remove related actions on landuse form', async function(assert) {
+  test('user can remove related actions on landuse form', async function (assert) {
     const project = this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
     });
@@ -426,7 +457,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.dom('[data-test-related-action-fieldset="0"]').doesNotExist();
   });
 
-  test('User can update the primary contact information on the landuse form', async function(assert) {
+  test('User can update the primary contact information on the landuse form', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
     });
@@ -453,7 +484,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
 
-  test('User can update the project name on the landuse form', async function(assert) {
+  test('User can update the project name on the landuse form', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
     });
@@ -476,7 +507,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
 
-  test('User can update the environmental review information on the landuse form', async function(assert) {
+  test('User can update the environmental review information on the landuse form', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
     });
@@ -503,7 +534,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
 
-  test('User only sees last questions under Project Area, Proposed Development Site, Project Tax Lots when project applies to partial area', async function(assert) {
+  test('User only sees last questions under Project Area, Proposed Development Site, Project Tax Lots when project applies to partial area', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
     });
@@ -546,7 +577,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.dom('[data-test-input="dcpSitedatarenewalarea"]').exists();
   });
 
-  test('User can update proposed actions section', async function(assert) {
+  test('User can update proposed actions section', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
     });
@@ -563,15 +594,12 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     await click('[data-test-checkbox="dcpOwnersubjectproperty"]');
     await click('[data-test-checkbox="dcpLeesseesubjectproperty"]');
 
-    await click('[data-test-dcpotherparties="true"]');
-
     await click('[data-test-save-button]');
 
     assert.equal(this.server.db.landuseForms.firstObject.dcpOwnersubjectproperty, true);
     assert.equal(this.server.db.landuseForms.firstObject.dcpLeesseesubjectproperty, true);
     assert.equal(this.server.db.landuseForms.firstObject.dcpIsother, undefined);
     assert.equal(this.server.db.landuseForms.firstObject.dcpLeaseorbuy, undefined);
-    assert.equal(this.server.db.landuseForms.firstObject.dcpOtherparties, true);
 
     // filling out the proposed actions section
     await click('[data-test-radio="dcpLegalinstrument"][data-test-radio-option="Yes"]');
@@ -588,10 +616,16 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.equal(this.server.db.landuseActions[0].dcpApplicantispublicagencyactions, true);
     assert.equal(this.server.db.landuseActions[1].dcpApplicantispublicagencyactions, false);
 
+    assert.equal(this.server.db.landuseForms.firstObject.dcpLegalinstrument, 717170000);
+    assert.equal(this.server.db.landuseActions[0].dcpPreviouslyapprovedactioncode, 717170016);
+    assert.equal(this.server.db.landuseActions[1].dcpPreviouslyapprovedactioncode, 717170013);
+    assert.equal(this.server.db.landuseActions[0].dcpApplicantispublicagencyactions, true);
+    assert.equal(this.server.db.landuseActions[1].dcpApplicantispublicagencyactions, false);
+
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
 
-  test('User can add, fill out, save and remove Subject Sites subsections', async function(assert) {
+  test('User can add, fill out, save and remove Subject Sites subsections', async function (assert) {
     // Create a LU form w housing-related actions
     this.server.create('project', {
       packages: [
@@ -746,7 +780,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.dom('[data-test-bbl-title="1000120001"]').doesNotExist();
   });
 
-  test('User can fill out Public Facilities section', async function(assert) {
+  test('User can fill out Public Facilities section', async function (assert) {
     // Create a LU form w public-facilities-related actions
     this.server.create('project', {
       packages: [
@@ -773,30 +807,30 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     await click('[data-test-checkbox="dcpSiteselectionopt"]');
     await click('[data-test-radio="dcpIndicatetypeoffacility"][data-test-radio-option="Local/Neighborhood"]');
 
-    assert.dom('[data-test-input="dcpTextexistingfacility"]').doesNotExist();
-    assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"]').doesNotExist();
+    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"]').exists();
 
     await click('[data-test-radio="dcpExistingfacilityproposedtoremainopt"][data-test-radio-option="Yes"]');
 
-    assert.dom('[data-test-input="dcpTextexistingfacility"]').exists();
-    assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"]').doesNotExist();
+    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').exists();
+    assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"]').exists();
 
-    await fillIn('[data-test-input="dcpTextexistingfacility"]', 'A while.');
+    await fillIn('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]', 'A while.');
 
     await click('[data-test-radio="dcpExistingfacilityproposedtoremainopt"][data-test-radio-option="No"]');
 
-    assert.dom('[data-test-input="dcpTextexistingfacility"]').doesNotExist();
+    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').doesNotExist();
 
     assert.dom('[data-test-input="dcpCurrentfacilitylocation"]').doesNotExist();
 
     await click('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"][data-test-radio-option="Yes"]');
 
-    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').doesNotExist();
+    assert.dom('[data-test-input="dcpTextexistingfacility"]').doesNotExist();
     await fillIn('[data-test-input="dcpCurrentfacilitylocation"]', 'Vibrant streets');
 
     await click('[data-test-radio="dcpExistingfacilityproposedtoremainandexpand"][data-test-radio-option="Yes"]');
 
-    await fillIn('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]', 'More than a while.');
+    await fillIn('[data-test-input="dcpTextexistingfacility"]', 'More than a while.');
 
     await click('[data-test-radio="dcpNewfacilityopt"][data-test-radio-option="Yes"]');
     await click('[data-test-radio="dcpIsprojectlistedinstatementofneedsopt"][data-test-radio-option="Yes"]');
@@ -811,7 +845,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.ok(true);
   });
 
-  test('Nested (i.e. Cascading, descendant) questions in Public Facilities reset when parent question values change', async function(assert) {
+  test('Nested (i.e. Cascading, descendant) questions in Public Facilities reset when parent question values change', async function (assert) {
     // Create a LU form w public-facilities-related actions
     this.server.create('project', {
       packages: [
@@ -836,9 +870,9 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     // Test clearing dependents of dcpExistingfacilityproposedtoremainopt
     await click('[data-test-radio="dcpExistingfacilityproposedtoremainopt"][data-test-radio-option="Yes"]');
 
-    await fillIn('[data-test-input="dcpTextexistingfacility"]', 'A while.');
+    await fillIn('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]', 'A while.');
 
-    assert.dom('[data-test-input="dcpTextexistingfacility"]').hasValue('A while.');
+    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').hasValue('A while.');
 
     await click('[data-test-radio="dcpExistingfacilityproposedtoremainopt"][data-test-radio-option="No"]');
 
@@ -852,28 +886,29 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
 
     await click('[data-test-radio="dcpExistingfacilityproposedtoremainopt"][data-test-radio-option="Yes"]');
 
-    assert.dom('[data-test-input="dcpTextexistingfacility"]').hasNoValue();
+    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').hasNoValue();
 
     await click('[data-test-radio="dcpExistingfacilityproposedtoremainopt"][data-test-radio-option="No"]');
 
-    assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"][data-test-radio-option="Yes"]').hasAria('checked', 'false');
-    assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"][data-test-radio-option="No"]').hasAria('checked', 'false');
+    // Removing these tests as changes to other variables should not reset this field
+    // assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"][data-test-radio-option="Yes"]').hasAria('checked', 'false');
+    // assert.dom('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"][data-test-radio-option="No"]').hasAria('checked', 'false');
 
-    await click('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"][data-test-radio-option="Yes"]');
-    assert.dom('[data-test-input="dcpCurrentfacilitylocation"]').hasNoValue();
+    // await click('[data-test-radio="dcpExistingfacilityreplacementinanewlocation"][data-test-radio-option="Yes"]');
+    // assert.dom('[data-test-input="dcpCurrentfacilitylocation"]').hasNoValue();
 
     // Test clearing dependents of dcpExistingfacilityproposedtoremainandexpand
-    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').doesNotExist();
+    assert.dom('[data-test-input="dcpTextexistingfacility"]').doesNotExist();
 
     await click('[data-test-radio="dcpExistingfacilityproposedtoremainandexpand"][data-test-radio-option="Yes"]');
 
-    await fillIn('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]', 'Many decades.');
-    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').hasValue('Many decades.');
+    await fillIn('[data-test-input="dcpTextexistingfacility"]', 'Many decades.');
+    assert.dom('[data-test-input="dcpTextexistingfacility"]').hasValue('Many decades.');
 
     await click('[data-test-radio="dcpExistingfacilityproposedtoremainandexpand"][data-test-radio-option="No"]');
     await click('[data-test-radio="dcpExistingfacilityproposedtoremainandexpand"][data-test-radio-option="Yes"]');
 
-    assert.dom('[data-test-input="dcpHowlonghasexistingfacilitybeenatthislocat"]').hasNoValue();
+    assert.dom('[data-test-input="dcpTextexistingfacility"]').hasNoValue();
 
     // Test clearing dependents of dcpIsprojectlistedinstatementofneedsopt
     assert.dom('[data-test-input="dcpIndicatefiscalyears"]').doesNotExist();
@@ -891,7 +926,7 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     await visit('/landuse-form/1/edit');
   });
 
-  test('User can update Change in City Map section', async function(assert) {
+  test('User can update Change in City Map section', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
     });
@@ -945,6 +980,320 @@ module('Acceptance | user can click landuse form edit', function(hooks) {
     assert.equal(this.server.db.landuseForms.firstObject.dcpRelatedacquisitionofpropertyopt, 1);
     assert.equal(this.server.db.landuseForms.firstObject.dcpRelatedacquisition, true);
     assert.equal(this.server.db.landuseForms.firstObject.dcpOnlychangetheeliminationofamappedbutunimp, 717170001);
+
+    assert.equal(currentURL(), '/landuse-form/1/edit');
+  });
+
+  test('User can add, fill out, save and remove Proposed Site Characteristics subsection', async function (assert) {
+    // Create a LU form w public-facilities-related actions
+    this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', {
+          dcpPackagetype: 717170001,
+          landuseForm: this.server.create('landuse-form', {
+            landuseActions: [
+              this.server.create('landuse-action', {
+                dcpActioncode: 'PS',
+              }),
+              this.server.create('landuse-action', {
+                dcpActioncode: 'PX',
+              }),
+            ],
+          }),
+        }),
+      ],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    await click('[data-test-add-landuse-geography-button]');
+
+    assert.dom('[data-test-proposed-site-title]').exists();
+
+    // This test doesn't field out the fields in sequential order
+    // integer fields
+    await fillIn('[data-test-input="dcpCommunityfacilitycommercialnooffirms"]', 123);
+    await fillIn('[data-test-input="dcpNumberofdwellingunits"]', 123);
+    await fillIn('[data-test-input="dcpBuildingsorsitetotalsquarefootage"]', 123);
+    await fillIn('[data-test-input="dcpSquarefootagetobeacquired"]', 123);
+    await fillIn('[data-test-input="dcpCommunityfacilitycommercialnoofemployees"]', 123);
+
+    await click('[data-test-radio="dcpIsthesiteimprovedunimprovedorpartlyimp"][data-test-radio-option="Unimproved"]');
+    await fillIn('[data-test-input="dcpBorough"]', 'text text');
+    await fillIn('[data-test-input="dcpUsesonsite"]', 'text text');
+    await fillIn('[data-test-input="dcpLocationsiteinbuilding"]', 'text text');
+    await fillIn('[data-test-input="dcpOwnership"]', 'text text');
+    await fillIn('[data-test-input="dcpDisplacementorrelocation"]', 'text text');
+    await fillIn('[data-test-input="dcpLot"]', 'text text');
+    await fillIn('[data-test-input="dcpBlock"]', 'text text');
+    await fillIn('[data-test-input="dcpNumberoffloorsinbuilding"]', 'text text');
+    await fillIn('[data-test-input="dcpVacantforlessthantwoyears"]', 'text text');
+
+    assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
+
+    saveForm();
+
+    await click('[data-test-remove-landuse-geography-button]');
+
+    saveForm();
+
+    assert.dom('[data-test-proposed-site-title]').doesNotExist();
+  });
+
+  test('User can update lead-agency', async function(assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'toDo', 'landuseForm')],
+    });
+    this.server.create('account', 1, {
+      name: 'first account',
+    });
+    this.server.create('account', 2, {
+      name: 'second account',
+    });
+    this.server.create('account', 3, {
+      name: 'third account',
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    // filling out necessary information in order to save
+    await click('[data-test-add-applicant-button]');
+    await fillIn('[data-test-input="dcpFirstname"]', 'Tess');
+    await fillIn('[data-test-input="dcpLastname"]', 'Ter');
+    await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
+
+    await selectChoose('[data-test-lead-agency-picker]', 'second account');
+
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.landuseForms.firstObject.chosenLeadAgencyId, 2);
+
+    assert.equal(currentURL(), '/landuse-form/1/edit');
+  });
+
+  test('User can fill out Disposition section', async function (assert) {
+    // Create a LU form w disposition-related actions
+    this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', {
+          dcpPackagetype: 717170001,
+          landuseForm: this.server.create('landuse-form', {
+            landuseActions: [
+              this.server.create('landuse-action', {
+                dcpActioncode: 'PP',
+              }),
+            ],
+          }),
+        }),
+      ],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    assert.dom('[data-test-input="dcpTextcityagency"]').doesNotExist();
+    assert.dom('[data-test-input="dcpTowhom"]').doesNotExist();
+
+    await click('[data-test-radio="dcpTypedisposition"][data-test-radio-option="General"]');
+
+    assert.dom('[data-test-input="dcpTextcityagency"]').doesNotExist();
+    assert.dom('[data-test-input="dcpTowhom"]').doesNotExist();
+
+    await click('[data-test-radio="dcpTypedisposition"][data-test-radio-option="Direct"]');
+
+    await fillIn('[data-test-input="dcpTextcityagency"]', 'text text');
+    await fillIn('[data-test-input="dcpTowhom"]', 'text text');
+
+    assert.dom('[data-test-disposition-dcpRestrictandcondition-helptext]').doesNotExist();
+
+    await click('[data-test-radio="dcpRestrictandcondition"][data-test-radio-option="None (Pursuant to Zoning)"]');
+
+    assert.dom('[data-test-disposition-dcpRestrictandcondition-helptext]').doesNotExist();
+
+    await click('[data-test-radio="dcpRestrictandcondition"][data-test-radio-option="Restricted"]');
+
+    assert.dom('[data-test-disposition-dcpRestrictandcondition-helptext]').exists();
+  });
+
+  test('User can add and delete a ZR Section on the landuse form', async function (assert) {
+    this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', {
+          dcpPackagetype: 717170001,
+          landuseForm: this.server.create('landuse-form', {
+            landuseActions: [
+              this.server.create('landuse-action', {
+                dcpActioncode: 'ZR',
+              }),
+            ],
+          }),
+        }),
+      ],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    // fill out other necessary fields for saving
+    await click('[data-test-add-applicant-button]');
+    await fillIn('[data-test-input="dcpFirstname"]', 'Tess');
+    await fillIn('[data-test-input="dcpLastname"]', 'Ter');
+    await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
+
+    // add and fill out fields for Zoning Text Amendment section
+    await click('[data-test-add-zr-section-button]');
+    assert.dom('[data-test-zr-section-fieldset="0"]').exists();
+
+    await fillIn('[data-test-input="dcpZrsectionnumber"]', 'our zr section number');
+    await fillIn('[data-test-input="dcpZrsectiontitle"]', 'our zr section title');
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.affectedZoningResolutions.firstObject.dcpZrsectionnumber, 'our zr section number');
+    assert.equal(this.server.db.affectedZoningResolutions.firstObject.dcpZrsectiontitle, 'our zr section title');
+
+    await click('[data-test-remove-zr-section-button]');
+    assert.dom('[data-test-zr-section-fieldset="0"]').doesNotExist();
+
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.affectedZoningResolutions.length, 0);
+  });
+
+  test('Attachment list text only shows up when one of PC, PQ, PS, or PX actions are present', async function (assert) {
+    this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', {
+          dcpPackagetype: 717170001,
+          landuseForm: this.server.create('landuse-form', {
+            landuseActions: [
+              this.server.create('landuse-action', {
+                dcpActioncode: 'PP',
+              }),
+            ],
+          }),
+        }),
+      ],
+    });
+
+    this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', {
+          dcpPackagetype: 717170001,
+          landuseForm: this.server.create('landuse-form', {
+            landuseActions: [
+              this.server.create('landuse-action', {
+                dcpActioncode: 'PC',
+              }),
+            ],
+          }),
+        }),
+      ],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    assert.dom('[data-test-landuse-attachment-list]').doesNotExist();
+
+    await visit('/landuse-form/2/edit');
+
+    assert.dom('[data-test-landuse-attachment-list]').exists();
+  });
+
+  test('User can add and delete a Zoning Map Change on the landuse form', async function (assert) {
+    this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', {
+          dcpPackagetype: 717170001,
+          landuseForm: this.server.create('landuse-form', {
+            landuseActions: [
+              this.server.create('landuse-action', {
+                dcpActioncode: 'ZM',
+              }),
+            ],
+          }),
+        }),
+      ],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    await selectChoose('[data-test-dcpTotalzoningareatoberezoned-dropdown]', '240,000 to 500,000 square feet');
+
+    // add and fill out fields for Zoning Text Amendment section
+    await click('[data-test-add-zoning-map-change-button]');
+    assert.dom('[data-test-zoning-map-change-fieldset="0"]').exists();
+
+    await fillIn('[data-test-input="dcpZoningsectionmapsnumber"]', exceedMaximum(100, 'String'));
+    assert.dom('[data-test-validation-message="dcpZoningsectionmapsnumber"]').exists();
+
+    await fillIn('[data-test-input="dcpZoningsectionmapsnumber"]', 'zoning section num 1234');
+    assert.dom('[data-test-validation-message="dcpZoningsectionmapsnumber"]').doesNotExist();
+
+    await selectChoose('[data-test-dcpExistingzoningdistrictvalue-dropdown]', 'R2A');
+
+    await fillIn('[data-test-input="dcpProposedzoningmapvalue"]', exceedMaximum(100, 'String'));
+    assert.dom('[data-test-validation-message="dcpProposedzoningmapvalue"]').exists();
+
+    await fillIn('[data-test-input="dcpProposedzoningmapvalue"]', 'some zoning map value');
+    assert.dom('[data-test-validation-message="dcpProposedzoningmapvalue"]').doesNotExist();
+
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.landuseForms.firstObject.dcpTotalzoningareatoberezoned, 717170006);
+    assert.equal(this.server.db.zoningMapChanges.firstObject.dcpZoningsectionmapsnumber, 'zoning section num 1234');
+    assert.equal(this.server.db.zoningMapChanges.firstObject.dcpExistingzoningdistrictvalue, 717170004);
+    assert.equal(this.server.db.zoningMapChanges.firstObject.dcpProposedzoningmapvalue, 'some zoning map value');
+
+    await click('[data-test-remove-zoning-map-change-button]');
+    assert.dom('[data-test-zr-section-fieldset="0"]').doesNotExist();
+
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.zoningMapChanges.length, 0);
+  });
+
+  test('Conditional questions display when user fills out Proposed Actions section', async function (assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'toDo', 'landuseForm')],
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    assert.dom('[data-test-input="dcpDateofpreviousapproval"]').doesNotExist();
+
+    await selectChoose('[data-test-dcpPreviouslyapprovedactioncode-picker="ZC"]', 'BF');
+
+    assert.dom('[data-test-input="dcpDateofpreviousapproval"]').exists();
+
+    assert.equal(currentURL(), '/landuse-form/1/edit');
+  });
+
+  test('User can search and select from zoning resolution dropdown in proposed actions section', async function (assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'toDo', 'landuseForm')],
+    });
+
+    this.server.create('zoning-resolution', 1, {
+      dcpZoningresolution: 'AppendixD',
+    });
+    this.server.create('zoning-resolution', 2, {
+      dcpZoningresolution: 'AppendixF',
+    });
+    this.server.create('zoning-resolution', 3, {
+      dcpZoningresolution: '74-116',
+    });
+
+    await visit('/landuse-form/1/edit');
+
+    // filling out necessary information in order to save
+    await click('[data-test-add-applicant-button]');
+    await fillIn('[data-test-input="dcpFirstname"]', 'Tess');
+    await fillIn('[data-test-input="dcpLastname"]', 'Ter');
+    await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
+
+    await selectChoose('[data-test-zoning-resolution-picker="ZA"]', 'AppendixF');
+
+    await click('[data-test-save-button]');
+
+    assert.equal(this.server.db.landuseActions[1].chosenZoningResolutionId, 2);
 
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });

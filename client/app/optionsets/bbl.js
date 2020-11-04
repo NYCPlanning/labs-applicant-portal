@@ -24,3 +24,7 @@ export const BOROUGHS = {
     label: 'Citywide',
   },
 };
+
+export const BBL_OPTIONSETS = {
+  BOROUGHS,
+};

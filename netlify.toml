@@ -9,16 +9,16 @@
 
 # staging
 [context.staging]
-  environment = { HOST="https://applicant-portal-staging.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-staging' }
+  environment = { HOST="https://applicant-portal-staging.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-staging', NYCID_DOMAIN='https://accounts-nonprd.nyc.gov' }
 
 # qa team
 [context.qa]
-  environment = { HOST="https://applicant-portal-qa.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-qa' }
+  environment = { HOST="https://applicant-portal-qa.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-qa', NYCID_DOMAIN='https://accounts-nonprd.nyc.gov' }
 
 # training
 [context.training]
-  environment = { HOST="https://applicant-portal-training.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-training' }
+  environment = { HOST="https://applicant-portal-training.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-training', NYCID_DOMAIN='https://accounts-nonprd.nyc.gov' }
 
 # develop
 [context.develop]
-  environment = { HOST="https://applicant-portal-develop.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-develop' }
+  environment = { HOST="https://applicant-portal-develop.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-develop', NYCID_DOMAIN='https://accounts-nonprd.nyc.gov' }

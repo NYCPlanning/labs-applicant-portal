@@ -1,0 +1,16 @@
+<@form.Section @title="Attached Documents"
+  data-test-attached-documents
+>
+  <p>
+    To complete this submission, attach the completed draft
+    Environmental Impact Statement (DEIS) and Final Scope of Work.
+    Upload all chapters and appendices as individual files.
+    The maximum size for a document is 50MB
+  </p>
+
+  <Packages::Attachments
+    @package={{@model}}
+    @fileManager={{@model.fileManager}}
+    data-test-section="attachments"
+  />
+</@form.Section>

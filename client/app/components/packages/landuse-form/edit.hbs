@@ -9,6 +9,9 @@
 
       <section class="form-section">
         <h1 class="header-large">
+          {{if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))
+            "Draft" "Filed"
+          }}
           Land Use
         </h1>
 
@@ -55,11 +58,13 @@
 
       <Packages::LanduseForm::EnvironmentalReview
         @form={{saveableForm}}
+        @accounts={{@accounts}}
       />
 
       <Packages::LanduseForm::ProposedActions
         @form={{saveableForm}}
         @validations={{this.validations}}
+        @zoningResolutions={{@zoningResolutions}}
       />
 
       <Packages::RelatedAction
@@ -91,8 +96,40 @@
         {{/if}}
       {{/let}}
 
-      <Packages::LanduseForm::PublicFacilities
+      {{#let (intersect
+        (map-by "dcpActioncode" this.landuseForm.landuseActions)
+        (array 'PC' 'PQ' 'PS' 'PX')
+      ) as |publicFacilitiesActions|}}
+        {{#if (gt publicFacilitiesActions.length 0)}}
+          <Packages::LanduseForm::PublicFacilities
+            @form={{saveableForm}}
+          />
+
+          <Packages::LanduseForm::ProposedSiteCharacteristics
+            @form={{saveableForm}}
+            @addLanduseGeography={{this.addLanduseGeography}}
+            @removeLanduseGeography={{this.removeLanduseGeography}}
+            @validations={{this.validations}}
+          />
+        {{/if}}
+      {{/let}}
+
+      <Packages::LanduseForm::Disposition
         @form={{saveableForm}}
+      />
+
+      <Packages::LanduseForm::ZoningTextAmendment
+        @form={{saveableForm}}
+        @addZrSection={{this.addZrSection}}
+        @removeZrSection={{this.removeZrSection}}
+        @validations={{this.validations}}
+      />
+
+      <Packages::LanduseForm::ZoningMapAmendment
+        @form={{saveableForm}}
+        @addZoningMapChange={{this.addZoningMapChange}}
+        @removeZoningMapChange={{this.removeZoningMapChange}}
+        @validations={{this.validations}}
       />
 
       <Packages::LanduseForm::AttachedDocuments

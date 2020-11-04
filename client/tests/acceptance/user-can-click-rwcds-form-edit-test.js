@@ -84,7 +84,7 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     await click('[data-test-submit-button]');
     await click('[data-test-confirm-submit-button]');
 
-    assert.equal(currentURL(), '/rwcds-form/1');
+    assert.equal(currentURL(), '/rwcds-form/1?header=true');
   });
 
   test('User can view existing values in Project Description section', async function(assert) {

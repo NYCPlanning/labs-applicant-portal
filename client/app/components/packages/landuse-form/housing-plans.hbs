@@ -72,7 +72,44 @@
               as |DcpMannerofdispositionRadioGroup|>
                 <DcpMannerofdispositionRadioGroup
                   @options={{optionset 'landuseForm' 'dcpMannerofdisposition' 'list'}}
-                />
+                  @onChange={{fn this.resetDependentFields this.dependantsOf.dcpMannerofdisposition}}
+                as |dcpMannerofdisposition|>
+                  {{#if (eq
+                    dcpMannerofdisposition
+                    (optionset 'landuseForm' 'dcpMannerofdisposition' 'code' 'Direct')
+                  )}}
+                    <Ui::Question
+                      @required={{true}}
+                    as |dcpFromQ|>
+                      <dcpFromQ.Label>
+                        From (Indicate City Agency)
+                      </dcpFromQ.Label>
+
+                      <form.Field
+                        @attribute="dcpFrom"
+                        @maxlength="100"
+                        @showCounter={{true}}
+                        id={{dcpFromQ.id}}
+                      />
+                    </Ui::Question>
+
+                    <Ui::Question
+                      @required={{true}}
+                    as |dcpToQ|>
+                      <dcpToQ.Label>
+                        To (Indicate Sponsor/Developer/Purchaser/Lessee
+                        or Local Public Development Corp.)
+                      </dcpToQ.Label>
+    
+                      <form.Field
+                        @attribute="dcpTo"
+                        @maxlength="100"
+                        @showCounter={{true}}
+                        id={{dcpToQ.id}}
+                      />
+                    </Ui::Question>
+                  {{/if}}
+                </DcpMannerofdispositionRadioGroup>
               </form.Field>
             </Ui::Question>
 
@@ -88,7 +125,7 @@
 
               <form.Field
                 @attribute="dcpRestrictandcondition"
-                @type="radio-group"s
+                @type="radio-group"
               as |DcpRestrictandconditionRadioGroup|>
                 <DcpRestrictandconditionRadioGroup
                   @options={{optionset 'landuseForm' 'dcpRestrictandcondition' 'list'}}

@@ -30,6 +30,16 @@ module('Integration | Component | auth/sign-in', function(hooks) {
 
     await click('[data-test-sign-in="next"]');
 
+    // We have to rerender to reset the isLoginStarted tracked
+    // property in the Auth::SignIn component. REDO: consider
+    // if it isn't too much overhead to use tasks to track state of
+    // searchContacts
+    await render(hbs`
+      <Auth::SignIn
+        @searchContacts={{this.searchContacts}}
+      />
+    `);
+
     this.set('searchContacts', () => ({
       isNycidValidated: null,
       isNycidEmailRegistered: true,
@@ -38,6 +48,12 @@ module('Integration | Component | auth/sign-in', function(hooks) {
 
     await click('[data-test-sign-in="next"]');
 
+    await render(hbs`
+      <Auth::SignIn
+        @searchContacts={{this.searchContacts}}
+      />
+    `);
+
     this.set('searchContacts', () => ({
       isNycidValidated: null,
       isNycidEmailRegistered: false,
@@ -45,6 +61,13 @@ module('Integration | Component | auth/sign-in', function(hooks) {
     }));
 
     await click('[data-test-sign-in="next"]');
+
+    await render(hbs`
+      <Auth::SignIn
+        @searchContacts={{this.searchContacts}}
+      />
+   `);
+
 
     this.set('searchContacts', () => ({
       isNycidValidated: false,

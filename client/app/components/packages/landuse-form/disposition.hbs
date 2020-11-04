@@ -1,0 +1,92 @@
+{{#let @form as |form|}}
+  {{#if (in-array
+    (map-by "dcpActioncode" form.data.data.landuseActions)
+    'PP')
+  }}
+    <form.Section @title="Disposition">
+      <Ui::Question as |dcpTypedispositionQ|>
+        <dcpTypedispositionQ.Legend>
+          What is the type of disposition?
+        </dcpTypedispositionQ.Legend>
+
+        <form.Field
+          @attribute="dcpTypedisposition"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{optionset 'landuseForm' 'dcpTypedisposition' 'list'}}
+          as |dcpTypedisposition|>
+            {{#if (eq
+              dcpTypedisposition
+              (optionset 'landuseForm' 'dcpTypedisposition' 'code' 'DIRECT')
+            )}}
+              <Ui::Question
+              as |dcpTextcityagencyQ|>
+                <dcpTextcityagencyQ.Label>
+                  From which agency?
+                </dcpTextcityagencyQ.Label>
+
+                <form.Field
+                  @attribute="dcpTextcityagency"
+                  @maxlength="50"
+                  @showCounter={{true}}
+                  id={{dcpTextcityagencyQ.questionId}}
+                />
+              </Ui::Question>
+
+              <Ui::Question
+              as |dcpTowhomQ|>
+                <dcpTowhomQ.Label>
+                  To whom?
+                </dcpTowhomQ.Label>
+                <p class="text-small">
+                  Sponsor/ Developer/ Purchaser/ Lessee or Local Public Development
+                  Corporation. If recipient has not been selected or disposition is not
+                  limited to a particular recipient, indicate:  "To be determined by
+                  agency"
+                </p>
+
+                <form.Field
+                  @attribute="dcpTowhom"
+                  @maxlength="150"
+                  @showCounter={{true}}
+                  id={{dcpTowhomQ.questionId}}
+                />
+              </Ui::Question>
+            {{/if}}
+          </RadioGroup>
+        </form.Field>
+      </Ui::Question>
+
+      <Ui::Question as |dcpRestrictandconditionQ|>
+        <dcpRestrictandconditionQ.Legend>
+          Are there any restrictions?
+        </dcpRestrictandconditionQ.Legend>
+
+        <form.Field
+          @attribute="dcpRestrictandcondition"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{optionset 'landuseForm' 'dcpRestrictandcondition' 'list'}}
+          as |dcpRestrictandcondition|>
+            {{#if (eq
+              dcpRestrictandcondition
+              (optionset 'landuseForm' 'dcpRestrictandcondition' 'code' 'RESTRICTED')
+            )}}
+              <p
+                data-test-disposition-dcpRestrictandcondition-helptext
+              >
+                If restricted, describe the restrictions in the attached Project
+                Description, and include any restrictions on Disposition, Term,
+                or Use of Property.
+              </p>
+            {{/if}}
+          </RadioGroup>
+        </form.Field>
+      </Ui::Question>
+    </form.Section>
+  {{/if}}
+{{/let}}

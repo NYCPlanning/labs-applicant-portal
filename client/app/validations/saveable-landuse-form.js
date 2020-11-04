@@ -137,6 +137,20 @@ export default {
       message: 'Text is too long (max {max} characters)',
     }),
   ],
+  dcpFrom: [
+    validateLength({
+      min: 0,
+      max: 100,
+      message: 'Text is too long (max {max} characters)',
+    }),
+  ],
+  dcpTo: [
+    validateLength({
+      min: 0,
+      max: 100,
+      message: 'Text is too long (max {max} characters)',
+    }),
+  ],
   dcpTextexistingfacility: [
     validateLength({
       min: 0,
@@ -183,6 +197,20 @@ export default {
     validateLength({
       min: 0,
       max: 100,
+    }),
+  ],
+  dcpTextcityagency: [
+    validateLength({
+      min: 0,
+      max: 50,
+      message: 'Text is too long (max {max} characters)',
+    }),
+  ],
+  dcpTowhom: [
+    validateLength({
+      min: 0,
+      max: 150,
+      message: 'Text is too long (max {max} characters)',
     }),
   ],
 };

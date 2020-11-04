@@ -1,0 +1,57 @@
+{{#let @form as |form|}}
+  <form.Section @title="Proposed Site Characteristic and Conditions">
+    <p>
+      List all Proposed Sites and indicate their conditions.
+    </p>
+
+    {{#if form.errors.landuseGeographies}}
+      {{#each form.errors.landuseGeographies.validation as |message|}}
+        <div class="callout alert"
+          data-test-validation-message="has-landuseGeographies">
+          {{message}}
+        </div>
+      {{/each}}
+    {{/if}}
+
+    <ul class="no-bullet">
+      {{#each
+        (filter-by 'isDeleted' false @form.data.landuseGeographies)
+      as |landuseGeography landuseGeographyIndex|}}
+        <li class="scale-fade-in">
+          <form.SaveableForm
+            @model={{landuseGeography}}
+            @validators={{array
+              @validations.SaveableLanduseGeographyValidations
+              @validations.SubmittableLanduseGeographyValidations
+            }}
+          as |landuseGeographyForm|>
+            <Packages::LanduseForm::ProposedSiteCharacteristicsFieldset
+              @landuseGeography={{landuseGeography.data}}
+              @form={{landuseGeographyForm}}
+              @removeLanduseGeography={{fn @removeLanduseGeography landuseGeography @form.data}}
+              data-test-landuse-geography-fieldset={{landuseGeographyIndex}}
+            />
+          </form.SaveableForm>
+        </li>
+      {{/each}}
+    </ul>
+
+    <div class="fieldset-adder">
+      <h5 class="small-margin-bottom">
+        Add a Proposed Site:
+      </h5>
+      <div class="grid-x">
+        <div class="cell large-6 small-padding-right">
+          <button
+            class="button expanded secondary no-margin"
+            type="button"
+            {{on "click" (fn @addLanduseGeography @form.data) }}
+            data-test-add-landuse-geography-button
+          >
+            <strong>Add Proposed Site</strong>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form.Section>
+{{/let}}
