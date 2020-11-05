@@ -1,6 +1,10 @@
 <Ui::Breadcrumbs as |Crumb|>
   <Crumb @text="My Projects" @route='projects' />
-  <Crumb @text={{@model.package.project.dcpProjectname}} @disabled={{true}} />
+  <Crumb
+    @text={{@model.package.project.dcpProjectname}}
+    @route='project'
+    @model={{@model.package.project.id}}
+  />
   <Crumb @text="{{if (eq @model.package.dcpPackagetype
       (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))
       "Draft" "Filed"
