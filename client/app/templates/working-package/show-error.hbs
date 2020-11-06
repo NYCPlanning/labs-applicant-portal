@@ -1,0 +1,9 @@
+<Ui::Breadcrumbs as |Crumb|>
+  <Crumb @text="My Projects" @route='projects' />
+  <Crumb @text="(Error / Not Found)" @disabled={{true}} />
+  <Crumb @text="RWCDS" @current={{true}} />
+</Ui::Breadcrumbs>
+
+<Errors::List
+  @errors={{@model.errors}}
+/>
