@@ -3,9 +3,18 @@
     <span class="show-for-sr">Current:</span>
   {{/if}}
   {{#if @route}}
-    <LinkTo @route={{@route}}>
-      {{@text}}
-    </LinkTo>
+    {{#if @model}}
+      <LinkTo
+        @route={{@route}}
+        @model={{@model}}
+      >
+        {{@text}}
+      </LinkTo>
+    {{else}}
+      <LinkTo @route={{@route}}>
+        {{@text}}
+      </LinkTo>
+    {{/if}}
   {{else}}
     {{@text}}
   {{/if}}

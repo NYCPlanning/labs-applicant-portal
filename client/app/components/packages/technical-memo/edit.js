@@ -1,8 +1,13 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import SubmittablePackageFormValidations from '../../../validations/submittable-package';
 
 export default class PackagesTechnicalMemoEditComponent extends Component {
+  validations = {
+    SubmittablePackageFormValidations,
+  };
+
   @service
   router;
 
