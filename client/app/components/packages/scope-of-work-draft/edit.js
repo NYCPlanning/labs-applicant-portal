@@ -1,8 +1,13 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import SubmittablePackageFormValidations from '../../../validations/submittable-package';
 
 export default class PackagesScopeOfWorkDraftEditComponent extends Component {
+  validations = {
+    SubmittablePackageFormValidations,
+  };
+
   @service
   router;
 
@@ -11,7 +16,7 @@ export default class PackagesScopeOfWorkDraftEditComponent extends Component {
     try {
       await this.args.package.save();
     } catch (error) {
-      console.log('Save Draft SOW package error:', error);
+      console.log('Save Draft Scope of Work (DSOW) package error:', error);
     }
   }
 

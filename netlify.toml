@@ -9,7 +9,7 @@
 
 # staging
 [context.staging]
-  environment = { HOST="https://applicant-portal-staging.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-staging' }
+  environment = { HOST="https://applicant-portal-staging.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-staging', NYCID_DOMAIN='https://accounts-nonprd.nyc.gov' }
 
 # qa team
 [context.qa]

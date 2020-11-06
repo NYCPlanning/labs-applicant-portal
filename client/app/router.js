@@ -60,6 +60,11 @@ Router.map(function() {
     this.route('show', { path: '/' });
   });
 
+  this.route('working-package', { path: 'working-package/:id' }, function () {
+    this.route('edit');
+    this.route('show', { path: '/' });
+  });
+
   this.route('project', { path: 'projects/:id' });
 
   this.route('auth', function() {
