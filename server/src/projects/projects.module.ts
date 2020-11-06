@@ -6,14 +6,15 @@ import { ConfigModule } from '../config/config.module';
 import { AuthModule } from '../auth/auth.module';
 import { ProjectsController } from './projects.controller';
 import { ProjectApplicantController } from './project-applicants/project-applicant.controller';
-import { NycidService } from 'src/contact/nycid/nycid.service';
+import { DocumentModule } from '../document/document.module';
 
 @Module({
   imports: [
+    AuthModule,
     CrmModule,
     ConfigModule,
     ContactModule,
-    AuthModule,
+    DocumentModule,
   ],
   providers: [ProjectsService],
   exports: [ProjectsService],

@@ -43,6 +43,7 @@ import { INVOICE_ATTRS } from '../invoices/invoices.attrs';
       ...PACKAGE_ATTRS,
 
       'invoices',
+      'documents',
     ],
     invoices: {
       ref: 'dcp_projectinvoiceid',

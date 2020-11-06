@@ -292,7 +292,15 @@ async getParentSiteLocation() {
 
       const { value: documents } = await this.crmService.getSharepointFolderFiles(`dcp_package/${folderIdentifier}`);
 
-      return documents;
+      if (documents) {
+        return documents.map(document => ({
+          name: document['Name'],
+          timeCreated: document['TimeCreated'],
+          serverRelativeUrl: document['ServerRelativeUrl'],
+        }));
+      }
+
+      return [];
     } catch (e) {
       // Relay errors from crmService 
       if (e instanceof HttpException) {
@@ -308,6 +316,38 @@ async getParentSiteLocation() {
           }
         }, HttpStatus.INTERNAL_SERVER_ERROR);
       }
+    }
+  }
+
+
+  /**
+   * Injects associated documents into the given package
+   *
+   * @param      {Object{ dcp_name, dcp_packageid }} CRM Package with
+   *              dcp_name and dcp_packageid properties
+   * @return     {[Object]} The CRM Package with the 'documents' property hydrated,
+   *              if associated documents exist in CRM.
+   */
+  public async packageWithDocuments(projectPackage: any) {
+    const {
+      dcp_name,
+      dcp_packageid,
+    } = projectPackage;
+
+    try {
+      return {
+        ...projectPackage,
+        documents: await this.findPackageSharepointDocuments(dcp_name, dcp_packageid),
+      };
+    } catch {
+      const errorMessage = `Error loading documents for package ${dcp_name}.`;
+      console.log(errorMessage);
+
+      throw new HttpException({
+        "code": "PACKAGE_WITH_DOCUMENTS",
+        "title": "Package Documents Error",
+        "detail": errorMessage,
+      }, HttpStatus.NOT_FOUND);
     }
   }
 }

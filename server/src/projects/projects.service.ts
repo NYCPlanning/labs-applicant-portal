@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { NycidService } from '../contact/nycid/nycid.service';
 import { CrmService } from '../crm/crm.service';
+import { DocumentService } from '../document/document.service';
 import { overwriteCodesWithLabels } from '../_utils/overwrite-codes-with-labels';
 
 const APPLICANT_ACTIVE_STATUS_CODE = 1;
@@ -33,6 +34,7 @@ const DCP_PROJECTROLES = {
 export class ProjectsService {
   constructor(
     private readonly crmService: CrmService,
+    private readonly documentService: DocumentService,
     private readonly nycidService: NycidService,
   ) {}
 
@@ -119,7 +121,7 @@ export class ProjectsService {
         &$orderby=dcp_name asc
       `);
 
-      const { records: projectPackages } = await this.crmService.get('dcp_packages', `
+      let { records: projectPackages } = await this.crmService.get('dcp_packages', `
         $filter=
           _dcp_project_value eq ${projectId}
           and (
@@ -135,6 +137,10 @@ export class ProjectsService {
           )
         &$expand=dcp_dcp_package_dcp_projectinvoice_package
       `);
+
+      projectPackages = await Promise.all(projectPackages.map(async (pkg) => {
+          return await this.documentService.packageWithDocuments(pkg);
+        }));
 
       const projectApplicantsWithContacts = await Promise.all(projectApplicants.map(async applicant => {
         const contact = applicant.dcp_applicant_customer_contact;

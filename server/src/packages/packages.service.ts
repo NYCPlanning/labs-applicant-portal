@@ -104,7 +104,7 @@ export class PackagesService {
 
     // Get package
     try {
-        const { records: [firstPackage] } = await this.crmService.get('dcp_packages', `
+        let { records: [firstPackage] } = await this.crmService.get('dcp_packages', `
         $select=${PACKAGE_ATTRS.join(',')}
         &$filter=dcp_packageid eq ${packageId}
         &$expand=dcp_project($select=${PROJECT_ATTRS.join(',')})
@@ -118,21 +118,10 @@ export class PackagesService {
         }, HttpStatus.NOT_FOUND);
       }
 
-      const {
-        dcp_project,
-        dcp_packageid,
-        dcp_name,
-      } = firstPackage;
+      // Hydrate package with documents
+      firstPackage = await this.documentService.packageWithDocuments(firstPackage);
 
-      // drive-by redefine because the sharepoint lookup
-      // is failing for some reason and we don't want it
-      // to take the entire system down with it.
-      //
-      // TODO: Why does it need to be this? We should check to see if this is still
-      // flakey given current configuration
-      let documents = [];
-      documents = await this.documentService.findPackageSharepointDocuments(dcp_name, dcp_packageid);
-
+      // Hydrate package with form data
       let formData = {};
 
       if (
@@ -144,16 +133,16 @@ export class PackagesService {
         formData = await this.fetchPackageForm(firstPackage);
       }
 
+      // re-alias project property
+      const {
+        dcp_project,
+      } = firstPackage;
+
       return {
         ...firstPackage,
         ...formData,
 
         project: dcp_project,
-        documents: documents.map(document => ({
-          name: document['Name'],
-          timeCreated: document['TimeCreated'],
-          serverRelativeUrl: document['ServerRelativeUrl'],
-        })),
       };
     } catch (e) {
       // relay lower-level exceptions, like from crmServce.get(),
