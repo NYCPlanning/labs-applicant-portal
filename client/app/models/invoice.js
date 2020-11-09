@@ -8,6 +8,9 @@ export default class InvoiceModel extends Model {
   dcpProjectname;
 
   @attr()
+  dcpInvoiceprojectname;
+
+  @attr()
   dcpName;
 
   @attr()

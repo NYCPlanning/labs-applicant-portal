@@ -8,4 +8,8 @@ export const INVOICE_ATTRS = [
   'dcp_supplemental_fee',
   'dcp_grandtotal',
   'dcp_invoice_applications',
+  'dcp_invoiceprojectname',
+  'dcp_twohundredpercentrule',
+  'dcp_supplementalfee',
+  'dcp_projectfees',
 ];

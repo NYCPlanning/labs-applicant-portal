@@ -10,6 +10,7 @@ export class InvoicesService {
       $filter=dcp_projectinvoiceid eq ${id}
     `);
 
+    console.log(invoice)
     return invoice;
   }
 }
