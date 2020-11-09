@@ -164,7 +164,9 @@
         @continueButtonTitle="Continue Editing"
         data-test-confirm-submit-button={{true}}
       >
-        <h6>Confirm Draft Land Use Form Submission</h6>
+        <h6>Confirm {{if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))
+            "Draft" "Filed"
+          }} Land Use Form Submission</h6>
         <p class="header-large medium-margin-top small-margin-bottom">
           Are you sure?
         </p>
