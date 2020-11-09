@@ -541,6 +541,15 @@
               </A.Field>
             </Ui::Answer>
 
+            <Ui::Answer @beside={{true}} as |A|>
+              <A.Prompt>
+                What Zoning Resolution section is this Action pursuant to?
+              </A.Prompt>
+              <A.Field>
+                {{landuseAction.zoningResolution.dcpZoningresolution}}
+              </A.Field>
+            </Ui::Answer>
+
             {{#if this.projectHasRequiredActions}}
               <Ui::Answer @beside={{true}} as |A|>
                 <A.Prompt>
