@@ -5,7 +5,6 @@ import {
   currentURL,
   settled,
   fillIn,
-  // waitFor,
   triggerKeyEvent,
 } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
@@ -48,17 +47,9 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     await click('[data-test-save-button]');
 
-    // Users should no longer be able to Submit without uploading an attachment
-    // await waitFor('[data-test-submit-button]:not([disabled])');
-    // await click('[data-test-submit-button]');
-    // await click('[data-test-confirm-submit-button]');
-
     await settled();
 
-    // await waitFor('[data-test-show="dcpProjectname"]');
-
     assert.equal(currentURL(), '/landuse-form/1/edit');
-    // assert.equal(currentURL(), '/landuse-form/1?header=true');
   });
 
   test('User can edit Site Information on the landuse form', async function (assert) {
@@ -222,9 +213,6 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     await click('[data-test-radio="dcpApplicantispublicagencyactions"][data-test-action="ZA"][data-test-radio-option="No"]');
     await click('[data-test-radio="dcpApplicantispublicagencyactions"][data-test-action="MM"][data-test-radio-option="Yes"]');
     await click('[data-test-save-button]');
-
-    // assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
-
     await click('[data-test-radio="dcpWholecity"][data-test-radio-option="No"]');
     await click('[data-test-radio="dcpEntiretyboroughs"][data-test-radio-option="No"]');
     await click('[data-test-radio="dcpEntiretycommunity"][data-test-radio-option="No"]');
@@ -232,7 +220,6 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     await click('[data-test-radio="dcp500kpluszone"][data-test-radio-option="No"]');
 
-    // assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-validation-message="dcpDevsize"]').doesNotExist();
 
     await click('[data-test-radio="dcp500kpluszone"][data-test-radio-option="Yes"]');
@@ -242,12 +229,10 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     await click('[data-test-radio="dcpDevsize"][data-test-radio-option="500,000 to 999,999 zoning sq ft"]');
 
-    // assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-validation-message="dcpDevsize"]').doesNotExist();
 
     await click('[data-test-radio="dcpSitedatasiteisinnewyorkcity"][data-test-radio-option="No"]');
 
-    // assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-validation-message="dcpSitedataidentifylandmark"]').doesNotExist();
 
     await click('[data-test-radio="dcpSitedatasiteisinnewyorkcity"][data-test-radio-option="Yes"]');
@@ -257,7 +242,6 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     await fillIn('[data-test-input="dcpSitedataidentifylandmark"]', 'Douglas Fir');
 
-    // assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-validation-message="dcpSitedataidentifylandmark"]').doesNotExist();
   });
 
@@ -1194,15 +1178,10 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     await visit('/landuse-form/1/edit');
 
     assert.dom('[data-test-landuse-attachment-list]').doesNotExist();
-    // assert.dom('[data-test-section="attachments"]').doesNotExist();
-    // await this.pauseTest();
 
     await visit('/landuse-form/2/edit');
 
-    // await this.pauseTest();
-
     assert.dom('[data-test-landuse-attachment-list]').exists();
-    // assert.dom('[data-test-section="attachments"]').exists();
   });
 
   test('User can add and delete a Zoning Map Change on the landuse form', async function (assert) {
