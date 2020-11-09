@@ -141,6 +141,7 @@
           @form={{saveablePackageForm}}
           @model={{@package}}
         />
+
       </div>
       <div class="cell large-4 sticky-sidebar">
         <saveableLanduseForm.PageNav>
@@ -171,22 +172,25 @@
           @continueButtonTitle="Continue Editing"
           data-test-confirm-submit-button={{true}}
         >
-          <h6>Confirm Draft Land Use Form Submission</h6>
-          <p class="header-large medium-margin-top small-margin-bottom">
-            Are you sure?
-          </p>
-          <p>
-            Before submitting, ensure that your answers are accurate and complete,
-            and that necessary attachments have been uploaded.
-            If NYC Planning does not receive enough accurate information,
-            the Lead Planner will notify you and request that this form be
-            resubmitted with necessary materials, corrections, or clarifications.
-          </p>
-        </saveablePackageForm.ConfirmationModal>
+          <h6>Confirm {{if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))
+            "Draft" "Filed"
+          }} Land Use Form Submission</h6>
+        <p class="header-large medium-margin-top small-margin-bottom">
+          Are you sure?
+        </p>
+        <p>
+          Before submitting, ensure that your answers are accurate and complete,
+          and that necessary attachments have been uploaded.
+          If NYC Planning does not receive enough accurate information,
+          the Lead Planner will notify you and request that this form be
+          resubmitted with necessary materials, corrections, or clarifications.
+        </p>
+      </saveableForm.ConfirmationModal>
 
         <Messages::Assistance class="large-margin-top" />
         
       </div>
+
     </div>
   </saveablePackageForm.SaveableForm>
 </SaveableForm>

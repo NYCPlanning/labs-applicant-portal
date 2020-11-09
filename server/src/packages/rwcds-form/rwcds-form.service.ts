@@ -219,7 +219,7 @@ export class RwcdsFormService {
     // there exists a "ZR" action and that action's dcp_ZoningResolution.dcp_zoningresolution is "AppendixF"
     const includeZoningTextAmendmentAction = projectActions.find(action =>
       action._dcp_action_value === ACTION_VALUE_OPTIONSET['ZR'].code
-      && action.dcp_ZoningResolution.dcp_zoningresolution === 'AppendixF'
+      && action.dcp_ZoningResolution?.dcp_zoningresolution === 'AppendixF'
     );
 
     if (includeZoningTextAmendmentAction) {

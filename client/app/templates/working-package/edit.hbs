@@ -5,11 +5,11 @@
     @route='project'
     @model={{@model.project.id}}
   />
-  <Crumb @text="FEIS" @disabled={{true}} />
+  <Crumb @text="Working Package" @disabled={{true}} />
   <Crumb @text="Edit" @current={{true}} />
 </Ui::Breadcrumbs>
 
-<Packages::Feis::Edit
+<Packages::WorkingPackage::Edit
   @package={{@model}}
 />
 

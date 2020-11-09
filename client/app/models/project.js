@@ -154,4 +154,11 @@ export default class ProjectModel extends Model {
 
     return technicalMemoPackages;
   }
+
+  get workingPackages() {
+    return this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'WORKING_PACKAGE']))
+      .sortBy('dcpPackageversion')
+      .reverse();
+  }
 }
