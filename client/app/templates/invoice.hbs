@@ -10,7 +10,7 @@
 <div class="grid-x grid-margin-x">
   <p class="cell medium-6 medium-order-2 medium-text-right">
     Date: <br class="show-for-medium">
-    <strong class="text-large">{{@model.dcpInvoicedate}}</strong>
+    <strong class="text-large">{{moment-format (utc @model.dcpInvoicedate) 'YYYY-MM-DD'}}</strong>
   </p>
   <p class="cell medium-6">
     Project: <br class="show-for-medium">
@@ -27,9 +27,9 @@
     </tr>
   </thead>
   <tbody>
-    {{#each @model.dcpInvoiceApplications as |dcpApplication|}}
+    {{#each @model.dcpInvoiceapplications as |dcpApplication|}}
     <tr>
-      <td>{{dcpApplication.dcpApplicationNumber}}</td>
+      <td>{{dcpApplication.dcpApplicationnumber}}</td>
       <td>{{dcpApplication.dcpAction}}</td>
       <td class="text-right font-mono">{{dcpApplication.dcpFee}}</td>
     </tr>
@@ -54,12 +54,12 @@
           </Ui::ExternalLink>
         </sup>
       </td>
-      <td class="text-right font-mono">{{@model.dcpTwoHundredPercentRule}}</td>
+      <td class="text-right font-mono">{{@model.dcpTwohundredpercentrule}}</td>
     </tr>
     <tr>
       <td></td>
       <td class="text-right text-weight-bold text-charcoal">Project Fees</td>
-      <td class="text-right font-mono">{{@model.dcpProjectFees}}</td>
+      <td class="text-right font-mono">{{@model.dcpProjectfees}}</td>
     </tr>
     <tr>
       <td></td>
@@ -72,12 +72,12 @@
           </Ui::ExternalLink>
         </sup>
       </td>
-      <td class="text-right font-mono">{{@model.dcpSupplementalFee}}</td>
+      <td class="text-right font-mono">{{@model.dcpSupplementalfee}}</td>
     </tr>
     <tr>
       <td></td>
       <td class="text-right text-weight-bold text-charcoal">Total Amount Due</td>
-      <td class="text-right font-mono text-weight-bold text-large">{{@model.dcpGrandTotal}}</td>
+      <td class="text-right font-mono text-weight-bold text-large">{{@model.dcpGrandtotal}}</td>
     </tr>
   </tbody>
 </table>

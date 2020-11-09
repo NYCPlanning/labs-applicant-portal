@@ -14,17 +14,17 @@ export default class InvoiceModel extends Model {
   dcpSubtotal;
 
   @attr()
-  dcpTwoHundredPercentRule;
+  dcpTwohundredpercentrule;
 
   @attr()
-  dcpProjectFees;
+  dcpProjectfees;
 
   @attr()
-  dcpSupplementalFee;
+  dcpSupplementalfee;
 
   @attr()
   dcpGrandtotal;
 
   @attr()
-  dcpInvoiceApplications;
+  dcpInvoiceapplications;
 }

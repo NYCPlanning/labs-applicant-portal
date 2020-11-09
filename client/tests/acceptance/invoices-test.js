@@ -12,28 +12,28 @@ module('Acceptance | invoices', function (hooks) {
       dcpName: 1234567893,
       dcpProjectname: '305-315 Tillbert Street (CEQR)',
       dcpInvoicedate: '04/18/20',
-      dcpInvoiceApplications: [
+      dcpInvoiceapplications: [
         {
-          dcpApplicationNumber: '210081RCR',
+          dcpApplicationnumber: '210081RCR',
           dcpAction: 'RC',
           dcpFee: '$160.00',
         },
         {
-          dcpApplicationNumber: '[ULURP Number]',
+          dcpApplicationnumber: '[ULURP Number]',
           dcpAction: '[Code]',
           dcpFee: '[amount]',
         },
         {
-          dcpApplicationNumber: '[ULURP Number]',
+          dcpApplicationnumber: '[ULURP Number]',
           dcpAction: '[Code]',
           dcpFee: '[amount]',
         },
       ],
       dcpSubtotal: '$160.00',
-      dcpTwoHundredPercentRule: '$320.00',
-      dcpProjectFees: '$160.00',
-      dcpSupplementalFee: '$0.00',
-      dcpGrandTotal: '$160.00',
+      dcpTwohundredpercentrule: '$320.00',
+      dcpProjectfees: '$160.00',
+      dcpSupplementalfee: '$0.00',
+      dcpGrandtotal: '$160.00',
     });
 
     await visit('/invoices/1');
