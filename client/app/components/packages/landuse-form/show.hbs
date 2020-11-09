@@ -528,7 +528,7 @@
                   Zoning Resolution section name
                 </A.Prompt>
                 <A.Field>
-                  {{landuseAction.dcpNameofzoningresolutionsectionQ.questionId}}
+                  {{landuseAction.dcpNameofzoningresolutionsection}}
                 </A.Field>
               </Ui::Answer>
 
@@ -591,7 +591,7 @@
                   Is the Action to authorize or permit an open use?
                 </A.Prompt>
                 <A.Field>
-                  {{landuseAction.dcpistheactiontoauthorizeorpermitanopenuse}}
+                  {{optionset 'landuseAction' 'dcpIstheactiontoauthorizeorpermitanopenuse' 'label' landuseAction.dcpIstheactiontoauthorizeorpermitanopenuse}}
                 </A.Field>
               </Ui::Answer>
 
@@ -600,10 +600,9 @@
                   Is the Action to authorize commercial or community facility use?
                 </A.Prompt>
                 <A.Field>
-                  {{landuseAction.dcpIstheactiontoauthorizeacommercial}}
+                {{optionset 'landuseAction' 'dcpIstheactiontoauthorizeacommercial' 'label' landuseAction.dcpIstheactiontoauthorizeacommercial}}
                 </A.Field>
               </Ui::Answer>
-
             {{/if}}
 
             <Ui::Answer @beside={{true}} as |A|>
