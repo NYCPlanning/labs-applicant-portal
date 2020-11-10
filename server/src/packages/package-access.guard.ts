@@ -38,7 +38,7 @@ export class PackageAccessGuard implements CanActivate {
     } = context.switchToHttp().getRequest();
 
     // permit internal staff to view
-    if (theRest.mail === 'dcpcreeper@gmail.com' || theRest.mail.includes('@planning.nyc.gov')) {
+    if (theRest.mail === 'dcpcreeper@gmail.com' || theRest.mail?.includes('@planning.nyc.gov')) {
       return true;
     }
 
