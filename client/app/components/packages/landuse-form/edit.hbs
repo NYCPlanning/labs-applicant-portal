@@ -38,23 +38,8 @@
 
       <Packages::LanduseForm::ProjectArea
         @form={{saveableForm}}
+        @removeBbl={{this.removeBbl}}
       />
-
-      {{#if (and
-        (eq saveableForm.data.dcpWholecity (optionset 'landuseForm' 'dcpWholecity' 'code' 'NO'))
-        (eq saveableForm.data.dcpEntiretyboroughs (optionset 'landuseForm' 'dcpEntiretyboroughs' 'code' 'NO'))
-        (eq saveableForm.data.dcpEntiretycommunity (optionset 'landuseForm' 'dcpEntiretycommunity' 'code' 'NO'))
-        (eq saveableForm.data.dcpNotaxblock (optionset 'landuseForm' 'dcpNotaxblock' 'code' 'NO'))
-      )}}
-        <Packages::LanduseForm::ProposedDevelopmentSite
-          @form={{saveableForm}}
-        />
-
-        <Packages::LanduseForm::ProjectTaxLots
-          @form={{saveableForm}}
-          @removeBbl={{this.removeBbl}}
-        />
-      {{/if}}
 
       <Packages::LanduseForm::EnvironmentalReview
         @form={{saveableForm}}
