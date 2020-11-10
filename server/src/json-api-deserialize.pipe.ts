@@ -55,6 +55,9 @@ export class JsonApiDeserializePipe implements PipeTransform {
         'zoning-resolutions': {
           valueForRelationship: relationship => relationship.id,
         },
+        'ceqr-invoice-questionnaires': {
+          valueForRelationship: relationship => relationship.id,
+        },
       }).deserialize(value);
     }
 

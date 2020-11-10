@@ -23,6 +23,17 @@ export const YES_NO_INTEGER = {
   },
 };
 
+export const YES_NO_PICKLIST_CODE = {
+  YES: {
+    code: 717170000,
+    label: 'Yes',
+  },
+  NO: {
+    code: 717170001,
+    label: 'No',
+  },
+};
+
 export const YES_NO_UNSURE = {
   YES: {
     code: 717170000,
@@ -56,6 +67,7 @@ export const YES_NO_DONT_KNOW = {
 const COMMON_OPTIONSETS = {
   YES_NO,
   YES_NO_UNSURE,
+  YES_NO_PICKLIST_CODE,
   YES_NO_DONT_KNOW,
   YES_NO_INTEGER,
 };

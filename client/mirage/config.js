@@ -93,6 +93,10 @@ export default function() {
 
   this.get('/invoices/:id');
 
+  this.get('/ceqr-invoice-questionnaires');
+  this.get('/ceqr-invoice-questionnaires/:id');
+  this.patch('/ceqr-invoice-questionnaires/:id');
+
   this.post('/documents', function(schema, request) {
     // requestBody should be a FormData object
     const { requestBody } = request;
