@@ -2,10 +2,12 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import SubmittablePackageFormValidations from '../../../validations/submittable-package';
+import SubmittableCeqrInvoiceQuestionnaireFormValidations from '../../../validations/submittable-ceqr-invoice-questionnaire-form';
 
 export default class PackagesScopeOfWorkDraftEditComponent extends Component {
   validations = {
     SubmittablePackageFormValidations,
+    SubmittableCeqrInvoiceQuestionnaireFormValidations,
   };
 
   @service

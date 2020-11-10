@@ -7,7 +7,7 @@ export default class ScopeOfWorkDraftRoute extends Route.extend(AuthenticatedRou
   async model(params) {
     const scopeOfWorkDraftPackage = await this.store.findRecord('package', params.id, {
       reload: true,
-      include: 'project',
+      include: 'project,ceqrInvoiceQuestionnaires',
     });
 
     // manually generate a file factory
