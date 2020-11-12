@@ -82,6 +82,9 @@ export default Factory.extend({
 
   filedEas: trait({
     dcpPackagetype: 717170012,
+    afterCreate(projectPackage, server) {
+      server.create('ceqr-invoice-questionnaire', { package: projectPackage });
+    },
   }),
 
   scopeOfWorkDraft: trait({
