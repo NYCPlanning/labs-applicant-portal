@@ -7,4 +7,5 @@ export const INVOICE_ATTRS = [
   'dcp_projectfees',
   'dcp_supplementalfee',
   'dcp_grandtotal',
+  'statuscode',
 ];
