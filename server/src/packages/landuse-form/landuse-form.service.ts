@@ -39,7 +39,10 @@ export class LanduseFormService {
     `);
 
     const { records: landuseActionsWithZr } = await this.crmService.get(`dcp_landuseactions`, `
-      $select=${LANDUSE_ACTION_ATTRS.join(',')}
+      $select=${LANDUSE_ACTION_ATTRS.join(',')},
+      dcp_dateofpreviousapproval,
+      dcp_lapsedateofpreviousapproval,
+      dcp_recordationdate,
       &$filter=
         _dcp_landuseid_value eq ${id}
       &$expand=
