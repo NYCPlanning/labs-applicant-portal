@@ -72,7 +72,7 @@
           <Packages::PasForm::PasFormError @package={{@package}} />
 
           <saveablePackageForm.SubmitButton
-            @isEnabled={{saveablePackageForm.isSubmittable}}
+            @isEnabled={{and (not @package.isDirty) saveablePackageForm.isSubmittable}}
             class="secondary"
             data-test-submit-button
           />

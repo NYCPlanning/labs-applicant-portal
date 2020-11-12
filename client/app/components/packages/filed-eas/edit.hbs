@@ -78,7 +78,7 @@
         />
 
         <saveableForm.SubmitButton
-          @isEnabled={{saveableForm.isSubmittable}}
+          @isEnabled={{and (not @package.isDirty) saveableForm.isSubmittable}}
           class="secondary"
           data-test-submit-button
         />
