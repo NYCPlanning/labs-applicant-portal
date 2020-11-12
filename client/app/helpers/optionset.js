@@ -28,6 +28,9 @@ import PROJECT_OPTIONSETS from '../optionsets/project';
 import {
   DCPAPPLICANTROLE,
 } from '../optionsets/project-applicant';
+import {
+  CEQR_INVOICE_QUESTIONNAIRE_OPTIONSETS,
+} from '../optionsets/ceqr-invoice-questionnaire';
 
 const OPTIONSET_LOOKUP = {
   applicant: {
@@ -151,6 +154,13 @@ const OPTIONSET_LOOKUP = {
   relatedAction: {
     // Actually a boolean field in CRM, not picklist
     dcpIscompletedaction: YES_NO,
+  },
+  ceqrInvoiceQuestionnaire: {
+    dcpSquarefeet: CEQR_INVOICE_QUESTIONNAIRE_OPTIONSETS.SQUARE_FEET,
+    dcpIsthesoleaapplicantagovtagency: COMMON_OPTIONSETS.YES_NO_PICKLIST_CODE,
+    dcpProjectspolelyconsistactionsnotmeasurable: COMMON_OPTIONSETS.YES_NO_PICKLIST_CODE,
+    dcpProjectmodificationtoapreviousapproval: COMMON_OPTIONSETS.YES_NO_PICKLIST_CODE,
+    dcpRespectivedecrequired: COMMON_OPTIONSETS.YES_NO,
   },
 };
 

@@ -7,7 +7,7 @@ export default class FiledEasRoute extends Route.extend(AuthenticatedRouteMixin)
   async model(params) {
     const filedEasPackage = await this.store.findRecord('package', params.id, {
       reload: true,
-      include: 'project',
+      include: 'project,ceqrInvoiceQuestionnaires',
     });
 
     // manually generate a file factory

@@ -1,6 +1,11 @@
+<SaveableForm 
+  @model={{@package.landuseForm}}
+  @validators={{array (hash) (hash)}} 
+  as |saveableForm|
+>
+
 <div class="grid-x grid-margin-x">
   <div class="cell large-8">
-
     <section class="form-section">
       <h1 class="header-large">
         <span id="project-info" class="section-anchor"></span>
@@ -23,13 +28,10 @@
       </p>
     </section>
 
-
-    <section class="form-section">
-      <h2 class="section-header">
-        <span id="project-description" class="section-anchor"></span>
-        Project Description
-      </h2>
-
+    <saveableForm.Section
+      @title="Project Description" 
+      @elementId="project-description"
+    >
       <Ui::Answer @beside={{true}} as |A|>
         <A.Prompt>
           Name
@@ -56,15 +58,12 @@
           {{@package.landuseForm.dcpContactemail}}
         </A.Field>
       </Ui::Answer>
+    </saveableForm.Section>
 
-    </section>
-
-    <section class="form-section">
-      <h2 class="section-header">
-        <span id="site-information" class="section-anchor"></span>
-        Site Information
-      </h2>
-
+    <saveableForm.Section
+      @title="Site Information" 
+      @elementId="site-information"
+    >
       <Ui::Answer @beside={{true}} as |A|>
         <A.Prompt>
           Primary Street Address
@@ -118,16 +117,12 @@
           {{@package.landuseForm.dcpSpecialdistricts}}
         </A.Field>
       </Ui::Answer>
+    </saveableForm.Section>
 
-    </section>
-
-
-    <section class="form-section">
-      <h2 class="section-header">
-        <span id="applicant-team" class="section-anchor"></span>
-        Applicant Team
-      </h2>
-
+    <saveableForm.Section
+      @title="Applicant Team" 
+      @elementId="applicant-team"
+    >
       <ul class="no-bullet">
         {{#each @package.landuseForm.applicants as |applicant|}}
           <li class="ruled-adjacent">
@@ -159,13 +154,12 @@
           </li>
         {{/each}}
       </ul>
-    </section>
+    </saveableForm.Section>
 
-    <section class="form-section">
-      <h2 class="section-header">
-        <span id="project-area" class="section-anchor"></span>
-        Proposed Project Area
-      </h2>
+    <saveableForm.Section
+      @title="Proposed Project Area" 
+      @elementId="project-area"
+    >
       <p>
         The <b>Project Area</b> is the entirety of all land parcels
         that are affected by all actions being sought.
@@ -314,7 +308,7 @@
           </Ui::Answer>
         {{/if}}
       {{/if}}
-    </section>
+    </saveableForm.Section>
 
     {{#if (and
       (eq @package.landuseForm.dcpWholecity (optionset 'landuseForm' 'dcpWholecity' 'code' 'NO'))
@@ -322,11 +316,10 @@
       (eq @package.landuseForm.dcpEntiretycommunity (optionset 'landuseForm' 'dcpEntiretycommunity' 'code' 'NO'))
       (eq @package.landuseForm.dcpNotaxblock (optionset 'landuseForm' 'dcpNotaxblock' 'code' 'NO'))
     )}}
-      <section class="form-section">
-        <h2 class="section-header">
-          <span id="proposed-development-site" class="section-anchor"></span>
-          Proposed Development Site
-        </h2>
+      <saveableForm.Section
+        @title="Proposed Development Site" 
+        @elementId="proposed-development-site"
+      >
         <p>
           The <b>Development Site</b> is the specific parcel(s) that the Applicant is seeking to develop.
           A Project Area and Development Site can be the same parcels of land or different,
@@ -380,13 +373,12 @@
             </A.Field>
           </Ui::Answer>
         {{/if}}
-      </section>
+      </saveableForm.Section>
 
-      <section class="form-section">
-        <h2 class="section-header">
-          <span id="project-area-tax-lots" class="section-anchor"></span>
-          Project Area Tax Lots
-        </h2>
+      <saveableForm.Section
+        @title="Project Area Tax Lots" 
+        @elementId="project-area-tax-lots"
+      >
         <p>Tax Lots Included in This Project:</p>
         <ul class="no-bullet">
           {{#each @package.landuseForm.bbls as |bbl|}}
@@ -413,26 +405,17 @@
                   {{optionset 'bbl' 'dcpPartiallot' 'label' bbl.dcpPartiallot}}
                 </A.Field>
               </Ui::Answer>
-
             </fieldset>
           </li>
           {{/each}}
         </ul>
-
-      </section>
-
+      </saveableForm.Section>
     {{/if}}
 
-
-
-
-
-    <section class="form-section">
-      <h2 class="section-header">
-        <span id="environmental-review" class="section-anchor"></span>
-        Environmental Review
-      </h2>
-
+    <saveableForm.Section
+      @title="Environmental Review" 
+      @elementId="environmental-review"
+    >
       <Ui::Answer @beside={{true}} as |A|>
         <A.Prompt>
           Who is the lead agency?
@@ -468,14 +451,12 @@
           {{@package.landuseForm.dcpTypecategory}}
         </A.Field>
       </Ui::Answer>
+    </saveableForm.Section>
 
-    </section>
-
-    <section class="form-section">
-      <h2 class="section-header">
-        <span id="proposed-actions" class="section-anchor"></span>
-        Proposed Actions
-      </h2>
+    <saveableForm.Section
+      @title="Proposed Actions" 
+      @elementId="proposed-actions"
+    >
       <div data-test-section="proposed-actions">
         {{#if this.projectHasRequiredActions}}
           <h3 class="large-margin-top">Zoning Special Permits, Authorizations, and Certifications</h3>
@@ -556,7 +537,7 @@
                   Zoning Resolution section name
                 </A.Prompt>
                 <A.Field>
-                  {{landuseAction.dcpNameofzoningresolutionsectionQ.questionId}}
+                  {{landuseAction.dcpNameofzoningresolutionsection}}
                 </A.Field>
               </Ui::Answer>
 
@@ -619,7 +600,7 @@
                   Is the Action to authorize or permit an open use?
                 </A.Prompt>
                 <A.Field>
-                  {{landuseAction.dcpistheactiontoauthorizeorpermitanopenuse}}
+                  {{optionset 'landuseAction' 'dcpIstheactiontoauthorizeorpermitanopenuse' 'label' landuseAction.dcpIstheactiontoauthorizeorpermitanopenuse}}
                 </A.Field>
               </Ui::Answer>
 
@@ -628,10 +609,9 @@
                   Is the Action to authorize commercial or community facility use?
                 </A.Prompt>
                 <A.Field>
-                  {{landuseAction.dcpIstheactiontoauthorizeacommercial}}
+                {{optionset 'landuseAction' 'dcpIstheactiontoauthorizeacommercial' 'label' landuseAction.dcpIstheactiontoauthorizeacommercial}}
                 </A.Field>
               </Ui::Answer>
-
             {{/if}}
 
             <Ui::Answer @beside={{true}} as |A|>
@@ -707,19 +687,16 @@
                   {{landuseAction.dcpRecordationdate}}
                 </A.Field>
               </Ui::Answer>
-
             {{/if}}
           </fieldset>
         {{/each}}
       </div>
-    </section>
+    </saveableForm.Section>
 
-
-    <section class="form-section">
-      <h2 class="section-header">
-        <span id="related-actions" class="section-anchor"></span>
-        Related Actions
-      </h2>
+    <saveableForm.Section
+      @title="Related Actions" 
+      @elementId="related-actions"
+    >
       <ul class="no-bullet">
         {{#each @package.landuseForm.relatedActions as |relatedAction|}}
           <li class="ruled-adjacent">
@@ -768,16 +745,13 @@
           </li>
         {{/each}}
       </ul>
-    </section>
-
+    </saveableForm.Section>
 
     {{#if this.projectHasCityMapActions}}
-      <section class="form-section">
-        <h2 class="section-header">
-          <span id="change-in-city-map" class="section-anchor"></span>
-          Change in City Map
-        </h2>
-
+      <saveableForm.Section
+      @title="Change in City Map" 
+      @elementId="change-in-city-map"
+      >
         <p>
           The following questions relate to Change in City Map and the following Actions: MM, MY, ME
         </p>
@@ -842,8 +816,7 @@
             {{optionset 'landuseForm' 'dcpOnlychangetheeliminationofamappedbutunimp' 'label' @package.landuseForm.dcpOnlychangetheeliminationofamappedbutunimp}}
           </A.Field>
         </Ui::Answer>
-
-      </section>
+      </saveableForm.Section>
     {{/if}}
 
     {{#let (intersect
@@ -851,17 +824,15 @@
         (array 'HA' 'HC' 'HD' 'HG' 'HN' 'HO' 'HP' 'HU')
       ) as |projectHousingActions|}}
     {{#if (gt projectHousingActions.length 0)}}
-      <section class="form-section">
-        <h2 class="section-header">
-          <span id="housing-plans" class="section-anchor"></span>
-          Housing Plans
-        </h2>
+      <saveableForm.Section
+      @title="Housing Plans" 
+      @elementId="housing-plans"
+      >
         <p>
           The following questions relate to Housing Plans,
           Urban Renewal Areas, and Urban Development Action
           Areas Program (UDAAP) and the follwoing Actions: HA,
           HC, HD, HG, HN, HO, HP, HU
-
         </p>
 
         <Ui::Answer as |A|>
@@ -918,14 +889,12 @@
             </A.Field>
           </Ui::Answer>
         {{/if}}
+      </saveableForm.Section>
 
-      </section>
-
-      <section class="form-section">
-        <h2 class="section-header">
-          <span id="subject-sites" class="section-anchor"></span>
-          Subject Sites
-        </h2>
+      <saveableForm.Section
+      @title="Subject Sites" 
+      @elementId="subject-sites"
+       >
         <ul class="no-bullet">
           {{#each @package.landuseForm.sitedatahForms as |subjectSite|}}
           <li class="ruled-adjacent">
@@ -1021,7 +990,7 @@
           </li>
           {{/each}}
         </ul>
-      </section>
+      </saveableForm.Section>
     {{/if}}
     {{/let}}
 
@@ -1030,11 +999,10 @@
         (array 'PC' 'PQ' 'PS' 'PX')
       ) as |publicFacilitiesActions|}}
     {{#if (gt publicFacilitiesActions.length 0)}}
-      <section class="form-section">
-        <h2 class="section-header">
-          <span id="public-facilities" class="section-anchor"></span>
-          Public Facilities
-        </h2>
+      <saveableForm.Section
+      @title="Public Facilities" 
+      @elementId="public-facilities"
+      >
         <p>
           The following questions relate to Office Space Lease,
           Public Facility Site Selection or Acquisition and the
@@ -1111,7 +1079,6 @@
             </Ui::Answer>
           {{/if}}
         {{/if}}
-
 
         <Ui::Answer @beside={{true}} as |A|>
           <A.Prompt>
@@ -1211,19 +1178,16 @@
             {{@package.landuseForm.dcpForfiscalyrs}}
           </A.Field>
         </Ui::Answer>
+      </saveableForm.Section>
 
-      </section>
-
-      <section class="form-section">
-        <h2 class="section-header">
-          <span id="proposed-site-characteristics" class="section-anchor"></span>
-          Proposed Site Characteristic and Conditions
-        </h2>
+      <saveableForm.Section
+      @title="Proposed Site Characteristics and Conditions" 
+      @elementId="proposed-site-characteristics-and-conditions"
+      >
         <p>
           List all Proposed Sites and indicate their conditions.
         </p>
       {{#each @package.landuseForm.landuseGeographies as |landuseGeography|}}
-
         <Ui::Answer @beside={{true}} as |A|>
           <A.Prompt>
             Borough
@@ -1358,11 +1322,8 @@
             {{landuseGeography.dcpLocationsiteinbuilding}}
           </A.Field>
         </Ui::Answer>
-
-
       {{/each}}
-      </section>
-
+      </saveableForm.Section>
     {{/if}}
     {{/let}}
 
@@ -1371,12 +1332,10 @@
         (array 'PP')
       ) as |publicFacilitiesActions|}}
       {{#if (gt publicFacilitiesActions.length 0)}}
-        <section class="form-section">
-          <h2 class="section-header">
-            <span id="disposition" class="section-anchor"></span>
-            Disposition
-          </h2>
-
+        <saveableForm.Section
+        @title="Disposition" 
+        @elementId="disposition"
+        >
           <Ui::Answer @beside={{true}} as |A|>
             <A.Prompt>
               What is the type of disposition?
@@ -1408,8 +1367,7 @@
               </A.Field>
             </Ui::Answer>
           {{/if}}
-
-        </section>
+        </saveableForm.Section>
       {{/if}}
     {{/let}}
 
@@ -1418,12 +1376,10 @@
         (array 'ZR')
       ) as |publicFacilitiesActions|}}
       {{#if (gt publicFacilitiesActions.length 0)}}
-        
-        <section class="form-section">
-          <h2 class="section-header">
-            <span id="zoning-text-amendment" class="section-anchor"></span>
-            Zoning Text Amendment
-          </h2>
+        <saveableForm.Section
+          @title="Zoning Text Amendment" 
+          @elementId="zoning-text-amendment"
+        >
           <p>
             List all affected Zoning Resolution Sections, indicating their title and number. This section only applies to ZR actions.
           </p>
@@ -1453,10 +1409,9 @@
                   {{affectedZoningResolution.dcpZrsectiontitle}}
                 </A.Field>
               </Ui::Answer>
-
             </fieldset>
           {{/each}}
-        </section>
+        </saveableForm.Section>
       {{/if}}
     {{/let}}
 
@@ -1465,12 +1420,10 @@
         (array 'ZM')
       ) as |publicFacilitiesActions|}}
       {{#if (gt publicFacilitiesActions.length 0)}}
-        <section class="form-section">
-          <h2 class="section-header">
-            <span id="zoning-map-amendment" class="section-anchor"></span>
-            Zoning Map Amendment
-          </h2>
-
+        <saveableForm.Section
+        @title="Zoning Map Amendment" 
+        @elementId="zoning-map-amendment"
+        >
           <Ui::Answer @beside={{true}} as |A|>
             <A.Prompt>
               What is the total area of all Zoning Lots in the area to the be rezoned?
@@ -1482,7 +1435,6 @@
 
           {{#each @package.landuseForm.zoningMapChanges as |zoningMapChange|}}
             <fieldset class="fieldset">
-
               <Ui::Legend>
                 <span class="label">
                   Zoning Map Change
@@ -1515,20 +1467,16 @@
                   {{zoningMapChange.dcpProposedzoningmapvalue}}
                 </A.Field>
               </Ui::Answer>
-
             </fieldset>
           {{/each}}
-
-        </section>
+        </saveableForm.Section>
       {{/if}}
     {{/let}}
 
-    <section class="form-section" id="attached-documents">
-      <h2 class="section-header">
-        <span id="attached-documents" class="section-anchor"></span>
-        Attached Documents
-      </h2>
-
+    <saveableForm.Section
+    @title="Attached Documents" 
+    @elementId="attached-documents"
+    >
       <ul class="no-bullet">
         {{#each @package.documents as |document|}}
           <li class="ruled-adjacent tight">
@@ -1544,12 +1492,14 @@
           </li>
         {{/each}}
       </ul>
-    </section>
+    </saveableForm.Section>
 
   </div>{{! end left/main column }}
   <div class="cell large-4 sticky-sidebar">
+    <saveableForm.PageNav>
 
+    <</saveableForm.PageNav>
   </div>{{! end right/sidebar column }}
 </div>
-
+</SaveableForm>
 {{yield}}
