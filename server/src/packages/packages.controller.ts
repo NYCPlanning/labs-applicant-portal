@@ -140,6 +140,7 @@ import { CitypayService } from '../citypay/citypay.service';
       ref: 'dcp_relatedactionsid',
       attributes: [
         ...RELATED_ACTION_ATTRS,
+        'dcp_applicationdate',
       ],
     },
     'landuse-actions': {
@@ -148,6 +149,9 @@ import { CitypayService } from '../citypay/citypay.service';
         ...LANDUSE_ACTION_ATTRS,
 
         'zoning-resolution',
+        'dcp_dateofpreviousapproval',
+        'dcp_lapsedateofpreviousapproval',
+        'dcp_recordationdate',
       ],
       'zoning-resolution': {
         ref: 'dcp_zoningresolutionid',

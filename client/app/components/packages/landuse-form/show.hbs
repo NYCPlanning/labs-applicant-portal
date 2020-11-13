@@ -522,6 +522,15 @@
               </A.Field>
             </Ui::Answer>
 
+            <Ui::Answer @beside={{true}} as |A|>
+              <A.Prompt>
+                What Zoning Resolution section is this Action pursuant to?
+              </A.Prompt>
+              <A.Field>
+                {{landuseAction.zoningResolution.dcpZoningresolution}}
+              </A.Field>
+            </Ui::Answer>
+
             {{#if this.projectHasRequiredActions}}
               <Ui::Answer @beside={{true}} as |A|>
                 <A.Prompt>
@@ -1037,7 +1046,7 @@
               How long has the existing facility been at this location?
             </A.Prompt>
             <A.Field>
-              {{@package.landuseForm.dcpTextexistingfacility}}
+              {{@package.landuseForm.dcpHowlonghasexistingfacilitybeenatthislocat}}
             </A.Field>
           </Ui::Answer>
         {{/if}}
@@ -1088,7 +1097,7 @@
               How long has the existing facility been at this location?
             </A.Prompt>
             <A.Field>
-              {{@package.landuseForm.dcpHowlonghasexistingfacilitybeenatthislocat}}
+              {{@package.landuseForm.dcpTextexistingfacility}}
             </A.Field>
           </Ui::Answer>
         {{/if}}
