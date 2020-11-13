@@ -7,6 +7,9 @@ import { INVOICE_ATTRS } from './invoices.attrs';
   id: 'dcp_projectinvoiceid',
   attributes: [
     ...INVOICE_ATTRS,
+
+    // virtual property — see the service. not serialized into a model for simplicity
+    'lineitems',
   ],
 }))
 @Controller('invoices')
