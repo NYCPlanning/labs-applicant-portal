@@ -52,6 +52,9 @@ export class JsonApiDeserializePipe implements PipeTransform {
         'zoning-map-changes': {
           valueForRelationship: relationship => relationship.id,
         },
+        'landuse-actions': {
+          valueForRelationship: relationship => relationship.id,
+        },
         'zoning-resolutions': {
           valueForRelationship: relationship => relationship.id,
         },

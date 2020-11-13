@@ -29,6 +29,17 @@ const DCP_PROJECTROLES = {
   BOROUGH_TEAM_LEADER: 717170000,
 };
 
+const DCP_PROJECTINVOICE_CODES = {
+  statuscode: {
+    APPROVED: 2,
+  },
+
+  statecode: {
+    ACTIVE: 0,
+    INACTIVE: 1,
+  }
+};
+
 @Injectable()
 export class ProjectsService {
   constructor(
@@ -133,7 +144,9 @@ export class ProjectsService {
             or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_NO_REVISIONS_REQUIRED}
             or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_REVISION_REQUIRED}
           )
-        &$expand=dcp_dcp_package_dcp_projectinvoice_package
+        &$expand=dcp_dcp_package_dcp_projectinvoice_package(
+          $filter=statuscode eq ${DCP_PROJECTINVOICE_CODES.statuscode.APPROVED} and statecode eq ${DCP_PROJECTINVOICE_CODES.statecode.ACTIVE}
+        )
       `);
 
       const projectApplicantsWithContacts = await Promise.all(projectApplicants.map(async applicant => {
