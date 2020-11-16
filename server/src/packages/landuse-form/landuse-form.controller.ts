@@ -31,12 +31,26 @@ export class LanduseFormController {
 
   @Patch('/:id')
   async update(@Body() body, @Param('id') id) {
-    const allowedAttrs = pick(body, LANDUSE_FORM_ATTRS);
+    let allowedAttrs = pick(body, LANDUSE_FORM_ATTRS);
+
+    // "chosen_zoning_resolution_id" is the id to a related resource,
+    // but, unlike other attributes, it may not always be included
+    // in the request body.
+    // If a request does not include all of the relationships
+    // for a resource, the server MUST interpret the missing relationships
+    // as if they were included with their current values. It MUST NOT
+    // interpret them as null or empty values.
+    // Therefore, we explicitly check for a null value
+    // (which would imply a key for chosen_zoning_resolution_id),
+    // to avoid assuming that falsiness indicates a disassociation.
+    if (body.chosen_lead_agency_id) {
+      allowedAttrs['dcp_leadagency@odata.bind'] = `/accounts(${body.chosen_lead_agency_id})`;
+    } else if (body.chosen_lead_agency_id === null) {
+      await this.crmService.disassociateHasOne('dcp_leadagency', 'dcp_landuses', id);
+    }
 
     await this.crmService.update('dcp_landuses', id, {
       ...allowedAttrs,
-
-      ...(body.chosen_lead_agency_id ? { 'dcp_leadagency@odata.bind': `/accounts(${body.chosen_lead_agency_id})` } : {}),
     });
 
     return {
