@@ -614,16 +614,15 @@
               </Ui::Answer>
             {{/if}}
 
-            <Ui::Answer @beside={{true}} as |A|>
-              <A.Prompt>
-                This is a follow-up Action. The previous approval Action Code:
-              </A.Prompt>
-              <A.Field>
-                {{optionset 'landuseAction' 'actions' 'label' landuseAction.dcpPreviouslyapprovedactioncode}}
-              </A.Field>
-            </Ui::Answer>
-
-            {{#if this.projectHasRequiredActionsAndFollowUpYes}}
+            {{#if landuseAction.dcpPreviouslyapprovedactioncode}}
+              <Ui::Answer @beside={{true}} as |A|>
+                <A.Prompt>
+                  This is a follow-up Action. The previous approval Action Code:
+                </A.Prompt>
+                <A.Field>
+                  {{optionset 'landuseAction' 'dcpPreviouslyapprovedactioncode' 'label' landuseAction.dcpPreviouslyapprovedactioncode}}
+                </A.Field>
+              </Ui::Answer>
 
               <Ui::Answer @beside={{true}} as |A|>
                 <A.Prompt>
@@ -1047,7 +1046,7 @@
               How long has the existing facility been at this location?
             </A.Prompt>
             <A.Field>
-              {{@package.landuseForm.dcpTextexistingfacility}}
+              {{@package.landuseForm.dcpHowlonghasexistingfacilitybeenatthislocat}}
             </A.Field>
           </Ui::Answer>
         {{/if}}
@@ -1098,7 +1097,7 @@
               How long has the existing facility been at this location?
             </A.Prompt>
             <A.Field>
-              {{@package.landuseForm.dcpHowlonghasexistingfacilitybeenatthislocat}}
+              {{@package.landuseForm.dcpTextexistingfacility}}
             </A.Field>
           </Ui::Answer>
         {{/if}}
