@@ -23,11 +23,13 @@ export default class ProjectPackageSectionComponent extends Component {
 
   get invoices() {
     return this.args.packages
-      .mapBy('invoices')
-      .reduce((acc, curr) => acc.concat(curr), []);
+      .map(pkg => { return pkg.get('invoices').toArray(); })
+      .flat();
   }
 
   get hasPayableInvoices() {
+    console.log(this.invoices);
+
     return this.invoices.filter((invoice) => invoice.statuscode === 'Approved').length >= 1;
   }
 
