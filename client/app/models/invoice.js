@@ -27,4 +27,11 @@ export default class InvoiceModel extends Model {
 
   @attr()
   lineitems;
+
+  @attr()
+  statuscode;
+
+  get isPaid() {
+    return this.statuscode === 'Paid';
+  }
 }

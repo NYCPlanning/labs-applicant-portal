@@ -16,8 +16,6 @@ module('Integration | Component | project/package-section/invoice-info', functio
       />
     `);
 
-    assert.equal(this.element.textContent.trim(), `$
-
-2020-10-27`);
+    assert.equal(this.element.textContent.trim(), '2020-10-27');
   });
 });

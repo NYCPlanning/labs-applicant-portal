@@ -3,6 +3,7 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
+import { joinLabels as joinInvoiceLabels } from '../invoices/invoices.service';
 import { NycidService } from '../contact/nycid/nycid.service';
 import { CrmService } from '../crm/crm.service';
 import { overwriteCodesWithLabels } from '../_utils/overwrite-codes-with-labels';
@@ -32,6 +33,7 @@ const DCP_PROJECTROLES = {
 const DCP_PROJECTINVOICE_CODES = {
   statuscode: {
     APPROVED: 2,
+    PAID: 717170000,
   },
 
   statecode: {
@@ -145,7 +147,8 @@ export class ProjectsService {
             or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_REVISION_REQUIRED}
           )
         &$expand=dcp_dcp_package_dcp_projectinvoice_package(
-          $filter=statuscode eq ${DCP_PROJECTINVOICE_CODES.statuscode.APPROVED} and statecode eq ${DCP_PROJECTINVOICE_CODES.statecode.ACTIVE}
+          $filter=statuscode eq ${DCP_PROJECTINVOICE_CODES.statuscode.APPROVED}
+            or statuscode eq ${DCP_PROJECTINVOICE_CODES.statuscode.PAID}
         )
       `);
 
@@ -186,7 +189,7 @@ export class ProjectsService {
         ...project,
         packages: projectPackages.map(pkg => ({
           ...pkg,
-          invoices: pkg.dcp_dcp_package_dcp_projectinvoice_package,
+          invoices: joinInvoiceLabels(pkg.dcp_dcp_package_dcp_projectinvoice_package),
         })),
         projectApplicants: project['project-applicants'],
         'project-applicants': projectApplicantsWithContacts,
