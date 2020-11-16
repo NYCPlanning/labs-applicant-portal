@@ -1,12 +1,19 @@
-<FaIcon @icon="shopping-cart" class="light-gray" />
-<LinkTo
-  @route="invoice"
-  @model={{@invoice}}
-  @query={{hash header=false}}
->
-  {{@invoice.dcpName}}
-</LinkTo>
+<li>
+  {{#if @invoice.isPaid}}
+    <FaIcon @icon="check" class="light-gray" />
+  {{else}}
+    <FaIcon @icon="shopping-cart" class="light-gray" />
+  {{/if}}
 
-<strong>${{@invoice.dcpGrandtotal}}</strong>
+  <LinkTo
+    @route="invoice"
+    @model={{@invoice}}
+    @query={{hash header=false}}
+  >
+    {{@invoice.dcpName}}
+  </LinkTo>
 
-<em>{{moment-format (utc @invoice.dcpInvoicedate) 'YYYY-MM-DD'}}</em>
+  <strong>{{@invoice.dcpGrandtotal}}</strong>
+
+  <em>{{moment-format (utc @invoice.dcpInvoicedate) 'YYYY-MM-DD'}}</em>
+</li>
