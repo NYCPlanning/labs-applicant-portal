@@ -1,9 +1,14 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { optionset } from '../../../helpers/optionset';
 
 export default class PackagesLanduseFormProposedActionEditorComponent extends Component {
-  actionCode;
+  @tracked chosenDcpPreviouslyapprovedactioncode = this.args.landuseActionForm.data.dcpPreviouslyapprovedactioncode
+    ? {
+      code: this.args.landuseActionForm.data.dcpPreviouslyapprovedactioncode,
+      label: optionset(['landuseAction', 'dcpPreviouslyapprovedactioncode', 'label', this.args.landuseActionForm.data.dcpPreviouslyapprovedactioncode]),
+    } : null;
 
   requiredActionCodes = ['CM', 'LD', 'RA', 'RC', 'RS', 'SA', 'SC', 'SD', 'ZA', 'ZC', 'ZS'];
 
@@ -17,20 +22,21 @@ export default class PackagesLanduseFormProposedActionEditorComponent extends Co
     return this.projectHasRequiredActions && hasPreviousAction;
   }
 
-  get selectedActionPlaceholder() {
-    const previouslyApprovedActionCode = this.args.landuseActionForm.data.dcpPreviouslyapprovedactioncode;
-    if (previouslyApprovedActionCode) {
-      return optionset(['landuseAction', 'dcpPreviouslyapprovedactioncode', 'label', previouslyApprovedActionCode]);
-    } return '-- select an action --';
-  }
-
   @action
   setPreviouslyApprovedActionCodeFields(actionCode) {
     if (actionCode) {
       this.args.landuseActionForm.data.dcpPreviouslyapprovedactioncode = actionCode;
       this.args.landuseActionForm.data.dcpFollowuptopreviousaction = true;
-    } else if (!actionCode && !this.args.landuseActionForm.data.dcpPreviouslyapprovedactioncode) {
+    } else {
+      this.args.landuseActionForm.data.dcpPreviouslyapprovedactioncode = null;
       this.args.landuseActionForm.data.dcpFollowuptopreviousaction = false;
     }
+  }
+
+  @action
+  clearPreviouslyApprovedActionCodeDropdown(landuseActionFormData) {
+    this.chosenDcpPreviouslyapprovedactioncode = null;
+    landuseActionFormData.dcpPreviouslyapprovedactioncode = null;
+    landuseActionFormData.dcpFollowuptopreviousaction = false;
   }
 }
