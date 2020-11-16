@@ -5,7 +5,7 @@ export default class InvoiceModel extends Model {
   dcpInvoicedate;
 
   @attr()
-  dcpProjectname;
+  dcpInvoiceprojectname;
 
   @attr()
   dcpName;
@@ -14,17 +14,24 @@ export default class InvoiceModel extends Model {
   dcpSubtotal;
 
   @attr()
-  dcpTwoHundredPercentRule;
+  dcpTwohundredpercentrule;
 
   @attr()
-  dcpProjectFees;
+  dcpProjectfees;
 
   @attr()
-  dcpSupplementalFee;
+  dcpSupplementalfee;
 
   @attr()
   dcpGrandtotal;
 
   @attr()
-  dcpInvoiceApplications;
+  lineitems;
+
+  @attr()
+  statuscode;
+
+  get isPaid() {
+    return this.statuscode === 'Paid';
+  }
 }

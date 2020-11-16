@@ -14,7 +14,7 @@
   </p>
   <p class="cell medium-6">
     Project: <br class="show-for-medium">
-    <strong class="text-xlarge">{{@model.dcpProjectname}}</strong>
+    <strong class="text-xlarge">{{@model.dcpInvoiceprojectname}}</strong>
   </p>
 </div>
 
@@ -27,14 +27,13 @@
     </tr>
   </thead>
   <tbody>
-    {{#each @model.dcpInvoiceApplications as |dcpApplication|}}
-    <tr>
-      <td>{{dcpApplication.dcpApplicationNumber}}</td>
-      <td>{{dcpApplication.dcpAction}}</td>
-      <td class="text-right font-mono">{{dcpApplication.dcpFee}}</td>
-    </tr>
+    {{#each @model.lineitems as |lineitem|}}
+      <tr>
+        <td>{{lineitem.dcp-applicationnumber}}</td>
+        <td>{{lineitem.dcp-action}}</td>
+        <td class="text-right font-mono">{{lineitem.dcp-fee}}</td>
+      </tr>
     {{/each}}
-
 
     <tr>
       <td></td>
@@ -54,12 +53,12 @@
           </Ui::ExternalLink>
         </sup>
       </td>
-      <td class="text-right font-mono">{{@model.dcpTwoHundredPercentRule}}</td>
+      <td class="text-right font-mono">{{@model.dcpTwohundredpercentrule}}</td>
     </tr>
     <tr>
       <td></td>
       <td class="text-right text-weight-bold text-charcoal">Project Fees</td>
-      <td class="text-right font-mono">{{@model.dcpProjectFees}}</td>
+      <td class="text-right font-mono">{{@model.dcpProjectfees}}</td>
     </tr>
     <tr>
       <td></td>
@@ -72,12 +71,12 @@
           </Ui::ExternalLink>
         </sup>
       </td>
-      <td class="text-right font-mono">{{@model.dcpSupplementalFee}}</td>
+      <td class="text-right font-mono">{{@model.dcpSupplementalfee}}</td>
     </tr>
     <tr>
       <td></td>
       <td class="text-right text-weight-bold text-charcoal">Total Amount Due</td>
-      <td class="text-right font-mono text-weight-bold text-large">{{@model.dcpGrandTotal}}</td>
+      <td class="text-right font-mono text-weight-bold text-large">{{@model.dcpGrandtotal}}</td>
     </tr>
   </tbody>
 </table>
