@@ -13,12 +13,9 @@ export const LANDUSE_ACTION_ATTRS = [
   'dcp_istheactiontoauthorizeorpermitanopenuse',
   'dcp_istheactiontoauthorizeacommercial',
   'dcp_followuptopreviousaction',
-  'dcp_dateofpreviousapproval',
-  'dcp_lapsedateofpreviousapproval',
   'dcp_typeoflegalinstrument',
   'dcp_modsubjectto197c',
   'dcp_indicatewhetheractionisamodification',
   'dcp_crfnnumber',
-  'dcp_recordationdate',
   '_dcp_landuseid_value',
 ];

@@ -147,7 +147,7 @@
         </dcpIstheactiontoauthorizeorpermitanopenuseQ.Label>
 
         <landuseActionForm.Field
-          @attribute="dcpistheactiontoauthorizeorpermitanopenuse"
+          @attribute="dcpIstheactiontoauthorizeorpermitanopenuse"
           @type="radio-group"
           as |DcpIstheactiontoauthorizeorpermitanopenuseRadioGroup|>
           <DcpIstheactiontoauthorizeorpermitanopenuseRadioGroup
@@ -202,27 +202,35 @@
 
     {{#if this.projectHasRequiredActionsAndFollowUpYes}}
 
-      <Ui::Question as |dcpDateofpreviousapprovalQ|>
+      <Ui::Question
+      as |dcpDateofpreviousapprovalQ|>
         <dcpDateofpreviousapprovalQ.Label>
           Date of previous approval
         </dcpDateofpreviousapprovalQ.Label>
 
-        <landuseActionForm.Field
-          @attribute="dcpDateofpreviousapproval"
-          type="date"
-          id={{dcpDateofpreviousapprovalQ.questionId}}
+        <EmberFlatpickr
+          data-test-dcpdateofpreviousapproval
+          @allowInput={{false}}
+          @date={{if landuseActionForm.data.dcpDateofpreviousapproval landuseActionForm.data.dcpDateofpreviousapproval null}}
+          @onChange={{fn (mut landuseActionForm.data.dcpDateofpreviousapproval)}}
+          @enableTime={{false}}
+          placeholder="Choose a date..."
         />
       </Ui::Question>
 
-      <Ui::Question as |dcpLapsedateofpreviousapprovalQ|>
+      <Ui::Question
+      as |dcpLapsedateofpreviousapprovalQ|>
         <dcpLapsedateofpreviousapprovalQ.Label>
           Lapse date of previous approval
         </dcpLapsedateofpreviousapprovalQ.Label>
 
-        <landuseActionForm.Field
-          @attribute="dcpLapsedateofpreviousapproval"
-          type="date"
-          id={{dcpLapsedateofpreviousapprovalQ.questionId}}
+        <EmberFlatpickr
+          data-test-dcplapsedateofpreviousapproval
+          @allowInput={{false}}
+          @date={{if landuseActionForm.data.dcpLapsedateofpreviousapproval landuseActionForm.data.dcpLapsedateofpreviousapproval null}}
+          @onChange={{fn (mut landuseActionForm.data.dcpLapsedateofpreviousapproval)}}
+          @enableTime={{false}}
+          placeholder="Choose a date..."
         />
       </Ui::Question>
 
@@ -291,15 +299,19 @@
         />
       </Ui::Question>
 
-      <Ui::Question as |dcpRecordationdateQ|>
+      <Ui::Question
+      as |dcpRecordationdateQ|>
         <dcpRecordationdateQ.Label>
           Recordation date of Legal Instrument
         </dcpRecordationdateQ.Label>
 
-        <landuseActionForm.Field
-          @attribute="dcpRecordationdate"
-          type="date"
-          id={{dcpRecordationdateQ.questionId}}
+        <EmberFlatpickr
+          data-test-dcprecordationdate
+          @allowInput={{false}}
+          @date={{if landuseActionForm.data.dcpRecordationdate landuseActionForm.data.dcpRecordationdate null}}
+          @onChange={{fn (mut landuseActionForm.data.dcpRecordationdate)}}
+          @enableTime={{false}}
+          placeholder="Choose a date..."
         />
       </Ui::Question>
 

@@ -1,170 +1,180 @@
 <SaveableForm
-  @model={{@package.landuseForm}}
-  @validators={{array this.validations.SaveableLanduseFormValidations this.validations.SubmittableLanduseFormValidations}}
-  as |saveableForm|
+  @model={{@package}}
+  @validators={{array (hash) this.validations.SubmittablePackageFormValidations}}
+  as |saveablePackageForm|
 >
+  <saveablePackageForm.SaveableForm
+    @model={{saveablePackageForm.data.landuseForm}}
+    @validators={{array this.validations.SaveableLanduseFormValidations this.validations.SubmittableLanduseFormValidations}}
+    as |saveableLanduseForm|
+  >
 
-  <div class="grid-x grid-margin-x">
-    <div class="cell large-8">
+    <div class="grid-x grid-margin-x">
+      <div class="cell large-8">
 
-      <section class="form-section">
-        <h1 class="header-large">
-          {{if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))
-            "Draft" "Filed"
-          }}
-          Land Use
-        </h1>
+        <section class="form-section">
+          <h1 class="header-large">
+            {{if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))
+              "Draft" "Filed"
+            }}
+            Land Use
+          </h1>
 
-        <Packages::LanduseForm::ProjectInformation
-          @form={{saveableForm}}
+          <Packages::LanduseForm::ProjectInformation
+            @form={{saveableLanduseForm}}
+            @validations={{this.validations}}
+          />
+        </section>
+
+        <Packages::LanduseForm::PrimaryContact
+          @form={{saveableLanduseForm}}
+        />
+
+        <Packages::LanduseForm::SiteInformation
+          @form={{saveableLanduseForm}}
+        />
+
+        <Packages::ApplicantTeam
+          @form={{saveableLanduseForm}}
+          @addApplicant={{this.addApplicant}}
+          @removeApplicant={{this.removeApplicant}}
           @validations={{this.validations}}
         />
-      </section>
 
-      <Packages::LanduseForm::PrimaryContact
-        @form={{saveableForm}}
-      />
-
-      <Packages::LanduseForm::SiteInformation
-        @form={{saveableForm}}
-      />
-
-      <Packages::ApplicantTeam
-        @form={{saveableForm}}
-        @addApplicant={{this.addApplicant}}
-        @removeApplicant={{this.removeApplicant}}
-        @validations={{this.validations}}
-      />
-
-      <Packages::LanduseForm::ProjectArea
-        @form={{saveableForm}}
-      />
-
-      {{#if (and
-        (eq saveableForm.data.dcpWholecity (optionset 'landuseForm' 'dcpWholecity' 'code' 'NO'))
-        (eq saveableForm.data.dcpEntiretyboroughs (optionset 'landuseForm' 'dcpEntiretyboroughs' 'code' 'NO'))
-        (eq saveableForm.data.dcpEntiretycommunity (optionset 'landuseForm' 'dcpEntiretycommunity' 'code' 'NO'))
-        (eq saveableForm.data.dcpNotaxblock (optionset 'landuseForm' 'dcpNotaxblock' 'code' 'NO'))
-      )}}
-        <Packages::LanduseForm::ProposedDevelopmentSite
-          @form={{saveableForm}}
+        <Packages::LanduseForm::ProjectArea
+          @form={{saveableLanduseForm}}
         />
 
-        <Packages::LanduseForm::ProjectTaxLots
-          @form={{saveableForm}}
-          @removeBbl={{this.removeBbl}}
-        />
-      {{/if}}
-
-      <Packages::LanduseForm::EnvironmentalReview
-        @form={{saveableForm}}
-        @accounts={{@accounts}}
-      />
-
-      <Packages::LanduseForm::ProposedActions
-        @form={{saveableForm}}
-        @validations={{this.validations}}
-        @zoningResolutions={{@zoningResolutions}}
-      />
-
-      <Packages::RelatedAction
-        @form={{saveableForm}}
-        @addRelatedAction={{this.addRelatedAction}}
-        @removeRelatedAction={{this.removeRelatedAction}}
-        @validations={{this.validations}}
-      />
-
-      <Packages::LanduseForm::ChangeCityMap
-        @form={{saveableForm}}
-      />
-
-      {{#let (intersect
-        (map-by "dcpActioncode" this.landuseForm.landuseActions)
-        (array 'HA' 'HC' 'HD' 'HG' 'HN' 'HO' 'HP' 'HU')
-      ) as |projectHousingActions|}}
-        {{#if (gt projectHousingActions.length 0)}}
-          <Packages::LanduseForm::HousingPlans
-            @form={{saveableForm}}
+        {{#if (and
+          (eq saveableLanduseForm.data.dcpWholecity (optionset 'landuseForm' 'dcpWholecity' 'code' 'NO'))
+          (eq saveableLanduseForm.data.dcpEntiretyboroughs (optionset 'landuseForm' 'dcpEntiretyboroughs' 'code' 'NO'))
+          (eq saveableLanduseForm.data.dcpEntiretycommunity (optionset 'landuseForm' 'dcpEntiretycommunity' 'code' 'NO'))
+          (eq saveableLanduseForm.data.dcpNotaxblock (optionset 'landuseForm' 'dcpNotaxblock' 'code' 'NO'))
+        )}}
+          <Packages::LanduseForm::ProposedDevelopmentSite
+            @form={{saveableLanduseForm}}
           />
 
-          <Packages::LanduseForm::SubjectSites
-            @form={{saveableForm}}
-            @addSitedatahForm={{this.addSitedatahForm}}
-            @removeSitedatahForm={{this.removeSitedatahForm}}
-            @validations={{this.validations}}
+          <Packages::LanduseForm::ProjectTaxLots
+            @form={{saveableLanduseForm}}
+            @removeBbl={{this.removeBbl}}
           />
         {{/if}}
-      {{/let}}
 
-      {{#let (intersect
-        (map-by "dcpActioncode" this.landuseForm.landuseActions)
-        (array 'PC' 'PQ' 'PS' 'PX')
-      ) as |publicFacilitiesActions|}}
-        {{#if (gt publicFacilitiesActions.length 0)}}
-          <Packages::LanduseForm::PublicFacilities
-            @form={{saveableForm}}
-          />
-
-          <Packages::LanduseForm::ProposedSiteCharacteristics
-            @form={{saveableForm}}
-            @addLanduseGeography={{this.addLanduseGeography}}
-            @removeLanduseGeography={{this.removeLanduseGeography}}
-            @validations={{this.validations}}
-          />
-        {{/if}}
-      {{/let}}
-
-      <Packages::LanduseForm::Disposition
-        @form={{saveableForm}}
-      />
-
-      <Packages::LanduseForm::ZoningTextAmendment
-        @form={{saveableForm}}
-        @addZrSection={{this.addZrSection}}
-        @removeZrSection={{this.removeZrSection}}
-        @validations={{this.validations}}
-      />
-
-      <Packages::LanduseForm::ZoningMapAmendment
-        @form={{saveableForm}}
-        @addZoningMapChange={{this.addZoningMapChange}}
-        @removeZoningMapChange={{this.removeZoningMapChange}}
-        @validations={{this.validations}}
-      />
-
-      <Packages::LanduseForm::AttachedDocuments
-        @form={{saveableForm}}
-        @model={{@package.landuseForm}}
-      />
-    </div>
-    <div class="cell large-4 sticky-sidebar">
-      <saveableForm.PageNav>
-        <saveableForm.SaveButton
-          @isEnabled={{or this.packageIsDirtyOrRecordsDeleted saveableForm.isSaveable}}
-          @onClick={{this.savePackage}}
-          data-test-save-button
+        <Packages::LanduseForm::EnvironmentalReview
+          @form={{saveableLanduseForm}}
+          @accounts={{@accounts}}
         />
 
-        <saveableForm.SubmitButton
-          @isEnabled={{saveableForm.isSubmittable}}
-          class="secondary"
-          data-test-submit-button
+        <Packages::LanduseForm::ProposedActions
+          @form={{saveableLanduseForm}}
+          @validations={{this.validations}}
+          @zoningResolutions={{@zoningResolutions}}
         />
-      </saveableForm.PageNav>
 
-      <saveableForm.ConfirmationModal
-        @action={{component saveableForm.SubmitButton
-          onClick=this.submitPackage
-          isEnabled=saveableForm.isSubmittable
-          class="no-margin"
-        }}
-        @footer={{component 'packages/landuse-form/landuse-form-error'
-          package=@package
-        }}
-        @continueButtonTitle="Continue Editing"
-        data-test-confirm-submit-button={{true}}
-      >
-        <h6>Confirm Draft Land Use Form Submission</h6>
+        <Packages::RelatedAction
+          @form={{saveableLanduseForm}}
+          @addRelatedAction={{this.addRelatedAction}}
+          @removeRelatedAction={{this.removeRelatedAction}}
+          @validations={{this.validations}}
+        />
+
+        <Packages::LanduseForm::ChangeCityMap
+          @form={{saveableLanduseForm}}
+        />
+
+        {{#let (intersect
+          (map-by "dcpActioncode" this.landuseForm.landuseActions)
+          (array 'HA' 'HC' 'HD' 'HG' 'HN' 'HO' 'HP' 'HU')
+        ) as |projectHousingActions|}}
+          {{#if (gt projectHousingActions.length 0)}}
+            <Packages::LanduseForm::HousingPlans
+              @form={{saveableLanduseForm}}
+            />
+
+            <Packages::LanduseForm::SubjectSites
+              @form={{saveableLanduseForm}}
+              @addSitedatahForm={{this.addSitedatahForm}}
+              @removeSitedatahForm={{this.removeSitedatahForm}}
+              @validations={{this.validations}}
+            />
+          {{/if}}
+        {{/let}}
+
+        {{#let (intersect
+          (map-by "dcpActioncode" this.landuseForm.landuseActions)
+          (array 'PC' 'PQ' 'PS' 'PX')
+        ) as |publicFacilitiesActions|}}
+          {{#if (gt publicFacilitiesActions.length 0)}}
+            <Packages::LanduseForm::PublicFacilities
+              @form={{saveableLanduseForm}}
+            />
+
+            <Packages::LanduseForm::ProposedSiteCharacteristics
+              @form={{saveableLanduseForm}}
+              @addLanduseGeography={{this.addLanduseGeography}}
+              @removeLanduseGeography={{this.removeLanduseGeography}}
+              @validations={{this.validations}}
+            />
+          {{/if}}
+        {{/let}}
+
+        <Packages::LanduseForm::Disposition
+          @form={{saveableLanduseForm}}
+        />
+
+        <Packages::LanduseForm::ZoningTextAmendment
+          @form={{saveableLanduseForm}}
+          @addZrSection={{this.addZrSection}}
+          @removeZrSection={{this.removeZrSection}}
+          @validations={{this.validations}}
+        />
+
+        <Packages::LanduseForm::ZoningMapAmendment
+          @form={{saveableLanduseForm}}
+          @addZoningMapChange={{this.addZoningMapChange}}
+          @removeZoningMapChange={{this.removeZoningMapChange}}
+          @validations={{this.validations}}
+        />
+
+        <Packages::LanduseForm::AttachedDocuments
+          @form={{saveablePackageForm}}
+          @model={{@package}}
+        />
+
+      </div>
+      <div class="cell large-4 sticky-sidebar">
+        <saveableLanduseForm.PageNav>
+          <saveablePackageForm.SaveButton
+            @isEnabled={{or this.packageIsDirtyOrRecordsDeleted saveablePackageForm.isSaveable}}
+            @onClick={{this.savePackage}}
+            data-test-save-button
+          />
+
+          <Packages::LanduseForm::LanduseFormError @package={{@package}} />
+
+          <saveablePackageForm.SubmitButton
+            @isEnabled={{saveablePackageForm.isSubmittable}}
+            class="secondary"
+            data-test-submit-button
+          />
+        </saveableLanduseForm.PageNav>
+
+        <saveablePackageForm.ConfirmationModal
+          @action={{component saveablePackageForm.SubmitButton
+            onClick=this.submitPackage
+            isEnabled=saveablePackageForm.isSubmittable
+            class="no-margin"
+          }}
+          @footer={{component 'packages/landuse-form/landuse-form-error'
+            package=@package
+          }}
+          @continueButtonTitle="Continue Editing"
+          data-test-confirm-submit-button={{true}}
+        >
+          <h6>Confirm {{if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))
+            "Draft" "Filed"
+          }} Land Use Form Submission</h6>
         <p class="header-large medium-margin-top small-margin-bottom">
           Are you sure?
         </p>
@@ -175,7 +185,12 @@
           the Lead Planner will notify you and request that this form be
           resubmitted with necessary materials, corrections, or clarifications.
         </p>
-      </saveableForm.ConfirmationModal>
+      </saveablePackageForm.ConfirmationModal>
+
+        <Messages::Assistance class="large-margin-top" />
+        
+      </div>
+
     </div>
-  </div>
+  </saveablePackageForm.SaveableForm>
 </SaveableForm>
