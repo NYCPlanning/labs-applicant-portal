@@ -19,7 +19,7 @@ export class InvoicesService {
     const [invoice] = joinLabels(records);
 
     return {
-      lineitems: invoice.dcp_dcp_projectinvoice_dcp_invoicelineitem_projectinvoice,
+      lineitems: overwriteCodesWithLabels(invoice.dcp_dcp_projectinvoice_dcp_invoicelineitem_projectinvoice, ['dcp_fee']),
       ...invoice
     };
   }
