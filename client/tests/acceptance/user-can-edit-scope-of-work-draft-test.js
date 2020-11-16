@@ -99,6 +99,9 @@ module('Acceptance | user can edit Draft SOW Packages', function (hooks) {
 
     await visit('/scope-of-work-draft/1/edit');
 
+    // filling out necessary fields for submit, also tests ceqr-invoice-questionnaire
+    await click('[data-test-radio="dcpIsthesoleaapplicantagovtagency"][data-test-radio-option="Yes"]');
+
     const file = new File(['foo'], 'Zoning Application.pdf', { type: 'text/plain' });
 
     await selectFiles('#FileUploader1 > input', file);
