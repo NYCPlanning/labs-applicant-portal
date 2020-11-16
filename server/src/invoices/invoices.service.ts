@@ -3,7 +3,7 @@ import { CrmService } from '../crm/crm.service';
 import { overwriteCodesWithLabels } from '../_utils/overwrite-codes-with-labels';
 import { INVOICE_ATTRS } from './invoices.attrs';
 
-export function joinLabels(records) {
+export function joinLabels(records, attrs = INVOICE_ATTRS) {
   return overwriteCodesWithLabels(records, INVOICE_ATTRS);
 }
 

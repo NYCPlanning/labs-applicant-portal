@@ -52,7 +52,7 @@
 
             <br/>
             <br/>
-            <h3>Total: ${{reduce (fn this.sum) 0 (map-by 'dcpGrandtotal' this.invoices)}}</h3>
+            <h3>Total: ${{to-locale-string this.payablePackage.grandTotal}}</h3>
 
             <p>
               The following link will direct you to the CityPay website for payment processing. Before proceeding, be ready with
