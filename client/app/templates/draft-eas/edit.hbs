@@ -1,6 +1,10 @@
 <Ui::Breadcrumbs as |Crumb|>
   <Crumb @text="My Projects" @route='projects' />
-  <Crumb @text={{@model.project.dcpProjectname}} @disabled={{true}} />
+  <Crumb
+    @text={{@model.project.dcpProjectname}}
+    @route='project'
+    @model={{@model.project.id}}
+  />
   <Crumb @text="Draft EAS" @disabled={{true}} />
   <Crumb @text="Edit" @current={{true}} />
 </Ui::Breadcrumbs>

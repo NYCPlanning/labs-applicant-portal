@@ -18,6 +18,7 @@ import { RwcdsFormService } from './rwcds-form/rwcds-form.service';
 import { LanduseFormService } from './landuse-form/landuse-form.service';
 import { DocumentModule } from '../document/document.module';
 import { CitypayModule } from '../citypay/citypay.module';
+import { CeqrInvoiceQuestionnairesController } from './ceqr-invoice-questionnaires/ceqr-invoice-questionnaires.controller';
 
 @Module({
   imports: [CrmModule, DocumentModule, CitypayModule],
@@ -36,6 +37,7 @@ import { CitypayModule } from '../citypay/citypay.module';
     LanduseActionsController,
     LanduseGeographyController,
     ZoningMapChangesController,
+    CeqrInvoiceQuestionnairesController,
   ],
 })
 export class PackagesModule {}

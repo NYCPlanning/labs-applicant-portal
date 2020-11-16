@@ -20,21 +20,24 @@
           {{#if invoices}}
             <h4>Invoices</h4>
 
-            {{#each invoices as |invoice|}}
-              <Project::PackageSection::InvoiceInfo
-                @invoice={{invoice}}
-              />
-            {{/each}}
+            <ul>
+              {{#each invoices as |invoice|}}
+                <Project::PackageSection::InvoiceInfo
+                  @invoice={{invoice}}
+                />
+              {{/each}}
+            </ul>
 
-            <br/>
-            <br/>
-            <button
-              type="button"
-              class="secondary button"
-              {{on 'click' (fn this.beginPayment)}}
-            >
-              Pay
-            </button>
+            {{#if this.hasPayableInvoices}}
+              <br/>
+              <button
+                type="button"
+                class="secondary button"
+                {{on 'click' (fn this.beginPayment)}}
+              >
+                Pay
+              </button>
+            {{/if}}
 
             <Ui::GenericModal
               @show={{this.isPaying}}

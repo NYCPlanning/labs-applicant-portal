@@ -42,6 +42,14 @@ export default class PackageModel extends Model {
   @belongsTo('landuse-form', { async: false })
   landuseForm;
 
+  // although the business logic for this field is that
+  // one package has ONE ceqr-invoice-questionnaire, the
+  // data in CRM is stored as an array of objects, so
+  // in this model we have a computed property singleCeqrInvoiceQuestionnaire
+  // that just grabs that first (and only) object from the array
+  @hasMany('ceqr-invoice-questionnaire', { async: false })
+  ceqrInvoiceQuestionnaires;
+
   @hasMany('invoice', { async: false })
   invoices;
 
@@ -69,6 +77,10 @@ export default class PackageModel extends Model {
   @attr({ defaultValue: () => [] })
   documents;
 
+  get singleCeqrInvoiceQuestionnaire() {
+    return this.ceqrInvoiceQuestionnaires.firstObject;
+  }
+
   setAttrsForSubmission() {
     this.statuscode = STATUSCODE.SUBMITTED.code;
     this.statecode = STATECODE.INACTIVE.code;
@@ -88,11 +100,26 @@ export default class PackageModel extends Model {
       await this.saveDeletedRecords(recordsToDelete);
       await this.landuseForm.save();
     }
+    if (this.dcpPackagetype === DCPPACKAGETYPE.FILED_EAS.code) {
+      await this.saveDirtySingleCeqrInvoiceQuestionnaire();
+    }
     await super.save();
 
     await this.reload();
 
     this._synchronizeDocuments();
+  }
+
+  get isSingleCeqrInvoiceQuestionnaireDirty() {
+    if (this.singleCeqrInvoiceQuestionnaire) {
+      return this.singleCeqrInvoiceQuestionnaire.hasDirtyAttributes;
+    } return false;
+  }
+
+  async saveDirtySingleCeqrInvoiceQuestionnaire() {
+    if (this.isSingleCeqrInvoiceQuestionnaireDirty) {
+      this.singleCeqrInvoiceQuestionnaire.save();
+    }
   }
 
   async submit() {
@@ -146,6 +173,10 @@ export default class PackageModel extends Model {
         || this.landuseForm.isProjectDirty
         || this.landuseForm.isAffectedZoningResolutionsDirty
         || this.landuseForm.isZoningMapChangesDirty;
+    }
+    if (this.dcpPackagetype === DCPPACKAGETYPE.FILED_EAS.code) {
+      return isPackageDirty
+        || this.isSingleCeqrInvoiceQuestionnaireDirty;
     }
 
     return isPackageDirty;

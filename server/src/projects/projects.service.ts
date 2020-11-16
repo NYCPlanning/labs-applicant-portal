@@ -3,6 +3,7 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
+import { joinLabels as joinInvoiceLabels } from '../invoices/invoices.service';
 import { NycidService } from '../contact/nycid/nycid.service';
 import { CrmService } from '../crm/crm.service';
 import { overwriteCodesWithLabels } from '../_utils/overwrite-codes-with-labels';
@@ -27,6 +28,18 @@ const PACKAGE_STATUSCODE = {
 const DCP_PROJECTROLES = {
   LEAD_PLANNER: 717170026,
   BOROUGH_TEAM_LEADER: 717170000,
+};
+
+const DCP_PROJECTINVOICE_CODES = {
+  statuscode: {
+    APPROVED: 2,
+    PAID: 717170000,
+  },
+
+  statecode: {
+    ACTIVE: 0,
+    INACTIVE: 1,
+  }
 };
 
 @Injectable()
@@ -133,7 +146,10 @@ export class ProjectsService {
             or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_NO_REVISIONS_REQUIRED}
             or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_REVISION_REQUIRED}
           )
-        &$expand=dcp_dcp_package_dcp_projectinvoice_package
+        &$expand=dcp_dcp_package_dcp_projectinvoice_package(
+          $filter=statuscode eq ${DCP_PROJECTINVOICE_CODES.statuscode.APPROVED}
+            or statuscode eq ${DCP_PROJECTINVOICE_CODES.statuscode.PAID}
+        )
       `);
 
       const projectApplicantsWithContacts = await Promise.all(projectApplicants.map(async applicant => {
@@ -173,7 +189,7 @@ export class ProjectsService {
         ...project,
         packages: projectPackages.map(pkg => ({
           ...pkg,
-          invoices: pkg.dcp_dcp_package_dcp_projectinvoice_package,
+          invoices: joinInvoiceLabels(pkg.dcp_dcp_package_dcp_projectinvoice_package),
         })),
         projectApplicants: project['project-applicants'],
         'project-applicants': projectApplicantsWithContacts,
