@@ -21,6 +21,16 @@ export default class ProjectPackageSectionComponent extends Component {
     return payablePackage;
   }
 
+  get invoices() {
+    return this.args.packages
+      .mapBy('invoices')
+      .reduce((acc, curr) => acc.concat(curr), []);
+  }
+
+  get hasPayableInvoices() {
+    return this.invoices.filter((invoice) => invoice.statuscode === 'Approved').length >= 1;
+  }
+
   @action
   async beginPayment() {
     this.isPaying = true;
