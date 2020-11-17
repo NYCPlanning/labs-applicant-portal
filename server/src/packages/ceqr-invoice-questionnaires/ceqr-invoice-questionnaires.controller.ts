@@ -22,11 +22,24 @@ export class CeqrInvoiceQuestionnairesController {
   async update(@Body() body, @Param('id') id) {
     const allowedAttrs = pick(body, CEQR_INVOICE_QUESTIONNAIRE_ATTRS);
 
-    await this.crmService.update('dcp_ceqrinvoicequestionnaires', id, allowedAttrs);
+    await this.crmService.update('dcp_ceqrinvoicequestionnaires', id, {
+      ...allowedAttrs,
+      'dcp_Package@odata.bind': `/dcp_packages(${body.package})`,
+    });
 
     return {
       dcp_ceqrinvoicequestionnaireid: id,
       ...body,
     }
+  }
+
+  @Post('/')
+  create(@Body() body) {
+    const allowedAttrs = pick(body, CEQR_INVOICE_QUESTIONNAIRE_ATTRS);
+
+    return this.crmService.create('dcp_ceqrinvoicequestionnaires', {
+      ...allowedAttrs,
+      'dcp_Package@odata.bind': `/dcp_packages(${body.package})`,
+    });
   }
 }
