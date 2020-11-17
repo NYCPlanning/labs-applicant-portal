@@ -115,29 +115,7 @@
                               as |DcpNotaxblockRadioGroup|>
                                 <DcpNotaxblockRadioGroup
                                   @options={{optionset 'landuseForm' 'dcpNotaxblock' 'list'}}
-                                  @onChange={{fn this.resetDependentFields this.dcpNotaxblock}}
-                                as |dcpNotaxblock|>
-                                  {{#if (eq
-                                    dcpNotaxblock
-                                    (optionset 'landuseForm' 'dcpNotaxblock' 'code' 'YES')
-                                  )}}
-                                    <Ui::Question
-                                    as |dcpSitedatapropertydescriptionQ|>
-                                        <dcpSitedatapropertydescriptionQ.Label>
-                                          Describe Non-Tax Lots by cross streets
-                                          bounding streets, dimensions, etc.
-                                        </dcpSitedatapropertydescriptionQ.Label>
-
-                                        <form.Field
-                                          @type="text-area"
-                                          @attribute="dcpSitedatapropertydescription"
-                                          @maxlength="500"
-                                          @showCounter={{true}}
-                                          id={{dcpSitedatapropertydescriptionQ.questionId}}
-                                        />
-                                    </Ui::Question>
-                                  {{/if}}
-                                </DcpNotaxblockRadioGroup>
+                                />
                               </form.Field>
                             </Ui::Question>
                           {{/if}}
@@ -159,7 +137,7 @@
       (eq form.data.dcpEntiretycommunity (optionset 'landuseForm' 'dcpEntiretycommunity' 'code' 'NO'))
       (eq form.data.dcpNotaxblock (optionset 'landuseForm' 'dcpNotaxblock' 'code' 'NO'))
     )}}
-      <Ui::Question
+    <Ui::Question
       as |dcpZonesspecialdistrictsQ|>
         <dcpZonesspecialdistrictsQ.Label>
           What are the existing Zoning Districts and Special Districts?
@@ -224,6 +202,129 @@
               </Ui::Question>
             {{/if}}
           </DcpHistoricdistrictRadioGroup>
+        </form.Field>
+      </Ui::Question>
+
+      <h3 data-test-section="project-area-tax-lots">Project Area Tax Lots</h3>
+      <p>
+        Review and edit the Tax Lots listed below.
+      </p>
+
+      <div data-test-section="project-tax-lots">
+        <Packages::ProjectGeography
+          @form={{@form}}
+          @bbls={{@form.data.bbls}}
+          @project={{@form.data.package.project}}
+          @removeBbl={{@removeBbl}}
+        />
+      </div>
+      {{/if}}
+
+      <Ui::Question
+      as |dcpSitedatapropertydescriptionQ|>
+        <dcpSitedatapropertydescriptionQ.Label>
+            Description of geography
+        </dcpSitedatapropertydescriptionQ.Label>
+        <p class="q-help">
+            Fill in if the Project Area and/or Development Site is irregular, especially large, or does not consist of tax lots.
+        </p>
+        <form.Field
+          @type="text-area"
+          @attribute="dcpSitedatapropertydescription"
+          @maxlength="500"
+          @showCounter={{true}}
+          id={{dcpSitedatapropertydescriptionQ.questionId}}
+        />
+      </Ui::Question>
+
+      {{#if (and
+      (eq form.data.dcpWholecity (optionset 'landuseForm' 'dcpWholecity' 'code' 'NO'))
+      (eq form.data.dcpEntiretyboroughs (optionset 'landuseForm' 'dcpEntiretyboroughs' 'code' 'NO'))
+      (eq form.data.dcpEntiretycommunity (optionset 'landuseForm' 'dcpEntiretycommunity' 'code' 'NO'))
+      (eq form.data.dcpNotaxblock (optionset 'landuseForm' 'dcpNotaxblock' 'code' 'NO'))
+    )}}
+      <h3 data-test-section="proposed-development-site">Proposed Development Site</h3>
+      <p>
+        The <b>Development Site</b> is the specific parcel(s) that the Applicant is seeking to develop.
+        A Project Area and Development Site can be the same parcels of land or different,
+        depending on the Actions being sought. For instance, a Special District may be mapped
+        over a portion of a neighborhood (Project Area), but only certain parcels within it may
+        be proposed for immediate development by the Applicant (Development Site).
+      </p>
+
+      <Ui::Question
+      as |dcp500kpluszoneQ|>
+        <dcp500kpluszoneQ.Label>
+          Does the Application result in the development of 500,000+ ZSF of floor area?
+        </dcp500kpluszoneQ.Label>
+
+        <form.Field
+          @attribute="dcp500kpluszone"
+          @type="radio-group"
+        as |Dcp500kpluszoneRadioGroup|>
+          <Dcp500kpluszoneRadioGroup
+            @options={{optionset 'landuseForm' 'dcp500kpluszone' 'list'}}
+            @onChange={{fn (mut @form.data.dcpDevsize) null}}
+          as |dcp500kpluszone|>
+            {{#if (eq
+              dcp500kpluszone
+              (optionset 'landuseForm' 'dcp500kpluszone' 'code' 'YES')
+            )}}
+              <Ui::Question
+                @required={{true}}
+              as |dcpDevsizeQ|>
+                <dcpDevsizeQ.Label>
+                  Development size
+                </dcpDevsizeQ.Label>
+
+                <form.Field
+                  @attribute="dcpDevsize"
+                  @type="radio-group"
+                as |DcpDevsizeRadioGroup|>
+                  <DcpDevsizeRadioGroup
+                    @options={{optionset 'landuseForm' 'dcpDevsize' 'list'}}
+                  />
+                </form.Field>
+              </Ui::Question>
+            {{/if}}
+          </Dcp500kpluszoneRadioGroup>
+        </form.Field>
+      </Ui::Question>
+
+      <Ui::Question
+      as |dcpSitedatasiteisinnewyorkcityQ|>
+        <dcpSitedatasiteisinnewyorkcityQ.Label>
+          Is the Development Site a Landmark (New York City or other) or within a Historic District?
+        </dcpSitedatasiteisinnewyorkcityQ.Label>
+
+        <form.Field
+          @attribute="dcpSitedatasiteisinnewyorkcity"
+          @type="radio-group"
+        as |DcpSitedatasiteisinnewyorkcityRadioGroup|>
+          <DcpSitedatasiteisinnewyorkcityRadioGroup
+            @options={{optionset 'landuseForm' 'dcpSitedatasiteisinnewyorkcity' 'list'}}
+            @onChange={{fn (mut @form.data.dcpSitedataidentifylandmark) ""}}
+          as |dcpSitedatasiteisinnewyorkcity|>
+            {{#if (eq
+              dcpSitedatasiteisinnewyorkcity
+              (optionset 'landuseForm' 'dcpSitedatasiteisinnewyorkcity' 'code' 'YES')
+            )}}
+              <Ui::Question
+                @required={{true}}
+              as |dcpSitedataidentifylandmarkQ|>
+                <dcpSitedataidentifylandmarkQ.Label>
+                  Landmark or Historic District name
+                </dcpSitedataidentifylandmarkQ.Label>
+
+                <form.Field
+                  @attribute="dcpSitedataidentifylandmark"
+                  @maxlength="100"
+                  @showCounter={{true}}
+                  id={{dcpSitedataidentifylandmarkQ.id}}
+                />
+              </Ui::Question>
+            {{/if}}
+          </DcpSitedatasiteisinnewyorkcityRadioGroup>
         </form.Field>
       </Ui::Question>
     {{/if}}
