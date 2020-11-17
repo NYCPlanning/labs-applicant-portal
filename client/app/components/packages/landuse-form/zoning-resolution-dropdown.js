@@ -1,12 +1,14 @@
 import Component from '@glimmer/component';
+import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class PackagesLanduseFormZoningResolutionComponent extends Component {
-  @tracked chosenZoningResolution;
+  @tracked chosenZoningResolution = this.args.landuseActionForm.data.zoningResolution || null;
 
-  get searchPlaceholder() {
-    if (this.args.landuseActionForm.data.zoningResolution) {
-      return this.args.landuseActionForm.data.zoningResolution.dcpZoningresolution;
-    } return 'Search Zoning Resolution Sections...';
+  @action
+  clearDropdown(landuseActionFormData) {
+    this.chosenZoningResolution = null;
+    landuseActionFormData.zoningResolution = null;
+    landuseActionFormData.chosenZoningResolutionId = null;
   }
 }

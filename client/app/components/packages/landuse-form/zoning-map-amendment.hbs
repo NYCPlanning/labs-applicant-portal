@@ -27,6 +27,7 @@
             @placeholder="-- select --"
             @options={{map-by 'code' (optionset 'landuseForm' 'dcpTotalzoningareatoberezoned' 'list')}}
             @onChange={{fn (mut form.data.dcpTotalzoningareatoberezoned)}}
+            @allowClear={{true}}
           as |dcpTotalzoningareatoberezoned|>
             {{optionset 'landuseForm' 'dcpTotalzoningareatoberezoned' 'label' dcpTotalzoningareatoberezoned}}
           </PowerSelect>
