@@ -3,6 +3,7 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
+import { joinLabels as joinInvoiceLabels } from '../invoices/invoices.service';
 import { NycidService } from '../contact/nycid/nycid.service';
 import { CrmService } from '../crm/crm.service';
 import { overwriteCodesWithLabels } from '../_utils/overwrite-codes-with-labels';
@@ -27,6 +28,18 @@ const PACKAGE_STATUSCODE = {
 const DCP_PROJECTROLES = {
   LEAD_PLANNER: 717170026,
   BOROUGH_TEAM_LEADER: 717170000,
+};
+
+const DCP_PROJECTINVOICE_CODES = {
+  statuscode: {
+    APPROVED: 2,
+    PAID: 717170000,
+  },
+
+  statecode: {
+    ACTIVE: 0,
+    INACTIVE: 1,
+  }
 };
 
 @Injectable()
@@ -91,7 +104,21 @@ export class ProjectsService {
           dcp_dcp_project_dcp_projectapplicant_Project(
             $filter= statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
           ),
-          dcp_dcp_project_dcp_dcpprojectteam_project
+          dcp_dcp_project_dcp_dcpprojectteam_project,
+          dcp_dcp_project_dcp_package_project(	
+            $filter= 	
+            (	
+              dcp_visibility eq ${PACKAGE_VISIBILITY.APPLICANT_ONLY}	
+              or dcp_visibility eq ${PACKAGE_VISIBILITY.GENERAL_PUBLIC}	
+            )	
+            and (	
+              statuscode eq ${PACKAGE_STATUSCODE.PACKAGE_PREPARATION}	
+              or statuscode eq ${PACKAGE_STATUSCODE.SUBMITTED}	
+              or statuscode eq ${PACKAGE_STATUSCODE.UNDER_REVIEW}	
+              or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_NO_REVISIONS_REQUIRED}	
+              or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_REVISION_REQUIRED}	
+            )	
+          )
       `);
 
       const { records: projectApplicants } = await this.crmService.get('dcp_projectapplicants', `
@@ -133,7 +160,10 @@ export class ProjectsService {
             or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_NO_REVISIONS_REQUIRED}
             or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_REVISION_REQUIRED}
           )
-        &$expand=dcp_dcp_package_dcp_projectinvoice_package
+        &$expand=dcp_dcp_package_dcp_projectinvoice_package(
+          $filter=statuscode eq ${DCP_PROJECTINVOICE_CODES.statuscode.APPROVED}
+            or statuscode eq ${DCP_PROJECTINVOICE_CODES.statuscode.PAID}
+        )
       `);
 
       const projectApplicantsWithContacts = await Promise.all(projectApplicants.map(async applicant => {
@@ -173,7 +203,7 @@ export class ProjectsService {
         ...project,
         packages: projectPackages.map(pkg => ({
           ...pkg,
-          invoices: pkg.dcp_dcp_package_dcp_projectinvoice_package,
+          invoices: joinInvoiceLabels(pkg.dcp_dcp_package_dcp_projectinvoice_package),
         })),
         projectApplicants: project['project-applicants'],
         'project-applicants': projectApplicantsWithContacts,

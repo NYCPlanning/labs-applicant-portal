@@ -107,7 +107,7 @@ export class PackagesService {
         const { records: [firstPackage] } = await this.crmService.get('dcp_packages', `
         $select=${PACKAGE_ATTRS.join(',')}
         &$filter=dcp_packageid eq ${packageId}
-        &$expand=dcp_project($select=${PROJECT_ATTRS.join(',')})
+        &$expand=dcp_project($select=${PROJECT_ATTRS.join(',')}),dcp_package_dcp_ceqrinvoicequestionnaire_Package
       `);
 
       if (!firstPackage) {

@@ -84,9 +84,13 @@
         Date
       </dcpApplicationdateQ.Label>
 
-      <form.Field
-        @attribute="dcpApplicationdate"
-        type="date"
+      <EmberFlatpickr
+        data-test-dcpapplicationdate
+        @allowInput={{false}}
+        @date={{if form.data.dcpApplicationdate form.data.dcpApplicationdate null}}
+        @onChange={{fn (mut form.data.dcpApplicationdate)}}
+        @enableTime={{false}}
+        placeholder="Choose a date..."
       />
     </Ui::Question>
 

@@ -5,13 +5,13 @@ import {
   currentURL,
   settled,
   fillIn,
-  waitFor,
   triggerKeyEvent,
 } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { selectChoose } from 'ember-power-select/test-support';
+import { setFlatpickrDate } from 'ember-flatpickr/test-support/helpers';
 import exceedMaximum from '../helpers/exceed-maximum-characters';
 
 const saveForm = async () => {
@@ -47,15 +47,10 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     await click('[data-test-radio="dcpApplicantispublicagencyactions"][data-test-action="MM"][data-test-radio-option="Yes"]');
 
     await click('[data-test-save-button]');
-    await waitFor('[data-test-submit-button]:not([disabled])');
-    await click('[data-test-submit-button]');
-    await click('[data-test-confirm-submit-button]');
 
     await settled();
 
-    await waitFor('[data-test-show="dcpProjectname"]');
-
-    assert.equal(currentURL(), '/landuse-form/1?header=true');
+    assert.equal(currentURL(), '/landuse-form/1/edit');
   });
 
   test('User can edit Site Information on the landuse form', async function (assert) {
@@ -218,9 +213,6 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     await click('[data-test-radio="dcpApplicantispublicagencyactions"][data-test-action="ZA"][data-test-radio-option="No"]');
     await click('[data-test-radio="dcpApplicantispublicagencyactions"][data-test-action="MM"][data-test-radio-option="Yes"]');
     await click('[data-test-save-button]');
-
-    assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
-
     await click('[data-test-radio="dcpWholecity"][data-test-radio-option="No"]');
     await click('[data-test-radio="dcpEntiretyboroughs"][data-test-radio-option="No"]');
     await click('[data-test-radio="dcpEntiretycommunity"][data-test-radio-option="No"]');
@@ -228,7 +220,6 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     await click('[data-test-radio="dcp500kpluszone"][data-test-radio-option="No"]');
 
-    assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-validation-message="dcpDevsize"]').doesNotExist();
 
     await click('[data-test-radio="dcp500kpluszone"][data-test-radio-option="Yes"]');
@@ -238,12 +229,10 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     await click('[data-test-radio="dcpDevsize"][data-test-radio-option="500,000 to 999,999 zoning sq ft"]');
 
-    assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-validation-message="dcpDevsize"]').doesNotExist();
 
     await click('[data-test-radio="dcpSitedatasiteisinnewyorkcity"][data-test-radio-option="No"]');
 
-    assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-validation-message="dcpSitedataidentifylandmark"]').doesNotExist();
 
     await click('[data-test-radio="dcpSitedatasiteisinnewyorkcity"][data-test-radio-option="Yes"]');
@@ -253,7 +242,6 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     await fillIn('[data-test-input="dcpSitedataidentifylandmark"]', 'Douglas Fir');
 
-    assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-validation-message="dcpSitedataidentifylandmark"]').doesNotExist();
   });
 
@@ -295,11 +283,15 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     await fillIn('[data-test-input="dcpApplicationdescription"]', 'applicant description');
     await fillIn('[data-test-input="dcpDispositionorstatus"]', 'disposition or status');
     await fillIn('[data-test-input="dcpCalendarnumbercalendarnumber"]', 'calendar number');
-    await fillIn('[data-test-input="dcpApplicationdate"]', 'application date');
+
+    const applicationDate = new Date(2020, 0, 1);
+    setFlatpickrDate('[data-test-dcpapplicationdate]', applicationDate);
+
     await click('[data-test-save-button]');
 
     assert.equal(this.server.db.applicants.firstObject.dcpFirstname, 'Tess');
     assert.equal(this.server.db.relatedActions.firstObject.dcpReferenceapplicationno, '12345678');
+    assert.ok(this.server.db.relatedActions.firstObject.dcpApplicationdate[0].includes('2020-01-01'));
   });
 
   test('User can fill out and save Housing Plans section', async function (assert) {
@@ -607,6 +599,9 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     await click('[data-test-radio="dcpApplicantispublicagencyactions"][data-test-action="ZC"][data-test-radio-option="Yes"]');
     await click('[data-test-radio="dcpApplicantispublicagencyactions"][data-test-action="ZA"][data-test-radio-option="No"]');
 
+    const recordationDate = new Date(2020, 0, 1);
+    setFlatpickrDate('[data-test-dcprecordationdate]', recordationDate);
+
     await click('[data-test-save-button]');
 
     assert.equal(this.server.db.landuseForms.firstObject.dcpLegalinstrument, 717170000);
@@ -620,6 +615,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     assert.equal(this.server.db.landuseActions[1].dcpPreviouslyapprovedactioncode, 717170013);
     assert.equal(this.server.db.landuseActions[0].dcpApplicantispublicagencyactions, true);
     assert.equal(this.server.db.landuseActions[1].dcpApplicantispublicagencyactions, false);
+    assert.ok(this.server.db.landuseActions.firstObject.dcpRecordationdate[0].includes('2020-01-01'));
 
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
@@ -1256,11 +1252,11 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     await visit('/landuse-form/1/edit');
 
-    assert.dom('[data-test-input="dcpDateofpreviousapproval"]').doesNotExist();
+    assert.dom('[data-test-dcpdateofpreviousapproval').doesNotExist();
 
     await selectChoose('[data-test-dcpPreviouslyapprovedactioncode-picker="ZC"]', 'BF');
 
-    assert.dom('[data-test-input="dcpDateofpreviousapproval"]').exists();
+    assert.dom('[data-test-dcpdateofpreviousapproval').exists();
 
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
