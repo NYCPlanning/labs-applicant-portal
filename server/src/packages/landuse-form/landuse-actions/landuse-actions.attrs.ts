@@ -4,7 +4,7 @@ export const LANDUSE_ACTION_ATTRS = [
   'dcp_applicantispublicagencyactions',
   'dcp_datadifferentiationmultipleactionsametype',
   'dcp_nameofzoningresolutionsection',
-  'dcp_zoningresolutionsectionactionispursuant',
+  'dcp_zoningsectionstobemodified',
   'dcp_numberofzoninglotsaffected',
   'dcp_squarefootageofzoninglotsaffected',
   'dcp_squarefootageoftheproposeddevelopment',

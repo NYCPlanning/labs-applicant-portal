@@ -11,7 +11,7 @@ export default {
       message: 'Text is too long (max {max} characters)',
     }),
   ],
-  dcpZoningresolutionsectionactionispursuant: [
+  dcpZoningsectionstobemodified: [
     validateLength({
       min: 0,
       max: 100,
