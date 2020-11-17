@@ -165,3 +165,9 @@ $sticky-sidebar-offset: 6rem + rem-calc(20);
   font-size: rem-calc(13);
   margin-bottom: 0.25 * $global-margin;
 }
+
+// Companion custom "Clear" button
+// Sits below a dropdown, aligned right 
+.dropdown-clear-btn-below {
+  color: $red-dark;
+}

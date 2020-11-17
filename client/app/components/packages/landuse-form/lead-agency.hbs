@@ -1,23 +1,37 @@
 {{#let @landuseForm as |landuseForm|}}
-  <div>
-    <h5 class="small-margin-bottom">
-      Who is the lead agency?
-    </h5>
+  <div class="grid-x">
+    <div class="cell small-12">
+      <h5 class="small-margin-bottom">
+        Who is the lead agency?
+      </h5>
 
-    <label data-test-lead-agency-picker>
-      <PowerSelect
-        triggerClass="lead-agency-dropdown"
-        supportsDataTestProperties={{true}}
-        @placeholder={{this.searchPlaceholder}}
-        @searchEnabled={{true}}
-        @options={{this.accountNames}}
-        @selected={{this.chosenAccountName}}
-        @onChange={{fn (mut this.chosenAccountName)}}
-        @onClose={{fn (mut landuseForm.data.chosenLeadAgencyId) this.chosenAccountId}}
-        as |accountName|
+      <label data-test-lead-agency-picker>
+        {{!-- REDO: Rework this powerselect to act on Models,
+        the "Ember" way. Remove use of chosenAccountName --}}
+        <PowerSelect
+          triggerClass="lead-agency-dropdown"
+          supportsDataTestProperties={{true}}
+          @placeholder="Search agencies..."
+          @searchEnabled={{true}}
+          @options={{this.accountNames}}
+          @selected={{this.chosenAccountName}}
+          @onChange={{fn (mut this.chosenAccountName)}}
+          @onClose={{fn (mut landuseForm.data.chosenLeadAgencyId) this.chosenAccountId}}
+          as |accountName|
+        >
+          {{accountName}}
+        </PowerSelect>
+      </label>
+    </div>
+
+    <div class="cell text-right">
+      <button
+        type="button"
+        class="dropdown-clear-btn-below"
+        {{on "click" (fn this.clearDropdown landuseForm.data)}}
       >
-        {{accountName}}
-      </PowerSelect>
-    </label>
+        Clear
+      </button>
+    </div>
   </div>
 {{/let}}
