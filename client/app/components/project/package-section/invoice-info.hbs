@@ -7,8 +7,9 @@
 
   <LinkTo
     @route="invoice"
-    @model={{@invoice}}
+    @model={{@invoice.id}}
     @query={{hash header=false}}
+    target="_blank"
   >
     {{@invoice.dcpName}}
   </LinkTo>

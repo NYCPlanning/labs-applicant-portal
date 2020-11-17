@@ -77,6 +77,9 @@ export default class PackageModel extends Model {
   @attr({ defaultValue: () => [] })
   documents;
 
+  @attr('number')
+  grandTotal;
+
   get singleCeqrInvoiceQuestionnaire() {
     return this.ceqrInvoiceQuestionnaires.firstObject;
   }

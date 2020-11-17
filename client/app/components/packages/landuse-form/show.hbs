@@ -241,20 +241,6 @@
                 {{optionset 'landuseForm' 'dcpNotaxblock' 'label' @package.landuseForm.dcpNotaxblock}}
               </A.Field>
             </Ui::Answer>
-            {{#if (eq
-                @package.landuseForm.dcpNotaxblock
-                (optionset 'landuseForm' 'dcpNotaxblock' 'code' 'YES')
-              )}}
-              <Ui::Answer @beside={{true}} as |A|>
-                <A.Prompt>
-                  Describe Non-Tax Lots by cross streets
-                  bounding streets, dimensions, etc.
-                </A.Prompt>
-                <A.Field>
-                  {{@package.landuseForm.dcpSitedatapropertydescription}}
-                </A.Field>
-              </Ui::Answer>
-            {{/if}}
           {{/if}}
         {{/if}}
       {{/if}}
@@ -295,9 +281,9 @@
         </Ui::Answer>
 
         {{#if (eq
-                @package.landuseForm.dcpHistoricdistrict
-                (optionset 'landuseForm' 'dcpHistoricdistrict' 'code' 'YES')
-              )}}
+          @package.landuseForm.dcpHistoricdistrict
+          (optionset 'landuseForm' 'dcpHistoricdistrict' 'code' 'YES')
+        )}}
           <Ui::Answer @beside={{true}} as |A|>
             <A.Prompt>
               Historic District Name
@@ -307,19 +293,60 @@
             </A.Field>
           </Ui::Answer>
         {{/if}}
-      {{/if}}
-    </saveableForm.Section>
 
-    {{#if (and
-      (eq @package.landuseForm.dcpWholecity (optionset 'landuseForm' 'dcpWholecity' 'code' 'NO'))
-      (eq @package.landuseForm.dcpEntiretyboroughs (optionset 'landuseForm' 'dcpEntiretyboroughs' 'code' 'NO'))
-      (eq @package.landuseForm.dcpEntiretycommunity (optionset 'landuseForm' 'dcpEntiretycommunity' 'code' 'NO'))
-      (eq @package.landuseForm.dcpNotaxblock (optionset 'landuseForm' 'dcpNotaxblock' 'code' 'NO'))
-    )}}
-      <saveableForm.Section
-        @title="Proposed Development Site" 
-        @elementId="proposed-development-site"
-      >
+        <h3 class="large-margin-top" data-test-section="project-area-tax-lots">Project Area Tax Lots</h3>
+
+        <p>Tax Lots Included in This Project:</p>
+        <ul class="no-bullet">
+          {{#each @package.landuseForm.bbls as |bbl|}}
+          <li class="ruled-adjacent">
+            <fieldset class="fieldset">
+              <h3 class="small-margin-bottom">
+                {{bbl.dcpBblnumber}}
+              </h3>
+
+              <Ui::Answer @beside={{true}} as |A|>
+                <A.Prompt>
+                  Is this BBL part of the Development Site?
+                </A.Prompt>
+                <A.Field>
+                  {{optionset 'bbl' 'dcpDevelopmentsite' 'label' bbl.dcpDevelopmentsite}}
+                </A.Field>
+              </Ui::Answer>
+
+              <Ui::Answer @beside={{true}} as |A|>
+                <A.Prompt>
+                  Is only a portion of this lot included in the project area?
+                </A.Prompt>
+                <A.Field>
+                  {{optionset 'bbl' 'dcpPartiallot' 'label' bbl.dcpPartiallot}}
+                </A.Field>
+              </Ui::Answer>
+            </fieldset>
+          </li>
+          {{/each}}
+        </ul>
+      {{/if}}
+
+        <Ui::Answer as |A|>
+          <A.Prompt>
+           Description of geography
+          </A.Prompt>
+          <p class="q-help">
+             Fill in if the Project Area and/or Development Site is irregular, especially large, or does not consist of tax lots.
+          </p>
+          <A.Field>
+            {{@package.landuseForm.dcpSitedatapropertydescription}}
+          </A.Field>
+        </Ui::Answer>
+
+      {{#if (and
+        (eq @package.landuseForm.dcpWholecity (optionset 'landuseForm' 'dcpWholecity' 'code' 'NO'))
+        (eq @package.landuseForm.dcpEntiretyboroughs (optionset 'landuseForm' 'dcpEntiretyboroughs' 'code' 'NO'))
+        (eq @package.landuseForm.dcpEntiretycommunity (optionset 'landuseForm' 'dcpEntiretycommunity' 'code' 'NO'))
+        (eq @package.landuseForm.dcpNotaxblock (optionset 'landuseForm' 'dcpNotaxblock' 'code' 'NO'))
+      )}}
+        <h3 class="large-margin-top" data-test-section="proposed-development-site">Proposed Development Site</h3>
         <p>
           The <b>Development Site</b> is the specific parcel(s) that the Applicant is seeking to develop.
           A Project Area and Development Site can be the same parcels of land or different,
@@ -327,7 +354,7 @@
           over a portion of a neighborhood (Project Area), but only certain parcels within it may
           be proposed for immediate development by the Applicant (Development Site).
         </p>
-        
+
         <Ui::Answer @beside={{true}} as |A|>
           <A.Prompt>
             Does the Application result in the development of 500,000+ ZSF of floor area?
@@ -373,44 +400,8 @@
             </A.Field>
           </Ui::Answer>
         {{/if}}
-      </saveableForm.Section>
-
-      <saveableForm.Section
-        @title="Project Area Tax Lots" 
-        @elementId="project-area-tax-lots"
-      >
-        <p>Tax Lots Included in This Project:</p>
-        <ul class="no-bullet">
-          {{#each @package.landuseForm.bbls as |bbl|}}
-          <li class="ruled-adjacent">
-            <fieldset class="fieldset">
-              <h3 class="small-margin-bottom">
-                {{bbl.dcpBblnumber}}
-              </h3>
-
-              <Ui::Answer @beside={{true}} as |A|>
-                <A.Prompt>
-                  Is this BBL part of the Development Site?
-                </A.Prompt>
-                <A.Field>
-                  {{optionset 'bbl' 'dcpDevelopmentsite' 'label' bbl.dcpDevelopmentsite}}
-                </A.Field>
-              </Ui::Answer>
-
-              <Ui::Answer @beside={{true}} as |A|>
-                <A.Prompt>
-                  Is only a portion of this lot included in the project area?
-                </A.Prompt>
-                <A.Field>
-                  {{optionset 'bbl' 'dcpPartiallot' 'label' bbl.dcpPartiallot}}
-                </A.Field>
-              </Ui::Answer>
-            </fieldset>
-          </li>
-          {{/each}}
-        </ul>
-      </saveableForm.Section>
     {{/if}}
+    </saveableForm.Section>
 
     <saveableForm.Section
       @title="Environmental Review" 
@@ -497,7 +488,6 @@
 
         {{#each @package.landuseForm.landuseActions as |landuseAction|}}
           <fieldset class="fieldset">
-
             {{#if landuseAction.dcpDatadifferentiationmultipleactionsametype}}
               <p>{{landuseAction.dcpDatadifferentiationmultipleactionsametype}}. This information differentiates multiple
                 Actions with the same Action Code.</p>
