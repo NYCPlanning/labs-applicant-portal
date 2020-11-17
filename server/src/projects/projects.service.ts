@@ -204,6 +204,10 @@ export class ProjectsService {
         packages: projectPackages.map(pkg => ({
           ...pkg,
           invoices: joinInvoiceLabels(pkg.dcp_dcp_package_dcp_projectinvoice_package),
+
+          // NOTE: "virtual" property. Maybe not be available in other requests for pkg data!
+          grand_total: pkg.dcp_dcp_package_dcp_projectinvoice_package
+            .reduce((acc, curr) => curr.dcp_grandtotal + acc, 0),
         })),
         projectApplicants: project['project-applicants'],
         'project-applicants': projectApplicantsWithContacts,

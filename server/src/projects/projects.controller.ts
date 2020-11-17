@@ -42,6 +42,9 @@ import { INVOICE_ATTRS } from '../invoices/invoices.attrs';
     attributes: [
       ...PACKAGE_ATTRS,
 
+      // Virtual property — computed in the projects service
+      'grand_total',
+
       'invoices',
     ],
     invoices: {

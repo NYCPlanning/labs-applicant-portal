@@ -23,8 +23,8 @@ export default class ProjectPackageSectionComponent extends Component {
 
   get invoices() {
     return this.args.packages
-      .mapBy('invoices')
-      .reduce((acc, curr) => acc.concat(curr), []);
+      .map((pkg) => pkg.get('invoices').toArray())
+      .flat();
   }
 
   get hasPayableInvoices() {
