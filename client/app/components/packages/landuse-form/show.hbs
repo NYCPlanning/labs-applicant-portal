@@ -855,6 +855,25 @@
                 @package.landuseForm.dcpDisposition
                 (optionset 'landuseForm' 'dcpDisposition' 'code' 'YES')
               )}}
+
+          <Ui::Answer as |A|>
+            <A.Prompt>
+              Is the type of disposition HA (Urban Development Action Area - UDAAP)?
+            </A.Prompt>
+            <A.Field>
+              {{optionset 'landuseForm' 'dcpHddispositionofurbanrenewalsite' 'label' @package.landuseForm.dcpHddispositionofurbanrenewalsite}}
+            </A.Field>
+          </Ui::Answer>
+
+          <Ui::Answer as |A|>
+            <A.Prompt>
+              Is the type of disposition HD (Disposition of Urban Renewal Site)?
+            </A.Prompt>
+            <A.Field>
+              {{optionset 'landuseForm' 'dcpHaurbandevelopmentactionareaudaap' 'label' @package.landuseForm.dcpHaurbandevelopmentactionareaudaap}}
+            </A.Field>
+          </Ui::Answer>
+
           <Ui::Answer as |A|>
             <A.Prompt>
               Manner of Disposition
