@@ -76,28 +76,6 @@ import { INVOICE_ATTRS } from '../invoices/invoices.attrs';
       ...TEAMMEMBER_ATTRS,
     ],
   },
-  
-  // remap verbose navigation link names to	
-  // more concise names	
-  transform(project) {	
-    try {	
-      return {	
-        ...project,	
-        packages: project.dcp_dcp_project_dcp_package_project,	
-        projectApplicants: project['project-applicants'],	
-      };	
-    } catch(e) {	
-      if (e instanceof HttpException) {	
-        throw e;	
-      } else {	
-        throw new HttpException({	
-          code: 'PROJECTS_ERROR',	
-          title: 'Failed load project(s)',	
-          detail: `An error occurred while loading one or more projects. ${e.message}`,	
-        }, HttpStatus.INTERNAL_SERVER_ERROR);	
-      }	
-    }	
-  },
 }))
 @UseGuards(AuthenticateGuard)
 @UsePipes(JsonApiDeserializePipe)

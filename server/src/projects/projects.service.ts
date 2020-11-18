@@ -69,7 +69,13 @@ export class ProjectsService {
             $filter= statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
           )
       `);
-      return this.overwriteCodesWithLabels(records);
+
+      return this.overwriteCodesWithLabels(records)
+        .map(project => ({
+          ...project,
+          packages: project.dcp_dcp_project_dcp_package_project,
+          projectApplicants: project['project-applicants'],
+        }));
     } catch(e) {
       const errorMessage = `Unable to find projects for current user. ${e.message}`;
       throw new HttpException({
