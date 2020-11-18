@@ -60,6 +60,43 @@
             dcpDisposition
             (optionset 'landuseForm' 'dcpDisposition' 'code' 'YES')
           )}}
+
+            <span class="text-weight-bold"><p>Type of Disposition?</p></span>
+
+            <Ui::Question
+              @required={{true}}
+            as |dcpHaurbandevelopmentactionareaudaapQ|>
+              <dcpHaurbandevelopmentactionareaudaapQ.Label>
+                HA (Urban Development Action Area - UDAAP)
+              </dcpHaurbandevelopmentactionareaudaapQ.Label>
+
+              <form.Field
+                @attribute="dcpHaurbandevelopmentactionareaudaap"
+                @type="radio-group"
+              as |dcpHaurbandevelopmentactionareaudaapRadioGroup|>
+                <dcpHaurbandevelopmentactionareaudaapRadioGroup
+                  @options={{optionset 'landuseForm' 'dcpHaurbandevelopmentactionareaudaap' 'list'}}
+                />
+              </form.Field>
+            </Ui::Question>
+
+            <Ui::Question
+              @required={{true}}
+            as |dcpHddispositionofurbanrenewalsiteQ|>
+              <dcpHddispositionofurbanrenewalsiteQ.Label>
+                HD (Disposition of Urban Renewal Site)
+              </dcpHddispositionofurbanrenewalsiteQ.Label>
+
+              <form.Field
+                @attribute="dcpHddispositionofurbanrenewalsite"
+                @type="radio-group"
+              as |dcpHddispositionofurbanrenewalsiteRadioGroup|>
+                <dcpHddispositionofurbanrenewalsiteRadioGroup
+                  @options={{optionset 'landuseForm' 'dcpHddispositionofurbanrenewalsite' 'list'}}
+                />
+              </form.Field>
+            </Ui::Question>
+
             <Ui::Question
             as |dcpMannerofdispositionQ|>
               <dcpMannerofdispositionQ.Label>

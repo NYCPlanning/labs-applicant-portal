@@ -114,6 +114,10 @@ export default class LanduseFormModel extends Model {
   @attr dcpFrom;
 
   @attr dcpTo;
+  
+  @attr dcpHddispositionofurbanrenewalsite;
+
+  @attr dcpHaurbandevelopmentactionareaudaap;
 
   // public facilities attrs
   @attr dcpOfficespaceleaseopt;
