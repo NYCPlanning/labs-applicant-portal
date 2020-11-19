@@ -19,4 +19,11 @@ export default class PackagesWorkingPackageEditComponent extends Component {
       console.log('Save Working Package package error:', error);
     }
   }
+
+  @action
+  async submitPackage() {
+    await this.args.package.submit();
+
+    this.router.transitionTo('working-package.show', this.args.package.id);
+  }
 }

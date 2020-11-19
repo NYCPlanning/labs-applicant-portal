@@ -77,6 +77,9 @@ export default class PackageModel extends Model {
   @attr({ defaultValue: () => [] })
   documents;
 
+  @attr('number')
+  grandTotal;
+
   get singleCeqrInvoiceQuestionnaire() {
     return this.ceqrInvoiceQuestionnaires.firstObject;
   }
@@ -101,6 +104,9 @@ export default class PackageModel extends Model {
       await this.landuseForm.save();
     }
     if (this.dcpPackagetype === DCPPACKAGETYPE.FILED_EAS.code) {
+      await this.saveDirtySingleCeqrInvoiceQuestionnaire();
+    }
+    if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_SCOPE_OF_WORK.code) {
       await this.saveDirtySingleCeqrInvoiceQuestionnaire();
     }
     await super.save();
@@ -175,6 +181,10 @@ export default class PackageModel extends Model {
         || this.landuseForm.isZoningMapChangesDirty;
     }
     if (this.dcpPackagetype === DCPPACKAGETYPE.FILED_EAS.code) {
+      return isPackageDirty
+        || this.isSingleCeqrInvoiceQuestionnaireDirty;
+    }
+    if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_SCOPE_OF_WORK.code) {
       return isPackageDirty
         || this.isSingleCeqrInvoiceQuestionnaireDirty;
     }

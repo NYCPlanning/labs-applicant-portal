@@ -84,7 +84,7 @@
         </label>
       </div>
 
-      <div class="cell auto medium-2">
+      <div class="cell auto medium-4">
         <label data-test-applicant-state-dropdown>
           State
           <PowerSelect
@@ -95,6 +95,7 @@
             @searchField="label"
             @options={{map-by 'code' (optionset 'applicant' 'dcpState' 'list')}}
             @onChange={{fn (mut @applicant.dcpState)}}
+            @allowClear={{true}}
           as |stateCode|>
             {{optionset 'applicant' 'dcpState' 'label' stateCode}}
           </PowerSelect>

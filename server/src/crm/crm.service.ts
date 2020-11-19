@@ -82,6 +82,10 @@ export class CrmService {
     return this._associate(relationshipName, entitySetName1, guid1, entitySetName2, guid2, headers);
   }
 
+  async disassociateHasOne(singleValuedNavigationProperty, entitySetName, guid) {
+    return this._disassociateSingleValuedNavigationProperty(singleValuedNavigationProperty, entitySetName, guid);
+  }
+
   /**
    * Makes a CRM Web API query using the passed in query in XML format
    *
@@ -399,6 +403,11 @@ export class CrmService {
       "@odata.id": this.host + entitySetName2 + "(" + guid2 + ")"
     };
     return this.create(query, data, headers);
+  }
+
+  async _disassociateSingleValuedNavigationProperty(singleValuedNavigationProperty, entitySetName, guid) {
+    const query = entitySetName + "(" + guid + ")/" + singleValuedNavigationProperty + "/$ref";
+    return this._sendDeleteRequest(query, {});
   }
 
   async generateSharePointAccessToken(): Promise<any> {

@@ -124,8 +124,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     assert.dom('[data-test-input="dcpCommunity"]').doesNotExist();
     assert.dom('[data-test-radio="dcpNotaxblock"]').exists();
 
-
-    assert.dom('[data-test-input="dcpSitedatapropertydescription"]').doesNotExist();
+    assert.dom('[data-test-input="dcpSitedatapropertydescription"]').exists();
 
     await click('[data-test-radio="dcpNotaxblock"][data-test-radio-option="Yes"]');
 
@@ -138,7 +137,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     await click('[data-test-radio="dcpNotaxblock"][data-test-radio-option="No"]');
 
-    assert.dom('[data-test-input="dcpSitedatapropertydescription"]').doesNotExist();
+    assert.dom('[data-test-input="dcpSitedatapropertydescription"]').exists();
 
     assert.dom('[data-test-input="dcpZonesspecialdistricts"]').exists();
     assert.dom('[data-test-radio="dcpStateczm"]').exists();
@@ -170,7 +169,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     await click('[data-test-radio="dcpNotaxblock"][data-test-radio-option="No"]');
     await click('[data-test-radio="dcpNotaxblock"][data-test-radio-option="Yes"]');
 
-    await assert.dom('[data-test-input="dcpSitedatapropertydescription"]').hasNoValue();
+    await assert.dom('[data-test-input="dcpSitedatapropertydescription"]').hasValue('Planning');
 
     await fillIn('[data-test-input="dcpSitedatapropertydescription"]', 'Planning');
 
@@ -187,7 +186,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     await click('[data-test-radio="dcpEntiretycommunity"][data-test-radio-option="No"]');
 
-    assert.dom('[data-test-input="dcpSitedatapropertydescription"]').doesNotExist();
+    assert.dom('[data-test-input="dcpSitedatapropertydescription"]').exists();
 
     await click('[data-test-radio="dcpNotaxblock"][data-test-radio-option="Yes"]');
 

@@ -45,6 +45,20 @@
         </saveableForm.Section>
       {{/if}}
 
+      {{#let saveableForm.data.singleCeqrInvoiceQuestionnaire as |ceqrInvoiceQuestionnaire|}}
+        <saveableForm.Section @title="Ceqr Invoice Questionnaire">
+          <saveableForm.SaveableForm
+            @model={{ceqrInvoiceQuestionnaire}}
+            @validators={{array (hash) this.validations.SubmittableCeqrInvoiceQuestionnaireFormValidations}}
+            as |ceqrInvoiceQuestionnaireForm|
+          >
+            <Packages::CeqrInvoiceQuestionnaire
+              @form={{ceqrInvoiceQuestionnaireForm}}
+            />
+          </saveableForm.SaveableForm>
+        </saveableForm.Section>
+      {{/let}}
+
       <Packages::ScopeOfWorkDraft::AttachedDocuments
         @form={{saveableForm}}
         @model={{@package}}

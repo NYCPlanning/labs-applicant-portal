@@ -100,7 +100,7 @@ module('Acceptance | user can edit Filed EAS Packages', function (hooks) {
 
     await visit('/filed-eas/1/edit');
 
-    // filling out necessary fields for submit
+    // filling out necessary fields for submit, also tests ceqr-invoice-questionnaire
     await click('[data-test-radio="dcpIsthesoleaapplicantagovtagency"][data-test-radio-option="Yes"]');
 
     const file = new File(['foo'], 'Zoning Application.pdf', { type: 'text/plain' });
