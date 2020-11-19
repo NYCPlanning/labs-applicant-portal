@@ -1,3 +1,5 @@
+import { authenticateSession } from 'ember-simple-auth';
+
 export default function(server) {
   /*
     Seed your development database using your factories.
