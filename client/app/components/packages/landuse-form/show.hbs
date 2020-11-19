@@ -883,6 +883,32 @@
             </A.Field>
           </Ui::Answer>
 
+          {{#if (eq
+            @package.landuseForm.dcpMannerofdisposition
+            (optionset 'landuseForm' 'dcpMannerofdisposition' 'code' 'Direct')
+          )}}
+            <Ui::Answer as |A|>
+              <A.Prompt>
+                From (Indicate City Agency)
+              </A.Prompt>
+
+              <A.Field>
+                {{@package.landuseForm.dcpFrom}}
+              </A.Field>
+            </Ui::Answer>
+
+            <Ui::Answer as |A|>
+              <A.Prompt>
+                To (Indicate Sponsor/Developer/Purchaser/Lessee
+                or Local Public Development Corp.)
+              </A.Prompt>
+
+              <A.Field>
+                {{@package.landuseForm.dcpTo}}
+              </A.Field>
+            </Ui::Answer>
+          {{/if}}
+
           <Ui::Answer as |A|>
             <A.Prompt>
               Restrictions and Conditions
