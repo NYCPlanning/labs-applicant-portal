@@ -105,6 +105,9 @@ const OPTIONSET_LOOKUP = {
     dcpChangestreetgradeopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpTypedisposition: LANDUSE_FORM_OPTIONSETS.DCPTYPEDISPOSITION,
     dcpTotalzoningareatoberezoned: LANDUSE_FORM_OPTIONSETS.DCPTOTALZONINGAREATOBEREZONED,
+    dcpHaurbandevelopmentactionareaudaap: COMMON_OPTIONSETS.YES_NO_PICKLIST_CODE,
+    dcpHddispositionofurbanrenewalsite: COMMON_OPTIONSETS.YES_NO_PICKLIST_CODE,
+
   },
   rwcdsForm: {
     dcpHasprojectchangedsincesubmissionofthepas: YES_NO,
