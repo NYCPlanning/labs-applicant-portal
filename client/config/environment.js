@@ -1,3 +1,7 @@
+const { EMBER_MIRAGE = 'no' } = process.env;
+const emberMirageEnabled = (EMBER_MIRAGE === 'yes') ? true : false;
+const testUserAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJueWNFeHRUT1VWZXJzaW9uIjoiMS4wIiwibWFpbCI6InRlc3R1c2VyQGdtYWlsLmNvbSIsInNjb3BlIjpbImFwcGxpY2FudC1wb3J0YWwtcHJvZHVjdGlvbiJdLCJnaXZlbk5hbWUiOiJUZXN0IiwibnljRXh0RW1haWxWYWxpZGF0aW9uRmxhZyI6dHJ1ZSwiR1VJRCI6ImJjODQ1NjVkYjAwMzQzMDg4MDkzYzdmODE2OTA1YmU1Iiwic24iOiJVc2VyIiwidXNlclR5cGUiOiJFRElSU1NPIiwiZXhwIjoxNjA1ODk3Mjk4LCJqdGkiOiIyYWZmZWZlOS1hNjIwLTQ1ZDQtYTFlYS0xY2IwNGIyZjA5Y2QifQ.g6hfKl8T08yxITYXfXqIP2Es89F1jux0IKSPpM5OnmU';
+
 module.exports = function(environment) {
   const ENV = {
     modulePrefix: 'client',
@@ -34,6 +38,9 @@ module.exports = function(environment) {
       host: 'https://search-api.planninglabs.nyc',
       route: 'search',
       helpers: ['geosearch', 'bbl'],
+    },
+    'ember-cli-mirage': {
+      enabled: false || emberMirageEnabled,
     },
   };
 
@@ -109,7 +116,7 @@ function getOAuthLoginEndpoint(environment) {
 
   // plain local development, no local backing server
   if (environment === 'development' && !HOST) {
-    return `${DOMAIN}/login#access_token=test`;
+    return `${DOMAIN}/login#access_token=${testUserAccessToken}`;
   }
 
   // if we're running locally and a HOST is provided

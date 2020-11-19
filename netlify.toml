@@ -22,3 +22,7 @@
 # develop
 [context.develop]
   environment = { HOST="https://applicant-portal-develop.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-develop', NYCID_DOMAIN='https://accounts-nonprd.nyc.gov' }
+
+# sample
+[context.sample]
+  environment = { HOST="", EMBER_MIRAGE="yes", NYCID_DOMAIN="" }
