@@ -37,6 +37,7 @@
           @placeholder="-- select --"
           @options={{map-by 'code' (optionset 'zoningMapChange' 'dcpExistingzoningdistrictvalue' 'list')}}
           @onChange={{fn (mut form.data.dcpExistingzoningdistrictvalue)}}
+          @allowClear={{true}}
         as |dcpExistingzoningdistrictvalue|>
           {{optionset 'zoningMapChange' 'dcpExistingzoningdistrictvalue' 'label' dcpExistingzoningdistrictvalue}}
         </PowerSelect>

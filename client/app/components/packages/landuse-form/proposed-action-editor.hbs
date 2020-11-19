@@ -61,16 +61,16 @@
         />
       </Ui::Question>
 
-      <Ui::Question as |dcpZoningresolutionsectionactionispursuantQ|>
-        <dcpZoningresolutionsectionactionispursuantQ.Label>
+      <Ui::Question as |dcpZoningsectionstobemodifiedQ|>
+        <dcpZoningsectionstobemodifiedQ.Label>
           Zoning Resolution section(s) to be modified
-        </dcpZoningresolutionsectionactionispursuantQ.Label>
+        </dcpZoningsectionstobemodifiedQ.Label>
 
         <landuseActionForm.Field
-          @attribute="dcpZoningresolutionsectionactionispursuant"
+          @attribute="dcpZoningsectionstobemodified"
           @showCounter={{true}}
           @maxlength="100"
-          id={{dcpZoningresolutionsectionactionispursuantQ.questionId}}
+          id={{dcpZoningsectionstobemodifiedQ.questionId}}
         />
       </Ui::Question>
 
@@ -178,26 +178,38 @@
 
     {{/if}}
 
-    <div>
-      <h5 class="small-margin-bottom">
-        If this is a follow-up Action, indicate the previously approved Action Code
-      </h5>
+    <div class="grid-x">
+      <div class="cell small-12">
+        <h5 class="small-margin-bottom">
+          If this is a follow-up Action, indicate the previously approved Action Code
+        </h5>
 
-      <label data-test-dcpPreviouslyapprovedactioncode-picker="{{landuseActionForm.data.dcpActioncode}}">
-        <PowerSelect
-          triggerClass="previouslyapprovedactions-dropdown"
-          supportsDataTestProperties={{true}}
-          @placeholder={{this.selectedActionPlaceholder}}
-          @searchEnabled={{false}}
-          @options={{optionset 'landuseAction' 'dcpPreviouslyapprovedactioncode' 'list'}}
-          @selected={{this.actionCode}}
-          @onChange={{fn (mut this.actionCode)}}
-          @onClose={{fn this.setPreviouslyApprovedActionCodeFields this.actionCode.code}}
-          as |landUseAction|
+        <label data-test-dcpPreviouslyapprovedactioncode-picker="{{landuseActionForm.data.dcpActioncode}}">
+          <PowerSelect
+            triggerClass="previouslyapprovedactions-dropdown"
+            supportsDataTestProperties={{true}}
+            @placeholder="-- select an action --"
+            @searchEnabled={{false}}
+            @options={{optionset 'landuseAction' 'dcpPreviouslyapprovedactioncode' 'list'}}
+            @selected={{this.chosenDcpPreviouslyapprovedactioncode}}
+            @onChange={{fn (mut this.chosenDcpPreviouslyapprovedactioncode)}}
+            @onClose={{fn this.setPreviouslyApprovedActionCodeFields this.chosenDcpPreviouslyapprovedactioncode.code}}
+            as |landUseAction|
+          >
+            {{landUseAction.label}}
+          </PowerSelect>
+        </label>
+      </div>
+
+      <div class="cell text-right">
+        <button
+          type="button"
+          class="dropdown-clear-btn-below"
+          {{on "click" (fn this.clearPreviouslyApprovedActionCodeDropdown landuseActionForm.data)}}
         >
-          {{landUseAction.label}}
-        </PowerSelect>
-      </label>
+          Clear
+        </button>
+      </div>
     </div>
 
     {{#if this.projectHasRequiredActionsAndFollowUpYes}}

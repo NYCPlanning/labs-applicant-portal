@@ -5,6 +5,18 @@ import SubmittablePackageFormValidations from '../../../validations/submittable-
 import SubmittableCeqrInvoiceQuestionnaireFormValidations from '../../../validations/submittable-ceqr-invoice-questionnaire-form';
 
 export default class PackagesFiledEasEditComponent extends Component {
+  @service
+  store;
+
+  constructor(...args) {
+    super(...args);
+
+    if (this.args.package.ceqrInvoiceQuestionnaires.length < 1) {
+      const newCeqrInvoiceQuestionnaire = this.store.createRecord('ceqr-invoice-questionnaire');
+      this.args.package.ceqrInvoiceQuestionnaires.pushObject(newCeqrInvoiceQuestionnaire);
+    }
+  }
+
   validations = {
     SubmittablePackageFormValidations,
   };

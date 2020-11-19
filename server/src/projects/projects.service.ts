@@ -69,7 +69,13 @@ export class ProjectsService {
             $filter= statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
           )
       `);
-      return this.overwriteCodesWithLabels(records);
+
+      return this.overwriteCodesWithLabels(records)
+        .map(project => ({
+          ...project,
+          packages: project.dcp_dcp_project_dcp_package_project,
+          projectApplicants: project['project-applicants'],
+        }));
     } catch(e) {
       const errorMessage = `Unable to find projects for current user. ${e.message}`;
       throw new HttpException({
@@ -104,7 +110,21 @@ export class ProjectsService {
           dcp_dcp_project_dcp_projectapplicant_Project(
             $filter= statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
           ),
-          dcp_dcp_project_dcp_dcpprojectteam_project
+          dcp_dcp_project_dcp_dcpprojectteam_project,
+          dcp_dcp_project_dcp_package_project(	
+            $filter= 	
+            (	
+              dcp_visibility eq ${PACKAGE_VISIBILITY.APPLICANT_ONLY}	
+              or dcp_visibility eq ${PACKAGE_VISIBILITY.GENERAL_PUBLIC}	
+            )	
+            and (	
+              statuscode eq ${PACKAGE_STATUSCODE.PACKAGE_PREPARATION}	
+              or statuscode eq ${PACKAGE_STATUSCODE.SUBMITTED}	
+              or statuscode eq ${PACKAGE_STATUSCODE.UNDER_REVIEW}	
+              or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_NO_REVISIONS_REQUIRED}	
+              or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_REVISION_REQUIRED}	
+            )	
+          )
       `);
 
       const { records: projectApplicants } = await this.crmService.get('dcp_projectapplicants', `
@@ -190,6 +210,10 @@ export class ProjectsService {
         packages: projectPackages.map(pkg => ({
           ...pkg,
           invoices: joinInvoiceLabels(pkg.dcp_dcp_package_dcp_projectinvoice_package),
+
+          // NOTE: "virtual" property. Maybe not be available in other requests for pkg data!
+          grand_total: pkg.dcp_dcp_package_dcp_projectinvoice_package
+            .reduce((acc, curr) => curr.dcp_grandtotal + acc, 0),
         })),
         projectApplicants: project['project-applicants'],
         'project-applicants': projectApplicantsWithContacts,
