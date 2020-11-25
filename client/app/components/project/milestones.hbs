@@ -1,14 +1,14 @@
-<ul>
-  {{#each @milestones as |milestone|}}
-    <li>
-      <p>{{milestone.statuscode}}</p>
-      <p>{{milestone.dcpMilestoneValue}}</p>
-      <p>{{milestone.dcpActualstartdate}}</p>
-      <p>{{milestone.dcpActualenddate}}</p>
-      <p>{{milestone.dcpPlannedstartdate}}</p>
-      <p>{{milestone.dcpPlannedcompletiondate}}</p>
-    </li>
-  {{/each}}
-</ul>
+{{#each-in (group-by 'statuscode' @milestones) as |status groupedMilestones|}}
+  <h3>{{status}}</h3>
+  <ul class="no-bullet">
+    {{#each groupedMilestones as |milestone|}}
+      <li>
+        <Project::Milestones::Milestone
+          @milestone={{milestone}}
+        />
+      </li>
+    {{/each}}
+  </ul>
+{{/each-in}}
 
 {{yield}}

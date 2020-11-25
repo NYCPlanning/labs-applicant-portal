@@ -129,8 +129,6 @@ export class ProjectsService {
           dcp_dcp_project_dcp_projectmilestone_project
       `);
 
-      console.log(records[0]['dcp_dcp_project_dcp_projectmilestone_project']);
-
       const { records: projectApplicants } = await this.crmService.get('dcp_projectapplicants', `
         $filter=
           _dcp_project_value eq ${projectId}
