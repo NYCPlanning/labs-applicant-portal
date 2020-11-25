@@ -3,10 +3,10 @@
     ...attributes
     data-test-package-section={{@packageType}}
   >
-    <h2>{{@packageType}}</h2>
+    <h3>{{@packageType}}</h3>
 
-    <div class="grid-x grid-padding-x">
-      <div class="cell large-6">
+    <div class="grid-y grid-padding-y">
+      <div class="cell">
         <ol class="no-bullet">
           {{#each @packages as |package|}}
             <Project::PackageListItem
@@ -15,8 +15,8 @@
           {{/each}}
         </ol>
       </div>
-      <div class="cell large-6">
-        {{#if this.invoices}}
+      {{#if this.invoices}}
+        <div class="cell">
           <h4>Invoices</h4>
 
           <ul>
@@ -92,8 +92,8 @@
               </div>
             </div>
           </Ui::GenericModal>
-        {{/if}}
-      </div>
+        </div>
+      {{/if}}
     </div>
   </div>
 {{/if}}

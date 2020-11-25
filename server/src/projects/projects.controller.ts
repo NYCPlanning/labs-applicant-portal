@@ -20,7 +20,7 @@ import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 import { AuthenticateGuard } from '../authenticate.guard';
 import { JsonApiDeserializePipe } from '../json-api-deserialize.pipe';
 import { pick } from 'underscore';
-import { PROJECT_ATTRS } from './projects.attrs';
+import { MILESTONE_ATTRS, PROJECT_ATTRS } from './projects.attrs';
 import { PACKAGE_ATTRS } from '../packages/packages.attrs';
 import { PROJECTAPPLICANT_ATTRS } from './project-applicants/project-applicants.attrs';
 import { TEAMMEMBER_ATTRS } from './team-members/team-members.attrs';
@@ -36,6 +36,7 @@ import { INVOICE_ATTRS } from '../invoices/invoices.attrs';
     'project-applicants',
     'team-members',
     'contacts',
+    'milestones',
   ],
   packages: {
     ref: 'dcp_packageid',
@@ -74,6 +75,12 @@ import { INVOICE_ATTRS } from '../invoices/invoices.attrs';
     ref: 'dcp_dcpprojectteamid',
     attributes: [
       ...TEAMMEMBER_ATTRS,
+    ],
+  },
+  milestones: {
+    ref: 'dcp_projectmilestoneid',
+    attributes: [
+      ...MILESTONE_ATTRS
     ],
   },
 }))

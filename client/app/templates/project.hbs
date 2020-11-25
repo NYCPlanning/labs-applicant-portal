@@ -41,53 +41,66 @@
       </p>
     </section>
 
-    <Project::PackageSection
-      @packages={{@model.landusePackages}}
-      @packageType="Land Use"
-      class="large-padding-top large-margin-bottom ruled-adjacent"
-    />
+    <div class="grid-x grid-padding-x">
+      <div class="cell large-6">
+        <h2>Packages</h2>
 
-    <Project::PackageSection
-      @packages={{@model.easPackages}}
-      @packageType="Environmental Assessment Statement (EAS)"
-      class="large-padding-top large-margin-bottom ruled-adjacent"
-    />
+        <Project::PackageSection
+          @packages={{@model.landusePackages}}
+          @packageType="Land Use"
+          class="large-padding-top large-margin-bottom ruled-adjacent"
+        />
 
-    <Project::PackageSection
-      @packages={{@model.scopeOfWorkDraftPackages}}
-      @packageType="Scope of Work (SOW)"
-      class="large-padding-top large-margin-bottom ruled-adjacent"
-    />
+        <Project::PackageSection
+          @packages={{@model.easPackages}}
+          @packageType="Environmental Assessment Statement (EAS)"
+          class="large-padding-top large-margin-bottom ruled-adjacent"
+        />
 
-    <Project::PackageSection
-      @packages={{@model.eisPackages}}
-      @packageType="Environmental Impact Statement (EIS)"
-      class="large-padding-top large-margin-bottom ruled-adjacent"
-    />
+        <Project::PackageSection
+          @packages={{@model.scopeOfWorkDraftPackages}}
+          @packageType="Scope of Work (SOW)"
+          class="large-padding-top large-margin-bottom ruled-adjacent"
+        />
 
-    <Project::PackageSection
-      @packages={{@model.technicalMemoPackages}}
-      @packageType="Technical Memo"
-      class="large-padding-top large-margin-bottom ruled-adjacent"
-    />
+        <Project::PackageSection
+          @packages={{@model.eisPackages}}
+          @packageType="Environmental Impact Statement (EIS)"
+          class="large-padding-top large-margin-bottom ruled-adjacent"
+        />
 
-    <Project::PackageSection
-      @packages={{@model.rwcdsPackages}}
-      @packageType="Reasonable Worst Case Development Scenario"
-      class="large-padding-top large-margin-bottom ruled-adjacent"
-    />
+        <Project::PackageSection
+          @packages={{@model.technicalMemoPackages}}
+          @packageType="Technical Memo"
+          class="large-padding-top large-margin-bottom ruled-adjacent"
+        />
 
-    <Project::PackageSection
-      @packages={{@model.pasPackages}}
-      @packageType="Pre-Application Statement"
-      class="large-padding-top large-margin-bottom ruled-adjacent"
-    />
+        <Project::PackageSection
+          @packages={{@model.rwcdsPackages}}
+          @packageType="Reasonable Worst Case Development Scenario"
+          class="large-padding-top large-margin-bottom ruled-adjacent"
+        />
 
-    <Project::PackageSection
-      @packages={{@model.workingPackages}}
-      @packageType="Working Package"
-      class="large-padding-top large-margin-bottom ruled-adjacent"
-    />
+        <Project::PackageSection
+          @packages={{@model.pasPackages}}
+          @packageType="Pre-Application Statement"
+          class="large-padding-top large-margin-bottom ruled-adjacent"
+        />
+
+        <Project::PackageSection
+          @packages={{@model.workingPackages}}
+          @packageType="Working Package"
+          class="large-padding-top large-margin-bottom ruled-adjacent"
+        />
+      </div>
+      <div class="cell large-6">
+        <h2>Milestones</h2>
+
+        <Project::Milestones
+          @milestones={{@model.milestones}}
+        />
+      </div>
+    </div>
   </div>{{! end left/main column }}
   <div class="cell large-4">
 

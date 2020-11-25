@@ -7,6 +7,7 @@ import { joinLabels as joinInvoiceLabels } from '../invoices/invoices.service';
 import { NycidService } from '../contact/nycid/nycid.service';
 import { CrmService } from '../crm/crm.service';
 import { overwriteCodesWithLabels } from '../_utils/overwrite-codes-with-labels';
+import { MILESTONE_ATTRS } from './projects.attrs';
 
 const APPLICANT_ACTIVE_STATUS_CODE = 1;
 const PROJECT_ACTIVE_STATE_CODE = 0;
@@ -124,8 +125,11 @@ export class ProjectsService {
               or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_NO_REVISIONS_REQUIRED}	
               or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_REVISION_REQUIRED}	
             )	
-          )
+          ),
+          dcp_dcp_project_dcp_projectmilestone_project
       `);
+
+      console.log(records[0]['dcp_dcp_project_dcp_projectmilestone_project']);
 
       const { records: projectApplicants } = await this.crmService.get('dcp_projectapplicants', `
         $filter=
@@ -224,6 +228,7 @@ export class ProjectsService {
           email: member.dcp_user.internalemailaddress,
           phone: member.dcp_user.address1_telephone1,
         })),
+        milestones: overwriteCodesWithLabels(project.dcp_dcp_project_dcp_projectmilestone_project, [...MILESTONE_ATTRS]),
       };
     } catch(e) {
       console.log(e);

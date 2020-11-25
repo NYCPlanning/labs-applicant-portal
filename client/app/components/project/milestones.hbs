@@ -1,0 +1,14 @@
+<ul>
+  {{#each @milestones as |milestone|}}
+    <li>
+      <p>{{milestone.statuscode}}</p>
+      <p>{{milestone.dcpMilestoneValue}}</p>
+      <p>{{milestone.dcpActualstartdate}}</p>
+      <p>{{milestone.dcpActualenddate}}</p>
+      <p>{{milestone.dcpPlannedstartdate}}</p>
+      <p>{{milestone.dcpPlannedcompletiondate}}</p>
+    </li>
+  {{/each}}
+</ul>
+
+{{yield}}
