@@ -43,6 +43,10 @@ const DCP_PROJECTINVOICE_CODES = {
   }
 };
 
+const MILESTONE_PHASES = {
+  PRECERT: 717170001,
+};
+
 @Injectable()
 export class ProjectsService {
   constructor(
@@ -126,7 +130,10 @@ export class ProjectsService {
               or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_REVISION_REQUIRED}	
             )	
           ),
-          dcp_dcp_project_dcp_projectmilestone_project
+          dcp_dcp_project_dcp_projectmilestone_project(
+            $select=${MILESTONE_ATTRS.join(',')};
+            $filter=dcp_milestonephase eq ${MILESTONE_PHASES.PRECERT}
+          )
       `);
 
       const { records: projectApplicants } = await this.crmService.get('dcp_projectapplicants', `
