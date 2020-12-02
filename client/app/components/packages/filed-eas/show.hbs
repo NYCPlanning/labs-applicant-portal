@@ -57,6 +57,7 @@
                 {{optionset 'ceqrInvoiceQuestionnaire' 'dcpIsthesoleaapplicantagovtagency' 'label' ceqrInvoiceQuestionnaire.dcpIsthesoleaapplicantagovtagency}}
               </A.Field>
             </Ui::Answer>
+
             {{#if (eq ceqrInvoiceQuestionnaire.dcpIsthesoleaapplicantagovtagency (optionset 'ceqrInvoiceQuestionnaire' 'dcpIsthesoleaapplicantagovtagency' 'code' 'NO'))}}
               <Ui::Answer @beside={{true}} as |A|>
                 <A.Prompt>
@@ -104,6 +105,7 @@
     <saveableForm.Section
       @title="Attached Documents" 
       @elementId="attachments"
+      data-test-attached-documents
     >
       <ul class="no-bullet">
         {{#each @package.documents as |document idx|}}
