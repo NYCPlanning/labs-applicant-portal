@@ -6,7 +6,7 @@ import { RwcdsFormService } from './rwcds-form/rwcds-form.service';
 import { LanduseFormService } from './landuse-form/landuse-form.service';
 import { PACKAGE_ATTRS } from './packages.attrs';
 import { PROJECT_ATTRS } from '../projects/projects.attrs';
-import { DocumentService } from '../document/document.service';
+import { SharepointService } from '../sharepoint/sharepoint.service';
 
 export const PACKAGE_TYPE_OPTIONSET = {
   INFORMATION_MEETING: {
@@ -78,7 +78,7 @@ export class PackagesService {
     private readonly pasFormService: PasFormService,
     private readonly rwcdsFormService: RwcdsFormService,
     private readonly landuseFormService: LanduseFormService,
-    private readonly documentService: DocumentService,
+    private readonly sharepointService: SharepointService,
   ) {}
 
   // this is starting to do way more than get a package. It gets a package, gets related
@@ -131,7 +131,7 @@ export class PackagesService {
       // TODO: Why does it need to be this? We should check to see if this is still
       // flakey given current configuration
       let documents = [];
-      documents = await this.documentService.findPackageSharepointDocuments(dcp_name, dcp_packageid);
+      documents = await this.findPackageSharepointDocuments(dcp_name, dcp_packageid);
 
       let formData = {};
 
@@ -214,5 +214,35 @@ export class PackagesService {
     const allowedAttrs = pick(body, PACKAGE_ATTRS);
 
     return this.crmService.update('dcp_packages', id, allowedAttrs);
+  }
+
+  // We retrieve documents from the Sharepoint folder (`folderIdentifier` in the
+  // code below) that holds both documents from past revisions and the current
+  // revision. CRM automatically carries over documents from past revisions into
+  // this folder, and we deliberately upload documents for the latest/current
+  // revision into this folder.
+  async findPackageSharepointDocuments(packageName, id: string) {
+    try {
+      const folderIdentifier = `${packageName}_${id.toUpperCase().replace(/-/g, '')}`;
+
+      const { value: documents } = await this.sharepointService.getSharepointFolderFiles(`dcp_package/${folderIdentifier}`);
+
+      return documents;
+    } catch (e) {
+      // Relay errors from crmService 
+      if (e instanceof HttpException) {
+        throw e;
+      } else {
+        throw new HttpException({
+          code: 'SHAREPOINT_FOLDER_ERROR',
+          title: 'Bad Sharepoint folder lookup',
+          detail: `An error occured while constructing and looking up folder for package. Perhaps the package name or id is wrong.`,
+          meta: {
+            packageName: packageName,
+            packageId: id,
+          }
+        }, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    }
   }
 }
