@@ -1,5 +1,13 @@
-<p>{{@milestone.dcpMilestoneValue}}</p>
-<p>{{@milestone.dcpActualstartdate}}</p>
-<p>{{@milestone.dcpActualenddate}}</p>
-<p>{{@milestone.dcpPlannedstartdate}}</p>
-<p>{{@milestone.dcpPlannedcompletiondate}}</p>
+<div class="large-margin-bottom">
+  <h4 class="no-margin">{{@milestone.dcpMilestoneValue}}</h4>
+  {{#if (eq @status "Not Started")}} 
+    Planned start date: {{@milestone.dcpActualstartdate}}<br>
+  {{else}}
+    Actual start date: {{@milestone.dcpPlannedstartdate}}<br>
+  {{/if}}
+  {{#if (eq @status "Completed")}} 
+    Actual completion date: {{@milestone.dcpActualenddate}}
+  {{else}}
+    Planned completion date: {{@milestone.dcpPlannedcompletiondate}}
+ {{/if}}
+</div>
