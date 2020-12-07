@@ -3,7 +3,7 @@
   <ul class="no-bullet">
     {{#each @groupedMilestones as |milestone|}}
       <li>
-        <Project::Milestones::MilestoneGroupItem @milestone={{milestone}} @status />
+        <Project::Milestones::MilestoneGroupItem @milestone={{milestone}} @status={{@status}}/>
       </li>
     {{/each}}
   </ul>
