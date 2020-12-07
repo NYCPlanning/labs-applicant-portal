@@ -21,14 +21,7 @@
 
       <div class="cell auto milestone">
         <div class="group-milestone">
-          <h3>{{status}}</h3>
-          <ul class="no-bullet">
-            {{#each groupedMilestones as |milestone|}}
-            <li>
-              <Project::Milestones::Milestone @milestone={{milestone}} @status={{status}}/>
-            </li>
-            {{/each}}
-          </ul>
+           <Project::Milestones::MilestoneGroup @status={{status}} @groupedMilestones={{groupedMilestones}}/>
         </div>
       </div>
     </div>
