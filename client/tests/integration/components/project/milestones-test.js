@@ -16,11 +16,9 @@ module('Integration | Component | project/milestones', function(hooks) {
 
     // Template block usage:
     await render(hbs`
-      <Project::Milestones>
-        template block text
-      </Project::Milestones>
+      <Project::Milestones/>
     `);
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.equal(this.element.textContent.trim(), '');
   });
 });

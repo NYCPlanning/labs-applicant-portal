@@ -10,17 +10,15 @@ module('Integration | Component | project/milestones/milestone', function(hooks)
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<Project::Milestones::Milestone />`);
+    await render(hbs`<Project::Milestones::MilestoneGroup />`);
 
     assert.equal(this.element.textContent.trim(), '');
 
     // Template block usage:
     await render(hbs`
-      <Project::Milestones::Milestone>
-        template block text
-      </Project::Milestones::Milestone>
+      <Project::Milestones::MilestoneGroup />
     `);
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.equal(this.element.textContent.trim(), '');
   });
 });
