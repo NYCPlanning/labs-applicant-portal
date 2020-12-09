@@ -1,6 +1,9 @@
 <div class="large-margin-bottom">
   <h4 class="no-margin">{{@milestone.dcpMilestoneValue}}</h4>
-  <small class="a11y-orange">{{fa-icon 'exclamation-triangle' fixedWidth=true class='a11y'}}Applicant controls this milestone’s duration.</small><br>
+  {{#unless @milestone.isDcpOwned}}
+    <small class="a11y-orange">{{fa-icon 'exclamation-triangle' fixedWidth=true class='a11y'}}Applicant controls this milestone’s duration.</small><br>
+  {{/unless}}
+
   {{#if (eq @status "Not Started")}} 
     Planned start date: {{@milestone.dcpPlannedstartdate}} <br>
   {{else}}
@@ -11,34 +14,12 @@
   {{else}}
     Planned completion date: {{@milestone.dcpPlannedcompletiondate}}
   {{/if}}
-  {{#if (eq @milestone.dcpMilestoneValue "Review Pre-Application Statement")}} 
-    <p class="small-margin-top"><small>*DCP’s target duration is 10-30 days.</small></p>
-  {{else if (eq @milestone.dcpMilestoneValue "Interdivisional Meeting")}} 
-    <p class="small-margin-top"><small>*DCP’s target duration is 5-10 days.</small></p>
-  {{else if (eq @milestone.dcpMilestoneValue "Finalize Actions")}} 
-    <p class="small-margin-top"><small>*DCP’s target duration is 10-60 days.</small></p>
-  {{else if (eq @milestone.dcpMilestoneValue "Review RWCDS Memo")}} 
-    <p class="small-margin-top"><small>*DCP’s target duration is 30-45 days.</small></p>
-  {{else if (eq @milestone.dcpMilestoneValue "Review Draft Land Use Application")}} 
-    <p class="small-margin-top"><small>*DCP’s target duration is 45-60 days.</small></p>
-  {{else if (eq @milestone.dcpMilestoneValue "Review Filed Land Use Fee Invoice")}} 
-    <p class="small-margin-top"><small>*DCP’s target duration is 2-4 days.</small></p>
-  {{else if (eq @milestone.dcpMilestoneValue "Review Filed Land Use Application")}} 
-    <p class="small-margin-top"><small>*DCP’s target duration is 45-60 days.</small></p>
-  {{else if (eq @milestone.dcpMilestoneValue "Review Draft EAS")}} 
-    <p class="small-margin-top"><small>*DCP’s target duration is 45-60 days.</small></p>
-  {{else if (eq @milestone.dcpMilestoneValue "Review Filed EAS and EIS Draft Scope of Work")}} 
-    <p class="small-margin-top"><small>*DCP’s target duration is 45-60 days.</small></p>
-  {{else if (eq @milestone.dcpMilestoneValue "Review CEQR Fee Invoice")}} 
-    <p class="small-margin-top"><small>*DCP’s target duration is 2-4 days.</small></p>
-  {{else if (eq @milestone.dcpMilestoneValue "Review Filed EAS")}} 
-    <p class="small-margin-top"><small>*DCP’s target duration is 45-60 days.</small></p>
-  {{else if (eq @milestone.dcpMilestoneValue "DEIS Public Scoping Meeting")}} 
-    <p class="small-margin-top"><small>*DCP’s target duration is 30-45 days.</small></p>
-  {{else if (eq @milestone.dcpMilestoneValue "Prepare and Review DEIS")}} 
-    <p class="small-margin-top"><small>*DCP’s target duration is 60-120 days.</small></p>
+
+  {{#if @milestone.targetDuration}}
+    <p class="small-margin-top">
+      <small>
+        *DCP’s target duration is {{@milestone.targetDuration}} days.
+      </small>
+    </p>
   {{/if}}
-  {{@milestone.dcpMilestonetype}}<br>
-  {{@milestone.owningbusinessunitValue}}<br>
-  {{@milestone.owninguserValue}}
 </div>

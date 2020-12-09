@@ -4,10 +4,10 @@ import { tracked } from '@glimmer/tracking';
 
 export default class ProjectMilestonesMilestoneGroupComponent extends Component {
   @tracked
-  showMilestones = false;
+  _showMilestones = this.args.showMilestones ?? false;
 
   @action
   toggleshowMilestones() {
-    this.showMilestones = !this.showMilestones;
+    this._showMilestones = !this._showMilestones;
   }
 }

@@ -1,5 +1,5 @@
 <div class="clickable-header" onClick={{this.toggleshowMilestones}}>
-  <FaIcon @icon={{if this.showMilestones "caret-down" "caret-right"}} />
+  <FaIcon @icon={{if this._showMilestones "caret-down" "caret-right"}} />
   {{#if (eq @status "Completed")}}
     <span class="milestone-icon fa-layers fa-fw">
       {{fa-icon 'circle' fixedWidth=true class='dark-gray'}}
@@ -17,10 +17,11 @@
     </span>
   {{/if}}
 </div>
+
 <div class="cell auto milestone">
   <div class="group-milestone">
     <h3 onClick={{this.toggleshowMilestones}}>{{@status}}</h3>
-    {{#if this.showMilestones}}
+    {{#if this._showMilestones}}
       <ul class="no-bullet">
         {{#each @groupedMilestones as |milestone|}}
           <li>
