@@ -80,7 +80,10 @@ import { INVOICE_ATTRS } from '../invoices/invoices.attrs';
   milestones: {
     ref: 'dcp_projectmilestoneid',
     attributes: [
-      ...MILESTONE_ATTRS
+      ...MILESTONE_ATTRS,
+
+      // Virtual property — it's computed in the projects service
+      'is_dcp_owned',
     ],
   },
 }))

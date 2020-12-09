@@ -47,6 +47,10 @@ const MILESTONE_PHASES = {
   PRECERT: 717170001,
 };
 
+const DCP_MILESTONE_OWNER_TYPES = {
+  DCP: 717170000,
+}
+
 @Injectable()
 export class ProjectsService {
   constructor(
@@ -161,6 +165,11 @@ export class ProjectsService {
         &$orderby=dcp_name asc
       `);
 
+      const { records: dcpOwnedMilestones } = await this.crmService.get('dcp_milestones', `
+            $select=dcp_milestoneid
+            &$filter=dcp_milestoneownertype eq ${DCP_MILESTONE_OWNER_TYPES.DCP}
+      `);
+
       const { records: projectPackages } = await this.crmService.get('dcp_packages', `
         $filter=
           _dcp_project_value eq ${projectId}
@@ -214,6 +223,14 @@ export class ProjectsService {
         }, HttpStatus.NOT_FOUND);
       }
 
+      const projectMilestones = project.dcp_dcp_project_dcp_projectmilestone_project
+        .map(projectMilestone =>({
+          is_dcp_owned: !!dcpOwnedMilestones.find(milestone => milestone.dcp_milestoneid === projectMilestone._dcp_milestone_value),
+
+          ...projectMilestone,
+        }));
+      const formattedProjectMilestones = overwriteCodesWithLabels(projectMilestones, [...MILESTONE_ATTRS]);
+
       return {
         ...project,
         packages: projectPackages.map(pkg => ({
@@ -233,7 +250,7 @@ export class ProjectsService {
           email: member.dcp_user.internalemailaddress,
           phone: member.dcp_user.address1_telephone1,
         })),
-        milestones: overwriteCodesWithLabels(project.dcp_dcp_project_dcp_projectmilestone_project, [...MILESTONE_ATTRS]),
+        milestones: formattedProjectMilestones,
       };
     } catch(e) {
       console.log(e);
