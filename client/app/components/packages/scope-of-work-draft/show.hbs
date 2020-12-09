@@ -42,12 +42,11 @@
       {{#if (gte saveableForm.data.ceqrInvoiceQuestionnaires.length 1)}}
           {{#let saveableForm.data.singleCeqrInvoiceQuestionnaire as |ceqrInvoiceQuestionnaire|}}
             <saveableForm.Section
-            @title="Ceqr Invoice Questionnaire" 
-            @elementId="ceqr-invoice-questionnaire"
+              @title="Ceqr Invoice Questionnaire" 
+              @elementId="ceqr-invoice-questionnaire"
             >
               <saveableForm.SaveableForm
                 @model={{ceqrInvoiceQuestionnaire}}
-                @validators={{array (hash) (hash)}} 
               >
                 <Ui::Answer @beside={{true}} as |A|>
                   <A.Prompt>
@@ -131,8 +130,7 @@
 
     <div class="cell large-4 sticky-sidebar">
       <Messages::Assistance class="large-margin-top" />
-      <saveableForm.PageNav>
-      </saveableForm.PageNav>
+      <saveableForm.PageNav />
     </div>
   </div>
 </SaveableForm>
