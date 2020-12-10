@@ -7,16 +7,12 @@ module('Integration | Component | project/milestones', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+    this.set('milestones', []);
 
-    await render(hbs`<Project::Milestones />`);
-
-    assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
     await render(hbs`
-      <Project::Milestones/>
+      <Project::Milestones
+        @milestones={{this.milestones}}
+      />
     `);
 
     assert.equal(this.element.textContent.trim(), '');
