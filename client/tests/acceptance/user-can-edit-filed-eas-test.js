@@ -128,6 +128,18 @@ module('Acceptance | user can edit Filed EAS Packages', function (hooks) {
     assert.dom('[data-test-attached-documents]').exists();
   });
 
+  test('User sees CEQR on the Filed EAS Show page', async function (assert) {
+    this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', 'scopeOfWorkDraft'),
+      ],
+    });
+
+    await visit('/scope-of-work-draft/1');
+
+    assert.dom('[data-test-ceqr-invoice-questionnaire]').exists();
+  });
+
   test('User sees Attached Documents on the Filed EAS Show page', async function (assert) {
     this.server.create('project', {
       packages: [
