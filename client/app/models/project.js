@@ -33,6 +33,9 @@ export default class ProjectModel extends Model {
   @hasMany('team-member', { async: false })
   teamMembers;
 
+  @hasMany('milestone', { async: false })
+  milestones;
+
   get publicStatusGeneralPublicProject() {
     const isGeneralPublic = this.dcpVisibility === optionset(['project', 'dcpVisibility', 'code', 'GENERAL_PUBLIC']);
     return this.dcpPublicstatus && isGeneralPublic;

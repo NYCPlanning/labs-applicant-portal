@@ -7,6 +7,7 @@ import { joinLabels as joinInvoiceLabels } from '../invoices/invoices.service';
 import { NycidService } from '../contact/nycid/nycid.service';
 import { CrmService } from '../crm/crm.service';
 import { overwriteCodesWithLabels } from '../_utils/overwrite-codes-with-labels';
+import { MILESTONE_ATTRS } from './projects.attrs';
 
 const APPLICANT_ACTIVE_STATUS_CODE = 1;
 const PROJECT_ACTIVE_STATE_CODE = 0;
@@ -41,6 +42,14 @@ const DCP_PROJECTINVOICE_CODES = {
     INACTIVE: 1,
   }
 };
+
+const MILESTONE_PHASES = {
+  PRECERT: 717170001,
+};
+
+const DCP_MILESTONE_OWNER_TYPES = {
+  DCP: 717170000,
+}
 
 @Injectable()
 export class ProjectsService {
@@ -124,6 +133,10 @@ export class ProjectsService {
               or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_NO_REVISIONS_REQUIRED}	
               or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_REVISION_REQUIRED}	
             )	
+          ),
+          dcp_dcp_project_dcp_projectmilestone_project(
+            $select=${MILESTONE_ATTRS.join(',')};
+            $filter=dcp_milestonephase eq ${MILESTONE_PHASES.PRECERT}
           )
       `);
 
@@ -150,6 +163,11 @@ export class ProjectsService {
             $select=internalemailaddress,address1_telephone1
           )
         &$orderby=dcp_name asc
+      `);
+
+      const { records: dcpOwnedMilestones } = await this.crmService.get('dcp_milestones', `
+            $select=dcp_milestoneid
+            &$filter=dcp_milestoneownertype eq ${DCP_MILESTONE_OWNER_TYPES.DCP}
       `);
 
       const { records: projectPackages } = await this.crmService.get('dcp_packages', `
@@ -205,6 +223,14 @@ export class ProjectsService {
         }, HttpStatus.NOT_FOUND);
       }
 
+      const projectMilestones = project.dcp_dcp_project_dcp_projectmilestone_project
+        .map(projectMilestone =>({
+          is_dcp_owned: !!dcpOwnedMilestones.find(milestone => milestone.dcp_milestoneid === projectMilestone._dcp_milestone_value),
+
+          ...projectMilestone,
+        }));
+      const formattedProjectMilestones = overwriteCodesWithLabels(projectMilestones, [...MILESTONE_ATTRS]);
+
       return {
         ...project,
         packages: projectPackages.map(pkg => ({
@@ -224,6 +250,7 @@ export class ProjectsService {
           email: member.dcp_user.internalemailaddress,
           phone: member.dcp_user.address1_telephone1,
         })),
+        milestones: formattedProjectMilestones,
       };
     } catch(e) {
       console.log(e);

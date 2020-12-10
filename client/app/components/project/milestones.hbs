@@ -1,0 +1,15 @@
+{{#with (group-by 'statuscode' @milestones) as |groupedMilestones|}}
+  {{#with (sort (keys groupedMilestones)) as |statuses|}}
+    {{#each statuses as |status|}}
+      <div class="cell shrink">
+        <Project::Milestones::MilestoneGroup
+          @status={{status}}
+          @showMilestones={{if (eq status 'Completed') false true}}
+          @groupedMilestones={{get groupedMilestones status}}
+        />
+      </div>
+    {{/each}}
+  {{/with}}
+{{/with}}
+
+{{yield}}
