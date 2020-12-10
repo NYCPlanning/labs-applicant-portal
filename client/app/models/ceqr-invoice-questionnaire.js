@@ -21,4 +21,7 @@ export default class CeqrInvoiceQuestionnaireModel extends Model {
 
   @attr()
   dcpRespectivedecrequired;
+
+  @attr()
+  dcpSubtotal;
 }
