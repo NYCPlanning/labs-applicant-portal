@@ -50,6 +50,7 @@
               @options={{map-by 'code' (optionset 'ceqrInvoiceQuestionnaire' 'dcpSquarefeet' 'list')}}
               @selected={{form.data.dcpSquarefeet}}
               @onChange={{fn (mut form.data.dcpSquarefeet)}}
+              @onClose={{fn (mut form.data.dcpSubtotal) (square-footage-to-subtotal form.data.dcpSquarefeet)}}
               as |dcpSquarefeet|
             >
               {{optionset 'ceqrInvoiceQuestionnaire' 'dcpSquarefeet' 'label' dcpSquarefeet}}

@@ -16,12 +16,12 @@ import { LanduseFormController } from './landuse-form/landuse-form.controller';
 import { PasFormService } from './pas-form/pas-form.service';
 import { RwcdsFormService } from './rwcds-form/rwcds-form.service';
 import { LanduseFormService } from './landuse-form/landuse-form.service';
-import { DocumentModule } from '../document/document.module';
+import { SharepointModule } from '../sharepoint/sharepoint.module';
 import { CitypayModule } from '../citypay/citypay.module';
 import { CeqrInvoiceQuestionnairesController } from './ceqr-invoice-questionnaires/ceqr-invoice-questionnaires.controller';
 
 @Module({
-  imports: [CrmModule, DocumentModule, CitypayModule],
+  imports: [CrmModule, SharepointModule, CitypayModule],
   exports: [PackagesService],
   providers: [PackagesService, PasFormService, RwcdsFormService, LanduseFormService],
   controllers: [
