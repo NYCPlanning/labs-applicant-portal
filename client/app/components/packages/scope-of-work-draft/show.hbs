@@ -1,71 +1,134 @@
-<div class="grid-x grid-margin-x">
-  <div class="cell large-8">
-    <section class="form-section">
-      <h1 class="header-large">
-        Draft Scope of Work (DSOW) Information Confirmation
-        <small
-          class="text-weight-normal"
-          data-test-package-dcpPackageversion
+<SaveableForm 
+  @model={{@package}}
+  @validators={{array (hash) (hash)}} 
+  as |saveableForm|
+>
+
+  <div class="grid-x grid-margin-x">
+    <div class="cell large-8">
+      <section class="form-section">
+        <h1 class="header-large">
+          Draft Scope of Work (DSOW) Information Confirmation
+          <small
+            class="text-weight-normal"
+            data-test-package-dcpPackageversion
+          >
+            {{if @package.dcpPackageversion (concat '(V' @package.dcpPackageversion ')')}}
+          </small>
+        </h1>
+
+        <h2 class="no-margin"
+          data-test-project-dcpProjectname
         >
-          {{if @package.dcpPackageversion (concat '(V' @package.dcpPackageversion ')')}}
-        </small>
-      </h1>
+          {{@package.project.dcpProjectname}}
+          <small
+            class="text-weight-normal"
+            data-test-project-dcpName
+          >
+            {{if @package.project.dcpName (concat '(' @package.project.dcpName ')')}}
+          </small>
+        </h2>
 
-      <h2 class="no-margin"
-        data-test-project-dcpProjectname
-      >
-        {{@package.project.dcpProjectname}}
-        <small
-          class="text-weight-normal"
-          data-test-project-dcpName
+        <p
+          class="text-large text-dark-gray"
+          data-test-project-dcpBorough
+          data-test-package-statuscode
         >
-          {{if @package.project.dcpName (concat '(' @package.project.dcpName ')')}}
-        </small>
-      </h2>
+          {{optionset 'bbl' 'boroughs' 'label' @package.project.dcpBorough}} |
+          {{optionset 'package' 'statuscode' 'label' @package.statuscode}}
+        </p>
+      </section>
 
-      <p
-        class="text-large text-dark-gray"
-        data-test-project-dcpBorough
-        data-test-package-statuscode
-      >
-        {{optionset 'bbl' 'boroughs' 'label' @package.project.dcpBorough}} |
-        {{optionset 'package' 'statuscode' 'label' @package.statuscode}}
-      </p>
-    </section>
-
-    <section class="form-section"
-      data-test-attached-documents
-    >
-      <h2 class="section-header">
-        <span id="attachments" class="section-anchor"></span>
-        Attached Documents
-      </h2>
-
-      <ul class="no-bullet">
-        {{#each @package.documents as |document idx|}}
-          <li class="ruled-adjacent tight">
-            <a
-              href={{concat (get-env-variable 'host') '/documents' document.serverRelativeUrl}}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-test-document-name={{idx}}
+      {{#if (gte saveableForm.data.ceqrInvoiceQuestionnaires.length 1)}}
+          {{#let saveableForm.data.singleCeqrInvoiceQuestionnaire as |ceqrInvoiceQuestionnaire|}}
+            <saveableForm.Section
+              @title="Ceqr Invoice Questionnaire" 
+              @elementId="ceqr-invoice-questionnaire"
+              data-test-ceqr-invoice-questionnaire
             >
-              <strong>
-                {{document.name}}
-              </strong>
-            </a>
-            <small class="text-gray">
-              {{document.timeCreated}}
-            </small>
-          </li>
-        {{/each}}
-      </ul>
-    </section>
-  </div>
+                <Ui::Answer @beside={{true}} as |A|>
+                  <A.Prompt>
+                    Is the sole applicant a government agency (City, State, or Federal)?
+                  </A.Prompt>
+                  <A.Field>
+                    {{optionset 'ceqrInvoiceQuestionnaire' 'dcpIsthesoleaapplicantagovtagency' 'label' ceqrInvoiceQuestionnaire.dcpIsthesoleaapplicantagovtagency}}
+                  </A.Field>
+                </Ui::Answer>
 
-  <div class="cell large-4 sticky-sidebar">
-    <Messages::Assistance class="large-margin-top" />
-  </div>
-</div>
+                {{#if (eq ceqrInvoiceQuestionnaire.dcpIsthesoleaapplicantagovtagency (optionset 'ceqrInvoiceQuestionnaire' 'dcpIsthesoleaapplicantagovtagency' 'code' 'NO'))}}
+                  <Ui::Answer @beside={{true}} as |A|>
+                    <A.Prompt>
+                      Does your project solely consist of action(s) that are not measureable by sq. ft.?
+                    </A.Prompt>
+                    <A.Field>
+                      {{optionset 'ceqrInvoiceQuestionnaire' 'dcpProjectspolelyconsistactionsnotmeasurable' 'label' ceqrInvoiceQuestionnaire.dcpProjectspolelyconsistactionsnotmeasurable}}
+                    </A.Field>
+                  </Ui::Answer>
 
+                {{#if (eq ceqrInvoiceQuestionnaire.dcpProjectspolelyconsistactionsnotmeasurable (optionset 'ceqrInvoiceQuestionnaire' 'dcpProjectspolelyconsistactionsnotmeasurable' 'code' 'NO'))}}
+                  <Ui::Answer @beside={{true}} as |A|>
+                    <A.Prompt>
+                      What is the Square Footage of the Total Project?
+                    </A.Prompt>
+                    <A.Field>
+                    {{optionset 'ceqrInvoiceQuestionnaire' 'dcpSquarefeet' 'label' ceqrInvoiceQuestionnaire.dcpSquarefeet}}
+                    </A.Field>
+                  </Ui::Answer>
+
+                  <Ui::Answer @beside={{true}} as |A|>
+                    <A.Prompt>
+                      Does the project consist solely of modification actions that are not subject to 197c? 
+                    </A.Prompt>
+                    <A.Field>
+                      {{optionset 'ceqrInvoiceQuestionnaire' 'dcpProjectmodificationtoapreviousapproval' 'label' ceqrInvoiceQuestionnaire.dcpProjectmodificationtoapreviousapproval}}
+                    </A.Field>
+                  </Ui::Answer>
+
+                  <Ui::Answer @beside={{true}} as |A|>
+                    <A.Prompt>
+                      Does your project produce a need for a CEQR Restrictive Declaration? 
+                    </A.Prompt>
+                    <A.Field>
+                    {{optionset 'ceqrInvoiceQuestionnaire' 'dcpRespectivedecrequired' 'label' ceqrInvoiceQuestionnaire.dcpRespectivedecrequired}}
+                    </A.Field>
+                  </Ui::Answer>
+                {{/if}}
+              {{/if}}
+            </saveableForm.Section>
+          {{/let}}
+        {{/if}}
+        
+      <saveableForm.Section
+        @title="Attached Documents" 
+        @elementId="attachments"
+        data-test-attached-documents
+      >
+        <ul class="no-bullet">
+          {{#each @package.documents as |document idx|}}
+            <li class="ruled-adjacent tight">
+              <a
+                href={{concat (get-env-variable 'host') '/documents' document.serverRelativeUrl}}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-test-document-name={{idx}}
+              >
+                <strong>
+                  {{document.name}}
+                </strong>
+              </a>
+              <small class="text-gray">
+                {{document.timeCreated}}
+              </small>
+            </li>
+          {{/each}}
+        </ul>
+      </saveableForm.Section>
+    </div>
+
+    <div class="cell large-4 sticky-sidebar">
+      <Messages::Assistance class="large-margin-top" />
+      <saveableForm.PageNav />
+    </div>
+  </div>
+</SaveableForm>
 {{yield}}

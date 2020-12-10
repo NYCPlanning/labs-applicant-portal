@@ -10,3 +10,12 @@ export const PROJECT_ATTRS = [
   '_dcp_applicant_customer_value',
   'dcp_dcp_project_dcp_projectapplicant_Project',
 ];
+
+export const MILESTONE_ATTRS = [
+  'statuscode',
+  'dcp_actualstartdate',
+  'dcp_actualenddate',
+  'dcp_plannedcompletiondate',
+  'dcp_plannedstartdate',
+  '_dcp_milestone_value',
+];

@@ -128,6 +128,18 @@ module('Acceptance | user can edit Filed EAS Packages', function (hooks) {
     assert.dom('[data-test-attached-documents]').exists();
   });
 
+  test('User sees CEQR on the Filed EAS Show page', async function (assert) {
+    this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', 'scopeOfWorkDraft'),
+      ],
+    });
+
+    await visit('/scope-of-work-draft/1');
+
+    assert.dom('[data-test-ceqr-invoice-questionnaire]').exists();
+  });
+
   test('User sees Attached Documents on the Filed EAS Show page', async function (assert) {
     this.server.create('project', {
       packages: [
@@ -150,7 +162,7 @@ module('Acceptance | user can edit Filed EAS Packages', function (hooks) {
 
     await visit('/filed-eas/1/edit');
 
-    await click('[data-test-radio="dcpIsthesoleaapplicantagovtagency"][data-test-radio-option="Yes"]');
+    await click('[data-test-radio="dcpIsthesoleaapplicantagovtagency"][data-test-radio-option="No"]');
     await click('[data-test-radio="dcpProjectspolelyconsistactionsnotmeasurable"][data-test-radio-option="No"]');
     await selectChoose('[data-test-dcpsquarefeet-picker]', 'less than 10,000 square feet');
     await click('[data-test-radio="dcpProjectmodificationtoapreviousapproval"][data-test-radio-option="No"]');

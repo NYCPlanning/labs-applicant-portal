@@ -15,72 +15,80 @@
     </form.Field>
   </Ui::Question>
 
-  <Ui::Question as |dcpProjectspolelyconsistactionsnotmeasurableQ|>
-    <dcpProjectspolelyconsistactionsnotmeasurableQ.Legend>
-      Does your project solely consist of action(s) that are not measureable by sq. ft.?
-    </dcpProjectspolelyconsistactionsnotmeasurableQ.Legend>
+  {{#if (eq form.data.dcpIsthesoleaapplicantagovtagency (optionset 'ceqrInvoiceQuestionnaire' 'dcpIsthesoleaapplicantagovtagency' 'code' 'NO'))}}
+    <Ui::Question @required={{true}} as |dcpProjectspolelyconsistactionsnotmeasurableQ|>
+      <dcpProjectspolelyconsistactionsnotmeasurableQ.Legend>
+        Does your project solely consist of action(s) that are not measureable by sq. ft.?
+      </dcpProjectspolelyconsistactionsnotmeasurableQ.Legend>
 
-    <form.Field
-      @attribute="dcpProjectspolelyconsistactionsnotmeasurable"
-      @type="radio-group"
-      as |RadioGroup|
-    >
-      <RadioGroup
-        @options={{optionset 'ceqrInvoiceQuestionnaire' 'dcpProjectspolelyconsistactionsnotmeasurable' 'list'}}
-      />
-    </form.Field>
-  </Ui::Question>
-
-  <div>
-    <h5 class="small-margin-bottom">
-      What is the Square Footage of the Total Project?
-    </h5>
-
-    <label data-test-dcpsquarefeet-picker>
-      <PowerSelect
-        triggerClass="square-feet-dropdown"
-        supportsDataTestProperties={{true}}
-        @placeholder="-- Select Square Footage --"
-        @searchEnabled={{false}}
-        @options={{map-by 'code' (optionset 'ceqrInvoiceQuestionnaire' 'dcpSquarefeet' 'list')}}
-        @selected={{form.data.dcpSquarefeet}}
-        @onChange={{fn (mut form.data.dcpSquarefeet)}}
-        as |dcpSquarefeet|
+      <form.Field
+        @attribute="dcpProjectspolelyconsistactionsnotmeasurable"
+        @type="radio-group"
+        as |RadioGroup|
       >
-        {{optionset 'ceqrInvoiceQuestionnaire' 'dcpSquarefeet' 'label' dcpSquarefeet}}
-      </PowerSelect>
-    </label>
-  </div>
+        <RadioGroup
+          @options={{optionset 'ceqrInvoiceQuestionnaire' 'dcpProjectspolelyconsistactionsnotmeasurable' 'list'}}
+        />
+      </form.Field>
+    </Ui::Question>
 
-  <Ui::Question as |dcpProjectmodificationtoapreviousapprovalQ|>
-    <dcpProjectmodificationtoapreviousapprovalQ.Legend>
-      Does the project consist solely of modification actions that are not subject to 197c? 
-    </dcpProjectmodificationtoapreviousapprovalQ.Legend>
+    {{#if (eq form.data.dcpProjectspolelyconsistactionsnotmeasurable (optionset 'ceqrInvoiceQuestionnaire' 'dcpProjectspolelyconsistactionsnotmeasurable' 'code' 'NO'))}}
+      <Ui::Question @required={{true}} as |dcpSquarefeetQ|>
+        <dcpSquarefeetQ.Label>
+          What is the Square Footage of the Total Project?
+        </dcpSquarefeetQ.Label>
 
-    <form.Field
-      @attribute="dcpProjectmodificationtoapreviousapproval"
-      @type="radio-group"
-      as |RadioGroup|
-    >
-      <RadioGroup
-        @options={{optionset 'ceqrInvoiceQuestionnaire' 'dcpProjectmodificationtoapreviousapproval' 'list'}}
-      />
-    </form.Field>
-  </Ui::Question>
+        <form.Field
+          @attribute="dcpSquarefeet"
+        >
+          <label data-test-dcpsquarefeet-picker>
+            <PowerSelect
+              triggerClass="square-feet-dropdown"
+              supportsDataTestProperties={{true}}
+              @placeholder="-- Select Square Footage --"
+              @searchEnabled={{false}}
+              @options={{map-by 'code' (optionset 'ceqrInvoiceQuestionnaire' 'dcpSquarefeet' 'list')}}
+              @selected={{form.data.dcpSquarefeet}}
+              @onChange={{fn (mut form.data.dcpSquarefeet)}}
+              as |dcpSquarefeet|
+            >
+              {{optionset 'ceqrInvoiceQuestionnaire' 'dcpSquarefeet' 'label' dcpSquarefeet}}
+            </PowerSelect>
+          </label>
+        </form.Field>
+      </Ui::Question>
 
-  <Ui::Question as |dcpRespectivedecrequiredQ|>
-    <dcpRespectivedecrequiredQ.Legend>
-      Does your project produce a need for a CEQR Restrictive Declaration? 
-    </dcpRespectivedecrequiredQ.Legend>
+      <Ui::Question @required={{true}} as |dcpProjectmodificationtoapreviousapprovalQ|>
+        <dcpProjectmodificationtoapreviousapprovalQ.Legend>
+          Does the project consist solely of modification actions that are not subject to 197c? 
+        </dcpProjectmodificationtoapreviousapprovalQ.Legend>
 
-    <form.Field
-      @attribute="dcpRespectivedecrequired"
-      @type="radio-group"
-      as |RadioGroup|
-    >
-      <RadioGroup
-        @options={{optionset 'ceqrInvoiceQuestionnaire' 'dcpRespectivedecrequired' 'list'}}
-      />
-    </form.Field>
-  </Ui::Question>
+        <form.Field
+          @attribute="dcpProjectmodificationtoapreviousapproval"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{optionset 'ceqrInvoiceQuestionnaire' 'dcpProjectmodificationtoapreviousapproval' 'list'}}
+          />
+        </form.Field>
+      </Ui::Question>
+
+      <Ui::Question @required={{true}} as |dcpRespectivedecrequiredQ|>
+        <dcpRespectivedecrequiredQ.Legend>
+          Does your project produce a need for a CEQR Restrictive Declaration? 
+        </dcpRespectivedecrequiredQ.Legend>
+
+        <form.Field
+          @attribute="dcpRespectivedecrequired"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{optionset 'ceqrInvoiceQuestionnaire' 'dcpRespectivedecrequired' 'list'}}
+          />
+        </form.Field>
+      </Ui::Question>
+    {{/if}}
+  {{/if}}
 {{/let}}
