@@ -127,6 +127,18 @@ module('Acceptance | user can edit Draft SOW Packages', function (hooks) {
     assert.dom('[data-test-attached-documents]').exists();
   });
 
+  test('User sees CEQR on the Draft SOW Show page', async function (assert) {
+    this.server.create('project', {
+      packages: [
+        this.server.create('package', 'toDo', 'scopeOfWorkDraft'),
+      ],
+    });
+
+    await visit('/scope-of-work-draft/1');
+
+    assert.dom('[data-test-ceqr-invoice-questionnaire]').exists();
+  });
+
   test('User sees Attached Documents on the Draft SOW Show page', async function (assert) {
     this.server.create('project', {
       packages: [

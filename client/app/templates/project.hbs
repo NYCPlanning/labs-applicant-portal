@@ -39,55 +39,81 @@
       <p>
         <strong>Project Brief:</strong> {{@model.dcpProjectbrief}}
       </p>
+
+      <p>
+        Milestone planned completion dates are an estimate based on the amount of time that is 
+        generally expected for the Department to review materials submitted to it, and for the 
+        applicant to prepare and submit those materials for review. This date is not guaranteed, 
+        may not accurately reflect timelines for review, and is subject to change. 
+        Note that all Filed EAS or DEIS review periods are dependent on other City agencies' 
+        reviews of materials and are less predictable as a result. Agency’s target duration are the 
+        goal durations for milestones of this type for all projects. For the most accurate information 
+        concerning timelines and review, please contact the lead DCP planner assigned to this project.
+      </p>
     </section>
 
-    <Project::PackageSection
-      @packages={{@model.landusePackages}}
-      @packageType="Land Use"
-      class="large-padding-top large-margin-bottom ruled-adjacent"
-    />
+    <div class="grid-x grid-padding-x">
+      <div class="cell large-6">
+        <h2>Packages</h2>
 
-    <Project::PackageSection
-      @packages={{@model.easPackages}}
-      @packageType="Environmental Assessment Statement (EAS)"
-      class="large-padding-top large-margin-bottom ruled-adjacent"
-    />
+        <Project::PackageSection
+          @packages={{@model.landusePackages}}
+          @packageType="Land Use"
+          class="large-padding-top large-margin-bottom ruled-adjacent"
+        />
 
-    <Project::PackageSection
-      @packages={{@model.scopeOfWorkDraftPackages}}
-      @packageType="Scope of Work (SOW)"
-      class="large-padding-top large-margin-bottom ruled-adjacent"
-    />
+        <Project::PackageSection
+          @packages={{@model.easPackages}}
+          @packageType="Environmental Assessment Statement (EAS)"
+          class="large-padding-top large-margin-bottom ruled-adjacent"
+        />
 
-    <Project::PackageSection
-      @packages={{@model.eisPackages}}
-      @packageType="Environmental Impact Statement (EIS)"
-      class="large-padding-top large-margin-bottom ruled-adjacent"
-    />
+        <Project::PackageSection
+          @packages={{@model.scopeOfWorkDraftPackages}}
+          @packageType="Scope of Work (SOW)"
+          class="large-padding-top large-margin-bottom ruled-adjacent"
+        />
 
-    <Project::PackageSection
-      @packages={{@model.technicalMemoPackages}}
-      @packageType="Technical Memo"
-      class="large-padding-top large-margin-bottom ruled-adjacent"
-    />
+        <Project::PackageSection
+          @packages={{@model.eisPackages}}
+          @packageType="Environmental Impact Statement (EIS)"
+          class="large-padding-top large-margin-bottom ruled-adjacent"
+        />
 
-    <Project::PackageSection
-      @packages={{@model.rwcdsPackages}}
-      @packageType="Reasonable Worst Case Development Scenario"
-      class="large-padding-top large-margin-bottom ruled-adjacent"
-    />
+        <Project::PackageSection
+          @packages={{@model.technicalMemoPackages}}
+          @packageType="Technical Memo"
+          class="large-padding-top large-margin-bottom ruled-adjacent"
+        />
 
-    <Project::PackageSection
-      @packages={{@model.pasPackages}}
-      @packageType="Pre-Application Statement"
-      class="large-padding-top large-margin-bottom ruled-adjacent"
-    />
+        <Project::PackageSection
+          @packages={{@model.rwcdsPackages}}
+          @packageType="Reasonable Worst Case Development Scenario"
+          class="large-padding-top large-margin-bottom ruled-adjacent"
+        />
 
-    <Project::PackageSection
-      @packages={{@model.workingPackages}}
-      @packageType="Working Package"
-      class="large-padding-top large-margin-bottom ruled-adjacent"
-    />
+        <Project::PackageSection
+          @packages={{@model.pasPackages}}
+          @packageType="Pre-Application Statement"
+          class="large-padding-top large-margin-bottom ruled-adjacent"
+        />
+
+        <Project::PackageSection
+          @packages={{@model.workingPackages}}
+          @packageType="Working Package"
+          class="large-padding-top large-margin-bottom ruled-adjacent"
+        />
+      </div>
+      <div class="cell large-6">
+        <h2>Milestones</h2>
+        <p>*=Planned completion dates may be different from the agency’s target duration based 
+          on application quality, complexity, and over volume awaiting review.</p>
+
+        <Project::Milestones
+          @milestones={{@model.milestones}}
+        />
+      </div>
+    </div>
   </div>{{! end left/main column }}
   <div class="cell large-4">
 

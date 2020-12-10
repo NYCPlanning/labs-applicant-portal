@@ -1,0 +1,29 @@
+// --------------------------------------------------
+// Module: Milestones
+// --------------------------------------------------
+
+.actions-list,
+.milestones-list {
+}
+
+.action {
+
+}
+
+.milestone {
+  position: relative;
+  top:-0.1rem;
+  box-shadow: inset rem-calc(28) 0 0 $body-background, inset rem-calc(30) 0 0 $medium-gray;
+}
+
+.group-milestone {
+position: relative;
+margin: 0 0 0 4.25rem;
+top: -1.95rem;
+}
+
+
+.milestone-icon,
+.action-icon {
+  font-size: 2rem;
+}
