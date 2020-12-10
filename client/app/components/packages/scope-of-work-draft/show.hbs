@@ -44,10 +44,8 @@
             <saveableForm.Section
               @title="Ceqr Invoice Questionnaire" 
               @elementId="ceqr-invoice-questionnaire"
+              data-test-ceqr-invoice-questionnaire
             >
-              <saveableForm.SaveableForm
-                @model={{ceqrInvoiceQuestionnaire}}
-              >
                 <Ui::Answer @beside={{true}} as |A|>
                   <A.Prompt>
                     Is the sole applicant a government agency (City, State, or Federal)?
@@ -96,7 +94,6 @@
                   </Ui::Answer>
                 {{/if}}
               {{/if}}
-             </saveableForm.SaveableForm>
             </saveableForm.Section>
           {{/let}}
         {{/if}}
