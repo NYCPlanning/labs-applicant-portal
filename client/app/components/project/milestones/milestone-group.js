@@ -10,4 +10,14 @@ export default class ProjectMilestonesMilestoneGroupComponent extends Component 
   toggleshowMilestones() {
     this._showMilestones = !this._showMilestones;
   }
+
+  groupsToShow = [
+    'Completed',
+    'In Progress',
+    'Not Started',
+  ]
+
+  get showTheGroup() {
+    return this.groupsToShow.includes(this.args.status);
+  }
 }
