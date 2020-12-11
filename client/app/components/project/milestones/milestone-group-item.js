@@ -26,7 +26,7 @@ export default class ProjectMilestonesMilestoneGroupItemComponent extends Compon
     'Prepare and Review DEIS',
   ]
 
-  get showTheProject() {
+  get showProject() {
     return this.projectsToShow.includes(this.args.milestone.dcpMilestoneValue)
           || this.args.milestone.dcpMilestoneValue.toUpperCase().includes('AD-HOC')
           || this.args.milestone.dcpMilestoneValue.toUpperCase().includes('ADHOC')

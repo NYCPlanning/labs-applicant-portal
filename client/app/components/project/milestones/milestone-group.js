@@ -15,9 +15,9 @@ export default class ProjectMilestonesMilestoneGroupComponent extends Component 
     'Completed',
     'In Progress',
     'Not Started',
-  ]
+  ];
 
-  get showTheGroup() {
+  get showGroup() {
     return this.groupsToShow.includes(this.args.status);
   }
 }

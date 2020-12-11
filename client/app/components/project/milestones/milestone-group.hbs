@@ -1,4 +1,4 @@
-{{#if this.showTheGroup}}
+{{#if this.showGroup}}
   <button type="button" class="clickable-header" onClick={{this.toggleshowMilestones}}>
     <FaIcon @icon={{if this._showMilestones "caret-down" "caret-right"}} />
     {{#if (eq @status "Completed")}}
