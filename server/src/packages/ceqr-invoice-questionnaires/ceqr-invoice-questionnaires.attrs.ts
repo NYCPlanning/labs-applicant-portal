@@ -4,4 +4,5 @@ export const CEQR_INVOICE_QUESTIONNAIRE_ATTRS = [
   'dcp_squarefeet',
   'dcp_projectmodificationtoapreviousapproval',
   'dcp_respectivedecrequired',
+  'dcp_subtotal',
 ];

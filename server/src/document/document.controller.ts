@@ -16,6 +16,7 @@ import {
 import { ConfigService } from '../config/config.service';
 import { CrmService } from '../crm/crm.service';
 import { DocumentService } from './document.service';
+import { SharepointService } from '../sharepoint/sharepoint.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthenticateGuard } from '../authenticate.guard';
 
@@ -25,6 +26,7 @@ export class DocumentController {
     private readonly config: ConfigService,
     private readonly crmService: CrmService,
     private readonly documentService: DocumentService,
+    private readonly sharepointService: SharepointService,
 ) {}
 
   /**
@@ -75,7 +77,7 @@ export class DocumentController {
   @HttpCode(204)
   @UseGuards(AuthenticateGuard)
   async destroy(@Query('serverRelativeUrl') serverRelativeUrl) {
-    return this.crmService.deleteSharepointFile(serverRelativeUrl);
+    return this.sharepointService.deleteSharepointFile(serverRelativeUrl);
   }
 
   // "path" refers to the "relative server path", the path
@@ -84,7 +86,7 @@ export class DocumentController {
   @Get('/*')
   async read(@Param() path, @Res() res) {
     const pathSegment = path[0];
-    const stream = await this.crmService.getSharepointFile(pathSegment);
+    const stream = await this.sharepointService.getSharepointFile(pathSegment);
 
     stream.pipe(res);
   }
