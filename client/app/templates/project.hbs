@@ -24,10 +24,12 @@
 
       <h2>Status</h2>
       
-      {{#each (filter-by 'statuscode' 'In Progress' @model.milestones) as |milestone|}}
+      {{#each 
+        (filter-by 'statuscode' 'In Progress' @model.milestones)
+      as |milestone|}} 
         <strong class="label dark-gray">{{milestone.dcpMilestoneValue}}</strong>
       {{/each}}
-      <p></p>
+      <br>
 
       <p>
         <strong>Project Status:</strong> {{optionset 'project' 'statuscode' 'label' @model.statuscode}}
