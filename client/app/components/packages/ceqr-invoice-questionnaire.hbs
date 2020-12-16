@@ -50,7 +50,7 @@
               @options={{map-by 'code' (optionset 'ceqrInvoiceQuestionnaire' 'dcpSquarefeet' 'list')}}
               @selected={{form.data.dcpSquarefeet}}
               @onChange={{fn (mut form.data.dcpSquarefeet)}}
-              @onClose={{fn (mut form.data.dcpSubtotal) (square-footage-to-subtotal form.data.dcpSquarefeet)}}
+              @onClose={{fn this.setSubtotal (square-footage-to-subtotal form.data.dcpSquarefeet) form.data}}
               as |dcpSquarefeet|
             >
               {{optionset 'ceqrInvoiceQuestionnaire' 'dcpSquarefeet' 'label' dcpSquarefeet}}
@@ -71,6 +71,7 @@
         >
           <RadioGroup
             @options={{optionset 'ceqrInvoiceQuestionnaire' 'dcpProjectmodificationtoapreviousapproval' 'list'}}
+            @onChange={{fn this.setSubtotal (square-footage-to-subtotal form.data.dcpSquarefeet) form.data}}
           />
         </form.Field>
       </Ui::Question>
