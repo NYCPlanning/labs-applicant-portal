@@ -7,7 +7,7 @@ import { joinLabels as joinInvoiceLabels } from '../invoices/invoices.service';
 import { NycidService } from '../contact/nycid/nycid.service';
 import { CrmService } from '../crm/crm.service';
 import { overwriteCodesWithLabels } from '../_utils/overwrite-codes-with-labels';
-import { MILESTONE_ATTRS } from './projects.attrs';
+import { MILESTONE_ATTRS, MILESTONE_NON_DATE_ATTRS } from './projects.attrs';
 
 const APPLICANT_ACTIVE_STATUS_CODE = 1;
 const PROJECT_ACTIVE_STATE_CODE = 0;
@@ -229,7 +229,10 @@ export class ProjectsService {
 
           ...projectMilestone,
         }));
-      const formattedProjectMilestones = overwriteCodesWithLabels(projectMilestones, [...MILESTONE_ATTRS]);
+
+      // we use MILESTONE_NON_DATE_ATTRS because if we include dates when we reformat below, 
+      // then the dates end up being sent to the frontend as strings, so we exclude them here
+      const formattedProjectMilestones = overwriteCodesWithLabels(projectMilestones, [...MILESTONE_NON_DATE_ATTRS]);
 
       return {
         ...project,
