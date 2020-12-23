@@ -1,36 +1,38 @@
-<button type="button" class="clickable-header" onClick={{this.toggleshowMilestones}}>
-  <FaIcon @icon={{if this._showMilestones "caret-down" "caret-right"}} />
-  {{#if (eq @status "Completed")}}
-    <span class="milestone-icon fa-layers fa-fw">
-      {{fa-icon 'circle' fixedWidth=true class='dark-gray'}}
-      {{fa-icon 'check' fixedWidth=true class='off-white' transform='shrink-6'}}
-    </span>
-  {{else if (eq @status "Not Started")}}
-    <span class="milestone-icon fa-layers fa-fw">
-      {{fa-icon 'circle' fixedWidth=true class='dark-gray'}}
-      {{fa-icon 'calendar' prefix='far' fixedWidth=true class='off-white' transform='shrink-8'}}
-    </span>
-  {{else if (eq @status "In Progress")}}
-    <span class="milestone-icon fa-layers fa-fw">
-      {{fa-icon 'circle' fixedWidth=true class='dark-gray'}}
-      {{fa-icon 'map-pin' fixedWidth=true class='off-white' transform='shrink-8'}}
-    </span>
-  {{/if}}
-</button>
-
-<div class="cell auto milestone">
-  <div class="group-milestone">
-    <button type="button" {{on 'click' this.toggleshowMilestones}}>
-      <h3>{{@status}}</h3>
-    </button>
-    {{#if this._showMilestones}}
-      <ul class="no-bullet">
-        {{#each @groupedMilestones as |milestone|}}
-          <li>
-            <Project::Milestones::MilestoneGroupItem @milestone={{milestone}} @status={{@status}} />
-          </li>
-        {{/each}}
-      </ul>
+{{#if this.showGroup}}
+  <button type="button" class="clickable-header" onClick={{this.toggleshowMilestones}}>
+    <FaIcon @icon={{if this._showMilestones "caret-down" "caret-right"}} />
+    {{#if (eq @status "Completed")}}
+      <span class="milestone-icon fa-layers fa-fw">
+        {{fa-icon 'circle' fixedWidth=true class='dark-gray'}}
+        {{fa-icon 'check' fixedWidth=true class='off-white' transform='shrink-6'}}
+      </span>
+    {{else if (eq @status "Not Started")}}
+      <span class="milestone-icon fa-layers fa-fw">
+        {{fa-icon 'circle' fixedWidth=true class='dark-gray'}}
+        {{fa-icon 'calendar' prefix='far' fixedWidth=true class='off-white' transform='shrink-8'}}
+      </span>
+    {{else if (eq @status "In Progress")}}
+      <span class="milestone-icon fa-layers fa-fw">
+        {{fa-icon 'circle' fixedWidth=true class='dark-gray'}}
+        {{fa-icon 'map-pin' fixedWidth=true class='off-white' transform='shrink-8'}}
+      </span>
     {{/if}}
+  </button>
+
+  <div class="cell auto milestone">
+    <div class="group-milestone">
+      <button type="button" {{on 'click' this.toggleshowMilestones}}>
+        <h3>{{@status}}</h3>
+      </button>
+      {{#if this._showMilestones}}
+        <ul class="no-bullet">
+          {{#each @groupedMilestones as |milestone|}}
+            <li>
+              <Project::Milestones::MilestoneGroupItem @milestone={{milestone}} @status={{@status}} />
+            </li>
+          {{/each}}
+        </ul>
+      {{/if}}
+    </div>
   </div>
-</div>
+{{/if}}
