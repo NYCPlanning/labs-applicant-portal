@@ -1,25 +1,27 @@
-<div class="large-margin-bottom">
-  <h4 class="no-margin">{{@milestone.dcpMilestoneValue}}</h4>
-  {{#unless @milestone.isDcpOwned}}
-    <small class="a11y-orange">{{fa-icon 'exclamation-triangle' fixedWidth=true class='a11y'}}Applicant controls this milestone’s duration.</small><br>
-  {{/unless}}
+{{#if this.showProject}}
+  <div class="large-margin-bottom">
+    <h4 class="no-margin">{{@milestone.dcpMilestoneValue}}</h4>
+    {{#unless @milestone.isDcpOwned}}
+      <small class="a11y-orange">{{fa-icon 'exclamation-triangle' fixedWidth=true class='a11y'}}Applicant controls this milestone’s duration.</small><br>
+    {{/unless}}
 
-  {{#if (eq @status "Not Started")}} 
-    Planned start date: {{@milestone.dcpPlannedstartdate}} <br>
-  {{else}}
-    Actual start date: {{@milestone.dcpActualstartdate}}<br>
-  {{/if}}
-  {{#if (eq @status "Completed")}} 
-    Actual completion date: {{@milestone.dcpActualenddate}}
-  {{else}}
-    Planned completion date: {{@milestone.dcpPlannedcompletiondate}}
-  {{/if}}
+    {{#if (eq @status "Not Started")}} 
+      Planned start date: {{@milestone.dcpPlannedstartdate}} <br>
+    {{else}}
+      Actual start date: {{@milestone.dcpActualstartdate}}<br>
+    {{/if}}
+    {{#if (eq @status "Completed")}} 
+      Actual completion date: {{@milestone.dcpActualenddate}}
+    {{else}}
+      Planned completion date: {{@milestone.dcpPlannedcompletiondate}}
+    {{/if}}
 
-  {{#if @milestone.targetDuration}}
-    <p class="small-margin-top">
-      <small>
-        *DCP’s target duration is {{@milestone.targetDuration}} days.
-      </small>
-    </p>
-  {{/if}}
-</div>
+    {{#if @milestone.targetDuration}}
+      <p class="small-margin-top">
+        <small>
+          *DCP’s target duration is {{@milestone.targetDuration}} days.
+        </small>
+      </p>
+    {{/if}}
+  </div>
+{{/if}}
