@@ -20,15 +20,20 @@ export default class LanduseActionModel extends Model {
 
   @attr dcpZoningsectionstobemodified;
 
-  @attr dcpNumberofzoninglotsaffected;
+  @attr('number')
+  dcpNumberofzoninglotsaffected;
 
-  @attr dcpSquarefootageofzoninglotsaffected;
+  @attr('number')
+  dcpSquarefootageofzoninglotsaffected;
 
-  @attr dcpSquarefootageoftheproposeddevelopment;
+  @attr('number')
+  dcpSquarefootageoftheproposeddevelopment;
 
-  @attr dcpSquarefootassociatedwithtransferbonus;
+  @attr('number')
+  dcpSquarefootassociatedwithtransferbonus;
 
-  @attr dcpNumberofdu;
+  @attr('number')
+  dcpNumberofdu;
 
   @attr dcpIstheactiontoauthorizeorpermitanopenuse;
 
