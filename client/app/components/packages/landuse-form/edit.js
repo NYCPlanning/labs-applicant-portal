@@ -12,6 +12,7 @@ import SaveableRelatedActionFormValidations from '../../../validations/saveable-
 import SubmittableRelatedActionFormValidations from '../../../validations/submittable-related-action-form';
 import SaveableSitedatahFormValidations from '../../../validations/saveable-sitedatah-form';
 import SubmittableSitedatahFormValidations from '../../../validations/submittable-sitedatah-form';
+import SaveableLanduseActionFormValidations from '../../../validations/saveable-landuse-action-form';
 import SubmittableLanduseActionFormValidations from '../../../validations/submittable-landuse-action-form';
 import SaveableLanduseGeographyValidations from '../../../validations/saveable-landuse-geography';
 import SubmittableLanduseGeographyValidations from '../../../validations/submittable-landuse-geography';
@@ -34,6 +35,7 @@ export default class LandUseFormComponent extends Component {
     SubmittableRelatedActionFormValidations,
     SaveableSitedatahFormValidations,
     SubmittableSitedatahFormValidations,
+    SaveableLanduseActionFormValidations,
     SubmittableLanduseActionFormValidations,
     SaveableLanduseGeographyValidations,
     SubmittableLanduseGeographyValidations,

@@ -79,7 +79,7 @@
       {{#each @form.data.landuseActions as |landuseAction|}}
         <form.SaveableForm
           @model={{landuseAction}}
-          @validators={{array (hash) @validations.SaveableLanduseFormValidations @validations.SubmittableLanduseActionFormValidations}}
+          @validators={{array @validations.SaveableLanduseActionFormValidations @validations.SubmittableLanduseActionFormValidations}}
           as |landuseActionForm|
         >
           <Packages::LanduseForm::ProposedActionEditor
