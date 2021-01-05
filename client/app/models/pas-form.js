@@ -794,9 +794,14 @@ export default class PasFormModel extends Model {
   temporaryAddressLabel = '';
 
   async save() {
-    await this.saveDirtyApplicants();
-    await this.saveDirtyBbls();
-    await super.save();
+    try {
+      await this.saveDirtyApplicants();
+      await this.saveDirtyBbls();
+      await super.save();
+    } catch (e) {
+      console.log('Saving PAS Form failed.');
+      console.log(e);
+    }
   }
 
   async saveDirtyBbls() {
