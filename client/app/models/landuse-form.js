@@ -221,16 +221,21 @@ export default class LanduseFormModel extends Model {
   @attr dcpTotalzoningareatoberezoned;
 
   async save() {
-    await this.saveDirtyLanduseActions();
-    await this.saveDirtyRelatedActions();
-    await this.saveDirtyApplicants();
-    await this.saveDirtySitedatahForms();
-    await this.saveDirtyLanduseGeographies();
-    await this.saveDirtyBbls();
-    await this.saveDirtyProject();
-    await this.saveDirtyAffectedZoningResolutions();
-    await this.saveZoningMapChanges();
-    await super.save();
+    try {
+      await this.saveDirtyLanduseActions();
+      await this.saveDirtyRelatedActions();
+      await this.saveDirtyApplicants();
+      await this.saveDirtySitedatahForms();
+      await this.saveDirtyLanduseGeographies();
+      await this.saveDirtyBbls();
+      await this.saveDirtyProject();
+      await this.saveDirtyAffectedZoningResolutions();
+      await this.saveZoningMapChanges();
+      await super.save();
+    } catch (e) {
+      console.log('Saving Land Use Form failed.');
+      console.log(e);
+    }
   }
 
   async saveDirtyRelatedActions() {
