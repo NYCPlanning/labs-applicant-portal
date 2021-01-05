@@ -126,7 +126,12 @@ export default class PackageModel extends Model {
 
   async saveDirtySingleCeqrInvoiceQuestionnaire() {
     if (this.isSingleCeqrInvoiceQuestionnaireDirty) {
-      this.singleCeqrInvoiceQuestionnaire.save();
+      try {
+        this.singleCeqrInvoiceQuestionnaire.save();
+      } catch (e){
+        console.log('Saving CEQR Invoice Questionnaire failed.');
+        console.log(e);
+      }
     }
   }
 
