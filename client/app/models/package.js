@@ -90,7 +90,6 @@ export default class PackageModel extends Model {
   }
 
   async save(recordsToDelete) {
-    await this.fileManager.save();
     if (this.dcpPackagetype === DCPPACKAGETYPE.PAS_PACKAGE.code) {
       await this.saveDeletedRecords(recordsToDelete);
       await this.pasForm.save();
@@ -109,6 +108,9 @@ export default class PackageModel extends Model {
     if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_SCOPE_OF_WORK.code) {
       await this.saveDirtySingleCeqrInvoiceQuestionnaire();
     }
+
+    await this.fileManager.save();
+
     await super.save();
 
     await this.reload();

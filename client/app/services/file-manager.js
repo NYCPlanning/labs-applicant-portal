@@ -93,13 +93,18 @@ export default class FileManager {
   }
 
   async save() {
-    // See TODO at top of this file.
-    await this.uploadFiles();
+    try {
+      // See TODO at top of this file.
+      await this.uploadFiles();
 
-    await this.deleteFiles();
+      await this.deleteFiles();
 
-    this.filesToDelete.clear();
+      this.filesToDelete.clear();
 
-    this.numFilesToUpload = 0;
+      this.numFilesToUpload = 0;
+    } catch (e) {
+      console.log('Saving files failed.');
+      console.log(e);
+    }
   }
 }
