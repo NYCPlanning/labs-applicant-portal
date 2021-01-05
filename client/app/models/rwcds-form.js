@@ -87,8 +87,13 @@ export default class RwcdsFormModel extends Model {
   @attr('number') utcconversiontimezonecode;
 
   async save() {
-    await this.saveDirtyAffectedZoningResolutions();
-    await super.save();
+    try {
+      await this.saveDirtyAffectedZoningResolutions();
+      await super.save();
+    } catch (e) {
+      console.log('Saving RWCDS Form failed.');
+      console.log(e);
+    }
   }
 
   async saveDirtyAffectedZoningResolutions() {
