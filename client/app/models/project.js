@@ -15,7 +15,7 @@ export default class ProjectModel extends Model {
 
   @attr statuscode;
 
-  // e.g. 'Prefiled', 'Filed', 'In Public Review', 'Completed'
+  // e.g. 'Noticed', 'Filed', 'In Public Review', 'Completed'
   @attr dcpPublicstatus;
 
   @attr dcpVisibility;

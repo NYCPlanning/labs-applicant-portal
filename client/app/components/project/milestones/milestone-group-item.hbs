@@ -6,14 +6,18 @@
     {{/unless}}
 
     {{#if (eq @status "Not Started")}} 
-      Planned start date: {{@milestone.dcpPlannedstartdate}} <br>
+      Planned start date: <Ui::DateDisplay @date={{@milestone.dcpPlannedstartdate}} @outputFormat="MM/D/YYYY"
+      @errorMessage="Date Unknown" /> <br>
     {{else}}
-      Actual start date: {{@milestone.dcpActualstartdate}}<br>
+      Actual start date: <Ui::DateDisplay @date={{@milestone.dcpActualstartdate}} @outputFormat="MM/D/YYYY"
+      @errorMessage="Date Unknown" /> <br>
     {{/if}}
     {{#if (eq @status "Completed")}} 
-      Actual completion date: {{@milestone.dcpActualenddate}}
+      Actual completion date:  <Ui::DateDisplay @date={{@milestone.dcpActualenddate}} @outputFormat="MM/D/YYYY"
+      @errorMessage="Date Unknown" /> <br>
     {{else}}
-      Planned completion date: {{@milestone.dcpPlannedcompletiondate}}
+      Planned completion date: <Ui::DateDisplay @date={{@milestone.dcpPlannedcompletiondate}} @outputFormat="MM/D/YYYY"
+      @errorMessage="Date Unknown" /> <br>
     {{/if}}
 
     {{#if @milestone.targetDuration}}
