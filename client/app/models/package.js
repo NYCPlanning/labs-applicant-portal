@@ -1,5 +1,6 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 import FileManager from '../services/file-manager';
 import {
   STATUSCODE,
@@ -23,6 +24,14 @@ export default class PackageModel extends Model {
       );
     }
   }
+
+  // Since file upload doesn't perform requests through
+  // an Ember Model save() process, it doesn't automatically
+  // hydrate the package.adapterError property. When an error occurs
+  // during upload we have to manually hydrate a custom error property
+  // to trigger the error box displayed to the user.
+  @tracked
+  fileUploadErrors = null;
 
   @service
   session;
@@ -119,6 +128,14 @@ export default class PackageModel extends Model {
       await this.fileManager.save();
     } catch (e) {
       console.log('Error saving files: ', e);
+
+      // See comment on the tracked fileUploadError property
+      // definition above.
+      this.fileUploadErrors = [{
+        code: 'UPLOAD_DOC_FAILED',
+        title: 'Failed to upload documents',
+        detail: 'An error occured while  uploading your documents. Please refresh and retry.',
+      }];
     }
 
     await this.reload();
