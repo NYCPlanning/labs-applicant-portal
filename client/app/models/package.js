@@ -90,25 +90,35 @@ export default class PackageModel extends Model {
   }
 
   async save(recordsToDelete) {
-    await this.fileManager.save();
-    if (this.dcpPackagetype === DCPPACKAGETYPE.PAS_PACKAGE.code) {
-      await this.saveDeletedRecords(recordsToDelete);
-      await this.pasForm.save();
+    try {
+      if (this.dcpPackagetype === DCPPACKAGETYPE.PAS_PACKAGE.code) {
+        await this.saveDeletedRecords(recordsToDelete);
+        await this.pasForm.save();
+      }
+      if (this.dcpPackagetype === DCPPACKAGETYPE.RWCDS.code) {
+        await this.rwcdsForm.save();
+      }
+      if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code
+        || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code) {
+        await this.saveDeletedRecords(recordsToDelete);
+        await this.landuseForm.save();
+      }
+      if (this.dcpPackagetype === DCPPACKAGETYPE.FILED_EAS.code) {
+        await this.saveDirtySingleCeqrInvoiceQuestionnaire();
+      }
+      if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_SCOPE_OF_WORK.code) {
+        await this.saveDirtySingleCeqrInvoiceQuestionnaire();
+      }
+    } catch (e) {
+      console.log('Error saving a Form or Ceqr Invoice Questionnaire: ', e);
     }
-    if (this.dcpPackagetype === DCPPACKAGETYPE.RWCDS.code) {
-      await this.rwcdsForm.save();
+
+    try {
+      await this.fileManager.save();
+    } catch (e) {
+      console.log('Error saving files: ', e);
     }
-    if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code
-      || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code) {
-      await this.saveDeletedRecords(recordsToDelete);
-      await this.landuseForm.save();
-    }
-    if (this.dcpPackagetype === DCPPACKAGETYPE.FILED_EAS.code) {
-      await this.saveDirtySingleCeqrInvoiceQuestionnaire();
-    }
-    if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_SCOPE_OF_WORK.code) {
-      await this.saveDirtySingleCeqrInvoiceQuestionnaire();
-    }
+
     await super.save();
 
     await this.reload();
