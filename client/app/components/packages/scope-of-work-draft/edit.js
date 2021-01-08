@@ -26,6 +26,8 @@ export default class PackagesScopeOfWorkDraftEditComponent extends Component {
   async submitPackage() {
     await this.args.package.submit();
 
-    this.router.transitionTo('scope-of-work-draft.show', this.args.package.id);
+    if (!this.args.package.singleCeqrInvoiceQuestionnaire.adapterError && !this.args.package.adapterError && !this.args.package.fileUploadErrors) {
+      this.router.transitionTo('scope-of-work-draft.show', this.args.package.id);
+    }
   }
 }
