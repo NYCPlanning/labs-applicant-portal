@@ -6,6 +6,8 @@ import {
   STATECODE,
   DCPPACKAGETYPE,
 } from '../optionsets/package';
+import { tracked } from '@glimmer/tracking';
+import ServerError from '@ember-data/adapter/error';
 
 export default class PackageModel extends Model {
   createFileQueue() {
@@ -23,6 +25,14 @@ export default class PackageModel extends Model {
       );
     }
   }
+
+  // While adapterError is a native, untracked Model property,
+  // we track it here so we can manually hydrate it when needed.
+  // Since file upload doesn't perform requests through
+  // an Ember Model save() process, when an error occurs
+  // during upload we have to manually hydrate the package.adapterError
+  // to trigger the error box displayed to the user.
+  @tracked adapterError;
 
   @service
   session;
@@ -90,6 +100,8 @@ export default class PackageModel extends Model {
   }
 
   async save(recordsToDelete) {
+    let saveError = false;
+
     try { 
       if (this.dcpPackagetype === DCPPACKAGETYPE.PAS_PACKAGE.code) {
         await this.saveDeletedRecords(recordsToDelete);
@@ -111,19 +123,35 @@ export default class PackageModel extends Model {
       }
     } catch (e) {
       console.log("Error saving a Form or Ceqr Invoice Questionnaire: ", e);
+
+      saveError = true;
     }
+
+    await super.save();
 
     try {
       await this.fileManager.save();
     } catch(e) {
       console.log("Error saving files: ", e);
+
+      // See comment on the tracked adapterError property
+      // definition above.
+      this.adapterError = new ServerError([{
+        code: 'UPLOAFD_DOC_FAILED',
+        title: 'Failed to upload documents',
+        detail: `An error occured while  uploading your documents. Please refresh and retry.`,
+      }],  "File upload failed.");
+
+      saveError = true;
     }
 
-    await super.save();
+    // This condition prevents the package adapterError
+    // from being cleared
+    if (!saveError) {
+      await this.reload();
 
-    await this.reload();
-
-    this._synchronizeDocuments();
+      this._synchronizeDocuments();
+    };
   }
 
   get isSingleCeqrInvoiceQuestionnaireDirty() {
