@@ -99,6 +99,8 @@ export default class PackageModel extends Model {
   }
 
   async save(recordsToDelete) {
+    let formAdapterError = false;
+
     try {
       if (this.dcpPackagetype === DCPPACKAGETYPE.PAS_PACKAGE.code) {
         await this.saveDeletedRecords(recordsToDelete);
@@ -120,6 +122,8 @@ export default class PackageModel extends Model {
       }
     } catch (e) {
       console.log('Error saving a Form or Ceqr Invoice Questionnaire: ', e);
+
+      formAdapterError = true;
     }
 
     try {
@@ -142,9 +146,11 @@ export default class PackageModel extends Model {
       }];
     }
 
-    await this.reload();
+    if (!formAdapterError && !this.adapterError && !this.fileUploadErrors) {
+      await this.reload();
 
-    this._synchronizeDocuments();
+      this._synchronizeDocuments();
+    }
   }
 
   get isSingleCeqrInvoiceQuestionnaireDirty() {
