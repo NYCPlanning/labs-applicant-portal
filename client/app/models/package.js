@@ -122,7 +122,11 @@ export default class PackageModel extends Model {
       console.log('Error saving a Form or Ceqr Invoice Questionnaire: ', e);
     }
 
-    await super.save();
+    try {
+      await super.save();
+    } catch (e) {
+      console.log('Error saving package: ', e);
+    }
 
     try {
       await this.fileManager.save();
