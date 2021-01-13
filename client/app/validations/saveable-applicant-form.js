@@ -58,6 +58,7 @@ export default {
     }),
     validateFormat({
       type: 'phone',
+      regex: /[0-9]{10}/,
       // Set allowBlank=true so that the validation message
       // only appears after user first types sometihng.
       // This field still indicates it is 'required'
