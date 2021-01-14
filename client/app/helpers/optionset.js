@@ -200,7 +200,7 @@ export function optionset([model, optionsetId, returnType, lookupToken]) {
       if (option) {
         return option.code;
       }
-      console.assert(false, 'Invalid call to optionset helper: must provide a valid identifier or label to look up a code.'); // eslint-disable-line
+      console.log(`Warning: Unable to lookup code for optionset ${optionsetId} (model is '${model})' using token '${lookupToken}'`); // eslint-disable-line
       break;
     case 'label':
       if (optionById) {
@@ -212,7 +212,7 @@ export function optionset([model, optionsetId, returnType, lookupToken]) {
       if (option) {
         return option.label;
       }
-      console.assert(false, `Invalid call to optionset helper with identifier ${lookupToken}: must provide a valid identifier or code to look up a label.`); // eslint-disable-line
+      console.log(`Warning: Unable to lookup label for optionset ${optionsetId} (model is '${model}) using token '${lookupToken}'`); // eslint-disable-linent-disable-line
       break;
     default:
       return optionset;
