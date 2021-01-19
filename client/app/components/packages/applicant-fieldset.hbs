@@ -115,9 +115,14 @@
 
     <label>
       Phone
+
+      <p class="q-help">
+        No dashes, parentheses, or special characters.
+      </p>
       <form.Field
         @attribute="dcpPhone"
-        type="number"
+        type="text"
+        @maxlength="10"
       />
     </label>
 
