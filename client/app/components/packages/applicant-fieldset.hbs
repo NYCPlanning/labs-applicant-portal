@@ -129,7 +129,7 @@
     <button
       type="button"
       class="delete-fieldset"
-      {{on "click" (fn @removeApplicant @applicant)}}
+      {{on "click" @removeApplicant}}
       data-test-remove-applicant-button
     >
       Remove {{@applicant.friendlyEntityName}}
