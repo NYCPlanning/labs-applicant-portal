@@ -37,7 +37,8 @@ export default {
       lte: 100,
       gte: 0,
       allowBlank: true,
-      message: 'Number must be in range ({gte} - {lte})',
+      integer: true,
+      message: 'Number must be a whole number in range ({gte} - {lte})',
     }),
   ],
   dcpSquarefootageoftheproposeddevelopment: [
@@ -45,7 +46,8 @@ export default {
       lte: 2147483647,
       gte: 0,
       allowBlank: true,
-      message: 'Number must be in range ({gte} - {lte})',
+      integer: true,
+      message: 'Number must be a whole number in range ({gte} - {lte})',
     }),
   ],
   dcpSquarefootassociatedwithtransferbonus: [
@@ -53,7 +55,8 @@ export default {
       lte: 2147483647,
       gte: -2147483648,
       allowBlank: true,
-      message: 'Number must be in range ({gte} - {lte})',
+      integer: true,
+      message: 'Number must a whole number in range ({gte} - {lte})',
     }),
   ],
   dcpNumberofdu: [
@@ -61,7 +64,8 @@ export default {
       lte: 10000,
       gte: 0,
       allowBlank: true,
-      message: 'Number must be in range ({gte} - {lte})',
+      integer: true,
+      message: 'Number must be a whole number in range ({gte} - {lte})',
     }),
   ],
   dcpSquarefootageofzoninglotsaffected: [
@@ -69,7 +73,8 @@ export default {
       lte: 2147483647,
       gte: 0,
       allowBlank: true,
-      message: 'Number must be in range ({gte} - {lte})',
+      integer: true,
+      message: 'Number must be a whole number between ({gte} - {lte})',
     }),
   ],
 };

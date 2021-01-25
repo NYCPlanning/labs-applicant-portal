@@ -202,16 +202,12 @@ module('Acceptance | pas form validation messages display', function(hooks) {
     assert.dom('[data-test-validation-message="dcpZipcode"]').doesNotExist();
   });
 
-  test('User cannot fill in letters for Applicant phone number or ZIP on the PAS Form', async function(assert) {
+  test('User cannot fill in letters for Applicant ZIP on the PAS Form', async function(assert) {
     this.server.create('project', 1, 'toDo');
 
     await visit('/pas-form/1/edit');
 
     await click('[data-test-add-applicant-button]');
-
-    await fillIn('[data-test-input="dcpPhone"]', 'asdfg');
-
-    assert.dom('[data-test-input="dcpPhone"]').hasNoValue();
 
     await fillIn('[data-test-input="dcpPhone"]', '2127203300');
 

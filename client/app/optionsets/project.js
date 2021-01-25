@@ -1,7 +1,7 @@
 export const DCPPUBLICSTATUS = {
-  PREFILED: {
+  NOTICED: {
     code: 717170005,
-    label: 'Prefiled',
+    label: 'Noticed',
   },
   FILED: {
     code: 717170000,

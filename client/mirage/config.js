@@ -31,7 +31,27 @@ export default function() {
   this.get('/logout');
 
   this.get('/packages');
-  this.get('/packages/:id');
+  this.get('/packages/:id', (schema, request) => {
+    const { params: { id } } = request;
+
+    const foundPackage = schema.packages.find(id);
+
+    foundPackage.documents = [
+      {
+        name: 'PAS Form.pdf',
+        timeCreated: '2021-01-09T02:54:28Z',
+        serverRelativeUrl: '/sites/dcppfsuat2/dcp_package/2021Q0246_EIS_1_5C1BCD9B6E23EB11A813001DD8309FA8/testUploadFile3.txt',
+      },
+      {
+        name: 'Action Changes.excel',
+        timeCreated: '2021-01-09T02:07:31Z',
+        serverRelativeUrl: '/sites/dcppfsuat2/dcp_package/2021Q0246_EIS_1_5C1BCD9B6E23EB11A813001DD8309FA8/fake-23.shp',
+      },
+    ];
+
+    return foundPackage;
+  });
+
   this.get('/applicants');
   this.get('/applicants/:id');
   this.patch('/applicants/:id');
