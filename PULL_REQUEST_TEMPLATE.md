@@ -14,12 +14,12 @@ Try to keep this more non-technical, and provide a wide angle, simple explanatio
 -->
 
 #### Tasks/Bug Numbers
-Fixes AB#1234
+ - Fixes AB#1234
 <!---
 Provide a link to a ticket, if applicable
 -->
-Related to AB#1235
-Reverses to AB#1222
+ - Related AB#1235
+ - Reverses AB#1222
 
 ### Technical Explanation
 <!---
