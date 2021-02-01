@@ -29,6 +29,8 @@ export default class PackagesFiledEasEditComponent extends Component {
   async submitPackage() {
     await this.args.package.submit();
 
-    this.router.transitionTo('filed-eas.show', this.args.package.id);
+    if (!this.args.package.singleCeqrInvoiceQuestionnaire.adapterError && !this.args.package.adapterError && !this.args.package.fileUploadErrors) {
+      this.router.transitionTo('filed-eas.show', this.args.package.id);
+    }
   }
 }

@@ -29,7 +29,7 @@ export class NycidService {
       // check if the e-mail is validated in nyc.id's system
       ...isNycidValidated,
 
-      is_city_employee: isNycidEmailRegistered && isNycidValidated && email.endsWith('nyc.gov'),
+      is_city_employee: email.endsWith('nyc.gov'),
     };
   }
 

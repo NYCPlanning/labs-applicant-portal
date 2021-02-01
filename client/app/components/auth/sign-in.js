@@ -28,16 +28,22 @@ export default class AuthSignInComponent extends Component {
       isCityEmployee,
     } = await this.args.searchContacts(loginEmail);
 
-    if (isNycidEmailRegistered) {
-      // we can only know email validation after they logged in once.
-      // if it's null, it means we don't know because they've never logged in before (null).
-      if (isNycidValidated === true || isNycidValidated === null) {
-        this.router.transitionTo('auth.login', { queryParams: { loginEmail, isCityEmployee } });
-      } else if (isNycidValidated === false) {
-        this.router.transitionTo('auth.validate', { queryParams: { loginEmail } });
-      }
+    // We should always be redirecting nyc government employees to the NYC.ID login page
+    // (never to the register page) regardless of whether isNycidEmailRegistered is true or false
+    if (isCityEmployee) {
+      this.router.transitionTo('auth.login', { queryParams: { loginEmail, isCityEmployee } });
     } else {
-      this.router.transitionTo('auth.register', { queryParams: { loginEmail } });
+      if (isNycidEmailRegistered) { // eslint-disable-line
+        // we can only know email validation after they logged in once.
+        // if it's null, it means we don't know because they've never logged in before (null).
+        if (isNycidValidated === true || isNycidValidated === null) {
+          this.router.transitionTo('auth.login', { queryParams: { loginEmail } });
+        } else if (isNycidValidated === false) {
+          this.router.transitionTo('auth.validate', { queryParams: { loginEmail } });
+        }
+      } else {
+        this.router.transitionTo('auth.register', { queryParams: { loginEmail } });
+      }
     }
   }
 }
