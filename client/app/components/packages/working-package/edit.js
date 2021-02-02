@@ -24,6 +24,8 @@ export default class PackagesWorkingPackageEditComponent extends Component {
   async submitPackage() {
     await this.args.package.submit();
 
-    this.router.transitionTo('working-package.show', this.args.package.id);
+    if (!this.args.package.adapterError && !this.args.package.fileUploadErrors) {
+      this.router.transitionTo('working-package.show', this.args.package.id);
+    }
   }
 }

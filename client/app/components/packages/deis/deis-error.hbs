@@ -1,4 +1,4 @@
-{{#if @package.adapterError}}
+{{#if (or @package.adapterError @package.fileUploadErrors)}}
   <div class="callout alert" data-test-error-saving>
     <h5 class="text-red-dark">
       <FaIcon
@@ -11,6 +11,9 @@
 
     <Errors::List
       @errors={{@package.adapterError.errors}}
+    />
+    <Errors::List
+      @errors={{@package.fileUploadErrors}}
     />
 
     <p class="text-red-dark text-small">

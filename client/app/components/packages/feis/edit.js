@@ -24,6 +24,8 @@ export default class PackagesFeisEditComponent extends Component {
   async submitPackage() {
     await this.args.package.submit();
 
-    this.router.transitionTo('feis.show', this.args.package.id);
+    if (!this.args.package.adapterError && !this.args.package.fileUploadErrors) {
+      this.router.transitionTo('feis.show', this.args.package.id);
+    }
   }
 }

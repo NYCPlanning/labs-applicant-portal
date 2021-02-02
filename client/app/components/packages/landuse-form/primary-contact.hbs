@@ -22,9 +22,13 @@
         Phone
       </Q.Label>
 
+      <p class="q-help">
+        No dashes, parentheses, or special characters.
+      </p>
+
       <form.Field
         @attribute="dcpContactphone"
-        type="number"
+        type="text"
         @maxlength="10"
         id={{Q.questionId}}
       />

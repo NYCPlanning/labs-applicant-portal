@@ -56,7 +56,9 @@ export default class PasFormComponent extends Component {
   async submitPackage() {
     await this.args.package.submit();
 
-    this.router.transitionTo('pas-form.show', this.args.package.id);
+    if (!this.pasForm.adapterError && !this.package.adapterError && !this.package.fileUploadErrors) {
+      this.router.transitionTo('pas-form.show', this.args.package.id);
+    }
   }
 
   @action

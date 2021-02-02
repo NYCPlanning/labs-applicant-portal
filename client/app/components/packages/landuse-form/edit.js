@@ -80,7 +80,9 @@ export default class LandUseFormComponent extends Component {
   async submitPackage() {
     await this.args.package.submit();
 
-    this.router.transitionTo('landuse-form.show', this.args.package.id);
+    if (!this.landuseForm.adapterError && !this.package.adapterError && !this.package.fileUploadErrors) {
+      this.router.transitionTo('landuse-form.show', this.args.package.id);
+    }
   }
 
   @action

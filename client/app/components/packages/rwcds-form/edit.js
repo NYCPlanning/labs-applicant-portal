@@ -17,6 +17,11 @@ export default class PackagesRwcdsFormEditComponent extends Component {
   @service
   router;
 
+  get rwcdsForm() {
+    return this.args.package.rwcdsForm || {};
+  }
+
+
   @action
   async savePackage() {
     try {
@@ -30,6 +35,8 @@ export default class PackagesRwcdsFormEditComponent extends Component {
   async submitPackage() {
     await this.args.package.submit();
 
-    this.router.transitionTo('rwcds-form.show', this.args.package.id);
+    if (!this.rwcdsForm.adapterError && !this.args.package.adapterError && !this.args.package.fileUploadErrors) {
+      this.router.transitionTo('rwcds-form.show', this.args.package.id);
+    }
   }
 }

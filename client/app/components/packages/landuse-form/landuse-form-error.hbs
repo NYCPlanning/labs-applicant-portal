@@ -1,4 +1,4 @@
-{{#if (or @package.landuseForm.adapterError @package.adapterError)}}
+{{#if (or @package.landuseForm.adapterError @package.adapterError @package.fileUploadErrors)}}
   <div class="callout alert" data-test-error-saving>
     <h5 class="text-red-dark">
       <FaIcon
@@ -13,6 +13,9 @@
       />
       <Errors::List
         @errors={{@package.adapterError.errors}}
+      />
+      <Errors::List
+        @errors={{@package.fileUploadErrors}}
       />
       <p class="text-red-dark text-small">
         Please try again. If the problem persists, please contact NYC Planning at <a href="mailto:ZAP_feedback_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a> or <a href="tel:212-720-3300" class="nowrap">212-720-3300</a>.

@@ -1,5 +1,6 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 import FileManager from '../services/file-manager';
 import {
   STATUSCODE,
@@ -23,6 +24,14 @@ export default class PackageModel extends Model {
       );
     }
   }
+
+  // Since file upload doesn't perform requests through
+  // an Ember Model save() process, it doesn't automatically
+  // hydrate the package.adapterError property. When an error occurs
+  // during upload we have to manually hydrate a custom error property
+  // to trigger the error box displayed to the user.
+  @tracked
+  fileUploadErrors = null;
 
   @service
   session;
@@ -90,30 +99,58 @@ export default class PackageModel extends Model {
   }
 
   async save(recordsToDelete) {
-    await this.fileManager.save();
-    if (this.dcpPackagetype === DCPPACKAGETYPE.PAS_PACKAGE.code) {
-      await this.saveDeletedRecords(recordsToDelete);
-      await this.pasForm.save();
-    }
-    if (this.dcpPackagetype === DCPPACKAGETYPE.RWCDS.code) {
-      await this.rwcdsForm.save();
-    }
-    if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code
-      || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code) {
-      await this.saveDeletedRecords(recordsToDelete);
-      await this.landuseForm.save();
-    }
-    if (this.dcpPackagetype === DCPPACKAGETYPE.FILED_EAS.code) {
-      await this.saveDirtySingleCeqrInvoiceQuestionnaire();
-    }
-    if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_SCOPE_OF_WORK.code) {
-      await this.saveDirtySingleCeqrInvoiceQuestionnaire();
-    }
-    await super.save();
+    let formAdapterError = false;
 
-    await this.reload();
+    try {
+      if (this.dcpPackagetype === DCPPACKAGETYPE.PAS_PACKAGE.code) {
+        await this.saveDeletedRecords(recordsToDelete);
+        await this.pasForm.save();
+      }
+      if (this.dcpPackagetype === DCPPACKAGETYPE.RWCDS.code) {
+        await this.rwcdsForm.save();
+      }
+      if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code
+        || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code) {
+        await this.saveDeletedRecords(recordsToDelete);
+        await this.landuseForm.save();
+      }
+      if (this.dcpPackagetype === DCPPACKAGETYPE.FILED_EAS.code) {
+        await this.saveDirtySingleCeqrInvoiceQuestionnaire();
+      }
+      if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_SCOPE_OF_WORK.code) {
+        await this.saveDirtySingleCeqrInvoiceQuestionnaire();
+      }
+    } catch (e) {
+      console.log('Error saving a Form or Ceqr Invoice Questionnaire: ', e);
 
-    this._synchronizeDocuments();
+      formAdapterError = true;
+    }
+
+    try {
+      await super.save();
+    } catch (e) {
+      console.log('Error saving package: ', e);
+    }
+
+    try {
+      await this.fileManager.save();
+    } catch (e) {
+      console.log('Error saving files: ', e);
+
+      // See comment on the tracked fileUploadError property
+      // definition above.
+      this.fileUploadErrors = [{
+        code: 'UPLOAD_DOC_FAILED',
+        title: 'Failed to upload documents',
+        detail: 'An error occured while  uploading your documents. Please refresh and retry.',
+      }];
+    }
+
+    if (!formAdapterError && !this.adapterError && !this.fileUploadErrors) {
+      await this.reload();
+
+      this._synchronizeDocuments();
+    }
   }
 
   get isSingleCeqrInvoiceQuestionnaireDirty() {
