@@ -3,6 +3,7 @@ import {
 } from 'ember-changeset-validations/validators';
 import SaveableLanduseForm from './saveable-landuse-form';
 import validatePresenceIf from '../validators/required-if-selected';
+import validateUniqueness from '../validators/validate-uniqueness';
 
 export default {
   ...SaveableLanduseForm,
@@ -71,6 +72,12 @@ export default {
     validateLength({
       min: 1,
       message: 'One or more applicant team members is required.',
+    }),
+  ],
+  bbls: [
+    validateUniqueness({
+      on: 'dcpBblnumber',
+      message: 'One or more bbls is required.',
     }),
   ],
 };

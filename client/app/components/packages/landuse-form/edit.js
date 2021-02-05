@@ -68,6 +68,7 @@ export default class LandUseFormComponent extends Component {
 
   @action
   async savePackage() {
+    console.log('saveable stuff', SaveableProjectFormValidations);
     try {
       await this.args.package.save(this.recordsToDelete);
       this.recordsToDelete = [];
@@ -156,6 +157,15 @@ export default class LandUseFormComponent extends Component {
     this.recordsToDelete.push(landuseGeography);
 
     landuseGeography.deleteRecord();
+  }
+
+  @action
+  addBbl(targetEntity, changeset) {
+    const newBbl = this.store.createRecord('bbl', {
+      landuseForm: this.landuseForm,
+    });
+
+    addToHasMany(changeset, 'applicants', newApplicant);
   }
 
   @action
