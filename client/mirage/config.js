@@ -2,7 +2,7 @@ import { Response } from 'ember-cli-mirage';
 import ENV from '../config/environment';
 
 export default function() {
-  this.passthrough('https://search-api.planninglabs.nyc/**');
+  this.passthrough('https://search-api-production.herokuapp.com/**');
   this.passthrough('/account/**');
   // These comments are here to help you get started. Feel free to delete them.
 
