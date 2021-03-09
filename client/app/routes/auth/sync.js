@@ -15,10 +15,10 @@ export default class AuthSyncRoute extends Route {
 
     const contact = await this.store.findRecord('contact', authenticated.contactId);
 
-    if (window.document.referrer.includes('/account/user/profile.htm?returnOnSave=true')) {
+    if (window.document.referrer.includes('nyc.gov')) {
       await contact.save();
-
-      this.transitionTo(to);
     }
+
+    this.transitionTo(to);
   }
 }
