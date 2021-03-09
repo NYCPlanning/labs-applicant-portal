@@ -83,7 +83,15 @@ export class CitypayService {
 
       // enter credentials
       await page.type('#Username', this.config.get('MS_APPLICANT_PORTAL_USERNAME'));
-      await page.type('#Password', this.config.get('MS_APPLICANT_PORTAL_PASSWORD'));
+
+      // Something changed MCS-portal side for this selector
+      // the selector changed from Password -> PasswordValue
+      // this code will try both just in case.
+      try {
+        await page.type('#Password', this.config.get('MS_APPLICANT_PORTAL_PASSWORD'));
+      } catch (e) {
+        await page.type('#PasswordValue', this.config.get('MS_APPLICANT_PORTAL_PASSWORD'));
+      }
 
       // click signin, but await for the response with cookies
       page.click('#submit-signin-local');
