@@ -489,11 +489,11 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
 
     // filling out the project name information
-    await fillIn('[data-test-input="dcpProjectname"]', 'new project name');
+    await fillIn('[data-test-input="dcpSitedataprojectname"]', 'new site data project name');
 
     await click('[data-test-save-button]');
 
-    assert.equal(this.server.db.projects.firstObject.dcpProjectname, 'new project name');
+    assert.equal(this.server.db.landuseForms.firstObject.dcpSitedataprojectname, 'new site data project name');
 
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });

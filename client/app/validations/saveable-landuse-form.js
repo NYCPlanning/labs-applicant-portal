@@ -19,6 +19,13 @@ export default {
       message: 'Text is too long (max {max} characters)',
     }),
   ],
+  dcpSitedataprojectname: [
+    validateLength({
+      min: 0,
+      max: 50,
+      message: 'Text is too long (max {max} characters)',
+    }),
+  ],
   dcpContactemail: [
     validateLength({
       min: 0,
