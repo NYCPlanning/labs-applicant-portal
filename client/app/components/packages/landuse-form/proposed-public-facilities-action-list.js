@@ -15,7 +15,7 @@ export default class ProposedPublicFacilitiesActionListComponent extends Compone
       },
       {
         prop: 'dcpSiteselectionopt',
-        label: 'Public Facility Site Acquisition',
+        label: 'Public Facility Site Selection',
       },
 
     ];
