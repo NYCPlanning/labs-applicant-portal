@@ -1,18 +1,12 @@
 {{#let @form as |form|}}
-  <form.SaveableForm
-    @model={{@form.data.package.project}}
-    @validators={{array @validations.SaveableProjectFormValidations @validations.SubmittableProjectFormValidations}}
-    as |projectForm|
-  >
-    <Ui::Question @required={{false}} as |Q|>
-      <Q.Label>
-        Project Name
-      </Q.Label>
+  <Ui::Question @required={{false}} as |Q|>
+    <Q.Label>
+      Project Name
+    </Q.Label>
 
-      <projectForm.Field
-        @attribute="dcpProjectname"
-        id={{Q.questionId}}
-      />
-    </Ui::Question>
-  </form.SaveableForm>
+    <form.Field
+      @attribute="dcpSitedataprojectname"
+      id={{Q.questionId}}
+    />
+  </Ui::Question>
 {{/let}}

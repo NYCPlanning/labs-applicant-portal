@@ -53,6 +53,8 @@ export default class LanduseFormModel extends Model {
 
   @attr dcpSitedatacommunitydistrict;
 
+  @attr dcpSitedataprojectname;
+
   @attr dcpSitedatazoningsectionnumbers;
 
   @attr dcpSitedataexistingzoningdistrict;

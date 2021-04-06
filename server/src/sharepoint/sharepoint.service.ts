@@ -56,6 +56,156 @@ export class SharepointService {
     })
   }
 
+  async getSharepointDigestInfo(): Promise<any> {
+    try {
+      const { access_token } = await this.generateSharePointAccessToken();
+      const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
+
+      const url = encodeURI(`https://nyco365.sharepoint.com/sites/${SHAREPOINT_CRM_SITE}/_api/contextinfo`);
+
+      const options = {
+        url,
+        headers: {
+          'Authorization': `Bearer ${access_token}`,
+          Accept: 'application/json'
+        },
+      };
+
+      return new Promise(resolve => {
+        Request.post(options, (error, response, body) => {
+          const stringifiedBody = body.toString('utf-8');
+          if (response.statusCode >= 400) {
+            throw new HttpException({
+              code: 'GET_DIGEST_FAILED',
+              title: 'Error getting sharepoint digest',
+              detail: `Could not get digest`,
+            }, HttpStatus.NOT_FOUND);;
+          }
+
+          resolve(JSON.parse(stringifiedBody));
+        });
+      });
+    } catch (e) {
+      if (e instanceof HttpException) {
+        throw e;
+      } else {
+        throw new HttpException({
+          code: 'GET_DIGEST_FAILED',
+          title: 'Error getting sharepoint digest',
+          detail: `Could not get digest`,
+        }, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    }
+  }
+
+  async getSharepointFolderInfo(folderIdentifier): Promise<any> {
+    try {
+      const { access_token } = await this.generateSharePointAccessToken();
+      const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
+
+      const formattedFolderIdentifier = folderIdentifier.replace("'", "''");
+      const url = encodeURI(`https://nyco365.sharepoint.com/sites/${SHAREPOINT_CRM_SITE}/_api/web/GetFolderByServerRelativeUrl('/sites/${SHAREPOINT_CRM_SITE}/${formattedFolderIdentifier}')/ListItemAllFields`);
+
+      const options = {
+        url,
+        headers: {
+          'Authorization': `Bearer ${access_token}`,
+          Accept: 'application/json',
+        },
+      };
+
+      return new Promise(resolve => {
+        Request.post(options, (error, response, body) => {
+          const stringifiedBody = body.toString('utf-8');
+          if (response.statusCode >= 400) {
+            throw new HttpException({
+              code: 'GET_FOLDER_INFO_FAILED',
+              title: 'Error getting folder info',
+              detail: `Could not load info on Sharepoint folder "${formattedFolderIdentifier}". ${stringifiedBody}`,
+            }, HttpStatus.NOT_FOUND);;
+          }
+
+          resolve(JSON.parse(stringifiedBody));
+        });
+      });
+    } catch (e) {
+      if (e instanceof HttpException) {
+        throw e;
+      } else {
+        throw new HttpException({
+          code: 'GET_FOLDER_INFO_FAILED',
+          title: 'Error requesting sharepoint folder info',
+          detail: `Error while constructing request for Sharepoint folder info`,
+        }, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    }
+  }
+
+  // This function renames the folder specified by `folderIdentifier` by appending `dcp_archived` to the end of its name
+  // Example of folderIdentifier: `dcp_package/2021M023_Draft LU Form_3_A234234ASFLKNF3423`
+  async archiveSharepointFolder(folderIdentifier): Promise<any> {
+    const { 'odata.type': folderOdataType } =  await this.getSharepointFolderInfo(folderIdentifier)
+
+    const { FormDigestValue: formDigest } = await this.getSharepointDigestInfo();
+
+    const newName = folderIdentifier.replace("dcp_package/", "") + '_dcp_archived'
+
+    try {
+      const { access_token } = await this.generateSharePointAccessToken();
+      const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
+
+      const formattedFolderIdentifier = folderIdentifier.replace("'", "''");
+      const url = encodeURI(`https://nyco365.sharepoint.com/sites/${SHAREPOINT_CRM_SITE}/_api/web/GetFolderByServerRelativeUrl('/sites/${SHAREPOINT_CRM_SITE}/${formattedFolderIdentifier}')/ListItemAllFields`);
+
+      const postBody = JSON.stringify({
+        "__metadata": {
+          "type": folderOdataType
+        },
+        "Title": newName,
+        "FileLeafRef": newName
+      });
+
+      const options = {
+        url,
+        headers: {
+          'Authorization': `Bearer ${access_token}`,
+          Accept: 'application/json;odata=verbose',
+          'Content-Type':  'application/json;odata=verbose',
+          'Content-Length': postBody.length,
+          'If-Match': "*",
+          'X-HTTP-Method': "MERGE",
+          'X-RequestDigest': formDigest
+        },
+        body: postBody,
+      };
+
+      return new Promise(resolve => {
+        Request.post(options, (error, response, body) => {
+          const stringifiedBody = body.toString('utf-8');
+          if (response.statusCode >= 400) {
+            throw new HttpException({
+              code: 'ARCHIVE_FOLDER_FAILED',
+              title: 'Error archiving existing folder',
+              detail: `Could not archive Sharepoint folder "${formattedFolderIdentifier}". ${stringifiedBody}`,
+            }, HttpStatus.NOT_FOUND);
+          }
+
+          resolve(stringifiedBody);
+        });
+      });
+    } catch (e) {
+      if (e instanceof HttpException) {
+        throw e;
+      } else {
+        throw new HttpException({
+          code: 'ARCHIVE_FOLDER_FAILED',
+          title: 'Error archiving existing folder',
+          detail: `Error while constructing request to archive Sharepoint folder`,
+        }, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    }
+  }
+
   // Retrieves a list of files in a given Sharepoint folder
   async getSharepointFolderFiles(folderIdentifier): Promise<any> {
     try {

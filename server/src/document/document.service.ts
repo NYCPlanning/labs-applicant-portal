@@ -1,6 +1,7 @@
 import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 import { ConfigService } from '../config/config.service';
 import { CrmService } from '../crm/crm.service';
+import { SharepointService } from '../sharepoint/sharepoint.service';
 import { ADAL } from '../_utils/adal';
 import * as Request from 'request';
 
@@ -19,6 +20,7 @@ export class DocumentService {
   constructor(
     private readonly config: ConfigService,
     private readonly crmService: CrmService,
+    private readonly sharepointService: SharepointService,
   ){
     ADAL.ADAL_CONFIG = {
       CRMUrl: this.config.get('CRM_HOST'),
@@ -211,7 +213,6 @@ async getParentSiteLocation() {
     let docLocation = await this.findDocumentLocation(entityID, folderName);
     let docLocationID = null;
 
-    // TODO:  Need to verify this
     if (!docLocation) {
       const parentSiteLocation = await this.getParentSiteLocation();
       if(!parentSiteLocation) throw new Error('Sharepoint Site Location not found');
@@ -226,8 +227,18 @@ async getParentSiteLocation() {
       };
       entityRef[entityName+"id"] = entityID;
 
-      // TODO:  Need to verify this
-      docLocationID = await this.createDocumentLocation(entityDocName, absoluteURL, folderName, sharepointSiteID, entityRef, headers);
+      try {
+        docLocationID = await this.createDocumentLocation(entityDocName, absoluteURL, folderName, sharepointSiteID, entityRef, headers);
+      } catch (e) {
+        console.log("Error:  ",  e);
+
+        // If for some reason the folder already exists, archive it first. Then try creating document location one more time.
+        if (e.message && e.message.includes("Record already present in db")) {
+          await this.sharepointService.archiveSharepointFolder(`${entityName}/${folderName}`);
+
+          docLocationID = await this.createDocumentLocation(entityDocName, absoluteURL, folderName, sharepointSiteID, entityRef, headers);
+        }
+      }
     } else {
       docLocationID = docLocation.sharepointdocumentlocationid;
     }
