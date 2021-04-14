@@ -57,21 +57,23 @@ export default class FileManager {
     this.numFilesToUpload -= 1;
   }
 
-  uploadFiles() {
-    return Promise.all(this.filesToUpload.files.map((file) => file.upload(`${ENV.host}/documents`, {
-      fileKey: 'file',
-      headers: {
-        Authorization: `Bearer ${this.session.data.authenticated.access_token}`,
-      },
-      data: {
-        instanceId: this.packageId,
-        // Todo: `entityName` shouldn't be necessary.
-        // In this application, documents should only be
-        // uploaded to packages (at least so far).
-        // remove `entityName` after deprecating it from the backend
-        entityName: 'dcp_package',
-      },
-    })));
+  async uploadFiles() {
+    for (let i = 0; i < this.filesToUpload.files.length; i += 1) {
+      await this.filesToUpload.files[i].upload(`${ENV.host}/documents`, { // eslint-disable-line
+        fileKey: 'file',
+        headers: {
+          Authorization: `Bearer ${this.session.data.authenticated.access_token}`,
+        },
+        data: {
+          instanceId: this.packageId,
+          // Todo: `entityName` shouldn't be necessary.
+          // In this application, documents should only be
+          // uploaded to packages (at least so far).
+          // remove `entityName` after deprecating it from the backend
+          entityName: 'dcp_package',
+        },
+      });
+    }
   }
 
   deleteFiles() {

@@ -42,6 +42,11 @@
     "underscore": "^1.10.2",
     "utf8": "^3.0.0"
   },
+  "resolutions": {
+    "y18n": "^4.0.1",
+    "elliptic": "^6.5.4",
+    "node-notifier": "^8.0.1"
+  },
   "devDependencies": {
     "@nestjs/cli": "^7.0.0",
     "@nestjs/schematics": "^7.0.0",
