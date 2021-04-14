@@ -4,6 +4,8 @@ import ENV from '../config/environment';
 export default function() {
   this.passthrough('https://search-api-production.herokuapp.com/**');
   this.passthrough('/account/**');
+  this.passthrough('https://d3hb14vkzrxvla.cloudfront.net/**');
+
   // These comments are here to help you get started. Feel free to delete them.
 
   /*
