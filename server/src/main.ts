@@ -20,7 +20,7 @@ function generateSSLConfiguration() {
 }
 
 async function bootstrap() {
-  let allowedOrigins = <any[]>[/\.planninglabs\.nyc$/, /\.planning\.nyc\.gov$/, /\.netlify\.com/];
+  let allowedOrigins = <any[]>[/\.planninglabs\.nyc$/, /\.planning\.nyc\.gov$/];
 
   // On Heroku instances, default NODE_ENV is 'production'
   if (!['production', 'staging'].includes(process.env.NODE_ENV)) {
