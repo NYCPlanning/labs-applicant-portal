@@ -29,9 +29,9 @@
         @attribute="dcpCeqrtype"
         @type="radio-group"
         id={{dcpCeqrtypeQ.questionId}}
-        as |dcpCeqrtypeRadioGroup|
+        as |DcpCeqrtypeRadioGroup|
       >
-        <dcpCeqrtypeRadioGroup
+        <DcpCeqrtypeRadioGroup
           @options={{optionset 'landuseForm' 'dcpCeqrtype' 'list'}}
           @onChange={{fn (mut @form.data.dcpTypecategory) ""}}
           as |dcpCeqrtype|
@@ -52,7 +52,7 @@
               />     
             </Ui::Question>
           {{/if}}
-        </dcpCeqrtypeRadioGroup>
+        </DcpCeqrtypeRadioGroup>
       </form.Field>
     </Ui::Question>
 
