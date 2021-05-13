@@ -35,7 +35,10 @@
     {{#if (eq @applicant.dcpType (optionset 'applicant' 'dcpType' 'code' 'ORGANIZATION'))}}
       <label data-test-applicant-organization>
         Organization Name <Ui::RequiredAsterisk />
-        <form.Field @attribute="dcpOrganization" />
+        <form.Field
+          @attribute="dcpOrganization"
+          @maxlength="100"
+         />
       </label>
 
       <hr/>
@@ -62,7 +65,10 @@
     {{#if (eq @applicant.friendlyEntityName "Other Team Member")}}
       <label>
         Organization
-        <form.Field @attribute="dcpOrganization" />
+        <form.Field 
+          @attribute="dcpOrganization"
+          @maxlength="100"
+        />
       </label>
     {{/if}}
 
