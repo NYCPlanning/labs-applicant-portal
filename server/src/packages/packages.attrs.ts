@@ -10,5 +10,6 @@ export const PACKAGE_ATTRS = [
   'dcp_packageid',
   'dcp_name',
   'dcp_statusdate',
+  'dcp_packagesubmissiondate',
   'dcp_packagenotes',
 ];
