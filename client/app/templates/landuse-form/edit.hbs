@@ -5,10 +5,7 @@
     @route='project'
     @model={{@model.package.project.id}}
   />
-  <Crumb @text="{{if (eq @model.package.dcpPackagetype
-      (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))
-      "Draft" "Filed"
-    }} Land Use"
+  <Crumb @text={{optionset 'package' 'dcpPackagetype' 'label' @model.package.dcpPackagetype}}
     @disabled={{true}}
   />
   <Crumb @text="Edit" @current={{true}} />

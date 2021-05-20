@@ -25,6 +25,10 @@ export const PACKAGE_TYPE_OPTIONSET = {
     code: 717170011,
     label: 'Filed LU Package',
   },
+  POST_CERT_LU: {
+    code: 717170015,
+    label: 'Post-Cert LU',
+  },
   DRAFT_EAS: {
     code: 717170002,
     label: 'Draft EAS',
@@ -142,6 +146,7 @@ export class PackagesService {
         || firstPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['RWCDS'].code
         || firstPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['DRAFT_LU_PACKAGE'].code
         || firstPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['FILED_LU_PACKAGE'].code
+        || firstPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['POST_CERT_LU'].code
       ) {
         formData = await this.fetchPackageForm(firstPackage);
       }
@@ -188,7 +193,8 @@ export class PackagesService {
       }
 
       if (dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['DRAFT_LU_PACKAGE'].code
-      || dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['FILED_LU_PACKAGE'].code) {
+      || dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['FILED_LU_PACKAGE'].code
+      || dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['POST_CERT_LU'].code) {
         return {
           dcp_landuse: await this.landuseFormService.find(dcpPackage._dcp_landuseapplication_value)
         };
