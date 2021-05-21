@@ -37,5 +37,7 @@ export default class PackagesAttachmentsComponent extends Component {
   @action
   deselectFileForUpload(file) {
     this.fileManager.deselectFileForUpload(file);
+
+    this.args.package.documents = this.args.package.documents.filter((document) => document !== file);
   }
 }
