@@ -9,9 +9,11 @@
       <div class="cell">
         <ol class="no-bullet">
           {{#each @packages as |package|}}
-            <Project::PackageListItem
-              @package={{package}}
-            />
+            {{#if (not-eq package.statuscode (optionset 'package' 'statuscode' 'code' 'MISTAKE'))}}
+              <Project::PackageListItem
+                @package={{package}}
+              />
+            {{/if}}
           {{/each}}
         </ol>
       </div>
