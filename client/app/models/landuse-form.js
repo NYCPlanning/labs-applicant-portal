@@ -178,7 +178,7 @@ export default class LanduseFormModel extends Model {
 
   @attr dcpEstablishgradeopt;
 
-  @attr dcpEasement1;
+  @attr dcpEstablisheasement;
 
   @attr dcpEliminatestreetopt;
 
@@ -188,7 +188,7 @@ export default class LanduseFormModel extends Model {
 
   @attr dcpEliminategradeopt;
 
-  @attr dcpEasement2;
+  @attr dcpEliminateeasement;
 
   @attr dcpChangestreetwidthopt;
 
@@ -198,7 +198,7 @@ export default class LanduseFormModel extends Model {
 
   @attr dcpChangestreetgradeopt;
 
-  @attr dcpEasement3;
+  @attr dcpChangeeasement;
 
   @attr dcpRelatedacquisitionofpropertyopt;
 

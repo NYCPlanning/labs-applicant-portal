@@ -22,7 +22,7 @@ export default class ChangeInCityMapEstablishDelineateListComponent extends Comp
         label: 'Grade',
       },
       {
-        prop: 'dcpEasement1',
+        prop: 'dcpEstablisheasement',
         label: 'Easement',
       },
 

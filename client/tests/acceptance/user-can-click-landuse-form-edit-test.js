@@ -935,7 +935,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     await fillIn('[data-test-input="dcpEmail"]', 'tesster@planning.nyc.gov');
 
     await click('[data-test-checkbox="dcpEstablishstreetopt"]');
-    await click('[data-test-checkbox="dcpEasement1"]');
+    await click('[data-test-checkbox="dcpEstablisheasement"]');
 
     await click('[data-test-save-button]');
 
@@ -943,10 +943,10 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     assert.equal(this.server.db.landuseForms.firstObject.dcpEstablishparkopt, undefined);
     assert.equal(this.server.db.landuseForms.firstObject.dcpEstablishpublicplaceopt, undefined);
     assert.equal(this.server.db.landuseForms.firstObject.dcpEstablishgradeopt, undefined);
-    assert.equal(this.server.db.landuseForms.firstObject.dcpEasement1, true);
+    assert.equal(this.server.db.landuseForms.firstObject.dcpEstablisheasement, true);
 
     await click('[data-test-checkbox="dcpEliminatestreetopt"]');
-    await click('[data-test-checkbox="dcpEasement2"]');
+    await click('[data-test-checkbox="dcpEliminateeasement"]');
 
     await click('[data-test-save-button]');
 
@@ -954,17 +954,17 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     assert.equal(this.server.db.landuseForms.firstObject.dcpEliminateparkopt, undefined);
     assert.equal(this.server.db.landuseForms.firstObject.dcpEliminatepublicplaceopt, undefined);
     assert.equal(this.server.db.landuseForms.firstObject.dcpEliminategradeopt, undefined);
-    assert.equal(this.server.db.landuseForms.firstObject.dcpEasement2, true);
+    assert.equal(this.server.db.landuseForms.firstObject.dcpEliminateeasement, true);
 
     await click('[data-test-checkbox="dcpChangestreetwidthopt"]');
-    await click('[data-test-checkbox="dcpEasement3"]');
+    await click('[data-test-checkbox="dcpChangeeasement"]');
 
     await click('[data-test-save-button]');
 
     assert.equal(this.server.db.landuseForms.firstObject.dcpChangestreetwidthopt, true);
     assert.equal(this.server.db.landuseForms.firstObject.dcpChangestreetalignmentopt, undefined);
     assert.equal(this.server.db.landuseForms.firstObject.dcpChangestreetgradeopt, undefined);
-    assert.equal(this.server.db.landuseForms.firstObject.dcpEasement3, true);
+    assert.equal(this.server.db.landuseForms.firstObject.dcpChangeeasement, true);
 
     await click('[data-test-radio="dcpRelatedacquisitionofpropertyopt"][data-test-radio-option="Yes"]');
     await click('[data-test-related-acquisition="true"]');
