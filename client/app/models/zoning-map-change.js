@@ -32,7 +32,7 @@ export default class ZoningMapChangeModel extends Model {
 
   @attr dcpZoningmapchangesid;
 
-  @attr dcpExistingzoningdistrictvalue;
+  @attr dcpExistingzoningdistrictvaluenew;
 
   @attr dcpName;
 }
