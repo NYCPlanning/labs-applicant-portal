@@ -164,6 +164,21 @@ export const DCPTOTALZONINGAREATOBEREZONED = {
   },
 };
 
+export const DCPEASEMENTS = {
+  YES: {
+    code: 1,
+    label: 'Yes',
+  },
+  NO: {
+    code: 2,
+    label: 'No',
+  },
+  SELECTNULL: {
+    code: -1,
+    label: 'Select (Null)',
+  },
+};
+
 const LANDUSE_FORM_OPTIONSETS = {
   CEQR_TYPE,
   DCPDEVSIZE,
@@ -177,6 +192,7 @@ const LANDUSE_FORM_OPTIONSETS = {
   DCPONLYCHANGETHEELIMINATIONOFAMAPPEDBUTUNIMP,
   DCPTYPEDISPOSITION,
   DCPTOTALZONINGAREATOBEREZONED,
+  DCPEASEMENTS,
 };
 
 export default LANDUSE_FORM_OPTIONSETS;
