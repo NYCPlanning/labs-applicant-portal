@@ -1222,7 +1222,11 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     await fillIn('[data-test-input="dcpZoningsectionmapsnumber"]', 'zoning section num 1234');
     assert.dom('[data-test-validation-message="dcpZoningsectionmapsnumber"]').doesNotExist();
 
-    await selectChoose('[data-test-dcpExistingzoningdistrictvalue-dropdown]', 'R2A');
+    await fillIn('[data-test-input="dcpExistingzoningdistrictvaluenew"]', exceedMaximum(30, 'String'));
+    assert.dom('[data-test-validation-message="dcpExistingzoningdistrictvaluenew"]').exists();
+
+    await fillIn('[data-test-input="dcpExistingzoningdistrictvaluenew"]', 'zoning district R2A');
+    assert.dom('[data-test-validation-message="dcpExistingzoningdistrictvaluenew"]').doesNotExist();
 
     await fillIn('[data-test-input="dcpProposedzoningmapvalue"]', exceedMaximum(100, 'String'));
     assert.dom('[data-test-validation-message="dcpProposedzoningmapvalue"]').exists();
@@ -1234,7 +1238,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     assert.equal(this.server.db.landuseForms.firstObject.dcpTotalzoningareatoberezoned, 717170006);
     assert.equal(this.server.db.zoningMapChanges.firstObject.dcpZoningsectionmapsnumber, 'zoning section num 1234');
-    assert.equal(this.server.db.zoningMapChanges.firstObject.dcpExistingzoningdistrictvalue, 717170004);
+    assert.equal(this.server.db.zoningMapChanges.firstObject.dcpExistingzoningdistrictvaluenew, 'zoning district R2A');
     assert.equal(this.server.db.zoningMapChanges.firstObject.dcpProposedzoningmapvalue, 'some zoning map value');
 
     await click('[data-test-remove-zoning-map-change-button]');
