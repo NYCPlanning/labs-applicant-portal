@@ -13,6 +13,6 @@ export const ZONING_MAP_CHANGE_ATTRS = [
   'dcp_number',
   'utcconversiontimezonecode',
   'dcp_zoningmapchangesid',
-  'dcp_existingzoningdistrictvalue',
+  'dcp_existingzoningdistrictvaluenew',
   'dcp_name',
 ];
