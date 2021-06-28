@@ -1,3 +1,7 @@
+{{#if this.hasUpcomingMaintenance}}
+  <h1>Please note: This portal will be down for 24 hours of system maintenance starting Monday, June 28 at 7PM.</h1>
+{{/if}}
+
 <form {{on 'submit' (fn this.startLogin this.email)}}>
   <Ui::Question as |Q|>
     <Q.Label>
@@ -17,7 +21,7 @@
           class="button secondary expanded text-weight-bold"
           type="submit"
           data-test-sign-in="next"
-          disabled={{if this.isLoginStarted "disabled"}}
+          disabled={{if (or this.isLoginStarted this.isMaintenancePeriod) "disabled"}}
         >
           {{#if this.isLoginStarted}}
             <FaIcon @icon="spinner" @spin={{true}} @pulse={{true}} class="small-margin-right" />
