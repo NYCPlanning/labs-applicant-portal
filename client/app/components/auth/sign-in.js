@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 const noop = async () => {};
+const MAINTENANCE_RANGE = ['06/28/2021 19:00', '06/29/2021 19:00'];
 
 export default class AuthSignInComponent extends Component {
   @service
@@ -45,5 +46,19 @@ export default class AuthSignInComponent extends Component {
         this.router.transitionTo('auth.register', { queryParams: { loginEmail } });
       }
     }
+  }
+
+  get isMaintenancePeriod() {
+    const [from, to] = MAINTENANCE_RANGE.map((string) => new Date(string));
+    const now = new Date();
+
+    return now > from && now < to;
+  }
+
+  get hasUpcomingMaintenance() {
+    const [, to] = MAINTENANCE_RANGE.map((string) => new Date(string));
+    const now = new Date();
+
+    return now < to;
   }
 }
