@@ -18,6 +18,7 @@ module('Integration | Component | project/package-list-item', function(hooks) {
       dcpPackageversion: 1,
       dcpVisibility: 717170002,
       dcpStatusdate: packageDate,
+      statecode: 0,
     });
 
     const store = this.owner.lookup('service:store');

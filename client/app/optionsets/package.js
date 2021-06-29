@@ -88,6 +88,10 @@ export const DCPPACKAGETYPE = {
     code: 717170011,
     label: 'Filed LU Package',
   },
+  POST_CERT_LU: {
+    code: 717170015,
+    label: 'Post-Cert LU',
+  },
   DRAFT_EAS: {
     code: 717170002,
     label: 'Draft EAS',

@@ -2,6 +2,14 @@
 
 This is a monorepo containing both the server and client code for the ZAP Applicant Portal.
 
+## Prerequisite Tools
+
+* [Git](https://git-scm.com/)
+* [Node.js](https://nodejs.org/) (with npm)
+  - This installation was tested using Node v14.15.0
+* [Ember CLI](https://ember-cli.com/)
+* [Yarn](https://yarnpkg.com/)
+
 ## Prerequisite SSL Setup for Local Development
 In order for cookies to work across both the client and the server during local development, we must have SSL setup for our development environment.
 

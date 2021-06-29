@@ -19,7 +19,7 @@ export default class ChangeInCityMapProjectChangeListComponent extends Component
         label: 'Street Grade',
       },
       {
-        prop: 'dcpEasement3',
+        prop: 'dcpChangeeasement',
         label: 'Easement',
       },
 

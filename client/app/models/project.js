@@ -61,6 +61,7 @@ export default class ProjectModel extends Model {
 
   get landusePackages() {
     const landusePackages = [
+      ...this.postCertLUPackages,
       ...this.filedLandusePackages,
       ...this.draftLandusePackages,
     ];
@@ -84,6 +85,13 @@ export default class ProjectModel extends Model {
       .reverse();
 
     return landusePackages;
+  }
+
+  get postCertLUPackages() {
+    return this.packages
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'POST_CERT_LU']))
+      .sortBy('dcpPackageversion')
+      .reverse();
   }
 
   get easPackages() {

@@ -19,35 +19,41 @@
     </Ui::Question>
 
     <Ui::Question
-      data-test-ceqr-type-radio-group
-      as |Q|
+      as |dcpCeqrtypeQ|
     >
-      <Q.Label>
+      <dcpCeqrtypeQ.Label>
         What is the CEQR type?
-      </Q.Label>
+      </dcpCeqrtypeQ.Label>
 
       <form.Field
         @attribute="dcpCeqrtype"
         @type="radio-group"
-        id={{Q.questionId}}
-        as |RadioGroup|
+        id={{dcpCeqrtypeQ.questionId}}
+        as |DcpCeqrtypeRadioGroup|
       >
-        <RadioGroup
+        <DcpCeqrtypeRadioGroup
           @options={{optionset 'landuseForm' 'dcpCeqrtype' 'list'}}
-        />
+          @onChange={{fn (mut @form.data.dcpTypecategory) ""}}
+          as |dcpCeqrtype|
+        >
+          {{#if (eq
+            dcpCeqrtype
+            (optionset 'landuseForm' 'dcpCeqrtype' 'code' 'Type II')
+          )}}
+            <Ui::Question as |DcpTypeIICategory|>
+              <DcpTypeIICategory.Label>
+                What is the Type II Category?
+              </DcpTypeIICategory.Label>
+                
+              <form.Field
+                @attribute="dcpTypecategory"
+                @maxlength="100"
+                id={{DcpTypeIICategory.questionId}}
+              />     
+            </Ui::Question>
+          {{/if}}
+        </DcpCeqrtypeRadioGroup>
       </form.Field>
-    </Ui::Question>
-
-    <Ui::Question as |Q|>
-      <Q.Label>
-        What is the Type II Category?
-      </Q.Label>
-        
-      <form.Field
-        @attribute="dcpTypecategory"
-        @maxlength="100"
-        id={{Q.questionId}}
-      />     
     </Ui::Question>
 
   {{!NOTE: "What is the date of determination?" question here}}
