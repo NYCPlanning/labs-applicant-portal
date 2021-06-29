@@ -39,3 +39,14 @@ On `yarn run start`, you may run into the error `EADDRINUSE: address already in 
 To solve this, open Activity Monitor, search for all "node" processes, then force kill them.
 
 Then try `yarn run start` again.
+
+## Maintenance Mode
+
+To enable "maintenance mode", set two environment variables in the frontend (Netlify) build environment:
+
+MAINTENANCE_START='06/28/2021 19:00'
+MAINTENANCE_END='06/29/2021 19:00'
+
+Use the date format in the example above. This will warn of upcoming maintenance (if the start date is in the future), disable
+the login, and disappear once the end period has passed.
+
