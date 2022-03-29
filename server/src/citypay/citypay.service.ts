@@ -50,10 +50,14 @@ export class CitypayService {
       const cartKeyJWT = MSPortalJWTRequest.body.toString();
 
       // fetch the CartKey used to identify the transaction on CityPay
-      const { body: { CartKey } } = await superagent
+      const cartKeyResponse = await superagent
         .post(MS_APPLICANT_PORTAL.CART_KEY_API)
         .set('Authorization', `Bearer ${cartKeyJWT}`)
         .send(`id=${packageId}`);
+
+      console.log("Cart key response: ", cartKeyResponse);
+
+      const { body: { CartKey } } = cartKeyResponse;
 
       return CartKey;
     } catch (e) {

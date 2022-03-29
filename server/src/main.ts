@@ -27,8 +27,6 @@ async function bootstrap() {
    allowedOrigins = allowedOrigins.concat(['http://localhost:4200', 'https://localhost:4200', 'https://local.planninglabs.nyc:4200']);
   }
 
-  allowedOrigins = allowedOrigins.concat(['https://local.planninglabs.nyc:4200']);
-
   const app = await NestFactory.create(AppModule, {
     cors: {
       origin: allowedOrigins,
