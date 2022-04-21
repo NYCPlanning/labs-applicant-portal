@@ -18,7 +18,7 @@ export default {
   dcpRationalbehindthebuildyear: [
     validateLength({
       min: 0,
-      max: 300,
+      max: 2400,
       message: 'Text is too long (max {max} characters)',
     }),
   ],
