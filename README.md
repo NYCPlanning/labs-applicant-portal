@@ -6,7 +6,7 @@ This is a monorepo containing both the server and client code for the ZAP Applic
 
 * [Git](https://git-scm.com/)
 * [Node.js](https://nodejs.org/) (with npm)
-  - This installation was tested using Node v14.15.0
+  - This installation was tested using Node v14.15.0, 10.21.0
 * [Ember CLI](https://ember-cli.com/)
 * [Yarn](https://yarnpkg.com/)
 
