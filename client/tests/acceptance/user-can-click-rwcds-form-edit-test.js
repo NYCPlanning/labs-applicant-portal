@@ -122,8 +122,8 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     await fillIn('[data-test-input="dcpProjectsitedescription"]', exceedMaximum(2400, 'String'));
     assert.dom('[data-test-validation-message="dcpProjectsitedescription"').hasText('Text is too long (max 2400 characters)');
 
-    await fillIn('[data-test-input="dcpProposedprojectdevelopmentdescription"]', exceedMaximum(1800, 'String'));
-    assert.dom('[data-test-validation-message="dcpProposedprojectdevelopmentdescription"').hasText('Text is too long (max 1800 characters)');
+    await fillIn('[data-test-input="dcpProposedprojectdevelopmentdescription"]', exceedMaximum(2400, 'String'));
+    assert.dom('[data-test-validation-message="dcpProposedprojectdevelopmentdescription"').hasText('Text is too long (max 2400 characters)');
 
     await fillIn('[data-test-input="dcpBuildyear"]', exceedMaximum(4, 'Number'));
     assert.dom('[data-test-validation-message="dcpBuildyear"').hasText('Number is too long (max 4 characters)');
