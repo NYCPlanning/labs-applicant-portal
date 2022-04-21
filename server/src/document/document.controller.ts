@@ -38,10 +38,10 @@ export class DocumentController {
    * with the selected file blob.
    * @return     {HTTP Response} Response
    */
-  @Post('/')
+  @Post('/package/')
   @UseInterceptors(FileInterceptor('file'))
   @UseGuards(AuthenticateGuard)
-  async create(@UploadedFile() file, @Body('instanceId') instanceId, @Session() session) {
+  async postPackageDocument(@UploadedFile() file, @Body('instanceId') instanceId, @Session() session) {
     const headers = {
       // Document will be uploaded as this user
       MSCRMCallerID: this.config.get('CRM_SERVICE_CONTACT_ID'),
@@ -64,6 +64,37 @@ export class DocumentController {
     const folderName = `${packageName}_${instanceId.toUpperCase().replace(/-/g, '')}`;
 
     return this.documentService.uploadDocument('dcp_package',
+      instanceId,
+      folderName,
+      file.originalname,
+      encodedBase64File,
+      true,
+      headers
+    );
+  }
+
+  // instandId - project artifact id
+  //  @UseGuards(AuthenticateGuard)
+  @Post('/artifact/')
+  @UseInterceptors(FileInterceptor('file'))
+  async postArtifactDocument(@UploadedFile() file, @Body('instanceId') instanceId, @Session() session) {
+    const headers = {
+      // Document will be uploaded as this user
+      MSCRMCallerID: this.config.get('CRM_SERVICE_CONTACT_ID'),
+    };
+
+    const encodedBase64File = Buffer.from(file.buffer).toString('base64');
+
+    const artifactRecord = (await this.crmService.get(
+      'dcp_artifactses',
+      `$select=dcp_name&$filter=dcp_artifactsid eq '${instanceId}'&$top=1`)
+    );
+
+    const { records: [ { dcp_name: artifactName }]} = artifactRecord;
+
+    const folderName = `${artifactName}_${instanceId.toUpperCase().replace(/-/g, '')}`;
+
+    return this.documentService.uploadDocument('dcp_artifacts',
       instanceId,
       folderName,
       file.originalname,
