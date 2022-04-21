@@ -67,7 +67,7 @@ export default {
   dcpRwcdsexplanation: [
     validateLength({
       min: 0,
-      max: 50,
+      max: 2400,
       message: 'Text is too long (max {max} characters)',
     }),
   ],

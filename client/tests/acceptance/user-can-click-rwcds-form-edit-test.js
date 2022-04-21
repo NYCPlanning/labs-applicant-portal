@@ -197,7 +197,7 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
 
     assert.dom('[data-test-validation-message="dcpRwcdsexplanation"]').hasText('This field is required');
 
-    await fillIn('[data-test-input="dcpRwcdsexplanation"]', exceedMaximum(50, 'String'));
-    assert.dom('[data-test-validation-message="dcpRwcdsexplanation"').hasText('Text is too long (max 50 characters)');
+    await fillIn('[data-test-input="dcpRwcdsexplanation"]', exceedMaximum(2400, 'String'));
+    assert.dom('[data-test-validation-message="dcpRwcdsexplanation"').hasText('Text is too long (max 2400 characters)');
   });
 });
