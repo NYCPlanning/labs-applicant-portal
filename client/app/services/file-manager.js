@@ -65,12 +65,12 @@ export default class FileManager {
           Authorization: `Bearer ${this.session.data.authenticated.access_token}`,
         },
         data: {
-          instanceId: this.packageId,
+          instanceId: '4a260465-0ec0-ec11-983e-001dd804d99b', // this.packageId, TODO: retrieve this from project.dcp_artifactses[0].id
           // Todo: `entityName` shouldn't be necessary.
           // In this application, documents should only be
           // uploaded to packages (at least so far).
           // remove `entityName` after deprecating it from the backend
-          entityName: 'dcp_package',
+          entityName: 'dcp_artifacts',
         },
       });
     }

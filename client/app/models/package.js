@@ -150,10 +150,24 @@ export default class PackageModel extends Model {
       }];
     }
 
+    try {
+      await this.project.artifactFileManager.save();
+    } catch (e) {
+      console.log('Error saving files: ', e);
+
+      this.fileUploadErrors = [{
+        code: 'UPLOAD_ARTIFACT_DOC_FAILED',
+        title: 'Failed to upload artifact documents',
+        detail: 'An error occured while  uploading your documents. Please refresh and retry.',
+      }];
+    }
+
     if (!formAdapterError && !this.adapterError && !this.fileUploadErrors) {
       await this.reload();
 
       this._synchronizeDocuments();
+
+      this.project._synchronizeArtifactDocuments();
     }
   }
 
@@ -194,7 +208,7 @@ export default class PackageModel extends Model {
 
   get isDirty() {
     const isPackageDirty = this.hasDirtyAttributes
-      || this.fileManager.isDirty;
+      || this.fileManager.isDirty || this.project.artifactFileManager.isDirty;
 
     if (this.dcpPackagetype === DCPPACKAGETYPE.PAS_PACKAGE.code) {
       return isPackageDirty

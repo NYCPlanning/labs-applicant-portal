@@ -21,6 +21,9 @@ export default class ProjectModel extends Model {
   }
 
   @service
+  session;
+
+  @service
   fileQueue;
 
   @attr({ defaultValue: () => [] })
@@ -77,6 +80,10 @@ export default class ProjectModel extends Model {
 
   @hasMany('milestone', { async: false })
   milestones;
+
+  _synchronizeArtifactDocuments() {
+    this.artifactFileManager.existingFiles = this.artifactDocuments;
+  }
 
   get publicStatusGeneralPublicProject() {
     const isGeneralPublic = this.dcpVisibility === optionset(['project', 'dcpVisibility', 'code', 'GENERAL_PUBLIC']);
