@@ -1,7 +1,31 @@
 import Model, { attr, hasMany } from '@ember-data/model';
+import { inject as service } from '@ember/service';
 import { optionset } from '../helpers/optionset';
+import FileManager from '../services/file-manager';
 
 export default class ProjectModel extends Model {
+  createArtifactFileQueue() {
+    if (this.artifactFileManager) {
+      this.artifactFileManager.existingFiles = this.artifactDocuments;
+    } else {
+      const fileQueue = this.fileQueue.create(this.id);
+
+      this.artifactFileManager = new FileManager(
+        this.id,
+        this.artifactDocuments,
+        [],
+        fileQueue,
+        this.session,
+      );
+    }
+  }
+
+  @service
+  fileQueue;
+
+  @attr({ defaultValue: () => [] })
+  artifactDocuments;
+
   // The human-readable, descriptive name.
   // e.g. "Marcus Garvey Blvd Project"
   @attr dcpProjectname;

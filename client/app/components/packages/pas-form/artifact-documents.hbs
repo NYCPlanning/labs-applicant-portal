@@ -1,0 +1,11 @@
+<@form.Section @title="Artifact Documents">
+  <p>
+    Please attach artifact documents.
+  </p>
+
+  <Packages::ArtifactAttachments
+    @project={{@model.project}}
+    @fileManager={{@model.project.artifactFileManager}}
+    data-test-section="artifact-attachments"
+  />
+</@form.Section>

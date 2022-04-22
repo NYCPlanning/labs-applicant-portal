@@ -59,7 +59,7 @@ export default class FileManager {
 
   async uploadFiles() {
     for (let i = 0; i < this.filesToUpload.files.length; i += 1) {
-      await this.filesToUpload.files[i].upload(`${ENV.host}/documents`, { // eslint-disable-line
+      await this.filesToUpload.files[i].upload(`${ENV.host}/documents/artifact`, { // eslint-disable-line
         fileKey: 'file',
         headers: {
           Authorization: `Bearer ${this.session.data.authenticated.access_token}`,
@@ -83,7 +83,7 @@ export default class FileManager {
     // POST request to a differently named endpoint, like
     // deleteDocument
     return Promise.all(this.filesToDelete.map((file) => fetch(
-      `${ENV.host}/documents?serverRelativeUrl=${file.serverRelativeUrl}`, {
+      `${ENV.host}/documents/artifacts?serverRelativeUrl=${file.serverRelativeUrl}`, {
         method: 'DELETE',
         credentials: 'include',
         headers: {
