@@ -131,8 +131,8 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     await fillIn('[data-test-input="dcpRationalbehindthebuildyear"]', exceedMaximum(2400, 'String'));
     assert.dom('[data-test-validation-message="dcpRationalbehindthebuildyear"').hasText('Text is too long (max 2400 characters)');
 
-    await fillIn('[data-test-input="dcpSitehistory"]', exceedMaximum(600, 'String'));
-    assert.dom('[data-test-validation-message="dcpSitehistory"').hasText('Text is too long (max 600 characters)');
+    await fillIn('[data-test-input="dcpSitehistory"]', exceedMaximum(2400, 'String'));
+    assert.dom('[data-test-validation-message="dcpSitehistory"').hasText('Text is too long (max 2400 characters)');
   });
 
   test('Validation messages display for Proposed Actions', async function(assert) {

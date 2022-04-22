@@ -46,7 +46,7 @@ export default {
   dcpSitehistory: [
     validateLength({
       min: 0,
-      max: 600,
+      max: 2400,
       message: 'Text is too long (max {max} characters)',
     }),
   ],
