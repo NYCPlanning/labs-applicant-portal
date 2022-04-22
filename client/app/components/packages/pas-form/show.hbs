@@ -585,6 +585,96 @@
       </Ui::Answer>
     </section>
 
+    <section class="form-section">
+      <h2 class="section-header">
+        <span id="equitable-development-reporting" class="section-anchor"></span>
+        Equitable Development Reporting
+      </h2>
+
+      <p>
+        The action(s) I am applying for are ULURP actions with an acquisition or disposition of land for:
+      </p>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Non-residential use of at least 50,000 sf floor area
+        </A.Prompt>
+        <A.Field>
+          {{@package.pasForm.dcpNonresatleast50000}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          New residential building of 50,000 sf or more
+        </A.Prompt>
+        <A.Field>
+          {{@package.pasForm.dcpNewresibuildmore50000sf}}
+        </A.Field>
+      </Ui::Answer>
+
+      <p>The action(s) I am applying for are ULURP actions and would:</p>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Increase permitted residential floor area by at least 50,000 square feet
+        </A.Prompt>
+        <A.Field>
+          {{@package.pasForm.dcpIncreasepermitresatleast50000sf}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Increase permitted non-residential floor area by at least 200,000 square feet
+        </A.Prompt>
+        <A.Field>
+          {{@package.pasForm.dcpIncreasepermitnonresiatleast200000sf}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Decrease permitted residential floor area on at least four contiguous city blocks
+        </A.Prompt>
+        <A.Field>
+          {{@package.pasForm.dcpDecpermresiatleastfourcontigcb}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Decrease number of housing units on at least four contiguous city blocks
+        </A.Prompt>
+        <A.Field>
+          {{@package.pasForm.dcpDecnumofhousunitsatleastfourcontigcb}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          I am applying for a Special Permit (ZS, RS), Zoning Map Amendment (ZM) and/or a Zoning Text Amendment (ZR) that would change permitted floor area or use regulations in a manufacturing district related to a building in the project area that contains at least 100,000 square feet of zoning floor area)
+        </A.Prompt>
+
+        <p class="q-help">
+          Note this can include City Map Amendments that result in acquisition or disposition of land (MM), ULURP UDAAP with disposition (HA), Site selection and Acquisition (PC), Acquisition (PQ), Urban Renewal Plans (HU), Disposition of urban renewal sites (HD), and Land Fill (ML) actions.
+        </p>
+
+        <A.Field>
+          {{@package.pasForm.dcpContatleast100000sfzonfla}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          I am applying for a Zoning Text Amendment (ZR) that affects 5 or more community districts
+        </A.Prompt>
+        <A.Field>
+          {{@package.pasForm.dcpImapplyazoningtmaffectsmore5rcd}}
+        </A.Field>
+      </Ui::Answer>
+    </section>
+
     <section class="form-section" id="attached-documents">
       <h2 class="section-header">
         <span id="attached-documents" class="section-anchor"></span>

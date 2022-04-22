@@ -791,6 +791,22 @@ export default class PasFormModel extends Model {
 
   @attr('string') dcpRepresentativeaddress3;
 
+  @attr('number') dcpNonresatleast50000;
+
+  @attr('number') dcpNewresibuildmore50000sf;
+
+  @attr('number') dcpIncreasepermitresatleast50000sf;
+
+  @attr('number') dcpIncreasepermitnonresiatleast200000sf;
+
+  @attr('number') dcpDecpermresiatleastfourcontigcb;
+
+  @attr('number') dcpDecnumofhousunitsatleastfourcontigcb;
+
+  @attr('number') dcpContatleast100000sfzonfla;
+
+  @attr('number') dcpImapplyazoningtmaffectsmore5rcd;
+
   temporaryAddressLabel = '';
 
   async save() {

@@ -105,6 +105,16 @@ export const PAS_FORM_ATTRS = [
   'dcp_projectdescriptionsurroundingarea',
   'dcp_projectattachmentsotherinformation',
 
+  // Equitable Development Reporting
+  'dcp_nonresatleast50000',
+  'dcp_newresibuildmore50000sf',
+  'dcp_increasepermitresatleast50000sf',
+  'dcp_increasepermitnonresiatleast200000sf',
+  'dcp_decpermresiatleastfourcontigcb',
+  'dcp_decnumofhousunitsatleastfourcontigcb',
+  'dcp_contatleast100000sfzonfla',
+  'dcp_imapplyazoningtmaffectsmore5rcd',
+
   // Internals
   '_dcp_projectname_value',
 ];
