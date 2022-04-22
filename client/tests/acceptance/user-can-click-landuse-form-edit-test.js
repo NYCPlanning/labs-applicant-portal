@@ -668,6 +668,9 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     await click('[data-test-radio="dcpSitetobedisposed"][data-test-radio-option="No"]');
     await fillIn('[data-test-input="dcpProposeduses"]', '12345');
 
+    await fillIn('[data-test-input="dcpLotnumberstring"]', exceedMaximum(250, 'String'));
+    assert.dom('[data-test-validation-message="dcpLotnumberstring"]').hasText('Number is too long (max 250 characters)');
+
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
 
     saveForm();
