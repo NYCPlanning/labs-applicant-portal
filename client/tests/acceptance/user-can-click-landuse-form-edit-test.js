@@ -148,6 +148,9 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
     assert.dom('[data-test-input="dcpSitedatarenewalarea"]').exists();
 
+    await fillIn('[data-test-input="dcpSitedatarenewalarea"]', exceedMaximum(100, 'String'));
+    assert.dom('[data-test-validation-message="dcpSitedatarenewalarea"]').hasText('Text is too long (max 100 characters)');
+
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
 
