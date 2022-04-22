@@ -102,7 +102,7 @@ export default {
   dcpDevelopmentsiteassumptions: [
     validateLength({
       min: 0,
-      max: 2400,
+      max: 4800,
       message: 'Text is too long (max {max} characters)',
     }),
   ],
