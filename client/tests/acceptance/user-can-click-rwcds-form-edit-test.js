@@ -152,8 +152,8 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     await fillIn('[data-test-input="dcpZrsectiontitle"]', exceedMaximum(100, 'String'));
     assert.dom('[data-test-validation-message="dcpZrsectiontitle"]').hasText('Text is too long (max 100 characters)');
 
-    await fillIn('[data-test-input="dcpPurposeandneedfortheproposedaction"]', exceedMaximum(1500, 'String'));
-    assert.dom('[data-test-validation-message="dcpPurposeandneedfortheproposedaction"]').hasText('Text is too long (max 1500 characters)');
+    await fillIn('[data-test-input="dcpPurposeandneedfortheproposedaction"]', exceedMaximum(2400, 'String'));
+    assert.dom('[data-test-validation-message="dcpPurposeandneedfortheproposedaction"]').hasText('Text is too long (max 2400 characters)');
 
     assert.dom('[data-test-validation-message="dcpWhichactionsfromotheragenciesaresought"]').doesNotExist();
     await click('[data-test-radio="dcpIsapplicantseekingaction"][data-test-radio-option="Yes"]');
