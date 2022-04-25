@@ -8,7 +8,7 @@ export default class ProjectModel extends Model {
     if (this.artifactFileManager) {
       this.artifactFileManager.existingFiles = this.artifactDocuments;
     } else {
-      const fileQueue = this.fileQueue.create(this.id);
+      const fileQueue = this.fileQueue.create('project' + this.id);
 
       this.artifactFileManager = new FileManager(
         this.id,

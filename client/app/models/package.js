@@ -13,7 +13,7 @@ export default class PackageModel extends Model {
     if (this.fileManager) {
       this.fileManager.existingFiles = this.documents;
     } else {
-      const fileQueue = this.fileQueue.create(this.id);
+      const fileQueue = this.fileQueue.create('package' + this.id);
 
       this.fileManager = new FileManager(
         this.id,
