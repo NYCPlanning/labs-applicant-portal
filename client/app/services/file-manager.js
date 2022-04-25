@@ -5,13 +5,17 @@ import { tracked } from '@glimmer/tracking';
 // This class supports the FileManagement service
 export default class FileManager {
   constructor(
-    packageId,
+    recordId,
+    entityType,
     existingFiles,
     filesToDelete,
     filesToUpload, // EmberFileUpload Queue Object
     session,
   ) {
-    this.packageId = packageId;
+    console.assert(entityType === 'package' || entityType === 'artifact', "entityType must be 'package' or 'artifact'");
+
+    this.recordId = recordId;
+    this.entityType = entityType;
     this.existingFiles = existingFiles || [];
     this.filesToDelete = filesToDelete || [];
     this.filesToUpload = filesToUpload; // EmberFileUpload QUEUE Object
@@ -59,18 +63,14 @@ export default class FileManager {
 
   async uploadFiles() {
     for (let i = 0; i < this.filesToUpload.files.length; i += 1) {
-      await this.filesToUpload.files[i].upload(`${ENV.host}/documents/artifact`, { // eslint-disable-line
+      await this.filesToUpload.files[i].upload(`${ENV.host}/documents/${this.entityType}`, { // eslint-disable-line
         fileKey: 'file',
         headers: {
           Authorization: `Bearer ${this.session.data.authenticated.access_token}`,
         },
         data: {
-          instanceId: '4a260465-0ec0-ec11-983e-001dd804d99b', // this.packageId, TODO: retrieve this from project.dcp_artifactses[0].id
-          // Todo: `entityName` shouldn't be necessary.
-          // In this application, documents should only be
-          // uploaded to packages (at least so far).
-          // remove `entityName` after deprecating it from the backend
-          entityName: 'dcp_artifacts',
+          instanceId: this.recordId,
+          entityName: this.entityType === 'artifact' ? 'dcp_artifacts' : 'dcp_package',
         },
       });
     }
@@ -83,7 +83,7 @@ export default class FileManager {
     // POST request to a differently named endpoint, like
     // deleteDocument
     return Promise.all(this.filesToDelete.map((file) => fetch(
-      `${ENV.host}/documents/artifacts?serverRelativeUrl=${file.serverRelativeUrl}`, {
+      `${ENV.host}/documents/${this.entityType}?serverRelativeUrl=${file.serverRelativeUrl}`, {
         method: 'DELETE',
         credentials: 'include',
         headers: {

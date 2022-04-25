@@ -17,6 +17,7 @@ export default class PackageModel extends Model {
 
       this.fileManager = new FileManager(
         this.id,
+        'package',
         this.documents,
         [],
         fileQueue,

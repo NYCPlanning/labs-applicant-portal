@@ -12,6 +12,7 @@ export default class ProjectModel extends Model {
 
       this.artifactFileManager = new FileManager(
         this.id,
+        'artifact',
         this.artifactDocuments,
         [],
         fileQueue,
