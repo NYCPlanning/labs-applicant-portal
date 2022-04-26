@@ -87,7 +87,11 @@ export default class ProjectModel extends Model {
   }
 
   get isDirty () {
-    return this.hasDirtyAttributes || this.artifactFileManager.isDirty;
+    if (this.artifactFileManager) {
+      return this.hasDirtyAttributes || this.artifactFileManager.isDirty;
+    }
+
+    return this.hasDirtyAttributes;
   }
 
   get publicStatusGeneralPublicProject() {
