@@ -13,6 +13,8 @@ export default class ScopeOfWorkDraftRoute extends Route.extend(AuthenticatedRou
     // manually generate a file factory
     scopeOfWorkDraftPackage.createFileQueue();
 
+    scopeOfWorkDraftPackage.project.createArtifactFileQueue();
+
     return scopeOfWorkDraftPackage;
   }
 }

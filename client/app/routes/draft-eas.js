@@ -13,6 +13,8 @@ export default class draftEasRoute extends Route.extend(AuthenticatedRouteMixin)
     // manually generate a file factory
     draftEasPackage.createFileQueue();
 
+    draftEasPackage.project.createArtifactFileQueue();
+
     return draftEasPackage;
   }
 }

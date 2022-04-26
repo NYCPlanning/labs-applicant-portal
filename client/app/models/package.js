@@ -209,7 +209,7 @@ export default class PackageModel extends Model {
 
   get isDirty() {
     const isPackageDirty = this.hasDirtyAttributes
-      || this.fileManager.isDirty || this.project.artifactFileManager.isDirty;
+      || this.fileManager.isDirty || this.project.isDirty;
 
     if (this.dcpPackagetype === DCPPACKAGETYPE.PAS_PACKAGE.code) {
       return isPackageDirty
