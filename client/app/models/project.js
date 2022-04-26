@@ -24,6 +24,22 @@ export default class ProjectModel extends Model {
 
   @attr dcpProjectbrief;
 
+  @attr('number') dcpNonresatleast50000;
+
+  @attr('number') dcpNewresibuildmore50000sf;
+
+  @attr('number') dcpIncreasepermitresatleast50000sf;
+
+  @attr('number') dcpIncreasepermitnonresiatleast200000sf;
+
+  @attr('number') dcpDecpermresiatleastfourcontigcb;
+
+  @attr('number') dcpDecnumofhousunitsatleastfourcontigcb;
+
+  @attr('number') dcpContatleast100000sfzonfla;
+
+  @attr('number') dcpImapplyazoningtmaffectsmore5rcd;
+
   @hasMany('package', { async: false })
   packages;
 

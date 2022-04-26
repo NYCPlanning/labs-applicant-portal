@@ -1,163 +1,165 @@
 {{#let @form as |form|}}
-  <form.Section @title="Equitable Development Reporting">
-    <p>
-      Certain projects are subject to provide a <Ui::ExternalLink href="https://legistar.council.nyc.gov/LegislationDetail.aspx?ID=3963886&GUID=D2C9A25B-0036-416E-87CD-C3AED208AE1B">Racial Equity Report on Housing and Opportunity</Ui::ExternalLink>. The below questions are to help identify whether your project requires this report.
-    </p>
-    <p>
-      Fill in the responses and the form will indicate if you need to produce a Racial Equity report.  The report should be submitted to the Department of City Planning prior to certification or referral and will be shared with the public. 
-    </p>
-    <p>
-      Provide an answer for each question.
-    </p>
-
-    <p>
-      The action(s) I am applying for are ULURP actions with an acquisition or disposition of land for:
-    </p>
-  
-
-    <Ui::Question @required={{false}} as |Q|>
-      <Q.Legend>
-        Non-residential use of at least 50,000 sf floor area
-      </Q.Legend>
-
-      <form.Field
-        @attribute="dcpNonresatleast50000"
-        @type="radio-group"
-        as |RadioGroup|
-      >
-        <RadioGroup
-          @options={{optionset 'pasForm' 'dcpNonresatleast50000' 'list'}}
-        />
-        
-      </form.Field>
-    </Ui::Question>
-
-    <Ui::Question @required={{false}} as |Q|>
-      <Q.Legend>
-        New residential building of 50,000 sf or more
-      </Q.Legend>
-
-      <form.Field
-        @attribute="dcpNewresibuildmore50000sf"
-        @type="radio-group"
-        as |RadioGroup|
-      >
-        <RadioGroup
-          @options={{optionset 'pasForm' 'dcpNewresibuildmore50000sf' 'list'}}
-        />
-        
-      </form.Field>
-    </Ui::Question>
-
-    <p>
-      The action(s) I am applying for are ULURP actions and would:
-    </p>
-
-    <Ui::Question @required={{false}} as |Q|>
-      <Q.Legend>
-        Increase permitted residential floor area by at least 50,000 square feet
-      </Q.Legend>
-
-      <form.Field
-        @attribute="dcpIncreasepermitresatleast50000sf"
-        @type="radio-group"
-        as |RadioGroup|
-      >
-        <RadioGroup
-          @options={{optionset 'pasForm' 'dcpIncreasepermitresatleast50000sf' 'list'}}
-        />
-        
-      </form.Field>
-    </Ui::Question>
-
-    <Ui::Question @required={{false}} as |Q|>
-      <Q.Legend>
-        Increase permitted non-residential floor area by at least 200,000 square feet
-      </Q.Legend>
-
-      <form.Field
-        @attribute="dcpIncreasepermitnonresiatleast200000sf"
-        @type="radio-group"
-        as |RadioGroup|
-      >
-        <RadioGroup
-          @options={{optionset 'pasForm' 'dcpIncreasepermitnonresiatleast200000sf' 'list'}}
-        />
-        
-      </form.Field>
-    </Ui::Question>
-
-    <Ui::Question @required={{false}} as |Q|>
-      <Q.Legend>
-        Decrease permitted residential floor area on at least four contiguous city blocks
-      </Q.Legend>
-
-      <form.Field
-        @attribute="dcpDecpermresiatleastfourcontigcb"
-        @type="radio-group"
-        as |RadioGroup|
-      >
-        <RadioGroup
-          @options={{optionset 'pasForm' 'dcpDecpermresiatleastfourcontigcb' 'list'}}
-        />
-        
-      </form.Field>
-    </Ui::Question>
-
-    <Ui::Question @required={{false}} as |Q|>
-      <Q.Legend>
-        Decrease number of housing units on at least four contiguous city blocks
-      </Q.Legend>
-
-      <form.Field
-        @attribute="dcpDecnumofhousunitsatleastfourcontigcb"
-        @type="radio-group"
-        as |RadioGroup|
-      >
-        <RadioGroup
-          @options={{optionset 'pasForm' 'dcpDecnumofhousunitsatleastfourcontigcb' 'list'}}
-        />
-        
-      </form.Field>
-    </Ui::Question>
-
-    <Ui::Question @required={{false}} as |Q|>
-      <Q.Legend>
-        I am applying for a Special Permit (ZS, RS), Zoning Map Amendment (ZM) and/or a Zoning Text Amendment (ZR) that would change permitted floor area or use regulations in a manufacturing district related to a building in the project area that contains at least 100,000 square feet of zoning floor area)
-      </Q.Legend>
-
-      <p class="q-help">
-        Note this can include City Map Amendments that result in acquisition or disposition of land (MM), ULURP UDAAP with disposition (HA), Site selection and Acquisition (PC), Acquisition (PQ), Urban Renewal Plans (HU), Disposition of urban renewal sites (HD), and Land Fill (ML) actions.
+  <form.SaveableForm @model={{@project}} as |projectForm|>
+    <projectForm.Section @title="Equitable Development Reporting">
+      <p>
+        Certain projects are subject to provide a <Ui::ExternalLink href="https://legistar.council.nyc.gov/LegislationDetail.aspx?ID=3963886&GUID=D2C9A25B-0036-416E-87CD-C3AED208AE1B">Racial Equity Report on Housing and Opportunity</Ui::ExternalLink>. The below questions are to help identify whether your project requires this report.
+      </p>
+      <p>
+        Fill in the responses and the form will indicate if you need to produce a Racial Equity report.  The report should be submitted to the Department of City Planning prior to certification or referral and will be shared with the public. 
+      </p>
+      <p>
+        Provide an answer for each question.
       </p>
 
-      <form.Field
-        @attribute="dcpContatleast100000sfzonfla"
-        @type="radio-group"
-        as |RadioGroup|
-      >
-        <RadioGroup
-          @options={{optionset 'pasForm' 'dcpContatleast100000sfzonfla' 'list'}}
-        />
-        
-      </form.Field>
-    </Ui::Question>
+      <p>
+        The action(s) I am applying for are ULURP actions with an acquisition or disposition of land for:
+      </p>
+    
 
-    <Ui::Question @required={{false}} as |Q|>
-      <Q.Legend>
-        I am applying for a Zoning Text Amendment (ZR) that affects 5 or more community districts
-      </Q.Legend>
+      <Ui::Question @required={{false}} as |Q|>
+        <Q.Legend>
+          Non-residential use of at least 50,000 sf floor area
+        </Q.Legend>
 
-      <form.Field
-        @attribute="dcpImapplyazoningtmaffectsmore5rcd"
-        @type="radio-group"
-        as |RadioGroup|
-      >
-        <RadioGroup
-          @options={{optionset 'pasForm' 'dcpImapplyazoningtmaffectsmore5rcd' 'list'}}
-        />
-        
-      </form.Field>
-    </Ui::Question>
+        <projectForm.Field
+          @attribute="dcpNonresatleast50000"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{optionset 'project' 'dcpNonresatleast50000' 'list'}}
+          />
+          
+        </projectForm.Field>
+      </Ui::Question>
 
-  </form.Section>
+      <Ui::Question @required={{false}} as |Q|>
+        <Q.Legend>
+          New residential building of 50,000 sf or more
+        </Q.Legend>
+
+        <projectForm.Field
+          @attribute="dcpNewresibuildmore50000sf"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{optionset 'project' 'dcpNewresibuildmore50000sf' 'list'}}
+          />
+          
+        </projectForm.Field>
+      </Ui::Question>
+
+      <p>
+        The action(s) I am applying for are ULURP actions and would:
+      </p>
+
+      <Ui::Question @required={{false}} as |Q|>
+        <Q.Legend>
+          Increase permitted residential floor area by at least 50,000 square feet
+        </Q.Legend>
+
+        <projectForm.Field
+          @attribute="dcpIncreasepermitresatleast50000sf"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{optionset 'project' 'dcpIncreasepermitresatleast50000sf' 'list'}}
+          />
+          
+        </projectForm.Field>
+      </Ui::Question>
+
+      <Ui::Question @required={{false}} as |Q|>
+        <Q.Legend>
+          Increase permitted non-residential floor area by at least 200,000 square feet
+        </Q.Legend>
+
+        <projectForm.Field
+          @attribute="dcpIncreasepermitnonresiatleast200000sf"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{optionset 'project' 'dcpIncreasepermitnonresiatleast200000sf' 'list'}}
+          />
+          
+        </projectForm.Field>
+      </Ui::Question>
+
+      <Ui::Question @required={{false}} as |Q|>
+        <Q.Legend>
+          Decrease permitted residential floor area on at least four contiguous city blocks
+        </Q.Legend>
+
+        <projectForm.Field
+          @attribute="dcpDecpermresiatleastfourcontigcb"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{optionset 'project' 'dcpDecpermresiatleastfourcontigcb' 'list'}}
+          />
+          
+        </projectForm.Field>
+      </Ui::Question>
+
+      <Ui::Question @required={{false}} as |Q|>
+        <Q.Legend>
+          Decrease number of housing units on at least four contiguous city blocks
+        </Q.Legend>
+
+        <projectForm.Field
+          @attribute="dcpDecnumofhousunitsatleastfourcontigcb"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{optionset 'project' 'dcpDecnumofhousunitsatleastfourcontigcb' 'list'}}
+          />
+          
+        </projectForm.Field>
+      </Ui::Question>
+
+      <Ui::Question @required={{false}} as |Q|>
+        <Q.Legend>
+          I am applying for a Special Permit (ZS, RS), Zoning Map Amendment (ZM) and/or a Zoning Text Amendment (ZR) that would change permitted floor area or use regulations in a manufacturing district related to a building in the project area that contains at least 100,000 square feet of zoning floor area)
+        </Q.Legend>
+
+        <p class="q-help">
+          Note this can include City Map Amendments that result in acquisition or disposition of land (MM), ULURP UDAAP with disposition (HA), Site selection and Acquisition (PC), Acquisition (PQ), Urban Renewal Plans (HU), Disposition of urban renewal sites (HD), and Land Fill (ML) actions.
+        </p>
+
+        <projectForm.Field
+          @attribute="dcpContatleast100000sfzonfla"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{optionset 'project' 'dcpContatleast100000sfzonfla' 'list'}}
+          />
+          
+        </projectForm.Field>
+      </Ui::Question>
+
+      <Ui::Question @required={{false}} as |Q|>
+        <Q.Legend>
+          I am applying for a Zoning Text Amendment (ZR) that affects 5 or more community districts
+        </Q.Legend>
+
+        <projectForm.Field
+          @attribute="dcpImapplyazoningtmaffectsmore5rcd"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{optionset 'project' 'dcpImapplyazoningtmaffectsmore5rcd' 'list'}}
+          />
+          
+        </projectForm.Field>
+      </Ui::Question>
+
+    </projectForm.Section>
+  </form.SaveableForm>
 {{/let}}
