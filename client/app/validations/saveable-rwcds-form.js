@@ -60,7 +60,7 @@ export default {
   dcpDescribethenoactionscenario: [
     validateLength({
       min: 0,
-      max: 1500,
+      max: 2400,
       message: 'Text is too long (max {max} characters)',
     }),
   ],
