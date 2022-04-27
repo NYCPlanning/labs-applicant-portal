@@ -200,7 +200,8 @@ export default class PackageModel extends Model {
       return isPackageDirty
         || this.pasForm.hasDirtyAttributes
         || this.pasForm.isBblsDirty
-        || this.pasForm.isApplicantsDirty;
+        || this.pasForm.isApplicantsDirty
+        || this.pasForm.isProjectDirty;
     }
     if (this.dcpPackagetype === DCPPACKAGETYPE.RWCDS.code) {
       return isPackageDirty
