@@ -1516,12 +1516,10 @@
       {{/if}}
     {{/let}}
 
-    <section class="form-section">
-      <h2 class="section-header">
-        <span id="equitable-development-reporting" class="section-anchor"></span>
-        Equitable Development Reporting
-      </h2>
-
+    <saveableForm.Section
+      @title="Equitable Development Reporting"
+      @elementId="equitable-development-reporting"
+    >
       <p>
         The action(s) I am applying for are ULURP actions with an acquisition or disposition of land for:
       </p>
@@ -1604,7 +1602,7 @@
           {{optionset 'project' 'dcpImapplyazoningtmaffectsmore5rcd' 'label' @package.project.dcpImapplyazoningtmaffectsmore5rcd}}
         </A.Field>
       </Ui::Answer>
-    </section>
+    </saveableForm.Section>
 
     <saveableForm.Section
     @title="Attached Documents" 
@@ -1631,7 +1629,7 @@
   <div class="cell large-4 sticky-sidebar">
     <saveableForm.PageNav>
 
-    <</saveableForm.PageNav>
+    </saveableForm.PageNav>
   </div>{{! end right/sidebar column }}
 </div>
 </SaveableForm>

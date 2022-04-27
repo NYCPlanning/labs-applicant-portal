@@ -1,6 +1,6 @@
 {{#let @form as |form|}}
   <form.SaveableForm @model={{@project}} as |projectForm|>
-    <projectForm.Section @title="Equitable Development Reporting">
+    <form.Section @title="Equitable Development Reporting">
       <p>
         Certain projects are subject to provide a <Ui::ExternalLink href="https://legistar.council.nyc.gov/LegislationDetail.aspx?ID=3963886&GUID=D2C9A25B-0036-416E-87CD-C3AED208AE1B">Racial Equity Report on Housing and Opportunity</Ui::ExternalLink>. The below questions are to help identify whether your project requires this report.
       </p>
@@ -160,6 +160,6 @@
         </projectForm.Field>
       </Ui::Question>
 
-    </projectForm.Section>
+    </form.Section>
   </form.SaveableForm>
 {{/let}}
