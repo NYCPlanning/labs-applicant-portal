@@ -616,6 +616,15 @@
 
               <Ui::Answer @beside={{true}} as |A|>
                 <A.Prompt>
+                  Previously Approved Application Number(s)*
+                </A.Prompt>
+                <A.Field>
+                  {{landuseAction.dcpPreviouslyapprovedapplicationnumbers}}
+                </A.Field>
+              </Ui::Answer>
+
+              <Ui::Answer @beside={{true}} as |A|>
+                <A.Prompt>
                   Date of previous approval
                 </A.Prompt>
                 <A.Field>

@@ -212,6 +212,21 @@
       </div>
     </div>
 
+    {{#if this.chosenDcpPreviouslyapprovedactioncode.code}}
+      <Ui::Question as |dcpPreviouslyapprovedapplicationnumbersQ|>
+        <dcpPreviouslyapprovedapplicationnumbersQ.Label>
+          Previously Approved Application Number(s)*
+        </dcpPreviouslyapprovedapplicationnumbersQ.Label>
+
+        <landuseActionForm.Field
+          @attribute="dcpPreviouslyapprovedapplicationnumbers"
+          @showCounter={{true}}
+          @maxlength="100"
+          id={{dcpPreviouslyapprovedapplicationnumbersQ.questionId}}
+        />
+      </Ui::Question>
+    {{/if}}
+
     {{#if this.projectHasRequiredActionsAndFollowUpYes}}
 
       <Ui::Question
