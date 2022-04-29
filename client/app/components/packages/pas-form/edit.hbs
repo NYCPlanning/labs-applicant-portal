@@ -54,6 +54,11 @@
 
         <Packages::PasForm::ProjectDescription @form={{saveablePasForm}} />
 
+        <Packages::EquitableDevelopmentReporting
+          @form={{saveablePasForm}}
+          @project={{@package.project}}
+        />
+
         <Packages::PasForm::AttachedDocuments
           @form={{saveablePackageForm}}
           @model={{@package}}

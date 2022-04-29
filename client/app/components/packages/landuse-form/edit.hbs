@@ -122,6 +122,11 @@
           @validations={{this.validations}}
         />
 
+        <Packages::EquitableDevelopmentReporting
+          @form={{saveableLanduseForm}}
+          @project={{@package.project}}
+        />
+
         <Packages::LanduseForm::AttachedDocuments
           @form={{saveablePackageForm}}
           @model={{@package}}

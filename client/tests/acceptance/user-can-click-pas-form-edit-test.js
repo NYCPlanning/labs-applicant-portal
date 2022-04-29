@@ -694,10 +694,13 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
   });
 
   test('User can add new actions and answer extra questions', async function (assert) {
-    const projectPackage = this.server.create('package', 'toDo', 'pasForm', 'withLandUseActions');
-    const packageModel = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
+    const project = this.server.create('project', 'toDo');
+    this.server.create('package', 'toDo', 'pasForm', 'withLandUseActions', {
+      project,
+    });
 
-    // Template block usage:
+    const packageModel = await this.owner.lookup('service:store').findRecord('package', 1, { include: 'pas-form' });
+
     await visit('/pas-form/1/edit');
 
     assert.equal(packageModel.pasForm.dcpPfzoningspecialpermit, undefined);
@@ -744,12 +747,16 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
   });
 
   test('User can delete actions', async function (assert) {
-    const projectPackage = this.server.create('package', 'toDo', 'pasForm', 'withLandUseActions');
+    const project = this.server.create('project', 'toDo');
 
-    const packageModel = await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
+    this.server.create('package', 'toDo', 'pasForm', 'withLandUseActions', {
+      project,
+    });
+
+    const packageModel = await this.owner.lookup('service:store').findRecord('package', 2, { include: 'pas-form' });
 
     // Template block usage:
-    await visit('/pas-form/1/edit');
+    await visit('/pas-form/2/edit');
 
     // Check that user can delete action loaded from db, "Change in CityMap"
     assert.equal(packageModel.pasForm.dcpPfchangeincitymap, 1);
@@ -787,12 +794,16 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
   });
 
   test('User can load PAS Form with existing Land Use Actions', async function (assert) {
-    const projectPackage = this.server.create('package', 'toDo', 'pasForm', 'withLandUseActions');
+    const project = this.server.create('project', 'toDo');
+    this.server.create('package', 'toDo', 'pasForm', 'withLandUseActions', {
+      project,
+    });
 
-    await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
+
+    await this.owner.lookup('service:store').findRecord('package', 2, { include: 'pas-form' });
 
     // Template block usage:
-    await visit('/pas-form/1/edit');
+    await visit('/pas-form/2/edit');
 
     assert.dom('[data-test-action-name="Change in CityMap"]').exists({ count: 1 });
     assert.dom('[data-test-action-name="Zoning Certification"]').exists({ count: 1 });
@@ -806,12 +817,15 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
   });
 
   test('Issue #235 Bug: Updating action inputs does not cause actions to show up twice', async function (assert) {
-    const projectPackage = this.server.create('package', 'toDo', 'pasForm', 'withLandUseActions');
+    const project = this.server.create('project', 'toDo');
+    this.server.create('package', 'toDo', 'pasForm', 'withLandUseActions', {
+      project,
+    });
 
-    await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
+    await this.owner.lookup('service:store').findRecord('package', 2, { include: 'pas-form' });
 
     // Template block usage:
-    await visit('/pas-form/1/edit');
+    await visit('/pas-form/2/edit');
 
     await selectChoose('[data-test-land-use-action-picker]', 'Zoning Special Permit');
     await saveForm();
@@ -840,12 +854,15 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
   });
 
   test('selected actions are sorted properly', async function (assert) {
-    const projectPackage = this.server.create('package', 'toDo', 'pasForm', 'withLandUseActions');
+    const project = this.server.create('project', 'toDo');
+    this.server.create('package', 'toDo', 'pasForm', 'withLandUseActions', {
+      project,
+    });
 
-    await this.owner.lookup('service:store').findRecord('package', projectPackage.id, { include: 'pas-form' });
+    await this.owner.lookup('service:store').findRecord('package', 2, { include: 'pas-form' });
 
     // Template block usage:
-    await visit('/pas-form/1/edit');
+    await visit('/pas-form/2/edit');
 
     // selectedActions should be sorted:
     // (1) all new (added by user) actions should be on top, sorted by most recently added on top

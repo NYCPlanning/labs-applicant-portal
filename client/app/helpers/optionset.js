@@ -4,6 +4,7 @@ import { helper } from '@ember/component/helper';
 import COMMON_OPTIONSETS, {
   YES_NO,
   YES_NO_UNSURE,
+  YES_NO_UNSURE_SMALLINT,
   YES_NO_DONT_KNOW,
 } from '../optionsets/common';
 import APPLICANT_OPTIONSETS from '../optionsets/applicant';
@@ -59,6 +60,14 @@ const OPTIONSET_LOOKUP = {
     dcpPublicstatus: PROJECT_OPTIONSETS.DCPPUBLICSTATUS,
     dcpVisibility: PROJECT_OPTIONSETS.DCPVISIBILITY,
     statuscode: PROJECT_OPTIONSETS.STATUSCODE,
+    dcpNonresatleast50000: YES_NO_UNSURE_SMALLINT,
+    dcpNewresibuildmore50000sf: YES_NO_UNSURE_SMALLINT,
+    dcpIncreasepermitresatleast50000sf: YES_NO_UNSURE_SMALLINT,
+    dcpIncreasepermitnonresiatleast200000sf: YES_NO_UNSURE_SMALLINT,
+    dcpDecpermresiatleastfourcontigcb: YES_NO_UNSURE_SMALLINT,
+    dcpDecnumofhousunitsatleastfourcontigcb: YES_NO_UNSURE_SMALLINT,
+    dcpContatleast100000sfzonfla: YES_NO_UNSURE_SMALLINT,
+    dcpImapplyazoningtmaffectsmore5rcd: YES_NO_UNSURE_SMALLINT,
   },
   landuseForm: {
     dcpOtherparties: YES_NO,
