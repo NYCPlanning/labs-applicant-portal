@@ -159,7 +159,7 @@ export class ProjectsController {
 
     return {
       dcp_projectid: id,
-      ...body
+      ...allowedAttrs
     };
   }
 }
