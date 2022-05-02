@@ -1596,6 +1596,16 @@
 
       <Ui::Answer as |A|>
         <A.Prompt>
+          The Landmarks Preservation Commission is requesting a report from the City Planning Commission
+          on a historic district designation that affects four or more City Blocks (or portions thereof)
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'project' 'dcpAffectfourmorecb' 'label' @package.project.dcpAffectfourmorecb}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
           I am applying for a Zoning Text Amendment (ZR) that affects 5 or more community districts
         </A.Prompt>
         <A.Field>

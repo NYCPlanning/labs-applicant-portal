@@ -40,6 +40,8 @@ export default class ProjectModel extends Model {
 
   @attr('number') dcpImapplyazoningtmaffectsmore5rcd;
 
+  @attr('number') dcpAffectfourmorecb;
+
   @hasMany('package', { async: false })
   packages;
 
