@@ -68,6 +68,7 @@ const OPTIONSET_LOOKUP = {
     dcpDecnumofhousunitsatleastfourcontigcb: YES_NO_UNSURE_SMALLINT,
     dcpContatleast100000sfzonfla: YES_NO_UNSURE_SMALLINT,
     dcpImapplyazoningtmaffectsmore5rcd: YES_NO_UNSURE_SMALLINT,
+    equityReportFields: YES_NO_UNSURE_SMALLINT,
   },
   landuseForm: {
     dcpOtherparties: YES_NO,

@@ -160,6 +160,26 @@
         </projectForm.Field>
       </Ui::Question>
 
+      {{#if (in-array (array projectForm.data.dcpNonresatleast50000
+              projectForm.data.dcpNewresibuildmore50000sf
+              projectForm.data.dcpIncreasepermitresatleast50000sf
+              projectForm.data.dcpIncreasepermitnonresiatleast200000sf
+              projectForm.data.dcpDecpermresiatleastfourcontigcb
+              projectForm.data.dcpDecnumofhousunitsatleastfourcontigcb
+              projectForm.data.dcpContatleast100000sfzonfla
+              projectForm.data.dcpImapplyazoningtmaffectsmore5rcd)
+          (optionset 'project' 'equityReportFields' 'code' 'YES')
+      )}}
+        <h3>
+          This project IS subject to requirements to submit a Racial Equity Report on
+          Housing and Opportunity under Local
+          <a href="https://legistar.council.nyc.gov/LegislationDetail.aspx?ID=3963886&GUID=D2C9A25B-0036-416E-87CD-C3AED208AE1B">
+            Law 78 of 2021 </a>.
+          The EDDE can be used to generate the data needed for the report. A template can be found <a href="">here</a>.
+          Submit the report as a PDF <a href="#">here</a>.
+        </h3>
+      {{/if}}
+
     </form.Section>
   </form.SaveableForm>
 {{/let}}
