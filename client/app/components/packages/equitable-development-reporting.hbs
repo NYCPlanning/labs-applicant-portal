@@ -5,7 +5,7 @@
         Certain projects are subject to provide a <Ui::ExternalLink href="https://legistar.council.nyc.gov/LegislationDetail.aspx?ID=3963886&GUID=D2C9A25B-0036-416E-87CD-C3AED208AE1B">Racial Equity Report on Housing and Opportunity</Ui::ExternalLink>. The below questions are to help identify whether your project requires this report.
       </p>
       <p>
-        Fill in the responses and the form will indicate if you need to produce a Racial Equity report.  The report should be submitted to the Department of City Planning prior to certification or referral and will be shared with the public. 
+        Fill in the responses and the form will indicate if you need to produce a Racial Equity report.  The report should be submitted to the Department of City Planning prior to certification or referral and will be shared with the public.
       </p>
       <p>
         Provide an answer for each question.
@@ -14,7 +14,7 @@
       <p>
         The action(s) I am applying for are ULURP actions with an acquisition or disposition of land for:
       </p>
-    
+
 
       <Ui::Question @required={{false}} as |Q|>
         <Q.Legend>
@@ -29,7 +29,7 @@
           <RadioGroup
             @options={{optionset 'project' 'dcpNonresatleast50000' 'list'}}
           />
-          
+
         </projectForm.Field>
       </Ui::Question>
 
@@ -46,7 +46,7 @@
           <RadioGroup
             @options={{optionset 'project' 'dcpNewresibuildmore50000sf' 'list'}}
           />
-          
+
         </projectForm.Field>
       </Ui::Question>
 
@@ -67,7 +67,7 @@
           <RadioGroup
             @options={{optionset 'project' 'dcpIncreasepermitresatleast50000sf' 'list'}}
           />
-          
+
         </projectForm.Field>
       </Ui::Question>
 
@@ -84,7 +84,7 @@
           <RadioGroup
             @options={{optionset 'project' 'dcpIncreasepermitnonresiatleast200000sf' 'list'}}
           />
-          
+
         </projectForm.Field>
       </Ui::Question>
 
@@ -101,7 +101,7 @@
           <RadioGroup
             @options={{optionset 'project' 'dcpDecpermresiatleastfourcontigcb' 'list'}}
           />
-          
+
         </projectForm.Field>
       </Ui::Question>
 
@@ -118,7 +118,7 @@
           <RadioGroup
             @options={{optionset 'project' 'dcpDecnumofhousunitsatleastfourcontigcb' 'list'}}
           />
-          
+
         </projectForm.Field>
       </Ui::Question>
 
@@ -139,7 +139,7 @@
           <RadioGroup
             @options={{optionset 'project' 'dcpContatleast100000sfzonfla' 'list'}}
           />
-          
+
         </projectForm.Field>
       </Ui::Question>
 
@@ -156,9 +156,32 @@
           <RadioGroup
             @options={{optionset 'project' 'dcpImapplyazoningtmaffectsmore5rcd' 'list'}}
           />
-          
+
         </projectForm.Field>
       </Ui::Question>
+
+      {{#if (or
+        (eq @packageType (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))
+        (eq @packageType (optionset 'package' 'dcpPackagetype' 'code' 'FILED_LU_PACKAGE'))
+      )}}
+        <Ui::Question @required={{false}} as |Q|>
+          <Q.Legend>
+            The Landmarks Preservation Commission is requesting a report from the City Planning Commission
+            on a historic district designation that affects four or more City Blocks (or portions thereof)
+          </Q.Legend>
+
+          <projectForm.Field
+            @attribute="dcpAffectfourmorecb"
+            @type="radio-group"
+            as |RadioGroup|
+          >
+            <RadioGroup
+              @options={{optionset 'project' 'equityReportFields' 'list'}}
+            />
+
+          </projectForm.Field>
+        </Ui::Question>
+      {{/if}}
 
       {{#if (in-array (array projectForm.data.dcpNonresatleast50000
               projectForm.data.dcpNewresibuildmore50000sf
@@ -167,7 +190,8 @@
               projectForm.data.dcpDecpermresiatleastfourcontigcb
               projectForm.data.dcpDecnumofhousunitsatleastfourcontigcb
               projectForm.data.dcpContatleast100000sfzonfla
-              projectForm.data.dcpImapplyazoningtmaffectsmore5rcd)
+              projectForm.data.dcpImapplyazoningtmaffectsmore5rcd
+              projectForm.data.dcpAffectfourmorecb)
           (optionset 'project' 'equityReportFields' 'code' 'YES')
       )}}
         <h3>

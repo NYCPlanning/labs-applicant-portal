@@ -18,6 +18,7 @@ export const PROJECT_ATTRS = [
   'dcp_decnumofhousunitsatleastfourcontigcb',
   'dcp_contatleast100000sfzonfla',
   'dcp_imapplyazoningtmaffectsmore5rcd',
+  'dcp_affectfourmorecb',
 ];
 
 export const MILESTONE_DATE_ATTRS = [
