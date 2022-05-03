@@ -1,5 +1,5 @@
 {{#let @form as |form|}}
-  <form.SaveableForm @model={{@project}} as |projectForm|>
+  <form.SaveableForm @model={{@package.project}} as |projectForm|>
     <form.Section @title="Equitable Development Reporting">
       <p>
         Certain projects are subject to provide a <Ui::ExternalLink href="https://legistar.council.nyc.gov/LegislationDetail.aspx?ID=3963886&GUID=D2C9A25B-0036-416E-87CD-C3AED208AE1B">Racial Equity Report on Housing and Opportunity</Ui::ExternalLink>. The below questions are to help identify whether your project requires this report.
@@ -161,8 +161,8 @@
       </Ui::Question>
 
       {{#if (or
-        (eq @packageType (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))
-        (eq @packageType (optionset 'package' 'dcpPackagetype' 'code' 'FILED_LU_PACKAGE'))
+        (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))
+        (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'FILED_LU_PACKAGE'))
       )}}
         <Ui::Question @required={{false}} as |Q|>
           <Q.Legend>
@@ -203,6 +203,25 @@
           Submit the report as a PDF <a href="#">here</a>.
         </h3>
       {{/if}}
+
+      {{#if (and (not (in-array (array projectForm.data.dcpNonresatleast50000
+              projectForm.data.dcpNewresibuildmore50000sf
+              projectForm.data.dcpIncreasepermitresatleast50000sf
+              projectForm.data.dcpIncreasepermitnonresiatleast200000sf
+              projectForm.data.dcpDecpermresiatleastfourcontigcb
+              projectForm.data.dcpDecnumofhousunitsatleastfourcontigcb
+              projectForm.data.dcpContatleast100000sfzonfla
+              projectForm.data.dcpImapplyazoningtmaffectsmore5rcd
+              projectForm.data.dcpAffectfourmorecb)
+          (optionset 'project' 'equityReportFields' 'code' 'YES')
+        ))
+        (eq @package.statuscode (optionset 'package' 'statuscode' 'code' 'PACKAGE_PREPARATION'))
+      )}}
+        <h3>
+          This project is not subject to requirements to submit a Racial Equity Report on Housing and Opportunity under Local Law 78 of 2021.
+        </h3>
+      {{/if}}
+
 
     </form.Section>
   </form.SaveableForm>
