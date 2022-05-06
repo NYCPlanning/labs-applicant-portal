@@ -13,8 +13,6 @@ export default class FiledEasRoute extends Route.extend(AuthenticatedRouteMixin)
     // manually generate a file factory
     filedEasPackage.createFileQueue();
 
-    filedEasPackage.project.createArtifactFileQueue();
-
     return filedEasPackage;
   }
 }

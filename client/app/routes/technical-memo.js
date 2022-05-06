@@ -13,8 +13,6 @@ export default class TechnicalMemoRoute extends Route.extend(AuthenticatedRouteM
     // manually generate a file factory
     tehnicalMemoPackage.createFileQueue();
 
-    TechnicalMemoRoute.project.createArtifactFileQueue();
-
     return tehnicalMemoPackage;
   }
 }

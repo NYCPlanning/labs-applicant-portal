@@ -13,8 +13,6 @@ export default class FeisRoute extends Route.extend(AuthenticatedRouteMixin) {
     // manually generate a file factory
     feisPackage.createFileQueue();
 
-    feisPackage.project.createArtifactFileQueue();
-
     return feisPackage;
   }
 }

@@ -7,13 +7,12 @@ export default class PasFormRoute extends Route.extend(AuthenticatedRouteMixin) 
   async model(params) {
     const pasFormPackage = await this.store.findRecord('package', params.id, {
       reload: true,
-      include: 'pas-form.bbls,pas-form.applicants,pas-form.project-addresses,project',
+      include: 'pas-form.bbls,pas-form.applicants,pas-form.project-addresses,project.artifact',
     });
 
     // manually generate a file factory
     pasFormPackage.createFileQueue();
 
-    pasFormPackage.project.createArtifactFileQueue();
 
     return pasFormPackage;
   }

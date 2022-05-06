@@ -11,7 +11,7 @@ export default class LanduseFormRoute extends Route.extend(AuthenticatedRouteMix
       include: [
         'landuse-form.bbls',
         'landuse-form.applicants',
-        'project',
+        'project.artifact',
         'landuse-form.related-actions',
         'landuse-form.landuse-actions',
         'landuse-form.sitedatah-forms',
@@ -24,8 +24,6 @@ export default class LanduseFormRoute extends Route.extend(AuthenticatedRouteMix
 
     // manually generate a file factory
     landuseFormPackage.createFileQueue();
-
-    landuseFormPackage.project.createArtifactFileQueue();
 
     return RSVP.hash({
       package: landuseFormPackage,

@@ -1,35 +1,7 @@
-import Model, { attr, hasMany } from '@ember-data/model';
-import { inject as service } from '@ember/service';
+import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { optionset } from '../helpers/optionset';
-import FileManager from '../services/file-manager';
 
 export default class ProjectModel extends Model {
-  createArtifactFileQueue() {
-    if (this.artifactFileManager) {
-      this.artifactFileManager.existingFiles = this.artifactDocuments;
-    } else {
-      const fileQueue = this.fileQueue.create('project' + this.id);
-
-      this.artifactFileManager = new FileManager(
-        this.id,
-        'artifact',
-        this.artifactDocuments,
-        [],
-        fileQueue,
-        this.session,
-      );
-    }
-  }
-
-  @service
-  session;
-
-  @service
-  fileQueue;
-
-  @attr({ defaultValue: () => [] })
-  artifactDocuments;
-
   // The human-readable, descriptive name.
   // e.g. "Marcus Garvey Blvd Project"
   @attr dcpProjectname;
@@ -70,6 +42,11 @@ export default class ProjectModel extends Model {
 
   @attr('number') dcpAffectfourmorecb;
 
+  // We assume there's only one. If there's >1 in crm, the backend
+  // should return the first one.
+  @belongsTo('artifact', { async: false })
+  artifact;
+
   @hasMany('package', { async: false })
   packages;
 
@@ -82,15 +59,7 @@ export default class ProjectModel extends Model {
   @hasMany('milestone', { async: false })
   milestones;
 
-  _synchronizeArtifactDocuments() {
-    this.artifactFileManager.existingFiles = this.artifactDocuments;
-  }
-
   get isDirty () {
-    if (this.artifactFileManager) {
-      return this.hasDirtyAttributes || this.artifactFileManager.isDirty;
-    }
-
     return this.hasDirtyAttributes;
   }
 

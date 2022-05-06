@@ -13,8 +13,6 @@ export default class DeisRoute extends Route.extend(AuthenticatedRouteMixin) {
     // manually generate a file factory
     deisPackage.createFileQueue();
 
-    deisPackage.project.createArtifactFileQueue();
-
     return deisPackage;
   }
 }

@@ -11,8 +11,6 @@ export default class WorkingPackageRoute extends Route {
     // manually generate a file factory
     workingPackage.createFileQueue();
 
-    workingPackage.project.createArtifactFileQueue();
-
     return workingPackage;
   }
 }
