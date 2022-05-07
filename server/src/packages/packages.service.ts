@@ -157,9 +157,13 @@ export class PackagesService {
         "dcp_artifactses",
         `
         $filter=
-          _dcp_project_value eq ${dcp_project.dcp_projectid}`
+          _dcp_project_value eq ${dcp_project.dcp_projectid}
+          and (
+            dcp_name eq '${dcp_project.dcp_name} - Racial Equity Report - 1'
+          )
+        `
       );
-  
+
       let firstArtifactWithDocuments = {};
 
       try {
