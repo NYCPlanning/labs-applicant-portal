@@ -187,11 +187,22 @@
 
       <Ui::Question @required={{false}} as |Q|>
         <Q.Legend>
-          I am applying for a Special Permit (ZS, RS), Zoning Map Amendment (ZM) and/or a Zoning Text Amendment (ZR) that would change permitted floor area or use regulations in a manufacturing district related to a building in the project area that contains at least 100,000 square feet of zoning floor area)
+          I am applying for a Special Permit (ZS, RS), Zoning Map Amendment (ZM) and/or a Zoning Text Amendment (ZR) in a manufacturing district that would change permitted floor area or use regulations related to a building in the project area that contains at least 100,000 square feet of zoning floor area)
+          <span>
+            <FaIcon @icon="info-circle" @prefix="fas" class="ember-tooltip-target"/>
+            <EmberTooltip @event="hover" @side="right-start">
+              <ol class="text-small" type="a">
+                <li>
+                  Change in permitted zoning square feet in portion of project area (includes development site and any other sites affected) that is within a Manufacturing District. To get permitted zoning square feet, multiply area of all sites affected by applicable Floor Area Ratio. Zoning Handbook or Urban Renewal Plan can help with identifying floor area ratio.
+                </li>
+                <li>Zoning square footage of buildings within the project area</li>
+              </ol>
+            </EmberTooltip>
+          </span>
         </Q.Legend>
 
         <p class="q-help">
-          Note this can include City Map Amendments that result in acquisition or disposition of land (MM), ULURP UDAAP with disposition (HA), Site selection and Acquisition (PC), Acquisition (PQ), Urban Renewal Plans (HU), Disposition of urban renewal sites (HD), and Land Fill (ML) actions.
+          Applies to all M districts except for MX (paired M/R) districts. Changes to the amount of floor area allowed for a use or to the use regulations, not just changes to use of the property, fall into this category.
         </p>
 
         <projectForm.Field
