@@ -116,6 +116,22 @@
       <Ui::Question @required={{false}} as |Q|>
         <Q.Legend>
           Decrease permitted residential floor area on at least four contiguous city blocks
+          <span>
+            <FaIcon @icon="info-circle" @prefix="fas" class="ember-tooltip-target"/>
+            <EmberTooltip @event="hover" @side="right">
+              <p class="q-help">
+                Data points needed:
+              </p>
+              <ol class="text-small" type="a">
+                <li>Number of contiguous zoning blocks affected by actions (in part and/or wholly)</li>
+                <li>Change in permitted zoning square feet (residential) in entire project area (includes development site and any other sites affected).</li>
+
+              </ol>
+              <p class="q-help">
+                To get permitted zoning square feet, multiply area of all sites affected by applicable Floor Area Ratio. Zoning Handbook or Urban Renewal Plan can help with identifying floor area ratio.
+              </p>
+            </EmberTooltip>
+          </span>
         </Q.Legend>
 
         <p class="q-help">
