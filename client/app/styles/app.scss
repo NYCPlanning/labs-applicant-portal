@@ -182,3 +182,7 @@ span.ember-tooltip-target > svg.svg-inline--fa.fa-info-circle.fa-w-16.ember-view
   margin-bottom: 5px;
 }
 
+.ember-tooltip {
+  max-width: 320px;
+}
+
