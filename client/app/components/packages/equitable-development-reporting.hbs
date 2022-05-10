@@ -137,6 +137,20 @@
       <Ui::Question @required={{false}} as |Q|>
         <Q.Legend>
           Decrease number of housing units on at least four contiguous city blocks
+          <span>
+            <FaIcon @icon="info-circle" @prefix="fas" class="ember-tooltip-target"/>
+            <EmberTooltip @event="hover" @side="right">
+              <p class="q-help">
+                Data points needed:
+              </p>
+              <ol class="text-small" type="a">
+                <li>Number of contiguous zoning blocks affected by actions (in part and/or wholly)</li>
+                <li>
+                  Proposed change in number of housing units permitted by zoning use regulations or if an Urban Renewal Plan imposes restrictions
+                </li>
+              </ol>
+            </EmberTooltip>
+          </span>
         </Q.Legend>
 
         <p class="q-help">
