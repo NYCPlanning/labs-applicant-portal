@@ -153,16 +153,24 @@ export class PackagesService {
         formData = await this.fetchPackageForm(firstPackage);
       }
 
+      // below query filters by Racial Equity Report file type. 
       let { records: projectArtifacts } = await this.crmService.get(
         "dcp_artifactses",
         `
         $filter=
           _dcp_project_value eq ${dcp_project.dcp_projectid}
           and (
-            dcp_name eq '${dcp_project.dcp_name} - Racial Equity Report - 1'
+            _dcp_applicantfiletype_value eq '8e49a11b-0991-ec11-8d20-001dd804c26c'
           )
         `
       );
+
+      // TODO: Consider reducing this side effecct in this GET endpoint
+      if (projectArtifacts.length === 0) {
+        let newProjectArtifact = await this.artifactService.createEquityReport(dcp_project.dcp_projectid);
+
+        projectArtifacts = [...projectArtifacts, newProjectArtifact];
+      }
 
       let firstArtifactWithDocuments = {};
 
