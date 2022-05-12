@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
 /**
-  * @param      {Project Model}  project
+  * @param      {Artifact Model}  artifact
   */
 export default class PackagesArtifactAttachmentsComponent extends Component {
   get fileManager() { // should be an instance of FileManager
@@ -13,7 +13,7 @@ export default class PackagesArtifactAttachmentsComponent extends Component {
   markFileForDeletion(file) {
     this.fileManager.markFileForDeletion(file);
 
-    this.args.project.artifactDocuments = this.fileManager.existingFiles;
+    this.args.artifact.documents = this.fileManager.existingFiles;
   }
 
   @action
@@ -25,13 +25,13 @@ export default class PackagesArtifactAttachmentsComponent extends Component {
   trackFileForUpload() {
     this.fileManager.trackFileForUpload();
 
-    this.args.project.artifactDocuments = [...this.args.project.artifactDocuments, ...this.fileManager.filesToUpload.files];
+    this.args.artifact.documents = [...this.args.artifact.documents, ...this.fileManager.filesToUpload.files];
   }
 
   @action
   deselectFileForUpload(file) {
     this.fileManager.deselectFileForUpload(file);
 
-    this.args.project.artifactDocuments = this.args.project.artifactDocuments.filter((document) => document !== file);
+    this.args.artifact.documents = this.args.artifact.documents.filter((document) => document !== file);
   }
 }

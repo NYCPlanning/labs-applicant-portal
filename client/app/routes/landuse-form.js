@@ -25,6 +25,8 @@ export default class LanduseFormRoute extends Route.extend(AuthenticatedRouteMix
     // manually generate a file factory
     landuseFormPackage.createFileQueue();
 
+    landuseFormPackage.project.artifact.createFileQueue();
+
     return RSVP.hash({
       package: landuseFormPackage,
       accounts: await this.store.findAll('account'),

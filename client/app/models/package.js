@@ -13,7 +13,7 @@ export default class PackageModel extends Model {
     if (this.fileManager) {
       this.fileManager.existingFiles = this.documents;
     } else {
-      const fileQueue = this.fileQueue.create('package' + this.id);
+      const fileQueue = this.fileQueue.create(`package${this.id}`);
 
       this.fileManager = new FileManager(
         this.id,
@@ -151,24 +151,10 @@ export default class PackageModel extends Model {
       }];
     }
 
-    try {
-      await this.project.artifactFileManager.save();
-    } catch (e) {
-      console.log('Error saving files: ', e);
-
-      this.fileUploadErrors = [{
-        code: 'UPLOAD_ARTIFACT_DOC_FAILED',
-        title: 'Failed to upload artifact documents',
-        detail: 'An error occured while  uploading your documents. Please refresh and retry.',
-      }];
-    }
-
     if (!formAdapterError && !this.adapterError && !this.fileUploadErrors) {
       await this.reload();
 
       this._synchronizeDocuments();
-
-      this.project._synchronizeArtifactDocuments();
     }
   }
 
@@ -234,7 +220,6 @@ export default class PackageModel extends Model {
         || this.landuseForm.isSitedatahFormsDirty
         || this.landuseForm.isLanduseGeographiesDirty
         || this.landuseForm.isRelatedActionsDirty
-        || this.landuseForm.isProjectDirty
         || this.landuseForm.isAffectedZoningResolutionsDirty
         || this.landuseForm.isZoningMapChangesDirty;
     }

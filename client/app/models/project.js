@@ -60,7 +60,7 @@ export default class ProjectModel extends Model {
   milestones;
 
   get isDirty () {
-    return this.hasDirtyAttributes;
+    return this.hasDirtyAttributes || (this.artifact && this.artifact.isDirty);
   }
 
   get publicStatusGeneralPublicProject() {
@@ -198,5 +198,17 @@ export default class ProjectModel extends Model {
       .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'WORKING_PACKAGE']))
       .sortBy('dcpPackageversion')
       .reverse();
+  }
+
+  async save() {
+    if (this.artifact && this.artifact.isDirty) {
+      this.artifact.save();
+    }
+
+    try {
+      await super.save();
+    } catch (e) {
+      console.log('Error saving project: ', e);
+    }
   }
 }
