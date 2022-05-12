@@ -13,7 +13,6 @@ export default class RwcdsFormRoute extends Route.extend(AuthenticatedRouteMixin
     // manually generate a file factory
     rwcdsFormPackage.createFileQueue();
 
-
     return rwcdsFormPackage;
   }
 }

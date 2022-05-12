@@ -13,7 +13,6 @@ export default class PasFormRoute extends Route.extend(AuthenticatedRouteMixin) 
     // manually generate a file factory
     pasFormPackage.createFileQueue();
 
-
     return pasFormPackage;
   }
 }

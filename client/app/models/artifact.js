@@ -40,7 +40,7 @@ export default class ArtifactModel extends Model {
   documents;
 
   get isDirty() {
-    return (this.fileManager && this.fileManager.isDirty); //return this.hasDirtyAttributes ||  this.fileManager && this.fileManager.isDirty);
+    return (this.fileManager && this.fileManager.isDirty);
   }
 
   async save() {
@@ -51,8 +51,6 @@ export default class ArtifactModel extends Model {
     } catch (e) {
       console.log('Error saving files: ', e);
 
-      // See comment on the tracked fileUploadError property
-      // definition above.
       this.fileUploadErrors = [{
         code: 'UPLOAD_DOC_FAILED',
         title: 'Failed to upload artifact documents',
