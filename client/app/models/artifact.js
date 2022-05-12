@@ -6,4 +6,7 @@ export default class ArtifactModel extends Model {
 
   @attr()
   dcpName;
+
+  @attr({ defaultValue: () => [] })
+  documents;
 }

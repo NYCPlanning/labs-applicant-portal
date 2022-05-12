@@ -165,17 +165,17 @@ export class PackagesService {
         `
       );
 
-      // TODO: Consider reducing this side effecct in this GET endpoint
-      if (projectArtifacts.length === 0) {
-        let newProjectArtifact = await this.artifactService.createEquityReport(dcp_project.dcp_projectid);
-
-        projectArtifacts = [...projectArtifacts, newProjectArtifact];
-      }
-
       let firstArtifactWithDocuments = {};
 
+      if (projectArtifacts.length < 1) {
+        // TODO: Consider reducing this side effecct in this GET endpoint
+        firstArtifactWithDocuments = await this.artifactService.createEquityReport(dcp_project.dcp_projectid);
+      } else {
+        firstArtifactWithDocuments = projectArtifacts[0];
+      }
+
       try {
-          firstArtifactWithDocuments = projectArtifacts[0];// await this.artifactService.artifactWithDocuments(projectArtifacts[0]);
+        firstArtifactWithDocuments = await this.artifactService.artifactWithDocuments(firstArtifactWithDocuments);
       } catch (e) {
         console.log(e);
       }
