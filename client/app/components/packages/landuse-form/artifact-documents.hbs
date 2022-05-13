@@ -1,6 +1,20 @@
-<@form.Section @title="Artifact Documents">
+<fieldset class="fieldset">
+  <Ui::Legend>
+    <h2>&nbsp;Preparing the Racial Equity Report&nbsp;</h2>
+  </Ui::Legend>
+
+  Report guidance is available on <a href="https://www1.nyc.gov/site/planning/data-maps/edde/edde-overview.page">DCP's website</a>, the report must include:
+
+  <br /><br />
+
+  <ul>
+    <li>A community profile downloaded from the <a href="https://equitableexplorer.planning.nyc.gov/map/data/district">Equitable Development Data Explorer (EDDE)</a></li>
+    <li>A narrative statement of how the project relates to the City's goals and strategies to <a href="https://wherewelive.cityofnewyork.us/">affirmatively further fair housing</a></li>
+    <li>Project specific data about anticipated housing units and jobs</li>
+  </ul>
+
   <p>
-    Please attach artifact documents.
+    Please attach the Racial Equity Report as a PDF for your project
   </p>
 
   <Packages::ArtifactAttachments
@@ -8,4 +22,4 @@
     @fileManager={{@model.project.artifact.fileManager}}
     data-test-section="artifact-attachments"
   />
-</@form.Section>
+</fieldset>
