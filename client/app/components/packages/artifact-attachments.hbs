@@ -114,8 +114,8 @@
     </ul>
 
     <FileUpload
-      id={{concat "FileUploader" @package.id}}
-      @name={{concat "package" @package.id}}
+      id={{concat "FileUploader" @artifact.id}}
+      @name={{concat "artifact" @artifact.id}}
       @accept='*/*'
       @multiple={{true}}
       @onfileadd={{this.trackFileForUpload}}

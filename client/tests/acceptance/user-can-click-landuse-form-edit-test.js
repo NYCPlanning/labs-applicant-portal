@@ -32,6 +32,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('User can edit, save and submit landuse form', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
+      artifact: this.server.create('artifact'),
     });
 
     await visit('/landuse-form/1/edit');
@@ -56,6 +57,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('User can edit Site Information on the landuse form', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
+      artifact: this.server.create('artifact'),
     });
 
     await visit('/landuse-form/1/edit');
@@ -82,6 +84,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('User can reveal Project Area conditional questions', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
+      artifact: this.server.create('artifact'),
     });
 
     await visit('/landuse-form/1/edit');
@@ -157,6 +160,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('User resets values of all radio descendants when changing radio answers in Project Area', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
+      artifact: this.server.create('artifact'),
     });
 
     await visit('/landuse-form/1/edit');
@@ -203,6 +207,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('User is required to fill out Proposed Development Site conditional fields', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
+      artifact: this.server.create('artifact'),
     });
 
     await visit('/landuse-form/1/edit');
@@ -251,6 +256,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('User can add an applicant on the landuse form', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
+      artifact: this.server.create('artifact'),
     });
 
     await visit('/landuse-form/1/edit');
@@ -269,6 +275,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('User can add and a related action on the landuse form', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
+      artifact: this.server.create('artifact'),
     });
 
     await visit('/landuse-form/1/edit');
@@ -300,6 +307,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('User can fill out and save Housing Plans section', async function (assert) {
     // Create a land use form with housing-related actions
     this.server.create('project', {
+      artifact: this.server.create('artifact'),
       packages: [
         this.server.create('package', 'toDo', {
           dcpPackagetype: 717170001,
@@ -374,11 +382,13 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
       packages: [
         this.server.create('package', 'toDo', 'landuseForm'),
       ],
+      artifact: this.server.create('artifact'),
     });
 
     // The housing-related Land Use Actions are
     // 'HA', 'HC', 'HD', 'HG', 'HN', 'HO', 'HP', 'HU'
     const projectWithHousingAction = this.server.create('project', {
+      artifact: this.server.create('artifact'),
       packages: [
         this.server.create('package', 'toDo', {
           dcpPackagetype: 717170001,
@@ -408,6 +418,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('user can remove applicants on landuse form', async function (assert) {
     const project = this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
+      artifact: this.server.create('artifact'),
     });
     const { landuseForm } = project.packages.models[0];
     // create an applicant model
@@ -431,6 +442,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('user can remove related actions on landuse form', async function (assert) {
     const project = this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
+      artifact: this.server.create('artifact'),
     });
     const { landuseForm } = project.packages.models[0];
     // create a related action model
@@ -454,6 +466,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('User can update the primary contact information on the landuse form', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
+      artifact: this.server.create('artifact'),
     });
 
     await visit('/landuse-form/1/edit');
@@ -481,6 +494,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('User can update the project name on the landuse form', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
+      artifact: this.server.create('artifact'),
     });
 
     await visit('/landuse-form/1/edit');
@@ -504,6 +518,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('User can update the environmental review information on the landuse form', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
+      artifact: this.server.create('artifact'),
     });
 
     await visit('/landuse-form/1/edit');
@@ -531,6 +546,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('User only sees last questions under Project Area, Proposed Development Site, Project Tax Lots when project applies to partial area', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
+      artifact: this.server.create('artifact'),
     });
 
     await visit('/landuse-form/1/edit');
@@ -574,6 +590,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('User can update proposed actions section', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
+      artifact: this.server.create('artifact'),
     });
 
     await visit('/landuse-form/1/edit');
@@ -626,6 +643,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('User can add, fill out, save and remove Subject Sites subsections', async function (assert) {
     // Create a LU form w housing-related actions
     this.server.create('project', {
+      artifact: this.server.create('artifact'),
       packages: [
         this.server.create('package', 'toDo', {
           dcpPackagetype: 717170001,
@@ -685,6 +703,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('user can search and add new bbls', async function (assert) {
     const project = this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
+      artifact: this.server.create('artifact'),
     });
     const { landuseForm } = project.packages.models[0];
 
@@ -734,6 +753,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('user can remove a bbl', async function (assert) {
     const project = this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
+      artifact: this.server.create('artifact'),
     });
     const { landuseForm } = project.packages.models[0];
 
@@ -784,6 +804,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('User can fill out Public Facilities section', async function (assert) {
     // Create a LU form w public-facilities-related actions
     this.server.create('project', {
+      artifact: this.server.create('artifact'),
       packages: [
         this.server.create('package', 'toDo', {
           dcpPackagetype: 717170001,
@@ -849,6 +870,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('Nested (i.e. Cascading, descendant) questions in Public Facilities reset when parent question values change', async function (assert) {
     // Create a LU form w public-facilities-related actions
     this.server.create('project', {
+      artifact: this.server.create('artifact'),
       packages: [
         this.server.create('package', 'toDo', {
           dcpPackagetype: 717170001,
@@ -930,6 +952,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('User can update Change in City Map section', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
+      artifact: this.server.create('artifact'),
     });
 
     await visit('/landuse-form/1/edit');
@@ -988,6 +1011,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('User can add, fill out, save and remove Proposed Site Characteristics subsection', async function (assert) {
     // Create a LU form w public-facilities-related actions
     this.server.create('project', {
+      artifact: this.server.create('artifact'),
       packages: [
         this.server.create('package', 'toDo', {
           dcpPackagetype: 717170001,
@@ -1044,6 +1068,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('User can update lead-agency', async function(assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
+      artifact: this.server.create('artifact'),
     });
     this.server.create('account', 1, {
       name: 'first account',
@@ -1075,6 +1100,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('User can fill out Disposition section', async function (assert) {
     // Create a LU form w disposition-related actions
     this.server.create('project', {
+      artifact: this.server.create('artifact'),
       packages: [
         this.server.create('package', 'toDo', {
           dcpPackagetype: 717170001,
@@ -1117,6 +1143,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
   test('User can add and delete a ZR Section on the landuse form', async function (assert) {
     this.server.create('project', {
+      artifact: this.server.create('artifact'),
       packages: [
         this.server.create('package', 'toDo', {
           dcpPackagetype: 717170001,
@@ -1160,6 +1187,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
 
   test('Attachment list text only shows up when one of PC, PQ, PS, or PX actions are present', async function (assert) {
     this.server.create('project', {
+      artifact: this.server.create('artifact'),
       packages: [
         this.server.create('package', 'toDo', {
           dcpPackagetype: 717170001,
@@ -1175,6 +1203,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     });
 
     this.server.create('project', {
+      artifact: this.server.create('artifact'),
       packages: [
         this.server.create('package', 'toDo', {
           dcpPackagetype: 717170001,
@@ -1212,6 +1241,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
           }),
         }),
       ],
+      artifact: this.server.create('artifact'),
     });
 
     await visit('/landuse-form/1/edit');
@@ -1258,6 +1288,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('Conditional questions display when user fills out Proposed Actions section', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
+      artifact: this.server.create('artifact'),
     });
 
     await visit('/landuse-form/1/edit');
@@ -1274,6 +1305,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
   test('User can search and select from zoning resolution dropdown in proposed actions section', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
+      artifact: this.server.create('artifact'),
     });
 
     this.server.create('zoning-resolution', 1, {

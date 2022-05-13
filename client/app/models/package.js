@@ -13,10 +13,11 @@ export default class PackageModel extends Model {
     if (this.fileManager) {
       this.fileManager.existingFiles = this.documents;
     } else {
-      const fileQueue = this.fileQueue.create(this.id);
+      const fileQueue = this.fileQueue.create(`package${this.id}`);
 
       this.fileManager = new FileManager(
         this.id,
+        'package',
         this.documents,
         [],
         fileQueue,
@@ -194,7 +195,7 @@ export default class PackageModel extends Model {
 
   get isDirty() {
     const isPackageDirty = this.hasDirtyAttributes
-      || this.fileManager.isDirty;
+      || this.fileManager.isDirty || this.project.isDirty;
 
     if (this.dcpPackagetype === DCPPACKAGETYPE.PAS_PACKAGE.code) {
       return isPackageDirty
@@ -219,7 +220,6 @@ export default class PackageModel extends Model {
         || this.landuseForm.isSitedatahFormsDirty
         || this.landuseForm.isLanduseGeographiesDirty
         || this.landuseForm.isRelatedActionsDirty
-        || this.landuseForm.isProjectDirty
         || this.landuseForm.isAffectedZoningResolutionsDirty
         || this.landuseForm.isZoningMapChangesDirty;
     }

@@ -1,4 +1,4 @@
-import Model, { attr, hasMany } from '@ember-data/model';
+import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { optionset } from '../helpers/optionset';
 
 export default class ProjectModel extends Model {
@@ -42,6 +42,11 @@ export default class ProjectModel extends Model {
 
   @attr('number') dcpAffectfourmorecb;
 
+  // We assume there's only one. If there's >1 in crm, the backend
+  // should return the first one.
+  @belongsTo('artifact', { async: false })
+  artifact;
+
   @hasMany('package', { async: false })
   packages;
 
@@ -53,6 +58,10 @@ export default class ProjectModel extends Model {
 
   @hasMany('milestone', { async: false })
   milestones;
+
+  get isDirty () {
+    return this.hasDirtyAttributes || (this.artifact && this.artifact.isDirty);
+  }
 
   get publicStatusGeneralPublicProject() {
     const isGeneralPublic = this.dcpVisibility === optionset(['project', 'dcpVisibility', 'code', 'GENERAL_PUBLIC']);
@@ -189,5 +198,17 @@ export default class ProjectModel extends Model {
       .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'WORKING_PACKAGE']))
       .sortBy('dcpPackageversion')
       .reverse();
+  }
+
+  async save() {
+    if (this.artifact && this.artifact.isDirty) {
+      this.artifact.save();
+    }
+
+    try {
+      await super.save();
+    } catch (e) {
+      console.log('Error saving project: ', e);
+    }
   }
 }

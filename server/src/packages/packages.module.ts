@@ -13,6 +13,7 @@ import { ZoningMapChangesController } from './landuse-form/zoning-map-changes/zo
 import { LanduseActionsController } from './landuse-form/landuse-actions/landuse-actions.controller';
 import { RwcdsFormController } from './rwcds-form/rwcds-form.controller';
 import { LanduseFormController } from './landuse-form/landuse-form.controller';
+import { ArtifactService } from '../artifacts/artifacts.service';
 import { PasFormService } from './pas-form/pas-form.service';
 import { RwcdsFormService } from './rwcds-form/rwcds-form.service';
 import { LanduseFormService } from './landuse-form/landuse-form.service';
@@ -23,7 +24,7 @@ import { CeqrInvoiceQuestionnairesController } from './ceqr-invoice-questionnair
 @Module({
   imports: [CrmModule, SharepointModule, CitypayModule],
   exports: [PackagesService],
-  providers: [PackagesService, PasFormService, RwcdsFormService, LanduseFormService],
+  providers: [ArtifactService, PackagesService, PasFormService, RwcdsFormService, LanduseFormService],
   controllers: [
     PackagesController,
     PasFormController,
