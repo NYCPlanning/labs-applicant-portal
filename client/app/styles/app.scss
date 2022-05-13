@@ -46,6 +46,8 @@ $small-font-size: 81.25%; // TODO: update Style Guide so that <small> matches .t
 
 @import "modules/_powerselect-overrides"; // TODO: move to Labs UI (if necessary)
 
+$orange: #AE5620;
+
 .site-header {
   @include breakpoint(large) {
     position: sticky;
@@ -185,6 +187,14 @@ $sticky-sidebar-offset: 6rem + rem-calc(20);
       height: 13.33px;
       width: 13.33px;
       margin-bottom: 5px;
+    }
+  }
+
+  .equity-auto-response {
+    color: $orange;
+
+    a {
+      text-decoration: underline;
     }
   }
 }
