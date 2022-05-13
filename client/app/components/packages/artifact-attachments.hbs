@@ -1,8 +1,6 @@
 <div ...attributes>
-  <fieldset class="fieldset">
-    <Ui::Legend>
-      Attachments
-    </Ui::Legend>
+  <div class="fieldset-adder">
+    <h3>Attach Racial Equity Report Files</h3>
 
     <ul class="no-bullet">
       {{#each @fileManager.existingFiles as |file idx|}}
@@ -126,7 +124,7 @@
     </FileUpload>
 
     <p class="text-small tiny-margin-bottom text-dark-gray">
-      The size limit for each file is 50 MB. You can upload up to 1 GB of files.
+      You can upload up to 1GB of files. Do not use special characters in the file name. Upload only PDF files.
     </p>
-  </fieldset>
+  </div>
 </div>
