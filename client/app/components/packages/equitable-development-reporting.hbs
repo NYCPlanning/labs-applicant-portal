@@ -1,17 +1,11 @@
 {{#let @form as |form|}}
   <form.SaveableForm @model={{@package.project}} as |projectForm|>
-    <form.Section @title="Equitable Development Reporting" class="equitable-development-reporting">
+    <form.Section @title="Racial Equity Report" class="equitable-development-reporting">
       <p>
-        Certain projects are subject to provide a <Ui::ExternalLink href="https://legistar.council.nyc.gov/LegislationDetail.aspx?ID=3963886&GUID=D2C9A25B-0036-416E-87CD-C3AED208AE1B">Racial Equity Report on Housing and Opportunity</Ui::ExternalLink>. The below questions are to help identify whether your project requires this report.
-      </p>
-      <p>
-        Fill in the responses and the form will indicate if you need to produce a Racial Equity report.  The report should be submitted to the Department of City Planning prior to certification or referral and will be shared with the public.
-      </p>
-      <p>
-        Provide an answer for each question.
+        Certain projects are subject to requirements to submit a Racial Equity Report on Housing and Opportunity under <Ui::ExternalLink href="https://legistar.council.nyc.gov/LegislationDetail.aspx?ID=3963886&GUID=D2C9A25B-0036-416E-87CD-C3AED208AE1B">Local Law 78 of 2021</Ui::ExternalLink>. The below questions are to help identify whether your project is. 
       </p>
 
-      <p>
+      <p class="text-weight-bold text-large">
         I am applying for ULURP actions with an acquisition or disposition of land to facilitate a proposed:
       </p>
 
@@ -54,7 +48,7 @@
         </projectForm.Field>
       </Ui::Question>
 
-      <p>
+      <p class="text-weight-bold text-large">
         The action(s) I am applying for are ULURP actions and would:
       </p>
 
