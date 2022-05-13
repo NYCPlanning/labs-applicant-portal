@@ -290,9 +290,14 @@
               Based on your answers, you will be required to submit a Racial Equity Report before Public Review begins.
             </h3>
 
-            <Packages::LanduseForm::ArtifactDocuments
-              @model={{@package}}
-            />
+            {{#if (or
+              (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))
+              (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'FILED_LU_PACKAGE'))
+            )}}
+              <Packages::LanduseForm::ArtifactDocuments
+                @model={{@package}}
+              />
+            {{/if}}
           {{/if}}
 
           {{#unless isEquityReportRequired}}
