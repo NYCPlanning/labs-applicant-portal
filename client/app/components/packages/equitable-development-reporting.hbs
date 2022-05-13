@@ -289,6 +289,10 @@
             <h3 class="equity-auto-response">
               Based on your answers, you will be required to submit a Racial Equity Report before Public Review begins.
             </h3>
+
+            <Packages::LanduseForm::ArtifactDocuments
+              @model={{@package}}
+            />
           {{/if}}
 
           {{#unless isEquityReportRequired}}
