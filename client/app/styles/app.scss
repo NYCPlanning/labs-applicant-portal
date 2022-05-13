@@ -173,16 +173,27 @@ $sticky-sidebar-offset: 6rem + rem-calc(20);
   color: $red-dark;
 }
 
-// Styling for tooltip "i" icons
-// note: over the top specificity was required to overwrite the fa defaults
-span.ember-tooltip-target > svg.svg-inline--fa.fa-info-circle.fa-w-16.ember-view.ember-tooltip-target {
-  color: #828891;
-  height: 13.33px;
-  width: 13.33px;
-  margin-bottom: 5px;
+// Styling for tooltip "i" info icons and tooltip copy container
+.equitable-development-reporting {
+  .ember-tooltip {
+    max-width: 320px;
+  }
+
+  .ember-tooltip-target {
+    .ember-view.ember-tooltip-target.fa-info-circle {
+      color: #828891;
+      height: 13.33px;
+      width: 13.33px;
+      margin-bottom: 5px;
+    }
+  }
 }
 
-.ember-tooltip {
-  max-width: 320px;
+@media (max-width:600px) {
+  .equitable-development-reporting {
+    .ember-tooltip {
+      max-width: 235px;
+    }
+  }
 }
 
