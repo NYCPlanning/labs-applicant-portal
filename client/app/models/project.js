@@ -199,16 +199,4 @@ export default class ProjectModel extends Model {
       .sortBy('dcpPackageversion')
       .reverse();
   }
-
-  async save() {
-    if (this.artifact && this.artifact.isDirty) {
-      this.artifact.save();
-    }
-
-    try {
-      await super.save();
-    } catch (e) {
-      console.log('Error saving project: ', e);
-    }
-  }
 }
