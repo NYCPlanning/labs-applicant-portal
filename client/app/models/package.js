@@ -151,10 +151,28 @@ export default class PackageModel extends Model {
       }];
     }
 
+    try {
+      await this.project.artifact.fileManager.save();
+    } catch (e) {
+      console.log('Error saving artifact files: ', e);
+
+      // See comment on the tracked fileUploadError property
+      // definition above.
+      this.fileUploadErrors = [{
+        code: 'UPLOAD_DOC_FAILED',
+        title: 'Failed to upload artifact documents',
+        detail: 'An error occured while  uploading your documents. Please refresh and retry.',
+      }];
+    }
+
     if (!formAdapterError && !this.adapterError && !this.fileUploadErrors) {
+      await this.project.artifact.rollbackAttributes();
+
       await this.reload();
 
       this._synchronizeDocuments();
+
+      this.project.artifact._synchronizeDocuments();
     }
   }
 
