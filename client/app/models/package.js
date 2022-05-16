@@ -97,6 +97,11 @@ export default class PackageModel extends Model {
     return this.ceqrInvoiceQuestionnaires.firstObject;
   }
 
+  get isLUPackage() {
+    return this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code
+    || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code;
+  }
+
   setAttrsForSubmission() {
     this.statuscode = STATUSCODE.SUBMITTED.code;
     this.statecode = STATECODE.INACTIVE.code;
@@ -151,28 +156,30 @@ export default class PackageModel extends Model {
       }];
     }
 
-    try {
-      await this.project.artifact.fileManager.save();
-    } catch (e) {
-      console.log('Error saving artifact files: ', e);
+    if (this.isLUPackage && this.project.artifact) {
+      try {
+        await this.project.artifact.fileManager.save();
+      } catch (e) {
+        console.log('Error saving artifact files: ', e);
 
-      // See comment on the tracked fileUploadError property
-      // definition above.
-      this.fileUploadErrors = [{
-        code: 'UPLOAD_DOC_FAILED',
-        title: 'Failed to upload artifact documents',
-        detail: 'An error occured while  uploading your documents. Please refresh and retry.',
-      }];
+        // See comment on the tracked fileUploadError property
+        // definition above.
+        this.fileUploadErrors = [{
+          code: 'UPLOAD_DOC_FAILED',
+          title: 'Failed to upload artifact documents',
+          detail: 'An error occured while  uploading your documents. Please refresh and retry.',
+        }];
+      }
     }
 
     if (!formAdapterError && !this.adapterError && !this.fileUploadErrors) {
-      await this.project.artifact.rollbackAttributes();
+      if (this.isLUPackage && this.project.artifact) await this.project.artifact.rollbackAttributes();
 
       await this.reload();
 
       this._synchronizeDocuments();
 
-      this.project.artifact._synchronizeDocuments();
+      if (this.isLUPackage && this.project.artifact) this.project.artifact._synchronizeDocuments();
     }
   }
 
@@ -213,7 +220,7 @@ export default class PackageModel extends Model {
 
   get isDirty() {
     const isPackageDirty = this.hasDirtyAttributes
-      || this.fileManager.isDirty || this.project.isDirty;
+      || this.fileManager.isDirty || (this.isLUPackage && this.project.isDirty);
 
     if (this.dcpPackagetype === DCPPACKAGETYPE.PAS_PACKAGE.code) {
       return isPackageDirty
