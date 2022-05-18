@@ -148,6 +148,12 @@ export default class PackageModel extends Model {
       YES_NO_UNSURE_SMALLINT.NO.code;
   }
 
+  setLUApplicability() {
+    this.landuseForm.dcpApplicability = this.isRERApplicable ?
+      YES_NO_UNSURE_SMALLINT.YES.code :
+      YES_NO_UNSURE_SMALLINT.NO.code;
+  }
+
   async save(recordsToDelete) {
     let formAdapterError = false;
 
@@ -159,6 +165,10 @@ export default class PackageModel extends Model {
       }
       if (this.dcpPackagetype === DCPPACKAGETYPE.RWCDS.code) {
         await this.rwcdsForm.save();
+      }
+      if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code
+        || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code) {
+        this.setLUApplicability();
       }
       if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code
         || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code
