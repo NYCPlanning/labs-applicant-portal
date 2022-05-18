@@ -102,7 +102,8 @@ export default class PackageModel extends Model {
 
   get isLUPackage() {
     return this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code
-    || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code;
+    || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code
+    || this.dcpPackagetype === DCPPACKAGETYPE.POST_CERT_LU.code;
   }
 
   setAttrsForSubmission() {
@@ -134,8 +135,7 @@ export default class PackageModel extends Model {
       dcpImapplyazoningtmaffectsmore5rcd,
     ];
 
-    if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code
-      || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code) {
+    if (this.isLUPackage) {
       rerValues = [...rerValues, dcpAffectfourmorecb];
     }
 
@@ -166,13 +166,8 @@ export default class PackageModel extends Model {
       if (this.dcpPackagetype === DCPPACKAGETYPE.RWCDS.code) {
         await this.rwcdsForm.save();
       }
-      if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code
-        || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code) {
+      if (this.isLUPackage) {
         this.setLUApplicability();
-      }
-      if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code
-        || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code
-        || this.dcpPackagetype === DCPPACKAGETYPE.POST_CERT_LU.code) {
         await this.saveDeletedRecords(recordsToDelete);
         await this.landuseForm.save();
       }
@@ -286,9 +281,7 @@ export default class PackageModel extends Model {
         || this.rwcdsForm.hasDirtyAttributes
         || this.rwcdsForm.isAffectedZoningResolutionsDirty;
     }
-    if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code
-      || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code
-      || this.dcpPackagetype === DCPPACKAGETYPE.POST_CERT_LU.code) {
+    if (this.isLUPackage) {
       return isPackageDirty
         || this.landuseForm.hasDirtyAttributes
         || this.landuseForm.isBblsDirty
