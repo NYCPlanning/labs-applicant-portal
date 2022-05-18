@@ -2,7 +2,7 @@
   <form.SaveableForm @model={{@package.project}} as |projectForm|>
     <form.Section @title="Racial Equity Report" class="equitable-development-reporting">
       <p>
-        Certain projects are subject to requirements to submit a Racial Equity Report on Housing and Opportunity under <Ui::ExternalLink href="https://legistar.council.nyc.gov/LegislationDetail.aspx?ID=3963886&GUID=D2C9A25B-0036-416E-87CD-C3AED208AE1B">Local Law 78 of 2021</Ui::ExternalLink>. The below questions are to help identify whether your project is. 
+        Certain projects are subject to requirements to submit a Racial Equity Report on Housing and Opportunity under <Ui::ExternalLink href="https://www1.nyc.gov/assets/planning/download/pdf/data-maps/edde/local-law-78.pdf">Local Law 78 of 2021</Ui::ExternalLink>. The below questions are to help identify whether your project is.
       </p>
 
       <p class="text-weight-bold text-large">
@@ -195,6 +195,9 @@
           <span>
             <FaIcon @icon="info-circle" @prefix="fas" class="ember-tooltip-target"/>
             <EmberTooltip @event="hover" @side="bottom-end">
+              <p class="q-help">
+                Data points needed:
+              </p>
               <ol class="text-small" type="a">
                 <li>
                   Change in permitted zoning square feet in portion of project area (includes development site and any other sites affected) that is within a Manufacturing District. To get permitted zoning square feet, multiply area of all sites affected by applicable Floor Area Ratio. Zoning Handbook or Urban Renewal Plan can help with identifying floor area ratio.
