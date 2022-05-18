@@ -1,4 +1,6 @@
 export const LANDUSE_FORM_ATTRS = [
+  'dcp_applicability',
+
   // todo: refine this list of landuse attributes
   'dcp_landuse',
   'dcp_landuseid',
