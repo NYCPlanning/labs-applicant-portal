@@ -13,6 +13,8 @@ export default class PasFormModel extends Model {
   @hasMany('project-address', { async: false })
   projectAddresses;
 
+  @attr('number') dcpApplicability;
+
   @attr('string') dcpApplicantnamecompanyorganization;
 
   @attr('boolean') dcpIsexistingrestrictionsondevsiteapplicable;

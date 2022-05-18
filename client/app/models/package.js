@@ -7,6 +7,9 @@ import {
   STATECODE,
   DCPPACKAGETYPE,
 } from '../optionsets/package';
+import {
+  YES_NO_UNSURE_SMALLINT,
+} from '../optionsets/common';
 
 export default class PackageModel extends Model {
   createFileQueue() {
@@ -107,11 +110,50 @@ export default class PackageModel extends Model {
     this.statecode = STATECODE.INACTIVE.code;
   }
 
+  get isRERApplicable() {
+    const {
+      dcpNonresatleast50000,
+      dcpNewresibuildmore50000sf,
+      dcpIncreasepermitresatleast50000sf,
+      dcpIncreasepermitnonresiatleast200000sf,
+      dcpDecpermresiatleastfourcontigcb,
+      dcpDecnumofhousunitsatleastfourcontigcb,
+      dcpContatleast100000sfzonfla,
+      dcpImapplyazoningtmaffectsmore5rcd,
+      dcpAffectfourmorecb,
+    } = this.project;
+
+    let rerValues = [
+      dcpNonresatleast50000,
+      dcpNewresibuildmore50000sf,
+      dcpIncreasepermitresatleast50000sf,
+      dcpIncreasepermitnonresiatleast200000sf,
+      dcpDecpermresiatleastfourcontigcb,
+      dcpDecnumofhousunitsatleastfourcontigcb,
+      dcpContatleast100000sfzonfla,
+      dcpImapplyazoningtmaffectsmore5rcd,
+    ];
+
+    if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code
+      || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code) {
+      rerValues = [...rerValues, dcpAffectfourmorecb];
+    }
+
+    return rerValues.includes(YES_NO_UNSURE_SMALLINT.YES.code);
+  }
+
+  setPASApplicability() {
+    this.pasForm.dcpApplicability = this.isRERApplicable ?
+      YES_NO_UNSURE_SMALLINT.YES.code :
+      YES_NO_UNSURE_SMALLINT.NO.code;
+  }
+
   async save(recordsToDelete) {
     let formAdapterError = false;
 
     try {
       if (this.dcpPackagetype === DCPPACKAGETYPE.PAS_PACKAGE.code) {
+        this.setPASApplicability();
         await this.saveDeletedRecords(recordsToDelete);
         await this.pasForm.save();
       }
