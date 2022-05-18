@@ -35,6 +35,8 @@ export default class LanduseFormModel extends Model {
   @belongsTo('lead-agency', { async: false })
   leadAgency;
 
+  @attr('number') dcpApplicability;
+
   @attr dcpVersion;
 
   // project name
