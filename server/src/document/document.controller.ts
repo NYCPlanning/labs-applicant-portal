@@ -94,10 +94,12 @@ export class DocumentController {
 
     const folderName = `${artifactName}_${instanceId.toUpperCase().replace(/-/g, '')}`;
 
+    const strippedFileName =  file.originalname.replace(/[^-a-zA-Z0-9._]/g, '-');
+
     return this.documentService.uploadDocument('dcp_artifacts',
       instanceId,
       folderName,
-      file.originalname,
+      strippedFileName,
       encodedBase64File,
       true,
       headers
