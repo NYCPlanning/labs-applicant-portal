@@ -238,10 +238,7 @@
         </projectForm.Field>
       </Ui::Question>
 
-      {{#if (or
-        (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))
-        (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'FILED_LU_PACKAGE'))
-      )}}
+      {{#if @package.isLUPackage}}
         <Ui::Question @required={{false}} as |Q|>
           <Q.Legend>
             The Landmarks Preservation Commission is requesting a report from the City Planning Commission
@@ -274,10 +271,7 @@
                 (optionset 'project' 'equityReportFields' 'code' 'YES')
               )
               (and
-                (or
-                  (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))
-                  (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'FILED_LU_PACKAGE'))
-                )
+                @package.isLUPackage
                 (eq projectForm.data.dcpAffectfourmorecb (optionset 'project' 'equityReportFields' 'code' 'YES'))
               )
             )
@@ -290,10 +284,7 @@
               Based on your answers, you will be required to submit a Racial Equity Report before Public Review begins.
             </h3>
 
-            {{#if (or
-              (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))
-              (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'FILED_LU_PACKAGE'))
-            )}}
+            {{#if @package.isLUPackage}}
               <Packages::LanduseForm::ArtifactDocuments
                 @model={{@package}}
               />
