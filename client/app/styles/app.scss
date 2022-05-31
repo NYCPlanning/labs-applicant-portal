@@ -172,3 +172,43 @@ $sticky-sidebar-offset: 6rem + rem-calc(20);
 .dropdown-clear-btn-below {
   color: $red-dark;
 }
+
+.maintenance-wrapper {
+  background-color: #E5E5E5;
+
+  p {
+    padding: 3px 5px 0 5px;
+  }
+}
+
+// Styling for tooltip "i" info icons and tooltip copy container
+.equitable-development-reporting {
+  .ember-tooltip {
+    max-width: 320px;
+  }
+
+  .ember-tooltip-target {
+    .ember-view.ember-tooltip-target.fa-info-circle {
+      color: #828891;
+      height: 13.33px;
+      width: 13.33px;
+      margin-bottom: 5px;
+    }
+  }
+
+  .equity-auto-response {
+    color: $orange;
+
+    a {
+      text-decoration: underline;
+    }
+  }
+}
+
+@media (max-width:600px) {
+  .equitable-development-reporting {
+    .ember-tooltip {
+      max-width: 235px;
+    }
+  }
+}
