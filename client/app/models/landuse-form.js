@@ -35,6 +35,8 @@ export default class LanduseFormModel extends Model {
   @belongsTo('lead-agency', { async: false })
   leadAgency;
 
+  @attr('number') dcpApplicability;
+
   @attr dcpVersion;
 
   // project name
@@ -260,7 +262,7 @@ export default class LanduseFormModel extends Model {
   }
 
   async saveDirtyProject() {
-    if (this.isProjectDirty) {
+    if (this.package.project.isDirty) {
       this.package.project.save();
     }
   }
@@ -340,10 +342,6 @@ export default class LanduseFormModel extends Model {
     const dirtyLanduseGeographies = this.landuseGeographies.filter((landuseGeography) => landuseGeography.hasDirtyAttributes);
 
     return dirtyLanduseGeographies.length > 0;
-  }
-
-  get isProjectDirty() {
-    return this.package.project.hasDirtyAttributes;
   }
 
   get isAffectedZoningResolutionsDirty() {

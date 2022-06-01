@@ -2,6 +2,7 @@ import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 import { CrmService } from '../crm/crm.service';
 import { PasFormService } from './pas-form/pas-form.service';
 import { pick } from 'underscore';
+import { ArtifactService } from '../artifacts/artifacts.service';
 import { RwcdsFormService } from './rwcds-form/rwcds-form.service';
 import { LanduseFormService } from './landuse-form/landuse-form.service';
 import { PACKAGE_ATTRS } from './packages.attrs';
@@ -78,6 +79,7 @@ export const PACKAGE_TYPE_OPTIONSET = {
 @Injectable()
 export class PackagesService {
   constructor(
+    private readonly artifactService: ArtifactService,
     private readonly crmService: CrmService,
     private readonly pasFormService: PasFormService,
     private readonly rwcdsFormService: RwcdsFormService,
@@ -150,6 +152,35 @@ export class PackagesService {
       ) {
         formData = await this.fetchPackageForm(firstPackage);
       }
+
+      // below query filters by Racial Equity Report file type. 
+      let { records: projectArtifacts } = await this.crmService.get(
+        "dcp_artifactses",
+        `
+        $filter=
+          _dcp_project_value eq ${dcp_project.dcp_projectid}
+          and (
+            _dcp_applicantfiletype_value eq '8e49a11b-0991-ec11-8d20-001dd804c26c'
+          )
+        `
+      );
+
+      let firstArtifactWithDocuments = {};
+
+      if (projectArtifacts.length < 1) {
+        // TODO: Consider reducing this side effecct in this GET endpoint
+        firstArtifactWithDocuments = await this.artifactService.createEquityReport(dcp_project.dcp_projectid);
+      } else {
+        firstArtifactWithDocuments = projectArtifacts[0];
+      }
+
+      try {
+        firstArtifactWithDocuments = await this.artifactService.artifactWithDocuments(firstArtifactWithDocuments);
+      } catch (e) {
+        console.log(e);
+      }
+
+      dcp_project.artifact = firstArtifactWithDocuments;
 
       return {
         ...firstPackage,

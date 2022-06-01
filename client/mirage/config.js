@@ -119,7 +119,7 @@ export default function() {
   this.get('/ceqr-invoice-questionnaires/:id');
   this.patch('/ceqr-invoice-questionnaires/:id');
 
-  this.post('/documents', function(schema, request) {
+  this.post('/documents/*', function(schema, request) {
     // requestBody should be a FormData object
     const { requestBody } = request;
     const success = requestBody.get('instanceId') && requestBody.get('entityName') && requestBody.get('file');

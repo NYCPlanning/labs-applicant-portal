@@ -127,7 +127,7 @@ export default {
   dcpSitedatarenewalarea: [
     validateLength({
       min: 0,
-      max: 60,
+      max: 100,
       message: 'Text is too long (max {max} characters)',
     }),
   ],

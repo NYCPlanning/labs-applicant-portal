@@ -212,6 +212,21 @@
       </div>
     </div>
 
+    {{#if this.chosenDcpPreviouslyapprovedactioncode.code}}
+      <Ui::Question as |dcpPreviouslyapprovedapplicationnumbersQ|>
+        <dcpPreviouslyapprovedapplicationnumbersQ.Label>
+          If this is a follow-up Action, indicate the ULURP or CP number of previous approval
+        </dcpPreviouslyapprovedapplicationnumbersQ.Label>
+
+        <landuseActionForm.Field
+          @attribute="dcpPreviouslyapprovedapplicationnumbers"
+          @showCounter={{true}}
+          @maxlength="100"
+          id={{dcpPreviouslyapprovedapplicationnumbersQ.questionId}}
+        />
+      </Ui::Question>
+    {{/if}}
+
     {{#if this.projectHasRequiredActionsAndFollowUpYes}}
 
       <Ui::Question
