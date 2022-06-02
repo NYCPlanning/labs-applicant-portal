@@ -32,7 +32,6 @@ import { ZONINGRESOLUTION_ATTRS } from '../zoning-resolutions/zoning-resolutions
 import { ZONING_MAP_CHANGE_ATTRS } from './landuse-form/zoning-map-changes/zoning-map-change.attrs';
 import { CEQR_INVOICE_QUESTIONNAIRE_ATTRS } from './ceqr-invoice-questionnaires/ceqr-invoice-questionnaires.attrs';
 import { CitypayService } from '../citypay/citypay.service';
-import { ARTIFACTS_ATTRS } from '../artifacts/artifacts.attrs';
 
 @UseInterceptors(new JsonApiSerializeInterceptor('packages', {
   id: 'dcp_packageid',
@@ -57,15 +56,8 @@ import { ARTIFACTS_ATTRS } from '../artifacts/artifacts.attrs';
   project: {
     ref: 'dcp_projectid',
     attributes: [
-      ...PROJECT_ATTRS,
-      'artifact'
+      ...PROJECT_ATTRS
     ],
-    artifact: {
-      ref: 'dcp_artifactsid',
-      attributes: [
-        ...ARTIFACTS_ATTRS,
-      ]
-    }
   },
   'ceqr-invoice-questionnaires': {
     ref: 'dcp_ceqrinvoicequestionnaireid',
@@ -215,7 +207,6 @@ import { ARTIFACTS_ATTRS } from '../artifacts/artifacts.attrs';
         dcp_pasform: pasForm,
         dcp_rwcdsform: rwcdsForm,
         dcp_landuse: landuseForm,
-        dcp_project: project,
       } = projectPackage;
   
       if (pasForm) {
@@ -254,10 +245,6 @@ import { ARTIFACTS_ATTRS } from '../artifacts/artifacts.attrs';
       } else if (landuseForm) {
         return {
           ...projectPackage,
-          project: {
-            ...project,
-            artifact: project.artifact
-          },
           'landuse-form': {
             ...landuseForm,
             applicants: [

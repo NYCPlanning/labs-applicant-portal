@@ -11,14 +11,14 @@ export default {
   dcpDescribethewithactionscenario: [
     validateLength({
       min: 0,
-      max: 2400,
+      max: 1500,
       message: 'Text is too long (max {max} characters)',
     }),
   ],
   dcpRationalbehindthebuildyear: [
     validateLength({
       min: 0,
-      max: 2400,
+      max: 300,
       message: 'Text is too long (max {max} characters)',
     }),
   ],
@@ -32,7 +32,7 @@ export default {
   dcpProposedprojectdevelopmentdescription: [
     validateLength({
       min: 0,
-      max: 2400,
+      max: 1800,
       message: 'Text is too long (max {max} characters)',
     }),
   ],
@@ -46,35 +46,35 @@ export default {
   dcpSitehistory: [
     validateLength({
       min: 0,
-      max: 2400,
+      max: 600,
       message: 'Text is too long (max {max} characters)',
     }),
   ],
   dcpPurposeandneedfortheproposedaction: [
     validateLength({
       min: 0,
-      max: 2400,
+      max: 1500,
       message: 'Text is too long (max {max} characters)',
     }),
   ],
   dcpDescribethenoactionscenario: [
     validateLength({
       min: 0,
-      max: 2400,
+      max: 1500,
       message: 'Text is too long (max {max} characters)',
     }),
   ],
   dcpRwcdsexplanation: [
     validateLength({
       min: 0,
-      max: 2400,
+      max: 50,
       message: 'Text is too long (max {max} characters)',
     }),
   ],
   dcpHowdidyoudeterminethenoactionscenario: [
     validateLength({
       min: 0,
-      max: 2400,
+      max: 600,
       message: 'Text is too long (max {max} characters)',
     }),
   ],
@@ -88,7 +88,7 @@ export default {
   dcpHowdidyoudeterminethiswithactionscena: [
     validateLength({
       min: 0,
-      max: 2400,
+      max: 600,
       message: 'Text is too long (max {max} characters)',
     }),
   ],
@@ -102,7 +102,7 @@ export default {
   dcpDevelopmentsiteassumptions: [
     validateLength({
       min: 0,
-      max: 4800,
+      max: 2400,
       message: 'Text is too long (max {max} characters)',
     }),
   ],

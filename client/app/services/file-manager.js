@@ -5,17 +5,13 @@ import { tracked } from '@glimmer/tracking';
 // This class supports the FileManagement service
 export default class FileManager {
   constructor(
-    recordId,
-    entityType,
+    packageId,
     existingFiles,
     filesToDelete,
     filesToUpload, // EmberFileUpload Queue Object
     session,
   ) {
-    console.assert(entityType === 'package' || entityType === 'artifact', "entityType must be 'package' or 'artifact'");
-
-    this.recordId = recordId;
-    this.entityType = entityType;
+    this.packageId = packageId;
     this.existingFiles = existingFiles || [];
     this.filesToDelete = filesToDelete || [];
     this.filesToUpload = filesToUpload; // EmberFileUpload QUEUE Object
@@ -63,14 +59,18 @@ export default class FileManager {
 
   async uploadFiles() {
     for (let i = 0; i < this.filesToUpload.files.length; i += 1) {
-      await this.filesToUpload.files[i].upload(`${ENV.host}/documents/${this.entityType}`, { // eslint-disable-line
+      await this.filesToUpload.files[i].upload(`${ENV.host}/documents`, { // eslint-disable-line
         fileKey: 'file',
         headers: {
           Authorization: `Bearer ${this.session.data.authenticated.access_token}`,
         },
         data: {
-          instanceId: this.recordId,
-          entityName: this.entityType === 'artifact' ? 'dcp_artifacts' : 'dcp_package',
+          instanceId: this.packageId,
+          // Todo: `entityName` shouldn't be necessary.
+          // In this application, documents should only be
+          // uploaded to packages (at least so far).
+          // remove `entityName` after deprecating it from the backend
+          entityName: 'dcp_package',
         },
       });
     }

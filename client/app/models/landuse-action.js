@@ -18,8 +18,6 @@ export default class LanduseActionModel extends Model {
 
   @attr dcpNameofzoningresolutionsection;
 
-  @attr dcpPreviouslyapprovedapplicationnumbers;
-
   @attr dcpZoningsectionstobemodified;
 
   @attr('number')

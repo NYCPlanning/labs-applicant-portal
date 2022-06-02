@@ -19,8 +19,6 @@
 /testem.log
 /yarn-error.log
 /ZAPPortal.code-workspace
-**./DS_Store
-.eslintcache
 
 # ember-try
 /.node_modules.ember-try/
