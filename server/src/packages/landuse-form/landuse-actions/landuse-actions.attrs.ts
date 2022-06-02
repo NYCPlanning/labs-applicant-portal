@@ -18,5 +18,4 @@ export const LANDUSE_ACTION_ATTRS = [
   'dcp_indicatewhetheractionisamodification',
   'dcp_crfnnumber',
   '_dcp_landuseid_value',
-  'dcp_previouslyapprovedapplicationnumbers',
 ];

@@ -7,20 +7,16 @@ import {
   STATECODE,
   DCPPACKAGETYPE,
 } from '../optionsets/package';
-import {
-  YES_NO_UNSURE_SMALLINT,
-} from '../optionsets/common';
 
 export default class PackageModel extends Model {
   createFileQueue() {
     if (this.fileManager) {
       this.fileManager.existingFiles = this.documents;
     } else {
-      const fileQueue = this.fileQueue.create(`package${this.id}`);
+      const fileQueue = this.fileQueue.create(this.id);
 
       this.fileManager = new FileManager(
         this.id,
-        'package',
         this.documents,
         [],
         fileQueue,
@@ -100,58 +96,9 @@ export default class PackageModel extends Model {
     return this.ceqrInvoiceQuestionnaires.firstObject;
   }
 
-  get isLUPackage() {
-    return this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code
-    || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code
-    || this.dcpPackagetype === DCPPACKAGETYPE.POST_CERT_LU.code;
-  }
-
   setAttrsForSubmission() {
     this.statuscode = STATUSCODE.SUBMITTED.code;
     this.statecode = STATECODE.INACTIVE.code;
-  }
-
-  get isRERApplicable() {
-    const {
-      dcpNonresatleast50000,
-      dcpNewresibuildmore50000sf,
-      dcpIncreasepermitresatleast50000sf,
-      dcpIncreasepermitnonresiatleast200000sf,
-      dcpDecpermresiatleastfourcontigcb,
-      dcpDecnumofhousunitsatleastfourcontigcb,
-      dcpContatleast100000sfzonfla,
-      dcpImapplyazoningtmaffectsmore5rcd,
-      dcpAffectfourmorecb,
-    } = this.project;
-
-    let rerValues = [
-      dcpNonresatleast50000,
-      dcpNewresibuildmore50000sf,
-      dcpIncreasepermitresatleast50000sf,
-      dcpIncreasepermitnonresiatleast200000sf,
-      dcpDecpermresiatleastfourcontigcb,
-      dcpDecnumofhousunitsatleastfourcontigcb,
-      dcpContatleast100000sfzonfla,
-      dcpImapplyazoningtmaffectsmore5rcd,
-    ];
-
-    if (this.isLUPackage) {
-      rerValues = [...rerValues, dcpAffectfourmorecb];
-    }
-
-    return rerValues.includes(YES_NO_UNSURE_SMALLINT.YES.code);
-  }
-
-  setPASApplicability() {
-    this.pasForm.dcpApplicability = this.isRERApplicable ?
-      YES_NO_UNSURE_SMALLINT.YES.code :
-      YES_NO_UNSURE_SMALLINT.NO.code;
-  }
-
-  setLUApplicability() {
-    this.landuseForm.dcpApplicability = this.isRERApplicable ?
-      YES_NO_UNSURE_SMALLINT.YES.code :
-      YES_NO_UNSURE_SMALLINT.NO.code;
   }
 
   async save(recordsToDelete) {
@@ -159,15 +106,15 @@ export default class PackageModel extends Model {
 
     try {
       if (this.dcpPackagetype === DCPPACKAGETYPE.PAS_PACKAGE.code) {
-        this.setPASApplicability();
         await this.saveDeletedRecords(recordsToDelete);
         await this.pasForm.save();
       }
       if (this.dcpPackagetype === DCPPACKAGETYPE.RWCDS.code) {
         await this.rwcdsForm.save();
       }
-      if (this.isLUPackage) {
-        this.setLUApplicability();
+      if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code
+        || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code
+        || this.dcpPackagetype === DCPPACKAGETYPE.POST_CERT_LU.code) {
         await this.saveDeletedRecords(recordsToDelete);
         await this.landuseForm.save();
       }
@@ -203,30 +150,10 @@ export default class PackageModel extends Model {
       }];
     }
 
-    if (this.isLUPackage && this.project.artifact) {
-      try {
-        await this.project.artifact.fileManager.save();
-      } catch (e) {
-        console.log('Error saving artifact files: ', e);
-
-        // See comment on the tracked fileUploadError property
-        // definition above.
-        this.fileUploadErrors = [{
-          code: 'UPLOAD_DOC_FAILED',
-          title: 'Failed to upload artifact documents',
-          detail: 'An error occured while  uploading your documents. Please refresh and retry.',
-        }];
-      }
-    }
-
     if (!formAdapterError && !this.adapterError && !this.fileUploadErrors) {
-      if (this.isLUPackage && this.project.artifact) await this.project.artifact.rollbackAttributes();
-
       await this.reload();
 
       this._synchronizeDocuments();
-
-      if (this.isLUPackage && this.project.artifact) this.project.artifact._synchronizeDocuments();
     }
   }
 
@@ -267,21 +194,22 @@ export default class PackageModel extends Model {
 
   get isDirty() {
     const isPackageDirty = this.hasDirtyAttributes
-      || this.fileManager.isDirty || (this.isLUPackage && this.project.isDirty);
+      || this.fileManager.isDirty;
 
     if (this.dcpPackagetype === DCPPACKAGETYPE.PAS_PACKAGE.code) {
       return isPackageDirty
         || this.pasForm.hasDirtyAttributes
         || this.pasForm.isBblsDirty
-        || this.pasForm.isApplicantsDirty
-        || this.pasForm.isProjectDirty;
+        || this.pasForm.isApplicantsDirty;
     }
     if (this.dcpPackagetype === DCPPACKAGETYPE.RWCDS.code) {
       return isPackageDirty
         || this.rwcdsForm.hasDirtyAttributes
         || this.rwcdsForm.isAffectedZoningResolutionsDirty;
     }
-    if (this.isLUPackage) {
+    if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code
+      || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code
+      || this.dcpPackagetype === DCPPACKAGETYPE.POST_CERT_LU.code) {
       return isPackageDirty
         || this.landuseForm.hasDirtyAttributes
         || this.landuseForm.isBblsDirty
@@ -290,6 +218,7 @@ export default class PackageModel extends Model {
         || this.landuseForm.isSitedatahFormsDirty
         || this.landuseForm.isLanduseGeographiesDirty
         || this.landuseForm.isRelatedActionsDirty
+        || this.landuseForm.isProjectDirty
         || this.landuseForm.isAffectedZoningResolutionsDirty
         || this.landuseForm.isZoningMapChangesDirty;
     }

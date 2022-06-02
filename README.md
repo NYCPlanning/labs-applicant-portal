@@ -6,7 +6,7 @@ This is a monorepo containing both the server and client code for the ZAP Applic
 
 * [Git](https://git-scm.com/)
 * [Node.js](https://nodejs.org/) (with npm)
-  - This installation was tested using Node v14.15.0, 10.21.0
+  - This installation was tested using Node v14.15.0
 * [Ember CLI](https://ember-cli.com/)
 * [Yarn](https://yarnpkg.com/)
 
@@ -28,7 +28,6 @@ Google Chrome is beginning to enforce some restrictions on particular uses of co
 
 ## Running the App
 Once you have SSL enabled...
-###### note: the project is optimized for node versions `10.* || >= 12` but you can use node version up to `v14.15.0` so use nvm (or your preferred node manager) to set the node version for the repo
 1. Clone `labs-applicant-portal` to your computer.
 2. Navigate into the `server` folder.
     - Create the `development.env` file using variables stored on 1Password.

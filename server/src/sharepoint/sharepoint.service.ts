@@ -6,16 +6,6 @@ import {
 import * as Request from 'request';
 import { ConfigService } from '../config/config.service';
 
-function unnest(folders = []) {
-  return folders
-    .map(folder => {
-      return [...folder['Files'], ...unnest(folder['Folders'])];
-    })
-    .reduce((acc, curr) => {
-      return acc.concat(curr);
-    }, []);
-}
-
 // This service currently only helps you read and delete files from Sharepoint.
 // If you wish to upload documents to Sharepoint through CRM,
 // use the DocumentService instead.
@@ -247,64 +237,6 @@ export class SharepointService {
           }
 
           resolve(JSON.parse(stringifiedBody));
-        });
-      })
-    } catch (e) {
-      if (e instanceof HttpException) {
-        throw e;
-      } else {
-        throw new HttpException({
-          code: 'REQUEST_FOLDER_FAILED',
-          title: 'Error requesting sharepoint files',
-          detail: `Error while constructing request for Sharepoint folder files`,
-        }, HttpStatus.INTERNAL_SERVER_ERROR);
-      }
-    }
-  }
-
-  // Use for artifacts
-  async getSharepointNestedFolderFiles(folderIdentifier, path = 'Files', method = 'post'): Promise<any> {
-    try {
-      const { access_token } = await this.generateSharePointAccessToken();
-
-      // For Artifacts, folderIdentifier is an absolute URL instead of a relative url, so we extract it
-      // by spltting folderIdentifier with the environment token (e.g. 'dcppfsuat2')
-      const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
-      let [, relativeUrl] = folderIdentifier.split(SHAREPOINT_CRM_SITE);
-
-      // If there's no relative url extracted, it means folderIdentifier was
-      // a true relative url (from a Package) to begin with. So we
-      // use the original folderIdentifier
-      if (!relativeUrl) {
-        relativeUrl = folderIdentifier;
-      }
-      
-      const url = encodeURI(`https://nyco365.sharepoint.com/sites/${SHAREPOINT_CRM_SITE}/_api/web/GetFolderByServerRelativeUrl('/sites/${SHAREPOINT_CRM_SITE}/${relativeUrl}')/${path}`);
-      const options = {
-        url,
-        headers: {
-          'Authorization': `Bearer ${access_token}`,
-          Accept: 'application/json',
-        },
-      };
-
-      return new Promise((resolve, reject) => {
-        Request[method](options, (error, response, body) => {
-          if (error) return;
-          const stringifiedBody = body.toString('utf-8');
-          if (response.statusCode >= 400) {
-            reject(new HttpException({
-              code: 'LOAD_FOLDER_FAILED',
-              title: 'Error loading sharepoint files',
-              detail: `Could not load file list from Sharepoint folder "${url}". ${stringifiedBody}`,
-            }, HttpStatus.NOT_FOUND));
-          }
-          const folderFiles = JSON.parse(stringifiedBody);
-
-          resolve([
-            ...(folderFiles['Files'] ? folderFiles['Files'] : []),
-            ...(folderFiles['Folders'] ? unnest(folderFiles['Folders']) : []),
-          ]);
         });
       })
     } catch (e) {

@@ -4,13 +4,13 @@ export default class WorkingPackageRoute extends Route {
   authenticationRoute = '/';
 
   async model(params) {
-    const workingPackage = await this.store.findRecord('package', params.id, {
+    const rwcdsFormPackage = await this.store.findRecord('package', params.id, {
       reload: true,
     });
 
     // manually generate a file factory
-    workingPackage.createFileQueue();
+    rwcdsFormPackage.createFileQueue();
 
-    return workingPackage;
+    return rwcdsFormPackage;
   }
 }

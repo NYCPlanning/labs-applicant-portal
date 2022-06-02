@@ -4,7 +4,6 @@ import { helper } from '@ember/component/helper';
 import COMMON_OPTIONSETS, {
   YES_NO,
   YES_NO_UNSURE,
-  YES_NO_UNSURE_SMALLINT,
   YES_NO_DONT_KNOW,
 } from '../optionsets/common';
 import APPLICANT_OPTIONSETS from '../optionsets/applicant';
@@ -60,7 +59,6 @@ const OPTIONSET_LOOKUP = {
     dcpPublicstatus: PROJECT_OPTIONSETS.DCPPUBLICSTATUS,
     dcpVisibility: PROJECT_OPTIONSETS.DCPVISIBILITY,
     statuscode: PROJECT_OPTIONSETS.STATUSCODE,
-    equityReportFields: YES_NO_UNSURE_SMALLINT,
   },
   landuseForm: {
     dcpOtherparties: YES_NO,

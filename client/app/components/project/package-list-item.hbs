@@ -57,7 +57,11 @@
       {{/if}}
     </LinkTo>
   {{/if}}
-  {{#if @package.isLUPackage}}
+  {{#if (or
+    (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))
+    (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'FILED_LU_PACKAGE'))
+    (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'POST_CERT_LU'))
+  )}}
     <LinkTo
       @route={{if (eq @package.statuscode (optionset 'package' 'statuscode' 'code' 'PACKAGE_PREPARATION')) 'landuse-form.edit' 'landuse-form.show'}}
       @model={{@package.id}}

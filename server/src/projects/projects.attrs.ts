@@ -9,16 +9,6 @@ export const PROJECT_ATTRS = [
   'dcp_projectbrief',
   '_dcp_applicant_customer_value',
   'dcp_dcp_project_dcp_projectapplicant_Project',
-
-  'dcp_nonresatleast50000',
-  'dcp_newresibuildmore50000sf',
-  'dcp_increasepermitresatleast50000sf',
-  'dcp_increasepermitnonresiatleast200000sf',
-  'dcp_decpermresiatleastfourcontigcb',
-  'dcp_decnumofhousunitsatleastfourcontigcb',
-  'dcp_contatleast100000sfzonfla',
-  'dcp_imapplyazoningtmaffectsmore5rcd',
-  'dcp_affectfourmorecb',
 ];
 
 export const MILESTONE_DATE_ATTRS = [
