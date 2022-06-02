@@ -5,7 +5,7 @@
 
 # production
 [context.master]
-  environment = { HOST="https://applicant-portal.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-production', MAINTENANCE_START='06/01/22 15:00', MAINTENANCE_END='06/01/22 16:00' }
+  environment = { HOST="https://applicant-portal.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-production', MAINTENANCE_START='06/02/22 09:00', MAINTENANCE_END='06/02/22 18:00' }
 
 # staging
 [context.staging]
