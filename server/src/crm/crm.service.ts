@@ -46,6 +46,9 @@ export class CrmService {
     try {
       const sanitizedQuery = query.replace(/^\s+|\s+$/g, '');
       const response = await this._get(`${entity}?${sanitizedQuery}`, ...options);
+      if (entity === 'dcp_artifactses') {
+        console.log('crmService get response', response);
+      }
       const {
         value: records,
         '@odata.count': count,
