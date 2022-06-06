@@ -24,6 +24,7 @@ async function bootstrap() {
     /\.planninglabs\.nyc$/,
     /\.planning\.nyc\.gov$/,
     /\.netlify\.app$/,
+    "https://qa--applicant-portal.netlify.app"
   ];
 
   // On Heroku instances, default NODE_ENV is 'production'
@@ -34,6 +35,8 @@ async function bootstrap() {
       'https://local.planninglabs.nyc:4200',
     ]);
   }
+
+  console.log(`STARTING UP WITH ALLOWED ORIGINS: ${allowedOrigins}`)
 
   const app = await NestFactory.create(AppModule, {
     cors: {
