@@ -8,6 +8,7 @@ import { LanduseFormService } from './landuse-form/landuse-form.service';
 import { PACKAGE_ATTRS } from './packages.attrs';
 import { PROJECT_ATTRS } from '../projects/projects.attrs';
 import { SharepointService } from '../sharepoint/sharepoint.service';
+import { ConfigService } from '../config/config.service';
 
 export const PACKAGE_TYPE_OPTIONSET = {
   INFORMATION_MEETING: {
@@ -78,6 +79,8 @@ export const PACKAGE_TYPE_OPTIONSET = {
 
 @Injectable()
 export class PackagesService {
+  rerFiletypeUuid = '';
+
   constructor(
     private readonly artifactService: ArtifactService,
     private readonly crmService: CrmService,
@@ -85,7 +88,10 @@ export class PackagesService {
     private readonly rwcdsFormService: RwcdsFormService,
     private readonly landuseFormService: LanduseFormService,
     private readonly sharepointService: SharepointService,
-  ) {}
+    private readonly config: ConfigService,
+  ) {
+    this.rerFiletypeUuid = this.config.get('RER_FILETYPE_UUID');
+  }
 
   // this is starting to do way more than get a package. It gets a package, gets related
   // forms, detects the form type, includes that form with the payload, includes additional
@@ -183,7 +189,7 @@ export class PackagesService {
         $filter=
           _dcp_project_value eq ${dcp_project.dcp_projectid}
           and (
-            _dcp_applicantfiletype_value eq '6f042805-0991-ec11-8d20-001dd804aa21'
+            _dcp_applicantfiletype_value eq '${this.rerFiletypeUuid}'
           )
         `,
       );
