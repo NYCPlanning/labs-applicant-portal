@@ -35,7 +35,11 @@ export class ArtifactService {
         ...(projectId ? {  'dcp_project@odata.bind': `/dcp_projects(${projectId})` } : {})
       });
     } catch (e) {
-      console.log(e);
+      throw new HttpException({
+        code: 'CREATE_RER_ERROR',
+        title: `Unable to create Racial Equity Report dcp_artifactses entity for project with UUID ${projectId}`,
+        detail: e
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     return newArtifact;
