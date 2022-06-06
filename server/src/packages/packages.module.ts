@@ -19,10 +19,11 @@ import { RwcdsFormService } from './rwcds-form/rwcds-form.service';
 import { LanduseFormService } from './landuse-form/landuse-form.service';
 import { SharepointModule } from '../sharepoint/sharepoint.module';
 import { CitypayModule } from '../citypay/citypay.module';
+import { ConfigModule } from '../config/config.module';
 import { CeqrInvoiceQuestionnairesController } from './ceqr-invoice-questionnaires/ceqr-invoice-questionnaires.controller';
 
 @Module({
-  imports: [CrmModule, SharepointModule, CitypayModule],
+  imports: [CrmModule, SharepointModule, CitypayModule, ConfigModule],
   exports: [PackagesService],
   providers: [ArtifactService, PackagesService, PasFormService, RwcdsFormService, LanduseFormService],
   controllers: [
