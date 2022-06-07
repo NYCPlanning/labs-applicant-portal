@@ -1,4 +1,4 @@
-import Model, { attr, hasMany } from '@ember-data/model';
+import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { optionset } from '../helpers/optionset';
 
 export default class ProjectModel extends Model {
@@ -24,6 +24,29 @@ export default class ProjectModel extends Model {
 
   @attr dcpProjectbrief;
 
+  @attr('number') dcpNonresatleast50000;
+
+  @attr('number') dcpNewresibuildmore50000sf;
+
+  @attr('number') dcpIncreasepermitresatleast50000sf;
+
+  @attr('number') dcpIncreasepermitnonresiatleast200000sf;
+
+  @attr('number') dcpDecpermresiatleastfourcontigcb;
+
+  @attr('number') dcpDecnumofhousunitsatleastfourcontigcb;
+
+  @attr('number') dcpContatleast100000sfzonfla;
+
+  @attr('number') dcpImapplyazoningtmaffectsmore5rcd;
+
+  @attr('number') dcpAffectfourmorecb;
+
+  // We assume there's only one. If there's >1 in crm, the backend
+  // should return the first one.
+  @belongsTo('artifact', { async: false })
+  artifact;
+
   @hasMany('package', { async: false })
   packages;
 
@@ -35,6 +58,10 @@ export default class ProjectModel extends Model {
 
   @hasMany('milestone', { async: false })
   milestones;
+
+  get isDirty () {
+    return this.hasDirtyAttributes || (this.artifact && this.artifact.isDirty);
+  }
 
   get publicStatusGeneralPublicProject() {
     const isGeneralPublic = this.dcpVisibility === optionset(['project', 'dcpVisibility', 'code', 'GENERAL_PUBLIC']);

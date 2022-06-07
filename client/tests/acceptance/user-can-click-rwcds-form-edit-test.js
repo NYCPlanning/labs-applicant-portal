@@ -122,17 +122,17 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     await fillIn('[data-test-input="dcpProjectsitedescription"]', exceedMaximum(2400, 'String'));
     assert.dom('[data-test-validation-message="dcpProjectsitedescription"').hasText('Text is too long (max 2400 characters)');
 
-    await fillIn('[data-test-input="dcpProposedprojectdevelopmentdescription"]', exceedMaximum(1800, 'String'));
-    assert.dom('[data-test-validation-message="dcpProposedprojectdevelopmentdescription"').hasText('Text is too long (max 1800 characters)');
+    await fillIn('[data-test-input="dcpProposedprojectdevelopmentdescription"]', exceedMaximum(2400, 'String'));
+    assert.dom('[data-test-validation-message="dcpProposedprojectdevelopmentdescription"').hasText('Text is too long (max 2400 characters)');
 
     await fillIn('[data-test-input="dcpBuildyear"]', exceedMaximum(4, 'Number'));
     assert.dom('[data-test-validation-message="dcpBuildyear"').hasText('Number is too long (max 4 characters)');
 
-    await fillIn('[data-test-input="dcpRationalbehindthebuildyear"]', exceedMaximum(300, 'String'));
-    assert.dom('[data-test-validation-message="dcpRationalbehindthebuildyear"').hasText('Text is too long (max 300 characters)');
+    await fillIn('[data-test-input="dcpRationalbehindthebuildyear"]', exceedMaximum(2400, 'String'));
+    assert.dom('[data-test-validation-message="dcpRationalbehindthebuildyear"').hasText('Text is too long (max 2400 characters)');
 
-    await fillIn('[data-test-input="dcpSitehistory"]', exceedMaximum(600, 'String'));
-    assert.dom('[data-test-validation-message="dcpSitehistory"').hasText('Text is too long (max 600 characters)');
+    await fillIn('[data-test-input="dcpSitehistory"]', exceedMaximum(2400, 'String'));
+    assert.dom('[data-test-validation-message="dcpSitehistory"').hasText('Text is too long (max 2400 characters)');
   });
 
   test('Validation messages display for Proposed Actions', async function(assert) {
@@ -152,8 +152,8 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     await fillIn('[data-test-input="dcpZrsectiontitle"]', exceedMaximum(100, 'String'));
     assert.dom('[data-test-validation-message="dcpZrsectiontitle"]').hasText('Text is too long (max 100 characters)');
 
-    await fillIn('[data-test-input="dcpPurposeandneedfortheproposedaction"]', exceedMaximum(1500, 'String'));
-    assert.dom('[data-test-validation-message="dcpPurposeandneedfortheproposedaction"]').hasText('Text is too long (max 1500 characters)');
+    await fillIn('[data-test-input="dcpPurposeandneedfortheproposedaction"]', exceedMaximum(2400, 'String'));
+    assert.dom('[data-test-validation-message="dcpPurposeandneedfortheproposedaction"]').hasText('Text is too long (max 2400 characters)');
 
     assert.dom('[data-test-validation-message="dcpWhichactionsfromotheragenciesaresought"]').doesNotExist();
     await click('[data-test-radio="dcpIsapplicantseekingaction"][data-test-radio-option="Yes"]');
@@ -175,29 +175,29 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     assert.equal(currentURL(), '/rwcds-form/1/edit');
 
     // no-action
-    await fillIn('[data-test-input="dcpDevelopmentsiteassumptions"]', exceedMaximum(2400, 'String'));
-    assert.dom('[data-test-validation-message="dcpDevelopmentsiteassumptions"').hasText('Text is too long (max 2400 characters)');
+    await fillIn('[data-test-input="dcpDevelopmentsiteassumptions"]', exceedMaximum(4800, 'String'));
+    assert.dom('[data-test-validation-message="dcpDevelopmentsiteassumptions"').hasText('Text is too long (max 4800 characters)');
 
-    await fillIn('[data-test-input="dcpDescribethenoactionscenario"]', exceedMaximum(1500, 'String'));
-    assert.dom('[data-test-validation-message="dcpDescribethenoactionscenario"').hasText('Text is too long (max 1500 characters)');
+    await fillIn('[data-test-input="dcpDescribethenoactionscenario"]', exceedMaximum(2400, 'String'));
+    assert.dom('[data-test-validation-message="dcpDescribethenoactionscenario"').hasText('Text is too long (max 2400 characters)');
 
     await click('[data-test-radio="dcpExistingconditions"][data-test-radio-option="No"]');
 
-    await fillIn('[data-test-input="dcpHowdidyoudeterminethenoactionscenario"]', exceedMaximum(600, 'String'));
-    assert.dom('[data-test-validation-message="dcpHowdidyoudeterminethenoactionscenario"').hasText('Text is too long (max 600 characters)');
+    await fillIn('[data-test-input="dcpHowdidyoudeterminethenoactionscenario"]', exceedMaximum(2400, 'String'));
+    assert.dom('[data-test-validation-message="dcpHowdidyoudeterminethenoactionscenario"').hasText('Text is too long (max 2400 characters)');
 
     // with-action
-    await fillIn('[data-test-input="dcpDescribethewithactionscenario"]', exceedMaximum(1500, 'String'));
-    assert.dom('[data-test-validation-message="dcpDescribethewithactionscenario"').hasText('Text is too long (max 1500 characters)');
+    await fillIn('[data-test-input="dcpDescribethewithactionscenario"]', exceedMaximum(2400, 'String'));
+    assert.dom('[data-test-validation-message="dcpDescribethewithactionscenario"').hasText('Text is too long (max 2400 characters)');
 
-    await fillIn('[data-test-input="dcpHowdidyoudeterminethiswithactionscena"]', exceedMaximum(600, 'String'));
-    assert.dom('[data-test-validation-message="dcpHowdidyoudeterminethiswithactionscena"').hasText('Text is too long (max 600 characters)');
+    await fillIn('[data-test-input="dcpHowdidyoudeterminethiswithactionscena"]', exceedMaximum(2400, 'String'));
+    assert.dom('[data-test-validation-message="dcpHowdidyoudeterminethiswithactionscena"').hasText('Text is too long (max 2400 characters)');
 
     await click('[data-test-radio="dcpIsrwcdsscenario"][data-test-radio-option="Yes"]');
 
     assert.dom('[data-test-validation-message="dcpRwcdsexplanation"]').hasText('This field is required');
 
-    await fillIn('[data-test-input="dcpRwcdsexplanation"]', exceedMaximum(50, 'String'));
-    assert.dom('[data-test-validation-message="dcpRwcdsexplanation"').hasText('Text is too long (max 50 characters)');
+    await fillIn('[data-test-input="dcpRwcdsexplanation"]', exceedMaximum(2400, 'String'));
+    assert.dom('[data-test-validation-message="dcpRwcdsexplanation"').hasText('Text is too long (max 2400 characters)');
   });
 });

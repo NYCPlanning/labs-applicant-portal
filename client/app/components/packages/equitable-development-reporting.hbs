@@ -1,0 +1,311 @@
+{{#let @form as |form|}}
+  <form.SaveableForm @model={{@package.project}} as |projectForm|>
+    <form.Section @title="Racial Equity Report" class="equitable-development-reporting">
+      <p>
+        Certain projects are subject to requirements to submit a Racial Equity Report on Housing and Opportunity under <Ui::ExternalLink href="https://www1.nyc.gov/assets/planning/download/pdf/data-maps/edde/local-law-78.pdf">Local Law 78 of 2021</Ui::ExternalLink>. The below questions are to help identify whether your project is.
+      </p>
+
+      <p class="text-weight-bold text-large">
+        I am applying for ULURP actions with an acquisition or disposition of land to facilitate a proposed:
+      </p>
+
+
+      <Ui::Question @required={{false}} as |Q|>
+        <Q.Legend>
+          Non-residential use of at least 50,000 zoning square feet floor area
+        </Q.Legend>
+
+        <projectForm.Field
+          @attribute="dcpNonresatleast50000"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{optionset 'project' 'equityReportFields' 'list'}}
+          />
+
+        </projectForm.Field>
+      </Ui::Question>
+
+      <Ui::Question @required={{false}} as |Q|>
+        <Q.Legend>
+          New, enlarged, or converted residential building of 50,000 zoning square feet or more.
+        </Q.Legend>
+
+        <p class="q-help">
+          This can include City Map Amendments that result in acquisition or disposition of land (MM), ULURP UDAAP with disposition (HA), Site selection and Acquisition (PC), Acquisition (PQ), Urban Renewal Plans (HU), Disposition of urban renewal sites (HD), and Land Fill (ML) actions.
+        </p>
+
+        <projectForm.Field
+          @attribute="dcpNewresibuildmore50000sf"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{optionset 'project' 'equityReportFields' 'list'}}
+          />
+
+        </projectForm.Field>
+      </Ui::Question>
+
+      <p class="text-weight-bold text-large">
+        The action(s) I am applying for are ULURP actions and would:
+      </p>
+
+      <Ui::Question @required={{false}} as |Q|>
+        <Q.Legend>
+          Increase permitted residential floor area by at least 50,000 zoning square feet
+          <span>
+            <FaIcon @icon="info-circle" @prefix="fas" class="ember-tooltip-target"/>
+            <EmberTooltip @event="hover" @side="bottom-end">
+              <p>
+                Proposed change in permitted zoning square feet (residential) in entire project area (includes development site and any other sites affected).
+              </p>
+              <p>
+                To get permitted zoning square feet, multiply area of all sites affected by applicable Floor Area Ratio. Zoning Handbook or Urban Renewal Plan can help with identifying floor area ratio.
+              </p>
+            </EmberTooltip>
+          </span>
+        </Q.Legend>
+
+        <p class="q-help">
+          This applies to the change in zoning square feet permitted (not the CEQR increment, and not limited to the proposed project).
+        </p>
+
+        <projectForm.Field
+          @attribute="dcpIncreasepermitresatleast50000sf"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{optionset 'project' 'equityReportFields' 'list'}}
+          />
+
+        </projectForm.Field>
+      </Ui::Question>
+
+      <Ui::Question @required={{false}} as |Q|>
+        <Q.Legend>
+          Increase permitted non-residential floor area by at least 200,000 zoning square feet
+          <span>
+            <FaIcon @icon="info-circle" @prefix="fas" class="ember-tooltip-target"/>
+            <EmberTooltip @event="hover" @side="bottom-end">
+              <p>
+                Change in permitted zoning square feet (non-residential) in entire project area (includes development site and any other sites affected).
+              </p>
+              <p>
+                To get permitted zoning square feet, multiply area of all sites affected by applicable Floor Area Ratio. Zoning Handbook or Urban Renewal Plan can help with identifying floor area ratio.
+              </p>
+            </EmberTooltip>
+          </span>
+        </Q.Legend>
+
+        <p class="q-help">
+          This applies to the change in zoning square feet permitted (not the CEQR increment, and not limited to the proposed project).
+        </p>
+
+
+        <projectForm.Field
+          @attribute="dcpIncreasepermitnonresiatleast200000sf"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{optionset 'project' 'equityReportFields' 'list'}}
+          />
+
+        </projectForm.Field>
+      </Ui::Question>
+
+      <Ui::Question @required={{false}} as |Q|>
+        <Q.Legend>
+          Decrease permitted residential floor area on at least four contiguous city blocks
+          <span>
+            <FaIcon @icon="info-circle" @prefix="fas" class="ember-tooltip-target"/>
+            <EmberTooltip @event="hover" @side="bottom-end">
+              <p class="q-help">
+                Data points needed:
+              </p>
+              <ol class="text-small" type="a">
+                <li>Number of contiguous zoning blocks affected by actions (in part and/or wholly)</li>
+                <li>Change in permitted zoning square feet (residential) in entire project area (includes development site and any other sites affected).</li>
+
+              </ol>
+              <p class="q-help">
+                To get permitted zoning square feet, multiply area of all sites affected by applicable Floor Area Ratio. Zoning Handbook or Urban Renewal Plan can help with identifying floor area ratio.
+              </p>
+            </EmberTooltip>
+          </span>
+        </Q.Legend>
+
+        <p class="q-help">
+          This applies to the change in zoning square feet permitted (not the CEQR increment, and not limited to the proposed project). They need not be complete blocks.
+        </p>
+
+        <projectForm.Field
+          @attribute="dcpDecpermresiatleastfourcontigcb"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{optionset 'project' 'equityReportFields' 'list'}}
+          />
+
+        </projectForm.Field>
+      </Ui::Question>
+
+      <Ui::Question @required={{false}} as |Q|>
+        <Q.Legend>
+          Decrease number of housing units on at least four contiguous city blocks
+          <span>
+            <FaIcon @icon="info-circle" @prefix="fas" class="ember-tooltip-target"/>
+            <EmberTooltip @event="hover" @side="bottom-end">
+              <p class="q-help">
+                Data points needed:
+              </p>
+              <ol class="text-small" type="a">
+                <li>Number of contiguous zoning blocks affected by actions (in part and/or wholly)</li>
+                <li>
+                  Proposed change in number of housing units permitted by zoning use regulations or if an Urban Renewal Plan imposes restrictions
+                </li>
+              </ol>
+            </EmberTooltip>
+          </span>
+        </Q.Legend>
+
+        <p class="q-help">
+          They need not be complete blocks. Only include the decrease of housing units where the action (usually a zoning map amendment (ZM)) changes permitted uses to restrict multifamily or two-family homes vis-à-vis what is currently allowed.
+        </p>
+
+        <projectForm.Field
+          @attribute="dcpDecnumofhousunitsatleastfourcontigcb"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{optionset 'project' 'equityReportFields' 'list'}}
+          />
+
+        </projectForm.Field>
+      </Ui::Question>
+
+      <Ui::Question @required={{false}} as |Q|>
+        <Q.Legend>
+          I am applying for a Special Permit (ZS, RS), Zoning Map Amendment (ZM) and/or a Zoning Text Amendment (ZR) in a manufacturing district that would change permitted floor area or use regulations related to a building in the project area that contains at least 100,000 square feet of zoning floor area)
+          <span>
+            <FaIcon @icon="info-circle" @prefix="fas" class="ember-tooltip-target"/>
+            <EmberTooltip @event="hover" @side="bottom-end">
+              <p class="q-help">
+                Data points needed:
+              </p>
+              <ol class="text-small" type="a">
+                <li>
+                  Change in permitted zoning square feet in portion of project area (includes development site and any other sites affected) that is within a Manufacturing District. To get permitted zoning square feet, multiply area of all sites affected by applicable Floor Area Ratio. Zoning Handbook or Urban Renewal Plan can help with identifying floor area ratio.
+                </li>
+                <li>Zoning square footage of buildings within the project area</li>
+              </ol>
+            </EmberTooltip>
+          </span>
+        </Q.Legend>
+
+        <p class="q-help">
+          Applies to all M districts except for MX (paired M/R) districts. Changes to the amount of floor area allowed for a use or to the use regulations, not just changes to use of the property, fall into this category.
+        </p>
+
+        <projectForm.Field
+          @attribute="dcpContatleast100000sfzonfla"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{optionset 'project' 'equityReportFields' 'list'}}
+          />
+
+        </projectForm.Field>
+      </Ui::Question>
+
+      <Ui::Question @required={{false}} as |Q|>
+        <Q.Legend>
+          I am applying for a Zoning Text Amendment (ZR) that affects 5 or more community districts
+        </Q.Legend>
+
+        <projectForm.Field
+          @attribute="dcpImapplyazoningtmaffectsmore5rcd"
+          @type="radio-group"
+          as |RadioGroup|
+        >
+          <RadioGroup
+            @options={{optionset 'project' 'equityReportFields' 'list'}}
+          />
+
+        </projectForm.Field>
+      </Ui::Question>
+
+      {{#if @package.isLUPackage}}
+        <Ui::Question @required={{false}} as |Q|>
+          <Q.Legend>
+            The Landmarks Preservation Commission is requesting a report from the City Planning Commission
+            on a historic district designation that affects four or more City Blocks (or portions thereof)
+          </Q.Legend>
+
+          <projectForm.Field
+            @attribute="dcpAffectfourmorecb"
+            @type="radio-group"
+            as |RadioGroup|
+          >
+            <RadioGroup
+              @options={{optionset 'project' 'equityReportFields' 'list'}}
+            />
+
+          </projectForm.Field>
+        </Ui::Question>
+      {{/if}}
+
+      {{#let (and (or
+              (in-array
+                (array projectForm.data.dcpNonresatleast50000
+                  projectForm.data.dcpNewresibuildmore50000sf
+                  projectForm.data.dcpIncreasepermitresatleast50000sf
+                  projectForm.data.dcpIncreasepermitnonresiatleast200000sf
+                  projectForm.data.dcpDecpermresiatleastfourcontigcb
+                  projectForm.data.dcpDecnumofhousunitsatleastfourcontigcb
+                  projectForm.data.dcpContatleast100000sfzonfla
+                  projectForm.data.dcpImapplyazoningtmaffectsmore5rcd)
+                (optionset 'project' 'equityReportFields' 'code' 'YES')
+              )
+              (and
+                @package.isLUPackage
+                (eq projectForm.data.dcpAffectfourmorecb (optionset 'project' 'equityReportFields' 'code' 'YES'))
+              )
+            )
+            (eq @package.statuscode (optionset 'package' 'statuscode' 'code' 'PACKAGE_PREPARATION'))
+          )
+        as |isEquityReportRequired|}}
+
+          {{#if isEquityReportRequired}}
+            <h3 class="equity-auto-response">
+              Based on your answers, you will be required to submit a Racial Equity Report before Public Review begins.
+            </h3>
+
+            {{#if @package.isLUPackage}}
+              <Packages::LanduseForm::ArtifactDocuments
+                @model={{@package}}
+              />
+            {{/if}}
+          {{/if}}
+
+          {{#unless isEquityReportRequired}}
+            <h3 class="equity-auto-response">
+              Based on your answers, you are not required to submit a Racial Equity Report. To learn more contact your Lead Planner or visit
+              <a
+                href="https://www1.nyc.gov/site/planning/data-maps/edde/edde-overview.page"
+                alt="NYC Department of City Planning Equitable Development Data Explorer overview page">
+                DCP's website
+              </a>.
+            </h3>
+          {{/unless}}
+    {{/let}}
+
+    </form.Section>
+  </form.SaveableForm>
+{{/let}}
