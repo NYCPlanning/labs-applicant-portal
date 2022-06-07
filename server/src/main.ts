@@ -10,9 +10,9 @@ function generateSSLConfiguration() {
       httpsOptions: {
         key: fs.readFileSync(__dirname + '/../ssl/server.key'),
         cert: fs.readFileSync(__dirname + '/../ssl/server.crt'),
-      }
+      },
     };
-  } catch(e) {
+  } catch (e) {
     console.log('Skipping local SSL certs: ', e);
 
     return {};
@@ -20,12 +20,23 @@ function generateSSLConfiguration() {
 }
 
 async function bootstrap() {
-  let allowedOrigins = <any[]>[/\.planninglabs\.nyc$/, /\.planning\.nyc\.gov$/];
+  let allowedOrigins = <any[]>[
+    /\.planninglabs\.nyc$/,
+    /\.planning\.nyc\.gov$/,
+    /\.netlify\.app$/,
+    "https://qa--applicant-portal.netlify.app"
+  ];
 
   // On Heroku instances, default NODE_ENV is 'production'
   if (!['production', 'staging'].includes(process.env.NODE_ENV)) {
-   allowedOrigins = allowedOrigins.concat(['http://localhost:4200', 'https://localhost:4200', 'https://local.planninglabs.nyc:4200']);
+    allowedOrigins = allowedOrigins.concat([
+      'http://localhost:4200',
+      'https://localhost:4200',
+      'https://local.planninglabs.nyc:4200',
+    ]);
   }
+
+  console.log(`STARTING UP WITH ALLOWED ORIGINS: ${allowedOrigins}`)
 
   const app = await NestFactory.create(AppModule, {
     cors: {

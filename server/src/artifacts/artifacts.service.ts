@@ -6,14 +6,20 @@ import {
 
 import { CrmService } from '../crm/crm.service';
 import { SharepointService } from '../sharepoint/sharepoint.service';
+import { ConfigService } from '../config/config.service';
 
 
 @Injectable()
 export class ArtifactService {
+  rerFiletypeUuid = '';
+
   constructor(
     private readonly crmService: CrmService,
     private readonly sharepointService: SharepointService,
-  ) {}
+    private readonly config: ConfigService,
+  ) {
+    this.rerFiletypeUuid = this.config.get('RER_FILETYPE_UUID');
+  }
 
   public async createEquityReport(projectId: string) {
     let newArtifact = null;
@@ -25,11 +31,15 @@ export class ArtifactService {
         dcp_filecreator: 717170000, // Applicant
         dcp_filecategory: 717170006, // Other
         dcp_visibility: 717170002, // Applicant Only
-        'dcp_applicantfiletype@odata.bind': "/dcp_filetypes(8e49a11b-0991-ec11-8d20-001dd804c26c)",
+        'dcp_applicantfiletype@odata.bind': `/dcp_filetypes(${this.rerFiletypeUuid})`,
         ...(projectId ? {  'dcp_project@odata.bind': `/dcp_projects(${projectId})` } : {})
       });
     } catch (e) {
-      console.log(e);
+      throw new HttpException({
+        code: 'CREATE_RER_ERROR',
+        title: `Unable to create Racial Equity Report dcp_artifactses entity for project with UUID ${projectId}`,
+        detail: e
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     return newArtifact;
