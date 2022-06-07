@@ -2,6 +2,8 @@ export const PAS_FORM_ATTRS = [
   // Project Information
   'dcp_revisedprojectname',
 
+  'dcp_applicability',
+
   // Project Geography
   'dcp_descriptionofprojectareageography',
 

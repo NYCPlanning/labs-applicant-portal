@@ -616,6 +616,15 @@
 
               <Ui::Answer @beside={{true}} as |A|>
                 <A.Prompt>
+                  If this is a follow-up Action, indicate the ULURP or CP number of previous approval
+                </A.Prompt>
+                <A.Field>
+                  {{landuseAction.dcpPreviouslyapprovedapplicationnumbers}}
+                </A.Field>
+              </Ui::Answer>
+
+              <Ui::Answer @beside={{true}} as |A|>
+                <A.Prompt>
                   Date of previous approval
                 </A.Prompt>
                 <A.Field>
@@ -1508,6 +1517,104 @@
     {{/let}}
 
     <saveableForm.Section
+      @title="Racial Equity Report"
+      @elementId="equitable-development-reporting"
+    >
+      <p>
+        The action(s) I am applying for are ULURP actions with an acquisition or disposition of land for:
+      </p>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Non-residential use of at least 50,000 sf floor area
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'project' 'equityReportFields' 'label' @package.project.dcpNonresatleast50000}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          New residential building of 50,000 sf or more
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'project' 'equityReportFields' 'label' @package.project.dcpNewresibuildmore50000sf}}
+        </A.Field>
+      </Ui::Answer>
+
+      <p>The action(s) I am applying for are ULURP actions and would:</p>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Increase permitted residential floor area by at least 50,000 square feet
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'project' 'equityReportFields' 'label' @package.project.dcpIncreasepermitresatleast50000sf}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Increase permitted non-residential floor area by at least 200,000 square feet
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'project' 'equityReportFields' 'label' @package.project.dcpIncreasepermitnonresiatleast200000sf}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Decrease permitted residential floor area on at least four contiguous city blocks
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'project' 'equityReportFields' 'label' @package.project.dcpDecpermresiatleastfourcontigcb}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Decrease number of housing units on at least four contiguous city blocks
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'project' 'equityReportFields' 'label' @package.project.dcpDecnumofhousunitsatleastfourcontigcb}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          I am applying for a Special Permit (ZS, RS), Zoning Map Amendment (ZM) and/or a Zoning Text Amendment (ZR) that would change permitted floor area or use regulations in a manufacturing district related to a building in the project area that contains at least 100,000 square feet of zoning floor area)
+        </A.Prompt>
+
+        <p class="q-help">
+          Note this can include City Map Amendments that result in acquisition or disposition of land (MM), ULURP UDAAP with disposition (HA), Site selection and Acquisition (PC), Acquisition (PQ), Urban Renewal Plans (HU), Disposition of urban renewal sites (HD), and Land Fill (ML) actions.
+        </p>
+
+        <A.Field>
+          {{optionset 'project' 'equityReportFields' 'label' @package.project.dcpContatleast100000sfzonfla}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          I am applying for a Zoning Text Amendment (ZR) that affects 5 or more community districts
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'project' 'equityReportFields' 'label' @package.project.dcpImapplyazoningtmaffectsmore5rcd}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          The Landmarks Preservation Commission is requesting a report from the City Planning Commission
+          on a historic district designation that affects four or more City Blocks (or portions thereof)
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'project' 'equityReportFields' 'label' @package.project.dcpAffectfourmorecb}}
+        </A.Field>
+      </Ui::Answer>
+    </saveableForm.Section>
+
+    <saveableForm.Section
     @title="Attached Documents" 
     @elementId="attached-documents"
     >
@@ -1532,7 +1639,7 @@
   <div class="cell large-4 sticky-sidebar">
     <saveableForm.PageNav>
 
-    <</saveableForm.PageNav>
+    </saveableForm.PageNav>
   </div>{{! end right/sidebar column }}
 </div>
 </SaveableForm>

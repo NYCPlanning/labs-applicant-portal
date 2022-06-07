@@ -8,7 +8,7 @@
       <form.Field
         @attribute="dcpDevelopmentsiteassumptions"
         @type="text-area"
-        @maxlength="2400"
+        @maxlength="4800"
         id={{Q.questionId}}
       />
 
@@ -21,9 +21,10 @@
         </p>
         <ul class="text-small">
           <li>Rationale for selecting Projected Development Sites and Potential Development Sites</li>
-          <li>Possible use conversions</li>
+          <li>Possible use conversions and expansions</li>
           <li>Expansions or sites with bulk or uses that would be legalized in the future with the Proposed Actions</li>
           <li>Other Sites that may be excluded from the analysis, if applicable (e.g., rent stabilized residential buildings, which are difficult to legally demolish due to tenant relocation requirements). Please note that dwelling unit sizes typically range between 850 – 1,000 gsf.</li>
+          <li>Site conditions that could make development difficult (e.g. legal easements, irregular lot with substandard size)</li>
         </ul>
         <p class="text-small">
           Please note that dwelling unit sizes typically range between 850 – 1,000 gsf.
@@ -64,13 +65,13 @@
               </Q.Label>
 
               <p class="q-help">
-                If Department of Building (DOB) approvals were granted that support the future No-Action Scenario assumed in the prior section, please indicate that in this summary, and if available, attach the DOB approved plans to this document.
+                If Department of Building (DOB) approvals were granted that support the future No-Action Scenario assumed in the prior section, please indicate that in this summary, and if available, attach the DOB approved plans to this document. Refer to the CEQR Technical Manual, Chapter 2, (pages 2-5, 2-6, &amp; 2-7).
               </p>
 
               <form.Field
                 @attribute="dcpHowdidyoudeterminethenoactionscenario"
                 @type="text-area"
-                @maxlength="600"
+                @maxlength="2400"
                 id={{Q.questionId}}
               />
             </Ui::Question>
@@ -83,10 +84,14 @@
         Description of No-Action scenario
       </Q.Label>
 
+      <p class="q-help">
+        Refer to the CEQR Technical Manual, Chapter 2, (pages 2-5, 2-6, &amp; 2-7).
+      </p>
+
       <form.Field
         @attribute="dcpDescribethenoactionscenario"
         @type="text-area"
-        @maxlength="1500"
+        @maxlength="2400"
         id={{Q.questionId}}
       />
 
@@ -99,7 +104,7 @@
             How all of the Development Sites(s) in question could reasonably be developed with regard to the underlying zoning district and any other applicable site controls:
             <ul>
               <li>The proposed Project’s/Development's overall gsf</li>
-              <li>All proposed land uses (in gsf per land use)</li>
+              <li>Each development site's No-Action Scenario gsf and sum of gross square footage by land use, and broken down for each development site</li>
               <li>Overall height, number of stories</li>
               <li>Floor Area Ratio (F.A.R.) and lot coverage</li>
               <li>Number of dwelling units (and number of affordable dwelling units, as well as the mechanism for providing affordable units, e.g., MIH)</li>
@@ -150,7 +155,7 @@
               <form.Field
                 @attribute="dcpRwcdsexplanation"
                 @type="text-area"
-                @maxlength="50"
+                @maxlength="2400"
                 id={{Q.questionId}}
               />
             </Ui::Question>
@@ -166,7 +171,7 @@
       <form.Field
         @attribute="dcpDescribethewithactionscenario"
         @type="text-area"
-        @maxlength="1500"
+        @maxlength="2400"
         id={{Q.questionId}}
       />
 
@@ -202,13 +207,13 @@
       </Q.Label>
 
       <p class="q-help">
-        Explain the rationale supporting the With-Action Scenario described above. If future conditions are not "maximized", please indicate why this is the case (e.g., existing site controls, site configuration).
+        Explain the rationale supporting the With-Action Scenario described above. If future conditions are not "maximized", please indicate why this is the case (e.g., existing site controls, site configuration). Refer to the CEQR Technical Manual, Chapter 2, (pages 2-7, 2-8, 2-9, 2-10).
       </p>
 
       <form.Field
         @attribute="dcpHowdidyoudeterminethiswithactionscena"
         @type="text-area"
-        @maxlength="600"
+        @maxlength="2400"
         id={{Q.questionId}}
       />
     </Ui::Question>
