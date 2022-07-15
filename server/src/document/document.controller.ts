@@ -12,6 +12,8 @@ import {
   Param,
   Get,
   Res,
+  HttpException,
+  HttpStatus
 } from '@nestjs/common';
 import { ConfigService } from '../config/config.service';
 import { CrmService } from '../crm/crm.service';
@@ -19,6 +21,8 @@ import { DocumentService } from './document.service';
 import { SharepointService } from '../sharepoint/sharepoint.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthenticateGuard } from '../authenticate.guard';
+
+const MAX_FILESIZE_BYTES = 99999999;
 
 @Controller('documents')
 export class DocumentController {
@@ -42,6 +46,10 @@ export class DocumentController {
   @UseInterceptors(FileInterceptor('file'))
   @UseGuards(AuthenticateGuard)
   async postPackageDocument(@UploadedFile() file, @Body('instanceId') instanceId, @Session() session) {
+    if (file.size > MAX_FILESIZE_BYTES) {
+      throw new HttpException('File size too large', HttpStatus.PAYLOAD_TOO_LARGE);
+    }
+
     const headers = {
       // Document will be uploaded as this user
       MSCRMCallerID: this.config.get('CRM_SERVICE_CONTACT_ID'),
@@ -78,6 +86,10 @@ export class DocumentController {
   @Post('/artifact/')
   @UseInterceptors(FileInterceptor('file'))
   async postArtifactDocument(@UploadedFile() file, @Body('instanceId') instanceId, @Session() session) {
+    if (file.size > MAX_FILESIZE_BYTES) {
+      throw new HttpException('File size too large', HttpStatus.PAYLOAD_TOO_LARGE);
+    }
+
     const headers = {
       // Document will be uploaded as this user
       MSCRMCallerID: this.config.get('CRM_SERVICE_CONTACT_ID'),
