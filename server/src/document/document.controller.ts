@@ -71,10 +71,12 @@ export class DocumentController {
     // previous revision documents and one for current revision documents).
     const folderName = `${packageName}_${instanceId.toUpperCase().replace(/-/g, '')}`;
 
+    const strippedFileName =  file.originalname.replace(/[^-a-zA-Z0-9._]/g, '-');
+
     return this.documentService.uploadDocument('dcp_package',
       instanceId,
       folderName,
-      file.originalname,
+      strippedFileName,
       encodedBase64File,
       true,
       headers
