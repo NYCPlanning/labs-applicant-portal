@@ -151,6 +151,7 @@ export class PackagesService {
         || firstPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['POST_CERT_LU'].code
       ) {
         formData = await this.fetchPackageForm(firstPackage);
+        console.log('from package.service.ts - firstPackage', firstPackage);
       }
 
       // below query filters by Racial Equity Report file type. 
@@ -177,7 +178,7 @@ export class PackagesService {
       try {
         firstArtifactWithDocuments = await this.artifactService.artifactWithDocuments(firstArtifactWithDocuments);
       } catch (e) {
-        console.log(e);
+        console.log('firstArtifactWithDocuments error', e);
       }
 
       dcp_project.artifact = firstArtifactWithDocuments;
@@ -196,7 +197,9 @@ export class PackagesService {
     } catch (e) {
       // relay lower-level exceptions, like from crmServce.get(),
       // or sharepoint document retrieval.
+      console.log('dcp_project.artifact error', e);
       if (e instanceof HttpException) {
+        console.log('dcp_project.artifact HttpException', e);
         throw e;
       } else {
         throw new HttpException({
@@ -237,7 +240,9 @@ export class PackagesService {
         detail: 'Requested package has invalid type.',
       }, HttpStatus.BAD_REQUEST);
     } catch (e) {
+      console.log('fetchPackageForm error', e);
       if (e instanceof HttpException) {
+        console.log('fetchPackageForm HttpException error', e);
         throw e;
       } else {
         throw new HttpException({

@@ -106,6 +106,12 @@ export class RwcdsFormService {
   }
 
   async find(id) {
+    try {
+
+    } catch (e) {
+      console.log('error in finding RWCDS package in RWCDS service', e);
+      throw e;
+    }
     // Because we post data from dcp_projectaction to dcp_affectedzoningresolution, we need
     // to GET the rwcdsForm twice. Once to pass the form into the syncActions method. And 
     // a second time to include the updated dcp_affectedzoningresolution relationship. 
@@ -152,7 +158,6 @@ export class RwcdsFormService {
         }
       }
     }
-
     return rwcdsForm;
   }
 
@@ -166,52 +171,74 @@ export class RwcdsFormService {
   // `ZoningResolution.dcp_zoningresolution` --> `dcp_zrsectionnumeber`
   // `dcp_zrmodifyingzrtxt` --> `dcp_modifiedzrsectionnumber`
   async syncActions(rwcdsForm) {
-    const {
-      dcp_rwcdsform_dcp_affectedzoningresolution_rwcdsform: affectedZoningResolutions,
-      _dcp_projectid_value,
-      dcp_rwcdsformid,
-    } = rwcdsForm;
-    const zrTypes = affectedZoningResolutions.map(zr => zr['dcp_zoningresolutiontype@OData.Community.Display.V1.FormattedValue']);
-    const { records: projectActions } = await this.crmService.get(`dcp_projectactions`, `
-      $filter=_dcp_project_value eq ${_dcp_projectid_value}
-      &$expand=dcp_ZoningResolution
-    `);
+    try {
+      const {
+        dcp_rwcdsform_dcp_affectedzoningresolution_rwcdsform: affectedZoningResolutions,
+        _dcp_projectid_value,
+        dcp_rwcdsformid,
+      } = rwcdsForm;
+      const zrTypes = affectedZoningResolutions.map(zr => zr['dcp_zoningresolutiontype@OData.Community.Display.V1.FormattedValue']);
+      const { records: projectActions } = await this.crmService.get(`dcp_projectactions`, `
+        $filter=_dcp_project_value eq ${_dcp_projectid_value}
+        &$expand=dcp_ZoningResolution
+      `);
+      await this.updateIncludeZoningTextAmendment(dcp_rwcdsformid, projectActions);
 
-    await this.updateIncludeZoningTextAmendment(dcp_rwcdsformid, projectActions);
+      await Promise.all(projectActions.map(action => {
+        const projectActionLabel = action['_dcp_action_value@OData.Community.Display.V1.FormattedValue'];
 
-    await Promise.all(projectActions.map(action => {
-      const projectActionLabel = action['_dcp_action_value@OData.Community.Display.V1.FormattedValue'];
+        // Lookup: dcp_affectedzoningresolutions asks for a ZR type,
+        const { label, code } = ZONING_RESOLUTION_TYPES.find((zr) => zr.label === projectActionLabel) || { label: '', code: null };
 
-      // Lookup: dcp_affectedzoningresolutions asks for a ZR type,
-      const { label, code } = ZONING_RESOLUTION_TYPES.find((zr) => zr.label === projectActionLabel) || { label: '', code: null };
-      const matchingZr = affectedZoningResolutions.find(zr => zr.dcp_zoningresolutiontype === code);
-      // action attribute that matches dcp_zrsectionnumber on dcp_affectedzoningresolution
-      const currentActionZoningResolution = action.dcp_ZoningResolution ? action.dcp_ZoningResolution.dcp_zoningresolution : null
+        if (!code) console.log(` No matching label or code in ZONING_RESOLUTION_TYPES for Project Action Label ${projectActionLabel}, the code value is: ${code ? code : "null "} and label value is ${label ? label : "an empty string"}`);
 
-      if (!label) console.log(`Could not find Affected ZR Type for ${projectActionLabel}`);
+        const matchingZr = affectedZoningResolutions.find(zr => zr.dcp_zoningresolutiontype === code);
 
-      // IF the action.ZoningResolution.dcp_zoningresolution value has changed since the initial POST,
-      // then PATCH the new value to dcp_zrsectionnumber on dcp_affectedzoningresolution entity
-      // NOTE: dcp_modifiedzrsectionnumber not included here because it's updated by applicant on rwcds-form
-      if (matchingZr && matchingZr.dcp_zrsectionnumber !== currentActionZoningResolution) {
-        return this.crmService.update('dcp_affectedzoningresolutions', matchingZr.dcp_affectedzoningresolutionid, {
-          dcp_zrsectionnumber: currentActionZoningResolution,
-        });
-      }
+        if (!matchingZr) console.log(`No matchingZr for Project Action Label ${projectActionLabel}, there are no affectedZoningResolutions for zr.dcp_zoningresolutiontype because the code value is ${code ? code : "null "}`);
 
-      // IF the zr type does not exist yet, then POST the action
-      // NOTE: Some actions that exist in dcp_projectaction SHOULD NOT be copied over.
-      // The ZONING_RESOLUTION_TYPES lookup also functions as a list of actions that SHOULD be
-      // copied over from dcp_projectaction, which is why we check that `code` exists here.
-      if (!matchingZr && code) {
-        return this.crmService.create(`dcp_affectedzoningresolutions`, {
-          'dcp_zoningresolutiontype': code, // coded value
-          'dcp_zrsectionnumber': currentActionZoningResolution,
-          'dcp_modifiedzrsectionnumber': action.dcp_zrmodifyingzrtxt,
-          'dcp_rwcdsform@odata.bind': `/dcp_pasforms(${dcp_rwcdsformid})`,
-        });
-      }
-    }));
+        // action attribute that matches dcp_zrsectionnumber on dcp_affectedzoningresolution
+        const currentActionZoningResolution = action.dcp_ZoningResolution ? action.dcp_ZoningResolution.dcp_zoningresolution : null
+
+        if (!action.dcp_ZoningResolution) console.log(`No currentActionZoningResolution for Project Action Label ${projectActionLabel}, no action.dcp_ZoningResolution found.`);
+
+        if (!label) console.log(`Could not find Affected ZR Type for ${projectActionLabel}`);
+
+        // IF the action.ZoningResolution.dcp_zoningresolution value has changed since the initial POST,
+        // then PATCH the new value to dcp_zrsectionnumber on dcp_affectedzoningresolution entity
+        // NOTE: dcp_modifiedzrsectionnumber not included here because it's updated by applicant on rwcds-form
+        if (matchingZr && matchingZr.dcp_zrsectionnumber !== currentActionZoningResolution) {
+          try {
+            return this.crmService.update('dcp_affectedzoningresolutions', matchingZr.dcp_affectedzoningresolutionid, {
+              dcp_zrsectionnumber: currentActionZoningResolution,
+            });
+          } catch (e) {
+            console.log('cannot update dcp_affectedzoningresolutions for matchingZr && matchingZr.dcp_zrsectionnumber', e);
+            throw e;
+          }
+        }
+
+        // IF the zr type does not exist yet, then POST the action
+        // NOTE: Some actions that exist in dcp_projectaction SHOULD NOT be copied over.
+        // The ZONING_RESOLUTION_TYPES lookup also functions as a list of actions that SHOULD be
+        // copied over from dcp_projectaction, which is why we check that `code` exists here.
+        if (!matchingZr && code) {
+          try {
+            return this.crmService.create(`dcp_affectedzoningresolutions`, {
+              'dcp_zoningresolutiontype': code, // coded value
+              'dcp_zrsectionnumber': currentActionZoningResolution,
+              'dcp_modifiedzrsectionnumber': action.dcp_zrmodifyingzrtxt, // text was too long, need to trim to 25 char or less. need to limit text limit in crm
+              'dcp_rwcdsform@odata.bind': `/dcp_pasforms(${dcp_rwcdsformid})`,
+            });
+          } catch (e) {
+            console.log('cannot create dcp_affectedzoningresolutions for !matchingZr && code', e);
+            throw e;
+          }
+        }
+      }));
+    } catch (e) {
+      console.log('Error in syncActions function', e);
+      throw e;
+    }
   }
 
   async updateIncludeZoningTextAmendment(dcp_rwcdsformid, projectActions) {
