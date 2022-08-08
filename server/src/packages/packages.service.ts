@@ -151,7 +151,6 @@ export class PackagesService {
         || firstPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['POST_CERT_LU'].code
       ) {
         formData = await this.fetchPackageForm(firstPackage);
-        console.log('from package.service.ts - firstPackage', firstPackage);
       }
 
       // below query filters by Racial Equity Report file type. 

@@ -107,58 +107,58 @@ export class RwcdsFormService {
 
   async find(id) {
     try {
+      // Because we post data from dcp_projectaction to dcp_affectedzoningresolution, we need
+      // to GET the rwcdsForm twice. Once to pass the form into the syncActions method. And
+      // a second time to include the updated dcp_affectedzoningresolution relationship.
+      const { records: [rwcdsFormWithoutUpdatedZr] } = await this.crmService.get(`dcp_rwcdsforms`, `
+        $filter=
+          dcp_rwcdsformid eq ${id}
+        &$expand=dcp_rwcdsform_dcp_affectedzoningresolution_rwcdsform
+      `);
 
+      // run syncActions to synchronize dcp_projectaction and dcp_affectedzoningresolution entities
+      await this.syncActions(rwcdsFormWithoutUpdatedZr);
+
+
+      // version of rwcdsForm that guarantees we have updated dcp_affectedzoningresolution
+      const { records: [rwcdsForm] } = await this.crmService.get(`dcp_rwcdsforms`, `
+        $filter=
+          dcp_rwcdsformid eq ${id}
+        &$expand=dcp_rwcdsform_dcp_affectedzoningresolution_rwcdsform
+      `);
+
+      const { _dcp_projectid_value } = rwcdsForm;
+
+      // requires info from adjacent latest pasForm
+      if (
+        rwcdsForm.dcp_projectsitedescription === null
+        || rwcdsForm.dcp_proposedprojectdevelopmentdescription === null
+      ) {
+       const latestPasForm = await this.pasFormService.getLatestPasForm(_dcp_projectid_value);
+
+       if (latestPasForm) {
+          const {
+            dcp_projectdescriptionproposedarea,
+            dcp_projectdescriptionproposeddevelopment,
+          } = latestPasForm;
+
+          // It is possible that only one of dcp_projectsitedescription
+          // or dcp_proposedprojectdevelopmentdescription is not yet
+          // edited on the RWCDs form
+          if (rwcdsForm.dcp_projectsitedescription === null) {
+            rwcdsForm.dcp_projectsitedescription = dcp_projectdescriptionproposedarea;
+          }
+
+          if (rwcdsForm.dcp_proposedprojectdevelopmentdescription === null) {
+            rwcdsForm.dcp_proposedprojectdevelopmentdescription = dcp_projectdescriptionproposeddevelopment;
+          }
+        }
+      }
+      return rwcdsForm;
     } catch (e) {
       console.log('error in finding RWCDS package in RWCDS service', e);
       throw e;
     }
-    // Because we post data from dcp_projectaction to dcp_affectedzoningresolution, we need
-    // to GET the rwcdsForm twice. Once to pass the form into the syncActions method. And 
-    // a second time to include the updated dcp_affectedzoningresolution relationship. 
-    const { records: [rwcdsFormWithoutUpdatedZr] } = await this.crmService.get(`dcp_rwcdsforms`, `
-      $filter=
-        dcp_rwcdsformid eq ${id}
-      &$expand=dcp_rwcdsform_dcp_affectedzoningresolution_rwcdsform
-    `);
-
-    // run syncActions to synchronize dcp_projectaction and dcp_affectedzoningresolution entities
-    await this.syncActions(rwcdsFormWithoutUpdatedZr);
-
-    // version of rwcdsForm that guarantees we have updated dcp_affectedzoningresolution
-    const { records: [rwcdsForm] } = await this.crmService.get(`dcp_rwcdsforms`, `
-      $filter=
-        dcp_rwcdsformid eq ${id}
-      &$expand=dcp_rwcdsform_dcp_affectedzoningresolution_rwcdsform
-    `);
-
-    const { _dcp_projectid_value } = rwcdsForm;
-
-    // requires info from adjacent latest pasForm
-    if (
-      rwcdsForm.dcp_projectsitedescription === null
-      || rwcdsForm.dcp_proposedprojectdevelopmentdescription === null
-    ) {
-     const latestPasForm = await this.pasFormService.getLatestPasForm(_dcp_projectid_value);
-
-     if (latestPasForm) {
-        const {
-          dcp_projectdescriptionproposedarea,
-          dcp_projectdescriptionproposeddevelopment,
-        } = latestPasForm;
-
-        // It is possible that only one of dcp_projectsitedescription
-        // or dcp_proposedprojectdevelopmentdescription is not yet
-        // edited on the RWCDs form
-        if (rwcdsForm.dcp_projectsitedescription === null) {
-          rwcdsForm.dcp_projectsitedescription = dcp_projectdescriptionproposedarea;
-        }
-
-        if (rwcdsForm.dcp_proposedprojectdevelopmentdescription === null) {
-          rwcdsForm.dcp_proposedprojectdevelopmentdescription = dcp_projectdescriptionproposeddevelopment;
-        }
-      }
-    }
-    return rwcdsForm;
   }
 
   // The syncActions method queries for project actions (dcp_projectaction) associated
@@ -190,16 +190,10 @@ export class RwcdsFormService {
         // Lookup: dcp_affectedzoningresolutions asks for a ZR type,
         const { label, code } = ZONING_RESOLUTION_TYPES.find((zr) => zr.label === projectActionLabel) || { label: '', code: null };
 
-        if (!code) console.log(` No matching label or code in ZONING_RESOLUTION_TYPES for Project Action Label ${projectActionLabel}, the code value is: ${code ? code : "null "} and label value is ${label ? label : "an empty string"}`);
-
         const matchingZr = affectedZoningResolutions.find(zr => zr.dcp_zoningresolutiontype === code);
-
-        if (!matchingZr) console.log(`No matchingZr for Project Action Label ${projectActionLabel}, there are no affectedZoningResolutions for zr.dcp_zoningresolutiontype because the code value is ${code ? code : "null "}`);
 
         // action attribute that matches dcp_zrsectionnumber on dcp_affectedzoningresolution
         const currentActionZoningResolution = action.dcp_ZoningResolution ? action.dcp_ZoningResolution.dcp_zoningresolution : null
-
-        if (!action.dcp_ZoningResolution) console.log(`No currentActionZoningResolution for Project Action Label ${projectActionLabel}, no action.dcp_ZoningResolution found.`);
 
         if (!label) console.log(`Could not find Affected ZR Type for ${projectActionLabel}`);
 
@@ -224,9 +218,9 @@ export class RwcdsFormService {
         if (!matchingZr && code) {
           try {
             return this.crmService.create(`dcp_affectedzoningresolutions`, {
-              'dcp_zoningresolutiontype': code, // coded value
+              'dcp_zoningresolutiontype': code,
               'dcp_zrsectionnumber': currentActionZoningResolution,
-              'dcp_modifiedzrsectionnumber': action.dcp_zrmodifyingzrtxt, // text was too long, need to trim to 25 char or less. need to limit text limit in crm
+              'dcp_modifiedzrsectionnumber': action.dcp_zrmodifyingzrtxt,
               'dcp_rwcdsform@odata.bind': `/dcp_pasforms(${dcp_rwcdsformid})`,
             });
           } catch (e) {
