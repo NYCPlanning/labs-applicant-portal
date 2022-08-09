@@ -196,9 +196,9 @@ export class PackagesService {
     } catch (e) {
       // relay lower-level exceptions, like from crmServce.get(),
       // or sharepoint document retrieval.
-      console.log('dcp_project.artifact error', e);
+      console.log('Error retrieving package in getPackage', e);
       if (e instanceof HttpException) {
-        console.log('dcp_project.artifact HttpException', e);
+        console.log('Error retrieving package in getPackage HttpException', e);
         throw e;
       } else {
         throw new HttpException({
