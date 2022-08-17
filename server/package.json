@@ -27,6 +27,7 @@
     "@nestjs/platform-express": "^7.0.0",
     "@types/utf8": "^2.1.6",
     "adal-node": "^0.2.1",
+    "axios": "^0.27.2",
     "compression": "^1.7.4",
     "dotenv": "^8.1.0",
     "inflected": "^2.0.4",
@@ -42,8 +43,7 @@
     "rxjs": "6.5.4",
     "superagent": "^5.2.2",
     "underscore": "^1.10.2",
-    "utf8": "^3.0.0",
-    "xmlbuilder2": "^3.0.2"
+    "utf8": "^3.0.0"
   },
   "resolutions": {
     "y18n": "^4.0.1",
