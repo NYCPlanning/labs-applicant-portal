@@ -11,9 +11,12 @@ import { AuthenticateGuard } from '../authenticate.guard';
 import { JsonApiDeserializePipe } from '../json-api-deserialize.pipe';
 import * as Request from 'request';
 import { pick } from 'underscore';
+import { create } from 'xmlbuilder2';
 import { first } from 'rxjs/operators';
 import axios from 'axios';
 import * as  url from 'url';
+import { v4 as uuidv4 } from 'uuid';
+import { InvoicePostbackService } from '../invoice-postback/invoice-postback.service';
 
 const DCP_PROJECTINVOICE_CODES = {
   statuscode: {
@@ -34,11 +37,12 @@ export class CityPayController {
   constructor(
     private readonly config: ConfigService,
     private readonly crmService: CrmService,
+    private readonly invoicePostbackService: InvoicePostbackService
   ) {
     this.CRM_IMPOSTER_ID = this.config.get('CRM_IMPOSTER_ID');
   }
 
-  async createRequestXML(packageId) {
+  async createRequestXML(packageId, agencyRequestID) : Promise<string> {
     const { records: [firstPackage] } = await this.crmService.get('dcp_packages', `
         $filter=dcp_packageid eq ${packageId}
         &$expand=dcp_dcp_package_dcp_projectinvoice_package(
@@ -47,8 +51,6 @@ export class CityPayController {
     );
 
     const [ firstInvoice ] = firstPackage.dcp_dcp_package_dcp_projectinvoice_package;
-
-    let getCartKey = null;
 
     const finalPayload = `<RetailPaymentRequest xmlns="${this.config.get('CITYPAY_DOMAIN')}">
           <profileID>${this.config.get('CITYPAY_USERNAME')}</profileID>
@@ -60,7 +62,7 @@ export class CityPayController {
           <postBackURL>${this.config.get('CITYPAY_POSTBACK')}</postBackURL>
           <returnFromCartURL>${this.config.get('CITYPAY_RETURN_FROM_CART')}</returnFromCartURL>
           <returnFromCheckoutURL>${this.config.get('CITYPAY_RETURN_FROM_CHECKOUT')}</returnFromCheckoutURL>
-          <agencyRequestID>${this.config.get('CITYPAY_REQUESTID')}</agencyRequestID>
+          <agencyRequestID>${agencyRequestID}</agencyRequestID>
           <retailPaymentRequestLineItems xmlns="${this.config.get('CITYPAY_DOMAIN')}">
             <agencyIdentifier>${this.config.get('CITYPAY_AGENCYID')}</agencyIdentifier>
             <displayLongDescription>${firstPackage.dcp_name}</displayLongDescription>
@@ -81,58 +83,54 @@ export class CityPayController {
         </RetailPaymentRequest>
         `
 
-    const params = new url.URLSearchParams({ saleData: finalPayload });
+    return finalPayload;
+  }
+
+  @Post('/getcartkey')
+  async getCartKey(@Body() body) {
+    const allowedAttrs = pick(body, [
+      'id'
+    ]);
+
+    const agencyRequestID = uuidv4();
+
+    const requestXML = await this.createRequestXML(allowedAttrs.id, agencyRequestID);
+
+    const params = new url.URLSearchParams({ saleData: requestXML });
 
     try {
-      getCartKey = await axios.post(`${this.config.get('PAYMENT_BASE_URL')}/${this.config.get('PAYMENT_STEP1_URL')}`, params.toString(), {
+      let citypayResponse = null;
+
+      citypayResponse = await axios.post(`${this.config.get('PAYMENT_BASE_URL')}/${this.config.get('PAYMENT_STEP1_URL')}`, params.toString(), {
         headers: {
           'content-type': 'application/x-www-form-urlencoded'
         }
       });
 
-      console.log("response: ", getCartKey);
+      const { data: xmlResponse } = citypayResponse;
+
+      const {
+        RetailPaymentResponse: {
+          receiptNumber: cartKey
+        }
+      } = create(xmlResponse).toObject() as {
+        RetailPaymentResponse: {
+          receiptNumber: string
+        }
+      };
+
+      // create new Project Invoice Postback in CRM
+      await this.invoicePostbackService.create({
+        dcp_name: agencyRequestID,
+        dcp_cartkey: cartKey,
+        dcp_postbackrequest: requestXML
+      });
+
+
+      return { CartKey: cartKey };
     } catch(e) {
       console.log("error: ", e);
     }
-
-    return getCartKey;
-  }
-
-  @Post('/getcartkey')
-  async getCartKey(@Body() body) {
-    console.log("body: ", body);
-    const allowedAttrs = pick(body, [
-      'id'
-    ]);
-
-    const saleData = this.createRequestXML(allowedAttrs.id)
-
-    const payload = { "saleData": saleData};
-
-    // const options = {
-    //   url: `${this.config.get('PAYMENT_BASE_URL')}${this.config.get('PAYMENT_STEP1_URL')}`,
-    //   headers: {
-    //     'Accept-Encoding': 'gzip, deflate',
-    //     'Content-Type': 'application/x-www-form-urlencoded',
-    //     'OData-MaxVersion': '4.0',
-    //     'OData-Version': '4.0',
-    //     Accept: 'application/json',
-    //     Prefer: 'return=representation',
-    //   },
-    //   body: payload,
-    //   encoding: null,
-    // };
-
-    // return new Promise(resolve => {
-    //   Request.get(options, (error, response, body) => {
-    //     const stringifiedBody = body.toString('utf-8');
-    //     if (response.statusCode >= 400) {
-    //       console.log('error', stringifiedBody);
-    //     }
-
-    //     resolve(JSON.parse(stringifiedBody));
-    //   });
-    // });
   }
 
   @Post('/postbackpayment')
