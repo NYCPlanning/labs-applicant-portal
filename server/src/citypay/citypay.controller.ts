@@ -16,6 +16,7 @@ import { first } from 'rxjs/operators';
 import axios from 'axios';
 import * as  url from 'url';
 import { v4 as uuidv4 } from 'uuid';
+import { InvoicesService } from '../invoices/invoices.service';
 import { InvoicePostbackService } from '../invoice-postback/invoice-postback.service';
 
 const DCP_PROJECTINVOICE_CODES = {
@@ -37,6 +38,7 @@ export class CityPayController {
   constructor(
     private readonly config: ConfigService,
     private readonly crmService: CrmService,
+    private readonly invoiceService: InvoicesService,
     private readonly invoicePostbackService: InvoicePostbackService
   ) {
     this.CRM_IMPOSTER_ID = this.config.get('CRM_IMPOSTER_ID');
@@ -50,9 +52,33 @@ export class CityPayController {
         )`
     );
 
-    const [ firstInvoice ] = firstPackage.dcp_dcp_package_dcp_projectinvoice_package;
+    const invoices = firstPackage.dcp_dcp_package_dcp_projectinvoice_package;
 
-    const finalPayload = `<RetailPaymentRequest xmlns="${this.config.get('CITYPAY_DOMAIN')}">
+    const lineItems = [];
+
+    for (let i = 0; i < invoices.length; i++) {
+      const curInvoice = invoices[i];
+
+      lineItems.push( `<retailPaymentRequestLineItems xmlns="${this.config.get('CITYPAY_DOMAIN')}">
+        <agencyIdentifier>${this.config.get('CITYPAY_AGENCYID')}-${i}</agencyIdentifier>
+        <displayLongDescription>${firstPackage.dcp_name}</displayLongDescription>
+        <displayShortDescription_1>${firstPackage.dcp_packagetype}</displayShortDescription_1>
+        <displayShortDescription_2>Filed EAS</displayShortDescription_2>
+        <displayShortDescription_3></displayShortDescription_3>
+        <flexField_1>XXXXXXXXXXX</flexField_1>
+        <flexField_2>CEQR</flexField_2>
+        <flexField_3>XXXXXXXXX_Filed EAS_1</flexField_3>
+        <itemCodeKey>900312</itemCodeKey>
+        <transactionCode>11112</transactionCode>
+        <lineItemExtraData>This is some extra line item data.</lineItemExtraData>
+        <paymentAmount>${curInvoice.dcp_grandtotal}</paymentAmount>
+        <quantity>1</quantity>
+        <sequenceNumber>${i}</sequenceNumber>
+        <unitPrice>${curInvoice.dcp_grandtotal}</unitPrice>
+      </retailPaymentRequestLineItems>`)
+    }
+
+    return `<RetailPaymentRequest xmlns="${this.config.get('CITYPAY_DOMAIN')}">
           <profileID>${this.config.get('CITYPAY_USERNAME')}</profileID>
           <profilePassword>${this.config.get('CITYPAY_PASSWORD')}</profilePassword>
           <displayTransactionDescription_1></displayTransactionDescription_1>
@@ -63,27 +89,8 @@ export class CityPayController {
           <returnFromCartURL>${this.config.get('CITYPAY_RETURN_FROM_CART')}</returnFromCartURL>
           <returnFromCheckoutURL>${this.config.get('CITYPAY_RETURN_FROM_CHECKOUT')}</returnFromCheckoutURL>
           <agencyRequestID>${agencyRequestID}</agencyRequestID>
-          <retailPaymentRequestLineItems xmlns="${this.config.get('CITYPAY_DOMAIN')}">
-            <agencyIdentifier>${this.config.get('CITYPAY_AGENCYID')}</agencyIdentifier>
-            <displayLongDescription>${firstPackage.dcp_name}</displayLongDescription>
-            <displayShortDescription_1>${firstPackage.dcp_packagetype}</displayShortDescription_1>
-            <displayShortDescription_2>Filed EAS</displayShortDescription_2>
-            <displayShortDescription_3></displayShortDescription_3>
-            <flexField_1>XXXXXXXXXXX</flexField_1>
-            <flexField_2>CEQR</flexField_2>
-            <flexField_3>XXXXXXXXX_Filed EAS_1</flexField_3>
-            <itemCodeKey>XXXXXX</itemCodeKey>
-            <transactionCode>XXXXXX</transactionCode>
-            <lineItemExtraData>This is some extra line item data.</lineItemExtraData>
-            <paymentAmount>${firstInvoice.dcp_grandtotal}</paymentAmount>
-            <quantity>1</quantity>
-            <sequenceNumber>1</sequenceNumber>
-            <unitPrice>${firstInvoice.dcp_grandtotal}</unitPrice>
-          </retailPaymentRequestLineItems>
-        </RetailPaymentRequest>
-        `
-
-    return finalPayload;
+          ${lineItems.join('')}
+        </RetailPaymentRequest>`;
   }
 
   @Post('/getcartkey')
