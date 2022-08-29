@@ -44,15 +44,8 @@ export class CityPayController {
     this.CRM_IMPOSTER_ID = this.config.get('CRM_IMPOSTER_ID');
   }
 
-  async createRequestXML(packageId, agencyRequestID) : Promise<string> {
-    const { records: [firstPackage] } = await this.crmService.get('dcp_packages', `
-        $filter=dcp_packageid eq ${packageId}
-        &$expand=dcp_dcp_package_dcp_projectinvoice_package(
-          $filter=statuscode eq ${DCP_PROJECTINVOICE_CODES.statuscode.APPROVED}
-        )`
-    );
-
-    const invoices = firstPackage.dcp_dcp_package_dcp_projectinvoice_package;
+  async createRequestXML(projectPackage, agencyRequestID) : Promise<string> {
+    const invoices = projectPackage.dcp_dcp_package_dcp_projectinvoice_package;
 
     const lineItems = [];
 
@@ -61,8 +54,8 @@ export class CityPayController {
 
       lineItems.push( `<retailPaymentRequestLineItems xmlns="${this.config.get('CITYPAY_DOMAIN')}">
         <agencyIdentifier>${this.config.get('CITYPAY_AGENCYID')}-${i}</agencyIdentifier>
-        <displayLongDescription>${firstPackage.dcp_name}</displayLongDescription>
-        <displayShortDescription_1>${firstPackage.dcp_packagetype}</displayShortDescription_1>
+        <displayLongDescription>${projectPackage.dcp_name}</displayLongDescription>
+        <displayShortDescription_1>${projectPackage.dcp_packagetype}</displayShortDescription_1>
         <displayShortDescription_2>Filed EAS</displayShortDescription_2>
         <displayShortDescription_3></displayShortDescription_3>
         <flexField_1>XXXXXXXXXXX</flexField_1>
@@ -101,7 +94,14 @@ export class CityPayController {
 
     const agencyRequestID = uuidv4();
 
-    const requestXML = await this.createRequestXML(allowedAttrs.id, agencyRequestID);
+    const { records: [firstPackage] } = await this.crmService.get('dcp_packages', `
+        $filter=dcp_packageid eq ${allowedAttrs.id}
+        &$expand=dcp_dcp_package_dcp_projectinvoice_package(
+          $filter=statuscode eq ${DCP_PROJECTINVOICE_CODES.statuscode.APPROVED}
+        )`
+    );
+
+    const requestXML = await this.createRequestXML(firstPackage, agencyRequestID);
 
     const params = new url.URLSearchParams({ saleData: requestXML });
 
@@ -126,13 +126,15 @@ export class CityPayController {
         }
       };
 
+      const associatedInvoices = firstPackage.dcp_dcp_package_dcp_projectinvoice_package.map(projectInvoice => `/dcp_projectinvoices(${projectInvoice.dcp_projectinvoiceid})`)
+
       // create new Project Invoice Postback in CRM
       await this.invoicePostbackService.create({
         dcp_name: agencyRequestID,
         dcp_cartkey: cartKey,
-        dcp_postbackrequest: requestXML
+        dcp_postbackrequest: requestXML,
+        'dcp_dcp_projectinvoicepostback_dcp_projectinvoice_cartkey@odata.bind': associatedInvoices
       });
-
 
       return { CartKey: cartKey };
     } catch(e) {
