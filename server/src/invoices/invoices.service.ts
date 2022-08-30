@@ -23,4 +23,15 @@ export class InvoicesService {
       ...invoice
     };
   }
+
+  // gets Project Invoices for given Package
+  async getPackageInvoices(packageId) {
+    const { records } = await this.crmService.get('dcp_projectinvoices', `
+      $filter=dcp_packageid eq ${packageId} and
+      and statuscode eq 2
+      and statecode eq 1
+    `)
+
+    return records;
+  }
 }
