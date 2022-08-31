@@ -85,18 +85,18 @@ export class CitypayService {
   async getCartKey(packageId) {
     const agencyRequestID = uuidv4();
 
-    const { records: [firstPackage] } = await this.crmService.get('dcp_packages', `
-        $filter=dcp_packageid eq ${packageId}
-        &$expand=dcp_dcp_package_dcp_projectinvoice_package(
-          $filter=statuscode eq ${DCP_PROJECTINVOICE_CODES.statuscode.APPROVED}
-        )`
-    );
-
-    const requestXML = await this.createRequestXML(firstPackage, agencyRequestID);
-
-    const params = new url.URLSearchParams({ saleData: requestXML });
-
     try {
+      const { records: [firstPackage] } = await this.crmService.get('dcp_packages', `
+          $filter=dcp_packageid eq ${packageId}
+          &$expand=dcp_dcp_package_dcp_projectinvoice_package(
+            $filter=statuscode eq ${DCP_PROJECTINVOICE_CODES.statuscode.APPROVED}
+          )`
+      );
+
+      const requestXML = await this.createRequestXML(firstPackage, agencyRequestID);
+
+      const params = new url.URLSearchParams({ saleData: requestXML });
+
       let citypayResponse = null;
 
       citypayResponse = await axios.post(`${this.config.get('PAYMENT_BASE_URL')}/${this.config.get('PAYMENT_STEP1_URL')}`, params.toString(), {
@@ -129,7 +129,7 @@ export class CitypayService {
 
       return cartKey;
     } catch(e) {
-      console.log("error: ", e);
+      console.log("getCartKey error: ", e);
     }
   }
 }
