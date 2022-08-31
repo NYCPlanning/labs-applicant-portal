@@ -6,6 +6,7 @@ import { InvoicesController } from './invoices.controller';
 @Module({
   imports: [CrmModule],
   providers: [InvoicesService],
-  controllers: [InvoicesController]
+  controllers: [InvoicesController],
+  exports: [InvoicesService]
 })
 export class InvoicesModule {}
