@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { CrmService } from '../crm/crm.service';
-
+import { create } from 'xmlbuilder2';
+import { pick } from 'underscore';
+import { INVOICE_POSTBACK_ATTRS } from './invoice-postback.attrs';
 
 @Injectable()
 export class InvoicePostbackService {
@@ -12,5 +14,15 @@ export class InvoicePostbackService {
     });
 
     return {};
+  }
+
+  async update(id, body) {
+    const allowedAttrs = pick(body, INVOICE_POSTBACK_ATTRS);
+
+    try {
+      const res = await this.crmService.update('dcp_projectinvoicepostbacks', id, allowedAttrs);
+    } catch (e) {
+
+    }
   }
 }
