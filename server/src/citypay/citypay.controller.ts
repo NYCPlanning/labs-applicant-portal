@@ -17,6 +17,8 @@ export class CityPayController {
   async citypayPostback(@Body() body) {
     const { paymentData } = body;
 
+    console.log(`paymentData: ${paymentData}`);
+
     const {
       PaymentPostBack: {
         agencyRequestID,
