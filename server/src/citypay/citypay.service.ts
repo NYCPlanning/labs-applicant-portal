@@ -119,6 +119,10 @@ export class CitypayService {
 
       const associatedInvoices = firstPackage.dcp_dcp_package_dcp_projectinvoice_package.map(projectInvoice => `/dcp_projectinvoices(${projectInvoice.dcp_projectinvoiceid})`)
 
+      console.log("Creating new postback... ");
+      console.log(`dcp_name: ${agencyRequestID}`);
+      console.log(`dcp_cartkey: ${cartKey}`);
+
       // create new Project Invoice Postback in CRM
       await this.invoicePostbackService.create({
         dcp_name: agencyRequestID,
