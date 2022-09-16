@@ -12,18 +12,18 @@ export class InvoicePostbackService {
   constructor(private readonly crmService: CrmService) {}
 
   async create(props) {
-    const allowedAttrs = pick(INVOICE_POSTBACK_ATTRS_GET);
+    const allowedAttrs = pick(props, INVOICE_POSTBACK_ATTRS_GET,);
 
-    const { records } = await this.crmService.create('dcp_projectinvoicepostbacks', allowedAttrs);
+    const result = await this.crmService.create('dcp_projectinvoicepostbacks', allowedAttrs);
 
-    return records;
+    return result;
   }
 
   async update(id, props) {
-    const allowedAttrs = pick(INVOICE_POSTBACK_ATTRS_UPDATE);
+    const allowedAttrs = pick(props, INVOICE_POSTBACK_ATTRS_UPDATE);
 
-    const { records } = await this.crmService.update('dcp_projectinvoicepostbacks', id, allowedAttrs);
+    const result = await this.crmService.update('dcp_projectinvoicepostbacks', id, allowedAttrs);
 
-    return records;
+    return result;
   }
 }

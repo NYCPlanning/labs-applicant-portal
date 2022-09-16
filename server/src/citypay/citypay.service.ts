@@ -122,6 +122,7 @@ export class CitypayService {
       console.log("Creating new postback... ");
       console.log(`dcp_name: ${agencyRequestID}`);
       console.log(`dcp_cartkey: ${cartKey}`);
+      console.log("associaated invoices: ", associatedInvoices);
 
       // create new Project Invoice Postback in CRM
       await this.invoicePostbackService.create({
