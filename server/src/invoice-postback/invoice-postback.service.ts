@@ -22,8 +22,14 @@ export class InvoicePostbackService {
   async update(id, props) {
     const allowedAttrs = pick(props, INVOICE_POSTBACK_ATTRS_UPDATE);
 
-    const result = await this.crmService.update('dcp_projectinvoicepostbacks', id, allowedAttrs);
+    console.log("allowedAttrs: ", allowedAttrs);
 
-    return result;
+    try {
+      const result = await this.crmService.update('dcp_projectinvoicepostbacks', id, allowedAttrs);
+    } catch(e) {
+      console.log("update failed: ", e);
+    }
+
+    return 1;
   }
 }
