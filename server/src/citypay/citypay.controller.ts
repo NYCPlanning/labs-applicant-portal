@@ -33,7 +33,8 @@ export class CityPayController {
       }
     };
 
-    console.log("request ID, cartkey: " + agencyRequestID  + " " + cartKey);
+    console.log(`Request ID: ${agencyRequestID}`)
+    console.log(`Cart Key: ${cartKey}`);
 
     const {
       records: [
