@@ -52,7 +52,7 @@ export class CityPayController {
         dcp_name: agencyRequestID,
         dcp_cartkey: cartKey,
         dcp_postbackresponse: paymentData,
-        dcp_processingtype: '717170000',
+        dcp_porcessingtype: 717170000,
     });
 
     return 1;
