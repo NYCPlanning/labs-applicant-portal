@@ -9,5 +9,5 @@ export const INVOICE_POSTBACK_ATTRS_UPDATE = [
   'dcp_name',
   'dcp_cartkey',
   'dcp_postbackresponse',
-  'dcp_processingtype'
+  'dcp_porcessingtype'
 ]
