@@ -36,7 +36,6 @@ export class CitypayService {
   ) {}
 
   async generateCityPayLink(packageId) {
-    console.log('Generating new key...');
     const newCartKey = await this.getCartKey(packageId);
 
     return this.createCartLink(newCartKey);
@@ -130,11 +129,6 @@ export class CitypayService {
       };
 
       const associatedInvoices = firstPackage.dcp_dcp_package_dcp_projectinvoice_package.map(projectInvoice => `/dcp_projectinvoices(${projectInvoice.dcp_projectinvoiceid})`)
-
-      console.log("Creating new postback... ");
-      console.log(`dcp_name: ${agencyRequestID}`);
-      console.log(`dcp_cartkey: ${cartKey}`);
-      console.log("associaated invoices: ", associatedInvoices);
 
       // create new Project Invoice Postback in CRM
       await this.invoicePostbackService.create({

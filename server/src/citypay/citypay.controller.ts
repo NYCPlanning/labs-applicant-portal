@@ -19,8 +19,6 @@ export class CityPayController {
   async citypayPostback(@Body() body) {
     const { paymentData } = body;
 
-    console.log(`paymentData: ${paymentData}`);
-
     const {
       PaymentPostBack: {
         agencyRequestID,
@@ -33,9 +31,6 @@ export class CityPayController {
       }
     };
 
-    console.log(`Request ID: ${agencyRequestID}`)
-    console.log(`Cart Key: ${cartKey}`);
-
     const {
       records: [
         {
@@ -45,8 +40,6 @@ export class CityPayController {
     } = await this.crmService.get('dcp_projectinvoicepostbacks',
       `$select=dcp_projectinvoicepostbackid&$filter=dcp_name eq ${agencyRequestID}&$top=1`
     )
-
-    console.log("postbackId: ", postbackId);
 
     this.invoicePostbackService.update(postbackId, {
         dcp_name: agencyRequestID,
