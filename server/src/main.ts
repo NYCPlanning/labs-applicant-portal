@@ -20,14 +20,17 @@ function generateSSLConfiguration() {
 }
 
 async function bootstrap() {
+  let allowedOrigins = <any[]>[/\.planninglabs\.nyc$/, /\.planning\.nyc\.gov$/];
+
   // On Heroku instances, default NODE_ENV is 'production'
-  console.log(`App NODE_ENV is: ${process.env.NODE_ENV}`)
-  console.log(`using single string origin`);
+  if (!['production', 'staging'].includes(process.env.NODE_ENV)) {
+   allowedOrigins = allowedOrigins.concat(['http://localhost:4200', 'https://localhost:4200', 'https://local.planninglabs.nyc:4200']);
+  }
 
   const app = await NestFactory.create(AppModule, {
     cors: {
-      "origin": "https://applicants.planning.nyc.gov",
-      "credentials": true,
+      origin: allowedOrigins,
+      credentials: true,
     },
 
     ...generateSSLConfiguration(),
