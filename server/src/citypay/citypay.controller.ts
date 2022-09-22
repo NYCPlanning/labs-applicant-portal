@@ -1,18 +1,22 @@
 import {
   Body,
   Controller,
+  HttpException,
+  HttpStatus,
   Post,
   Req,
   UseGuards,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { create } from 'xmlbuilder2';
+import { ConfigService } from '../config/config.service';
 import { CrmService } from '../crm/crm.service';
 import { InvoicePostbackService } from '../invoice-postback/invoice-postback.service';
 
 @Controller('citypay')
 export class CityPayController {
   constructor(
+    private readonly config: ConfigService,
     private readonly crmService: CrmService,
     private readonly invoicePostbackService: InvoicePostbackService
   ) {}
@@ -28,6 +32,12 @@ export class CityPayController {
     console.log(`request.subdomains: ${request.subdomains}`);
     console.log(`request.ip: ${request.ip}`);
     console.log(`request.originalUrl: ${request.ips}`);
+
+    const { ip } = request;
+
+    if ( ip != this.config.get('CITYPAY_IP')) {
+      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+    }
 
     const { paymentData } = body;
 
