@@ -35,7 +35,7 @@ export class CityPayController {
 
     const { ip } = request;
 
-    if ( ip != this.config.get('CITYPAY_IP')) {
+    if (!ip.includes(this.config.get('PAYMENT_IP_RANGE'))) {
       throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
     }
 
