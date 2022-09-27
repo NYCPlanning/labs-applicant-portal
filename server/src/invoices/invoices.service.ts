@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CrmService } from '../crm/crm.service';
+import { pick } from 'underscore';
 import { overwriteCodesWithLabels } from '../_utils/overwrite-codes-with-labels';
 import { INVOICE_ATTRS } from './invoices.attrs';
 
@@ -33,5 +34,17 @@ export class InvoicesService {
     `)
 
     return records;
+  }
+
+  async update(id, props) {
+    const allowedAttrs = pick(props, INVOICE_ATTRS);
+
+    try {
+      const result = await this.crmService.update('dcp_projectinvoices', id, allowedAttrs);
+    } catch(e) {
+      console.log("update failed: ", e);
+    }
+
+    return 1;
   }
 }

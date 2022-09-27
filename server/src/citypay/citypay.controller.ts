@@ -11,28 +11,76 @@ import { Request } from 'express';
 import { create } from 'xmlbuilder2';
 import { ConfigService } from '../config/config.service';
 import { CrmService } from '../crm/crm.service';
+import { InvoicesService } from '../invoices/invoices.service';
 import { InvoicePostbackService } from '../invoice-postback/invoice-postback.service';
+
+interface PostbackXML {
+  PaymentPostBack: {
+    agencyRequestID: string,
+    receiptNumber: string,
+    paidTimestamp: string,
+    tender: {
+      tenderType: string,
+    },
+    payer: {
+      firstName: string,
+      lastName: string
+      streetAddress: string,
+      city: string,
+      state: string,
+      zipPostalCode: number,
+      country: string,
+      payerEmail: string,
+      payerEmailOptin: string,
+      phoneNumber: string,
+      shipToFirstName: string,
+      shipToLastName: string,
+      shipToStreetAddress: string,
+      shipToCity: string,
+      shipToState: string,
+      shipToZipPostalCode: string,
+      shipToCountry: string,
+      shipToPhoneNumber: string
+    },
+    cart: {
+      lineItems: {
+        sequence: number,
+        amountPaid: number,
+        transactionCode: number,
+        itemCodeKey: number,
+        itemID: string,
+        flexField1: string,
+        flexField2: string,
+        flexField3: string,
+        description: string,
+        unitPrice: number,
+        quantity: number,
+        extraData: string,
+      }[],
+    }
+  }
+}
+
+function getPaymentMethod(tenderType) : number {
+  switch(tenderType) {
+    case "check": 
+      return 717170002;
+    default:
+      return 717170003;
+  }
+}
 
 @Controller('citypay')
 export class CityPayController {
   constructor(
     private readonly config: ConfigService,
     private readonly crmService: CrmService,
-    private readonly invoicePostbackService: InvoicePostbackService
+    private readonly invoiceService: InvoicesService,
+    private readonly invoicePostbackService: InvoicePostbackService,
   ) {}
-  
+
   @Post('/postbackpayment')
   async citypayPostback(@Req() request: Request, @Body() body) {
-    console.log(`Request: ${request}` );
-    console.log(`request.cookies: ${request.cookies}`);
-    console.log(`request.hostname: ${request.hostname}`);
-    console.log(`request.ip: ${request.ip}`);
-    console.log(`request.ips: ${request.ips}`);
-    console.log(`request.signedCookies: ${request.signedCookies}`);
-    console.log(`request.subdomains: ${request.subdomains}`);
-    console.log(`request.ip: ${request.ip}`);
-    console.log(`request.originalUrl: ${request.ips}`);
-
     const { ip } = request;
 
     if (!ip.includes(this.config.get('PAYMENT_IP_RANGE'))) {
@@ -44,13 +92,37 @@ export class CityPayController {
     const {
       PaymentPostBack: {
         agencyRequestID,
-        receiptNumber: cartKey
+        receiptNumber: cartKey,
+        paidTimestamp,
+        tender: {
+          tenderType,
+        },
+        payer: {
+          firstName,
+          lastName,
+          streetAddress,
+          city,
+          state: payerState,
+          zipPostalCode,
+          country
+        },
+        cart: {
+          lineItems,
+        }
       }
-    } = create(paymentData).toObject() as {
-      PaymentPostBack: {
-        agencyRequestID: string,
-        receiptNumber: string
-      }
+    } = create(paymentData).toObject() as unknown as PostbackXML;
+
+    const invoiceBody =  {
+      dcp_paymentdate: paidTimestamp,
+      dcp_paymentmethod: getPaymentMethod(tenderType),
+      dcp_cpssreceiptnumber: cartKey,
+      dcp_payername: firstName + ' ' + lastName,
+      dcp_payerstreetaddress: streetAddress,
+      dcp_payercity: city,
+      dcp_payerstate: payerState,
+      dcp_payerzippostalcode: zipPostalCode,
+      dcp_payercountry: country,
+      dcp_recordtype: "PAY"
     };
 
     const {
@@ -63,12 +135,16 @@ export class CityPayController {
       `$select=dcp_projectinvoicepostbackid&$filter=dcp_name eq ${agencyRequestID}&$top=1`
     )
 
-    this.invoicePostbackService.update(postbackId, {
+    await this.invoicePostbackService.update(postbackId, {
         dcp_name: agencyRequestID,
         dcp_cartkey: cartKey,
         dcp_postbackresponse: paymentData,
         dcp_porcessingtype: 717170000,
     });
+
+    for (let i = 0; i < lineItems.length; i += 1) {
+      await this.invoiceService.update(lineItems[i].flexField1, invoiceBody);
+    }
 
     return 1;
   }
