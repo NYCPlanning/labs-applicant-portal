@@ -43,7 +43,7 @@ interface PostbackXML {
       shipToPhoneNumber: string
     },
     cart: {
-      lineItems: {
+      lineitems: {
         sequence: number,
         amountPaid: number,
         transactionCode: number,
@@ -107,7 +107,7 @@ export class CityPayController {
           country
         },
         cart: {
-          lineItems,
+          lineitems: lineItems,
         }
       }
     } = create(paymentData).toObject() as unknown as PostbackXML;
