@@ -83,7 +83,7 @@ export class CityPayController {
   async citypayPostback(@Req() request: Request, @Body() body) {
     const { ip } = request;
 
-    if (!ip.includes(this.config.get('PAYMENT_IP_RANGE'))) {
+    if (!ip.includes(this.config.get('PAYMENT_IP_RANGE')) && process.env.NODE_ENV != 'test') {
       throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
     }
 
