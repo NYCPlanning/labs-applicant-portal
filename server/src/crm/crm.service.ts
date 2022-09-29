@@ -161,11 +161,6 @@ export class CrmService {
 
     return new Promise((resolve, reject) => {
       Request.get(options, (error, response, body) => {
-        console.log("response: ");
-        console.log(response);
-        console.log("body: ")
-        console.log(body);
-
         const encoding = response.headers['content-encoding'];
 
         if (!error && response.statusCode === 200) {
@@ -174,8 +169,6 @@ export class CrmService {
           const parseResponse = jsonText => {
             const json_string = jsonText.toString('utf-8');
 
-            console.log("json string: ");
-            console.log(json_string);
             var result = JSON.parse(json_string, this._dateReviver);
             if (result["@odata.context"].indexOf("/$entity") >= 0) {
               // retrieve single
