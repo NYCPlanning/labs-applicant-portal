@@ -143,7 +143,17 @@ export class CityPayController {
     });
 
     for (let i = 0; i < lineItems.length; i += 1) {
-      await this.invoiceService.update(lineItems[i].flexField1, invoiceBody);
+      const {
+        records: [
+          {
+            dcp_projectinvoiceid: invoiceId
+          }
+        ]
+      } = await this.crmService.get('dcp_projectinvoices',
+        `$select=dcp_projectinvoiceid&$filter=dcp_name eq ${lineItems[i].flexField1}&$top=1`
+      );
+
+      await this.invoiceService.update(invoiceId, invoiceBody);
     }
 
     return 1;

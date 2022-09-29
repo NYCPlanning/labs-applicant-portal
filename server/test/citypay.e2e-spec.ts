@@ -41,12 +41,25 @@ describe('CityPayController (e2e)', () => {
     jest.spyOn(crmService, 'get').mockImplementation(async (entity, query, ...options) => {
       console.log(`called crmService.get(${entity}, ${query}, ${options})`);
 
+      if (entity === 'dcp_projectinvoicepostbacks') {
+        return {
+          count: 1,
+          records: [
+            {
+              "@odata.etag": "W/\"299453083\"",
+              "dcp_projectinvoicepostbackid": "fb1fab0c-a33e-ed11-9daf-001dd83096d3"
+            }
+          ]
+        }
+      }
+
+
       return {
-        count: 3,
+        count: 1,
         records: [
           {
             "@odata.etag": "W/\"299453083\"",
-            "dcp_projectinvoicepostbackid": "fb1fab0c-a33e-ed11-9daf-001dd83096d3"
+            "dcp_projectinvoiceid": "fb1fab0c-a33e-ed11-9daf-001dd83096d3"
           }
         ]
       }

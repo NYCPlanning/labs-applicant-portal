@@ -37,9 +37,16 @@ export class InvoicesService {
   }
 
   async update(id, props) {
+    console.log("original props: ");
+    console.log(props);
+
     const allowedAttrs = pick(props, INVOICE_ATTRS);
 
     try {
+      console.log("updating dcp_projectinvoice with id ", id);
+      console.log("attribute are:")
+      console.log(allowedAttrs);
+
       const result = await this.crmService.update('dcp_projectinvoices', id, allowedAttrs);
     } catch(e) {
       console.log("update failed: ", e);
