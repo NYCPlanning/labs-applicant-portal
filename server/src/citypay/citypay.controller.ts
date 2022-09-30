@@ -91,13 +91,7 @@ export class CityPayController {
 
     const { paymentData } = body;
 
-    console.log("incoming XML");
-    console.log(paymentData);
-
     const paymentDataParsed = create(paymentData).toObject() as unknown as PostbackXML;
-
-    console.log("parsed payment data: ");
-    console.log(paymentDataParsed);
 
     const {
       PaymentPostBack: {
@@ -152,18 +146,11 @@ export class CityPayController {
         dcp_porcessingtype: 717170000,
     });
 
-    console.log("line items: ")
-    console.log(lineItems);
-
     if (Array.isArray(lineItems)) {
       for (let i = 0; i < lineItems.length; i += 1) {
-        console.log(`citypay ctrlr: updating invoice[i] ${lineItems[i].flexField1}`)
-
         this.invoiceService.updateByName(lineItems[i].flexField1, invoiceBody);
       }
     } else {
-      console.log(`citypay ctrlr: updating one invoice ${lineItems.flexField1}`)
-
       this.invoiceService.updateByName(lineItems.flexField1, invoiceBody);
     }
 

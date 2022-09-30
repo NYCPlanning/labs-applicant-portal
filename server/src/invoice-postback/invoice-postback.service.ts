@@ -12,7 +12,7 @@ export class InvoicePostbackService {
   constructor(private readonly crmService: CrmService) {}
 
   async create(props) {
-    const allowedAttrs = pick(props, INVOICE_POSTBACK_ATTRS_GET,);
+    const allowedAttrs = pick(props, INVOICE_POSTBACK_ATTRS_GET);
 
     const result = await this.crmService.create('dcp_projectinvoicepostbacks', allowedAttrs);
 
