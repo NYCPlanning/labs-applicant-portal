@@ -143,6 +143,7 @@ export class CityPayController {
     });
 
     for (let i = 0; i < lineItems.length; i += 1) {
+      console.log(`citypay ctrlr: updating invoice ${lineItems[i].flexField1}`)
       const {
         records: [
           {
