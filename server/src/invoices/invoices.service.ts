@@ -37,21 +37,28 @@ export class InvoicesService {
   }
 
   async update(id, props) {
-    console.log("original props: ");
-    console.log(props);
-
     const allowedAttrs = pick(props, INVOICE_ATTRS);
 
     try {
-      console.log("updating dcp_projectinvoice with id ", id);
-      console.log("attribute are:")
-      console.log(allowedAttrs);
-
       const result = await this.crmService.update('dcp_projectinvoices', id, allowedAttrs);
     } catch(e) {
       console.log("update failed: ", e);
     }
 
     return 1;
+  }
+
+  async updateByName(dcpName, props) {
+    const {
+      records: [
+        {
+          dcp_projectinvoiceid: invoiceId
+        }
+      ]
+    } = await this.crmService.get('dcp_projectinvoices',
+      `$select=dcp_projectinvoiceid&$filter=dcp_name eq ${dcpName}&$top=1`
+    );
+
+    await this.update(invoiceId, props);
   }
 }

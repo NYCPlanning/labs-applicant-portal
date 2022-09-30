@@ -14,6 +14,21 @@ import { CrmService } from '../crm/crm.service';
 import { InvoicesService } from '../invoices/invoices.service';
 import { InvoicePostbackService } from '../invoice-postback/invoice-postback.service';
 
+type LineItem = {
+  sequence: number,
+  amountPaid: number,
+  transactionCode: number,
+  itemCodeKey: number,
+  itemID: string,
+  flexField1: string,
+  flexField2: string,
+  flexField3: string,
+  description: string,
+  unitPrice: number,
+  quantity: number,
+  extraData: string,
+}
+
 interface PostbackXML {
   PaymentPostBack: {
     agencyRequestID: string,
@@ -43,20 +58,7 @@ interface PostbackXML {
       shipToPhoneNumber: string
     },
     cart: {
-      lineitems: {
-        sequence: number,
-        amountPaid: number,
-        transactionCode: number,
-        itemCodeKey: number,
-        itemID: string,
-        flexField1: string,
-        flexField2: string,
-        flexField3: string,
-        description: string,
-        unitPrice: number,
-        quantity: number,
-        extraData: string,
-      }[],
+      lineitems: LineItem[] | LineItem,
     }
   }
 }
@@ -153,19 +155,16 @@ export class CityPayController {
     console.log("line items: ")
     console.log(lineItems);
 
-    for (let i = 0; i < lineItems.length; i += 1) {
-      console.log(`citypay ctrlr: updating invoice ${lineItems[i].flexField1}`)
-      const {
-        records: [
-          {
-            dcp_projectinvoiceid: invoiceId
-          }
-        ]
-      } = await this.crmService.get('dcp_projectinvoices',
-        `$select=dcp_projectinvoiceid&$filter=dcp_name eq ${lineItems[i].flexField1}&$top=1`
-      );
+    if (Array.isArray(lineItems)) {
+      for (let i = 0; i < lineItems.length; i += 1) {
+        console.log(`citypay ctrlr: updating invoice[i] ${lineItems[i].flexField1}`)
 
-      await this.invoiceService.update(invoiceId, invoiceBody);
+        this.invoiceService.updateByName(lineItems[i].flexField1, invoiceBody);
+      }
+    } else {
+      console.log(`citypay ctrlr: updating one invoice ${lineItems.flexField1}`)
+
+      this.invoiceService.updateByName(lineItems.flexField1, invoiceBody);
     }
 
     return 1;
