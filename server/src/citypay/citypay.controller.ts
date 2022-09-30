@@ -89,6 +89,14 @@ export class CityPayController {
 
     const { paymentData } = body;
 
+    console.log("incoming XML");
+    console.log(paymentData);
+
+    const paymentDataParsed = create(paymentData).toObject() as unknown as PostbackXML;
+
+    console.log("parsed payment data: ");
+    console.log(paymentDataParsed);
+
     const {
       PaymentPostBack: {
         agencyRequestID,
@@ -110,7 +118,7 @@ export class CityPayController {
           lineitems: lineItems,
         }
       }
-    } = create(paymentData).toObject() as unknown as PostbackXML;
+    } = paymentDataParsed;
 
     const invoiceBody =  {
       dcp_paymentdate: paidTimestamp,
@@ -141,6 +149,9 @@ export class CityPayController {
         dcp_postbackresponse: paymentData,
         dcp_porcessingtype: 717170000,
     });
+
+    console.log("line items: ")
+    console.log(lineItems);
 
     for (let i = 0; i < lineItems.length; i += 1) {
       console.log(`citypay ctrlr: updating invoice ${lineItems[i].flexField1}`)
