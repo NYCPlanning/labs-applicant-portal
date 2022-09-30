@@ -142,7 +142,7 @@ export class CityPayController {
         }
       ]
     } = await this.crmService.get('dcp_projectinvoicepostbacks',
-      `$select=dcp_projectinvoicepostbackid&$filter=dcp_name eq ${agencyRequestID}&$top=1`
+      `$select=dcp_projectinvoicepostbackid&$filter=dcp_name eq '${agencyRequestID}'&$top=1`
     )
 
     await this.invoicePostbackService.update(postbackId, {

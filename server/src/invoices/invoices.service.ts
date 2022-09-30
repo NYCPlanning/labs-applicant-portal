@@ -56,7 +56,7 @@ export class InvoicesService {
         }
       ]
     } = await this.crmService.get('dcp_projectinvoices',
-      `$select=dcp_projectinvoiceid&$filter=dcp_name eq ${dcpName}&$top=1`
+      `$select=dcp_projectinvoiceid&$filter=dcp_name eq '${dcpName}'&$top=1`
     );
 
     await this.update(invoiceId, props);
