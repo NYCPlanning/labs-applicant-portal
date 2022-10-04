@@ -26,6 +26,25 @@ const DCP_PROJECTINVOICE_CODES = {
   }
 };
 
+const DCP_PACAKAGETYPE_LOOKUP = {
+  717170014: 'Information Meeting',
+  717170000: 'PAS Package',
+  717170001: 'Draft LU Package',
+  717170011: 'Filed LU Package',
+  717170015: 'Post-Cert LU',
+  717170002: 'Draft EAS',
+  717170012: 'Filed EAS',
+  717170003: 'EIS',
+  717170013: 'PDEIS',
+  717170004: 'RWCDS',
+  717170005: 'Legal',
+  717170006: 'WRP Package',
+  717170007: 'Technical Memo',
+  717170008: 'Draft Scope of Work',
+  717170009: 'Final Scope of Work',
+  717170010: 'Working Package'
+}
+
 @Injectable()
 export class CitypayService {
   constructor(
@@ -63,7 +82,7 @@ export class CitypayService {
         <agencyIdentifier>${this.config.get('CITYPAY_AGENCYID')}-${i}</agencyIdentifier>
         <displayLongDescription>${projectPackage.dcp_name}</displayLongDescription>
         <displayShortDescription_1>${shortDesc1}</displayShortDescription_1>
-        <displayShortDescription_2>${projectPackage.dcp_packagetype}</displayShortDescription_2>
+        <displayShortDescription_2>${DCP_PACAKAGETYPE_LOOKUP[projectPackage.dcp_packagetype]}</displayShortDescription_2>
         <displayShortDescription_3></displayShortDescription_3>
         <flexField_1>${curInvoice.dcp_name}</flexField_1>
         <flexField_2>${curInvoice.dcp_invoicetype}</flexField_2>
