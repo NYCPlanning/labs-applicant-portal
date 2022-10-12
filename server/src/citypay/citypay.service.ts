@@ -72,7 +72,7 @@ export class CitypayService {
     for (let i = 0; i < invoices.length; i++) {
       const curInvoice = invoices[i];
 
-      const isCEQR : boolean = curInvoice.dcp_invoicetype === DCP_PROJECTINVOICE_CODES.dcp_invoicetype.CEQR || DCP_PROJECTINVOICE_CODES.dcp_invoicetype.TYPE_II ? true : false;
+      const isCEQR : boolean = curInvoice.dcp_invoicetype === DCP_PROJECTINVOICE_CODES.dcp_invoicetype.CEQR || curInvoice.dcp_invoicetype === DCP_PROJECTINVOICE_CODES.dcp_invoicetype.TYPE_II ? true : false;
       const isLU : boolean = curInvoice.dcp_invoicetype === DCP_PROJECTINVOICE_CODES.dcp_invoicetype.LAND_USE ? true : false;
       const shortDesc1 : string =  isCEQR ? "CEQR Fees" : (isLU ? "Land Use Fees" : null);
       const itemCodeKey : number = isCEQR ?  900312 : (isLU ? 900313 : null);
