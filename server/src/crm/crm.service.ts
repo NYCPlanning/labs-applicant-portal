@@ -303,7 +303,7 @@ export class CrmService {
     })
   }
 
-  async _update(entitySetName, guid, data, headers) {
+  async _update(entitySetName, guid, data, headers): Promise<any> {
     var query = entitySetName + "(" + guid + ")";
     return this._sendPatchRequest(query, data, headers);
   }
