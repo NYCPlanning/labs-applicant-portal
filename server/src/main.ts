@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import * as fs from 'fs';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './http-exception.filter';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 // Attempt to insert SSL certs, if they exist
 function generateSSLConfiguration() {
@@ -20,14 +21,14 @@ function generateSSLConfiguration() {
 }
 
 async function bootstrap() {
-  let allowedOrigins = <any[]>[/\.planninglabs\.nyc$/, /\.planning\.nyc\.gov$/, /\.nyc\.gov$/, /\.dof\.citypay$/];
+  let allowedOrigins = <any[]>[/\.planninglabs\.nyc$/, /\.planning\.nyc\.gov$/];
 
   // On Heroku instances, default NODE_ENV is 'production'
   if (!['production', 'staging'].includes(process.env.NODE_ENV)) {
    allowedOrigins = allowedOrigins.concat(['http://localhost:4200', 'https://localhost:4200', 'https://local.planninglabs.nyc:4200']);
   }
 
-  const app = await NestFactory.create(AppModule, {
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     cors: {
       origin: allowedOrigins,
       credentials: true,
@@ -36,7 +37,10 @@ async function bootstrap() {
     ...generateSSLConfiguration(),
   });
 
+  app.enable('trust proxy');
+
   app.useGlobalFilters(new HttpExceptionFilter());
+
 
   await app.listen(process.env.PORT || 3000);
 }

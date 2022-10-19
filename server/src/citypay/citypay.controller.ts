@@ -1,22 +1,44 @@
 import {
   Body,
   Controller,
+  HttpException,
+  HttpStatus,
   Post,
+  Req,
   UseGuards,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { create } from 'xmlbuilder2';
+import { ConfigService } from '../config/config.service';
 import { CrmService } from '../crm/crm.service';
 import { InvoicePostbackService } from '../invoice-postback/invoice-postback.service';
 
 @Controller('citypay')
 export class CityPayController {
   constructor(
+    private readonly config: ConfigService,
     private readonly crmService: CrmService,
     private readonly invoicePostbackService: InvoicePostbackService
   ) {}
   
   @Post('/postbackpayment')
-  async citypayPostback(@Body() body) {
+  async citypayPostback(@Req() request: Request, @Body() body) {
+    console.log(`Request: ${request}` );
+    console.log(`request.cookies: ${request.cookies}`);
+    console.log(`request.hostname: ${request.hostname}`);
+    console.log(`request.ip: ${request.ip}`);
+    console.log(`request.ips: ${request.ips}`);
+    console.log(`request.signedCookies: ${request.signedCookies}`);
+    console.log(`request.subdomains: ${request.subdomains}`);
+    console.log(`request.ip: ${request.ip}`);
+    console.log(`request.originalUrl: ${request.ips}`);
+
+    const { ip } = request;
+
+    if (!ip.includes(this.config.get('PAYMENT_IP_RANGE'))) {
+      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+    }
+
     const { paymentData } = body;
 
     const {
