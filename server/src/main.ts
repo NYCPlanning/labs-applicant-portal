@@ -24,7 +24,10 @@ async function bootstrap() {
   let allowedOrigins = <any[]>[/\.planninglabs\.nyc$/, /\.planning\.nyc\.gov$/];
 
   // On Heroku instances, default NODE_ENV is 'production'
+  console.log(`App NODE_ENV is: ${process.env.NODE_ENV}`)
+
   if (!['production', 'staging'].includes(process.env.NODE_ENV)) {
+   console.log("Starting development server...");
    allowedOrigins = allowedOrigins.concat(['http://localhost:4200', 'https://localhost:4200', 'https://local.planninglabs.nyc:4200']);
   }
 
