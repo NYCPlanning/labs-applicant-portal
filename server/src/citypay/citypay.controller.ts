@@ -148,10 +148,16 @@ export class CityPayController {
 
     if (Array.isArray(lineItems)) {
       for (let i = 0; i < lineItems.length; i += 1) {
-        this.invoiceService.updateByName(lineItems[i].flexField1, invoiceBody);
+        this.invoiceService.updateByName(lineItems[i].flexField1, {
+          ...invoiceBody,
+          dcp_totalamountpaid: Number(lineItems[i].amountPaid)
+        });
       }
     } else {
-      this.invoiceService.updateByName(lineItems.flexField1, invoiceBody);
+      this.invoiceService.updateByName(lineItems.flexField1, {
+        ...invoiceBody,
+        dcp_totalamountpaid: Number(lineItems.amountPaid)
+      });
     }
 
     return 1;
