@@ -11,6 +11,10 @@ import { InvoicesService } from '../src/invoices/invoices.service';
 import { InvoicePostbackService } from '../src/invoice-postback/invoice-postback.service';
 import { ConfigService } from '../src/config/config.service';
 
+const mockCrmHost  = 'https://planning.nyc.gov';
+const mockApiPath = 'api';
+const mockAAuthorityHost =  'https://login.planning.nyc.gov';
+
 describe('CityPayController (e2e)', () => {
   let app;
   let restoreEnv;
@@ -21,9 +25,9 @@ describe('CityPayController (e2e)', () => {
 
   beforeAll(async () => {
     restoreEnv = mockedEnv({
-      CRM_HOST: 'https://dcppfsuat2.crm9.dynamics.com',
-      AUTHORITY_HOST_URL: 'https://login.microsoftonline.com',
-      CRM_URL_PATH: '/api/data/v9.1/',
+      CRM_HOST: mockCrmHost,
+      AUTHORITY_HOST_URL: mockAAuthorityHost,
+      CRM_URL_PATH: `/${mockApiPath}/`,
       CLIENT_ID: 'test',
       CLIENT_SECRET: 'test',
       TENANT_ID: 'test',
@@ -101,17 +105,17 @@ describe('CityPayController (e2e)', () => {
   beforeAll(async() => {
     oauthMock(nock);
 
-    const scope = nock('https://dcppfsuat2.crm9.dynamics.com');
+    const scope = nock(mockCrmHost);
 
     scope
-      .post(uri => uri.includes('api/data/v9.1'))
+      .post(uri => uri.includes(mockApiPath))
       .reply(201)
       .persist();
 
     scope
-      .get(uri => uri.includes('api/data/v9.1'))
+      .get(uri => uri.includes(mockApiPath))
       .reply(200, {
-        "@odata.context": "https://dcppfsuat2.crm9.dynamics.com/api/data/v9.1/$metadata#dcp_projectinvoicepostbacks(dcp_projectinvoicepostbackid)",
+        "@odata.context": `${mockCrmHost}/${mockApiPath}/$metadata#dcp_projectinvoicepostbacks(dcp_projectinvoicepostbackid)`,
         "@Microsoft.Dynamics.CRM.totalrecordcount": -1,
         "@Microsoft.Dynamics.CRM.totalrecordcountlimitexceeded": false,
         "@Microsoft.Dynamics.CRM.globalmetadataversion": "298165205",
