@@ -26,6 +26,9 @@ export default class InvoiceModel extends Model {
   dcpGrandtotal;
 
   @attr()
+  dcpPaymentdate;
+
+  @attr()
   lineitems;
 
   @attr()
