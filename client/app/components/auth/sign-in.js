@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import ENV from 'client/config/environment';
 
+/* eslint-disable no-unused-vars */
 const noop = async () => {};
 const MAINTENANCE_RANGE = ENV.maintenanceTimes;
 
@@ -57,9 +58,9 @@ export default class AuthSignInComponent extends Component {
   }
 
   get hasUpcomingMaintenance() {
-    const [, end] = MAINTENANCE_RANGE.map((string) => new Date(string));
+    const [start, end] = MAINTENANCE_RANGE.map((string) => new Date(string));
     const now = new Date();
 
-    return now < end;
+    return now < start;
   }
 }

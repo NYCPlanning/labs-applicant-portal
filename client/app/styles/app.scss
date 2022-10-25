@@ -175,6 +175,14 @@ $sticky-sidebar-offset: 6rem + rem-calc(20);
   color: $red-dark;
 }
 
+.maintenance-wrapper {
+  background-color: #E5E5E5;
+
+  p {
+    padding: 3px 5px 0 5px;
+  }
+}
+
 // Styling for tooltip "i" info icons and tooltip copy container
 .equitable-development-reporting {
   .ember-tooltip {
@@ -206,4 +214,3 @@ $sticky-sidebar-offset: 6rem + rem-calc(20);
     }
   }
 }
-

@@ -1,5 +1,17 @@
-{{#if this.hasUpcomingMaintenance}}
-  <h1>Please note: This portal will be down for 24 hours of system maintenance starting Monday, June 28 at 7PM.</h1>
+{{#if this.hasUpcomingMaintenance }}
+  <div class="maintenance-wrapper">
+    <p>
+      Please be advised that there will be scheduled maintenance on ZAP Search and the Applicant Portal from June 1, 2022, 3:00 pm to June 1, 2022, 4:00 pm. During that time, you will not be able to sign in to your account.  Thank you for your understanding. For help, please email <a href="mailto:ZAP_support_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a>
+    </p>
+  </div>
+{{/if}}
+
+{{#if this.isMaintenancePeriod}}
+  <div class="maintenance-wrapper">
+    <p>
+      Please be advised that we are currently performing scheduled maintenance from June 2, 2022, 9:00 pm to June 2, 2022, 6:00 pm. During this time, you will not be able to sign in to your account. Thank you for your understanding. For help, please email <a href="mailto:ZAP_support_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a>
+    </p>
+  </div>
 {{/if}}
 
 <form {{on 'submit' (fn this.startLogin this.email)}}>
@@ -12,7 +24,7 @@
       @type="text"
       @value={{this.email}}
       id={{Q.questionId}}
-      disabled={{if this.isLoginStarted "disabled"}}
+      disabled={{if (or this.isLoginStarted this.isMaintenancePeriod) "disabled"}}
     />
 
     <div class="grid-x grid-margin-x">
