@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { CrmModule } from '../crm/crm.module';
 import { InvoicesService } from './invoices.service';
+import { ConfigModule } from '../config/config.module';
 import { InvoicesController } from './invoices.controller';
 
 @Module({
-  imports: [CrmModule],
+  imports: [ConfigModule, CrmModule],
   providers: [InvoicesService],
   controllers: [InvoicesController],
   exports: [InvoicesService]

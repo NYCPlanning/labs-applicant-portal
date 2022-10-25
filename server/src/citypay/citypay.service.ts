@@ -17,8 +17,33 @@ const DCP_PROJECTINVOICE_CODES = {
   statecode: {
     ACTIVE: 0,
     INACTIVE: 1,
+  },
+
+  dcp_invoicetype: {
+    LAND_USE: 717170000,
+    CEQR: 717170001,
+    TYPE_II: 717170002
   }
 };
+
+const DCP_PACAKAGETYPE_LOOKUP = {
+  717170014: 'Information Meeting',
+  717170000: 'PAS Package',
+  717170001: 'Draft LU Package',
+  717170011: 'Filed LU Package',
+  717170015: 'Post-Cert LU',
+  717170002: 'Draft EAS',
+  717170012: 'Filed EAS',
+  717170003: 'EIS',
+  717170013: 'PDEIS',
+  717170004: 'RWCDS',
+  717170005: 'Legal',
+  717170006: 'WRP Package',
+  717170007: 'Technical Memo',
+  717170008: 'Draft Scope of Work',
+  717170009: 'Final Scope of Work',
+  717170010: 'Working Package'
+}
 
 @Injectable()
 export class CitypayService {
@@ -30,7 +55,6 @@ export class CitypayService {
   ) {}
 
   async generateCityPayLink(packageId) {
-    console.log('Generating new key...');
     const newCartKey = await this.getCartKey(packageId);
 
     return this.createCartLink(newCartKey);
@@ -48,21 +72,27 @@ export class CitypayService {
     for (let i = 0; i < invoices.length; i++) {
       const curInvoice = invoices[i];
 
+      const isCEQR : boolean = curInvoice.dcp_invoicetype === DCP_PROJECTINVOICE_CODES.dcp_invoicetype.CEQR || curInvoice.dcp_invoicetype === DCP_PROJECTINVOICE_CODES.dcp_invoicetype.TYPE_II ? true : false;
+      const isLU : boolean = curInvoice.dcp_invoicetype === DCP_PROJECTINVOICE_CODES.dcp_invoicetype.LAND_USE ? true : false;
+      const shortDesc1 : string =  isCEQR ? "CEQR Fees" : (isLU ? "Land Use Fees" : null);
+      const itemCodeKey : number = isCEQR ?  900312 : (isLU ? 900313 : null);
+      const transactionCode : number = isCEQR ?  11112 : (isLU ? 11113 : null);
+
       lineItems.push( `<retailPaymentRequestLineItems xmlns="${this.config.get('CITYPAY_DOMAIN')}">
         <agencyIdentifier>${this.config.get('CITYPAY_AGENCYID')}-${i}</agencyIdentifier>
         <displayLongDescription>${projectPackage.dcp_name}</displayLongDescription>
-        <displayShortDescription_1>${projectPackage.dcp_packagetype}</displayShortDescription_1>
-        <displayShortDescription_2>XXXXXX</displayShortDescription_2>
+        <displayShortDescription_1>${shortDesc1}</displayShortDescription_1>
+        <displayShortDescription_2>${DCP_PACAKAGETYPE_LOOKUP[projectPackage.dcp_packagetype]}</displayShortDescription_2>
         <displayShortDescription_3></displayShortDescription_3>
-        <flexField_1>XXXXXXXXXXX</flexField_1>
-        <flexField_2>XXXX</flexField_2>
-        <flexField_3>XXXXXXXXX_XXXXXXX_X</flexField_3>
-        <itemCodeKey>900312</itemCodeKey>
-        <transactionCode>11112</transactionCode>
+        <flexField_1>${curInvoice.dcp_name}</flexField_1>
+        <flexField_2>${curInvoice.dcp_invoicetype}</flexField_2>
+        <flexField_3></flexField_3>
+        <itemCodeKey>${itemCodeKey}</itemCodeKey>
+        <transactionCode>${transactionCode}</transactionCode>
         <lineItemExtraData>This is some extra line item data.</lineItemExtraData>
         <paymentAmount>${curInvoice.dcp_grandtotal}</paymentAmount>
         <quantity>1</quantity>
-        <sequenceNumber>${i}</sequenceNumber>
+        <sequenceNumber>${invoices.length}</sequenceNumber>
         <unitPrice>${curInvoice.dcp_grandtotal}</unitPrice>
       </retailPaymentRequestLineItems>`)
     }
