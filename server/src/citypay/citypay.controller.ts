@@ -67,8 +67,12 @@ function getPaymentMethod(tenderType) : number {
   switch(tenderType) {
     case "check": 
       return 717170002;
+    case "paypal":
+      return 717170006;
+    case "venmo":
+      return 717170007;
     default:
-      return 717170003;
+      return 717170003; //card
   }
 }
 
