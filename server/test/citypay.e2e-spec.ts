@@ -76,7 +76,7 @@ describe('CityPayController (e2e)', () => {
     });
 
     jest.spyOn(invoicePostbackService, 'update').mockImplementation(async (id, body) => {
-      console.log(`called invoiceService.update(${id}, ${body})`);
+      console.log(`called invoicePostbackService.update(${id}, ${body})`);
 
       return 1;
     })
@@ -266,5 +266,139 @@ describe('CityPayController (e2e)', () => {
               </tender>
           </PaymentPostBack>`
       }).expect(201, '1');
-  })
+  });
+
+  it('handles Paypal tendertypes', async() => {
+    const server = app.getHttpServer();
+
+    jest.spyOn(invoiceService, 'updateByName').mockImplementation(async (dcpName, props) => {
+      console.log(`called invoiceService.updateByName(${dcpName}, ${props})`);
+
+      expect(props.dcp_paymentmethod).toBe(717170006);
+    })
+
+    return request(server)
+      .post('/citypay/postbackpayment')
+      .type('json')
+      .send({
+        paymentData: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+          <PaymentPostBack xmlns="http://gov.nyc.dof.citypay">
+              <receiptNumber>CPY201541234</receiptNumber>
+              <agencyRequestID>11asdf30-asdf-401d-asdf-5f5b8c63asdf</agencyRequestID>
+              <paidTimestamp>2022-09-02T14:30:42.181-04:00</paidTimestamp>
+              <status>PAID</status>
+              <serviceFeeAmount>0</serviceFeeAmount>
+              <cart>
+                  <agencyIdentifier>DCPZAP</agencyIdentifier>
+                  <lineitems>
+                      <sequence>0</sequence>
+                      <amountPaid>1000.1</amountPaid>
+                      <transactionCode>11112</transactionCode>
+                      <itemCodeKey>900312</itemCodeKey>
+                      <itemID>DCPZAP-0</itemID>
+                      <flexField1>XXXXXXXXXXX</flexField1>
+                      <flexField2>XXXX</flexField2>
+                      <flexField3>XXXXXXXXX_XXXXXXX_X</flexField3>
+                      <description>2021Q0402_Filed LU Package_2</description>
+                      <unitPrice>1000.1</unitPrice>
+                      <quantity>1</quantity>
+                      <extraData>This is some extra line item data.</extraData>
+                  </lineitems>
+                  <extraData></extraData>
+              </cart>
+              <payer>
+                  <firstName>sponge</firstName>
+                  <lastName>bob</lastName>
+                  <streetAddress>ocean city</streetAddress>
+                  <city>somecity</city>
+                  <state>NY</state>
+                  <zipPostalCode>23132</zipPostalCode>
+                  <country>US</country>
+                  <payerEmail>sponge@bob.com</payerEmail>
+                  <payerEmailOptin>false</payerEmailOptin>
+                  <phoneNumber>(123) 123-1234</phoneNumber>
+                  <shipToFirstName></shipToFirstName>
+                  <shipToLastName></shipToLastName>
+                  <shipToStreetAddress></shipToStreetAddress>
+                  <shipToCity></shipToCity>
+                  <shipToState></shipToState>
+                  <shipToZipPostalCode></shipToZipPostalCode>
+                  <shipToCountry></shipToCountry>
+                  <shipToPhoneNumber></shipToPhoneNumber>
+              </payer>
+              <tender>
+                  <amount>1279.10</amount>
+                  <tenderType>paypal</tenderType>
+                  <accountNumber>4242</accountNumber>
+              </tender>
+          </PaymentPostBack>`
+      }).expect(201, '1');
+  });
+
+  it('handles Venmo tendertypes', async() => {
+    const server = app.getHttpServer();
+
+    jest.spyOn(invoiceService, 'updateByName').mockImplementation(async (dcpName, props) => {
+      console.log(`called invoiceService.updateByName(${dcpName}, ${props})`);
+
+      expect(props.dcp_paymentmethod).toBe(717170007);
+    })
+
+    return request(server)
+      .post('/citypay/postbackpayment')
+      .type('json')
+      .send({
+        paymentData: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+          <PaymentPostBack xmlns="http://gov.nyc.dof.citypay">
+              <receiptNumber>CPY201541234</receiptNumber>
+              <agencyRequestID>11asdf30-asdf-401d-asdf-5f5b8c63asdf</agencyRequestID>
+              <paidTimestamp>2022-09-02T14:30:42.181-04:00</paidTimestamp>
+              <status>PAID</status>
+              <serviceFeeAmount>0</serviceFeeAmount>
+              <cart>
+                  <agencyIdentifier>DCPZAP</agencyIdentifier>
+                  <lineitems>
+                      <sequence>0</sequence>
+                      <amountPaid>1000.1</amountPaid>
+                      <transactionCode>11112</transactionCode>
+                      <itemCodeKey>900312</itemCodeKey>
+                      <itemID>DCPZAP-0</itemID>
+                      <flexField1>XXXXXXXXXXX</flexField1>
+                      <flexField2>XXXX</flexField2>
+                      <flexField3>XXXXXXXXX_XXXXXXX_X</flexField3>
+                      <description>2021Q0402_Filed LU Package_2</description>
+                      <unitPrice>1000.1</unitPrice>
+                      <quantity>1</quantity>
+                      <extraData>This is some extra line item data.</extraData>
+                  </lineitems>
+                  <extraData></extraData>
+              </cart>
+              <payer>
+                  <firstName>sponge</firstName>
+                  <lastName>bob</lastName>
+                  <streetAddress>ocean city</streetAddress>
+                  <city>somecity</city>
+                  <state>NY</state>
+                  <zipPostalCode>23132</zipPostalCode>
+                  <country>US</country>
+                  <payerEmail>sponge@bob.com</payerEmail>
+                  <payerEmailOptin>false</payerEmailOptin>
+                  <phoneNumber>(123) 123-1234</phoneNumber>
+                  <shipToFirstName></shipToFirstName>
+                  <shipToLastName></shipToLastName>
+                  <shipToStreetAddress></shipToStreetAddress>
+                  <shipToCity></shipToCity>
+                  <shipToState></shipToState>
+                  <shipToZipPostalCode></shipToZipPostalCode>
+                  <shipToCountry></shipToCountry>
+                  <shipToPhoneNumber></shipToPhoneNumber>
+              </payer>
+              <tender>
+                  <amount>1279.10</amount>
+                  <tenderType>venmo</tenderType>
+                  <accountNumber>4242</accountNumber>
+              </tender>
+          </PaymentPostBack>`
+      }).expect(201, '1');
+  });
 });
