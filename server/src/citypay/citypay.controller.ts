@@ -11,7 +11,7 @@ import { Request } from 'express';
 import { create } from 'xmlbuilder2';
 import { ConfigService } from '../config/config.service';
 import { CrmService } from '../crm/crm.service';
-import { InvoicesService } from '../invoices/invoices.service';
+import { InvoicesService, DCP_PROJECTINVOICE_CODES } from '../invoices/invoices.service';
 import { InvoicePostbackService } from '../invoice-postback/invoice-postback.service';
 
 type LineItem = {
@@ -154,13 +154,15 @@ export class CityPayController {
       for (let i = 0; i < lineItems.length; i += 1) {
         this.invoiceService.updateByName(lineItems[i].flexField1, {
           ...invoiceBody,
-          dcp_totalamountpaid: Number(lineItems[i].amountPaid)
+          dcp_totalamountpaid: Number(lineItems[i].amountPaid),
+          statuscode: DCP_PROJECTINVOICE_CODES.statuscode.PAID
         });
       }
     } else {
       this.invoiceService.updateByName(lineItems.flexField1, {
         ...invoiceBody,
-        dcp_totalamountpaid: Number(lineItems.amountPaid)
+        dcp_totalamountpaid: Number(lineItems.amountPaid),
+        statuscode: DCP_PROJECTINVOICE_CODES.statuscode.PAID
       });
     }
 
