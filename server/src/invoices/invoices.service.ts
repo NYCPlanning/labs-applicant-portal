@@ -4,6 +4,24 @@ import { pick } from 'underscore';
 import { overwriteCodesWithLabels } from '../_utils/overwrite-codes-with-labels';
 import { INVOICE_ATTRS } from './invoices.attrs';
 
+export const DCP_PROJECTINVOICE_CODES = {
+  statuscode: {
+    APPROVED: 2,
+    PAID: 717170000,
+  },
+
+  statecode: {
+    ACTIVE: 0,
+    INACTIVE: 1,
+  },
+
+  dcp_invoicetype: {
+    LAND_USE: 717170000,
+    CEQR: 717170001,
+    TYPE_II: 717170002
+  }
+};
+
 export function joinLabels(records, attrs = INVOICE_ATTRS) {
   return overwriteCodesWithLabels(records, INVOICE_ATTRS);
 }

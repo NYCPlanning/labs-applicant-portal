@@ -1,30 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '../config/config.service';
 import { CrmService } from '../crm/crm.service';
-import { InvoicesService } from '../invoices/invoices.service';
+import { InvoicesService, DCP_PROJECTINVOICE_CODES } from '../invoices/invoices.service';
 import { InvoicePostbackService } from '../invoice-postback/invoice-postback.service';
 import axios from 'axios';
 import { create } from 'xmlbuilder2';
 import * as  url from 'url';
 import { v4 as uuidv4 } from 'uuid';
-
-const DCP_PROJECTINVOICE_CODES = {
-  statuscode: {
-    APPROVED: 2,
-    PAID: 717170000,
-  },
-
-  statecode: {
-    ACTIVE: 0,
-    INACTIVE: 1,
-  },
-
-  dcp_invoicetype: {
-    LAND_USE: 717170000,
-    CEQR: 717170001,
-    TYPE_II: 717170002
-  }
-};
 
 const DCP_PACAKAGETYPE_LOOKUP = {
   717170014: 'Information Meeting',
