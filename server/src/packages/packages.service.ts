@@ -183,7 +183,7 @@ export class PackagesService {
       try {
         firstArtifactWithDocuments = await this.artifactService.artifactWithDocuments(firstArtifactWithDocuments);
       } catch (e) {
-        console.log(e);
+        console.log('firstArtifactWithDocuments error', e);
       }
 
       dcp_project.artifact = firstArtifactWithDocuments;
@@ -202,7 +202,9 @@ export class PackagesService {
     } catch (e) {
       // relay lower-level exceptions, like from crmServce.get(),
       // or sharepoint document retrieval.
+      console.log('Error retrieving package in getPackage', e);
       if (e instanceof HttpException) {
+        console.log('Error retrieving package in getPackage HttpException', e);
         throw e;
       } else {
         throw new HttpException({
@@ -243,7 +245,9 @@ export class PackagesService {
         detail: 'Requested package has invalid type.',
       }, HttpStatus.BAD_REQUEST);
     } catch (e) {
+      console.log('fetchPackageForm error', e);
       if (e instanceof HttpException) {
+        console.log('fetchPackageForm HttpException error', e);
         throw e;
       } else {
         throw new HttpException({

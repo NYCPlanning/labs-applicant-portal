@@ -1,120 +1,147 @@
 import { Injectable } from '@nestjs/common';
-import * as puppeteer from 'puppeteer';
-import * as superagent from 'superagent';
 import { ConfigService } from '../config/config.service';
+import { CrmService } from '../crm/crm.service';
+import { InvoicesService, DCP_PROJECTINVOICE_CODES } from '../invoices/invoices.service';
+import { InvoicePostbackService } from '../invoice-postback/invoice-postback.service';
+import axios from 'axios';
+import { create } from 'xmlbuilder2';
+import * as  url from 'url';
+import { v4 as uuidv4 } from 'uuid';
 
-const MAX_RETRIES = 5;
-const MS_APPLICANT_PORTAL = {
-  COOKIE_NAME: '.AspNet.ApplicationCookie',
-  SIGN_IN_PAGE: 'https://nycdcppfs.dynamics365portals.us/SignIn',
-  TOKEN_API: 'https://nycdcppfs.dynamics365portals.us/_services/auth/token',
-  CART_KEY_API: 'https://appservicedcpzapprod.azurewebsites.net/api/payment/getcartkey',
-
-   // security measure — they sign forms with this token
-  MICROSOFT_SIGN_IN_REQUEST_TOKEN: 'https://nycdcppfs.dynamics365portals.us/_layout/tokenhtml'
+const DCP_PACAKAGETYPE_LOOKUP = {
+  717170014: 'Information Meeting',
+  717170000: 'PAS Package',
+  717170001: 'Draft LU Package',
+  717170011: 'Filed LU Package',
+  717170015: 'Post-Cert LU',
+  717170002: 'Draft EAS',
+  717170012: 'Filed EAS',
+  717170003: 'EIS',
+  717170013: 'PDEIS',
+  717170004: 'RWCDS',
+  717170005: 'Legal',
+  717170006: 'WRP Package',
+  717170007: 'Technical Memo',
+  717170008: 'Draft Scope of Work',
+  717170009: 'Final Scope of Work',
+  717170010: 'Working Package'
 }
-
-const CITY_PAY_LINK = 'https://a836-citypay.nyc.gov/citypay/retail/dcp-zap/processPreparedRetail';
 
 @Injectable()
 export class CitypayService {
   constructor(
     private readonly config: ConfigService,
+    private readonly crmService: CrmService,
+    private readonly invoiceService: InvoicesService,
+    private readonly invoicePostbackService: InvoicePostbackService
   ) {}
 
   async generateCityPayLink(packageId) {
-    console.log('Generating new key...');
-    const newCartKey = await this.generateCartKey(packageId);
+    const newCartKey = await this.getCartKey(packageId);
 
     return this.createCartLink(newCartKey);
   }
 
   private createCartLink(CartKey) {
-    return `${CITY_PAY_LINK}?cartKey=${CartKey}`;
+    return `${this.config.get('CITYPAY_CUSTOMER_LINK')}?cartKey=${CartKey}`;
   }
 
-  private async generateCartKey(packageId, retries = MAX_RETRIES) {
-    console.log('getting cart key...');
+  async createRequestXML(projectPackage, agencyRequestID) : Promise<string> {
+    const invoices = projectPackage.dcp_dcp_package_dcp_projectinvoice_package;
 
-    try {
-      const cookies = await this.stealCookies();
-      const microsoftPortalCookie = cookies.find(cookie => cookie.name === MS_APPLICANT_PORTAL.COOKIE_NAME)
+    const lineItems = [];
 
-      // fetch the JWT to sign the next req
-      const MSPortalJWTRequest = await superagent
-        .get(MS_APPLICANT_PORTAL.TOKEN_API)
-        .query({ client_id: '29f7ab7e-e9bb-4b20-9b8f-4760a8313b28' })
-        .withCredentials()
-        .set('Cookie', `${MS_APPLICANT_PORTAL.COOKIE_NAME}=${microsoftPortalCookie.value}`)
-        .set('Accept-Encoding', 'gzip, deflate, br');
-      const cartKeyJWT = MSPortalJWTRequest.body.toString();
+    for (let i = 0; i < invoices.length; i++) {
+      const curInvoice = invoices[i];
 
-      // fetch the CartKey used to identify the transaction on CityPay
-      const { body: { CartKey } } = await superagent
-        .post(MS_APPLICANT_PORTAL.CART_KEY_API)
-        .set('Authorization', `Bearer ${cartKeyJWT}`)
-        .send(`id=${packageId}`);
+      const isCEQR : boolean = curInvoice.dcp_invoicetype === DCP_PROJECTINVOICE_CODES.dcp_invoicetype.CEQR || curInvoice.dcp_invoicetype === DCP_PROJECTINVOICE_CODES.dcp_invoicetype.TYPE_II ? true : false;
+      const isLU : boolean = curInvoice.dcp_invoicetype === DCP_PROJECTINVOICE_CODES.dcp_invoicetype.LAND_USE ? true : false;
+      const shortDesc1 : string =  isCEQR ? "CEQR Fees" : (isLU ? "Land Use Fees" : null);
+      const itemCodeKey : number = isCEQR ?  900312 : (isLU ? 900313 : null);
+      const transactionCode : number = isCEQR ?  11112 : (isLU ? 11113 : null);
 
-      return CartKey;
-    } catch (e) {
-      console.log(`There was a problem: ${e.toString()}`);
-      console.log('Trying again...');
-
-      if (retries) {
-        return this.generateCartKey(packageId, retries - 1);
-      } else {
-        throw new Error(`Could not generate the key for some reason: ${e.toString()}`);
-      }
+      lineItems.push( `<retailPaymentRequestLineItems xmlns="${this.config.get('CITYPAY_DOMAIN')}">
+        <agencyIdentifier>${this.config.get('CITYPAY_AGENCYID')}-${i}</agencyIdentifier>
+        <displayLongDescription>${projectPackage.dcp_name}</displayLongDescription>
+        <displayShortDescription_1>${shortDesc1}</displayShortDescription_1>
+        <displayShortDescription_2>${DCP_PACAKAGETYPE_LOOKUP[projectPackage.dcp_packagetype]}</displayShortDescription_2>
+        <displayShortDescription_3></displayShortDescription_3>
+        <flexField_1>${curInvoice.dcp_name}</flexField_1>
+        <flexField_2>${curInvoice.dcp_invoicetype}</flexField_2>
+        <flexField_3></flexField_3>
+        <itemCodeKey>${itemCodeKey}</itemCodeKey>
+        <transactionCode>${transactionCode}</transactionCode>
+        <lineItemExtraData>This is some extra line item data.</lineItemExtraData>
+        <paymentAmount>${curInvoice.dcp_grandtotal}</paymentAmount>
+        <quantity>1</quantity>
+        <sequenceNumber>${invoices.length}</sequenceNumber>
+        <unitPrice>${curInvoice.dcp_grandtotal}</unitPrice>
+      </retailPaymentRequestLineItems>`)
     }
+
+    return `<RetailPaymentRequest xmlns="${this.config.get('CITYPAY_DOMAIN')}">
+          <profileID>${this.config.get('CITYPAY_USERNAME')}</profileID>
+          <profilePassword>${this.config.get('CITYPAY_PASSWORD')}</profilePassword>
+          <displayTransactionDescription_1></displayTransactionDescription_1>
+          <displayTransactionDescription_2></displayTransactionDescription_2>
+          <displayTransactionDescription_3></displayTransactionDescription_3>
+          <paymentExtraData></paymentExtraData>
+          <postBackURL>${this.config.get('CITYPAY_POSTBACK')}</postBackURL>
+          <returnFromCartURL>${this.config.get('CITYPAY_RETURN_FROM_CART')}</returnFromCartURL>
+          <returnFromCheckoutURL>${this.config.get('CITYPAY_RETURN_FROM_CHECKOUT')}</returnFromCheckoutURL>
+          <agencyRequestID>${agencyRequestID}</agencyRequestID>
+          ${lineItems.join('')}
+        </RetailPaymentRequest>`;
   }
 
-  // generates cookies by headless login to MS Applicant Portal
-  private async stealCookies(retries = MAX_RETRIES) {
-    const browserPromise = puppeteer.launch({ args: ['--no-sandbox'] });
+  async getCartKey(packageId) {
+    const agencyRequestID = uuidv4();
 
     try {
-      const browser = await browserPromise;
-      const page = await browser.newPage();
+      const { records: [firstPackage] } = await this.crmService.get('dcp_packages', `
+          $filter=dcp_packageid eq ${packageId}
+          &$expand=dcp_dcp_package_dcp_projectinvoice_package(
+            $filter=statuscode eq ${DCP_PROJECTINVOICE_CODES.statuscode.APPROVED}
+          )`
+      );
 
-      await page.goto(MS_APPLICANT_PORTAL.SIGN_IN_PAGE);
+      const requestXML = await this.createRequestXML(firstPackage, agencyRequestID);
 
-      // this gets dynamically inserted after a handshake event with MS
-      await page.waitForSelector('[action="/SignIn"]');
+      const params = new url.URLSearchParams({ saleData: requestXML });
 
-      // enter credentials
-      await page.type('#Username', this.config.get('MS_APPLICANT_PORTAL_USERNAME'));
+      let citypayResponse = null;
 
-      // Something changed MCS-portal side for this selector
-      // the selector changed from Password -> PasswordValue
-      // this code will try both just in case.
-      try {
-        await page.type('#Password', this.config.get('MS_APPLICANT_PORTAL_PASSWORD'));
-      } catch (e) {
-        await page.type('#PasswordValue', this.config.get('MS_APPLICANT_PORTAL_PASSWORD'));
-      }
-
-      // click signin, but await for the response with cookies
-      page.click('#submit-signin-local');
-
-      await page.waitForNavigation({
-        waitUntil: 'networkidle0'
+      citypayResponse = await axios.post(`${this.config.get('PAYMENT_BASE_URL')}/${this.config.get('PAYMENT_STEP1_URL')}`, params.toString(), {
+        headers: {
+          'content-type': 'application/x-www-form-urlencoded'
+        }
       });
 
-      return page.cookies();
-    } catch (e) {
-      console.log(`having trouble... ${e}`);
+      const { data: xmlResponse } = citypayResponse;
 
-      // can't stop, won't stop...
-      // sometimes puppeteer times out.
-      if (retries) {
-        return this.stealCookies(retries - 1);
-      } else {
-        throw new Error(`Could not create cookie, maybe something is wrong with the username/password? ${e.toString()}`);
-      }
-    } finally {
-      const browser = await browserPromise;
+      const {
+        RetailPaymentResponse: {
+          receiptNumber: cartKey
+        }
+      } = create(xmlResponse).toObject() as {
+        RetailPaymentResponse: {
+          receiptNumber: string
+        }
+      };
 
-      browser.close();
+      const associatedInvoices = firstPackage.dcp_dcp_package_dcp_projectinvoice_package.map(projectInvoice => `/dcp_projectinvoices(${projectInvoice.dcp_projectinvoiceid})`)
+
+      // create new Project Invoice Postback in CRM
+      await this.invoicePostbackService.create({
+        dcp_name: agencyRequestID,
+        dcp_cartkey: cartKey,
+        dcp_postbackrequest: requestXML,
+        'dcp_dcp_projectinvoicepostback_dcp_projectinvoice_cartkey@odata.bind': associatedInvoices
+      });
+
+      return cartKey;
+    } catch(e) {
+      console.log("getCartKey error: ", e);
     }
   }
 }
