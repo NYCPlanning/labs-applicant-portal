@@ -61,7 +61,7 @@ export class CitypayService {
       const transactionCode : number = isCEQR ?  11112 : (isLU ? 11113 : null);
 
       lineItems.push( `<retailPaymentRequestLineItems xmlns="${this.config.get('CITYPAY_DOMAIN')}">
-        <agencyIdentifier>${this.config.get('CITYPAY_AGENCYID')}-${i}</agencyIdentifier>
+        <agencyIdentifier>${this.config.get('CITYPAY_AGENCYID')}-${i+1}</agencyIdentifier>
         <displayLongDescription>${projectPackage.dcp_name}</displayLongDescription>
         <displayShortDescription_1>${shortDesc1}</displayShortDescription_1>
         <displayShortDescription_2>${DCP_PACAKAGETYPE_LOOKUP[projectPackage.dcp_packagetype]}</displayShortDescription_2>
@@ -74,7 +74,7 @@ export class CitypayService {
         <lineItemExtraData>This is some extra line item data.</lineItemExtraData>
         <paymentAmount>${curInvoice.dcp_grandtotal}</paymentAmount>
         <quantity>1</quantity>
-        <sequenceNumber>${invoices.length}</sequenceNumber>
+        <sequenceNumber>${i+1}</sequenceNumber>
         <unitPrice>${curInvoice.dcp_grandtotal}</unitPrice>
       </retailPaymentRequestLineItems>`)
     }
