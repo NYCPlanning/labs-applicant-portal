@@ -2,11 +2,13 @@ import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 import { CrmService } from '../crm/crm.service';
 import { PasFormService } from './pas-form/pas-form.service';
 import { pick } from 'underscore';
+import { ArtifactService } from '../artifacts/artifacts.service';
 import { RwcdsFormService } from './rwcds-form/rwcds-form.service';
 import { LanduseFormService } from './landuse-form/landuse-form.service';
 import { PACKAGE_ATTRS } from './packages.attrs';
 import { PROJECT_ATTRS } from '../projects/projects.attrs';
 import { SharepointService } from '../sharepoint/sharepoint.service';
+import { ConfigService } from '../config/config.service';
 
 export const PACKAGE_TYPE_OPTIONSET = {
   INFORMATION_MEETING: {
@@ -24,6 +26,10 @@ export const PACKAGE_TYPE_OPTIONSET = {
   FILED_LU_PACKAGE: {
     code: 717170011,
     label: 'Filed LU Package',
+  },
+  POST_CERT_LU: {
+    code: 717170015,
+    label: 'Post-Cert LU',
   },
   DRAFT_EAS: {
     code: 717170002,
@@ -69,17 +75,23 @@ export const PACKAGE_TYPE_OPTIONSET = {
     code: 717170010,
     label: 'Working Package',
   },
-}
+};
 
 @Injectable()
 export class PackagesService {
+  rerFiletypeUuid = '';
+
   constructor(
+    private readonly artifactService: ArtifactService,
     private readonly crmService: CrmService,
     private readonly pasFormService: PasFormService,
     private readonly rwcdsFormService: RwcdsFormService,
     private readonly landuseFormService: LanduseFormService,
     private readonly sharepointService: SharepointService,
-  ) {}
+    private readonly config: ConfigService,
+  ) {
+    this.rerFiletypeUuid = this.config.get('RER_FILETYPE_UUID');
+  }
 
   // this is starting to do way more than get a package. It gets a package, gets related
   // forms, detects the form type, includes that form with the payload, includes additional
@@ -142,9 +154,39 @@ export class PackagesService {
         || firstPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['RWCDS'].code
         || firstPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['DRAFT_LU_PACKAGE'].code
         || firstPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['FILED_LU_PACKAGE'].code
+        || firstPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['POST_CERT_LU'].code
       ) {
         formData = await this.fetchPackageForm(firstPackage);
       }
+
+      // below query filters by Racial Equity Report file type. 
+      let { records: projectArtifacts } = await this.crmService.get(
+        "dcp_artifactses",
+        `
+        $filter=
+          _dcp_project_value eq ${dcp_project.dcp_projectid}
+          and (
+            _dcp_applicantfiletype_value eq '${this.rerFiletypeUuid}'
+          )
+        `
+      );
+
+      let firstArtifactWithDocuments = {};
+
+      if (projectArtifacts.length < 1) {
+        // TODO: Consider reducing this side effecct in this GET endpoint
+        firstArtifactWithDocuments = await this.artifactService.createEquityReport(dcp_project.dcp_projectid);
+      } else {
+        firstArtifactWithDocuments = projectArtifacts[0];
+      }
+
+      try {
+        firstArtifactWithDocuments = await this.artifactService.artifactWithDocuments(firstArtifactWithDocuments);
+      } catch (e) {
+        console.log('firstArtifactWithDocuments error', e);
+      }
+
+      dcp_project.artifact = firstArtifactWithDocuments;
 
       return {
         ...firstPackage,
@@ -160,7 +202,9 @@ export class PackagesService {
     } catch (e) {
       // relay lower-level exceptions, like from crmServce.get(),
       // or sharepoint document retrieval.
+      console.log('Error retrieving package in getPackage', e);
       if (e instanceof HttpException) {
+        console.log('Error retrieving package in getPackage HttpException', e);
         throw e;
       } else {
         throw new HttpException({
@@ -188,7 +232,8 @@ export class PackagesService {
       }
 
       if (dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['DRAFT_LU_PACKAGE'].code
-      || dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['FILED_LU_PACKAGE'].code) {
+      || dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['FILED_LU_PACKAGE'].code
+      || dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['POST_CERT_LU'].code) {
         return {
           dcp_landuse: await this.landuseFormService.find(dcpPackage._dcp_landuseapplication_value)
         };
@@ -200,7 +245,9 @@ export class PackagesService {
         detail: 'Requested package has invalid type.',
       }, HttpStatus.BAD_REQUEST);
     } catch (e) {
+      console.log('fetchPackageForm error', e);
       if (e instanceof HttpException) {
+        console.log('fetchPackageForm HttpException error', e);
         throw e;
       } else {
         throw new HttpException({

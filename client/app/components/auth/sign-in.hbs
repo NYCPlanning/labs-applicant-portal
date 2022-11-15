@@ -1,3 +1,19 @@
+{{#if this.hasUpcomingMaintenance }}
+  <div class="maintenance-wrapper">
+    <p>
+      Please be advised that there will be scheduled maintenance on ZAP Search and the Applicant Portal from Nov 14, 2022, 10:00 pm to Nov 15, 2022, 1:00 pm. During that time, you will not be able to sign in to your account.  Thank you for your understanding. For help, please email <a href="mailto:ZAP_support_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a>
+    </p>
+  </div>
+{{/if}}
+
+{{#if this.isMaintenancePeriod}}
+  <div class="maintenance-wrapper">
+    <p>
+      Please be advised that we are currently performing scheduled maintenance from Nov 14, 2022, 10:00 pm to Nov 15, 2022, 1:00 pm. During this time, you will not be able to sign in to your account. Thank you for your understanding. For help, please email <a href="mailto:ZAP_support_DL@planning.nyc.gov">ZAP_feedback_DL@planning.nyc.gov</a>
+    </p>
+  </div>
+{{/if}}
+
 <form {{on 'submit' (fn this.startLogin this.email)}}>
   <Ui::Question as |Q|>
     <Q.Label>
@@ -8,7 +24,7 @@
       @type="text"
       @value={{this.email}}
       id={{Q.questionId}}
-      disabled={{if this.isLoginStarted "disabled"}}
+      disabled={{if (or this.isLoginStarted this.isMaintenancePeriod) "disabled"}}
     />
 
     <div class="grid-x grid-margin-x">
@@ -17,7 +33,7 @@
           class="button secondary expanded text-weight-bold"
           type="submit"
           data-test-sign-in="next"
-          disabled={{if this.isLoginStarted "disabled"}}
+          disabled={{if (or this.isLoginStarted this.isMaintenancePeriod) "disabled"}}
         >
           {{#if this.isLoginStarted}}
             <FaIcon @icon="spinner" @spin={{true}} @pulse={{true}} class="small-margin-right" />

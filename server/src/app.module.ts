@@ -15,6 +15,7 @@ import { CitypayService } from './citypay/citypay.service';
 import { CitypayModule } from './citypay/citypay.module';
 import { ZoningResolutionsModule } from './zoning-resolutions/zoning-resolutions.module';
 import { InvoicesModule } from './invoices/invoices.module';
+import { InvoicePostbackModule } from './invoice-postback/invoice-postback.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { InvoicesModule } from './invoices/invoices.module';
     CitypayModule,
     ZoningResolutionsModule,
     InvoicesModule,
+    InvoicePostbackModule
   ],
   controllers: [AppController],
   providers: [CitypayService],

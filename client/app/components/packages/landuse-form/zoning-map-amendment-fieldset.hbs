@@ -23,25 +23,17 @@
 
 
     <Ui::Question
-    as |dcpExistingzoningdistrictvalueQ|>
-      <dcpExistingzoningdistrictvalueQ.Label
-        data-test-applicant-state-dropdown
-      >
+    as |dcpExistingzoningdistrictvaluenewQ|>
+      <dcpExistingzoningdistrictvaluenewQ.Label>
         Existing Zoning District(s)
-      </dcpExistingzoningdistrictvalueQ.Label>
+      </dcpExistingzoningdistrictvaluenewQ.Label>
       
-      <label data-test-dcpExistingzoningdistrictvalue-dropdown>
-        <PowerSelect
-          supportsDataTestProperties={{true}}
-          @selected={{form.data.dcpExistingzoningdistrictvalue}}
-          @placeholder="-- select --"
-          @options={{map-by 'code' (optionset 'zoningMapChange' 'dcpExistingzoningdistrictvalue' 'list')}}
-          @onChange={{fn (mut form.data.dcpExistingzoningdistrictvalue)}}
-          @allowClear={{true}}
-        as |dcpExistingzoningdistrictvalue|>
-          {{optionset 'zoningMapChange' 'dcpExistingzoningdistrictvalue' 'label' dcpExistingzoningdistrictvalue}}
-        </PowerSelect>
-      </label>
+      <form.Field
+        @attribute="dcpExistingzoningdistrictvaluenew"
+        @maxlength="30"
+        @showCounter={{true}}
+        id={{dcpExistingzoningdistrictvaluenewQ.id}}
+      />
     </Ui::Question>
 
     <Ui::Question

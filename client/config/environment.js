@@ -7,6 +7,7 @@ module.exports = function(environment) {
     host: getHost(environment),
     NYCIDDomain: getOAuthDomain(environment),
     NYCIDLocation: getOAuthLoginEndpoint(environment),
+    maintenanceTimes: getMaintenanceTimes(),
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -33,7 +34,7 @@ module.exports = function(environment) {
     'labs-search': {
       host: 'https://search-api-production.herokuapp.com',
       route: 'search',
-      helpers: ['geosearch', 'bbl'],
+      helpers: ['geosearch-v2', 'bbl'],
     },
   };
 
@@ -128,4 +129,13 @@ function getOAuthLoginEndpoint(environment) {
   }
 
   return '';
+}
+
+function getMaintenanceTimes() {
+  const {
+    MAINTENANCE_START = '01/01/01 00:00',
+    MAINTENANCE_END = '01/01/01 00:00',
+  } = process.env;
+
+  return [MAINTENANCE_START, MAINTENANCE_END];
 }

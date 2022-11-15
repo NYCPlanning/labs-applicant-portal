@@ -42,7 +42,7 @@ export default {
   dcpLotnumberstring: [
     validateLength({
       min: 0,
-      max: 20,
+      max: 250,
       message: 'Number is too long (max {max} characters)',
     }),
   ],

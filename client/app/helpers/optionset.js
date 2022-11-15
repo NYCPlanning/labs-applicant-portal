@@ -4,6 +4,7 @@ import { helper } from '@ember/component/helper';
 import COMMON_OPTIONSETS, {
   YES_NO,
   YES_NO_UNSURE,
+  YES_NO_UNSURE_SMALLINT,
   YES_NO_DONT_KNOW,
 } from '../optionsets/common';
 import APPLICANT_OPTIONSETS from '../optionsets/applicant';
@@ -59,6 +60,7 @@ const OPTIONSET_LOOKUP = {
     dcpPublicstatus: PROJECT_OPTIONSETS.DCPPUBLICSTATUS,
     dcpVisibility: PROJECT_OPTIONSETS.DCPVISIBILITY,
     statuscode: PROJECT_OPTIONSETS.STATUSCODE,
+    equityReportFields: YES_NO_UNSURE_SMALLINT,
   },
   landuseForm: {
     dcpOtherparties: YES_NO,
@@ -96,13 +98,16 @@ const OPTIONSET_LOOKUP = {
     dcpEstablishparkopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpEstablishpublicplaceopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpEstablishgradeopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpEstablisheasement: LANDUSE_FORM_OPTIONSETS.DCPEASEMENTS,
     dcpEliminatestreetopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpEliminateparkopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpEliminatepublicplaceopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpEliminategradeopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpEliminateeasement: LANDUSE_FORM_OPTIONSETS.DCPEASEMENTS,
     dcpChangestreetwidthopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpChangestreetalignmentopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpChangestreetgradeopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpChangeeasement: LANDUSE_FORM_OPTIONSETS.DCPEASEMENTS,
     dcpTypedisposition: LANDUSE_FORM_OPTIONSETS.DCPTYPEDISPOSITION,
     dcpTotalzoningareatoberezoned: LANDUSE_FORM_OPTIONSETS.DCPTOTALZONINGAREATOBEREZONED,
     dcpHaurbandevelopmentactionareaudaap: COMMON_OPTIONSETS.YES_NO_PICKLIST_CODE,
@@ -152,7 +157,7 @@ const OPTIONSET_LOOKUP = {
     dcpIsthesiteimprovedunimprovedorpartlyimp: LANDUSE_GEOGRAPHY_OPTIONSETS.DCPISTHESITEIMPROVEDUNIMPROVEDORPARTLYIMP,
   },
   zoningMapChange: {
-    dcpExistingzoningdistrictvalue: ZONING_MAP_CHANGE_OPTIONSETS.DCPEXISTINGZONINGDISTRICTVALUE,
+    dcpExistingzoningdistrictvaluenew: ZONING_MAP_CHANGE_OPTIONSETS.DCPEXISTINGZONINGDISTRICTVALUE,
   },
   relatedAction: {
     // Actually a boolean field in CRM, not picklist

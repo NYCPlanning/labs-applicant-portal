@@ -13,6 +13,8 @@ export default class PasFormModel extends Model {
   @hasMany('project-address', { async: false })
   projectAddresses;
 
+  @attr('number') dcpApplicability;
+
   @attr('string') dcpApplicantnamecompanyorganization;
 
   @attr('boolean') dcpIsexistingrestrictionsondevsiteapplicable;
@@ -796,6 +798,7 @@ export default class PasFormModel extends Model {
   async save() {
     await this.saveDirtyApplicants();
     await this.saveDirtyBbls();
+    await this.saveDirtyProject();
     await super.save();
   }
 
@@ -813,6 +816,16 @@ export default class PasFormModel extends Model {
         .filter((applicant) => applicant.hasDirtyAttributes)
         .map((applicant) => applicant.save()),
     );
+  }
+
+  async saveDirtyProject() {
+    if (this.isProjectDirty) {
+      this.package.project.save();
+    }
+  }
+
+  get isProjectDirty() {
+    return this.package.project.hasDirtyAttributes;
   }
 
   get isBblsDirty() {

@@ -2,8 +2,11 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import ENV from 'client/config/environment';
 
+/* eslint-disable no-unused-vars */
 const noop = async () => {};
+const MAINTENANCE_RANGE = ENV.maintenanceTimes;
 
 export default class AuthSignInComponent extends Component {
   @service
@@ -45,5 +48,19 @@ export default class AuthSignInComponent extends Component {
         this.router.transitionTo('auth.register', { queryParams: { loginEmail } });
       }
     }
+  }
+
+  get isMaintenancePeriod() {
+    const [start, end] = MAINTENANCE_RANGE.map((string) => new Date(string));
+    const now = new Date();
+
+    return now > start && now < end;
+  }
+
+  get hasUpcomingMaintenance() {
+    const [start, end] = MAINTENANCE_RANGE.map((string) => new Date(string));
+    const now = new Date();
+
+    return now < start;
   }
 }

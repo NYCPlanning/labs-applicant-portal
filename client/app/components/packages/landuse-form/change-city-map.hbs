@@ -99,16 +99,29 @@
 
         <br>
 
-        <form.Field
-          @attribute="dcpEasement1"
-          @type="checkbox"
-          as |Checkbox|
-        >
-          <Checkbox>
-            Easement
-          </Checkbox>
-        </form.Field>
-
+        <Input
+          type="checkbox"
+          id="dcpEstablisheasement"
+          data-test-checkbox="dcpEstablisheasement"
+          checked={{if
+            (eq
+              form.data.dcpEstablisheasement
+              (optionset 'landuseForm' 'dcpEstablisheasement' 'code' 'Yes')
+            ) "checked"}}
+          onClick={{fn (mut form.data.dcpEstablisheasement)
+            (if 
+              (eq
+                form.data.dcpEstablisheasement
+                (optionset 'landuseForm' 'dcpEstablisheasement' 'code' 'Yes')
+              )
+              (optionset 'landuseForm' 'dcpEstablisheasement' 'code' 'No')
+              (optionset 'landuseForm' 'dcpEstablisheasement' 'code' 'Yes')
+            )
+          }}
+        />
+        <label for="dcpEstablisheasement">
+          Easement
+        </label>
       </Ui::Question>
 
       <Ui::Question as |Q|>
@@ -205,15 +218,29 @@
 
         <br>
 
-        <form.Field
-          @attribute="dcpEasement2"
-          @type="checkbox"
-          as |Checkbox|
-        >
-          <Checkbox>
-            Easement
-          </Checkbox>
-        </form.Field>
+        <Input
+          type="checkbox"
+          id="dcpEliminateeasement"
+          data-test-checkbox="dcpEliminateeasement"
+          checked={{if
+            (eq
+              form.data.dcpEliminateeasement
+              (optionset 'landuseForm' 'dcpEliminateeasement' 'code' 'Yes')
+            ) "checked"}}
+          onClick={{fn (mut form.data.dcpEliminateeasement)
+            (if 
+              (eq
+                form.data.dcpEliminateeasement
+                (optionset 'landuseForm' 'dcpEliminateeasement' 'code' 'Yes')
+              )
+              (optionset 'landuseForm' 'dcpEliminateeasement' 'code' 'No')
+              (optionset 'landuseForm' 'dcpEliminateeasement' 'code' 'Yes')
+            )
+          }}
+        />
+        <label for="dcpEliminateeasement">
+          Easement
+        </label>
 
       </Ui::Question>
 
@@ -289,15 +316,29 @@
 
         <br>
 
-        <form.Field
-          @attribute="dcpEasement3"
-          @type="checkbox"
-          as |Checkbox|
-        >
-          <Checkbox>
-            Easement
-          </Checkbox>
-        </form.Field>
+        <Input
+          type="checkbox"
+          id="dcpChangeeasement"
+          data-test-checkbox="dcpChangeeasement"
+          checked={{if
+            (eq
+              form.data.dcpChangeeasement
+              (optionset 'landuseForm' 'dcpChangeeasement' 'code' 'Yes')
+            ) "checked"}}
+          onClick={{fn (mut form.data.dcpChangeeasement)
+            (if 
+              (eq
+                form.data.dcpChangeeasement
+                (optionset 'landuseForm' 'dcpChangeeasement' 'code' 'Yes')
+              )
+              (optionset 'landuseForm' 'dcpChangeeasement' 'code' 'No')
+              (optionset 'landuseForm' 'dcpChangeeasement' 'code' 'Yes')
+            )
+          }}
+        />
+        <label for="dcpChangeeasement">
+          Easement
+        </label>
 
       </Ui::Question>
 

@@ -115,7 +115,7 @@
 
     <FileUpload
       id={{concat "FileUploader" @package.id}}
-      @name={{@package.id}}
+      @name={{concat "package" @package.id}}
       @accept='*/*'
       @multiple={{true}}
       @onfileadd={{this.trackFileForUpload}}

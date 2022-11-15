@@ -22,7 +22,7 @@ export default class ChangeInCityMapEliminateRemoveListComponent extends Compone
         label: 'Grade',
       },
       {
-        prop: 'dcpEasement2',
+        prop: 'dcpEliminateeasement',
         label: 'Easement',
       },
 

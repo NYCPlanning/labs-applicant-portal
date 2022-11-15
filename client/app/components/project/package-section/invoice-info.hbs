@@ -16,5 +16,9 @@
 
   <strong>{{@invoice.dcpGrandtotal}}</strong>
 
-  <em>{{moment-format (utc @invoice.dcpInvoicedate) 'YYYY-MM-DD'}}</em>
+  {{#if @invoice.dcpPaymentdate}}
+    <em>{{moment-format (utc @invoice.dcpPaymentdate) 'YYYY-MM-DD'}}</em>
+  {{else}}
+    <em>{{moment-format (utc @invoice.dcpInvoicedate) 'YYYY-MM-DD'}}</em>
+  {{/if}}
 </li>

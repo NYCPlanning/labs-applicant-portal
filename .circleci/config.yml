@@ -2,7 +2,7 @@ version: 2
 jobs:
   nest_tests:
     docker:
-      - image: circleci/node:10.18-browsers
+      - image: cimg/node:16.15-browsers
     working_directory: ~/repo/server
 
     steps:

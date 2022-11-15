@@ -1,4 +1,6 @@
 export const LANDUSE_FORM_ATTRS = [
+  'dcp_applicability',
+
   // todo: refine this list of landuse attributes
   'dcp_landuse',
   'dcp_landuseid',
@@ -84,11 +86,11 @@ export const LANDUSE_FORM_ATTRS = [
   'dcp_coapplicantrepcity2',
   'dcp_communitydistrict',
   'dcp_ispreapplicationmeetingheld',
-  'dcp_easement1',
+  'dcp_establisheasement',
   'dcp_minorchangefees_base',
   'dcp_acquistionofproperty',
   'dcp_entiretyboroughs',
-  'dcp_easement2',
+  'dcp_eliminateeasement',
   'dcp_eliminatestreetopt',
   'dcp_coapplicantpostalcode1',
   'dcp_dispositionofnonresidentialownedproperty',
@@ -380,7 +382,7 @@ export const LANDUSE_FORM_ATTRS = [
   'dcp_urbanrenewaldesignationfees',
   'dcp_otherdescribewn',
   'dcp_applicationcalnumber1',
-  'dcp_easement3',
+  'dcp_changeeasement',
   'dcp_designation',
   'dcp_improved',
   'dcp_urbanrenewalprojectfees_base',

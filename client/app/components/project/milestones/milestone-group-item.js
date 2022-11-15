@@ -24,6 +24,7 @@ export default class ProjectMilestonesMilestoneGroupItemComponent extends Compon
     'Review Filed EAS',
     'DEIS Public Scoping Meeting',
     'Prepare and Review DEIS',
+    'Urban Design Guidance',
   ]
 
   get showProject() {

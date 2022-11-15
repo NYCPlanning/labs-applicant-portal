@@ -57,10 +57,7 @@
       {{/if}}
     </LinkTo>
   {{/if}}
-  {{#if (or
-    (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'DRAFT_LU_PACKAGE'))
-    (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'FILED_LU_PACKAGE'))
-  )}}
+  {{#if @package.isLUPackage}}
     <LinkTo
       @route={{if (eq @package.statuscode (optionset 'package' 'statuscode' 'code' 'PACKAGE_PREPARATION')) 'landuse-form.edit' 'landuse-form.show'}}
       @model={{@package.id}}
@@ -73,6 +70,9 @@
         >
           <FaIcon @icon="edit" />
           <strong>
+            {{#if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'POST_CERT_LU'))}}
+              Post-Cert
+            {{/if}}
             {{#if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'FILED_LU_PACKAGE'))}}
               Filed
             {{/if}}
@@ -87,6 +87,9 @@
         </button>
       {{else}}
         <strong>
+          {{#if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'POST_CERT_LU'))}}
+            Post-Cert
+          {{/if}}
           {{#if (eq @package.dcpPackagetype (optionset 'package' 'dcpPackagetype' 'code' 'FILED_LU_PACKAGE'))}}
             Filed
           {{/if}}
@@ -296,8 +299,30 @@
     Private
   {{/if}}
   <small class="text-gray">
-    {{if (eq @package.statuscode (optionset 'package' 'statuscode' 'code' 'PACKAGE_PREPARATION')) 'Editable since ' 'Submitted '}}
-    <Ui::DateDisplay @date={{@package.dcpStatusdate}} @outputFormat="MM/D/YYYY" @errorMessage="Date Unknown"/>
+    {{#if (eq @package.statecode (optionset 'package' 'statecode' 'code' 'ACTIVE'))}}
+      Editable since <Ui::DateDisplay @date={{@package.dcpStatusdate}} @outputFormat="MM/D/YYYY" @errorMessage="Date Unknown"/>
+    {{/if}}
+
+    {{#if (eq @package.statecode (optionset 'package' 'statecode' 'code' 'INACTIVE'))}}
+      {{#if (in-array
+        (array
+          (optionset 'package' 'statuscode' 'code' 'SUBMITTED')
+          (optionset 'package' 'statuscode' 'code' 'UNDER_REVIEW')
+          (optionset 'package' 'statuscode' 'code' 'REVIEWED_NO_REVISIONS_REQUIRED')
+          (optionset 'package' 'statuscode' 'code' 'CERTIFIED')
+          (optionset 'package' 'statuscode' 'code' 'REVIEWED_REVISIONS_REQUIRED')
+          (optionset 'package' 'statuscode' 'code' 'FINAL_APPROVAL')
+          (optionset 'package' 'statuscode' 'code' 'WITHDRAWN')
+        )
+        @package.statuscode)
+      }}
+        Submitted <Ui::DateDisplay
+          @date={{@package.dcpPackagesubmissiondate}}
+          @outputFormat="MM/D/YYYY"
+          @errorMessage="Date Unknown"
+        />
+      {{/if}}
+    {{/if}}
   </small>
 </li>
 
