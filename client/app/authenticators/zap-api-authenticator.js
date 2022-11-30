@@ -35,7 +35,8 @@ export default class ZAPAuthenticator extends OAuth2ImplicitGrantAuthenticator {
     try {
       // eslint-disable-next-line no-undef
       FS.identify(NYCIDUser.GUID, {
-        displayName: 'Logged-In Applicant Portal User',
+        displayName: `${NYCIDUser.givenName} ${NYCIDUser.sn}`,
+        email: NYCIDUser.email,
       });
     } catch (e) {
       // eslint-disable-next-line no-console
