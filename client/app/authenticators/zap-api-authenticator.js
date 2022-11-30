@@ -32,6 +32,11 @@ export default class ZAPAuthenticator extends OAuth2ImplicitGrantAuthenticator {
 
     if (!response.ok) throw body;
 
+    // eslint-disable-next-line no-undef
+    FS.identify(NYCIDUser.GUID, {
+      displayName: 'Logged-In Applicant Portal User',
+    });
+
     // Since all requests to the API are now authenticated.
     // Returning the session data's "authenticated" property and marks
     // the session as authenticated.
