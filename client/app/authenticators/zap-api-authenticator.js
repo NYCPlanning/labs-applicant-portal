@@ -32,10 +32,15 @@ export default class ZAPAuthenticator extends OAuth2ImplicitGrantAuthenticator {
 
     if (!response.ok) throw body;
 
-    // eslint-disable-next-line no-undef
-    FS.identify(NYCIDUser.GUID, {
-      displayName: 'Logged-In Applicant Portal User',
-    });
+    try {
+      // eslint-disable-next-line no-undef
+      FS.identify(NYCIDUser.GUID, {
+        displayName: 'Logged-In Applicant Portal User',
+      });
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log('FS.identify failed.  This may happen during tests, if using incognito mode, or if Mirage is blocking your request. Erro message:', e);
+    }
 
     // Since all requests to the API are now authenticated.
     // Returning the session data's "authenticated" property and marks
