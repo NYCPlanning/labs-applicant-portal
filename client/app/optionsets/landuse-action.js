@@ -47,6 +47,10 @@ export const DCPPREVIOUSLYAPPROVEDACTIONCODE = {
     code: 717170005,
     label: 'SD',
   },
+  ZA: {
+    code: 717170004,
+    label: 'ZA',
+  },
   ZC: {
     code: 717170003,
     label: 'ZC',
