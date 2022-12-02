@@ -125,8 +125,8 @@ export default class LandUseActionComponent extends Component {
 
   get selectedActions() {
     return [
-      ...this._selectedActions,
       ...this.actionsAddedByUser,
+      ...this._selectedActions,
     ];
   }
 
