@@ -8,7 +8,7 @@ export default class LanduseFormEditRoute extends Route.extend(AuthenticatedRout
   afterModel(model) {
     const formpackage = model.package;
     const { landuseForm } = formpackage;
-    const { landuseActions } = formpackage.landuseForm;
+    const { landuseActions } = landuseForm;
     const projectDispositionCodes = ['HA', 'HD'];
 
     const luPackageActionCodes = landuseActions.currentState.map((landuseAction) => landuseAction.__recordData.__data.dcpActioncode);

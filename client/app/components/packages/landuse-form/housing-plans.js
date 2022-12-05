@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
-
 export default class PackagesLanduseFormHousingPlansComponent extends Component {
   // The following properties represent lists of fields
   // dependent on the value of a respective radio group.
