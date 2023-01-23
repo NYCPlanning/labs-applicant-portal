@@ -49,10 +49,63 @@ export class LanduseFormService {
         dcp_zoningresolutionsectionactionispursuantto
     `);
 
+    await this.syncApplicants(landuseForm);
+
     landuseForm.landuseActions = landuseActionsWithZr;
     return {
       ...landuseForm,
       ...landuseFormPg2,
     };
+  }
+
+  async syncApplicants(landuseForm) {
+    const {
+      dcp_dcp_applicantinformation_dcp_landuse,
+      dcp_dcp_applicantrepinformation_dcp_landuse,
+      dcp_landuseid,
+      _dcp_project_value,
+    } = landuseForm;
+
+    const { records: [pasFormWithApplicants] } = await this.crmService.get('dcp_pasforms', `
+      $filter=
+        _dcp_projectname_value eq ${_dcp_project_value}
+      &$expand=
+      dcp_dcp_applicantinformation_dcp_pasform,
+      dcp_dcp_applicantrepinformation_dcp_pasform,
+    `);
+
+    const landuseApplicants = [...dcp_dcp_applicantinformation_dcp_landuse, ...dcp_dcp_applicantrepinformation_dcp_landuse];
+    const pasApplicants = [...pasFormWithApplicants.dcp_dcp_applicantinformation_dcp_pasform, ...pasFormWithApplicants.dcp_dcp_applicantrepinformation_dcp_pasform];
+
+    const landuseApplicantEmails = landuseApplicants.map(applicant => applicant.dcp_email);
+
+    await Promise.all(pasApplicants.map(pasApplicant => {
+      if (!landuseApplicantEmails.includes(pasApplicant.dcp_email)) {
+        if (pasApplicant.dcp_applicantinformationid) {
+    
+          this.crmService.update(
+            'dcp_applicantinformations',
+            pasApplicant.dcp_applicantinformationid, {
+              'dcp_dcp_applicantinformation_dcp_landuse@odata.bind': [
+                `/dcp_landuses(${dcp_landuseid})`,
+              ],
+            }
+          );
+        } else if (pasApplicant.dcp_applicantrepresentativeinformationid) {
+    
+          // strip the hacky prepended "representative-" to use the exact CRM id
+          // const representativeId = pasApplicant.dcp_applicantinformationid.replace('representative-', '');
+    
+          // this.crmService.update(
+          //   'dcp_applicantrepresentativeinformations',
+          //   pasApplicant.dcp_applicantinformationid, {
+          //     'dcp_dcp_applicantrepinformation_dcp_landuse@odata.bind': [
+          //       `/dcp_landuses(${dcp_landuseid})`,
+          //     ],
+          //   }
+          // )
+        }
+      }
+    }));
   }
 }
