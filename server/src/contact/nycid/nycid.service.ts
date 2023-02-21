@@ -49,6 +49,7 @@ export class NycidService {
         is_nycid_validated: body.validated,
       };
     } catch (e) {
+      console.log(e);
       if (e.response.body.ERRORS['cpui.unknownGuid']) {
         return {
           is_nycid_validated: true,
@@ -74,6 +75,7 @@ export class NycidService {
         email,
       });
     } catch (e) {
+      console.log(e);
       errors = e.response.body.ERRORS;
     }
 
