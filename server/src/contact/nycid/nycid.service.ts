@@ -49,6 +49,7 @@ export class NycidService {
         is_nycid_validated: body.validated,
       };
     } catch (e) {
+      console.log(e);
       if (e.response.body.ERRORS['cpui.unknownGuid']) {
         return {
           is_nycid_validated: true,
@@ -74,6 +75,7 @@ export class NycidService {
         email,
       });
     } catch (e) {
+      console.log(e);
       errors = e.response.body.ERRORS;
     }
 
@@ -104,6 +106,7 @@ export class NycidService {
   private makeNycidRequest(method, path, query, accessToken?: string) {
     const NYCID_SERVICE_ACCOUNT_USERNAME = this.config.get('NYCID_SERVICE_ACCOUNT_USERNAME') || 'applicant-portal-local';
     const NYCID_DOMAIN = this.config.get('NYCID_DOMAIN') || 'https://accounts-nonprd.nyc.gov';
+    console.log("NYC ID DOMAIN: ", NYCID_DOMAIN)
     // Alphabetize query values: https://www1.nyc.gov/assets/nyc4d/html/services-nycid/web-services.shtml#signature
     const queryValues = sortValuesByKey([
       ...Object.entries(query),
