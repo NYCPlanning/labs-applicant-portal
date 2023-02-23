@@ -2,6 +2,7 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import * as crypto from 'crypto';
 import * as utf8 from 'utf8';
 import * as superagent from 'superagent';
+import * as superagentProxy from 'superagent-proxy'
 import { ConfigService } from '../../config/config.service';
 
 function sortValuesByKey(entries) {
@@ -16,7 +17,9 @@ function sortValuesByKey(entries) {
 export class NycidService {
   constructor(
     private readonly config: ConfigService,
-  ) {}
+  ) {
+    superagentProxy(superagent)
+  }
 
   public async getNycidStatus(email = '', dcp_nycid_guid) {
     const isNycidEmailRegistered = await this.isNycidEmailRegistered(email);
@@ -106,7 +109,7 @@ export class NycidService {
   private makeNycidRequest(method, path, query, accessToken?: string) {
     const NYCID_SERVICE_ACCOUNT_USERNAME = this.config.get('NYCID_SERVICE_ACCOUNT_USERNAME') || 'applicant-portal-local';
     const NYCID_DOMAIN = this.config.get('NYCID_DOMAIN') || 'https://accounts-nonprd.nyc.gov';
-    console.log("NYC ID DOMAIN: ", NYCID_DOMAIN)
+    const FIXIE_URL = this.config.get('FIXIE_URL')
     // Alphabetize query values: https://www1.nyc.gov/assets/nyc4d/html/services-nycid/web-services.shtml#signature
     const queryValues = sortValuesByKey([
       ...Object.entries(query),
@@ -123,6 +126,8 @@ export class NycidService {
 
     return superagent
       .get(`${NYCID_DOMAIN}${path}`)
+      // @ts-ignore
+      .proxy(FIXIE_URL)
       .set({ ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}) })
       .query({
         signature,
