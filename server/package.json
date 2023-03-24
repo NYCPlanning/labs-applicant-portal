@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "engines": {
-    "node": "^16"
+    "node": "^12 || ^14 || ^16"
   },
   "scripts": {
     "prebuild": "rimraf dist",
@@ -44,10 +44,11 @@
     "rimraf": "^3.0.2",
     "rxjs": "6.5.4",
     "superagent": "^5.2.2",
-    "xmlbuilder2": "^3.0.2",
+    "superagent-proxy": "^3.0.0",
     "underscore": "^1.10.2",
     "utf8": "^3.0.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "xmlbuilder2": "^3.0.2"
   },
   "resolutions": {
     "y18n": "^4.0.1",
