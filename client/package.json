@@ -95,9 +95,13 @@
     "edition": "octane"
   },
   "dependencies": {
+    "ember-cli-update": "^1.0.1",
     "jwt-decode": "^3.0.0-beta.2"
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix"
+  },
+  "resolutions": {
+    "node-sass": "7.0.0"
   }
 }
