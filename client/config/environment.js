@@ -1,5 +1,7 @@
-module.exports = function(environment) {
-  const ENV = {
+'use strict';
+
+module.exports = function (environment) {
+  let ENV = {
     modulePrefix: 'client',
     environment,
     rootURL: '/',

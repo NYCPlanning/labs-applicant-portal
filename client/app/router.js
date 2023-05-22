@@ -1,5 +1,5 @@
-import EmberRouterScroll from 'ember-router-scroll';
-import config from './config/environment';
+import EmberRouter from '@ember/routing/router';
+import config from 'client/config/environment';
 
 export default class Router extends EmberRouterScroll {
   location = config.locationType;

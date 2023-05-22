@@ -9,13 +9,13 @@ module.exports = {
     },
   },
   plugins: [
-    'ember',
-    'hbs',
+    'ember'
   ],
   extends: [
     'eslint:recommended',
     'plugin:ember/recommended',
     'airbnb-base',
+    'plugin:prettier/recommended',
   ],
   env: {
     browser: true,
@@ -59,18 +59,20 @@ module.exports = {
     'operator-linebreak': 1,
     'ember/avoid-leaking-state-in-ember-objects': 0,
   },
+  rules: {},
   overrides: [
     // node files
     {
       files: [
-        '.eslintrc.js',
-        '.template-lintrc.js',
-        'ember-cli-build.js',
-        'testem.js',
-        'blueprints/*/index.js',
-        'config/**/*.js',
-        'lib/*/index.js',
-        'server/**/*.js',
+        './.eslintrc.js',
+        './.prettierrc.js',
+        './.template-lintrc.js',
+        './ember-cli-build.js',
+        './testem.js',
+        './blueprints/*/index.js',
+        './config/**/*.js',
+        './lib/*/index.js',
+        './server/**/*.js',
       ],
       parserOptions: {
         sourceType: 'script',
@@ -80,13 +82,18 @@ module.exports = {
         node: true,
       },
       plugins: ['node'],
+      // extends: ['plugin:node/recommended'],
       rules: {
         ...require('eslint-plugin-node').configs.recommended.rules, // eslint-disable-line
-
         // this can be removed once the following is fixed
         // https://github.com/mysticatea/eslint-plugin-node/issues/77
         'node/no-unpublished-require': 'off',
       },
+    },
+    {
+      // Test files:
+      files: ['tests/**/*-test.{js,ts}'],
+      // extends: ['plugin:qunit/recommended'],
     },
   ],
 };
