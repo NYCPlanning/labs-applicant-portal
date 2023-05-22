@@ -89,7 +89,7 @@
     "tracked-maps-and-sets": "^2.1.0"
   },
   "engines": {
-    "node": "10.* || >= 12"
+    "node": "12"
   },
   "ember": {
     "edition": "octane"

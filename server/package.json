@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "engines": {
-    "node": "^12 || ^14 || ^16"
+    "node": "16"
   },
   "scripts": {
     "prebuild": "rimraf dist",

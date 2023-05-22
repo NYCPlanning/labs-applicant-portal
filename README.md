@@ -32,11 +32,14 @@ Once you have SSL enabled...
 2. Navigate into the `server` folder.
     - Create the `development.env` file using variables stored on 1Password.
     - Copy the `server.key` and `server.crt` files from your `local-cert-generator` repo and paste both files into the `labs-applicant-portal/server/ssl/` folder.
+    - Activate the compatible node version `nvm use`
     - Run `yarn` to install dependencies for the server.
-3. Navigate into the `client` folder.
+    - Run `yarn run start:dev` to start a development server
+3. Open a new terminal and navigate into the `client` folder.
     - Copy the `server.key` and `server.crt` files from your `local-cert-generator` repo and paste both files into the `labs-applicant-portal/client/ssl/` folder.
+    - Activate the compatible node version `nvm use`
     - Run `yarn` to install dependencies for the client.
-4. Go to the root of the app `cd ..` and run: `yarn run start`. It will run both the client and server servers.
+    - Run `yarn start:ssl` to start a development server
 
 ## Troubleshooting
 
