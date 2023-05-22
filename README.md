@@ -41,15 +41,6 @@ Once you have SSL enabled...
     - Run `yarn` to install dependencies for the client.
     - Run `yarn start:ssl` to start a development server
 
-## Troubleshooting
-
-### Address in use 3000
-
-On `yarn run start`, you may run into the error `EADDRINUSE: address already in use :::3000`. 
-
-To solve this, open Activity Monitor, search for all "node" processes, then force kill them.
-
-Then try `yarn run start` again.
 
 ## Maintenance Mode
 
@@ -60,4 +51,3 @@ MAINTENANCE_END='06/29/2021 19:00'
 
 Use the date format in the example above. This will warn of upcoming maintenance (if the start date is in the future), disable
 the login, and disappear once the end period has passed.
-
