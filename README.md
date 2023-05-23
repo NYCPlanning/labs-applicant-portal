@@ -41,6 +41,12 @@ Once you have SSL enabled...
     - Run `yarn` to install dependencies for the client.
     - Run `yarn start:ssl` to start a development server
 
+## Pre-commit linting and testing
+ The client and server application node versions have become out of sync with each other. Consequently, the pre-commit hooks have been turned off until both the server and client are on the same node version.
+
+ Husky is designed to use the node version set in the terminal PATH at the time the command is run. Whichever node version the developer chooses will be the one that the both the client and server are tested against. This can lead to weird cases where the client or server passes in the environment its developed for but fails in the environment where its tests are run.
+
+As the hooks have been disabled, please take care to run linting and testing scripts for the server and client before commiting. These scripts are documented in their respective `package.json` files.
 
 ## Maintenance Mode
 
