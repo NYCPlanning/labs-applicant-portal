@@ -29,9 +29,9 @@
     "@ember/render-modifiers": "^1.0.2",
     "@ember/test-helpers": "^2.6.0",
     "@fortawesome/ember-fontawesome": "^0.2.1",
-    "@fortawesome/free-solid-svg-icons": "5.15.4",
     "@fortawesome/free-brands-svg-icons": "5.15.4",
     "@fortawesome/free-regular-svg-icons": "5.15.4",
+    "@fortawesome/free-solid-svg-icons": "5.15.4",
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
     "@nycplanning/ember": "^2.1.1",
@@ -64,6 +64,7 @@
     "ember-fetch": "^8.1.1",
     "ember-file-upload": "^3.0.3",
     "ember-load-initializers": "^2.1.2",
+    "ember-mapbox-gl": "^1.0.0",
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-moment": "^8.0.0",
     "ember-page-title": "^6.2.2",
@@ -107,6 +108,7 @@
   },
   "dependencies": {
     "ember-cli-update": "^1.0.1",
+    "ember-tooltips": "^3.6.0",
     "jwt-decode": "^3.0.0-beta.2"
   },
   "lint-staged": {
