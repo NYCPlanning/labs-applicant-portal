@@ -33,7 +33,7 @@ $small-font-size: 81.25%; // TODO: update Style Guide so that <small> matches .t
 @import "modules/nyc-planning-all-modules"; // or a subset
 
 // Labs UI components
-@import "labs-ui/all-modules"; // or a subset
+@import "@nycplanning/ember/all-modules";
 @import "ember-power-select";
 
 // Custom app components

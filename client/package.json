@@ -29,9 +29,12 @@
     "@ember/render-modifiers": "^1.0.2",
     "@ember/test-helpers": "^2.6.0",
     "@fortawesome/ember-fontawesome": "^0.2.1",
-    "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "@fortawesome/free-solid-svg-icons": "5.15.4",
+    "@fortawesome/free-brands-svg-icons": "5.15.4",
+    "@fortawesome/free-regular-svg-icons": "5.15.4",
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
+    "@nycplanning/ember": "^2.1.1",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
     "ember-auto-import": "^1.12.0",
@@ -87,8 +90,6 @@
     "eslint-plugin-prettier": "^3.4.1",
     "eslint-plugin-qunit": "^6.2.0",
     "husky": "^6.0.0",
-    "labs-ember-search": "3.1.6",
-    "labs-ui": "^1.1.0",
     "lint-staged": ">=10",
     "loader.js": "^4.7.0",
     "npm-run-all": "^4.1.5",
@@ -99,7 +100,7 @@
     "tracked-maps-and-sets": "^2.1.0"
   },
   "engines": {
-    "node": "12.* || 14.* || >= 16"
+    "node": "12.* || 14.* || ^16.*"
   },
   "ember": {
     "edition": "octane"
