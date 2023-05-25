@@ -207,6 +207,11 @@ $sticky-sidebar-offset: 6rem + rem-calc(20);
   }
 }
 
+.heading {
+  font-size: 1.17em;
+  font-weight: bold;
+}
+
 @media (max-width:600px) {
   .equitable-development-reporting {
     .ember-tooltip {

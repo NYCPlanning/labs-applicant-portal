@@ -3,11 +3,11 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Helper | nycid-target', function(hooks) {
+module('Integration | Helper | nycid-target', function (hooks) {
   setupRenderingTest(hooks);
 
   // Replace this with your real tests.
-  test('it generates nycid "target" param, encoded', async function(assert) {
+  test('it generates nycid "target" param, encoded', async function (assert) {
     this.set('inputValue', '1234');
 
     await render(hbs`{{nycid-target inputValue}}`);

@@ -7,7 +7,9 @@ module('Unit | Authenticators | zap-api-authenticator', function (hooks) {
   setupMirage(hooks);
 
   test('it exists', function (assert) {
-    const authenticator = this.owner.lookup('authenticator:zap-api-authenticator');
+    const authenticator = this.owner.lookup(
+      'authenticator:zap-api-authenticator',
+    );
 
     assert.ok(authenticator);
   });

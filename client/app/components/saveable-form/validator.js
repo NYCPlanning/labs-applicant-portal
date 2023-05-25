@@ -6,7 +6,9 @@ import createChangeset from '../../utils/create-changeset';
 const noop = () => {};
 
 export default class ValidatorComponent extends Component {
-  changeset = createChangeset(this.args.model, this.args.validator, { dependsOn: this.args.dependsOn });
+  changeset = createChangeset(this.args.model, this.args.validator, {
+    dependsOn: this.args.dependsOn,
+  });
 
   registeredDescendants = new TrackedSet();
 
@@ -15,11 +17,17 @@ export default class ValidatorComponent extends Component {
   }
 
   get _hasDirtyDescendants() {
-    return this._registeredDescendants.any((formvalidator) => formvalidator.isDirty === true);
+    return this._registeredDescendants.any(
+      (formvalidator) => formvalidator.isDirty === true,
+    );
   }
 
   get _hasValidDescendants() {
-    return this.registeredDescendants.size ? this._registeredDescendants.every((formvalidator) => formvalidator.isValid === true) : true;
+    return this.registeredDescendants.size
+      ? this._registeredDescendants.every(
+        (formvalidator) => formvalidator.isValid === true,
+      )
+      : true;
   }
 
   get isDirty() {
@@ -41,6 +49,7 @@ export default class ValidatorComponent extends Component {
       await callback();
       await this.changeset.rollback();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log('Save error:', error);
     }
   }
@@ -55,6 +64,7 @@ export default class ValidatorComponent extends Component {
   }
 
   willDestroy() {
+    super.willDestroy(...arguments);
     this.registeredDescendants.clear();
   }
 }

@@ -255,9 +255,7 @@ export default class LanduseFormModel extends Model {
 
   async saveDirtyBbls() {
     return Promise.all(
-      this.bbls
-        .filter((bbl) => bbl.hasDirtyAttributes)
-        .map((bbl) => bbl.save()),
+      this.bbls.filter((bbl) => bbl.hasDirtyAttributes).map((bbl) => bbl.save()),
     );
   }
 
@@ -308,14 +306,17 @@ export default class LanduseFormModel extends Model {
   }
 
   get isLanduseActionsDirty() {
-    const dirtyLanduseActions = this.landuseActions.filter((action) => action.hasDirtyAttributes);
+    const dirtyLanduseActions = this.landuseActions.filter(
+      (action) => action.hasDirtyAttributes,
+    );
 
     return dirtyLanduseActions.length > 0;
   }
 
-
   get isRelatedActionsDirty() {
-    const dirtyRelatedActions = this.relatedActions.filter((action) => action.hasDirtyAttributes);
+    const dirtyRelatedActions = this.relatedActions.filter(
+      (action) => action.hasDirtyAttributes,
+    );
 
     return dirtyRelatedActions.length > 0;
   }
@@ -327,31 +328,41 @@ export default class LanduseFormModel extends Model {
   }
 
   get isApplicantsDirty() {
-    const dirtyApplicants = this.applicants.filter((applicant) => applicant.hasDirtyAttributes);
+    const dirtyApplicants = this.applicants.filter(
+      (applicant) => applicant.hasDirtyAttributes,
+    );
 
     return dirtyApplicants.length > 0;
   }
 
   get isSitedatahFormsDirty() {
-    const dirtySitedatahForms = this.sitedatahForms.filter((sitedatahForm) => sitedatahForm.hasDirtyAttributes);
+    const dirtySitedatahForms = this.sitedatahForms.filter(
+      (sitedatahForm) => sitedatahForm.hasDirtyAttributes,
+    );
 
     return dirtySitedatahForms.length > 0;
   }
 
   get isLanduseGeographiesDirty() {
-    const dirtyLanduseGeographies = this.landuseGeographies.filter((landuseGeography) => landuseGeography.hasDirtyAttributes);
+    const dirtyLanduseGeographies = this.landuseGeographies.filter(
+      (landuseGeography) => landuseGeography.hasDirtyAttributes,
+    );
 
     return dirtyLanduseGeographies.length > 0;
   }
 
   get isAffectedZoningResolutionsDirty() {
-    const dirtyZrs = this.affectedZoningResolutions.filter((zr) => zr.hasDirtyAttributes);
+    const dirtyZrs = this.affectedZoningResolutions.filter(
+      (zr) => zr.hasDirtyAttributes,
+    );
 
     return dirtyZrs.length > 0;
   }
 
   get isZoningMapChanges() {
-    const dirtyZoningMapChanges = this.zoningMapChanges.filter((zoningMapChange) => zoningMapChange.hasDirtyAttributes);
+    const dirtyZoningMapChanges = this.zoningMapChanges.filter(
+      (zoningMapChange) => zoningMapChange.hasDirtyAttributes,
+    );
 
     return dirtyZoningMapChanges.length > 0;
   }

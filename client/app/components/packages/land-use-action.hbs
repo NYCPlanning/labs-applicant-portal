@@ -10,7 +10,7 @@
         @placeholder="-- select an action --"
         @searchEnabled={{false}}
         @options={{this.availableActions}}
-        @onChange={{fn this.addSelectedAction}}
+        @onChange={{this.addSelectedAction}}
         as |landUseAction|
       >
         {{landUseAction.name}}

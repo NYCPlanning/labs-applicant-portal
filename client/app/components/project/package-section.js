@@ -16,7 +16,9 @@ export default class ProjectPackageSectionComponent extends Component {
   paymentLink;
 
   get payablePackage() {
-    const [payablePackage] = this.args.packages.filter((pkg) => pkg.invoices.length > 0);
+    const [payablePackage] = this.args.packages.filter(
+      (pkg) => pkg.invoices.length > 0,
+    );
 
     return payablePackage;
   }
@@ -28,7 +30,10 @@ export default class ProjectPackageSectionComponent extends Component {
   }
 
   get hasPayableInvoices() {
-    return this.invoices.filter((invoice) => invoice.statuscode === 'Approved').length >= 1;
+    return (
+      this.invoices.filter((invoice) => invoice.statuscode === 'Approved')
+        .length >= 1
+    );
   }
 
   @action
@@ -37,11 +42,14 @@ export default class ProjectPackageSectionComponent extends Component {
 
     if (!this.paymentLink) {
       try {
-        const response = await fetch(`${ENV.host}/packages/pay/${this.payablePackage.id}`, {
-          headers: {
-            Authorization: `Bearer ${this.session.data.authenticated.access_token}`,
+        const response = await fetch(
+          `${ENV.host}/packages/pay/${this.payablePackage.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${this.session.data.authenticated.access_token}`,
+            },
           },
-        });
+        );
         const paymentLink = await response.json();
 
         this.paymentLink = paymentLink.data.attributes['city-pay-url'];

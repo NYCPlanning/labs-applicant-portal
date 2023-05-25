@@ -35,11 +35,13 @@ export default class ProposedDevelopmentTypesListComponent extends Component {
       },
     ];
 
-    return developmentTypes.reduce((proposedTypes, type) => {
-      if (pasForm[type.prop]) {
-        proposedTypes.push(type.label);
-      }
-      return proposedTypes;
-    }, []).join(', ');
+    return developmentTypes
+      .reduce((proposedTypes, type) => {
+        if (pasForm[type.prop]) {
+          proposedTypes.push(type.label);
+        }
+        return proposedTypes;
+      }, [])
+      .join(', ');
   }
 }

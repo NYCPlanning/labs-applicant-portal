@@ -1,6 +1,4 @@
-import {
-  validatePresence,
-} from 'ember-changeset-validations/validators';
+import { validatePresence } from 'ember-changeset-validations/validators';
 import SaveableApplicantForm from './saveable-applicant-form';
 
 export default {

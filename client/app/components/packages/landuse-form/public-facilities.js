@@ -19,10 +19,8 @@ export default class PackagesLanduseFormPublicFacilitiesComponent extends Compon
     dcpExistingfacilityproposedtoremainandexpand: [
       'dcpHowlonghasexistingfacilitybeenatthislocat',
     ],
-    dcpIsprojectlistedinstatementofneedsopt: [
-      'dcpIndicatefiscalyears',
-    ],
-  }
+    dcpIsprojectlistedinstatementofneedsopt: ['dcpIndicatefiscalyears'],
+  };
 
   get landuseForm() {
     return this.args.form.data;

@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { focus, render, waitFor } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | user-badge', function(hooks) {
+module('Integration | Component | user-badge', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders with a menu button and popover', async function(assert) {
+  test('it renders with a menu button and popover', async function (assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 

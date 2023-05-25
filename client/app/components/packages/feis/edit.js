@@ -16,6 +16,7 @@ export default class PackagesFeisEditComponent extends Component {
     try {
       await this.args.package.save();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log('Save Final EIS package error:', error);
     }
   }
@@ -24,7 +25,10 @@ export default class PackagesFeisEditComponent extends Component {
   async submitPackage() {
     await this.args.package.submit();
 
-    if (!this.args.package.adapterError && !this.args.package.fileUploadErrors) {
+    if (
+      !this.args.package.adapterError
+      && !this.args.package.fileUploadErrors
+    ) {
       this.router.transitionTo('feis.show', this.args.package.id);
     }
   }

@@ -12,17 +12,14 @@ export default Factory.extend({
       '123 Ember Avenue',
       'Arizona Sun Dog Kennel',
       'All Things Blue For You Merch',
-      'Pop Up Palm Tree & Goat Farm'];
+      'Pop Up Palm Tree & Goat Farm',
+    ];
 
     return SAMPLE_NAMES[i % SAMPLE_NAMES.length];
   },
 
   dcpName(i) {
-    const SAMPLE_CODENAMES = [
-      'P2018M0268',
-      'P2017M0366',
-      '2019M0123',
-    ];
+    const SAMPLE_CODENAMES = ['P2018M0268', 'P2017M0366', '2019M0123'];
 
     return SAMPLE_CODENAMES[i % SAMPLE_CODENAMES.length];
   },
@@ -40,16 +37,12 @@ export default Factory.extend({
     return SAMPLE_CUSTOMERS[i % SAMPLE_CUSTOMERS.length];
   },
 
-  dcpProjectbrief: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  dcpProjectbrief:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
 
   dcpBorough(i) {
     const BOROUGHS = [
-      717170000,
-      717170002,
-      717170001,
-      717170003,
-      717170004,
-      717170005,
+      717170000, 717170002, 717170001, 717170003, 717170004, 717170005,
     ];
 
     return BOROUGHS[i % BOROUGHS.length];
@@ -58,7 +51,13 @@ export default Factory.extend({
   // Defaults to Project with a PAS Form applicant package.
   toDo: trait({
     afterCreate(project, server) {
-      server.create('package', { project }, 'toDo', 'pasForm', 'withExistingDocuments');
+      server.create(
+        'package',
+        { project },
+        'toDo',
+        'pasForm',
+        'withExistingDocuments',
+      );
     },
   }),
 

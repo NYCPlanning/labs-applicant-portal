@@ -7,9 +7,7 @@ export default class PackagesLanduseFormProjectAreaComponent extends Component {
   // For a radio group property (such as dcpEntiretycommunity),
   // the associated list of fields are those which should be
   // cleared (reset) when the dcpEntiretycommunity value changes.
-  dcpNotaxblock = [
-    'dcpSitedatapropertydescription',
-  ]
+  dcpNotaxblock = ['dcpSitedatapropertydescription'];
 
   dcpEntiretycommunity = [
     ...this.dcpNotaxblock,
@@ -23,10 +21,7 @@ export default class PackagesLanduseFormProjectAreaComponent extends Component {
     'dcpBoroughs',
   ];
 
-  dcpWholecity = [
-    ...this.dcpEntiretyboroughs,
-    'dcpEntiretyboroughs',
-  ];
+  dcpWholecity = [...this.dcpEntiretyboroughs, 'dcpEntiretyboroughs'];
 
   get landuseForm() {
     return this.args.form.data;

@@ -4,13 +4,32 @@ import { tracked } from '@glimmer/tracking';
 import { optionset } from '../../../helpers/optionset';
 
 export default class PackagesLanduseFormProposedActionEditorComponent extends Component {
-  @tracked chosenDcpPreviouslyapprovedactioncode = this.args.landuseActionForm.data.dcpPreviouslyapprovedactioncode
+  @tracked chosenDcpPreviouslyapprovedactioncode = this.args.landuseActionForm
+    .data.dcpPreviouslyapprovedactioncode
     ? {
       code: this.args.landuseActionForm.data.dcpPreviouslyapprovedactioncode,
-      label: optionset(['landuseAction', 'dcpPreviouslyapprovedactioncode', 'label', this.args.landuseActionForm.data.dcpPreviouslyapprovedactioncode]),
-    } : null;
+      label: optionset([
+        'landuseAction',
+        'dcpPreviouslyapprovedactioncode',
+        'label',
+        this.args.landuseActionForm.data.dcpPreviouslyapprovedactioncode,
+      ]),
+    }
+    : null;
 
-  requiredActionCodes = ['CM', 'LD', 'RA', 'RC', 'RS', 'SA', 'SC', 'SD', 'ZA', 'ZC', 'ZS'];
+  requiredActionCodes = [
+    'CM',
+    'LD',
+    'RA',
+    'RC',
+    'RS',
+    'SA',
+    'SC',
+    'SD',
+    'ZA',
+    'ZC',
+    'ZS',
+  ];
 
   get projectHasRequiredActions() {
     const actionCode = this.args.landuseActionForm.data.dcpActioncode;
@@ -18,7 +37,8 @@ export default class PackagesLanduseFormProposedActionEditorComponent extends Co
   }
 
   get projectHasRequiredActionsAndFollowUpYes() {
-    const hasPreviousAction = this.args.landuseActionForm.data.dcpFollowuptopreviousaction || this.args.landuseActionForm.data.dcpPreviouslyapprovedactioncode;
+    const hasPreviousAction = this.args.landuseActionForm.data.dcpFollowuptopreviousaction
+      || this.args.landuseActionForm.data.dcpPreviouslyapprovedactioncode;
     return this.projectHasRequiredActions && hasPreviousAction;
   }
 

@@ -1,6 +1,4 @@
-import {
-  validateLength,
-} from 'ember-changeset-validations/validators';
+import { validateLength } from 'ember-changeset-validations/validators';
 import SaveableLanduseForm from './saveable-landuse-form';
 import validatePresenceIf from '../validators/required-if-selected';
 

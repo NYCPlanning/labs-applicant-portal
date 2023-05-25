@@ -10,7 +10,10 @@ import SubmittableApplicantFormValidations from '../../../validations/submittabl
 
 import SubmittablePackageFormValidations from '../../../validations/submittable-package';
 
-import { addToHasMany, removeFromHasMany } from '../../../utils/ember-changeset';
+import {
+  addToHasMany,
+  removeFromHasMany,
+} from '../../../utils/ember-changeset';
 
 export default class PasFormComponent extends Component {
   validations = {
@@ -31,6 +34,7 @@ export default class PasFormComponent extends Component {
   store;
 
   get package() {
+    console.log(" this.args.package || {};",  this.args.package || {});
     return this.args.package || {};
   }
 
@@ -48,6 +52,7 @@ export default class PasFormComponent extends Component {
       await this.args.package.save(this.recordsToDelete);
       this.recordsToDelete = [];
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log('Save PAS package error:', error);
     }
   }
@@ -56,7 +61,11 @@ export default class PasFormComponent extends Component {
   async submitPackage() {
     await this.args.package.submit();
 
-    if (!this.pasForm.adapterError && !this.package.adapterError && !this.package.fileUploadErrors) {
+    if (
+      !this.pasForm.adapterError
+      && !this.package.adapterError
+      && !this.package.fileUploadErrors
+    ) {
       this.router.transitionTo('pas-form.show', this.args.package.id);
     }
   }

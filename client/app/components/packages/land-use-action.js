@@ -118,16 +118,14 @@ export default class LandUseActionComponent extends Component {
   // actions added by user in current session (pushed each time user selects from dropdown)
   @tracked actionsAddedByUser = [];
 
-  @tracked _selectedActions = All_LAND_USE_ACTION_OPTIONS
-    .filter((option) => this.args.pasForm[option.countField]
+  @tracked _selectedActions = All_LAND_USE_ACTION_OPTIONS.filter(
+    (option) => this.args.pasForm[option.countField]
       || this.args.pasForm[option.attr1]
-      || this.args.pasForm[option.attr2]);
+      || this.args.pasForm[option.attr2],
+  );
 
   get selectedActions() {
-    return [
-      ...this.actionsAddedByUser,
-      ...this._selectedActions,
-    ];
+    return [...this.actionsAddedByUser, ...this._selectedActions];
   }
 
   // sorting: actions from db all on bottom in alphabetical order
@@ -146,7 +144,7 @@ export default class LandUseActionComponent extends Component {
 
       // if actions are both from db -- sort alphabetically
       if (!includesA && !includesB) {
-        return (a.name > b.name) ? 1 : -1;
+        return a.name > b.name ? 1 : -1;
       }
 
       // if top action is new and bottom action is from db -- don't reorder
@@ -158,9 +156,9 @@ export default class LandUseActionComponent extends Component {
 
   // actions that appear in dropdown sorted alphabetically
   get availableActions() {
-    return All_LAND_USE_ACTION_OPTIONS
-      .filter((option) => !this.selectedActions.includes(option))
-      .sort((a, b) => ((a.name > b.name) ? 1 : -1));
+    return All_LAND_USE_ACTION_OPTIONS.filter(
+      (option) => !this.selectedActions.includes(option),
+    ).sort((a, b) => (a.name > b.name ? 1 : -1));
   }
 
   @action

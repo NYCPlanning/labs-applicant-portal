@@ -21,14 +21,15 @@ export default class ApplicantPropertyTypeListComponent extends Component {
         prop: 'dcpIsother',
         label: 'Other (explain in attached project description)',
       },
-
     ];
 
-    return actions.reduce((applicantPropertyTypes, type) => {
-      if (landuseForm[type.prop]) {
-        applicantPropertyTypes.push(type.label);
-      }
-      return applicantPropertyTypes;
-    }, []).join(', ');
+    return actions
+      .reduce((applicantPropertyTypes, type) => {
+        if (landuseForm[type.prop]) {
+          applicantPropertyTypes.push(type.label);
+        }
+        return applicantPropertyTypes;
+      }, [])
+      .join(', ');
   }
 }

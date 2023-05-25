@@ -17,14 +17,15 @@ export default class ProposedPublicFacilitiesActionListComponent extends Compone
         prop: 'dcpSiteselectionopt',
         label: 'Public Facility Site Selection',
       },
-
     ];
 
-    return actions.reduce((proposedActions, type) => {
-      if (landuseForm[type.prop]) {
-        proposedActions.push(type.label);
-      }
-      return proposedActions;
-    }, []).join(', ');
+    return actions
+      .reduce((proposedActions, type) => {
+        if (landuseForm[type.prop]) {
+          proposedActions.push(type.label);
+        }
+        return proposedActions;
+      }, [])
+      .join(', ');
   }
 }

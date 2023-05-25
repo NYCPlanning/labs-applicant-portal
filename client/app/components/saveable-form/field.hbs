@@ -8,7 +8,7 @@
     showCounter=@showCounter
   )) as |CurriedFieldComponent|
 }}
-  {{#if hasBlock}}
+  {{#if (has-block)}}
     {{!-- Yield the component so more args can be added --}}
     {{yield (component CurriedFieldComponent)}}
   {{else}}

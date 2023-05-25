@@ -25,8 +25,22 @@ export default class ProjectApplicantModel extends Model {
   contact;
 
   get isPrimaryApplicantOrContact() {
-    return this.dcpApplicantrole === optionset(['projectApplicant', 'applicantrole', 'code', 'PRIMARY_CONTACT'])
-      || this.dcpApplicantrole === optionset(['projectApplicant', 'applicantrole', 'code', 'PRIMARY_APPLICANT']);
+    return (
+      this.dcpApplicantrole
+        === optionset([
+          'projectApplicant',
+          'applicantrole',
+          'code',
+          'PRIMARY_CONTACT',
+        ])
+      || this.dcpApplicantrole
+        === optionset([
+          'projectApplicant',
+          'applicantrole',
+          'code',
+          'PRIMARY_APPLICANT',
+        ])
+    );
   }
 
   get displayName() {

@@ -8,11 +8,8 @@ export default class PackagesLanduseFormHousingPlansComponent extends Component 
   // the associated list of fields are those which should be
   // cleared (reset) when the radio-group value changes.
   dependantsOf = {
-    dcpMannerofdisposition: [
-      'dcpFrom',
-      'dcpTo',
-    ],
-  }
+    dcpMannerofdisposition: ['dcpFrom', 'dcpTo'],
+  };
 
   get landuseForm() {
     return this.args.form.data;

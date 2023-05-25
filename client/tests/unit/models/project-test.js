@@ -1,11 +1,11 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Model | project', function(hooks) {
+module('Unit | Model | project', function (hooks) {
   setupTest(hooks);
 
   // Replace this with your real tests.
-  test('it exists', function(assert) {
+  test('it exists', function (assert) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('project', {});
 
@@ -14,7 +14,7 @@ module('Unit | Model | project', function(hooks) {
     assert.ok(model);
   });
 
-  test('pasPackages works when no packages available', function(assert) {
+  test('pasPackages works when no packages available', function (assert) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('project', {
       packages: [],
@@ -25,7 +25,7 @@ module('Unit | Model | project', function(hooks) {
     assert.ok(model);
   });
 
-  test('rwcdsPackages works when no packages available', function(assert) {
+  test('rwcdsPackages works when no packages available', function (assert) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('project', {
       packages: [],

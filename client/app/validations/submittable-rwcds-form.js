@@ -1,6 +1,4 @@
-import {
-  validatePresence,
-} from 'ember-changeset-validations/validators';
+import { validatePresence } from 'ember-changeset-validations/validators';
 import validatePresenceIf from '../validators/required-if-selected';
 import SaveableRwcdsForm from './saveable-rwcds-form';
 

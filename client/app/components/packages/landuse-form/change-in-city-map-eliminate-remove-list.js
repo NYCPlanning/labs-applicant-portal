@@ -25,14 +25,15 @@ export default class ChangeInCityMapEliminateRemoveListComponent extends Compone
         prop: 'dcpEliminateeasement',
         label: 'Easement',
       },
-
     ];
 
-    return actions.reduce((citymapEliminateRemove, type) => {
-      if (landuseForm[type.prop]) {
-        citymapEliminateRemove.push(type.label);
-      }
-      return citymapEliminateRemove;
-    }, []).join(', ');
+    return actions
+      .reduce((citymapEliminateRemove, type) => {
+        if (landuseForm[type.prop]) {
+          citymapEliminateRemove.push(type.label);
+        }
+        return citymapEliminateRemove;
+      }, [])
+      .join(', ');
   }
 }

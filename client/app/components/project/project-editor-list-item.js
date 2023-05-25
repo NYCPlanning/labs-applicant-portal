@@ -11,7 +11,7 @@ export default class ProjectEditorListComponent extends Component {
 
   @tracked inviteTeamMemberModal = false;
 
-  @tracked isCopied = false
+  @tracked isCopied = false;
 
   @action
   tryRemoveEditor() {

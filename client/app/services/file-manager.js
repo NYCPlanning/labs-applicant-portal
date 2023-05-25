@@ -12,7 +12,11 @@ export default class FileManager {
     filesToUpload, // EmberFileUpload Queue Object
     session,
   ) {
-    console.assert(entityType === 'package' || entityType === 'artifact', "entityType must be 'package' or 'artifact'");
+    // eslint-disable-next-line no-console
+    console.assert(
+      entityType === 'package' || entityType === 'artifact',
+      "entityType must be 'package' or 'artifact'",
+    );
 
     this.recordId = recordId;
     this.entityType = entityType;
@@ -70,7 +74,8 @@ export default class FileManager {
         },
         data: {
           instanceId: this.recordId,
-          entityName: this.entityType === 'artifact' ? 'dcp_artifacts' : 'dcp_package',
+          entityName:
+              this.entityType === 'artifact' ? 'dcp_artifacts' : 'dcp_package',
         },
       });
     }
@@ -82,16 +87,19 @@ export default class FileManager {
     // TODO: If this is not possible, rework this to be a
     // POST request to a differently named endpoint, like
     // deleteDocument
-    return Promise.all(this.filesToDelete.map((file) => fetch(
-      `${ENV.host}/documents?serverRelativeUrl=${file.serverRelativeUrl}`, {
-        method: 'DELETE',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${this.session.data.authenticated.access_token}`,
+    return Promise.all(
+      this.filesToDelete.map((file) => fetch(
+        `${ENV.host}/documents?serverRelativeUrl=${file.serverRelativeUrl}`,
+        {
+          method: 'DELETE',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${this.session.data.authenticated.access_token}`,
+          },
         },
-      },
-    )));
+      )),
+    );
   }
 
   async save() {

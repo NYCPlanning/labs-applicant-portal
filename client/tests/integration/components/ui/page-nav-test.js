@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | ui/page-nav', function(hooks) {
+module('Integration | Component | ui/page-nav', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders navItems and yields block content', async function(assert) {
+  test('it renders navItems and yields block content', async function (assert) {
     await render(hbs`
       <Ui::PageNav
         @navItems={{array

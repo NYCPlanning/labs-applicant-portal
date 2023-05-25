@@ -1,7 +1,7 @@
 import { Response } from 'ember-cli-mirage';
 import ENV from '../config/environment';
 
-export default function() {
+export default function () {
   this.passthrough('https://search-api-production.herokuapp.com/**');
   this.passthrough('https://search-api-staging.herokuapp.com/**');
   this.passthrough('/account/**');
@@ -35,7 +35,9 @@ export default function() {
 
   this.get('/packages');
   this.get('/packages/:id', (schema, request) => {
-    const { params: { id } } = request;
+    const {
+      params: { id },
+    } = request;
 
     const foundPackage = schema.packages.find(id);
 
@@ -43,12 +45,14 @@ export default function() {
       {
         name: 'PAS Form.pdf',
         timeCreated: '2021-01-09T02:54:28Z',
-        serverRelativeUrl: '/sites/dcppfsuat2/dcp_package/2021Q0246_EIS_1_5C1BCD9B6E23EB11A813001DD8309FA8/testUploadFile3.txt',
+        serverRelativeUrl:
+          '/sites/dcppfsuat2/dcp_package/2021Q0246_EIS_1_5C1BCD9B6E23EB11A813001DD8309FA8/testUploadFile3.txt',
       },
       {
         name: 'Action Changes.excel',
         timeCreated: '2021-01-09T02:07:31Z',
-        serverRelativeUrl: '/sites/dcppfsuat2/dcp_package/2021Q0246_EIS_1_5C1BCD9B6E23EB11A813001DD8309FA8/fake-23.shp',
+        serverRelativeUrl:
+          '/sites/dcppfsuat2/dcp_package/2021Q0246_EIS_1_5C1BCD9B6E23EB11A813001DD8309FA8/fake-23.shp',
       },
     ];
 
@@ -120,11 +124,15 @@ export default function() {
   this.get('/ceqr-invoice-questionnaires/:id');
   this.patch('/ceqr-invoice-questionnaires/:id');
 
-  this.post('/documents/*', function(schema, request) {
+  this.post('/documents/*', function (schema, request) {
     // requestBody should be a FormData object
     const { requestBody } = request;
-    const success = requestBody.get('instanceId') && requestBody.get('entityName') && requestBody.get('file');
-    return success ? new Response(200) : new Response(400, {}, { errors: ['Bad Parameters'] });
+    const success = requestBody.get('instanceId')
+      && requestBody.get('entityName')
+      && requestBody.get('file');
+    return success
+      ? new Response(200)
+      : new Response(400, {}, { errors: ['Bad Parameters'] });
   });
 
   // Assumes that the backend delivers files each with
@@ -132,7 +140,7 @@ export default function() {
   // TODO: If this is not possible, rework this to be a
   // POST request for a differently named endpoint, like
   // deleteDocument
-  this.del('/documents', function() {
+  this.del('/documents', function () {
     return new Response(204);
   });
   /*

@@ -21,12 +21,12 @@ export default class PackagesRwcdsFormEditComponent extends Component {
     return this.args.package.rwcdsForm || {};
   }
 
-
   @action
   async savePackage() {
     try {
       await this.args.package.save();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log('Save RWCDS package error:', error);
     }
   }
@@ -35,7 +35,11 @@ export default class PackagesRwcdsFormEditComponent extends Component {
   async submitPackage() {
     await this.args.package.submit();
 
-    if (!this.rwcdsForm.adapterError && !this.args.package.adapterError && !this.args.package.fileUploadErrors) {
+    if (
+      !this.rwcdsForm.adapterError
+      && !this.args.package.adapterError
+      && !this.args.package.fileUploadErrors
+    ) {
       this.router.transitionTo('rwcds-form.show', this.args.package.id);
     }
   }

@@ -21,7 +21,10 @@ import SubmittableAffectedZoningResolutionFormValidations from '../../../validat
 import SaveableZoningMapChangeValidations from '../../../validations/saveable-zoning-map-change';
 import SubmittableZoningMapChangeValidations from '../../../validations/submittable-zoning-map-change';
 import SubmittablePackageFormValidations from '../../../validations/submittable-package';
-import { addToHasMany, removeFromHasMany } from '../../../utils/ember-changeset';
+import {
+  addToHasMany,
+  removeFromHasMany,
+} from '../../../utils/ember-changeset';
 
 export default class LandUseFormComponent extends Component {
   validations = {
@@ -72,6 +75,7 @@ export default class LandUseFormComponent extends Component {
       await this.args.package.save(this.recordsToDelete);
       this.recordsToDelete = [];
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log('Save Landuse package error:', error); //eslint-disable-line
     }
   }
@@ -80,7 +84,11 @@ export default class LandUseFormComponent extends Component {
   async submitPackage() {
     await this.args.package.submit();
 
-    if (!this.landuseForm.adapterError && !this.package.adapterError && !this.package.fileUploadErrors) {
+    if (
+      !this.landuseForm.adapterError
+      && !this.package.adapterError
+      && !this.package.fileUploadErrors
+    ) {
       this.router.transitionTo('landuse-form.show', this.args.package.id);
     }
   }
@@ -167,16 +175,27 @@ export default class LandUseFormComponent extends Component {
 
   @action
   addZrSection(changeset) {
-    const newAffectedZoningResolution = this.store.createRecord('affected-zoning-resolution', {
-      landuseForm: this.landuseForm,
-    });
+    const newAffectedZoningResolution = this.store.createRecord(
+      'affected-zoning-resolution',
+      {
+        landuseForm: this.landuseForm,
+      },
+    );
 
-    addToHasMany(changeset, 'affectedZoningResolutions', newAffectedZoningResolution);
+    addToHasMany(
+      changeset,
+      'affectedZoningResolutions',
+      newAffectedZoningResolution,
+    );
   }
 
   @action
   removeZrSection(affectedZoningResolution, changeset) {
-    removeFromHasMany(changeset, 'affectedZoningResolutions', affectedZoningResolution);
+    removeFromHasMany(
+      changeset,
+      'affectedZoningResolutions',
+      affectedZoningResolution,
+    );
 
     this.recordsToDelete.push(affectedZoningResolution);
 

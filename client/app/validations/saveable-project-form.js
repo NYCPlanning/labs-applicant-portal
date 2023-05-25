@@ -1,6 +1,4 @@
-import {
-  validateLength,
-} from 'ember-changeset-validations/validators';
+import { validateLength } from 'ember-changeset-validations/validators';
 
 export default {
   dcpProjectname: [
