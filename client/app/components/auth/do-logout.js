@@ -1,10 +1,16 @@
-import Component from '@ember/component';
-import { action } from '@ember/object';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action, set } from '@ember/object';
 import { inject as service } from '@ember/service';
 import ENV from '../../config/environment';
 
 export default class DoLogout extends Component {
   @service session;
+
+  @tracked
+  iFrameDidLoad = false;
+
+  origin = window.location.origin;
 
   get nycIDHost() {
     const { origin } = new URL(ENV.NYCIDLocation || this.origin);
@@ -12,14 +18,10 @@ export default class DoLogout extends Component {
     return `${origin}/account/idpLogout.htm?x-frames-allow-from=${this.origin}`;
   }
 
-  origin = window.location.origin;
-
-  iFrameDidLoad = false;
-
   @action
   didLogoutNycId() {
     this.session.invalidate(); // also logout of the current session
 
-    this.set('iFrameDidLoad', true);
+    set(this, 'iFrameDidLoad', true);
   }
 }

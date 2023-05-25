@@ -21,8 +21,9 @@ export default class ContactManagerComponent extends Component {
   @tracked contact;
 
   get matchingCurrentApplicant() {
-    return this.args.projectApplicants
-      .find((applicant) => applicant.email === this.emailAddress);
+    return this.args.projectApplicants.find(
+      (applicant) => applicant.email === this.emailAddress,
+    );
   }
 
   @action
@@ -35,7 +36,9 @@ export default class ContactManagerComponent extends Component {
     this.addEditorModalOpen = true;
     const { emailAddress } = this;
 
-    this.contact = await this.store.queryRecord('contact', { email: emailAddress });
+    this.contact = await this.store.queryRecord('contact', {
+      email: emailAddress,
+    });
   }
 
   @action

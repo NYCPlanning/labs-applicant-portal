@@ -10,28 +10,20 @@ import COMMON_OPTIONSETS, {
 import APPLICANT_OPTIONSETS from '../optionsets/applicant';
 import CONTACT_OPTIONSETS from '../optionsets/contact';
 import BBL_OPTIONSETS from '../optionsets/bbl';
-import {
-  AFFECTED_ZONING_RESOLUTION_ACTION,
-} from '../optionsets/affected-zoning-resolution';
+import { AFFECTED_ZONING_RESOLUTION_ACTION } from '../optionsets/affected-zoning-resolution';
 import LANDUSE_ACTION_OPTIONSETS from '../optionsets/landuse-action';
 import LANDUSE_GEOGRAPHY_OPTIONSETS from '../optionsets/landuse-geography';
 import ZONING_MAP_CHANGE_OPTIONSETS from '../optionsets/zoning-map-change';
 import PACKAGE_OPTIONSETS from '../optionsets/package';
 import LANDUSE_FORM_OPTIONSETS from '../optionsets/landuse-form';
-import {
-  DCPCONSTRUCTIONPHASING,
-} from '../optionsets/rwcds-form';
+import { DCPCONSTRUCTIONPHASING } from '../optionsets/rwcds-form';
 import {
   DCPLEGALSTREETFRONTAGE,
   DCPHOUSINGUNITTYPE,
 } from '../optionsets/pas-form';
 import PROJECT_OPTIONSETS from '../optionsets/project';
-import {
-  DCPAPPLICANTROLE,
-} from '../optionsets/project-applicant';
-import {
-  CEQR_INVOICE_QUESTIONNAIRE_OPTIONSETS,
-} from '../optionsets/ceqr-invoice-questionnaire';
+import { DCPAPPLICANTROLE } from '../optionsets/project-applicant';
+import { CEQR_INVOICE_QUESTIONNAIRE_OPTIONSETS } from '../optionsets/ceqr-invoice-questionnaire';
 
 const OPTIONSET_LOOKUP = {
   applicant: {
@@ -77,22 +69,28 @@ const OPTIONSET_LOOKUP = {
     dcpHistoricdistrict: YES_NO,
     dcpDesignation: LANDUSE_FORM_OPTIONSETS.DCPDESIGNATION,
     dcpDisposition: LANDUSE_FORM_OPTIONSETS.DCPDISPOSITION,
-    dcpProjecthousingplanudaap: LANDUSE_FORM_OPTIONSETS.DCPPROJECTHOUSINGPLANUDAAP,
+    dcpProjecthousingplanudaap:
+      LANDUSE_FORM_OPTIONSETS.DCPPROJECTHOUSINGPLANUDAAP,
     dcpMannerofdisposition: LANDUSE_FORM_OPTIONSETS.DCPMANNEROFDISPOSITION,
     dcpRestrictandcondition: LANDUSE_FORM_OPTIONSETS.DCPRESTRICTANDCONDITION,
     dcpOfficespaceleaseopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpAcquisitionopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpSiteselectionopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
-    dcpIndicatetypeoffacility: LANDUSE_FORM_OPTIONSETS.DCPINDICATETYPEOFFACILITY,
+    dcpIndicatetypeoffacility:
+      LANDUSE_FORM_OPTIONSETS.DCPINDICATETYPEOFFACILITY,
     dcpExistingfacilityproposedtoremainopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
-    dcpExistingfacilityproposedtoremainandexpand: COMMON_OPTIONSETS.YES_NO_INTEGER,
-    dcpExistingfacilityreplacementinanewlocation: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpExistingfacilityproposedtoremainandexpand:
+      COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpExistingfacilityreplacementinanewlocation:
+      COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpNewfacilityopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpIsprojectlistedinstatementofneedsopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
-    dcpDidboroughpresidentproposealternativesite: COMMON_OPTIONSETS.YES_NO_INTEGER,
+    dcpDidboroughpresidentproposealternativesite:
+      COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpLegalinstrument: LANDUSE_FORM_OPTIONSETS.DCPLEGALINSTRUMENT,
     dcpRelatedacquisitionofpropertyopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
-    dcpOnlychangetheeliminationofamappedbutunimp: LANDUSE_FORM_OPTIONSETS.DCPONLYCHANGETHEELIMINATIONOFAMAPPEDBUTUNIMP,
+    dcpOnlychangetheeliminationofamappedbutunimp:
+      LANDUSE_FORM_OPTIONSETS.DCPONLYCHANGETHEELIMINATIONOFAMAPPEDBUTUNIMP,
     dcpYesmappedbutunimprovedstreetelimated: COMMON_OPTIONSETS.YES_NO,
     dcpEstablishstreetopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpEstablishparkopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
@@ -109,10 +107,11 @@ const OPTIONSET_LOOKUP = {
     dcpChangestreetgradeopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpChangeeasement: LANDUSE_FORM_OPTIONSETS.DCPEASEMENTS,
     dcpTypedisposition: LANDUSE_FORM_OPTIONSETS.DCPTYPEDISPOSITION,
-    dcpTotalzoningareatoberezoned: LANDUSE_FORM_OPTIONSETS.DCPTOTALZONINGAREATOBEREZONED,
-    dcpHaurbandevelopmentactionareaudaap: COMMON_OPTIONSETS.YES_NO_PICKLIST_CODE,
+    dcpTotalzoningareatoberezoned:
+      LANDUSE_FORM_OPTIONSETS.DCPTOTALZONINGAREATOBEREZONED,
+    dcpHaurbandevelopmentactionareaudaap:
+      COMMON_OPTIONSETS.YES_NO_PICKLIST_CODE,
     dcpHddispositionofurbanrenewalsite: COMMON_OPTIONSETS.YES_NO_PICKLIST_CODE,
-
   },
   rwcdsForm: {
     dcpHasprojectchangedsincesubmissionofthepas: YES_NO,
@@ -145,19 +144,23 @@ const OPTIONSET_LOOKUP = {
     dcpApplicantispublicagencyactions: YES_NO,
     dcpIstheactiontoauthorizeorpermitanopenuse: YES_NO,
     dcpIstheactiontoauthorizeacommercial: YES_NO,
-    dcpIndicatewhetheractionisamodification: LANDUSE_ACTION_OPTIONSETS.DCPINDICATEWHETHERACTIONISAMODIFICATION,
+    dcpIndicatewhetheractionisamodification:
+      LANDUSE_ACTION_OPTIONSETS.DCPINDICATEWHETHERACTIONISAMODIFICATION,
     dcpModsubjectto197c: YES_NO,
-    dcpPreviouslyapprovedactioncode: LANDUSE_ACTION_OPTIONSETS.DCPPREVIOUSLYAPPROVEDACTIONCODE,
+    dcpPreviouslyapprovedactioncode:
+      LANDUSE_ACTION_OPTIONSETS.DCPPREVIOUSLYAPPROVEDACTIONCODE,
     actions: AFFECTED_ZONING_RESOLUTION_ACTION,
   },
   sitedatahForm: {
     dcpSitetobedisposed: YES_NO,
   },
   landuseGeography: {
-    dcpIsthesiteimprovedunimprovedorpartlyimp: LANDUSE_GEOGRAPHY_OPTIONSETS.DCPISTHESITEIMPROVEDUNIMPROVEDORPARTLYIMP,
+    dcpIsthesiteimprovedunimprovedorpartlyimp:
+      LANDUSE_GEOGRAPHY_OPTIONSETS.DCPISTHESITEIMPROVEDUNIMPROVEDORPARTLYIMP,
   },
   zoningMapChange: {
-    dcpExistingzoningdistrictvaluenew: ZONING_MAP_CHANGE_OPTIONSETS.DCPEXISTINGZONINGDISTRICTVALUE,
+    dcpExistingzoningdistrictvaluenew:
+      ZONING_MAP_CHANGE_OPTIONSETS.DCPEXISTINGZONINGDISTRICTVALUE,
   },
   relatedAction: {
     // Actually a boolean field in CRM, not picklist
@@ -166,8 +169,10 @@ const OPTIONSET_LOOKUP = {
   ceqrInvoiceQuestionnaire: {
     dcpSquarefeet: CEQR_INVOICE_QUESTIONNAIRE_OPTIONSETS.SQUARE_FEET,
     dcpIsthesoleaapplicantagovtagency: COMMON_OPTIONSETS.YES_NO_PICKLIST_CODE,
-    dcpProjectspolelyconsistactionsnotmeasurable: COMMON_OPTIONSETS.YES_NO_PICKLIST_CODE,
-    dcpProjectmodificationtoapreviousapproval: COMMON_OPTIONSETS.YES_NO_PICKLIST_CODE,
+    dcpProjectspolelyconsistactionsnotmeasurable:
+      COMMON_OPTIONSETS.YES_NO_PICKLIST_CODE,
+    dcpProjectmodificationtoapreviousapproval:
+      COMMON_OPTIONSETS.YES_NO_PICKLIST_CODE,
     dcpRespectivedecrequired: COMMON_OPTIONSETS.YES_NO,
   },
 };
@@ -205,6 +210,7 @@ export function optionset([model, optionsetId, returnType, lookupToken]) {
       if (option) {
         return option.code;
       }
+      // eslint-disable-next-line no-console
       console.log(`Warning: Unable to lookup code for optionset ${optionsetId} (model is '${model})' using token '${lookupToken}'`); // eslint-disable-line
       break;
     case 'label':
@@ -217,7 +223,10 @@ export function optionset([model, optionsetId, returnType, lookupToken]) {
       if (option) {
         return option.label;
       }
-      console.log(`Warning: Unable to lookup label for optionset ${optionsetId} (model is '${model}) using token '${lookupToken}'`); // eslint-disable-linent-disable-line
+      // eslint-disable-next-line no-console
+      console.log(
+        `Warning: Unable to lookup label for optionset ${optionsetId} (model is '${model}) using token '${lookupToken}'`,
+      ); // eslint-disable-linent-disable-line
       break;
     default:
       return optionset;

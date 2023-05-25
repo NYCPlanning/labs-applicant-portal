@@ -1,17 +1,13 @@
 import { module, test } from 'qunit';
 import {
-  click,
-  fillIn,
-  settled,
-  visit,
-  currentURL,
+  click, fillIn, visit, currentURL,
 } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import exceedMaximum from '../helpers/exceed-maximum-characters';
 
-module('Acceptance | user can click rwcds edit', function(hooks) {
+module('Acceptance | user can click rwcds edit', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
@@ -21,7 +17,7 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     });
   });
 
-  test('User can visit, edit and save rwcds-form route', async function(assert) {
+  test('User can visit, edit and save rwcds-form route', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'rwcdsForm')],
     });
@@ -31,18 +27,24 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     assert.equal(currentURL(), '/rwcds-form/1/edit');
 
     assert.dom('[data-test-input="dcpProjectsitedescription"]').hasNoValue();
-    await fillIn('[data-test-input="dcpProjectsitedescription"]', 'Whatever affects one directly, affects all indirectly.');
+    await fillIn(
+      '[data-test-input="dcpProjectsitedescription"]',
+      'Whatever affects one directly, affects all indirectly.',
+    );
 
     await click('[data-test-save-button]');
 
-    await settled();
+    assert
+      .dom('[data-test-input="dcpProjectsitedescription"]')
+      .hasValue('Whatever affects one directly, affects all indirectly.');
 
-    assert.dom('[data-test-input="dcpProjectsitedescription"]').hasValue('Whatever affects one directly, affects all indirectly.');
-
-    assert.equal(this.server.db.rwcdsForms.firstObject.dcpProjectsitedescription, 'Whatever affects one directly, affects all indirectly.');
+    assert.equal(
+      this.server.db.rwcdsForms.firstObject.dcpProjectsitedescription,
+      'Whatever affects one directly, affects all indirectly.',
+    );
   });
 
-  test('User can save proposed actions information on rwcds form', async function(assert) {
+  test('User can save proposed actions information on rwcds form', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'rwcdsForm')],
     });
@@ -52,18 +54,25 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     assert.equal(currentURL(), '/rwcds-form/1/edit');
 
     assert.dom('[data-test-input="dcpModifiedzrsectionnumber"]').hasNoValue();
-    await fillIn('[data-test-input="dcpModifiedzrsectionnumber"]', 'blah blah blah');
+    await fillIn(
+      '[data-test-input="dcpModifiedzrsectionnumber"]',
+      'blah blah blah',
+    );
 
     await click('[data-test-save-button]');
 
-    await settled();
+    assert
+      .dom('[data-test-input="dcpModifiedzrsectionnumber"]')
+      .hasValue('blah blah blah');
 
-    assert.dom('[data-test-input="dcpModifiedzrsectionnumber"]').hasValue('blah blah blah');
-
-    assert.equal(this.server.db.affectedZoningResolutions.firstObject.dcpModifiedzrsectionnumber, 'blah blah blah');
+    assert.equal(
+      this.server.db.affectedZoningResolutions.firstObject
+        .dcpModifiedzrsectionnumber,
+      'blah blah blah',
+    );
   });
 
-  test('User can visit, edit, save, and submit rwcds-form route', async function(assert) {
+  test('User can visit, edit, save, and submit rwcds-form route', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'rwcdsForm')],
     });
@@ -73,13 +82,17 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     assert.equal(currentURL(), '/rwcds-form/1/edit');
 
     assert.dom('[data-test-input="dcpProjectsitedescription"]').hasNoValue();
-    await fillIn('[data-test-input="dcpProjectsitedescription"]', 'Whatever affects one directly, affects all indirectly.');
+    await fillIn(
+      '[data-test-input="dcpProjectsitedescription"]',
+      'Whatever affects one directly, affects all indirectly.',
+    );
 
-    await fillIn('[data-test-input="dcpProposedprojectdevelopmentdescription"]', 'bananas');
+    await fillIn(
+      '[data-test-input="dcpProposedprojectdevelopmentdescription"]',
+      'bananas',
+    );
 
     await click('[data-test-save-button]');
-
-    await settled();
 
     await click('[data-test-submit-button]');
     await click('[data-test-confirm-submit-button]');
@@ -87,30 +100,36 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     assert.equal(currentURL(), '/rwcds-form/1?header=true');
   });
 
-  test('User can view existing values in Project Description section', async function(assert) {
+  test('User can view existing values in Project Description section', async function (assert) {
     this.server.create('project', 1, {
-      packages: [this.server.create('package', 'toDo', {
-        dcpPackagetype: 717170004,
-        rwcdsForm: this.server.create('rwcds-form', {
-          dcpProjectsitedescription: 'Mixed use',
-          dcpProposedprojectdevelopmentdescription: 'Increase equity',
-          dcpBuildyear: '1990',
-          dcpSitehistory: 'Some history',
+      packages: [
+        this.server.create('package', 'toDo', {
+          dcpPackagetype: 717170004,
+          rwcdsForm: this.server.create('rwcds-form', {
+            dcpProjectsitedescription: 'Mixed use',
+            dcpProposedprojectdevelopmentdescription: 'Increase equity',
+            dcpBuildyear: '1990',
+            dcpSitehistory: 'Some history',
+          }),
         }),
-      })],
+      ],
     });
 
     await visit('/rwcds-form/1/edit');
 
     assert.equal(currentURL(), '/rwcds-form/1/edit');
 
-    assert.dom('[data-test-input="dcpProjectsitedescription"]').hasValue('Mixed use');
-    assert.dom('[data-test-input="dcpProposedprojectdevelopmentdescription"]').hasValue('Increase equity');
+    assert
+      .dom('[data-test-input="dcpProjectsitedescription"]')
+      .hasValue('Mixed use');
+    assert
+      .dom('[data-test-input="dcpProposedprojectdevelopmentdescription"]')
+      .hasValue('Increase equity');
     assert.dom('[data-test-input="dcpBuildyear"]').hasValue('1990');
     assert.dom('[data-test-input="dcpSitehistory"]').hasValue('Some history');
   });
 
-  test('Validation messages display for Project Description', async function(assert) {
+  test('Validation messages display for Project Description', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'rwcdsForm')],
     });
@@ -119,23 +138,50 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
 
     assert.equal(currentURL(), '/rwcds-form/1/edit');
 
-    await fillIn('[data-test-input="dcpProjectsitedescription"]', exceedMaximum(2400, 'String'));
-    assert.dom('[data-test-validation-message="dcpProjectsitedescription"').hasText('Text is too long (max 2400 characters)');
+    await fillIn(
+      '[data-test-input="dcpProjectsitedescription"]',
+      exceedMaximum(2400, 'String'),
+    );
+    assert
+      .dom('[data-test-validation-message="dcpProjectsitedescription"]')
+      .hasText('Text is too long (max 2400 characters)');
 
-    await fillIn('[data-test-input="dcpProposedprojectdevelopmentdescription"]', exceedMaximum(2400, 'String'));
-    assert.dom('[data-test-validation-message="dcpProposedprojectdevelopmentdescription"').hasText('Text is too long (max 2400 characters)');
+    await fillIn(
+      '[data-test-input="dcpProposedprojectdevelopmentdescription"]',
+      exceedMaximum(2400, 'String'),
+    );
+    assert
+      .dom(
+        '[data-test-validation-message="dcpProposedprojectdevelopmentdescription"]',
+      )
+      .hasText('Text is too long (max 2400 characters)');
 
-    await fillIn('[data-test-input="dcpBuildyear"]', exceedMaximum(4, 'Number'));
-    assert.dom('[data-test-validation-message="dcpBuildyear"').hasText('Number is too long (max 4 characters)');
+    await fillIn(
+      '[data-test-input="dcpBuildyear"]',
+      exceedMaximum(4, 'Number'),
+    );
+    assert
+      .dom('[data-test-validation-message="dcpBuildyear"]')
+      .hasText('Number is too long (max 4 characters)');
 
-    await fillIn('[data-test-input="dcpRationalbehindthebuildyear"]', exceedMaximum(2400, 'String'));
-    assert.dom('[data-test-validation-message="dcpRationalbehindthebuildyear"').hasText('Text is too long (max 2400 characters)');
+    await fillIn(
+      '[data-test-input="dcpRationalbehindthebuildyear"]',
+      exceedMaximum(2400, 'String'),
+    );
+    assert
+      .dom('[data-test-validation-message="dcpRationalbehindthebuildyear"]')
+      .hasText('Text is too long (max 2400 characters)');
 
-    await fillIn('[data-test-input="dcpSitehistory"]', exceedMaximum(2400, 'String'));
-    assert.dom('[data-test-validation-message="dcpSitehistory"').hasText('Text is too long (max 2400 characters)');
+    await fillIn(
+      '[data-test-input="dcpSitehistory"]',
+      exceedMaximum(2400, 'String'),
+    );
+    assert
+      .dom('[data-test-validation-message="dcpSitehistory"]')
+      .hasText('Text is too long (max 2400 characters)');
   });
 
-  test('Validation messages display for Proposed Actions', async function(assert) {
+  test('Validation messages display for Proposed Actions', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'rwcdsForm')],
     });
@@ -146,26 +192,63 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
 
     assert.dom('[data-test-zrsectionnumber]').exists();
 
-    await fillIn('[data-test-input="dcpModifiedzrsectionnumber"]', exceedMaximum(25, 'String'));
-    assert.dom('[data-test-validation-message="dcpModifiedzrsectionnumber"]').hasText('Text is too long (max 25 characters)');
+    await fillIn(
+      '[data-test-input="dcpModifiedzrsectionnumber"]',
+      exceedMaximum(25, 'String'),
+    );
+    assert
+      .dom('[data-test-validation-message="dcpModifiedzrsectionnumber"]')
+      .hasText('Text is too long (max 25 characters)');
 
-    await fillIn('[data-test-input="dcpZrsectiontitle"]', exceedMaximum(100, 'String'));
-    assert.dom('[data-test-validation-message="dcpZrsectiontitle"]').hasText('Text is too long (max 100 characters)');
+    await fillIn(
+      '[data-test-input="dcpZrsectiontitle"]',
+      exceedMaximum(100, 'String'),
+    );
+    assert
+      .dom('[data-test-validation-message="dcpZrsectiontitle"]')
+      .hasText('Text is too long (max 100 characters)');
 
-    await fillIn('[data-test-input="dcpPurposeandneedfortheproposedaction"]', exceedMaximum(2400, 'String'));
-    assert.dom('[data-test-validation-message="dcpPurposeandneedfortheproposedaction"]').hasText('Text is too long (max 2400 characters)');
+    await fillIn(
+      '[data-test-input="dcpPurposeandneedfortheproposedaction"]',
+      exceedMaximum(2400, 'String'),
+    );
+    assert
+      .dom(
+        '[data-test-validation-message="dcpPurposeandneedfortheproposedaction"]',
+      )
+      .hasText('Text is too long (max 2400 characters)');
 
-    assert.dom('[data-test-validation-message="dcpWhichactionsfromotheragenciesaresought"]').doesNotExist();
-    await click('[data-test-radio="dcpIsapplicantseekingaction"][data-test-radio-option="Yes"]');
+    assert
+      .dom(
+        '[data-test-validation-message="dcpWhichactionsfromotheragenciesaresought"]',
+      )
+      .doesNotExist();
+    await click(
+      '[data-test-radio="dcpIsapplicantseekingaction"][data-test-radio-option="Yes"]',
+    );
 
-    await fillIn('[data-test-input="dcpWhichactionsfromotheragenciesaresought"]', exceedMaximum(2400, 'String'));
-    assert.dom('[data-test-validation-message="dcpWhichactionsfromotheragenciesaresought"]').hasText('Text is too long (max 2400 characters)');
+    await fillIn(
+      '[data-test-input="dcpWhichactionsfromotheragenciesaresought"]',
+      exceedMaximum(2400, 'String'),
+    );
+    assert
+      .dom(
+        '[data-test-validation-message="dcpWhichactionsfromotheragenciesaresought"]',
+      )
+      .hasText('Text is too long (max 2400 characters)');
 
-    await fillIn('[data-test-input="dcpWhichactionsfromotheragenciesaresought"]', '');
-    assert.dom('[data-test-validation-message="dcpWhichactionsfromotheragenciesaresought"]').hasText('This field is required');
+    await fillIn(
+      '[data-test-input="dcpWhichactionsfromotheragenciesaresought"]',
+      '',
+    );
+    assert
+      .dom(
+        '[data-test-validation-message="dcpWhichactionsfromotheragenciesaresought"]',
+      )
+      .hasText('This field is required');
   });
 
-  test('Validation messages display for With-Action-No-Action', async function(assert) {
+  test('Validation messages display for With-Action-No-Action', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'rwcdsForm')],
     });
@@ -175,29 +258,69 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     assert.equal(currentURL(), '/rwcds-form/1/edit');
 
     // no-action
-    await fillIn('[data-test-input="dcpDevelopmentsiteassumptions"]', exceedMaximum(4800, 'String'));
-    assert.dom('[data-test-validation-message="dcpDevelopmentsiteassumptions"').hasText('Text is too long (max 4800 characters)');
+    await fillIn(
+      '[data-test-input="dcpDevelopmentsiteassumptions"]',
+      exceedMaximum(4800, 'String'),
+    );
+    assert
+      .dom('[data-test-validation-message="dcpDevelopmentsiteassumptions"]')
+      .hasText('Text is too long (max 4800 characters)');
 
-    await fillIn('[data-test-input="dcpDescribethenoactionscenario"]', exceedMaximum(2400, 'String'));
-    assert.dom('[data-test-validation-message="dcpDescribethenoactionscenario"').hasText('Text is too long (max 2400 characters)');
+    await fillIn(
+      '[data-test-input="dcpDescribethenoactionscenario"]',
+      exceedMaximum(2400, 'String'),
+    );
+    assert
+      .dom('[data-test-validation-message="dcpDescribethenoactionscenario"]')
+      .hasText('Text is too long (max 2400 characters)');
 
-    await click('[data-test-radio="dcpExistingconditions"][data-test-radio-option="No"]');
+    await click(
+      '[data-test-radio="dcpExistingconditions"][data-test-radio-option="No"]',
+    );
 
-    await fillIn('[data-test-input="dcpHowdidyoudeterminethenoactionscenario"]', exceedMaximum(2400, 'String'));
-    assert.dom('[data-test-validation-message="dcpHowdidyoudeterminethenoactionscenario"').hasText('Text is too long (max 2400 characters)');
+    await fillIn(
+      '[data-test-input="dcpHowdidyoudeterminethenoactionscenario"]',
+      exceedMaximum(2400, 'String'),
+    );
+    assert
+      .dom(
+        '[data-test-validation-message="dcpHowdidyoudeterminethenoactionscenario"]',
+      )
+      .hasText('Text is too long (max 2400 characters)');
 
     // with-action
-    await fillIn('[data-test-input="dcpDescribethewithactionscenario"]', exceedMaximum(2400, 'String'));
-    assert.dom('[data-test-validation-message="dcpDescribethewithactionscenario"').hasText('Text is too long (max 2400 characters)');
+    await fillIn(
+      '[data-test-input="dcpDescribethewithactionscenario"]',
+      exceedMaximum(2400, 'String'),
+    );
+    assert
+      .dom('[data-test-validation-message="dcpDescribethewithactionscenario"]')
+      .hasText('Text is too long (max 2400 characters)');
 
-    await fillIn('[data-test-input="dcpHowdidyoudeterminethiswithactionscena"]', exceedMaximum(2400, 'String'));
-    assert.dom('[data-test-validation-message="dcpHowdidyoudeterminethiswithactionscena"').hasText('Text is too long (max 2400 characters)');
+    await fillIn(
+      '[data-test-input="dcpHowdidyoudeterminethiswithactionscena"]',
+      exceedMaximum(2400, 'String'),
+    );
+    assert
+      .dom(
+        '[data-test-validation-message="dcpHowdidyoudeterminethiswithactionscena"]',
+      )
+      .hasText('Text is too long (max 2400 characters)');
 
-    await click('[data-test-radio="dcpIsrwcdsscenario"][data-test-radio-option="Yes"]');
+    await click(
+      '[data-test-radio="dcpIsrwcdsscenario"][data-test-radio-option="Yes"]',
+    );
 
-    assert.dom('[data-test-validation-message="dcpRwcdsexplanation"]').hasText('This field is required');
+    assert
+      .dom('[data-test-validation-message="dcpRwcdsexplanation"]')
+      .hasText('This field is required');
 
-    await fillIn('[data-test-input="dcpRwcdsexplanation"]', exceedMaximum(2400, 'String'));
-    assert.dom('[data-test-validation-message="dcpRwcdsexplanation"').hasText('Text is too long (max 2400 characters)');
+    await fillIn(
+      '[data-test-input="dcpRwcdsexplanation"]',
+      exceedMaximum(2400, 'String'),
+    );
+    assert
+      .dom('[data-test-validation-message="dcpRwcdsexplanation"]')
+      .hasText('Text is too long (max 2400 characters)');
   });
 });

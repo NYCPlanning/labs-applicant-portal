@@ -10,17 +10,20 @@ import {
 import { setupApplicationTest } from 'ember-qunit';
 import window, { setupWindowMock } from 'ember-window-mock';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { currentSession, authenticateSession } from 'ember-simple-auth/test-support';
+import {
+  currentSession,
+  authenticateSession,
+} from 'ember-simple-auth/test-support';
 import { Response } from 'ember-cli-mirage';
 
 const DUMMY_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
 
-module('Acceptance | user can login', function(hooks) {
+module('Acceptance | user can login', function (hooks) {
   setupApplicationTest(hooks);
   setupWindowMock(hooks);
   setupMirage(hooks);
 
-  test('AccessToken is sent to server', async function(assert) {
+  test('AccessToken is sent to server', async function (assert) {
     assert.expect(2);
 
     this.server.create('contact');
@@ -51,19 +54,32 @@ module('Acceptance | user can login', function(hooks) {
   test('User sees error message if no CRM contact is found for their email', async function (assert) {
     const accessToken = DUMMY_TOKEN;
     this.server.create('contact');
-    this.server.get('/login', () => new Response(401, { some: 'header' }, {
-      errors: [{
-        code: 'NO_CONTACT_FOUND',
-        title: 'This message is nice but does not affect frontend logic',
-        status: 401,
-      }],
-    }));
+    this.server.get(
+      '/login',
+      () => new Response(
+        401,
+        { some: 'header' },
+        {
+          errors: [
+            {
+              code: 'NO_CONTACT_FOUND',
+              title:
+                  'This message is nice but does not affect frontend logic',
+              status: 401,
+            },
+          ],
+        },
+      ),
+    );
 
     window.location.hash = `#access_token=${accessToken}`;
     await visit('/login');
 
-    assert.ok(find('[data-test-applicant-error-message="contact-not-assigned"'));
-    assert.dom('[data-test-error-key="code"]')
+    assert.ok(
+      find('[data-test-applicant-error-message="contact-not-assigned"]'),
+    );
+    assert
+      .dom('[data-test-error-key="code"]')
       .hasText('code: NO_CONTACT_FOUND', 'It displays the correct error code');
   });
 
@@ -94,7 +110,8 @@ module('Acceptance | user can login', function(hooks) {
 
     await visit('/login');
 
-    assert.dom('[data-test-error-key="detail"][data-test-error-idx="0"]')
+    assert
+      .dom('[data-test-error-key="detail"][data-test-error-idx="0"]')
       .hasText('detail: Invalid auth params - "access_token" missing.');
   });
 
@@ -115,11 +132,20 @@ module('Acceptance | user can login', function(hooks) {
   });
 
   test('Redirect an unauthenticated user', async function (assert) {
-    this.server.get('/projects', () => new Response(403, { some: 'header' }, {
-      errors: [{
-        status: 403,
-      }],
-    }));
+    this.server.get(
+      '/projects',
+      () => new Response(
+        403,
+        { some: 'header' },
+        {
+          errors: [
+            {
+              status: 403,
+            },
+          ],
+        },
+      ),
+    );
 
     await authenticateSession();
     await visit('/projects');

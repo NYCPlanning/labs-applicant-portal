@@ -27,12 +27,16 @@ export default class ZAPAuthenticator extends OAuth2ImplicitGrantAuthenticator {
     // Pass the NYCIDToken to backend /login endpoint.
     // Server should provide an access_token used for signing
     // requests using the Authorization header
-    const response = await fetch(`${ENV.host}/login?accessToken=${accessToken}&DEBUG_useremail=${attemptedLoginEmail}`);
+    const response = await fetch(
+      `${ENV.host}/login?accessToken=${accessToken}&DEBUG_useremail=${attemptedLoginEmail}`,
+    );
     const body = await response.json();
 
     if (!response.ok) throw body;
 
-    const displayName = `${(typeof NYCIDUser.givenName === 'undefined') ? '' : NYCIDUser.givenName} ${(typeof NYCIDUser.sn === 'undefined') ? '' : NYCIDUser.sn}`;
+    const displayName = `${
+      typeof NYCIDUser.givenName === 'undefined' ? '' : NYCIDUser.givenName
+    } ${typeof NYCIDUser.sn === 'undefined' ? '' : NYCIDUser.sn}`;
 
     try {
       // eslint-disable-next-line no-undef
@@ -42,7 +46,10 @@ export default class ZAPAuthenticator extends OAuth2ImplicitGrantAuthenticator {
       });
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.log('FS.identify failed.  This may happen during tests, if using incognito mode, or if Mirage is blocking your request. Error message:', e);
+      console.log(
+        'FS.identify failed.  This may happen during tests, if using incognito mode, or if Mirage is blocking your request. Error message:',
+        e,
+      );
     }
 
     // Since all requests to the API are now authenticated.

@@ -25,14 +25,15 @@ export default class ChangeInCityMapEstablishDelineateListComponent extends Comp
         prop: 'dcpEstablisheasement',
         label: 'Easement',
       },
-
     ];
 
-    return actions.reduce((citymapEstablishDelineate, type) => {
-      if (landuseForm[type.prop]) {
-        citymapEstablishDelineate.push(type.label);
-      }
-      return citymapEstablishDelineate;
-    }, []).join(', ');
+    return actions
+      .reduce((citymapEstablishDelineate, type) => {
+        if (landuseForm[type.prop]) {
+          citymapEstablishDelineate.push(type.label);
+        }
+        return citymapEstablishDelineate;
+      }, [])
+      .join(', ');
   }
 }

@@ -43,7 +43,7 @@ export default class LanduseActionModel extends Model {
 
   @attr dcpFollowuptopreviousaction;
 
-  @attr dcpDateofpreviousapproval
+  @attr dcpDateofpreviousapproval;
 
   @attr dcpLapsedateofpreviousapproval;
 

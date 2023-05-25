@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | packages/pas-form/show', function(hooks) {
+module('Integration | Component | packages/pas-form/show', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('Displays Project Addresses', async function(assert) {
+  test('Displays Project Addresses', async function (assert) {
     this.set('packagePasForm', {
       pasForm: {
         projectAddresses: [
@@ -20,12 +20,16 @@ module('Integration | Component | packages/pas-form/show', function(hooks) {
       },
     });
 
-    await render(hbs`<Packages::PasForm::Show @package={{this.packagePasForm}} />`);
+    await render(
+      hbs`<Packages::PasForm::Show @package={{this.packagePasForm}} />`,
+    );
 
-    assert.dom('[data-test-projectAddress="0"]').hasText('77 Frederick Douglas');
+    assert
+      .dom('[data-test-projectAddress="0"]')
+      .hasText('77 Frederick Douglas');
   });
 
-  test('Displays all proposed development types', async function(assert) {
+  test('Displays all proposed development types', async function (assert) {
     this.set('packageHasAllTypes', {
       pasForm: {
         dcpProposeddevelopmentsitenewconstruction: true,
@@ -39,12 +43,18 @@ module('Integration | Component | packages/pas-form/show', function(hooks) {
       },
     });
 
-    await render(hbs`<Packages::PasForm::Show @package={{this.packageHasAllTypes}} />`);
+    await render(
+      hbs`<Packages::PasForm::Show @package={{this.packageHasAllTypes}} />`,
+    );
 
-    assert.dom('[data-test-proposedDevelopmentTypes]').hasText('Newly constructed buildings, Demolition, Alteration, Addition, Change of use, Enlargement, Other (Esta bien)');
+    assert
+      .dom('[data-test-proposedDevelopmentTypes]')
+      .hasText(
+        'Newly constructed buildings, Demolition, Alteration, Addition, Change of use, Enlargement, Other (Esta bien)',
+      );
   });
 
-  test('Does not display Falsy proposed development types', async function(assert) {
+  test('Does not display Falsy proposed development types', async function (assert) {
     this.set('packageHasSomeTypes', {
       pasForm: {
         dcpProposeddevelopmentsitenewconstruction: true,
@@ -54,8 +64,12 @@ module('Integration | Component | packages/pas-form/show', function(hooks) {
       },
     });
 
-    await render(hbs`<Packages::PasForm::Show @package={{this.packageHasSomeTypes}} />`);
+    await render(
+      hbs`<Packages::PasForm::Show @package={{this.packageHasSomeTypes}} />`,
+    );
 
-    assert.dom('[data-test-proposedDevelopmentTypes]').hasText('Newly constructed buildings, Demolition, Alteration');
+    assert
+      .dom('[data-test-proposedDevelopmentTypes]')
+      .hasText('Newly constructed buildings, Demolition, Alteration');
   });
 });

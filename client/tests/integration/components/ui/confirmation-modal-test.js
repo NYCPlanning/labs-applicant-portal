@@ -3,12 +3,14 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | ui/confirmation-modal', function(hooks) {
+module('Integration | Component | ui/confirmation-modal', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     this.show = false;
-    this.toggle = () => { this.set('show', !this.show); };
+    this.toggle = () => {
+      this.set('show', !this.show);
+    };
 
     // Template block usage:
     await render(hbs`

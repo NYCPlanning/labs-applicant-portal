@@ -13,6 +13,6 @@ shows that else block when the iframe is still loading. When it is finished
 loading, it yields the main block. --}}
 {{#if this.iFrameDidLoad}}
   {{yield}}
-{{else if (hasBlock 'inverse')}}
+{{else if (has-block 'inverse')}}
   {{yield to="inverse"}}
 {{/if}}

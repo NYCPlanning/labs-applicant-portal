@@ -1,5 +1,5 @@
 import EmberRouterScroll from 'ember-router-scroll';
-import config from './config/environment';
+import config from 'client/config/environment';
 
 export default class Router extends EmberRouterScroll {
   location = config.locationType;
@@ -8,7 +8,7 @@ export default class Router extends EmberRouterScroll {
 }
 
 // TODO: wrap in an authenticated route
-Router.map(function() {
+Router.map(function () {
   // eslint-disable-line
   this.route('projects');
   this.route('login');
@@ -39,10 +39,14 @@ Router.map(function() {
     this.route('show', { path: '/' });
   });
 
-  this.route('scope-of-work-draft', { path: 'scope-of-work-draft/:id' }, function () {
-    this.route('edit');
-    this.route('show', { path: '/' });
-  });
+  this.route(
+    'scope-of-work-draft',
+    { path: 'scope-of-work-draft/:id' },
+    function () {
+      this.route('edit');
+      this.route('show', { path: '/' });
+    },
+  );
 
   // REDO: Consider renaming this to draft-eis, final eis
   this.route('deis', { path: 'deis/:id' }, function () {
@@ -67,7 +71,7 @@ Router.map(function() {
 
   this.route('project', { path: 'projects/:id' });
 
-  this.route('auth', function() {
+  this.route('auth', function () {
     this.route('login');
     this.route('register');
     this.route('validate');

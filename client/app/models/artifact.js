@@ -40,7 +40,7 @@ export default class ArtifactModel extends Model {
   documents;
 
   get isDirty() {
-    return (this.fileManager && this.fileManager.isDirty);
+    return this.fileManager && this.fileManager.isDirty;
   }
 
   async save() {
@@ -49,13 +49,17 @@ export default class ArtifactModel extends Model {
     try {
       await this.fileManager.save();
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.log('Error saving files: ', e);
 
-      this.fileUploadErrors = [{
-        code: 'UPLOAD_DOC_FAILED',
-        title: 'Failed to upload artifact documents',
-        detail: 'An error occured while uploading your artifact documents. Please refresh and retry.',
-      }];
+      this.fileUploadErrors = [
+        {
+          code: 'UPLOAD_DOC_FAILED',
+          title: 'Failed to upload artifact documents',
+          detail:
+            'An error occured while uploading your artifact documents. Please refresh and retry.',
+        },
+      ];
     }
 
     if (!this.fileUploadErrors) {

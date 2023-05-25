@@ -17,7 +17,12 @@ export default class ProjectController extends Controller {
       firstname: applicant.firstName,
       lastname: applicant.lastName,
       emailaddress: applicant.emailAddress,
-      dcpApplicantrole: optionset(['projectApplicant', 'applicantrole', 'code', 'Other']),
+      dcpApplicantrole: optionset([
+        'projectApplicant',
+        'applicantrole',
+        'code',
+        'Other',
+      ]),
       project: this.model,
     });
 

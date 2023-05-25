@@ -1,8 +1,5 @@
 import { Factory, trait } from 'ember-cli-mirage';
-import {
-  STATUSCODE,
-  DCPVISIBILITY,
-} from '../../optionsets/package';
+import { STATUSCODE, DCPVISIBILITY } from '../../optionsets/package';
 
 export default Factory.extend({
   dcpStatusdate: new Date('December 17, 1995 03:24:00'),
@@ -10,11 +7,7 @@ export default Factory.extend({
   dcpPackagenotes: 'Some instructions from Planners',
 
   dcpPackageversion(i) {
-    const SAMPLE_VERSIONS = [
-      1,
-      2,
-      3,
-    ];
+    const SAMPLE_VERSIONS = [1, 2, 3];
 
     return SAMPLE_VERSIONS[i % SAMPLE_VERSIONS.length];
   },
@@ -108,15 +101,15 @@ export default Factory.extend({
 
   withLandUseActions: trait({
     afterCreate(projectPackage, server) {
-      server.create('pas-form', 'withLandUseActions', { package: projectPackage });
+      server.create('pas-form', 'withLandUseActions', {
+        package: projectPackage,
+      });
     },
   }),
 
   toDo: trait({
     statuscode(i) {
-      const statuses = [
-        STATUSCODE.PACKAGE_PREPARATION.code,
-      ];
+      const statuses = [STATUSCODE.PACKAGE_PREPARATION.code];
 
       return statuses[i % statuses.length];
     },

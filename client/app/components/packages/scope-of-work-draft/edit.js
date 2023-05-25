@@ -18,6 +18,7 @@ export default class PackagesScopeOfWorkDraftEditComponent extends Component {
     try {
       await this.args.package.save();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log('Save Draft Scope of Work (DSOW) package error:', error);
     }
   }
@@ -26,8 +27,15 @@ export default class PackagesScopeOfWorkDraftEditComponent extends Component {
   async submitPackage() {
     await this.args.package.submit();
 
-    if (!this.args.package.singleCeqrInvoiceQuestionnaire.adapterError && !this.args.package.adapterError && !this.args.package.fileUploadErrors) {
-      this.router.transitionTo('scope-of-work-draft.show', this.args.package.id);
+    if (
+      !this.args.package.singleCeqrInvoiceQuestionnaire.adapterError
+      && !this.args.package.adapterError
+      && !this.args.package.fileUploadErrors
+    ) {
+      this.router.transitionTo(
+        'scope-of-work-draft.show',
+        this.args.package.id,
+      );
     }
   }
 }

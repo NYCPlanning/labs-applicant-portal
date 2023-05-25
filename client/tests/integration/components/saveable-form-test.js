@@ -3,15 +3,15 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, fillIn, click } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | f', function(hooks) {
+module('Integration | Component | f', function (hooks) {
   setupRenderingTest(hooks);
 
   // default some blank validators
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.set('validators', [{}, {}]);
   });
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     this.dummyModel = {};
 
     await render(hbs`
@@ -174,16 +174,24 @@ module('Integration | Component | f', function(hooks) {
 
     assert.dom('[data-test-save-button]').isEnabled();
 
-    assert.deepEqual(this.secondaryModel, {
-      someProp: 'test',
-      someBool: null,
-    }, 'does not mutate until saved');
+    assert.deepEqual(
+      this.secondaryModel,
+      {
+        someProp: 'test',
+        someBool: null,
+      },
+      'does not mutate until saved',
+    );
 
     await click('[data-test-save-button]');
 
-    assert.deepEqual(this.secondaryModel, {
-      someProp: 'asdf',
-      someBool: null,
-    }, 'mutates when saved');
+    assert.deepEqual(
+      this.secondaryModel,
+      {
+        someProp: 'asdf',
+        someBool: null,
+      },
+      'mutates when saved',
+    );
   });
 });

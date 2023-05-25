@@ -22,14 +22,15 @@ export default class ChangeInCityMapProjectChangeListComponent extends Component
         prop: 'dcpChangeeasement',
         label: 'Easement',
       },
-
     ];
 
-    return actions.reduce((citymapPropjectChange, type) => {
-      if (landuseForm[type.prop]) {
-        citymapPropjectChange.push(type.label);
-      }
-      return citymapPropjectChange;
-    }, []).join(', ');
+    return actions
+      .reduce((citymapPropjectChange, type) => {
+        if (landuseForm[type.prop]) {
+          citymapPropjectChange.push(type.label);
+        }
+        return citymapPropjectChange;
+      }, [])
+      .join(', ');
   }
 }

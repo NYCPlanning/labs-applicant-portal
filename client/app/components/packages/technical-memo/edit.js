@@ -16,6 +16,7 @@ export default class PackagesTechnicalMemoEditComponent extends Component {
     try {
       await this.args.package.save();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log('Save Technical Memo package error:', error);
     }
   }
@@ -24,7 +25,10 @@ export default class PackagesTechnicalMemoEditComponent extends Component {
   async submitPackage() {
     await this.args.package.submit();
 
-    if (!this.args.package.adapterError && !this.args.package.fileUploadErrors) {
+    if (
+      !this.args.package.adapterError
+      && !this.args.package.fileUploadErrors
+    ) {
       this.router.transitionTo('technical-memo.show', this.args.package.id);
     }
   }

@@ -1,12 +1,6 @@
 import { module, test } from 'qunit';
 import {
-  visit,
-  click,
-  currentURL,
-  settled,
-  waitFor,
-  fillIn,
-  triggerKeyEvent,
+  visit, click, currentURL, waitFor, fillIn, triggerKeyEvent,
 } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -16,10 +10,9 @@ import { selectChoose } from 'ember-power-select/test-support';
 
 const saveForm = async () => {
   await click('[data-test-save-button]');
-  await settled();
 };
 
-module('Acceptance | user can click pas-form edit', function(hooks) {
+module('Acceptance | user can click pas-form edit', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
@@ -29,7 +22,7 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     });
   });
 
-  test('User can visit edit pas-form route', async function(assert) {
+  test('User can visit edit pas-form route', async function (assert) {
     this.server.create('project', 1, 'toDo');
 
     await visit('/projects');
@@ -45,7 +38,10 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     await visit('/projects');
     await click('[data-test-project-link="1"]');
     await click('[data-test-package-link="1"]');
-    await fillIn('[data-test-input="dcpRevisedprojectname"]', 'my project name');
+    await fillIn(
+      '[data-test-input="dcpRevisedprojectname"]',
+      'my project name',
+    );
     await click('[data-test-add-applicant-button]');
     await fillIn('[data-test-input="dcpFirstname"]', 'Tess');
     await fillIn('[data-test-input="dcpLastname"]', 'Ter');
@@ -57,7 +53,6 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     await click('[data-test-confirm-submit-button]');
 
     // for some reason promises aren't being captured so we await for settled state
-    await settled();
 
     // use waitFor as a way to "wait" for the transition
     // within the pas-form/edit Component submit() task
@@ -92,7 +87,9 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
 
     assert.dom('[data-test-save-button]').isDisabled();
 
-    const file = new File(['foo'], 'Zoning Application.pdf', { type: 'text/plain' });
+    const file = new File(['foo'], 'Zoning Application.pdf', {
+      type: 'text/plain',
+    });
 
     await selectFiles('#FileUploader2 > input', file);
 
@@ -107,7 +104,9 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
 
     await visit('/pas-form/2/edit');
 
-    const file = new File(['foo'], 'Zoning Application.pdf', { type: 'text/plain' });
+    const file = new File(['foo'], 'Zoning Application.pdf', {
+      type: 'text/plain',
+    });
     await selectFiles('#FileUploader2 > input', file);
 
     await click('[data-test-delete-file-button="0"]');
@@ -127,7 +126,9 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     await visit('/pas-form/1/edit');
     assert.dom('[data-test-input="dcpUrbanareaname"]').doesNotExist();
 
-    await click('[data-test-radio="dcpUrbanrenewalarea"][data-test-radio-option="Yes"]');
+    await click(
+      '[data-test-radio="dcpUrbanrenewalarea"][data-test-radio-option="Yes"]',
+    );
     assert.dom('[data-test-input="dcpUrbanareaname"]').exists();
   });
 
@@ -136,8 +137,12 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
 
     await visit('/pas-form/1/edit');
 
-    assert.dom('[data-test-input="dcpPleaseexplaintypeiienvreview"]').doesNotExist();
-    await click('[data-test-radio="dcpLanduseactiontype2"][data-test-radio-option="Yes"]');
+    assert
+      .dom('[data-test-input="dcpPleaseexplaintypeiienvreview"]')
+      .doesNotExist();
+    await click(
+      '[data-test-radio="dcpLanduseactiontype2"][data-test-radio-option="Yes"]',
+    );
     assert.dom('[data-test-input="dcpPleaseexplaintypeiienvreview"]').exists();
   });
 
@@ -146,8 +151,12 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
 
     await visit('/pas-form/1/edit');
 
-    assert.dom('[data-test-input="dcpProjectareaindutrialzonename"]').doesNotExist();
-    await click('[data-test-radio="dcpProjectareaindustrialbusinesszone"][data-test-radio-option="Yes"]');
+    assert
+      .dom('[data-test-input="dcpProjectareaindutrialzonename"]')
+      .doesNotExist();
+    await click(
+      '[data-test-radio="dcpProjectareaindustrialbusinesszone"][data-test-radio-option="Yes"]',
+    );
     assert.dom('[data-test-input="dcpProjectareaindutrialzonename"]').exists();
   });
 
@@ -157,7 +166,9 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     await visit('/pas-form/1/edit');
 
     assert.dom('[data-test-input="dcpProjectarealandmarkname"]').doesNotExist();
-    await click('[data-test-radio="dcpIsprojectarealandmark"][data-test-radio-option="Yes"]');
+    await click(
+      '[data-test-radio="dcpIsprojectarealandmark"][data-test-radio-option="Yes"]',
+    );
     assert.dom('[data-test-input="dcpProjectarealandmarkname"]').exists();
   });
 
@@ -166,9 +177,13 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
 
     await visit('/pas-form/1/edit');
 
-    assert.dom('[data-test-input="dcpProposeddevelopmentsiteotherexplanation"]').doesNotExist();
+    assert
+      .dom('[data-test-input="dcpProposeddevelopmentsiteotherexplanation"]')
+      .doesNotExist();
     await click('[data-test-checkbox="dcpProposeddevelopmentsiteinfoother"]');
-    assert.dom('[data-test-input="dcpProposeddevelopmentsiteotherexplanation"]').exists();
+    assert
+      .dom('[data-test-input="dcpProposeddevelopmentsiteotherexplanation"]')
+      .exists();
   });
 
   test('MIH sub Q shows conditionally', async function (assert) {
@@ -176,9 +191,15 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
 
     await visit('/pas-form/1/edit');
 
-    assert.dom('[data-test-input="dcpInclusionaryhousingdesignatedareaname"]').doesNotExist();
-    await click('[data-test-radio="dcpIsinclusionaryhousingdesignatedarea"][data-test-radio-option="Yes"]');
-    assert.dom('[data-test-input="dcpInclusionaryhousingdesignatedareaname"]').exists();
+    assert
+      .dom('[data-test-input="dcpInclusionaryhousingdesignatedareaname"]')
+      .doesNotExist();
+    await click(
+      '[data-test-radio="dcpIsinclusionaryhousingdesignatedarea"][data-test-radio-option="Yes"]',
+    );
+    assert
+      .dom('[data-test-input="dcpInclusionaryhousingdesignatedareaname"]')
+      .exists();
   });
 
   test('Funding Source sub Q shows conditionally', async function (assert) {
@@ -186,16 +207,50 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
 
     await visit('/pas-form/1/edit');
 
-    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="City"]').doesNotExist();
-    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="State"]').doesNotExist();
-    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="Federal"]').doesNotExist();
-    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="Other"]').doesNotExist();
+    assert
+      .dom(
+        '[data-test-radio="dcpHousingunittype"][data-test-radio-option="City"]',
+      )
+      .doesNotExist();
+    assert
+      .dom(
+        '[data-test-radio="dcpHousingunittype"][data-test-radio-option="State"]',
+      )
+      .doesNotExist();
+    assert
+      .dom(
+        '[data-test-radio="dcpHousingunittype"][data-test-radio-option="Federal"]',
+      )
+      .doesNotExist();
+    assert
+      .dom(
+        '[data-test-radio="dcpHousingunittype"][data-test-radio-option="Other"]',
+      )
+      .doesNotExist();
 
-    await click('[data-test-radio="dcpDiscressionaryfundingforffordablehousing"][data-test-radio-option="Yes"]');
-    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="City"]').exists();
-    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="State"]').exists();
-    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="Federal"]').exists();
-    assert.dom('[data-test-radio="dcpHousingunittype"][data-test-radio-option="Other"]').exists();
+    await click(
+      '[data-test-radio="dcpDiscressionaryfundingforffordablehousing"][data-test-radio-option="Yes"]',
+    );
+    assert
+      .dom(
+        '[data-test-radio="dcpHousingunittype"][data-test-radio-option="City"]',
+      )
+      .exists();
+    assert
+      .dom(
+        '[data-test-radio="dcpHousingunittype"][data-test-radio-option="State"]',
+      )
+      .exists();
+    assert
+      .dom(
+        '[data-test-radio="dcpHousingunittype"][data-test-radio-option="Federal"]',
+      )
+      .exists();
+    assert
+      .dom(
+        '[data-test-radio="dcpHousingunittype"][data-test-radio-option="Other"]',
+      )
+      .exists();
   });
 
   test('user can save pas form', async function (assert) {
@@ -208,16 +263,22 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     // assert.dom('[data-test-save-button').hasProperty('disabled', true);
 
     // edit a field to make it pasForm dirty
-    await fillIn('[data-test-input="dcpRevisedprojectname"]', 'Some Cool New Project Name');
+    await fillIn(
+      '[data-test-input="dcpRevisedprojectname"]',
+      'Some Cool New Project Name',
+    );
 
     // save button should become active when dirty
-    assert.dom('[data-test-save-button').hasProperty('disabled', false);
+    assert.dom('[data-test-save-button]').hasProperty('disabled', false);
 
     // save it
     await saveForm(); // async make sure save action finishes before assertion
 
     // database record should have new updated value
-    assert.equal(this.server.db.pasForms[0].dcpRevisedprojectname, 'Some Cool New Project Name');
+    assert.equal(
+      this.server.db.pasForms[0].dcpRevisedprojectname,
+      'Some Cool New Project Name',
+    );
   });
 
   test('user sees a confirmation modal upon submit', async function (assert) {
@@ -226,7 +287,10 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     // render form
     await visit('/pas-form/1/edit');
 
-    await fillIn('[data-test-input="dcpRevisedprojectname"]', 'my project name');
+    await fillIn(
+      '[data-test-input="dcpRevisedprojectname"]',
+      'my project name',
+    );
 
     await click('[data-test-add-applicant-button]');
     await fillIn('[data-test-input="dcpFirstname"]', 'Tess');
@@ -248,7 +312,6 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
 
     // research: ember changeset validations save method triggers a
     // promise that resolves _after_ mirage has been torn down by tests
-    await settled();
 
     assert.ok(true);
   });
@@ -265,12 +328,17 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
 
     await visit('/pas-form/1/edit');
 
-    await fillIn('[data-test-input="dcpRevisedprojectname"]', 'my project name');
+    await fillIn(
+      '[data-test-input="dcpRevisedprojectname"]',
+      'my project name',
+    );
 
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
 
-    await click('[data-test-radio="dcpUrbanrenewalarea"][data-test-radio-option="Yes"]');
+    await click(
+      '[data-test-radio="dcpUrbanrenewalarea"][data-test-radio-option="Yes"]',
+    );
 
     assert.dom('[data-test-validation-message="dcpUrbanareaname"]').exists();
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
@@ -278,13 +346,17 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
 
     await fillIn('[data-test-input="dcpUrbanareaname"]', 'abc');
 
-    assert.dom('[data-test-validation-message="dcpUrbanareaname"]').doesNotExist();
+    assert
+      .dom('[data-test-validation-message="dcpUrbanareaname"]')
+      .doesNotExist();
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-submit-button]').hasNoAttribute('disabled');
 
     await fillIn('[data-test-input="dcpUrbanareaname"]', '');
 
-    assert.dom('[data-test-validation-message="dcpUrbanareaname"]').exists('it revalidates');
+    assert
+      .dom('[data-test-validation-message="dcpUrbanareaname"]')
+      .exists('it revalidates');
     assert.dom('[data-test-save-button]').hasNoAttribute('disabled');
     assert.dom('[data-test-submit-button]').hasAttribute('disabled');
   });
@@ -295,14 +367,21 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     });
 
     await visit('/pas-form/1/edit');
-    await fillIn('[data-test-section="project-geography"] .map-search-input', '1000120001');
-    await triggerKeyEvent('[data-test-section="project-geography"] .labs-geosearch', 'keypress', 13);
+    await fillIn(
+      '[data-test-section="project-geography"] .map-search-input',
+      '1000120001',
+    );
+    await triggerKeyEvent(
+      '[data-test-section="project-geography"] .labs-geosearch',
+      'keypress',
+      13,
+    );
     await click('[data-test-save-button]');
 
     assert.equal(this.server.db.bbls.firstObject.projectId, '42');
   });
 
-  test('Docs appear in attachments section when visiting from another route', async function(assert) {
+  test('Docs appear in attachments section when visiting from another route', async function (assert) {
     this.server.create('package', 'toDo', 'pasForm', 'withExistingDocuments', {
       id: '1',
       project: this.server.create('project'),
@@ -322,10 +401,12 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     await click('[data-test-project-link="1"]');
     await click('[data-test-package-link="1"]');
 
-    assert.dom('[data-test-section="attachments"').hasTextContaining('PAS Form.pdf');
+    assert
+      .dom('[data-test-section="attachments"]')
+      .hasTextContaining('PAS Form.pdf');
   });
 
-  test('For input dependent on radio button/checkbox -- when user fills out input, then clicks radio button/checkbox that hides input, text is not saved to model', async function(assert) {
+  test('For input dependent on radio button/checkbox -- when user fills out input, then clicks radio button/checkbox that hides input, text is not saved to model', async function (assert) {
     this.server.create('package', 'pasForm', {
       project: this.server.create('project'),
     });
@@ -334,40 +415,76 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
 
     // dcpInclusionaryhousingdesignatedareaname (radio button) -----------------------------------------
     // user selects "Yes" radio button and fills out input, then saves
-    await click('[data-test-radio="dcpIsinclusionaryhousingdesignatedarea"][data-test-radio-option="Yes"]');
-    await fillIn('[data-test-input="dcpInclusionaryhousingdesignatedareaname"]', 'bananas');
+    await click(
+      '[data-test-radio="dcpIsinclusionaryhousingdesignatedarea"][data-test-radio-option="Yes"]',
+    );
+    await fillIn(
+      '[data-test-input="dcpInclusionaryhousingdesignatedareaname"]',
+      'bananas',
+    );
     await saveForm();
-    assert.equal(this.server.db.pasForms[0].dcpInclusionaryhousingdesignatedareaname, 'bananas');
+    assert.equal(
+      this.server.db.pasForms[0].dcpInclusionaryhousingdesignatedareaname,
+      'bananas',
+    );
     // user selects "No" radio button and fills out input, then saves
-    await click('[data-test-radio="dcpIsinclusionaryhousingdesignatedarea"][data-test-radio-option="No"]');
+    await click(
+      '[data-test-radio="dcpIsinclusionaryhousingdesignatedarea"][data-test-radio-option="No"]',
+    );
     await saveForm();
     // clicking on the radio button should set the value to an empty string
-    assert.equal(this.server.db.pasForms[0].dcpInclusionaryhousingdesignatedareaname, '');
+    assert.equal(
+      this.server.db.pasForms[0].dcpInclusionaryhousingdesignatedareaname,
+      '',
+    );
     // user re-selects "Yes" radio button and re-fills out input, then saves
-    await click('[data-test-radio="dcpIsinclusionaryhousingdesignatedarea"][data-test-radio-option="Yes"]');
-    await fillIn('[data-test-input="dcpInclusionaryhousingdesignatedareaname"]', 'peaches');
+    await click(
+      '[data-test-radio="dcpIsinclusionaryhousingdesignatedarea"][data-test-radio-option="Yes"]',
+    );
+    await fillIn(
+      '[data-test-input="dcpInclusionaryhousingdesignatedareaname"]',
+      'peaches',
+    );
     await saveForm();
-    assert.equal(this.server.db.pasForms[0].dcpInclusionaryhousingdesignatedareaname, 'peaches');
+    assert.equal(
+      this.server.db.pasForms[0].dcpInclusionaryhousingdesignatedareaname,
+      'peaches',
+    );
 
     // dcpProposeddevelopmentsiteotherexplanation (checkbox) -----------------------------------------
     // user selects checkbox and fills out input, then saves
     await click('[data-test-checkbox="dcpProposeddevelopmentsiteinfoother"]');
-    await fillIn('[data-test-input="dcpProposeddevelopmentsiteotherexplanation"]', 'pecan pie');
+    await fillIn(
+      '[data-test-input="dcpProposeddevelopmentsiteotherexplanation"]',
+      'pecan pie',
+    );
     await saveForm();
-    assert.equal(this.server.db.pasForms[0].dcpProposeddevelopmentsiteotherexplanation, 'pecan pie');
+    assert.equal(
+      this.server.db.pasForms[0].dcpProposeddevelopmentsiteotherexplanation,
+      'pecan pie',
+    );
     await click('[data-test-checkbox="dcpProposeddevelopmentsiteinfoother"]');
     await saveForm();
     // clicking the checkbox should set the value to an empty string
-    assert.equal(this.server.db.pasForms[0].dcpProposeddevelopmentsiteotherexplanation, '');
+    assert.equal(
+      this.server.db.pasForms[0].dcpProposeddevelopmentsiteotherexplanation,
+      '',
+    );
     // user re-selects checkbox and re-fills out input, then saves
     await click('[data-test-checkbox="dcpProposeddevelopmentsiteinfoother"]');
-    await fillIn('[data-test-input="dcpProposeddevelopmentsiteotherexplanation"]', 'strawberry rhubarb');
+    await fillIn(
+      '[data-test-input="dcpProposeddevelopmentsiteotherexplanation"]',
+      'strawberry rhubarb',
+    );
     await saveForm();
-    assert.equal(this.server.db.pasForms[0].dcpProposeddevelopmentsiteotherexplanation, 'strawberry rhubarb');
+    assert.equal(
+      this.server.db.pasForms[0].dcpProposeddevelopmentsiteotherexplanation,
+      'strawberry rhubarb',
+    );
   });
 
   // applicants
-  test('user can see existing applicants', async function(assert) {
+  test('user can see existing applicants', async function (assert) {
     const project = this.server.create('project', 1, 'toDo');
     const { pasForm } = project.packages.models[0];
 
@@ -384,7 +501,7 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     assert.dom('[data-test-applicant-fieldset="2"]').exists();
   });
 
-  test('user can add new applicants', async function(assert) {
+  test('user can add new applicants', async function (assert) {
     this.server.create('project', 1, 'toDo');
     await visit('/pas-form/1/edit');
 
@@ -402,13 +519,19 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     assert.dom('[data-test-applicant-type="Other Team Member"]').exists();
   });
 
-  test('user can remove applicants', async function(assert) {
+  test('user can remove applicants', async function (assert) {
     const project = this.server.create('project', 1, 'toDo');
     const { pasForm } = project.packages.models[0];
     // create an applicant model
-    const serverSideApplicant = this.server.create('applicant', 'organizationApplicant', { pasForm });
+    const serverSideApplicant = this.server.create(
+      'applicant',
+      'organizationApplicant',
+      { pasForm },
+    );
     // get the reference to the model instance
-    const applicant = await this.owner.lookup('service:store').findRecord('applicant', serverSideApplicant.id);
+    const applicant = await this.owner
+      .lookup('service:store')
+      .findRecord('applicant', serverSideApplicant.id);
 
     await visit('/pas-form/1/edit');
 
@@ -416,7 +539,7 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     await assert.equal(applicant.isDeleted, false);
 
     // remove the applicant
-    await click('[data-test-remove-applicant-button');
+    await click('[data-test-remove-applicant-button]');
 
     // should trigger dirty state, be queued for deletion when user saves
     await assert.equal(applicant.hasDirtyAttributes, true);
@@ -430,7 +553,7 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     assert.dom('[data-test-applicant-fieldset="0"]').doesNotExist();
   });
 
-  test('user can toggle individual or organization applicant type', async function(assert) {
+  test('user can toggle individual or organization applicant type', async function (assert) {
     const project = this.server.create('project', 1, 'toDo');
     const { pasForm } = project.packages.models[0];
     this.server.create('applicant', 'individualApplicant', { pasForm });
@@ -445,7 +568,9 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     await click('[data-test-radio-option="Organization"]');
 
     // organization input should appear after user toggles to "Organization"
-    assert.dom('[data-test-applicant-organization]').hasText('Organization Name');
+    assert
+      .dom('[data-test-applicant-organization]')
+      .hasText('Organization Name');
 
     await saveForm();
 
@@ -453,7 +578,7 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     assert.equal(this.applicants[0].dcpType, 717170001);
   });
 
-  test('user can select a state for an applicant team member', async function(assert) {
+  test('user can select a state for an applicant team member', async function (assert) {
     const project = this.server.create('project', 1, 'toDo');
     const { pasForm } = project.packages.models[0];
 
@@ -597,29 +722,53 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     await triggerKeyEvent('.labs-geosearch', 'keypress', 13);
 
     // check that radio buttons work for bbl that already existed
-    assert.dom('[data-test-development-site-question="3071590111-true"]').doesNotExist();
-    assert.dom('[data-test-development-site-question="3071590111-false"]').doesNotExist();
+    assert
+      .dom('[data-test-development-site-question="3071590111-true"]')
+      .doesNotExist();
+    assert
+      .dom('[data-test-development-site-question="3071590111-false"]')
+      .doesNotExist();
 
     await click('[data-test-bbl-development-site-yes="3071590111"]');
 
-    assert.dom('[data-test-development-site-question="3071590111-true"]').exists();
-    assert.dom('[data-test-development-site-question="3071590111-false"]').doesNotExist();
+    assert
+      .dom('[data-test-development-site-question="3071590111-true"]')
+      .exists();
+    assert
+      .dom('[data-test-development-site-question="3071590111-false"]')
+      .doesNotExist();
 
     await click('[data-test-bbl-development-site-no="3071590111"]');
-    assert.dom('[data-test-development-site-question="3071590111-true"]').doesNotExist();
-    assert.dom('[data-test-development-site-question="3071590111-false"]').exists();
+    assert
+      .dom('[data-test-development-site-question="3071590111-true"]')
+      .doesNotExist();
+    assert
+      .dom('[data-test-development-site-question="3071590111-false"]')
+      .exists();
 
     // check that radio buttons work for user-added bbl
-    assert.dom('[data-test-development-site-question="1000120001-true"]').doesNotExist();
-    assert.dom('[data-test-development-site-question="1000120001-false"]').doesNotExist();
+    assert
+      .dom('[data-test-development-site-question="1000120001-true"]')
+      .doesNotExist();
+    assert
+      .dom('[data-test-development-site-question="1000120001-false"]')
+      .doesNotExist();
 
     await click('[data-test-bbl-development-site-yes="1000120001"]');
-    assert.dom('[data-test-development-site-question="1000120001-true"]').exists();
-    assert.dom('[data-test-development-site-question="1000120001-false"]').doesNotExist();
+    assert
+      .dom('[data-test-development-site-question="1000120001-true"]')
+      .exists();
+    assert
+      .dom('[data-test-development-site-question="1000120001-false"]')
+      .doesNotExist();
 
     await click('[data-test-bbl-development-site-no="1000120001"]');
-    assert.dom('[data-test-development-site-question="1000120001-true"]').doesNotExist();
-    assert.dom('[data-test-development-site-question="1000120001-false"]').exists();
+    assert
+      .dom('[data-test-development-site-question="1000120001-true"]')
+      .doesNotExist();
+    assert
+      .dom('[data-test-development-site-question="1000120001-false"]')
+      .exists();
   });
 
   test('user can update dcpPartiallot through the radio buttons', async function (assert) {
@@ -654,27 +803,43 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     await triggerKeyEvent('.labs-geosearch', 'keypress', 13);
 
     // check that radio buttons work for bbl that already existed
-    assert.dom('[data-test-partial-lot-question="3071590111-true"]').doesNotExist();
-    assert.dom('[data-test-partial-lot-question="3071590111-false"]').doesNotExist();
+    assert
+      .dom('[data-test-partial-lot-question="3071590111-true"]')
+      .doesNotExist();
+    assert
+      .dom('[data-test-partial-lot-question="3071590111-false"]')
+      .doesNotExist();
 
     await click('[data-test-bbl-partial-lot-yes="3071590111"]');
     assert.dom('[data-test-partial-lot-question="3071590111-true"]').exists();
-    assert.dom('[data-test-partial-lot-question="3071590111-false"]').doesNotExist();
+    assert
+      .dom('[data-test-partial-lot-question="3071590111-false"]')
+      .doesNotExist();
 
     await click('[data-test-bbl-partial-lot-no="3071590111"]');
-    assert.dom('[data-test-partial-lot-question="3071590111-true"]').doesNotExist();
+    assert
+      .dom('[data-test-partial-lot-question="3071590111-true"]')
+      .doesNotExist();
     assert.dom('[data-test-partial-lot-question="3071590111-false"]').exists();
 
     // check that radio buttons work for user-added bbl
-    assert.dom('[data-test-partial-lot-question="1000120001-true"]').doesNotExist();
-    assert.dom('[data-test-partial-lot-question="1000120001-false"]').doesNotExist();
+    assert
+      .dom('[data-test-partial-lot-question="1000120001-true"]')
+      .doesNotExist();
+    assert
+      .dom('[data-test-partial-lot-question="1000120001-false"]')
+      .doesNotExist();
 
     await click('[data-test-bbl-partial-lot-yes="1000120001"]');
     assert.dom('[data-test-partial-lot-question="1000120001-true"]').exists();
-    assert.dom('[data-test-partial-lot-question="1000120001-false"]').doesNotExist();
+    assert
+      .dom('[data-test-partial-lot-question="1000120001-false"]')
+      .doesNotExist();
 
     await click('[data-test-bbl-partial-lot-no="1000120001"]');
-    assert.dom('[data-test-partial-lot-question="1000120001-true"]').doesNotExist();
+    assert
+      .dom('[data-test-partial-lot-question="1000120001-true"]')
+      .doesNotExist();
     assert.dom('[data-test-partial-lot-question="1000120001-false"]').exists();
   });
 
@@ -699,26 +864,50 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
       project,
     });
 
-    const packageModel = await this.owner.lookup('service:store').findRecord('package', 1, { include: 'pas-form' });
+    const packageModel = await this.owner
+      .lookup('service:store')
+      .findRecord('package', 1, { include: 'pas-form' });
 
     await visit('/pas-form/1/edit');
 
     assert.equal(packageModel.pasForm.dcpPfzoningspecialpermit, undefined);
 
-    await selectChoose('[data-test-land-use-action-picker]', 'Zoning Special Permit');
-    await selectChoose('[data-test-land-use-action-picker]', 'Zoning Authorization');
+    await selectChoose(
+      '[data-test-land-use-action-picker]',
+      'Zoning Special Permit',
+    );
+    await selectChoose(
+      '[data-test-land-use-action-picker]',
+      'Zoning Authorization',
+    );
     await saveForm();
     // Check that we can add "Zoning Special Permit" and "Zoning Authorization"
-    assert.dom('[data-test-action-name="Zoning Special Permit"]').exists({ count: 1 });
-    assert.dom('[data-test-action-name="Zoning Authorization"]').exists({ count: 1 });
+    assert
+      .dom('[data-test-action-name="Zoning Special Permit"]')
+      .exists({ count: 1 });
+    assert
+      .dom('[data-test-action-name="Zoning Authorization"]')
+      .exists({ count: 1 });
 
     // Check that count field is set to 1 and that extra questions are not yet filled
     assert.equal(packageModel.pasForm.dcpPfzoningspecialpermit, 1);
-    assert.equal(packageModel.pasForm.dcpZoningspecialpermitpursuantto, undefined);
-    assert.equal(packageModel.pasForm.dcpZoningspecialpermittomodify, undefined);
+    assert.equal(
+      packageModel.pasForm.dcpZoningspecialpermitpursuantto,
+      undefined,
+    );
+    assert.equal(
+      packageModel.pasForm.dcpZoningspecialpermittomodify,
+      undefined,
+    );
     assert.equal(packageModel.pasForm.dcpPfzoningauthorization, 1);
-    assert.equal(packageModel.pasForm.dcpZoningauthorizationpursuantto, undefined);
-    assert.equal(packageModel.pasForm.dcpZoningauthorizationtomodify, undefined);
+    assert.equal(
+      packageModel.pasForm.dcpZoningauthorizationpursuantto,
+      undefined,
+    );
+    assert.equal(
+      packageModel.pasForm.dcpZoningauthorizationtomodify,
+      undefined,
+    );
 
     // fill in count field for Zoning Special Permit
     await fillIn('[data-test-input="dcpPfzoningspecialpermit"]', 6);
@@ -736,14 +925,26 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     assert.equal(packageModel.pasForm.dcpPfzoningspecialpermit, 6);
 
     // check that user can fill in extra questions
-    await fillIn('[data-test-input="dcpZoningspecialpermitpursuantto"]', 'Section 5B');
+    await fillIn(
+      '[data-test-input="dcpZoningspecialpermitpursuantto"]',
+      'Section 5B',
+    );
     await saveForm();
 
-    assert.equal(packageModel.pasForm.dcpZoningspecialpermitpursuantto, 'Section 5B');
-    await fillIn('[data-test-input="dcpZoningspecialpermittomodify"]', 'Permit 7A');
+    assert.equal(
+      packageModel.pasForm.dcpZoningspecialpermitpursuantto,
+      'Section 5B',
+    );
+    await fillIn(
+      '[data-test-input="dcpZoningspecialpermittomodify"]',
+      'Permit 7A',
+    );
     await saveForm();
 
-    assert.equal(packageModel.pasForm.dcpZoningspecialpermittomodify, 'Permit 7A');
+    assert.equal(
+      packageModel.pasForm.dcpZoningspecialpermittomodify,
+      'Permit 7A',
+    );
   });
 
   test('User can delete actions', async function (assert) {
@@ -753,7 +954,9 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
       project,
     });
 
-    const packageModel = await this.owner.lookup('service:store').findRecord('package', 2, { include: 'pas-form' });
+    const packageModel = await this.owner
+      .lookup('service:store')
+      .findRecord('package', 2, { include: 'pas-form' });
 
     // Template block usage:
     await visit('/pas-form/2/edit');
@@ -767,27 +970,44 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     assert.dom('[data-test-action-name="Change in CityMap"]').doesNotExist();
 
     // Check that user can delete "Zoning Special Permit" after adding
-    await selectChoose('[data-test-land-use-action-picker]', 'Zoning Special Permit');
+    await selectChoose(
+      '[data-test-land-use-action-picker]',
+      'Zoning Special Permit',
+    );
 
     await fillIn('[data-test-input="dcpPfzoningspecialpermit"]', 6);
     await saveForm();
 
     assert.equal(packageModel.pasForm.dcpPfzoningspecialpermit, 6);
 
-    await fillIn('[data-test-input="dcpZoningspecialpermitpursuantto"]', 'Section 5B');
+    await fillIn(
+      '[data-test-input="dcpZoningspecialpermitpursuantto"]',
+      'Section 5B',
+    );
     await saveForm();
 
-    assert.equal(packageModel.pasForm.dcpZoningspecialpermitpursuantto, 'Section 5B');
+    assert.equal(
+      packageModel.pasForm.dcpZoningspecialpermitpursuantto,
+      'Section 5B',
+    );
 
-    await fillIn('[data-test-input="dcpZoningspecialpermittomodify"]', 'Permit 7A');
+    await fillIn(
+      '[data-test-input="dcpZoningspecialpermittomodify"]',
+      'Permit 7A',
+    );
     await saveForm();
 
-    assert.equal(packageModel.pasForm.dcpZoningspecialpermittomodify, 'Permit 7A');
+    assert.equal(
+      packageModel.pasForm.dcpZoningspecialpermittomodify,
+      'Permit 7A',
+    );
 
     await click('[data-test-delete-button="Zoning Special Permit"]');
     await saveForm();
 
-    assert.dom('[data-test-action-name="Zoning Special Permit"]').doesNotExist();
+    assert
+      .dom('[data-test-action-name="Zoning Special Permit"]')
+      .doesNotExist();
     assert.equal(packageModel.pasForm.dcpPfzoningspecialpermit, null);
     assert.equal(packageModel.pasForm.dcpZoningspecialpermitpursuantto, '');
     assert.equal(packageModel.pasForm.dcpZoningspecialpermittomodify, '');
@@ -799,19 +1019,30 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
       project,
     });
 
-
-    await this.owner.lookup('service:store').findRecord('package', 2, { include: 'pas-form' });
+    await this.owner
+      .lookup('service:store')
+      .findRecord('package', 2, { include: 'pas-form' });
 
     // Template block usage:
     await visit('/pas-form/2/edit');
 
-    assert.dom('[data-test-action-name="Change in CityMap"]').exists({ count: 1 });
-    assert.dom('[data-test-action-name="Zoning Certification"]').exists({ count: 1 });
-    assert.dom('[data-test-action-name="Zoning Text Amendment"]').exists({ count: 1 });
+    assert
+      .dom('[data-test-action-name="Change in CityMap"]')
+      .exists({ count: 1 });
+    assert
+      .dom('[data-test-action-name="Zoning Certification"]')
+      .exists({ count: 1 });
+    assert
+      .dom('[data-test-action-name="Zoning Text Amendment"]')
+      .exists({ count: 1 });
 
     assert.dom('[data-test-input="dcpPfzoningcertification"]').hasValue('21');
-    assert.dom('[data-test-input="dcpZoningpursuantto"]').hasValue('some value');
-    assert.dom('[data-test-input="dcpZoningtomodify"]').hasValue('some other val');
+    assert
+      .dom('[data-test-input="dcpZoningpursuantto"]')
+      .hasValue('some value');
+    assert
+      .dom('[data-test-input="dcpZoningtomodify"]')
+      .hasValue('some other val');
     assert.dom('[data-test-input="dcpAffectedzrnumber"]').hasNoValue();
     assert.dom('[data-test-input="dcpZoningresolutiontitle"]').hasNoValue();
   });
@@ -822,35 +1053,51 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
       project,
     });
 
-    await this.owner.lookup('service:store').findRecord('package', 2, { include: 'pas-form' });
+    await this.owner
+      .lookup('service:store')
+      .findRecord('package', 2, { include: 'pas-form' });
 
     // Template block usage:
     await visit('/pas-form/2/edit');
 
-    await selectChoose('[data-test-land-use-action-picker]', 'Zoning Special Permit');
+    await selectChoose(
+      '[data-test-land-use-action-picker]',
+      'Zoning Special Permit',
+    );
     await saveForm();
 
     // check that only one input exists
-    assert.dom('[data-test-input="dcpZoningspecialpermitpursuantto"]').exists({ count: 1 });
+    assert
+      .dom('[data-test-input="dcpZoningspecialpermitpursuantto"]')
+      .exists({ count: 1 });
 
-    await fillIn('[data-test-input="dcpZoningspecialpermitpursuantto"]', 'Section 5B');
+    await fillIn(
+      '[data-test-input="dcpZoningspecialpermitpursuantto"]',
+      'Section 5B',
+    );
     await saveForm();
 
     // check that setting field on the model did NOT add another instance of the action to the UI
-    assert.dom('[data-test-input="dcpZoningspecialpermitpursuantto"]').exists({ count: 1 });
+    assert
+      .dom('[data-test-input="dcpZoningspecialpermitpursuantto"]')
+      .exists({ count: 1 });
 
     // user removes text
     await fillIn('[data-test-input="dcpZoningspecialpermitpursuantto"]', '');
     await saveForm();
 
-    assert.dom('[data-test-input="dcpPfzoningspecialpermit"]').exists({ count: 1 });
+    assert
+      .dom('[data-test-input="dcpPfzoningspecialpermit"]')
+      .exists({ count: 1 });
 
     // check that only one input exists
     await fillIn('[data-test-input="dcpPfzoningspecialpermit"]', 6);
     await saveForm();
 
     // check that setting field on the model did NOT add another instance of the action to the UI
-    assert.dom('[data-test-input="dcpPfzoningspecialpermit"]').exists({ count: 1 });
+    assert
+      .dom('[data-test-input="dcpPfzoningspecialpermit"]')
+      .exists({ count: 1 });
   });
 
   test('selected actions are sorted properly', async function (assert) {
@@ -859,7 +1106,9 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
       project,
     });
 
-    await this.owner.lookup('service:store').findRecord('package', 2, { include: 'pas-form' });
+    await this.owner
+      .lookup('service:store')
+      .findRecord('package', 2, { include: 'pas-form' });
 
     // Template block usage:
     await visit('/pas-form/2/edit');
@@ -868,19 +1117,30 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     // (1) all new (added by user) actions should be on top, sorted by most recently added on top
     // (2) all actions from db should be on bottom, sorted alphabetically
 
-    assert.dom('[data-test-action-name="Change in CityMap"]').exists({ count: 1 });
-    assert.dom('[data-test-action-name="Zoning Certification"]').exists({ count: 1 });
-    assert.dom('[data-test-action-name="Zoning Text Amendment"]').exists({ count: 1 });
+    assert
+      .dom('[data-test-action-name="Change in CityMap"]')
+      .exists({ count: 1 });
+    assert
+      .dom('[data-test-action-name="Zoning Certification"]')
+      .exists({ count: 1 });
+    assert
+      .dom('[data-test-action-name="Zoning Text Amendment"]')
+      .exists({ count: 1 });
 
     // if added in this order, should be sorted: (1) Renewal (2) Acquisition (3) Landfill
     await selectChoose('[data-test-land-use-action-picker]', 'Landfill');
-    await selectChoose('[data-test-land-use-action-picker]', 'Acquisition of Real Property');
+    await selectChoose(
+      '[data-test-land-use-action-picker]',
+      'Acquisition of Real Property',
+    );
     await selectChoose('[data-test-land-use-action-picker]', 'Renewal');
     await saveForm();
 
     // check that order is: (1) Renewal (2) Acquisition (3) Landfill (4) CityMap (5) Zoning Cert (6) Zoning Text Amendment
     assert
       .dom('[data-test-section="land-use-actions"]')
-      .hasText('Add a Proposed Action: -- select an action -- Land Use Actions Included in This Project Renewal Previous ULURP Numbers: ex. 200307ZRK This field is required Delete Action Acquisition of Real Property No additional information required for this action Delete Action Landfill No additional information required for this action Delete Action Change in CityMap No additional information required for this action Delete Action Zoning Certification How many Zoning Certification actions? Where in the Zoning Resolution can this action be found? Provide the Zoning Resolution section number. Ex. ZR Sec. 74-711 Which sections of the Zoning Resolution does this modify? Provide the Zoning Resolution section number(s). Ex. ZR Sec. 42-10 and 43-17 Delete Action Zoning Text Amendment Affected ZR Section Number: Provide the Zoning Resolution section number. Ex. ZR Sec. 74-711 This field is required Affected ZR Section Title: Provide the Zoning Resolution section Title. Ex. EXAMPLE This field is required Delete Action');
+      .hasText(
+        'Add a Proposed Action: -- select an action -- Land Use Actions Included in This Project Renewal Previous ULURP Numbers: ex. 200307ZRK This field is required Delete Action Acquisition of Real Property No additional information required for this action Delete Action Landfill No additional information required for this action Delete Action Change in CityMap No additional information required for this action Delete Action Zoning Certification How many Zoning Certification actions? Where in the Zoning Resolution can this action be found? Provide the Zoning Resolution section number. Ex. ZR Sec. 74-711 Which sections of the Zoning Resolution does this modify? Provide the Zoning Resolution section number(s). Ex. ZR Sec. 42-10 and 43-17 Delete Action Zoning Text Amendment Affected ZR Section Number: Provide the Zoning Resolution section number. Ex. ZR Sec. 74-711 This field is required Affected ZR Section Title: Provide the Zoning Resolution section Title. Ex. EXAMPLE This field is required Delete Action',
+      );
   });
 });

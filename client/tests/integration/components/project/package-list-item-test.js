@@ -4,11 +4,11 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | project/package-list-item', function(hooks) {
+module('Integration | Component | project/package-list-item', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('displays package item correctly', async function(assert) {
+  test('displays package item correctly', async function (assert) {
     const packageDate = new Date(2018, 11, 24);
 
     this.server.create('package', 'pasForm', {

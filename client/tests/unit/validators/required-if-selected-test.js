@@ -5,14 +5,8 @@ module('Unit | Validator | required-if-selected');
 
 // signature here: https://github.com/poteto/ember-changeset-validations/blob/master/addon/validators/presence.js#L18
 // key, value, _oldValue, changes, content
-test('it invalidates when withValue met', function(assert) {
-  const args = [
-    'someKey',
-    '',
-    undefined,
-    {},
-    { dependentKey: 123 },
-  ];
+test('it invalidates when withValue met', function (assert) {
+  const args = ['someKey', '', undefined, {}, { dependentKey: 123 }];
 
   const result = validateRequiredIfSelected({
     presence: true,
@@ -25,13 +19,7 @@ test('it invalidates when withValue met', function(assert) {
 });
 
 test('it validates when withValue is not present', function (assert) {
-  const args = [
-    'someKey',
-    '',
-    undefined,
-    {},
-    {},
-  ];
+  const args = ['someKey', '', undefined, {}, {}];
 
   const result = validateRequiredIfSelected({
     presence: true,
@@ -44,13 +32,7 @@ test('it validates when withValue is not present', function (assert) {
 });
 
 test('it validates when withValue is falsey', function (assert) {
-  const args = [
-    'someKey',
-    '',
-    undefined,
-    {},
-    { dependentKey: true },
-  ];
+  const args = ['someKey', '', undefined, {}, { dependentKey: true }];
 
   const result = validateRequiredIfSelected({
     presence: true,
@@ -63,13 +45,7 @@ test('it validates when withValue is falsey', function (assert) {
 });
 
 test('it validates when key not in content but in changes', function (assert) {
-  const args = [
-    'someKey',
-    '',
-    undefined,
-    { dependentKey: true },
-    {},
-  ];
+  const args = ['someKey', '', undefined, { dependentKey: true }, {}];
 
   const result = validateRequiredIfSelected({
     presence: true,

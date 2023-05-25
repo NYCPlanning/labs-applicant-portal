@@ -4,7 +4,12 @@ import ENV from '../config/environment';
 
 // Taken from
 // https://github.com/emberjs/data/blob/v3.24.0/packages/adapter/addon/-private/utils/serialize-into-hash.js
-function serializeIntoHash(store, modelClass, snapshot, options = { includeId: true }) {
+function serializeIntoHash(
+  store,
+  modelClass,
+  snapshot,
+  options = { includeId: true },
+) {
   const serializer = store.serializerFor(modelClass.modelName);
 
   if (typeof serializer.serializeIntoHash === 'function') {
@@ -46,7 +51,12 @@ export default class PackageAdapter extends JSONAPIAdapter {
 
     const data = serializeIntoHash(store, type, snapshot);
 
-    let url = this.buildURL(type.modelName, snapshot.id, snapshot, 'updateRecord');
+    const url = this.buildURL(
+      type.modelName,
+      snapshot.id,
+      snapshot,
+      'updateRecord',
+    );
 
     return this.ajax(url, 'PATCH', { data });
   }

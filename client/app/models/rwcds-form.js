@@ -100,7 +100,9 @@ export default class RwcdsFormModel extends Model {
   }
 
   get isAffectedZoningResolutionsDirty() {
-    const dirtyZrs = this.affectedZoningResolutions.filter((zr) => zr.hasDirtyAttributes);
+    const dirtyZrs = this.affectedZoningResolutions.filter(
+      (zr) => zr.hasDirtyAttributes,
+    );
 
     return dirtyZrs.length > 0;
   }

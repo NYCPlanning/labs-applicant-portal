@@ -25,12 +25,14 @@ export default class ProjectMilestonesMilestoneGroupItemComponent extends Compon
     'DEIS Public Scoping Meeting',
     'Prepare and Review DEIS',
     'Urban Design Guidance',
-  ]
+  ];
 
   get showProject() {
-    return this.projectsToShow.includes(this.args.milestone.dcpMilestoneValue)
-          || this.args.milestone.dcpMilestoneValue.toUpperCase().includes('AD-HOC')
-          || this.args.milestone.dcpMilestoneValue.toUpperCase().includes('ADHOC')
-          || this.args.milestone.dcpMilestoneValue.toUpperCase().includes('AD HOC');
+    return (
+      this.projectsToShow.includes(this.args.milestone.dcpMilestoneValue)
+      || this.args.milestone.dcpMilestoneValue.toUpperCase().includes('AD-HOC')
+      || this.args.milestone.dcpMilestoneValue.toUpperCase().includes('ADHOC')
+      || this.args.milestone.dcpMilestoneValue.toUpperCase().includes('AD HOC')
+    );
   }
 }

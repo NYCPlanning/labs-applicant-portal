@@ -2,11 +2,12 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
 /**
-  * This component wires a fileManager to the attachments UI.
-  * @param      {Package Model}  package
-  */
+ * This component wires a fileManager to the attachments UI.
+ * @param      {Package Model}  package
+ */
 export default class PackagesAttachmentsComponent extends Component {
-  get fileManager() { // should be an instance of FileManager
+  get fileManager() {
+    // should be an instance of FileManager
     return this.args.fileManager;
   }
 
@@ -31,13 +32,18 @@ export default class PackagesAttachmentsComponent extends Component {
   trackFileForUpload() {
     this.fileManager.trackFileForUpload();
 
-    this.args.package.documents = [...this.args.package.documents, ...this.fileManager.filesToUpload.files];
+    this.args.package.documents = [
+      ...this.args.package.documents,
+      ...this.fileManager.filesToUpload.files,
+    ];
   }
 
   @action
   deselectFileForUpload(file) {
     this.fileManager.deselectFileForUpload(file);
 
-    this.args.package.documents = this.args.package.documents.filter((document) => document !== file);
+    this.args.package.documents = this.args.package.documents.filter(
+      (document) => document !== file,
+    );
   }
 }

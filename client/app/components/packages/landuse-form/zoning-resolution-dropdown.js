@@ -3,7 +3,8 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class PackagesLanduseFormZoningResolutionComponent extends Component {
-  @tracked chosenZoningResolution = this.args.landuseActionForm.data.zoningResolution || null;
+  @tracked chosenZoningResolution =
+    this.args.landuseActionForm.data.zoningResolution || null;
 
   @action
   clearDropdown(landuseActionFormData) {

@@ -21,6 +21,7 @@ export default class PackagesFiledEasEditComponent extends Component {
     try {
       await this.args.package.save();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log('Save Filed EAS package error:', error);
     }
   }
@@ -29,7 +30,11 @@ export default class PackagesFiledEasEditComponent extends Component {
   async submitPackage() {
     await this.args.package.submit();
 
-    if (!this.args.package.singleCeqrInvoiceQuestionnaire.adapterError && !this.args.package.adapterError && !this.args.package.fileUploadErrors) {
+    if (
+      !this.args.package.singleCeqrInvoiceQuestionnaire.adapterError
+      && !this.args.package.adapterError
+      && !this.args.package.fileUploadErrors
+    ) {
       this.router.transitionTo('filed-eas.show', this.args.package.id);
     }
   }

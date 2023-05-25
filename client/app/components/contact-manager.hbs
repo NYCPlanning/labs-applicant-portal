@@ -3,7 +3,7 @@
   <button
     type="button"
     class="button secondary small float-right no-margin"
-    {{on "click" (fn this.toggleContactMgmt) }}
+    {{on "click" this.toggleContactMgmt }}
   >
     {{if this.contactMgmtOpen 'Cancel' 'Manage'}}
     <FaIcon @icon='users-cog' @fixedWidth={{true}} />
@@ -68,7 +68,7 @@
     <button
       class="button expanded no-margin text-weight-bold"
       type="button"
-      {{on "click" (fn this.addEditor) }}
+      {{on "click" this.addEditor }}
     >
       Add Project Editor
     </button>
@@ -94,7 +94,7 @@
         <button
           class="button expanded large"
           type="button"
-          {{on "click" (fn this.save) }}
+          {{on "click" this.save }}
         >
           <strong>Add Editor</strong>
         </button>

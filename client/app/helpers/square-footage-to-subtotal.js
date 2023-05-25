@@ -2,7 +2,12 @@ import { helper } from '@ember/component/helper';
 import { optionset } from './optionset';
 
 export function sfOptionset(label) {
-  return optionset(['ceqrInvoiceQuestionnaire', 'dcpSquarefeet', 'code', label]);
+  return optionset([
+    'ceqrInvoiceQuestionnaire',
+    'dcpSquarefeet',
+    'code',
+    label,
+  ]);
 }
 
 export const squareFootageToSubtotalLookup = [
@@ -21,5 +26,7 @@ export const squareFootageToSubtotalLookup = [
 ];
 
 export default helper(function squareFootageToSubtotal([squareFootageValue]) {
-  return squareFootageToSubtotalLookup.find((lookup) => lookup.squareFeet === squareFootageValue).subTotal;
+  return squareFootageToSubtotalLookup.find(
+    (lookup) => lookup.squareFeet === squareFootageValue,
+  ).subTotal;
 });

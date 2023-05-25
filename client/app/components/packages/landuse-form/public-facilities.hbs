@@ -14,10 +14,10 @@
       </proposedActionsQ.Label>
 
       <Input
-        type="checkbox"
+        @type="checkbox"
         id="dcpOfficespaceleaseopt"
         data-test-checkbox="dcpOfficespaceleaseopt"
-        checked={{if
+        @checked={{if
           (eq
             form.data.dcpOfficespaceleaseopt
             (optionset 'landuseForm' 'dcpOfficespaceleaseopt' 'code' 'Yes')
@@ -36,10 +36,10 @@
       <br>
 
       <Input
-        type="checkbox"
+        @type="checkbox"
         id="dcpAcquisitionopt"
         data-test-checkbox="dcpAcquisitionopt"
-        checked={{if
+        @checked={{if
           (eq
             form.data.dcpAcquisitionopt
             (optionset 'landuseForm' 'dcpAcquisitionopt' 'code' 'Yes')
@@ -58,10 +58,10 @@
       <br>
 
       <Input
-        type="checkbox"
+        @type="checkbox"
         id="dcpSiteselectionopt"
         data-test-checkbox="dcpSiteselectionopt"
-        checked={{if
+        @checked={{if
           (eq
             form.data.dcpSiteselectionopt
             (optionset 'landuseForm' 'dcpSiteselectionopt' 'code' 'Yes')

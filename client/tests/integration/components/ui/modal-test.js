@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | ui/modal', function(hooks) {
+module('Integration | Component | ui/modal', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it opens', async function(assert) {
+  test('it opens', async function (assert) {
     this.open = false;
 
     // Template block usage:

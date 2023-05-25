@@ -4,14 +4,16 @@ import { render, click } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import Service from '@ember/service';
 
-module('Integration | Component | auth/sign-in', function(hooks) {
+module('Integration | Component | auth/sign-in', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it routes', async function(assert) {
+  test('it routes', async function (assert) {
     assert.expect(4);
 
     class FakeRouter extends Service {
-      transitionTo() { assert.ok(true); }
+      transitionTo() {
+        assert.ok(true);
+      }
     }
 
     this.owner.register('service:router', FakeRouter);
@@ -67,7 +69,6 @@ module('Integration | Component | auth/sign-in', function(hooks) {
         @searchContacts={{this.searchContacts}}
       />
    `);
-
 
     this.set('searchContacts', () => ({
       isNycidValidated: false,

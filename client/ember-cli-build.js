@@ -1,6 +1,6 @@
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-module.exports = function(defaults) {
+module.exports = function (defaults) {
   const app = new EmberApp(defaults, {
     sassOptions: {
       includePaths: [
@@ -16,7 +16,15 @@ module.exports = function(defaults) {
       sourcemap: false,
     },
     'ember-composable-helpers': {
-      only: ['toggle', 'map-by', 'reduce', 'includes', 'group-by', 'sort-by', 'keys'],
+      only: [
+        'toggle',
+        'map-by',
+        'reduce',
+        'includes',
+        'group-by',
+        'sort-by',
+        'keys',
+      ],
     },
   });
 

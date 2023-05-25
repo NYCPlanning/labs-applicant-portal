@@ -15,15 +15,12 @@ export default class ProjectMilestonesMilestoneGroupComponent extends Component 
     const { groupedMilestones, status } = this.args;
     if (status === 'Not Started') {
       return groupedMilestones.sortBy('dcpPlannedstartdate');
-    // "In Progress" and "Completed" milestones
-    } return groupedMilestones.sortBy('dcpActualstartdate');
+      // "In Progress" and "Completed" milestones
+    }
+    return groupedMilestones.sortBy('dcpActualstartdate');
   }
 
-  groupsToShow = [
-    'Completed',
-    'In Progress',
-    'Not Started',
-  ];
+  groupsToShow = ['Completed', 'In Progress', 'Not Started'];
 
   get showGroup() {
     return this.groupsToShow.includes(this.args.status);

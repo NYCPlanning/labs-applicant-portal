@@ -18,20 +18,25 @@ function _parseResponse(locationHash) {
 
 export default class LoginRoute extends Route {
   @service
-  session
+  session;
 
   // hit /login in backend
   async beforeModel() {
     // try to authenticate with the url#access_token
     // & with the zap api CRM-authenticated
 
-    await this.session.authenticate('authenticator:zap-api-authenticator', _parseResponse(window.location.hash));
+    await this.session.authenticate(
+      'authenticator:zap-api-authenticator',
+      _parseResponse(window.location.hash),
+    );
 
     // redirect
     const contact = await this.store.queryRecord('contact', { me: true });
 
     if (!contact.isNycidValidated) {
-      this.transitionTo('auth.validate', { queryParams: { loginEmail: contact.emailaddress1 } });
+      this.transitionTo('auth.validate', {
+        queryParams: { loginEmail: contact.emailaddress1 },
+      });
     }
   }
 

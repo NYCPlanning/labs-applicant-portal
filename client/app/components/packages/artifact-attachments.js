@@ -2,10 +2,11 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
 /**
-  * @param      {Artifact Model}  artifact
-  */
+ * @param      {Artifact Model}  artifact
+ */
 export default class PackagesArtifactAttachmentsComponent extends Component {
-  get fileManager() { // should be an instance of FileManager
+  get fileManager() {
+    // should be an instance of FileManager
     return this.args.fileManager;
   }
 
@@ -25,13 +26,18 @@ export default class PackagesArtifactAttachmentsComponent extends Component {
   trackFileForUpload() {
     this.fileManager.trackFileForUpload();
 
-    this.args.artifact.documents = [...this.args.artifact.documents, ...this.fileManager.filesToUpload.files];
+    this.args.artifact.documents = [
+      ...this.args.artifact.documents,
+      ...this.fileManager.filesToUpload.files,
+    ];
   }
 
   @action
   deselectFileForUpload(file) {
     this.fileManager.deselectFileForUpload(file);
 
-    this.args.artifact.documents = this.args.artifact.documents.filter((document) => document !== file);
+    this.args.artifact.documents = this.args.artifact.documents.filter(
+      (document) => document !== file,
+    );
   }
 }

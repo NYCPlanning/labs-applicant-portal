@@ -1,8 +1,11 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+// eslint-disable-next-line ember/no-mixins
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default class LanduseFormEditRoute extends Route.extend(AuthenticatedRouteMixin) {
+export default class LanduseFormEditRoute extends Route.extend(
+  AuthenticatedRouteMixin,
+) {
   @service router;
 
   afterModel(model) {
@@ -11,11 +14,15 @@ export default class LanduseFormEditRoute extends Route.extend(AuthenticatedRout
     const { landuseActions } = landuseForm;
     const projectDispositionCodes = ['HA', 'HD'];
 
-    const luPackageActionCodes = landuseActions.currentState.map((landuseAction) => landuseAction.__recordData.__data.dcpActioncode);
+    const luPackageActionCodes = landuseActions.currentState.map(
+      (landuseAction) => landuseAction.__recordData.__data.dcpActioncode,
+    );
 
     (function determineIfDispositionIsProposed() {
-      if (luPackageActionCodes.some((luPackageActionCode) => projectDispositionCodes.includes(luPackageActionCode))) {
-        return landuseForm.dcpDisposition = true;
+      if (
+        luPackageActionCodes.some((luPackageActionCode) => projectDispositionCodes.includes(luPackageActionCode))
+      ) {
+        return (landuseForm.dcpDisposition = true);
       }
     }());
   }

@@ -11,7 +11,10 @@ export default class SaveableFormComponent extends Component {
   sections = new TrackedSet();
 
   get sectionData() {
-    return Array.from(this.sections).map((section) => ({ label: section.args.title, anchorId: section.elementId }));
+    return Array.from(this.sections).map((section) => ({
+      label: section.args.title,
+      anchorId: section.elementId,
+    }));
   }
 
   @action

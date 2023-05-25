@@ -1,6 +1,4 @@
-import {
-  validateLength,
-} from 'ember-changeset-validations/validators';
+import { validateLength } from 'ember-changeset-validations/validators';
 
 // These validate the fields for _saving_ to the server
 // REMEMBER: You still need to manually update "maxlength"

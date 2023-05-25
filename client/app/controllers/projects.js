@@ -1,9 +1,7 @@
 import Controller from '@ember/controller';
+// eslint-disable-next-line ember/no-computed-properties-in-native-classes
 import { sort } from '@ember/object/computed';
-import {
-  STATUSCODE,
-  DCPVISIBILITY,
-} from '../optionsets/package';
+import { STATUSCODE, DCPVISIBILITY } from '../optionsets/package';
 
 export function packageIsToDo(projectPackages) {
   return projectPackages.some((projectPackage) => {
@@ -15,7 +13,8 @@ export function packageIsToDo(projectPackages) {
       ].includes(projectPackage.dcpVisibility)
     ) {
       return true;
-    } return false;
+    }
+    return false;
   });
 }
 
@@ -26,13 +25,15 @@ export default class ProjectsController extends Controller {
   // (includes active projects with packages that haven't been submitted)
   get toDoProjects() {
     // Check that at least ONE of the packages is currently editable
-    return this.model.filter((project) => packageIsToDo(project.pasPackages)
-      || packageIsToDo(project.rwcdsPackages)
-      || (packageIsToDo(project.landusePackages))
-      || (packageIsToDo(project.easPackages))
-      || (packageIsToDo(project.scopeOfWorkDraftPackages))
-      || (packageIsToDo(project.eisPackages))
-      || (packageIsToDo(project.technicalMemoPackages)));
+    return this.model.filter(
+      (project) => packageIsToDo(project.pasPackages)
+        || packageIsToDo(project.rwcdsPackages)
+        || packageIsToDo(project.landusePackages)
+        || packageIsToDo(project.easPackages)
+        || packageIsToDo(project.scopeOfWorkDraftPackages)
+        || packageIsToDo(project.eisPackages)
+        || packageIsToDo(project.technicalMemoPackages),
+    );
   }
 
   // Projects in NYC Planning's hands

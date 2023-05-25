@@ -4,7 +4,7 @@
   </h5>
   <LabsSearch
     @searchPlaceholder='Enter an address or BBL (ex 1001440001)'
-    @onSelect={{fn this.selectSearchResult}}
+    @onSelect={{this.selectSearchResult}}
     data-test-input="bbl-search" as |search|
   >
     <span class="text-black">
