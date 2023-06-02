@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import fetch from 'fetch';
-import ENV from '../../config/environment';
+import ENV from 'client/config/environment';
 
 export default class ProjectPackageSectionComponent extends Component {
   @service

@@ -2,7 +2,7 @@ import fetch from 'fetch';
 import OAuth2ImplicitGrantAuthenticator from 'ember-simple-auth/authenticators/oauth2-implicit-grant';
 import { InvalidError } from '@ember-data/adapter/error';
 import jwtDecode from 'jwt-decode';
-import ENV from '../config/environment';
+import ENV from 'client/config/environment';
 
 export default class ZAPAuthenticator extends OAuth2ImplicitGrantAuthenticator {
   async authenticate(...args) {

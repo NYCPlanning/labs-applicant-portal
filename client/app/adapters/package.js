@@ -1,6 +1,6 @@
 import JSONAPIAdapter from '@ember-data/adapter/json-api';
 import { inject as service } from '@ember/service';
-import ENV from '../config/environment';
+import ENV from 'client/config/environment';
 
 // Taken from
 // https://github.com/emberjs/data/blob/v3.24.0/packages/adapter/addon/-private/utils/serialize-into-hash.js

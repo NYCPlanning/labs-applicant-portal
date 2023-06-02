@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
-import ENV from '../../config/environment';
+import ENV from 'client/config/environment';
 
 const encodeToBase64 = (string) => btoa(string);
 

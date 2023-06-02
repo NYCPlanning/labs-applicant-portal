@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import window from 'ember-window-mock';
-import ENV from '../../../../config/environment';
+import ENV from 'client/config/environment';
 
 module('Integration | Component | auth/sign-in-button', function (hooks) {
   setupRenderingTest(hooks);

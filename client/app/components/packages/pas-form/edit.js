@@ -34,7 +34,6 @@ export default class PasFormComponent extends Component {
   store;
 
   get package() {
-    console.log(" this.args.package || {};",  this.args.package || {});
     return this.args.package || {};
   }
 

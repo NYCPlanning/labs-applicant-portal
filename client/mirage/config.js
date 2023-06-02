@@ -1,5 +1,5 @@
 import { Response } from 'ember-cli-mirage';
-import ENV from '../config/environment';
+import ENV from 'client/config/environment';
 
 export default function () {
   this.passthrough('https://search-api-production.herokuapp.com/**');
