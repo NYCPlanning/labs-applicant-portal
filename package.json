@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "repository": "git@github.com:NYCPlanning/labs-applicant-portal.git",
   "license": "MIT",
-  "scripts": {
-    "start": "(cd server && yarn run start:dev) & (cd client && yarn run start:ssl)"
-  },
   "devDependencies": {
     "eslint": "^7.10.0"
   }
