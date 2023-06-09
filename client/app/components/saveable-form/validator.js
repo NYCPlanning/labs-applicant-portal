@@ -13,29 +13,37 @@ export default class ValidatorComponent extends Component {
   registeredDescendants = new TrackedSet();
 
   get _registeredDescendants() {
-    return Array.from(this.registeredDescendants);
+    const regDecs =  Array.from(this.registeredDescendants);
+
+    return regDecs;
   }
 
   get _hasDirtyDescendants() {
-    return this._registeredDescendants.any(
+    const hasDirtyDecs =  this._registeredDescendants.any(
       (formvalidator) => formvalidator.isDirty === true,
     );
+
+    return hasDirtyDecs
   }
 
   get _hasValidDescendants() {
-    return this.registeredDescendants.size
+    const hasValidDDecs = this.registeredDescendants.size
       ? this._registeredDescendants.every(
         (formvalidator) => formvalidator.isValid === true,
       )
       : true;
+
+      return hasValidDDecs;
   }
 
   get isDirty() {
-    return this.changeset.isDirty || this._hasDirtyDescendants;
+    const durty =  this.changeset.isDirty || this._hasDirtyDescendants;
+    return durty;
   }
 
   get isValid() {
-    return this.changeset.isValid && this._hasValidDescendants;
+    const itsvalid =  this.changeset.isValid && this._hasValidDescendants;
+    return itsvalid;
   }
 
   @action
@@ -50,7 +58,7 @@ export default class ValidatorComponent extends Component {
       await this.changeset.rollback();
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.log('Save error:', error);
+      console.log('Save error in persisting change:', error);
     }
   }
 

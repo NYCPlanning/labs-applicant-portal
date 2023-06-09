@@ -8,6 +8,11 @@
       />
         There was a problem saving your information.
     </h5>
+    <Errors::List>
+      {{log "@package.pasForm.adapterError" @package.pasForm.adapterError }}
+      {{ log "@package.adapterError"  @package.adapterError }}
+      {{log "@package.fileUploadErrors"  @package.fileUploadErrors }}
+    </Errors::List>
       <Errors::List
         @errors={{@package.pasForm.adapterError.errors}}
       />

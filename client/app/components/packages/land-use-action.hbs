@@ -13,7 +13,9 @@
         @onChange={{this.addSelectedAction}}
         as |landUseAction|
       >
+        {{ log  'land use action name: ' landUseAction.name }}
         {{landUseAction.name}}
+        }
       </PowerSelect>
     </label>
   </div>

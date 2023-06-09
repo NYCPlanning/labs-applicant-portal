@@ -1,12 +1,14 @@
-{{#let (component (concat 'saveable-form/field/' this.type)
-  value=this.value
-  attribute=@attribute
-  parentField=(component 'saveable-form/field'
-    data=@data
-    error=@error
+{{#let (
+  component (concat 'saveable-form/field/' this.type)
+    value=this.value
     attribute=@attribute
-    showCounter=@showCounter
-  )) as |CurriedFieldComponent|
+    parentField=(component 'saveable-form/field'
+      data=@data
+      error=@error
+      attribute=@attribute
+      showCounter=@showCounter
+    )
+  ) as |CurriedFieldComponent|
 }}
   {{#if (has-block)}}
     {{!-- Yield the component so more args can be added --}}

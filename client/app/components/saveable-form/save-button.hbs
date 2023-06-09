@@ -5,6 +5,7 @@
   {{on "click" (perform this.clickTask)}}
   ...attributes
 >
+{{ log "this.args" this.args}}
   {{#if this.clickTask.isRunning}}
     <FaIcon @icon="spinner" @spin={{true}} @pulse={{true}} class="small-margin-right" />
     {{if @isSubmit 'Submitting' 'Saving'}}

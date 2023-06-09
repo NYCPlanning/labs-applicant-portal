@@ -2,7 +2,7 @@ import { validatePresence } from 'ember-changeset-validations/validators';
 
 export default function validatePresenceIf(options) {
   const { withValue, on } = options;
-
+  // console.log("require if selected js - options", options);
   return (...args) => {
     const [, , , changes, content] = args;
     const target = Object.prototype.hasOwnProperty.call(changes, on)

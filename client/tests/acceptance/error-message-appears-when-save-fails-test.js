@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import {
-  visit, click, fillIn, currentURL, waitFor,
+  visit, click, fillIn, currentURL, waitFor, pauseTest
 } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -18,6 +18,7 @@ module('Acceptance | error message appears when save fails', function (hooks) {
   });
 
   test('error message appears when error occurs on save for PAS Form', async function (assert) {
+
     this.server.create('package', 'pasForm', {
       project: this.server.create('project'),
       id: null,
@@ -40,6 +41,8 @@ module('Acceptance | error message appears when save fails', function (hooks) {
 
     // save it
     await click('[data-test-save-button]');
+    await this.pauseTest();
+
     // async make sure save action finishes before assertion
 
     await waitFor('[data-test-error-key="detail"]');

@@ -156,6 +156,8 @@ export default class LandUseActionComponent extends Component {
 
   // actions that appear in dropdown sorted alphabetically
   get availableActions() {
+    console.log('All_LAND_USE_ACTION_OPTIONS', All_LAND_USE_ACTION_OPTIONS.filter((o) => !this.selectedActions.includes(o)).sort((a, b) => (a.name > b.name ? 1 : -1)));
+
     return All_LAND_USE_ACTION_OPTIONS.filter(
       (option) => !this.selectedActions.includes(option),
     ).sort((a, b) => (a.name > b.name ? 1 : -1));
