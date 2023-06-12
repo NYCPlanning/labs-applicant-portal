@@ -48,6 +48,7 @@
     "ember-cli-sass": "^10.0.1",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-uglify": "^3.0.0",
+    "ember-cli-update": "^1.0.1",
     "ember-cli-what-input": "^1.0.0",
     "ember-composable-helpers": "^4.3.0",
     "ember-concurrency": "^1.1.7",
@@ -89,7 +90,7 @@
     "tracked-maps-and-sets": "^2.1.0"
   },
   "engines": {
-    "node": "12"
+    "node": "10.* || >= ^14.*"
   },
   "ember": {
     "edition": "octane"
