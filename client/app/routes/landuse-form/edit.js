@@ -1,8 +1,7 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default class LanduseFormEditRoute extends Route.extend(AuthenticatedRouteMixin) {
+export default class LanduseFormEditRoute extends Route {
   @service router;
 
   afterModel(model) {

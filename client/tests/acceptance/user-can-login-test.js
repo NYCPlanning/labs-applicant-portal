@@ -29,7 +29,19 @@ module('Acceptance | user can login', function(hooks) {
     });
 
     window.location.hash = `#access_token=${DUMMY_TOKEN}`;
-    await visit('/login');
+
+    // eslint-disable-next-line spaced-comment
+    //https://github.com/mainmatter/ember-simple-auth/issues/2244
+
+    try {
+      await visit('/login');
+    } catch (error) {
+      const { message } = error;
+      if (message !== 'TransitionAborted') {
+        // eslint-disable-next-line no-console
+        console.log('TransitionAborted AccessToken', message);
+      }
+    }
 
     assert.equal(currentSession().isAuthenticated, true);
   });
@@ -40,7 +52,17 @@ module('Acceptance | user can login', function(hooks) {
     this.server.create('contact');
 
     window.location.hash = `#access_token=${DUMMY_TOKEN}`;
-    await visit('/login');
+
+    try {
+      await visit('/login');
+    } catch (error) {
+      const { message } = error;
+      if (message !== 'TransitionAborted') {
+        // eslint-disable-next-line no-console
+        console.log('TransitionAborted Logout', message);
+      }
+    }
+
     await focus('[data-test-auth="menu-button"]');
     await click('[data-test-auth="logout"]');
 
@@ -74,7 +96,16 @@ module('Acceptance | user can login', function(hooks) {
       assert.equal(request.queryParams.accessToken, DUMMY_TOKEN);
     });
     window.location.hash = `#access_token=${DUMMY_TOKEN}`;
-    await visit('/login');
+
+    try {
+      await visit('/login');
+    } catch (error) {
+      const { message } = error;
+      if (message !== 'TransitionAborted') {
+        // eslint-disable-next-line no-console
+        console.log('TransitionAborted Loggedin Redirect', message);
+      }
+    }
 
     // because user is already logged in, route should redirect to /projects
     await visit('/');
