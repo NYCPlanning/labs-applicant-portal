@@ -17,8 +17,7 @@ function _parseResponse(locationHash) {
 }
 
 export default class LoginRoute extends Route {
-  @service
-  session
+  @service session
 
   // hit /login in backend
   async beforeModel() {
