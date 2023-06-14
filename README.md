@@ -27,26 +27,26 @@ Google Chrome is beginning to enforce some restrictions on particular uses of co
 
 ## Running the App
 Once you have SSL enabled...
-###### note: the project is optimized for node versions `10.* || >= 12` but you can use node version up to `v14.15.0` so use nvm (or your preferred node manager) to set the node version for the repo
+##### note: the client and server each run on their own node version, independent of each other. Refer to the .nvmrc of their respective folders to determine the appropriate node verion.
 1. Clone `labs-applicant-portal` to your computer.
 2. Navigate into the `server` folder.
     - Create the `development.env` file using variables stored on 1Password.
     - Copy the `server.key` and `server.crt` files from your `local-cert-generator` repo and paste both files into the `labs-applicant-portal/server/ssl/` folder.
+    - Activate the compatible node version `nvm use`
     - Run `yarn` to install dependencies for the server.
-3. Navigate into the `client` folder.
+    - Run `yarn run start:dev` to start a development server
+3. Open a new terminal and navigate into the `client` folder.
     - Copy the `server.key` and `server.crt` files from your `local-cert-generator` repo and paste both files into the `labs-applicant-portal/client/ssl/` folder.
+    - Activate the compatible node version `nvm use`
     - Run `yarn` to install dependencies for the client.
-4. Go to the root of the app `cd ..` and run: `yarn run start`. It will run both the client and server servers.
+    - Run `yarn start:dev` to start a development server
 
-## Troubleshooting
+## Pre-commit linting and testing
+ The client and server application node versions have become out of sync with each other. Consequently, the pre-commit hooks have been turned off until both the server and client are on the same node version.
 
-### Address in use 3000
+ Husky is designed to use the node version set in the terminal PATH at the time the command is run. Whichever node version the developer chooses will be the one that the both the client and server are tested against. This can lead to weird cases where the client or server passes in the environment its developed for but fails in the environment where its tests are run.
 
-On `yarn run start`, you may run into the error `EADDRINUSE: address already in use :::3000`. 
-
-To solve this, open Activity Monitor, search for all "node" processes, then force kill them.
-
-Then try `yarn run start` again.
+As the hooks have been disabled, please take care to run linting and testing scripts for the server and client before commiting. These scripts are documented in their respective `package.json` files.
 
 ## Maintenance Mode
 
@@ -57,4 +57,3 @@ MAINTENANCE_END='06/29/2021 19:00'
 
 Use the date format in the example above. This will warn of upcoming maintenance (if the start date is in the future), disable
 the login, and disappear once the end period has passed.
-
