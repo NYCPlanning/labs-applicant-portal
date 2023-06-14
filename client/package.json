@@ -90,7 +90,7 @@
     "tracked-maps-and-sets": "^2.1.0"
   },
   "engines": {
-    "node": "10.* || >= ^14.*"
+    "node": "10.* || >= ^16.*"
   },
   "ember": {
     "edition": "octane"
@@ -100,5 +100,8 @@
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix"
+  },
+  "resolutions": {
+    "node-sass": "7.0.0"
   }
 }
