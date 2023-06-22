@@ -1,4 +1,6 @@
-module.exports = function(environment) {
+'use strict';
+
+module.exports = function (environment) {
   const ENV = {
     modulePrefix: 'client',
     environment,

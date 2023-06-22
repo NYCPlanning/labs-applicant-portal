@@ -9,13 +9,14 @@ module.exports = {
     },
   },
   plugins: [
-    'ember',
-    'hbs',
+    'ember'
   ],
   extends: [
     'eslint:recommended',
     'plugin:ember/recommended',
     'airbnb-base',
+    'plugin:prettier/recommended',
+    'plugin:qunit/recommended',
   ],
   env: {
     browser: true,
@@ -60,17 +61,17 @@ module.exports = {
     'ember/avoid-leaking-state-in-ember-objects': 0,
   },
   overrides: [
-    // node files
     {
       files: [
-        '.eslintrc.js',
-        '.template-lintrc.js',
-        'ember-cli-build.js',
-        'testem.js',
-        'blueprints/*/index.js',
-        'config/**/*.js',
-        'lib/*/index.js',
-        'server/**/*.js',
+        './.eslintrc.js',
+        './.prettierrc.js',
+        './.template-lintrc.js',
+        './ember-cli-build.js',
+        './testem.js',
+        './blueprints/*/index.js',
+        './config/**/*.js',
+        './lib/*/index.js',
+        './server/**/*.js',
       ],
       parserOptions: {
         sourceType: 'script',
@@ -86,6 +87,10 @@ module.exports = {
         // https://github.com/mysticatea/eslint-plugin-node/issues/77
         'node/no-unpublished-require': 'off',
       },
+    },
+    {
+      // Test files:
+      files: ['tests/**/*-test.{js,ts}'],
     },
   ],
 };
