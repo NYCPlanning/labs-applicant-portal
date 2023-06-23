@@ -3,18 +3,18 @@
     <FaIcon @icon={{if this._showMilestones "caret-down" "caret-right"}} />
     {{#if (eq @status "Completed")}}
       <span class="milestone-icon fa-layers fa-fw">
-        <FaIcon @icon="circle" fixedWidth="true" class="dark-gray">
-        <FaIcon @icon="check" ixedWidth="true" class="off-white" transform="shrink-6">
+        <FaIcon @icon="circle" fixedWidth="true" class="dark-gray" />
+        <FaIcon @icon="check" ixedWidth="true" class="off-white" transform="shrink-6" />
       </span>
     {{else if (eq @status "Not Started")}}
       <span class="milestone-icon fa-layers fa-fw">
-        <FaIcon @icon="circle" fixedWidth="true" class="dark-gray">
-        <FaIcon @icon="calendar" prefix="far" fixedWidth="true" class="off-white" transform="shrink-8">
+        <FaIcon @icon="circle" fixedWidth="true" class="dark-gray" />
+        <FaIcon @icon="calendar" prefix="far" fixedWidth="true" class="off-white" transform="shrink-8" />
       </span>
     {{else if (eq @status "In Progress")}}
       <span class="milestone-icon fa-layers fa-fw">
-        <FaIcon @icon="circle" fixedWidth="true" class="dark-gray">
-        <FaIcon @icon="map-pin" fixedWidth="true" class="off-white" transform="shrink-8">
+        <FaIcon @icon="circle" fixedWidth="true" class="dark-gray" />
+        <FaIcon @icon="map-pin" fixedWidth="true" class="off-white" transform="shrink-8" />
       </span>
     {{/if}}
   </button>

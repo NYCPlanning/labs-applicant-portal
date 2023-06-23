@@ -3,7 +3,7 @@
     <h4 class="no-margin">{{@milestone.dcpMilestoneValue}}</h4>
     {{#unless @milestone.isDcpOwned}}
       <small class="a11y-orange">
-        <FaIcon @icon="exclamation-triangle" fixedWidth="true" class="a11y">
+        <FaIcon @icon="exclamation-triangle" fixedWidth="true" class="a11y" />
         Applicant controls this milestone’s duration.
       </small><br>
     {{/unless}}
