@@ -22,6 +22,7 @@ function generateSSLConfiguration() {
 
 async function bootstrap() {
   let allowedOrigins = <any[]>[
+    /\.tangoyankee\.io$/,
     /\.planninglabs\.nyc$/,
     /\.planning\.nyc\.gov$/,
     /\.netlify\.app$/,
@@ -35,7 +36,8 @@ async function bootstrap() {
     allowedOrigins = allowedOrigins.concat([
       'http://localhost:4200',
       'https://localhost:4200',
-      'https://local.planninglabs.nyc:4200',
+      // 'https://local.planninglabs.nyc:4200',
+      'https://local.tangoyankee.io:4200',
     ]);
   }
 
