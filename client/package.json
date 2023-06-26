@@ -28,8 +28,6 @@
     "*.js": "eslint --cache --fix"
   },
   "dependencies": {
-    "@fortawesome/free-brands-svg-icons": "^5.15.3",
-    "@fortawesome/free-regular-svg-icons": "^5.15.3",
     "jwt-decode": "^3.0.0-beta.2",
     "moment": "^2.29.4"
   },
@@ -38,6 +36,8 @@
     "@ember/render-modifiers": "^1.0.2",
     "@ember/test-helpers": "^2.7.0",
     "@fortawesome/ember-fontawesome": "0.3.0",
+    "@fortawesome/free-brands-svg-icons": "^5.15.3",
+    "@fortawesome/free-regular-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@glimmer/component": "^1.0.0",
     "@glimmer/tracking": "^1.0.0",
@@ -86,6 +86,7 @@
     "ember-source": "~3.28.8",
     "ember-template-lint": "^3.15.0",
     "ember-test-selectors": "^4.0.0",
+    "ember-tooltips": "^3.6.0",
     "ember-truth-helpers": "^2.1.0",
     "ember-validators": "4.1.2",
     "ember-welcome-page": "^4.1.0",
