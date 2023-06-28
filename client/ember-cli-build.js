@@ -18,6 +18,33 @@ module.exports = function(defaults) {
     'ember-composable-helpers': {
       only: ['toggle', 'map-by', 'reduce', 'includes', 'group-by', 'sort-by', 'keys'],
     },
+    babel: {
+      plugins: [require.resolve('ember-auto-import/babel-plugin')],
+    },
+    autoImport: {
+      alias: {
+        handlebars: 'handlebars/dist/handlebars',
+      },
+      webpack: {
+        node: {
+          global: true,
+          __filename: false,
+          __dirname: false,
+        },
+        output: {
+          filename: 'client.chunk.[id].[chunkhash].js',
+        },
+      },
+      skipBabel: [
+        {
+          // when an already-babel-transpiled package like "mapbox-gl" is
+          // not skipped, it can produce errors in the production mode
+          // due to double transpilation
+          package: 'mapbox-gl',
+          semverRange: '*',
+        },
+      ],
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated
