@@ -1,4 +1,6 @@
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const babelPlugin = require('ember-auto-import/babel-plugin');
+const sass = require('sass-embedded');
 
 module.exports = function(defaults) {
   const app = new EmberApp(defaults, {
@@ -9,6 +11,7 @@ module.exports = function(defaults) {
       ],
       onlyIncluded: true,
       sourceMap: false,
+      implementation: sass,
     },
     autoprefixer: {
       enabled: true,
@@ -19,31 +22,17 @@ module.exports = function(defaults) {
       only: ['toggle', 'map-by', 'reduce', 'includes', 'group-by', 'sort-by', 'keys'],
     },
     babel: {
-      plugins: [require.resolve('ember-auto-import/babel-plugin')],
+      plugins: [babelPlugin],
     },
-    autoImport: {
-      alias: {
-        handlebars: 'handlebars/dist/handlebars',
-      },
+   autoImport: {
       webpack: {
-        node: {
-          global: true,
-          __filename: false,
-          __dirname: false,
-        },
-        output: {
-          filename: 'client.chunk.[id].[chunkhash].js',
+        resolve: {
+          fallback: {
+            fs: false,
+            path: false,
+          },
         },
       },
-      skipBabel: [
-        {
-          // when an already-babel-transpiled package like "mapbox-gl" is
-          // not skipped, it can produce errors in the production mode
-          // due to double transpilation
-          package: 'mapbox-gl',
-          semverRange: '*',
-        },
-      ],
     },
   });
 
