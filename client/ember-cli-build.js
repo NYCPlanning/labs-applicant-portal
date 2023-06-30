@@ -26,6 +26,7 @@ module.exports = function(defaults) {
     },
    autoImport: {
       webpack: {
+        entry: '/app/app.js',
         resolve: {
           fallback: {
             fs: false,
