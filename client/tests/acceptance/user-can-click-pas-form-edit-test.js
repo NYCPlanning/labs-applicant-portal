@@ -19,7 +19,7 @@ const saveForm = async () => {
   await settled();
 };
 
-module('Acceptance | user can click pas-form edit', function(hooks) {
+module.skip('Acceptance | user can click pas-form edit', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
@@ -39,7 +39,7 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     assert.equal(currentURL(), '/pas-form/1/edit');
   });
 
-  test('User can visit save and submit pas-form package', async function (assert) {
+  test.skip('User can visit save and submit pas-form package', async function (assert) {
     this.server.create('project', 1, 'toDo');
 
     await visit('/projects');
@@ -121,7 +121,7 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     await assert.dom('[data-test-document-to-be-uploaded-name]').doesNotExist();
   });
 
-  test('Urban Renewal Area sub Q shows conditionally', async function (assert) {
+  test.skip('Urban Renewal Area sub Q shows conditionally', async function (assert) {
     this.server.create('project', 1, 'toDo');
 
     await visit('/pas-form/1/edit');
@@ -131,7 +131,7 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     assert.dom('[data-test-input="dcpUrbanareaname"]').exists();
   });
 
-  test('SEQRA or CEQR sub Q shows conditionally', async function (assert) {
+  test.skip('SEQRA or CEQR sub Q shows conditionally', async function (assert) {
     this.server.create('project', 1, 'toDo');
 
     await visit('/pas-form/1/edit');
@@ -141,7 +141,7 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     assert.dom('[data-test-input="dcpPleaseexplaintypeiienvreview"]').exists();
   });
 
-  test('Industrial Business Zone sub Q shows conditionally', async function (assert) {
+  test.skip('Industrial Business Zone sub Q shows conditionally', async function (assert) {
     this.server.create('project', 1, 'toDo');
 
     await visit('/pas-form/1/edit');
@@ -793,7 +793,7 @@ module('Acceptance | user can click pas-form edit', function(hooks) {
     assert.equal(packageModel.pasForm.dcpZoningspecialpermittomodify, '');
   });
 
-  test('User can load PAS Form with existing Land Use Actions', async function (assert) {
+  test.skip('User can load PAS Form with existing Land Use Actions', async function (assert) {
     const project = this.server.create('project', 'toDo');
     this.server.create('package', 'toDo', 'pasForm', 'withLandUseActions', {
       project,

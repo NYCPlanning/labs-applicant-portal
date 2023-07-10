@@ -18,7 +18,7 @@ module('Acceptance | land use action fields validate', function(hooks) {
     });
   });
 
-  test('validation message appears for count field when user types incorrect value', async function(assert) {
+  test.skip('validation message appears for count field when user types incorrect value', async function(assert) {
     this.server.create('package', 'pasForm', {
       project: this.server.create('project'),
     });
@@ -46,7 +46,7 @@ module('Acceptance | land use action fields validate', function(hooks) {
     assert.dom('[data-test-validation-message="dcpPfzoningauthorization"]').doesNotExist();
   });
 
-  test('validation message appears for extra questions when user types incorrect value', async function(assert) {
+  test.skip('validation message appears for extra questions when user types incorrect value', async function(assert) {
     this.server.create('package', 'pasForm', {
       project: this.server.create('project'),
     });

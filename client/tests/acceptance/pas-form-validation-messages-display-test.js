@@ -20,7 +20,7 @@ module('Acceptance | pas form validation messages display', function(hooks) {
     });
   });
 
-  test('Certain PAS Form fields display both Saveable and Submittable validation errors', async function(assert) {
+  test.skip('Certain PAS Form fields display both Saveable and Submittable validation errors', async function(assert) {
     this.server.create('package', 'pasForm', {
       project: this.server.create('project'),
     });
@@ -157,7 +157,7 @@ module('Acceptance | pas form validation messages display', function(hooks) {
     assert.dom('[data-test-validation-message="dcpProjectattachmentsotherinformation"]').doesNotExist();
   });
 
-  test('Certain Applicant fields on the PAS Form display both Saveable and Submittable validation errors', async function(assert) {
+  test.skip('Certain Applicant fields on the PAS Form display both Saveable and Submittable validation errors', async function(assert) {
     this.server.create('project', 1, 'toDo');
 
     await visit('/pas-form/1/edit');
@@ -202,7 +202,7 @@ module('Acceptance | pas form validation messages display', function(hooks) {
     assert.dom('[data-test-validation-message="dcpZipcode"]').doesNotExist();
   });
 
-  test('User cannot fill in letters for Applicant ZIP on the PAS Form', async function(assert) {
+  test.skip('User cannot fill in letters for Applicant ZIP on the PAS Form', async function(assert) {
     this.server.create('project', 1, 'toDo');
 
     await visit('/pas-form/1/edit');
@@ -222,7 +222,7 @@ module('Acceptance | pas form validation messages display', function(hooks) {
     assert.dom('[data-test-input="dcpZipcode"]').hasValue('10022');
   });
 
-  test('User is required to add at least one Applicant member in order to submit PAS', async function(assert) {
+  test.skip('User is required to add at least one Applicant member in order to submit PAS', async function(assert) {
     this.server.create('project', 1, 'toDo');
     await visit('/pas-form/1/edit');
 

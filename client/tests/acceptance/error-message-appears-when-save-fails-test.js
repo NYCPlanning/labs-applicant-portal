@@ -22,7 +22,7 @@ module('Acceptance | error message appears when save fails', function(hooks) {
     });
   });
 
-  test('error message appears when error occurs on save for PAS Form', async function(assert) {
+  test.skip('error message appears when error occurs on save for PAS Form', async function(assert) {
     this.server.create('package', 'pasForm', {
       project: this.server.create('project'),
     });

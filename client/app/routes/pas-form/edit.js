@@ -6,7 +6,10 @@ export default class PasFormEditRoute extends Route {
   @service router;
 
   afterModel(model) {
-    if (model.statuscode === STATUSCODE.SUBMITTED.code && model.statecode === STATECODE.INACTIVE.code) {
+    if (
+      model.statuscode === STATUSCODE.SUBMITTED.code &&
+      model.statecode === STATECODE.INACTIVE.code
+    ) {
       return this.router.replaceWith('pas-form');
     }
   }
