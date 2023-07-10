@@ -1,8 +1,10 @@
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const sass = require('sass-embedded');
 
-module.exports = function(defaults) {
+module.exports = function (defaults) {
   const app = new EmberApp(defaults, {
     sassOptions: {
+      implementation: sass,
       includePaths: [
         'node_modules/foundation-sites/scss',
         'node_modules/nyc-planning-style-guide/dist/assets/scss',
@@ -16,7 +18,15 @@ module.exports = function(defaults) {
       sourcemap: false,
     },
     'ember-composable-helpers': {
-      only: ['toggle', 'map-by', 'reduce', 'includes', 'group-by', 'sort-by', 'keys'],
+      only: [
+        'toggle',
+        'map-by',
+        'reduce',
+        'includes',
+        'group-by',
+        'sort-by',
+        'keys',
+      ],
     },
   });
 
