@@ -14,7 +14,6 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:ember/recommended',
-    'airbnb-base',
     'plugin:prettier/recommended',
     'plugin:qunit/recommended',
   ],
@@ -25,10 +24,7 @@ module.exports = {
     'ember/no-jquery': 'error',
     'import/no-extraneous-dependencies': 0,
     'import/no-unresolved': 0,
-    'import/no-named-as-default': 1,
-    'import/prefer-default-export': 1,
     'import/extensions': 0,
-    'import/no-named-as-default-member': 1,
     'import/named': 0,
     'array-callback-return': 1,
     'consistent-return': 1,
