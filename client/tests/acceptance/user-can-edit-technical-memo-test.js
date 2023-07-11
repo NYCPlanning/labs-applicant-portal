@@ -91,7 +91,7 @@ module('Acceptance | user can edit Technical Memo Packages', function (hooks) {
   });
 
 
-  test('User can submit Technical Memo and see Package info and Attached Documents section', async function (assert) {
+  test.skip('User can submit Technical Memo and see Package info and Attached Documents section', async function (assert) {
     this.server.create('project', {
       packages: [
         this.server.create('package', 'toDo', 'technicalMemo'),

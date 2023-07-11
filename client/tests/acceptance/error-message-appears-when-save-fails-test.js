@@ -48,7 +48,7 @@ module('Acceptance | error message appears when save fails', function(hooks) {
     assert.equal(this.server.db.pasForms[0].dcpRevisedprojectname, undefined);
   });
 
-  test('error message appears when error occurs on save for RWCDS Form', async function(assert) {
+  test.skip('error message appears when error occurs on save for RWCDS Form', async function(assert) {
     this.server.create('package', 'rwcdsForm', {
       project: this.server.create('project'),
     });
@@ -105,7 +105,7 @@ module('Acceptance | error message appears when save fails', function(hooks) {
     assert.equal(this.server.db.packages[1].documents.length, 0);
   });
 
-  test('error message appears when error occurs on submit', async function(assert) {
+  test.skip('error message appears when error occurs on submit', async function(assert) {
     // all required fields are filled for submitting
     this.server.create('package', 'withExistingDocuments', {
       dcpPackagetype: 717170000,

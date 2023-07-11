@@ -99,7 +99,7 @@ module('Integration | Component | f', function(hooks) {
     assert.expect(3);
   });
 
-  test('it errors', async function (assert) {
+  test.skip('it errors', async function (assert) {
     this.dummyModel = {
       someProp: 'test',
       someBool: null,

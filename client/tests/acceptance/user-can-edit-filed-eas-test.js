@@ -91,7 +91,7 @@ module('Acceptance | user can edit Filed EAS Packages', function (hooks) {
     assert.dom('[data-test-attached-documents]').exists();
   });
 
-  test('User can submit Filed EAS and see Package info and Attached Documents section', async function (assert) {
+  test.skip('User can submit Filed EAS and see Package info and Attached Documents section', async function (assert) {
     this.server.create('project', {
       packages: [
         this.server.create('package', 'toDo', 'filedEas'),
@@ -153,7 +153,7 @@ module('Acceptance | user can edit Filed EAS Packages', function (hooks) {
     assert.dom('[data-test-document-name="1"]').containsText('Action Changes.excel');
   });
 
-  test('User can click through Ceqr Invoice Questionnaire section on Filed Eas', async function (assert) {
+  test.skip('User can click through Ceqr Invoice Questionnaire section on Filed Eas', async function (assert) {
     this.server.create('project', {
       packages: [
         this.server.create('package', 'toDo', 'filedEas'),

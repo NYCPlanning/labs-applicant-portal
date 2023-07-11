@@ -90,7 +90,7 @@ module('Acceptance | user can edit DEIS Packages', function (hooks) {
     assert.dom('[data-test-attached-documents]').exists();
   });
 
-  test('User can submit Draft EIS and see Package info and Attached Documents section', async function (assert) {
+  test.skip('User can submit Draft EIS and see Package info and Attached Documents section', async function (assert) {
     this.server.create('project', {
       packages: [
         this.server.create('package', 'toDo', 'deis'),

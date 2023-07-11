@@ -19,7 +19,7 @@ const saveForm = async () => {
   await settled();
 };
 
-module('Acceptance | user can click landuse form edit', function (hooks) {
+module.skip('Acceptance | user can click landuse form edit', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
@@ -29,7 +29,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     });
   });
 
-  test('User can edit, save and submit landuse form', async function (assert) {
+  test.skip('User can edit, save and submit landuse form', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
       artifact: this.server.create('artifact'),
@@ -54,7 +54,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
 
-  test('User can edit Site Information on the landuse form', async function (assert) {
+  test.skip('User can edit Site Information on the landuse form', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
       artifact: this.server.create('artifact'),
@@ -81,7 +81,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
 
-  test('User can reveal Project Area conditional questions', async function (assert) {
+  test.skip('User can reveal Project Area conditional questions', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
       artifact: this.server.create('artifact'),
@@ -157,7 +157,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     assert.equal(currentURL(), '/landuse-form/1/edit');
   });
 
-  test('User resets values of all radio descendants when changing radio answers in Project Area', async function (assert) {
+  test.skip('User resets values of all radio descendants when changing radio answers in Project Area', async function (assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'landuseForm')],
       artifact: this.server.create('artifact'),

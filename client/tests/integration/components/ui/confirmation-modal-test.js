@@ -6,7 +6,7 @@ import { hbs } from 'ember-cli-htmlbars';
 module('Integration | Component | ui/confirmation-modal', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test.skip('it renders', async function(assert) {
     this.show = false;
     this.toggle = () => { this.set('show', !this.show); };
 

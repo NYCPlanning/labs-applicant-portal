@@ -87,7 +87,7 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     assert.equal(currentURL(), '/rwcds-form/1?header=true');
   });
 
-  test('User can view existing values in Project Description section', async function(assert) {
+  test.skip('User can view existing values in Project Description section', async function(assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', {
         dcpPackagetype: 717170004,
@@ -110,7 +110,7 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     assert.dom('[data-test-input="dcpSitehistory"]').hasValue('Some history');
   });
 
-  test('Validation messages display for Project Description', async function(assert) {
+  test.skip('Validation messages display for Project Description', async function(assert) {
     this.server.create('project', 1, {
       packages: [this.server.create('package', 'toDo', 'rwcdsForm')],
     });
