@@ -80,6 +80,48 @@ export default {
       message: 'This field is required',
     }),
   ],
+  dcpNumberofnewdwellingunits: [ // start
+    ...SaveableRwcdsForm.dcpNewindustrialsqft,
+    validatePresence({
+      presence: true,
+      message: 'This field is required',
+    }),
+  ],
+  dcpIncrementhousingunits: [
+    ...SaveableRwcdsForm.dcpNewindustrialsqft,
+    validatePresence({
+      presence: true,
+      message: 'This field is required',
+    }),
+  ],
+  dcpActionaffordabledwellingunits: [
+    ...SaveableRwcdsForm.dcpNewindustrialsqft,
+    validatePresence({
+      presence: true,
+      message: 'This field is required',
+    }),
+  ],
+  dcpIncrementalaffordabledwellingunits: [
+    ...SaveableRwcdsForm.dcpNewindustrialsqft,
+    validatePresence({
+      presence: true,
+      message: 'This field is required',
+    }),
+  ],
+  dcpResidentialsqft: [
+    ...SaveableRwcdsForm.dcpNewindustrialsqft,
+    validatePresence({
+      presence: true,
+      message: 'This field is required',
+    }),
+  ],
+  dcpNewcommercialsqft: [
+    ...SaveableRwcdsForm.dcpNewindustrialsqft,
+    validatePresence({
+      presence: true,
+      message: 'This field is required',
+    }),
+  ], // end
   dcpNewindustrialsqft: [
     ...SaveableRwcdsForm.dcpNewindustrialsqft,
     validatePresence({

@@ -43,7 +43,7 @@ $small-font-size: 81.25%; // TODO: update Style Guide so that <small> matches .t
 @import "modules/_pasform";
 @import "modules/_animations";
 @import "modules/_m-actions-milestones";
-@import "_rwcds-style-overrides";
+@import "modules/_rwcds-style-overrides";
 
 @import "modules/_powerselect-overrides"; // TODO: move to Labs UI (if necessary)
 
