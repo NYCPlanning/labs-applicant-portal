@@ -37,4 +37,12 @@ export const RWCDS_FORM_ATTRS = [
   'dcp_date',
   'overriddencreatedon',
   'utcconversiontimezonecode',
+  'dcp_numberofnewdwellingunits',
+  'dcp_incrementhousingunits',
+  'dcp_actionaffordabledwellingunits',
+  'dcp_incrementalaffordabledwellingunits',
+  'dcp_residentialsqft',
+  'dcp_newcommercialsqft',
+  'dcp_newindustrialsqft',
+  'dcp_newcommunityfacilitysqft',
 ];

@@ -86,6 +86,22 @@ export default class RwcdsFormModel extends Model {
 
   @attr('number') utcconversiontimezonecode;
 
+  @attr('number') dcpNumberofnewdwellingunits;
+
+  @attr('number') dcpIncrementhousingunits;
+
+  @attr('number') dcpActionaffordabledwellingunits;
+
+  @attr('number') dcpIncrementalaffordabledwellingunits;
+
+  @attr('number') dcpResidentialsqft;
+
+  @attr('number') dcpNewcommercialsqft;
+
+  @attr('number') dcpNewindustrialsqft;
+
+  @attr('number') dcpNewcommunityfacilitysqft;
+
   async save() {
     await this.saveDirtyAffectedZoningResolutions();
     await super.save();

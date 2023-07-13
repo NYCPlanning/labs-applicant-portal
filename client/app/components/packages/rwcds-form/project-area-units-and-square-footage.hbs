@@ -1,0 +1,108 @@
+{{#let @form as |form|}}
+  <form.Section @title="Project Area Units and Square Footage">
+
+     <p class="header-small">
+        Provide number of dwelling units
+    </p>
+
+    <Ui::Question @required={{true}} as |Q|>
+      <Q.Label class="question-text-small">
+        Total number of dwelling units in the with-action scenario as it appears in the RWCDS Part II table
+      </Q.Label>
+
+      <form.Field
+        @attribute="dcpNumberofnewdwellingunits"
+        id={{Q.questionId}}
+        @maxlength="10"
+      />
+    </Ui::Question>
+
+    <Ui::Question @required={{true}} as |Q|>
+      <Q.Label class="question-text-small">
+        Total incremental number of dwelling units as it appears in the RWCDS Part II table
+      </Q.Label>
+
+      <form.Field
+        @attribute="dcpIncrementhousingunits"
+        id={{Q.questionId}}
+        @maxlength="10"
+      />
+    </Ui::Question>
+
+    <Ui::Question @required={{true}} as |Q|>
+      <Q.Label class="question-text-small">
+        Total number of affordable (MIH + voluntary) dwelling units in the with-action
+      </Q.Label>
+
+      <form.Field
+        @attribute="dcpActionaffordabledwellingunits"
+        id={{Q.questionId}}
+        @maxlength="10"
+      />
+    </Ui::Question>
+
+    <Ui::Question @required={{true}} as |Q|>
+      <Q.Label class="question-text-small">
+        Total incremental number of affordable (MIH + voluntary) dwelling
+      </Q.Label>
+
+      <form.Field
+        @attribute="dcpIncrementalaffordabledwellingunits"
+        id={{Q.questionId}}
+        @maxlength="10"
+      />
+    </Ui::Question>
+
+     <p class="header-small">
+        Provide the gross square footage for incremental uses as they appear in the RWCDS Part II table
+    </p>
+
+    <Ui::Question @required={{true}} as |Q|>
+      <Q.Label class="question-text-small">
+        Gross square footage for incremental residential uses
+      </Q.Label>
+
+      <form.Field
+        @attribute="dcpResidentialsqft"
+        id={{Q.questionId}}
+        @maxlength="10"
+      />
+    </Ui::Question>
+
+    <Ui::Question @required={{true}} as |Q|>
+      <Q.Label class="question-text-small">
+        Gross square footage for incremental commercial uses
+      </Q.Label>
+
+      <form.Field
+        @attribute="dcpNewcommercialsqft"
+        id={{Q.questionId}}
+        @maxlength="10"
+      />
+    </Ui::Question>
+
+    <Ui::Question @required={{true}} as |Q|>
+      <Q.Label class="question-text-small">
+        Gross square footage for incremental industrial uses
+      </Q.Label>
+
+      <form.Field
+        @attribute="dcpNewindustrialsqft"
+        id={{Q.questionId}}
+        @maxlength="10"
+      />
+    </Ui::Question>
+
+    <Ui::Question @required={{true}} as |Q|>
+      <Q.Label class="question-text-small">
+        Gross square footage for incremental community facilities
+      </Q.Label>
+
+      <form.Field
+        @attribute="dcpNewcommunityfacilitysqft"
+        id={{Q.questionId}}
+        @maxlength="10"
+      />
+    </Ui::Question>
+  </form.Section>
+{{/let}}
