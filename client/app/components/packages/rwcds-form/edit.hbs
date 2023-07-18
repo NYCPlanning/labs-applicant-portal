@@ -34,9 +34,10 @@
         </p>
       </section>
 
-     <Packages::RwcdsForm::ProjectAreaUnitsAndSquareFootage
-        @form={{saveableForm}}
-      />
+     <Packages::ProjectAreaUnitsAndSquareFootage
+      @form={{saveableForm}}
+      @package={{@package}}
+     />
 
       <Packages::RwcdsForm::ProjectDescription
         @form={{saveableForm}}

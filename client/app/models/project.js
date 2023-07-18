@@ -29,7 +29,7 @@ export default class ProjectModel extends Model {
   @attr('number') dcpNewresibuildmore50000sf;
 
   @attr('number') dcpIncreasepermitresatleast50000sf;
-
+0
   @attr('number') dcpIncreasepermitnonresiatleast200000sf;
 
   @attr('number') dcpDecpermresiatleastfourcontigcb;
@@ -41,6 +41,22 @@ export default class ProjectModel extends Model {
   @attr('number') dcpImapplyazoningtmaffectsmore5rcd;
 
   @attr('number') dcpAffectfourmorecb;
+
+  @attr('number') dcpNumberofnewdwellingunits;
+
+  @attr('number') dcpIncrementhousingunits;
+
+  @attr('number') dcpActionaffordabledwellingunits;
+
+  @attr('number') dcpIncrementalaffordabledwellingunits;
+
+  @attr('number') dcpResidentialsqft;
+
+  @attr('number') dcpNewcommercialsqft;
+
+  @attr('number') dcpNewindustrialsqft;
+
+  @attr('number') dcpNewcommunityfacilitysqft;
 
   // We assume there's only one. If there's >1 in crm, the backend
   // should return the first one.

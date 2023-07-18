@@ -139,7 +139,7 @@ export class ProjectsService {
             $filter=dcp_milestonephase eq ${MILESTONE_PHASES.PRECERT}
           )
       `);
-      console.log('RECORDSSSSSSSSSSSSS', records);
+    console.log('RECORDSSSSSSSSSSSSS', records);
       const { records: projectApplicants } = await this.crmService.get('dcp_projectapplicants', `
         $filter=
           _dcp_project_value eq ${projectId}
