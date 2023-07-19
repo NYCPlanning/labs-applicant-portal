@@ -5,6 +5,7 @@ import SaveableRwcdsFormValidations from '../../../validations/saveable-rwcds-fo
 import SubmittableRwcdsFormValidations from '../../../validations/submittable-rwcds-form';
 import SaveableAffectedZoningResolutionFormValidations from '../../../validations/saveable-affected-zoning-resolution-form';
 import SubmittableAffectedZoningResolutionFormValidations from '../../../validations/submittable-affected-zoning-resolution-form';
+import SubmittableProjectFormValidations from '../../../validations/submittable-project-form';
 
 export default class PackagesRwcdsFormEditComponent extends Component {
   validations = {
@@ -12,6 +13,7 @@ export default class PackagesRwcdsFormEditComponent extends Component {
     SubmittableRwcdsFormValidations,
     SaveableAffectedZoningResolutionFormValidations,
     SubmittableAffectedZoningResolutionFormValidations,
+    SubmittableProjectFormValidations,
   };
 
   @service
@@ -27,7 +29,7 @@ export default class PackagesRwcdsFormEditComponent extends Component {
     try {
       await this.args.package.save();
     } catch (error) {
-      console.log('Save RWCDS package error:', error);
+      console.log('Save RWCDS package error:', error); // eslint-disable-line
     }
   }
 

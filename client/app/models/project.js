@@ -42,6 +42,23 @@ export default class ProjectModel extends Model {
 
   @attr('number') dcpAffectfourmorecb;
 
+  // RWCDS Project attributes
+  @attr('number') dcpNumberofnewdwellingunits;
+
+  @attr('number') dcpIncrementhousingunits;
+
+  @attr('number') dcpActionaffordabledwellingunits;
+
+  @attr('number') dcpIncrementalaffordabledwellingunits;
+
+  @attr('number') dcpResidentialsqft;
+
+  @attr('number') dcpNewcommercialsqft;
+
+  @attr('number') dcpNewindustrialsqft;
+
+  @attr('number') dcpNewcommunityfacilitysqft;
+
   // We assume there's only one. If there's >1 in crm, the backend
   // should return the first one.
   @belongsTo('artifact', { async: false })

@@ -26,6 +26,87 @@
       </p>
     </section>
 
+    <section
+      class="form-section">
+      <h2 class="section-header">
+        <span id="project-description" class="section-anchor"></span>
+          Project Area Units and Square Footage
+      </h2>
+      <Packages::ProjectAreaUnitsAndSquareFootageHeader />
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Total number of dwelling units in the with-action scenario as it appears in the RWCDS Part II table
+        </A.Prompt>
+        <A.Field>
+          {{@package.dcpNumberofnewdwellingunits}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Total incremental number of dwelling units as it appears in the RWCDS Part II table
+        </A.Prompt>
+        <A.Field>
+          {{@package.dcpIncrementhousingunits}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Total number of affordable (MIH + voluntary) dwelling units in the with-action
+        </A.Prompt>
+        <A.Field>
+          {{@package.dcpActionaffordabledwellingunits}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Total incremental number of affordable (MIH + voluntary) dwelling
+        </A.Prompt>
+        <A.Field>
+          {{@package.dcpIncrementalaffordabledwellingunits}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Gross square footage for incremental residential uses
+        </A.Prompt>
+        <A.Field>
+          {{@package.dcpResidentialsqft}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Gross square footage for incremental commercial uses
+        </A.Prompt>
+        <A.Field>
+          {{@package.dcpNewcommercialsqft}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Gross square footage for incremental industrial uses
+        </A.Prompt>
+        <A.Field>
+          {{@package.dcpNewindustrialsqft}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer as |A|>
+        <A.Prompt>
+          Gross square footage for incremental community facilities
+        </A.Prompt>
+        <A.Field>
+          {{@package.dcpNewcommunityfacilitysqft}}
+        </A.Field>
+      </Ui::Answer>
+    </section>
+
     <section class="form-section">
       <h2 class="section-header">
         <span id="project-description" class="section-anchor"></span>
