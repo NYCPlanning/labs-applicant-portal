@@ -19,13 +19,14 @@ export class RwcdsFormController {
 
   @Patch('/:id')
   async update(@Body() body, @Param('id') id) {
+    console.log("***** RWCDS form Controller *****", body);
     const allowedAttrs = pick(body, [
       ...RWCDS_FORM_ATTRS,
       'package',
     ]);
 
-    await this.rwcdsFormService.update(id, allowedAttrs);
-
+    console.log('***** RWCDS form Controller allows aattributes *****', allowedAttrs);
+    await this.rwcdsFormService.update(id, allowedAttrs); // investigate form service
     return {
       dcp_rwcdsformid: id,
       ...body

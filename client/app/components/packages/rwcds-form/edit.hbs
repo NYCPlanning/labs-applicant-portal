@@ -1,12 +1,13 @@
 <SaveableForm
   @model={{@package}}
   @validators={{array (hash)
+    this.validations.SaveableProjectFormValidations
     this.validations.SubmittablePackageFormValidations}}
   as |saveablePackageForm|
 >
   <saveablePackageForm.SaveableForm
     @model={{saveablePackageForm.data.rwcdsForm}}
-    @validators={{array this.validations.SaveableRwcdsFormValidations this.validations.SubmittableRwcdsFormValidations}}
+    @validators={{array this.validations.SaveableRwcdsFormValidations this.validations.SubmittableRwcdsFormValidations this.validations.SaveableProjectFormValidations}}
     as |saveableRwcdsForm|
   >
     <div class="grid-x grid-margin-x">
@@ -64,24 +65,24 @@
       <div class="cell large-4 sticky-sidebar">
 
         <saveableRwcdsForm.PageNav>
-          <saveableRwcdsForm.SaveButton
-            @isEnabled={{or @package.isDirty saveableRwcdsForm.isSaveable}}
+          <saveablePackageForm.SaveButton
+            @isEnabled={{or @package.isDirty saveablePackageForm.isSaveable}}
             @onClick={{this.savePackage}}
             data-test-save-button
           />
           <Packages::RwcdsForm::RwcdsFormError @package={{@package}} />
 
-          <saveableRwcdsForm.SubmitButton
-            @isEnabled={{saveableRwcdsForm.isSubmittable}}
+          <saveablePackageForm.SubmitButton
+            @isEnabled={{saveablePackageForm.isSubmittable}}
             class="secondary"
             data-test-submit-button
           />
         </saveableRwcdsForm.PageNav>
 
-        <saveableRwcdsForm.ConfirmationModal
-          @action={{component saveableRwcdsForm.SubmitButton
+        <saveablePackageForm.ConfirmationModal
+          @action={{component saveablePackageForm.SubmitButton
             onClick=this.submitPackage
-            isEnabled=saveableRwcdsForm.isSubmittable
+            isEnabled=saveablePackageForm.isSubmittable
             class="no-margin"
           }}
           @footer={{component 'packages/rwcds-form/rwcds-form-error'
@@ -97,7 +98,7 @@
           <p>
             Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including the analysis framework table and spreadsheet) have been uploaded. If NYC Planning does not receive enough accurate information, the Lead Planner will notify you and request that this form be resubmitted with necessary materials, corrections, or clarifications.
           </p>
-        </saveableRwcdsForm.ConfirmationModal>
+        </saveablePackageForm.ConfirmationModal>
 
         <Messages::Assistance class="large-margin-top" />
 
