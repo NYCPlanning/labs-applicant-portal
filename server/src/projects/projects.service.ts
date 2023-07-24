@@ -139,7 +139,7 @@ export class ProjectsService {
             $filter=dcp_milestonephase eq ${MILESTONE_PHASES.PRECERT}
           )
       `);
-      console.log('***** RECORDS - RECORDS - RECORDS - RECORDS *****', records);
+      // console.log('***** RECORDS - RECORDS - RECORDS - RECORDS *****', records);
       const { records: projectApplicants } = await this.crmService.get('dcp_projectapplicants', `
         $filter=
           _dcp_project_value eq ${projectId}
@@ -211,6 +211,9 @@ export class ProjectsService {
       }));
 
       const [ project ] = this.overwriteCodesWithLabels(records);
+      // const [ packages ] = project;
+      console.log('***** PROJECT - PROJECT - PROJECT - PROJECT *****', project);
+      // console.log('***** packages - packages - packages - packages *****', packages);
 
       if (!project) {
         const errorMessage = `Could not find requested project ${projectId}.`;

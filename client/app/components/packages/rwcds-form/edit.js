@@ -35,6 +35,8 @@ export default class PackagesRwcdsFormEditComponent extends Component {
 
   @action
   async submitPackage() {
+
+    console.log("this.args.package", this.args.package);
     await this.args.package.submit();
 
     if (!this.rwcdsForm.adapterError && !this.args.package.adapterError && !this.args.package.fileUploadErrors) {
