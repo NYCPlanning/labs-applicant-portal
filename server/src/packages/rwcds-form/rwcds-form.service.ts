@@ -154,7 +154,6 @@ export class RwcdsFormService {
           }
         }
       }
-      console.log("***** RWCDS FORM - RWCDS FORM - RWCDS FORM - RWCDS FORM *****", rwcdsForm);
       return rwcdsForm;
     } catch (e) {
       console.log('error in finding RWCDS package in RWCDS service', e);

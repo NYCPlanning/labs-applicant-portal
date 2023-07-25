@@ -188,8 +188,6 @@ export class PackagesService {
 
       dcp_project.artifact = firstArtifactWithDocuments;
 
-      console.log("***** firstArtifactWithDocuments ****", firstArtifactWithDocuments);
-
       return {
         ...firstPackage,
         ...formData,
@@ -263,7 +261,6 @@ export class PackagesService {
 
   async update(id, body) {
     const allowedAttrs = pick(body, PACKAGE_ATTRS);
-    console.log("***** Package Service allowed attributes *****", allowedAttrs);
 
     return this.crmService.update('dcp_packages', id, allowedAttrs);
   }

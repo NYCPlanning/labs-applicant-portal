@@ -1,13 +1,12 @@
 <SaveableForm
   @model={{@package}}
   @validators={{array (hash)
-    this.validations.SaveableProjectFormValidations
-    this.validations.SubmittablePackageFormValidations}}
+    this.validations.SubmittableProjectFormValidations}}
   as |saveablePackageForm|
 >
   <saveablePackageForm.SaveableForm
     @model={{saveablePackageForm.data.rwcdsForm}}
-    @validators={{array this.validations.SaveableRwcdsFormValidations this.validations.SubmittableRwcdsFormValidations this.validations.SaveableProjectFormValidations}}
+    @validators={{this.validations.SaveableProjectFormValidations}}
     as |saveableRwcdsForm|
   >
     <div class="grid-x grid-margin-x">

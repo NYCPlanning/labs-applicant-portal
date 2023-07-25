@@ -1,5 +1,7 @@
 {{#let @form as |form|}}
-  <form.SaveableForm @model={{@package.project}} as |projectForm|>
+  <form.SaveableForm
+     @model={{@package.project}}
+     as |projectForm|>
     <form.Section @title="Project Area Units and Square Footage">
 
       <Packages::ProjectAreaUnitsAndSquareFootageHeader />
@@ -16,11 +18,20 @@
         <projectForm.Field
           @attribute="dcpNumberofnewdwellingunits"
           @maxlength="10"
+          id={{Q.questionId}}
         />
         <SaveableForm::CharacterCounter
           @string={{dcpNumberofnewdwellingunits.value}}
           @maxlength={{if @maxlength @maxlength '10'}}
-        />
+          id={{Q.questionId}}
+        >
+            <span
+          class="form-error is-visible"
+          data-test-validation-message={{@attribute}}
+        >
+          {{@validation}}
+        </span>
+      </SaveableForm::CharacterCounter>
       </Ui::Question>
 
       <Ui::Question @required={{true}} as |Q|>
@@ -31,10 +42,12 @@
         <projectForm.Field
           @attribute="dcpIncrementhousingunits"
           @maxlength="10"
+          id={{Q.questionId}}
         />
         <SaveableForm::CharacterCounter
           @string={{@value}}
           @maxlength={{if @maxlength @maxlength '10'}}
+          id={{Q.questionId}}
         />
       </Ui::Question>
 
@@ -46,10 +59,12 @@
         <projectForm.Field
           @attribute="dcpActionaffordabledwellingunits"
           @maxlength="10"
+          id={{Q.questionId}}
         />
         <SaveableForm::CharacterCounter
           @string={{@value}}
           @maxlength={{if @maxlength @maxlength '10'}}
+          id={{Q.questionId}}
         />
       </Ui::Question>
 
@@ -61,10 +76,12 @@
         <projectForm.Field
           @attribute="dcpIncrementalaffordabledwellingunits"
           @maxlength="10"
+          id={{Q.questionId}}
         />
         <SaveableForm::CharacterCounter
           @string={{@value}}
           @maxlength={{if @maxlength @maxlength '10'}}
+          id={{Q.questionId}}
         />
       </Ui::Question>
 
@@ -80,10 +97,12 @@
         <projectForm.Field
           @attribute="dcpResidentialsqft"
           @maxlength="10"
+          id={{Q.questionId}}
         />
         <SaveableForm::CharacterCounter
           @string={{@value}}
           @maxlength={{if @maxlength @maxlength '10'}}
+          id={{Q.questionId}}
         />
       </Ui::Question>
 
@@ -95,10 +114,12 @@
         <projectForm.Field
           @attribute="dcpNewcommercialsqft"
           @maxlength="10"
+          id={{Q.questionId}}
         />
         <SaveableForm::CharacterCounter
           @string={{@value}}
           @maxlength={{if @maxlength @maxlength '10'}}
+          id={{Q.questionId}}
         />
       </Ui::Question>
 
@@ -110,10 +131,12 @@
         <projectForm.Field
           @attribute="dcpNewindustrialsqft"
           @maxlength="10"
+          id={{Q.questionId}}
         />
         <SaveableForm::CharacterCounter
           @string={{@value}}
           @maxlength={{if @maxlength @maxlength '10'}}
+          id={{Q.questionId}}
         />
       </Ui::Question>
 
@@ -125,10 +148,12 @@
         <projectForm.Field
           @attribute="dcpNewcommunityfacilitysqft"
           @maxlength="10"
+          id={{Q.questionId}}
         />
         <SaveableForm::CharacterCounter
           @string={{@value}}
           @maxlength={{if @maxlength @maxlength '10'}}
+          id={{Q.questionId}}
         />
       </Ui::Question>
     </form.Section>

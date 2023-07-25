@@ -10,8 +10,7 @@ import {
 import { AuthenticateGuard } from '../../authenticate.guard';
 import { JsonApiSerializeInterceptor } from '../../json-api-serialize.interceptor';
 import { JsonApiDeserializePipe } from '../../json-api-deserialize.pipe';
-// import { RwcdsFormService } from './rwcds-form.service';
-import { CrmService } from '../../crm/crm.service';
+import { RwcdsFormService } from './rwcds-form.service';
 import { pick } from 'underscore';
 import { RWCDS_FORM_ATTRS } from './rwcds-form.attrs';
 
@@ -24,15 +23,19 @@ import { RWCDS_FORM_ATTRS } from './rwcds-form.attrs';
 @UsePipes(JsonApiDeserializePipe)
 @Controller('rwcds-forms')
 export class RwcdsFormController {
-  constructor(private readonly CrmService: CrmService) {}
+  constructor(private readonly RwcdsFormService: RwcdsFormService) {}
 
   @Patch('/:id')
   async update(@Body() body, @Param('id') id) {
-    console.log("***** RWCDS form Controller *****", body);
-    const allowedAttrs = pick(body, RWCDS_FORM_ATTRS);
+    const allowedAttrs = pick(body,
+      [
+        RWCDS_FORM_ATTRS,
+        'package',
+      ]
+    );
 
     console.log('***** RWCDS form Controller allowed attributes *****', allowedAttrs);
-    await this.CrmService.update('dcp_rwcdsforms', id, allowedAttrs); // investigate form service
+    await this.RwcdsFormService.update(id, allowedAttrs); // investigate form service
     return {
       dcp_rwcdsformid: id,
       ...body

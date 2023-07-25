@@ -5,6 +5,7 @@ import SaveableRwcdsFormValidations from '../../../validations/saveable-rwcds-fo
 import SubmittableRwcdsFormValidations from '../../../validations/submittable-rwcds-form';
 import SaveableAffectedZoningResolutionFormValidations from '../../../validations/saveable-affected-zoning-resolution-form';
 import SubmittableAffectedZoningResolutionFormValidations from '../../../validations/submittable-affected-zoning-resolution-form';
+import SaveableProjectFormValidations from '../../../validations/saveable-project-form';
 import SubmittableProjectFormValidations from '../../../validations/submittable-project-form';
 
 export default class PackagesRwcdsFormEditComponent extends Component {
@@ -13,6 +14,7 @@ export default class PackagesRwcdsFormEditComponent extends Component {
     SubmittableRwcdsFormValidations,
     SaveableAffectedZoningResolutionFormValidations,
     SubmittableAffectedZoningResolutionFormValidations,
+    SaveableProjectFormValidations,
     SubmittableProjectFormValidations,
   };
 
@@ -35,8 +37,7 @@ export default class PackagesRwcdsFormEditComponent extends Component {
 
   @action
   async submitPackage() {
-
-    console.log("this.args.package", this.args.package);
+    console.log('this.args.package', this.args.package);
     await this.args.package.submit();
 
     if (!this.rwcdsForm.adapterError && !this.args.package.adapterError && !this.args.package.fileUploadErrors) {

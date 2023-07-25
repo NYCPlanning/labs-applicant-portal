@@ -69,7 +69,6 @@ export class CrmService {
   }
 
   async update(entity, guid, data, headers = {}) {
-    console.log('DATA IN CRM SERVICE UPDATE', data);
     return this._update(entity, guid, data, headers);
   }
 
