@@ -4,34 +4,25 @@
      as |projectForm|>
     <form.Section @title="Project Area Units and Square Footage">
 
-      <Packages::ProjectAreaUnitsAndSquareFootageHeader />
+      <Packages::ProjectAreaUnitsHeader />
 
        <p class="header-small">
           Provide number of dwelling units
       </p>
 
-      <Ui::Question @required={{true}} as |Q|>
-        <Q.Label class="question-text-small">
+       <Ui::Question @required={{true}} as |Q|>
+        <Q.Label>
           Total number of dwelling units in the with-action scenario as it appears in the RWCDS Part II table
         </Q.Label>
 
         <projectForm.Field
+          @type="text-input"
+          @showCounter={{true}}
           @attribute="dcpNumberofnewdwellingunits"
           @maxlength="10"
+          @value={{dcpNumberofnewdwellingunits}}
           id={{Q.questionId}}
         />
-        <SaveableForm::CharacterCounter
-          @string={{dcpNumberofnewdwellingunits.value}}
-          @maxlength={{if @maxlength @maxlength '10'}}
-          id={{Q.questionId}}
-        >
-            <span
-          class="form-error is-visible"
-          data-test-validation-message={{@attribute}}
-        >
-          {{@validation}}
-        </span>
-      </SaveableForm::CharacterCounter>
       </Ui::Question>
 
       <Ui::Question @required={{true}} as |Q|>
@@ -40,13 +31,10 @@
         </Q.Label>
 
         <projectForm.Field
+          @type="text-input"
+          @showCounter={{true}}
           @attribute="dcpIncrementhousingunits"
           @maxlength="10"
-          id={{Q.questionId}}
-        />
-        <SaveableForm::CharacterCounter
-          @string={{@value}}
-          @maxlength={{if @maxlength @maxlength '10'}}
           id={{Q.questionId}}
         />
       </Ui::Question>
@@ -57,13 +45,10 @@
         </Q.Label>
 
         <projectForm.Field
+          @type="text-input"
+          @showCounter={{true}}
           @attribute="dcpActionaffordabledwellingunits"
           @maxlength="10"
-          id={{Q.questionId}}
-        />
-        <SaveableForm::CharacterCounter
-          @string={{@value}}
-          @maxlength={{if @maxlength @maxlength '10'}}
           id={{Q.questionId}}
         />
       </Ui::Question>
@@ -74,13 +59,10 @@
         </Q.Label>
 
         <projectForm.Field
+          @type="text-input"
+          @showCounter={{true}}
           @attribute="dcpIncrementalaffordabledwellingunits"
           @maxlength="10"
-          id={{Q.questionId}}
-        />
-        <SaveableForm::CharacterCounter
-          @string={{@value}}
-          @maxlength={{if @maxlength @maxlength '10'}}
           id={{Q.questionId}}
         />
       </Ui::Question>
@@ -95,13 +77,10 @@
         </Q.Label>
 
         <projectForm.Field
+          @type="text-input"
+          @showCounter={{true}}
           @attribute="dcpResidentialsqft"
           @maxlength="10"
-          id={{Q.questionId}}
-        />
-        <SaveableForm::CharacterCounter
-          @string={{@value}}
-          @maxlength={{if @maxlength @maxlength '10'}}
           id={{Q.questionId}}
         />
       </Ui::Question>
@@ -112,13 +91,10 @@
         </Q.Label>
 
         <projectForm.Field
+          @type="text-input"
+          @showCounter={{true}}
           @attribute="dcpNewcommercialsqft"
           @maxlength="10"
-          id={{Q.questionId}}
-        />
-        <SaveableForm::CharacterCounter
-          @string={{@value}}
-          @maxlength={{if @maxlength @maxlength '10'}}
           id={{Q.questionId}}
         />
       </Ui::Question>
@@ -129,13 +105,10 @@
         </Q.Label>
 
         <projectForm.Field
+          @type="text-input"
+          @showCounter={{true}}
           @attribute="dcpNewindustrialsqft"
           @maxlength="10"
-          id={{Q.questionId}}
-        />
-        <SaveableForm::CharacterCounter
-          @string={{@value}}
-          @maxlength={{if @maxlength @maxlength '10'}}
           id={{Q.questionId}}
         />
       </Ui::Question>
@@ -146,13 +119,10 @@
         </Q.Label>
 
         <projectForm.Field
+          @type="text-input"
+          @showCounter={{true}}
           @attribute="dcpNewcommunityfacilitysqft"
           @maxlength="10"
-          id={{Q.questionId}}
-        />
-        <SaveableForm::CharacterCounter
-          @string={{@value}}
-          @maxlength={{if @maxlength @maxlength '10'}}
           id={{Q.questionId}}
         />
       </Ui::Question>
