@@ -1,3 +1,13 @@
+{{#if this.isNotificationBannerPeriod}}
+  <div class="maintenance-wrapper">
+    <h4>
+      <FaIcon @icon="info-circle" @size="1x" /> Attention
+    </h4>
+    <p>
+      This application has a new section with required project area questions.
+    </p>
+  </div>
+{{/if}}
 <SaveableForm
   @model={{@package}}
   @validators={{array (hash)

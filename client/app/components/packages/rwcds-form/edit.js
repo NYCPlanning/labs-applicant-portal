@@ -7,6 +7,9 @@ import SaveableAffectedZoningResolutionFormValidations from '../../../validation
 import SubmittableAffectedZoningResolutionFormValidations from '../../../validations/submittable-affected-zoning-resolution-form';
 import SaveableProjectFormValidations from '../../../validations/saveable-project-form';
 import SubmittableProjectFormValidations from '../../../validations/submittable-project-form';
+import ENV from 'client/config/environment';
+
+const NOTIFICATIONBANNER_RANGE = ENV.notificationBannerTimes;
 
 export default class PackagesRwcdsFormEditComponent extends Component {
   validations = {
@@ -43,5 +46,12 @@ export default class PackagesRwcdsFormEditComponent extends Component {
     if (!this.rwcdsForm.adapterError && !this.args.package.adapterError && !this.args.package.fileUploadErrors) {
       this.router.transitionTo('rwcds-form.show', this.args.package.id);
     }
+  }
+
+   get isNotificationBannerPeriod() {
+    const [start, end] = NOTIFICATIONBANNER_RANGE.map((string) => new Date(string));
+    const now = new Date();
+
+    return now > start && now < end;
   }
 }
