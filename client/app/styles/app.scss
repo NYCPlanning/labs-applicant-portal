@@ -184,6 +184,35 @@ $sticky-sidebar-offset: 6rem + rem-calc(20);
   }
 }
 
+.notification-banner {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+
+  &.maintenance-wrapper {
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  div {
+    h4 {
+      margin: 0;
+    }
+    display: grid;
+    grid-template-columns: 2rem 1fr 3fr;
+
+    svg#information-icon {
+      margin: 0.3125rem 0 0 0.3125rem;
+    }
+
+    .close-icon {
+      align-self: flex-start;
+      justify-self: end;
+      margin-right: 1rem;
+    }
+  }
+}
+
 // Styling for tooltip "i" info icons and tooltip copy container
 .equitable-development-reporting {
   .ember-tooltip {

@@ -1,8 +1,10 @@
 {{#if this.isNotificationBannerPeriod}}
-  <div class="maintenance-wrapper">
-    <h4>
-      <FaIcon @icon="info-circle" @size="1x" /> Attention
-    </h4>
+  <div class="maintenance-wrapper notification-banner">
+    <div>
+      <FaIcon @icon="info-circle" @size="1x" id="information-icon"/>
+      <h4>Attention </h4>
+      <FaIcon @icon="times" @size="1x" class="close-icon" />
+    </div>
     <p>
       This application has a new section with required project area questions.
     </p>
