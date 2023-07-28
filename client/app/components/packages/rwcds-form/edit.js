@@ -1,13 +1,15 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
+import ENV from 'client/config/environment';
+
 import SaveableRwcdsFormValidations from '../../../validations/saveable-rwcds-form';
 import SubmittableRwcdsFormValidations from '../../../validations/submittable-rwcds-form';
 import SaveableAffectedZoningResolutionFormValidations from '../../../validations/saveable-affected-zoning-resolution-form';
 import SubmittableAffectedZoningResolutionFormValidations from '../../../validations/submittable-affected-zoning-resolution-form';
 import SaveablePackageFormValidations from '../../../validations/saveable-package';
 import SubmittablePackageFormValidations from '../../../validations/submittable-package';
-import ENV from 'client/config/environment';
 
 const NOTIFICATIONBANNER_RANGE = ENV.notificationBannerTimes;
 
@@ -23,6 +25,9 @@ export default class PackagesRwcdsFormEditComponent extends Component {
 
   @service
   router;
+
+  @tracked
+  isBannerOpen = true;
 
   get rwcdsForm() {
     return this.args.package.rwcdsForm || {};
@@ -48,7 +53,13 @@ export default class PackagesRwcdsFormEditComponent extends Component {
     }
   }
 
-   get isNotificationBannerPeriod() {
+  @action
+  closeBanner() {
+    console.log('closing banner 55');
+    this.isBannerOpen = false;
+  }
+
+  get isNotificationBannerPeriod() {
     const [start, end] = NOTIFICATIONBANNER_RANGE.map((string) => new Date(string));
     const now = new Date();
 

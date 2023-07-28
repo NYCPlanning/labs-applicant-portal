@@ -195,17 +195,20 @@ $sticky-sidebar-offset: 6rem + rem-calc(20);
   }
 
   div {
+    display: grid;
+    grid-template-columns: 2rem 1fr 3fr;
+
     h4 {
       margin: 0;
     }
-    display: grid;
-    grid-template-columns: 2rem 1fr 3fr;
 
     svg#information-icon {
       margin: 0.3125rem 0 0 0.3125rem;
     }
 
-    .close-icon {
+    .dismiss-notification {
+      padding: 0;
+      margin: 0;
       align-self: flex-start;
       justify-self: end;
       margin-right: 1rem;
