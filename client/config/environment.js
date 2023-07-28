@@ -144,7 +144,7 @@ function getMaintenanceTimes() {
 function getNotificationBannerTimes() {
   const {
     NOTIFICATIONBANNER_START = '07/01/23 00:00',
-    NOTIFICATIONBANNER_END = '07/20/23 00:00',
+    NOTIFICATIONBANNER_END = '08/20/23 00:00',
   } = process.env;
 
   return [NOTIFICATIONBANNER_START, NOTIFICATIONBANNER_END];

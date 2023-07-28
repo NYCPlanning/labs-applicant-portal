@@ -5,8 +5,8 @@ import SaveableRwcdsFormValidations from '../../../validations/saveable-rwcds-fo
 import SubmittableRwcdsFormValidations from '../../../validations/submittable-rwcds-form';
 import SaveableAffectedZoningResolutionFormValidations from '../../../validations/saveable-affected-zoning-resolution-form';
 import SubmittableAffectedZoningResolutionFormValidations from '../../../validations/submittable-affected-zoning-resolution-form';
-import SaveableProjectFormValidations from '../../../validations/saveable-project-form';
-import SubmittableProjectFormValidations from '../../../validations/submittable-project-form';
+import SaveablePackageFormValidations from '../../../validations/saveable-package';
+import SubmittablePackageFormValidations from '../../../validations/submittable-package';
 import ENV from 'client/config/environment';
 
 const NOTIFICATIONBANNER_RANGE = ENV.notificationBannerTimes;
@@ -17,8 +17,8 @@ export default class PackagesRwcdsFormEditComponent extends Component {
     SubmittableRwcdsFormValidations,
     SaveableAffectedZoningResolutionFormValidations,
     SubmittableAffectedZoningResolutionFormValidations,
-    SaveableProjectFormValidations,
-    SubmittableProjectFormValidations,
+    SaveablePackageFormValidations,
+    SubmittablePackageFormValidations,
   };
 
   @service

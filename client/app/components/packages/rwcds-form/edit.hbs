@@ -10,15 +10,15 @@
 {{/if}}
 <SaveableForm
   @model={{@package}}
-  @validators={{array (hash)
-    this.validations.SubmittableProjectFormValidations}}
-  as |saveablePackageForm|
->
+  @validators={{array
+    (hash) this.validations.SubmittablePackageFormValidations}}
+    as |saveablePackageForm| >
+
   <saveablePackageForm.SaveableForm
     @model={{saveablePackageForm.data.rwcdsForm}}
-    @validators={{this.validations.SaveableProjectFormValidations}}
-    as |saveableRwcdsForm|
-  >
+    @validators={{array this.validations.SaveableRwcdsFormValidations this.validations.SubmittableRwcdsFormValidations this.validations.SaveablePackageFormValidations}}
+    as |saveableRwcdsForm| >
+
     <div class="grid-x grid-margin-x">
       <div class="cell large-8">
 
@@ -48,6 +48,7 @@
         </section>
 
         <Packages::ProjectAreaUnitsForm
+          @model={{@package}}
           @form={{saveableRwcdsForm}}
           @package={{@package}}
          />
