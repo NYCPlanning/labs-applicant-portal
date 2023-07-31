@@ -96,6 +96,31 @@ export default class PackageModel extends Model {
   @attr('number')
   grandTotal;
 
+  // RWCDS Project attributes
+  @attr('number')
+  dcpNumberofnewdwellingunits;
+
+  @attr('number')
+  dcpIncrementhousingunits;
+
+  @attr('number')
+  dcpActionaffordabledwellingunits;
+
+  @attr('number')
+  dcpIncrementalaffordabledwellingunits;
+
+  @attr('number')
+  dcpResidentialsqft;
+
+  @attr('number')
+  dcpNewcommercialsqft;
+
+  @attr('number')
+  dcpNewindustrialsqft;
+
+  @attr('number')
+  dcpNewcommunityfacilitysqft;
+
   get singleCeqrInvoiceQuestionnaire() {
     return this.ceqrInvoiceQuestionnaires.firstObject;
   }
@@ -143,15 +168,13 @@ export default class PackageModel extends Model {
   }
 
   setPASApplicability() {
-    this.pasForm.dcpApplicability = this.isRERApplicable ?
-      YES_NO_UNSURE_SMALLINT.YES.code :
-      YES_NO_UNSURE_SMALLINT.NO.code;
+    this.pasForm.dcpApplicability = this.isRERApplicable
+      ? YES_NO_UNSURE_SMALLINT.YES.code : YES_NO_UNSURE_SMALLINT.NO.code;
   }
 
   setLUApplicability() {
-    this.landuseForm.dcpApplicability = this.isRERApplicable ?
-      YES_NO_UNSURE_SMALLINT.YES.code :
-      YES_NO_UNSURE_SMALLINT.NO.code;
+    this.landuseForm.dcpApplicability = this.isRERApplicable
+      ? YES_NO_UNSURE_SMALLINT.YES.code : YES_NO_UNSURE_SMALLINT.NO.code;
   }
 
   async save(recordsToDelete) {
@@ -178,7 +201,7 @@ export default class PackageModel extends Model {
         await this.saveDirtySingleCeqrInvoiceQuestionnaire();
       }
     } catch (e) {
-      console.log('Error saving a Form or Ceqr Invoice Questionnaire: ', e);
+      console.log('Error saving a Form or Ceqr Invoice Questionnaire: ', e); // eslint-disable-line
 
       formAdapterError = true;
     }
@@ -186,13 +209,13 @@ export default class PackageModel extends Model {
     try {
       await super.save();
     } catch (e) {
-      console.log('Error saving package: ', e);
+      console.log('Error saving package: ', e); // eslint-disable-line
     }
 
     try {
       await this.fileManager.save();
     } catch (e) {
-      console.log('Error saving files: ', e);
+      console.log('Error saving files: ', e); // eslint-disable-line
 
       // See comment on the tracked fileUploadError property
       // definition above.
@@ -207,7 +230,7 @@ export default class PackageModel extends Model {
       try {
         await this.project.artifact.fileManager.save();
       } catch (e) {
-        console.log('Error saving artifact files: ', e);
+        console.log('Error saving artifact files: ', e); // eslint-disable-line
 
         // See comment on the tracked fileUploadError property
         // definition above.
@@ -248,6 +271,7 @@ export default class PackageModel extends Model {
     await this.save();
   }
 
+  // eslint-disable
   async saveDeletedRecords(recordsToDelete) {
     if (recordsToDelete) {
       return Promise.all(
@@ -256,6 +280,7 @@ export default class PackageModel extends Model {
       );
     }
   }
+  // eslint-enable
 
   // deprecate
   // filemanager does not actually mutate the package directly. instead, it pushes files into the API
