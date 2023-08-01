@@ -211,9 +211,6 @@ export class ProjectsService {
       }));
 
       const [ project ] = this.overwriteCodesWithLabels(records);
-      // const [ packages ] = project;
-      console.log('***** PROJECT - PROJECT - PROJECT - PROJECT *****', project);
-      // console.log('***** packages - packages - packages - packages *****', packages);
 
       if (!project) {
         const errorMessage = `Could not find requested project ${projectId}.`;

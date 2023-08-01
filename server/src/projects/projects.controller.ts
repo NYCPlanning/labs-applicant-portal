@@ -155,7 +155,6 @@ export class ProjectsController {
   async update(@Body() body, @Param('id') id) {
     const allowedAttrs = pick(body, PROJECT_ATTRS);
 
-console.log('PROJECT ALLOWED ATTRIBUTES', allowedAttrs);
     await this.crmService.update('dcp_projects', id, allowedAttrs);
 
     return {

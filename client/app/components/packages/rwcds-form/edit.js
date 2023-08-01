@@ -5,22 +5,24 @@ import { inject as service } from '@ember/service';
 import ENV from 'client/config/environment';
 
 import SaveableRwcdsFormValidations from '../../../validations/saveable-rwcds-form';
-import SubmittableRwcdsFormValidations from '../../../validations/submittable-rwcds-form';
+import SaveableProjectFormValidations from '../../../validations/saveable-project-form'
 import SaveableAffectedZoningResolutionFormValidations from '../../../validations/saveable-affected-zoning-resolution-form';
 import SubmittableAffectedZoningResolutionFormValidations from '../../../validations/submittable-affected-zoning-resolution-form';
-import SaveablePackageFormValidations from '../../../validations/saveable-package';
 import SubmittablePackageFormValidations from '../../../validations/submittable-package';
+import SubmittableRwcdsFormValidations from '../../../validations/submittable-rwcds-form';
+import SubmittableProjectFormValidations from '../../../validations/submittable-project-form';
+
 
 const NOTIFICATIONBANNER_RANGE = ENV.notificationBannerTimes;
 
 export default class PackagesRwcdsFormEditComponent extends Component {
   validations = {
-    SaveableRwcdsFormValidations,
-    SubmittableRwcdsFormValidations,
     SaveableAffectedZoningResolutionFormValidations,
+    SaveableProjectFormValidations,
+    SaveableRwcdsFormValidations,
     SubmittableAffectedZoningResolutionFormValidations,
-    SaveablePackageFormValidations,
-    SubmittablePackageFormValidations,
+    SubmittableProjectFormValidations,
+    SubmittableRwcdsFormValidations,
   };
 
   @service
@@ -32,7 +34,6 @@ export default class PackagesRwcdsFormEditComponent extends Component {
   get rwcdsForm() {
     return this.args.package.rwcdsForm || {};
   }
-
 
   @action
   async savePackage() {

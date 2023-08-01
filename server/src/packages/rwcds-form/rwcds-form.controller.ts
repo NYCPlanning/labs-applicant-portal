@@ -34,8 +34,7 @@ export class RwcdsFormController {
       ]
     );
 
-    console.log('***** RWCDS form Controller allowed attributes *****', allowedAttrs);
-    await this.RwcdsFormService.update(id, allowedAttrs); // investigate form service
+    await this.RwcdsFormService.update(id, allowedAttrs);
     return {
       dcp_rwcdsformid: id,
       ...body
