@@ -56,7 +56,6 @@ export default class PackagesRwcdsFormEditComponent extends Component {
 
   @action
   closeBanner() {
-    console.log('closing banner 55');
     this.isBannerOpen = false;
   }
 

@@ -23,8 +23,7 @@
 
   <saveablePackageForm.SaveableForm
     @model={{saveablePackageForm.data.rwcdsForm}}
-    @validators={{array this.validations.SaveableRwcdsFormValidations this.validations.SubmittableRwcdsFormValidations
-    this.validations.SaveableProjectFormValidations this.validations.SubmittableProjectFormValidations}}
+    @validators={{array this.validations.SaveableRwcdsFormValidations this.validations.SubmittableRwcdsFormValidations}}
     as |saveableRwcdsForm| >
 
     <div class="grid-x grid-margin-x">
@@ -60,7 +59,7 @@
           @form={{saveableRwcdsForm}}
           @package={{@package}}
          />
-          {{log "thissss" this}}
+          {{ log "thissss" this }}
           {{ log "isError?" this.rwcdsForm.isError}}
           {{ log "Errors?" this.rwcdsForm.errors}}
 
@@ -91,6 +90,8 @@
             @onClick={{this.savePackage}}
             data-test-save-button
           />
+          {{ log "durdy?"  @package.isDirty }}
+          {{ log "saveable???" saveablePackageForm.isSaveable }}
           <Packages::RwcdsForm::RwcdsFormError @package={{@package}} />
 
           <saveablePackageForm.SubmitButton
