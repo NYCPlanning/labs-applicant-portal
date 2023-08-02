@@ -18,7 +18,7 @@
 {{/if}}
 <SaveableForm
   @model={{@package}}
-  @validators={{array (hash) this.validations.SubmittableProjectFormValidations this.validations.SaveableProjectFormValidations}}
+  @validators={{array (hash) this.validations.SubmittableProjectFormValidations }}
     as |saveablePackageForm| >
 
   <saveablePackageForm.SaveableForm

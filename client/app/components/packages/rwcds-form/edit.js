@@ -3,9 +3,13 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import ENV from 'client/config/environment';
+
 import SaveableRwcdsFormValidations from '../../../validations/saveable-rwcds-form';
-import SubmittableRwcdsFormValidations from '../../../validations/submittable-rwcds-form';
+import SaveableProjectFormValidations from '../../../validations/saveable-project-form';
 import SaveableAffectedZoningResolutionFormValidations from '../../../validations/saveable-affected-zoning-resolution-form';
+
+import SubmittableRwcdsFormValidations from '../../../validations/submittable-rwcds-form';
+import SubmittableProjectFormValidations from '../../../validations/submittable-project-form';
 import SubmittableAffectedZoningResolutionFormValidations from '../../../validations/submittable-affected-zoning-resolution-form';
 
 const NOTIFICATIONBANNER_RANGE = ENV.notificationBannerTimes;
@@ -13,8 +17,10 @@ const NOTIFICATIONBANNER_RANGE = ENV.notificationBannerTimes;
 export default class PackagesRwcdsFormEditComponent extends Component {
   validations = {
     SaveableRwcdsFormValidations,
-    SubmittableRwcdsFormValidations,
+    SaveableProjectFormValidations,
     SaveableAffectedZoningResolutionFormValidations,
+    SubmittableRwcdsFormValidations,
+    SubmittableProjectFormValidations,
     SubmittableAffectedZoningResolutionFormValidations,
   };
 
