@@ -1,10 +1,9 @@
 {{#let @form as |form|}}
   <form.SaveableForm
      @model={{@package.project}}
-     @validators={{array @validations.SaveablePackageFormValidations @validations.SaveableProjectFormValidations}}
+     @validators={{array @validations.SubmittableProjectFormValidations @validations.SaveableProjectFormValidations}}
      as |projectForm|>
     <form.Section @title="Project Area Units and Square Footage">
-
       <Packages::ProjectAreaUnitsHeader />
 
        <p class="header-small">
