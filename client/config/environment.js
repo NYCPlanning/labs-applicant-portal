@@ -8,6 +8,7 @@ module.exports = function(environment) {
     NYCIDDomain: getOAuthDomain(environment),
     NYCIDLocation: getOAuthLoginEndpoint(environment),
     maintenanceTimes: getMaintenanceTimes(),
+    notificationBannerTimes: getNotificationBannerTimes(),
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -138,4 +139,13 @@ function getMaintenanceTimes() {
   } = process.env;
 
   return [MAINTENANCE_START, MAINTENANCE_END];
+}
+
+function getNotificationBannerTimes() {
+  const {
+    NOTIFICATIONBANNER_START = '07/01/23 00:00',
+    NOTIFICATIONBANNER_END = '08/20/23 00:00',
+  } = process.env;
+
+  return [NOTIFICATIONBANNER_START, NOTIFICATIONBANNER_END];
 }
