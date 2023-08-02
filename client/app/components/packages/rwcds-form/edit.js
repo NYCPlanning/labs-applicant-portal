@@ -40,7 +40,7 @@ export default class PackagesRwcdsFormEditComponent extends Component {
     try {
       await this.args.package.save();
     } catch (error) {
-      console.log('Save RWCDS package error:', error);
+      console.log('Save RWCDS package error:', error); // eslint-disable-line
     }
   }
 
