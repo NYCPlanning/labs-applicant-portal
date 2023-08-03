@@ -107,7 +107,7 @@ export default class RwcdsFormModel extends Model {
   }
 
   async saveDirtyProject() {
-    if (this.isProjectDirty) {
+    if (this.package.project.isDirty) {
       this.package.project.save();
     }
   }
