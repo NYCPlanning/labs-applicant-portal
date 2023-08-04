@@ -4,7 +4,6 @@
   parentField=(component 'saveable-form/field'
     data=@data
     error=@error
-    error=@error
     attribute=@attribute
     showCounter=@showCounter
   )) as |CurriedFieldComponent|
@@ -29,5 +28,4 @@
     @attribute={{@attribute}}
     @validation={{this.error.validation}}
   />
-  {{ log "SaveableForm::FieldValidationMessage" this.error }}
 {{/if}}
