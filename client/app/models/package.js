@@ -248,7 +248,6 @@ export default class PackageModel extends Model {
     await this.save();
   }
 
-  /* eslint-disable consistent-return */
   async saveDeletedRecords(recordsToDelete) {
     if (recordsToDelete) {
       return Promise.all(
@@ -257,7 +256,6 @@ export default class PackageModel extends Model {
       );
     }
   }
-  /* eslint-enable consistent-return */
 
   // deprecate
   // filemanager does not actually mutate the package directly. instead, it pushes files into the API

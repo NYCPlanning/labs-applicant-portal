@@ -1,21 +1,20 @@
-{{#if (and this.isNotificationBannerPeriod this.isBannerOpen)}}
-  <div class="maintenance-wrapper notification-banner">
-    <div>
-      <FaIcon @icon="info-circle" @size="1x" id="information-icon"/>
-      <h4>Attention </h4>
-        <button
-          type="button"
-          aria-label="dismiss notification banner"
-          class="dismiss-notification"
-          {{on "click" this.closeBanner}}>
-            <FaIcon @icon="times" @size="1x" class="close-icon" />
-        </button>
-    </div>
-    <p>
-      This application has a new section with required project area questions.
-    </p>
+<div class="maintenance-wrapper notification-banner">
+  <div>
+    <FaIcon @icon="info-circle" @size="1x" id="information-icon"/>
+    <h4>Attention </h4>
+      <button
+        type="button"
+        aria-label="dismiss notification banner"
+        class="dismiss-notification"
+        {{on "click" this.closeBanner}}>
+          <FaIcon @icon="times" @size="1x" class="close-icon" />
+      </button>
   </div>
-{{/if}}
+  <p>
+    This application has a new section with required project area questions.
+  </p>
+</div>
+
 <SaveableForm
   @model={{@package}}
   @validators={{array (hash) this.validations.SubmittableProjectFormValidations }}

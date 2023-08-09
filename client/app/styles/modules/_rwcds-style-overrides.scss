@@ -1,13 +1,16 @@
 .question-text-small {
   font-size: 0.875rem;
-  color: rose;
 }
 
-.project-area-guidance {
-  margin-left: 0;
+.project-area-guidance-wrapper {
   padding-bottom: 1.5rem;
-  li {
-    list-style-type: none;
-    padding-left: 1rem;
+
+  .project-area-guidance {
+    margin-left: 0;
+
+    li {
+      list-style-type: none;
+      padding: 1rem 0 0 1.5rem;
+    }
   }
 }
