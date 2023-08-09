@@ -11,7 +11,7 @@
       data=saveableValidator.changeset
       errors=submittableValidator.changeset.error
 
-      isSaveable=(and saveableValidator.isDirty submittableValidator.isValid)
+      isSaveable=(and saveableValidator.isDirty saveableValidator.isValid)
       isSubmittable=submittableValidator.isValid
 
       SaveableForm=(component 'saveable-form'
