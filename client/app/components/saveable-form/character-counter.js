@@ -2,7 +2,9 @@ import Component from '@glimmer/component';
 
 export default class CharacterCounterComponent extends Component {
   get stringLength() {
-    return (this.args.string ? this.args.string.length : 0);
+    const val = this.args.string; // Could be type number or string
+    if (val === null || val === undefined) return 0;
+    return val.toString().length;
   }
 
   get warningClass() {

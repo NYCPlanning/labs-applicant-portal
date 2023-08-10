@@ -24,6 +24,7 @@ export default class ProjectModel extends Model {
 
   @attr dcpProjectbrief;
 
+  // equitable development project attrs
   @attr('number') dcpNonresatleast50000;
 
   @attr('number') dcpNewresibuildmore50000sf;
@@ -41,6 +42,31 @@ export default class ProjectModel extends Model {
   @attr('number') dcpImapplyazoningtmaffectsmore5rcd;
 
   @attr('number') dcpAffectfourmorecb;
+
+  // RWCDS project attrs
+  @attr('number')
+  dcpNumberofnewdwellingunits;
+
+  @attr('number')
+  dcpIncrementhousingunits;
+
+  @attr('number')
+  dcpActionaffordabledwellingunits;
+
+  @attr('number')
+  dcpIncrementalaffordabledwellingunits;
+
+  @attr('number')
+  dcpResidentialsqft;
+
+  @attr('number')
+  dcpNewcommercialsqft;
+
+  @attr('number')
+  dcpNewindustrialsqft;
+
+  @attr('number')
+  dcpNewcommunityfacilitysqft;
 
   // We assume there's only one. If there's >1 in crm, the backend
   // should return the first one.
@@ -168,7 +194,9 @@ export default class ProjectModel extends Model {
 
   get deisPackages() {
     const eisPackages = this.packages
-      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'PDEIS']))
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(
+        ['package', 'dcpPackagetype', 'code', 'PDEIS'],
+      ))
       .sortBy('dcpPackageversion')
       .reverse();
 
@@ -177,7 +205,9 @@ export default class ProjectModel extends Model {
 
   get feisPackages() {
     const eisPackages = this.packages
-      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'EIS']))
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(
+        ['package', 'dcpPackagetype', 'code', 'EIS'],
+      ))
       .sortBy('dcpPackageversion')
       .reverse();
 
@@ -186,7 +216,9 @@ export default class ProjectModel extends Model {
 
   get technicalMemoPackages() {
     const technicalMemoPackages = this.packages
-      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'TECHNICAL_MEMO']))
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(
+        ['package', 'dcpPackagetype', 'code', 'TECHNICAL_MEMO'],
+      ))
       .sortBy('dcpPackageversion')
       .reverse();
 
@@ -195,7 +227,9 @@ export default class ProjectModel extends Model {
 
   get workingPackages() {
     return this.packages
-      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'WORKING_PACKAGE']))
+      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(
+        ['package', 'dcpPackagetype', 'code', 'WORKING_PACKAGE'],
+      ))
       .sortBy('dcpPackageversion')
       .reverse();
   }
