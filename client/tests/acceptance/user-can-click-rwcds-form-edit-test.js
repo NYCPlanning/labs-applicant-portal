@@ -231,6 +231,9 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     await fillIn('[data-test-input="dcpNumberofnewdwellingunits"]', 'Jiro');
     assert.dom('[data-test-validation-message="dcpNumberofnewdwellingunits"').hasText('Must be a number');
 
+    await fillIn('[data-test-input="dcpNumberofnewdwellingunits"]', 'JiroisaGoodBoy');
+    assert.dom('[data-test-validation-message="dcpNumberofnewdwellingunits"').hasText('Text is too long (max 10 characters), Must be a number');
+
     await fillIn('[data-test-input="dcpIncrementhousingunits"]', '50000000000');
     assert.dom('[data-test-validation-message="dcpIncrementhousingunits"').hasText('Text is too long (max 10 characters)');
 
