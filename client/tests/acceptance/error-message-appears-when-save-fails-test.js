@@ -60,6 +60,14 @@ module('Acceptance | error message appears when save fails', function(hooks) {
     assert.dom('[data-test-error-key="detail"]').doesNotExist();
 
     await fillIn('[data-test-input="dcpProjectsitedescription"]', 'Whatever affects one directly, affects all indirectly.');
+    await fillIn('[data-test-input="dcpNumberofnewdwellingunits"]', '5000');
+    await fillIn('[data-test-input="dcpIncrementhousingunits"]', '5000');
+    await fillIn('[data-test-input="dcpActionaffordabledwellingunits"]', '5000');
+    await fillIn('[data-test-input="dcpIncrementalaffordabledwellingunits"]', '5000');
+    await fillIn('[data-test-input="dcpResidentialsqft"]', '5000');
+    await fillIn('[data-test-input="dcpNewcommercialsqft"]', '5000');
+    await fillIn('[data-test-input="dcpNewindustrialsqft"]', '5000');
+    await fillIn('[data-test-input="dcpNewcommunityfacilitysqft"]', '5000');
 
     // save it
     await click('[data-test-save-button]');

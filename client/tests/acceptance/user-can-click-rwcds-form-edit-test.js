@@ -32,6 +32,14 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
 
     assert.dom('[data-test-input="dcpProjectsitedescription"]').hasNoValue();
     await fillIn('[data-test-input="dcpProjectsitedescription"]', 'Whatever affects one directly, affects all indirectly.');
+    await fillIn('[data-test-input="dcpNumberofnewdwellingunits"]', '5000');
+    await fillIn('[data-test-input="dcpIncrementhousingunits"]', '5000');
+    await fillIn('[data-test-input="dcpActionaffordabledwellingunits"]', '5000');
+    await fillIn('[data-test-input="dcpIncrementalaffordabledwellingunits"]', '5000');
+    await fillIn('[data-test-input="dcpResidentialsqft"]', '5000');
+    await fillIn('[data-test-input="dcpNewcommercialsqft"]', '5000');
+    await fillIn('[data-test-input="dcpNewindustrialsqft"]', '5000');
+    await fillIn('[data-test-input="dcpNewcommunityfacilitysqft"]', '5000');
 
     await click('[data-test-save-button]');
 
@@ -53,6 +61,14 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
 
     assert.dom('[data-test-input="dcpModifiedzrsectionnumber"]').hasNoValue();
     await fillIn('[data-test-input="dcpModifiedzrsectionnumber"]', 'blah blah blah');
+    await fillIn('[data-test-input="dcpNumberofnewdwellingunits"]', '5000');
+    await fillIn('[data-test-input="dcpIncrementhousingunits"]', '5000');
+    await fillIn('[data-test-input="dcpActionaffordabledwellingunits"]', '5000');
+    await fillIn('[data-test-input="dcpIncrementalaffordabledwellingunits"]', '5000');
+    await fillIn('[data-test-input="dcpResidentialsqft"]', '5000');
+    await fillIn('[data-test-input="dcpNewcommercialsqft"]', '5000');
+    await fillIn('[data-test-input="dcpNewindustrialsqft"]', '5000');
+    await fillIn('[data-test-input="dcpNewcommunityfacilitysqft"]', '5000');
 
     await click('[data-test-save-button]');
 
@@ -74,7 +90,6 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
 
     assert.dom('[data-test-input="dcpProjectsitedescription"]').hasNoValue();
     await fillIn('[data-test-input="dcpProjectsitedescription"]', 'Whatever affects one directly, affects all indirectly.');
-
     await fillIn('[data-test-input="dcpProposedprojectdevelopmentdescription"]', 'bananas');
 
     await click('[data-test-save-button]');
@@ -199,5 +214,63 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
 
     await fillIn('[data-test-input="dcpRwcdsexplanation"]', exceedMaximum(2400, 'String'));
     assert.dom('[data-test-validation-message="dcpRwcdsexplanation"').hasText('Text is too long (max 2400 characters)');
+  });
+
+  test('Validation messages display for Project Area Units and Square Footage form questions', async function(assert) {
+    this.server.create('project', 1, {
+      packages: [this.server.create('package', 'toDo', 'rwcdsForm')],
+    });
+
+    await visit('/rwcds-form/1/edit');
+
+    assert.equal(currentURL(), '/rwcds-form/1/edit');
+
+    await fillIn('[data-test-input="dcpNumberofnewdwellingunits"]', '50000000000');
+    assert.dom('[data-test-validation-message="dcpNumberofnewdwellingunits"').hasText('Text is too long (max 10 characters)');
+
+    await fillIn('[data-test-input="dcpNumberofnewdwellingunits"]', 'Jiro');
+    assert.dom('[data-test-validation-message="dcpNumberofnewdwellingunits"').hasText('Must be a number');
+
+    await fillIn('[data-test-input="dcpIncrementhousingunits"]', '50000000000');
+    assert.dom('[data-test-validation-message="dcpIncrementhousingunits"').hasText('Text is too long (max 10 characters)');
+
+    await fillIn('[data-test-input="dcpIncrementhousingunits"]', 'Jiro');
+    assert.dom('[data-test-validation-message="dcpIncrementhousingunits"').hasText('Must be a number');
+
+    await fillIn('[data-test-input="dcpActionaffordabledwellingunits"]', '50000000000');
+    assert.dom('[data-test-validation-message="dcpActionaffordabledwellingunits"').hasText('Text is too long (max 10 characters)');
+
+    await fillIn('[data-test-input="dcpActionaffordabledwellingunits"]', 'Jiro');
+    assert.dom('[data-test-validation-message="dcpActionaffordabledwellingunits"').hasText('Must be a number');
+
+    await fillIn('[data-test-input="dcpIncrementalaffordabledwellingunits"]', '50000000000');
+    assert.dom('[data-test-validation-message="dcpIncrementalaffordabledwellingunits"').hasText('Text is too long (max 10 characters)');
+
+    await fillIn('[data-test-input="dcpIncrementalaffordabledwellingunits"]', 'Jiro');
+    assert.dom('[data-test-validation-message="dcpIncrementalaffordabledwellingunits"').hasText('Must be a number');
+
+    await fillIn('[data-test-input="dcpResidentialsqft"]', '50000000000');
+    assert.dom('[data-test-validation-message="dcpResidentialsqft"').hasText('Text is too long (max 10 characters)');
+
+    await fillIn('[data-test-input="dcpResidentialsqft"]', 'Jiro');
+    assert.dom('[data-test-validation-message="dcpResidentialsqft"').hasText('Must be a number');
+
+    await fillIn('[data-test-input="dcpNewcommercialsqft"]', '50000000000');
+    assert.dom('[data-test-validation-message="dcpNewcommercialsqft"').hasText('Text is too long (max 10 characters)');
+
+    await fillIn('[data-test-input="dcpNewcommercialsqft"]', 'Jiro');
+    assert.dom('[data-test-validation-message="dcpNewcommercialsqft"').hasText('Must be a number');
+
+    await fillIn('[data-test-input="dcpNewindustrialsqft"]', '50000000000');
+    assert.dom('[data-test-validation-message="dcpNewindustrialsqft"').hasText('Text is too long (max 10 characters)');
+
+    await fillIn('[data-test-input="dcpNewindustrialsqft"]', 'Jiro');
+    assert.dom('[data-test-validation-message="dcpNewindustrialsqft"').hasText('Must be a number');
+
+    await fillIn('[data-test-input="dcpNewcommunityfacilitysqft"]', '50000000000');
+    assert.dom('[data-test-validation-message="dcpNewcommunityfacilitysqft"').hasText('Text is too long (max 10 characters)');
+
+    await fillIn('[data-test-input="dcpNewcommunityfacilitysqft"]', 'Jiro');
+    assert.dom('[data-test-validation-message="dcpNewcommunityfacilitysqft"').hasText('Must be a number');
   });
 });

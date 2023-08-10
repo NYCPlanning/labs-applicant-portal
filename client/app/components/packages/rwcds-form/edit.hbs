@@ -82,7 +82,7 @@
 
         <saveableRwcdsForm.PageNav>
           <saveablePackageForm.SaveButton
-            @isEnabled={{or @package.isDirty saveableRwcdsForm.isSubmittable}}
+            @isEnabled={{or @package.isDirty saveableRwcdsForm.isSaveable}}
             @onClick={{this.savePackage}}
             data-test-save-button
           />
