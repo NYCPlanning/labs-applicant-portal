@@ -1,5 +1,5 @@
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
-const babelPlugin = require('ember-auto-import/babel-plugin');
+const babelPlugin = require.resolve('ember-auto-import/babel-plugin');
 const sass = require('sass-embedded');
 
 module.exports = function(defaults) {
@@ -25,6 +25,12 @@ module.exports = function(defaults) {
       plugins: [babelPlugin],
     },
    autoImport: {
+      skipBabel: [
+        {
+          package: 'mapbox-gl',
+          semverRange: '*',
+        }
+      ],
       webpack: {
         resolve: {
           fallback: {
