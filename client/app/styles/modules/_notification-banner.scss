@@ -5,6 +5,7 @@
   &.maintenance-wrapper {
     p {
       margin-bottom: 0;
+      font-size: 1.3rem;
     }
   }
 
@@ -13,11 +14,17 @@
     grid-template-columns: 2rem 1fr 3fr;
 
     h4 {
+      color: red;
       margin: 0;
+      font-size: 1.5rem;
+      margin-left: .5rem;
     }
 
     svg#information-icon {
-      margin: 0.3125rem 0 0 0.3125rem;
+      margin-left: 0.3125rem;
+      align-self: center;
+      color: red;
+      font-size: 1.5rem;
     }
 
     .dismiss-notification {
@@ -26,6 +33,7 @@
       align-self: flex-start;
       justify-self: end;
       margin-right: 1rem;
+      font-size: 1.5rem;
     }
   }
 }
