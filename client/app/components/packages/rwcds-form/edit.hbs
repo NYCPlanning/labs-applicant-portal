@@ -89,7 +89,7 @@
           <Packages::RwcdsForm::RwcdsFormError @package={{@package}} />
 
           <saveablePackageForm.SubmitButton
-            @isEnabled={{saveableRwcdsForm.isSubmittable}}
+            @isEnabled={{and saveableRwcdsForm.isSubmittable saveableRwcdsForm.isSaveable}}
             class="secondary"
             data-test-submit-button
           />
