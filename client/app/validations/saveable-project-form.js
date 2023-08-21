@@ -1,6 +1,7 @@
 import {
   validateLength,
   validateNumber,
+  validatePresence,
 } from 'ember-changeset-validations/validators';
 
 export default {
@@ -12,6 +13,10 @@ export default {
     }),
   ],
   dcpNumberofnewdwellingunits: [
+    validatePresence({
+      presence: true,
+      message: 'This field is required',
+    }),
     validateLength({
       min: 0,
       max: 10,
@@ -24,6 +29,10 @@ export default {
     }),
   ],
   dcpIncrementhousingunits: [
+    validatePresence({
+      presence: true,
+      message: 'This field is required',
+    }),
     validateLength({
       min: 0,
       max: 10,
@@ -36,6 +45,10 @@ export default {
     }),
   ],
   dcpActionaffordabledwellingunits: [
+    validatePresence({
+      presence: true,
+      message: 'This field is required',
+    }),
     validateLength({
       min: 0,
       max: 10,
@@ -48,6 +61,10 @@ export default {
     }),
   ],
   dcpIncrementalaffordabledwellingunits: [
+    validatePresence({
+      presence: true,
+      message: 'This field is required',
+    }),
     validateLength({
       min: 0,
       max: 10,
@@ -60,6 +77,10 @@ export default {
     }),
   ],
   dcpResidentialsqft: [
+    validatePresence({
+      presence: true,
+      message: 'This field is required',
+    }),
     validateLength({
       min: 0,
       max: 10,
@@ -72,6 +93,10 @@ export default {
     }),
   ],
   dcpNewcommercialsqft: [
+    validatePresence({
+      presence: true,
+      message: 'This field is required',
+    }),
     validateLength({
       min: 0,
       max: 10,
@@ -84,6 +109,10 @@ export default {
     }),
   ],
   dcpNewindustrialsqft: [
+    validatePresence({
+      presence: true,
+      message: 'This field is required',
+    }),
     validateLength({
       min: 0,
       max: 10,
@@ -96,6 +125,10 @@ export default {
     }),
   ],
   dcpNewcommunityfacilitysqft: [
+    validatePresence({
+      presence: true,
+      message: 'This field is required',
+    }),
     validateLength({
       min: 0,
       max: 10,

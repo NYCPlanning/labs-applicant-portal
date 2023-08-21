@@ -89,12 +89,12 @@
           <Packages::RwcdsForm::RwcdsFormError @package={{@package}} />
 
           <saveablePackageForm.SubmitButton
-            @isEnabled={{and saveableRwcdsForm.isSubmittable saveableRwcdsForm.isSaveable}}
+            @isEnabled={{and saveableRwcdsForm.isSubmittable}}
             class="secondary"
             data-test-submit-button
           />
-        </saveableRwcdsForm.PageNav>
 
+        </saveableRwcdsForm.PageNav>
         <saveablePackageForm.ConfirmationModal
           @action={{component saveableRwcdsForm.SubmitButton
             onClick=this.submitPackage
