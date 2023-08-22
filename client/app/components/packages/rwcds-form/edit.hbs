@@ -1,11 +1,11 @@
-<div class="maintenance-wrapper notification-banner">
+<div class="maintenance-wrapper notification-banner  {{if isBannerClosed 'hide-banner'}}">
   <div>
     <FaIcon @icon="info-circle" @size="1x" id="information-icon"/>
     <h4>Attention </h4>
       <button
         type="button"
         aria-label="dismiss notification banner"
-        class="dismiss-notification"
+        class="dismiss-banner-button"
         {{on "click" this.closeBanner}}>
           <FaIcon @icon="times" @size="1x" class="close-icon" />
       </button>
@@ -93,8 +93,8 @@
             class="secondary"
             data-test-submit-button
           />
-        </saveableRwcdsForm.PageNav>
 
+        </saveableRwcdsForm.PageNav>
         <saveablePackageForm.ConfirmationModal
           @action={{component saveableRwcdsForm.SubmitButton
             onClick=this.submitPackage
