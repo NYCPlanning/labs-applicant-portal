@@ -28,7 +28,7 @@ export default class PackagesRwcdsFormEditComponent extends Component {
   router;
 
   @tracked
-  isBannerOpen = true;
+  isBannerClosed = false;
 
   get rwcdsForm() {
     return this.args.package.rwcdsForm || {};
@@ -55,7 +55,7 @@ export default class PackagesRwcdsFormEditComponent extends Component {
 
   @action
   closeBanner() {
-    this.isBannerOpen = false;
+    this.isBannerClosed = true;
   }
 
   get isNotificationBannerPeriod() {
