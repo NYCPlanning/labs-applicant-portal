@@ -31,10 +31,12 @@ export default class PasFormComponent extends Component {
   store;
 
   get package() {
+    console.log("getting package", this.args.package ? this.args.package : "failed getting package");
     return this.args.package || {};
   }
 
   get pasForm() {
+    console.log("getting PAS form", this.package.pasForm ? this.package.pasForm : "failed getting PAS form");
     return this.package.pasForm || {};
   }
 
