@@ -7,7 +7,7 @@ export default {
   dcpReferenceapplicationno: [
     validateLength({
       min: 0,
-      max: 10,
+      max: 25,
       message: 'Text is too long (max {max} characters)',
     }),
   ],
