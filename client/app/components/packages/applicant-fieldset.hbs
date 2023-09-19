@@ -94,15 +94,16 @@
         <label data-test-applicant-state-dropdown>
           State
           <PowerSelect
+            @searchEnabled={{false}}
             supportsDataTestProperties={{true}}
             @selected={{@applicant.dcpState}}
             @placeholder="state"
-            @searchEnabled={{true}}
             @searchField="label"
             @options={{map-by 'code' (optionset 'applicant' 'dcpState' 'list')}}
             @onChange={{fn (mut @applicant.dcpState)}}
             @allowClear={{true}}
           as |stateCode|>
+
             {{optionset 'applicant' 'dcpState' 'label' stateCode}}
           </PowerSelect>
         </label>
