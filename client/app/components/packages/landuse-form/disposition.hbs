@@ -59,25 +59,25 @@
         </form.Field>
       </Ui::Question>
 
-      <Ui::Question as |dcpRestrictandconditionQ|>
-        <dcpRestrictandconditionQ.Legend>
+      <Ui::Question as |dcpRestrictionsandconditionsdispositiontabQ|>
+        <dcpRestrictionsandconditionsdispositiontabQ.Legend>
           Are there any restrictions?
-        </dcpRestrictandconditionQ.Legend>
+        </dcpRestrictionsandconditionsdispositiontabQ.Legend>
 
         <form.Field
-          @attribute="dcpRestrictandcondition"
+          @attribute="dcpRestrictionsandconditionsdispositiontab"
           @type="radio-group"
           as |RadioGroup|
         >
           <RadioGroup
-            @options={{optionset 'landuseForm' 'dcpRestrictandcondition' 'list'}}
-          as |dcpRestrictandcondition|>
+            @options={{optionset 'landuseForm' 'dcpRestrictionsandconditionsdispositiontab' 'list'}}
+          as |dcpRestrictionsandconditionsdispositiontab|>
             {{#if (eq
-              dcpRestrictandcondition
-              (optionset 'landuseForm' 'dcpRestrictandcondition' 'code' 'RESTRICTED')
+              dcpRestrictionsandconditionsdispositiontab
+              (optionset 'landuseForm' 'dcpRestrictionsandconditionsdispositiontab' 'code' 'RESTRICTED')
             )}}
               <p
-                data-test-disposition-dcpRestrictandcondition-helptext
+                data-test-disposition-dcpRestrictionsandconditionsdispositiontab-helptext
               >
                 If restricted, describe the restrictions in the attached Project
                 Description, and include any restrictions on Disposition, Term,

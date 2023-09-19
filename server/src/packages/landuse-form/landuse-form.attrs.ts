@@ -271,7 +271,7 @@ export const LANDUSE_FORM_ATTRS = [
   'dcp_applicantorrepname',
   'dcp_coapplicantstate1',
   'dcp_totalsqfootage',
-  'dcp_restrictandcondition',
+  'dcp_restrictionsandconditionsdispositiontab',
   'dcp_changeincitymapfees_base',
   'dcp_contactpersonstate',
   'dcp_stateczm',

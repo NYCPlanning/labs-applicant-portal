@@ -113,7 +113,7 @@ export default class LanduseFormModel extends Model {
 
   @attr dcpMannerofdisposition;
 
-  @attr dcpRestrictandcondition;
+  @attr dcpRestrictionsandconditionsdispositiontab;
 
   @attr dcpFrom;
 
