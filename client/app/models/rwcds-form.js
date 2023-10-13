@@ -88,6 +88,7 @@ export default class RwcdsFormModel extends Model {
 
   async save() {
     await this.saveDirtyAffectedZoningResolutions();
+    await this.saveDirtyProject();
     await super.save();
   }
 
@@ -103,5 +104,11 @@ export default class RwcdsFormModel extends Model {
     const dirtyZrs = this.affectedZoningResolutions.filter((zr) => zr.hasDirtyAttributes);
 
     return dirtyZrs.length > 0;
+  }
+
+  async saveDirtyProject() {
+    if (this.package.project.isDirty) {
+      this.package.project.save();
+    }
   }
 }

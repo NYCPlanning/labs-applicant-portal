@@ -19,6 +19,15 @@ export const PROJECT_ATTRS = [
   'dcp_contatleast100000sfzonfla',
   'dcp_imapplyazoningtmaffectsmore5rcd',
   'dcp_affectfourmorecb',
+
+  'dcp_numberofnewdwellingunits',
+  'dcp_incrementhousingunits',
+  'dcp_actionaffordabledwellingunits',
+  'dcp_incrementalaffordabledwellingunits',
+  'dcp_residentialsqft',
+  'dcp_newcommercialsqft',
+  'dcp_newindustrialsqft',
+  'dcp_newcommunityfacilitysqft',
 ];
 
 export const MILESTONE_DATE_ATTRS = [

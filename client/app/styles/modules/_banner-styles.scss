@@ -1,0 +1,43 @@
+.maintenance-wrapper {
+  background-color: #E5E5E5;
+
+  p {
+    padding: 3px 5px 0 5px;
+  }
+}
+
+.notification-banner {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+
+  &.maintenance-wrapper {
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  div {
+    display: grid;
+    grid-template-columns: 2rem 1fr 3fr;
+
+    h4 {
+      margin: 0;
+    }
+
+    svg#information-icon {
+      margin: 0.3125rem 0 0 0.3125rem;
+    }
+
+    .dismiss-banner-button {
+      padding: 0;
+      margin: 0;
+      align-self: flex-start;
+      justify-self: end;
+      margin-right: 1rem;
+    }
+  }
+}
+
+.hide-banner {
+  display: none;
+}
