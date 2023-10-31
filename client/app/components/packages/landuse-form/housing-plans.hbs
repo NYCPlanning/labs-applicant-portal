@@ -151,21 +151,21 @@
             </Ui::Question>
 
             <Ui::Question
-            as |dcpRestrictandconditionQ|>
-              <dcpRestrictandconditionQ.Label>
+            as |dcpRestrictionsandconditionsdispositiontabQ|>
+              <dcpRestrictionsandconditionsdispositiontabQ.Label>
                 Restrictions and Conditions
-              </dcpRestrictandconditionQ.Label>
+              </dcpRestrictionsandconditionsdispositiontabQ.Label>
               <p class="text-small">
                 If there are restrictions, attach a project description
                 in the documents section that describes the restrictions.
               </p>
 
               <form.Field
-                @attribute="dcpRestrictandcondition"
+                @attribute="dcpRestrictionsandconditionsdispositiontab"
                 @type="radio-group"
-              as |DcpRestrictandconditionRadioGroup|>
-                <DcpRestrictandconditionRadioGroup
-                  @options={{optionset 'landuseForm' 'dcpRestrictandcondition' 'list'}}
+              as |dcpRestrictionsandconditionsdispositiontabRadioGroup|>
+                <dcpRestrictionsandconditionsdispositiontabRadioGroup
+                  @options={{optionset 'landuseForm' 'dcpRestrictionsandconditionsdispositiontab' 'list'}}
                 />
               </form.Field>
             </Ui::Question>
