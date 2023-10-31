@@ -90,7 +90,7 @@ const OPTIONSET_LOOKUP = {
     dcpNewfacilityopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpIsprojectlistedinstatementofneedsopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpDidboroughpresidentproposealternativesite: COMMON_OPTIONSETS.YES_NO_INTEGER,
-    dcpLegalinstrument: LANDUSE_FORM_OPTIONSETS.DCPLEGALINSTRUMENT,
+    dcpLegalinstrument: COMMON_OPTIONSETS.YES_NO_UNSURE,
     dcpRelatedacquisitionofpropertyopt: COMMON_OPTIONSETS.YES_NO_INTEGER,
     dcpOnlychangetheeliminationofamappedbutunimp: LANDUSE_FORM_OPTIONSETS.DCPONLYCHANGETHEELIMINATIONOFAMAPPEDBUTUNIMP,
     dcpYesmappedbutunimprovedstreetelimated: COMMON_OPTIONSETS.YES_NO,
