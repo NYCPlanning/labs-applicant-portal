@@ -336,12 +336,12 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     await click('[data-test-radio="dcpDisposition"][data-test-radio-option="No (HC, HD, HG, HN, HO, HP, HU)"]');
 
     assert.dom('[data-test-radio="dcpMannerofdisposition"]').doesNotExist();
-    assert.dom('[data-test-radio="dcpRestrictandcondition"]').doesNotExist();
+    assert.dom('[data-test-radio="dcpRestrictionsandconditionsdispositiontab"]').doesNotExist();
 
     await click('[data-test-radio="dcpDisposition"][data-test-radio-option="Yes (HA, HD)"]');
 
     assert.dom('[data-test-radio="dcpMannerofdisposition"]').exists();
-    assert.dom('[data-test-radio="dcpRestrictandcondition"]').exists();
+    assert.dom('[data-test-radio="dcpRestrictionsandconditionsdispositiontab"]').exists();
 
     assert.dom('[data-test-radio="dcpFrom"]').doesNotExist();
     assert.dom('[data-test-radio="dcpTo"]').doesNotExist();
@@ -1130,15 +1130,15 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     await fillIn('[data-test-input="dcpTextcityagency"]', 'text text');
     await fillIn('[data-test-input="dcpTowhom"]', 'text text');
 
-    assert.dom('[data-test-disposition-dcpRestrictandcondition-helptext]').doesNotExist();
+    assert.dom('[data-test-disposition-dcpRestrictionsandconditionsdispositiontab-helptext]').doesNotExist();
 
-    await click('[data-test-radio="dcpRestrictandcondition"][data-test-radio-option="None (Pursuant to Zoning)"]');
+    await click('[data-test-radio="dcpRestrictionsandconditionsdispositiontab"][data-test-radio-option="None (Pursuant to Zoning)"]');
 
-    assert.dom('[data-test-disposition-dcpRestrictandcondition-helptext]').doesNotExist();
+    assert.dom('[data-test-disposition-dcpRestrictionsandconditionsdispositiontab-helptext]').doesNotExist();
 
-    await click('[data-test-radio="dcpRestrictandcondition"][data-test-radio-option="Restricted"]');
+    await click('[data-test-radio="dcpRestrictionsandconditionsdispositiontab"][data-test-radio-option="Restricted"]');
 
-    assert.dom('[data-test-disposition-dcpRestrictandcondition-helptext]').exists();
+    assert.dom('[data-test-disposition-dcpRestrictionsandconditionsdispositiontab-helptext]').exists();
   });
 
   test('User can add and delete a ZR Section on the landuse form', async function (assert) {

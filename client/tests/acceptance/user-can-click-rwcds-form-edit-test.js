@@ -91,6 +91,14 @@ module('Acceptance | user can click rwcds edit', function(hooks) {
     assert.dom('[data-test-input="dcpProjectsitedescription"]').hasNoValue();
     await fillIn('[data-test-input="dcpProjectsitedescription"]', 'Whatever affects one directly, affects all indirectly.');
     await fillIn('[data-test-input="dcpProposedprojectdevelopmentdescription"]', 'bananas');
+    await fillIn('[data-test-input="dcpNumberofnewdwellingunits"]', '5000');
+    await fillIn('[data-test-input="dcpIncrementhousingunits"]', '5000');
+    await fillIn('[data-test-input="dcpActionaffordabledwellingunits"]', '5000');
+    await fillIn('[data-test-input="dcpIncrementalaffordabledwellingunits"]', '5000');
+    await fillIn('[data-test-input="dcpResidentialsqft"]', '5000');
+    await fillIn('[data-test-input="dcpNewcommercialsqft"]', '5000');
+    await fillIn('[data-test-input="dcpNewindustrialsqft"]', '5000');
+    await fillIn('[data-test-input="dcpNewcommunityfacilitysqft"]', '5000');
 
     await click('[data-test-save-button]');
 
