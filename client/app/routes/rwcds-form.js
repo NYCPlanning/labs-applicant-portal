@@ -1,8 +1,12 @@
 import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
+import { inject as service } from '@ember/service';
 
-export default class RwcdsFormRoute extends Route.extend(AuthenticatedRouteMixin) {
-  authenticationRoute = '/';
+export default class RwcdsFormRoute extends Route {
+  @service session;
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
+  }
 
   async model(params) {
     const rwcdsFormPackage = await this.store.findRecord('package', params.id, {

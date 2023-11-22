@@ -11,7 +11,6 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { selectChoose } from 'ember-power-select/test-support';
-import { setFlatpickrDate } from 'ember-flatpickr/test-support/helpers';
 import exceedMaximum from '../helpers/exceed-maximum-characters';
 
 const saveForm = async () => {

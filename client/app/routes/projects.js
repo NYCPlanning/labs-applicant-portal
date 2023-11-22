@@ -1,16 +1,16 @@
 import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 // model of this route is all projects
 // will have associated controller, which will handle business logic of sorting project
 // objects into appropriate buckets
-export default class ProjectsRoute extends Route.extend(AuthenticatedRouteMixin) {
-  @service
-  session
+export default class ProjectsRoute extends Route {
+  @service session;
 
-  authenticationRoute = '/';
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
+  }
 
   // where we define the model of this part of the application
   model(params) {

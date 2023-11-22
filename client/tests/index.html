@@ -10,6 +10,15 @@
     {{content-for "head"}}
     {{content-for "test-head"}}
 
+     <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="theme-color" content="#ffffff">
+
+
     <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
     <link rel="stylesheet" href="{{rootURL}}assets/client.css">
     <link rel="stylesheet" href="{{rootURL}}assets/test-support.css">
@@ -20,6 +29,15 @@
   <body>
     {{content-for "body"}}
     {{content-for "test-body"}}
+
+    <div id="qunit"></div>
+    <div id="qunit-fixture">
+      <div id="ember-testing-container">
+        <div id="ember-testing"></div>
+      </div>
+    </div>
+
+    <script src="{{rootURL}}testem.js" integrity="" data-embroider-ignore></script>
 
     <script type="text/javascript">
       function setGetParam(key, value) {
@@ -33,8 +51,9 @@
 
       setGetParam('hidepassed', true);
       setGetParam('dockcontainer', true);
+      setGetParam('mirageLogging', true);
     </script>
-    <script src="/testem.js" integrity=""></script>
+
     <script src="{{rootURL}}assets/vendor.js"></script>
     <script src="{{rootURL}}assets/test-support.js"></script>
     <script src="{{rootURL}}assets/client.js"></script>

@@ -28,10 +28,13 @@
       </p>
 
       <form.Field
-        @attribute="dcpDescriptionofprojectareageography"
+        @attribute={{this.dcpDescriptionofprojectareageography}}
         @type="text-area"
         id={{Q.questionId}}
       />
+
+      {{log "dcpDescriptionofprojectareageography" dcpDescriptionofprojectareageography}}
+      {{log "this.dcpDescriptionofprojectareageography" this.dcpDescriptionofprojectareageography}}
     </Ui::Question>
   </form.Section>
 {{/let}}

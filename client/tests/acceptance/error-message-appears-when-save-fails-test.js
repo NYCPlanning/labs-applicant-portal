@@ -22,19 +22,24 @@ module('Acceptance | error message appears when save fails', function(hooks) {
     });
   });
 
+  function pause(ms = 0) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   test('error message appears when error occurs on save for PAS Form', async function(assert) {
     this.server.create('package', 'pasForm', {
       project: this.server.create('project'),
     });
-
     this.server.patch('/pas-forms/:id', { errors: [{ detail: 'server problem with pasForm' }] }, 500); // force mirage to error
 
     await visit('/pas-form/1/edit');
 
     assert.dom('[data-test-error-key="detail"]').doesNotExist();
 
+    // await this.pauseTest();
+    await pause(2000);
     await fillIn('[data-test-input="dcpRevisedprojectname"]', 'Some Cool New Project Name');
-
+    await pause(2000);
     // save it
     await click('[data-test-save-button]');
     await settled(); // async make sure save action finishes before assertion

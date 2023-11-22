@@ -17,7 +17,7 @@
   ariaDescribedby=ariaDescribedby
   changed=(action "changed")
 }}
-{{#if hasBlock}}
+{{#if (has-block)}}
   <label
     class="ember-radio-button {{if checked checkedClass}} {{joinedClassNames}}"
     for={{radioId}}

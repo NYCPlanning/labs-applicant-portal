@@ -1,9 +1,13 @@
 import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
+import { inject as service } from '@ember/service';
 import RSVP from 'rsvp';
 
-export default class LanduseFormRoute extends Route.extend(AuthenticatedRouteMixin) {
-  authenticationRoute = '/';
+export default class LanduseFormRoute extends Route {
+  @service session;
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
+  }
 
   async model(params) {
     const landuseFormPackage = await this.store.findRecord('package', params.id, {
