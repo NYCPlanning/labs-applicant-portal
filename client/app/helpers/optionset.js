@@ -122,6 +122,7 @@ const OPTIONSET_LOOKUP = {
     dcpIncludezoningtextamendment: YES_NO_DONT_KNOW,
     dcpIsplannigondevelopingaffordablehousing: YES_NO,
     dcpIsapplicantseekingaction: YES_NO_DONT_KNOW,
+    dcpApplicantpursuetype2eligibility: YES_NO_UNSURE_SMALLINT,
   },
   pasForm: {
     dcpProposedprojectorportionconstruction: YES_NO_UNSURE,
@@ -137,6 +138,7 @@ const OPTIONSET_LOOKUP = {
     dcpIsinclusionaryhousingdesignatedarea: YES_NO,
     dcpDiscressionaryfundingforffordablehousing: YES_NO_UNSURE,
     dcpHousingunittype: DCPHOUSINGUNITTYPE,
+    dcpPursuetype2eligibility: YES_NO_UNSURE_SMALLINT,
   },
   affectedZoningResolution: {
     actions: AFFECTED_ZONING_RESOLUTION_ACTION,

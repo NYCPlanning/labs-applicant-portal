@@ -717,6 +717,8 @@ export default class PasFormModel extends Model {
 
   @attr('number') dcpLanduseactiontype2;
 
+  @attr('number') dcpPursuetype2eligibility;
+
   @attr('number') dcpProposedprojectorportionconstruction;
 
   @attr('number') dcpProcommunityfacilitygrosssqft;
