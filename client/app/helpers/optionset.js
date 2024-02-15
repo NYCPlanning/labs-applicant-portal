@@ -137,6 +137,7 @@ const OPTIONSET_LOOKUP = {
     dcpIsinclusionaryhousingdesignatedarea: YES_NO,
     dcpDiscressionaryfundingforffordablehousing: YES_NO_UNSURE,
     dcpHousingunittype: DCPHOUSINGUNITTYPE,
+    dcpPursuetype2eligibility: YES_NO_UNSURE_SMALLINT,
   },
   affectedZoningResolution: {
     actions: AFFECTED_ZONING_RESOLUTION_ACTION,
