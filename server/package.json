@@ -30,7 +30,7 @@
     "@nestjs/platform-express": "^7.0.0",
     "@types/utf8": "^2.1.6",
     "adal-node": "^0.2.1",
-    "axios": "^0.27.2",
+    "axios": "^1.6.0",
     "compression": "^1.7.4",
     "dotenv": "^8.1.0",
     "inflected": "^2.0.4",
