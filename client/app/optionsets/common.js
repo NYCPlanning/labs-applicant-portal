@@ -64,6 +64,21 @@ export const YES_NO_UNSURE_SMALLINT = {
   },
 };
 
+export const YES_NO_UNSURE_LONGINT = {
+  YES: {
+    code: 717170000,
+    label: 'Yes',
+  },
+  NO: {
+    code: 717170001,
+    label: 'No',
+  },
+  UNSURE: {
+    code: null,
+    label: 'Unsure at this time',
+  },
+};
+
 export const YES_NO_DONT_KNOW = {
   YES: {
     code: 717170000,
@@ -85,6 +100,7 @@ const COMMON_OPTIONSETS = {
   YES_NO_PICKLIST_CODE,
   YES_NO_DONT_KNOW,
   YES_NO_INTEGER,
+  YES_NO_UNSURE_LONGINT
 };
 
 export default COMMON_OPTIONSETS;
