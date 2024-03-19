@@ -3,9 +3,10 @@ import {
   HttpStatus,
   Injectable
 } from '@nestjs/common';
-import * as Request from 'request';
+import Request from 'request';
 import { ConfigService } from '../config/config.service';
 import msal from '@azure/msal-node';
+import { response } from 'express';
 
 function unnest(folders = []) {
   return folders
@@ -26,45 +27,45 @@ export class SharepointService {
     private readonly config: ConfigService,
   ) {}
 
-  async generateSharePointAccessToken(): Promise<any> {
-    const TENANT_ID = this.config.get('TENANT_ID');
-    const SHAREPOINT_CLIENT_ID = this.config.get('SHAREPOINT_CLIENT_ID');
-    const SHAREPOINT_CLIENT_SECRET = this.config.get('SHAREPOINT_CLIENT_SECRET');
-    const ADO_PRINCIPAL = this.config.get('ADO_PRINCIPAL');
-    const SHAREPOINT_TARGET_HOST = this.config.get('SHAREPOINT_TARGET_HOST');
+  msalConfig = {
+    auth: {
+      clientId: this.config.get("SHAREPOINT_CLIENT_ID"),
+      authority: `${this.config.get("SHAREPOINT_AUTHORITY")}/${this.config.get("TENANT_ID")}`,
+      clientSecret: this.config.get("SHAREPOINT_CLIENT_SECRET")
+    },
+  }
 
-    const clientId = `${SHAREPOINT_CLIENT_ID}@${TENANT_ID}`;
-    const data = `
-      grant_type=client_credentials
-      &client_id=${clientId}
-      &client_secret=${SHAREPOINT_CLIENT_SECRET}
-      &resource=${ADO_PRINCIPAL}/${SHAREPOINT_TARGET_HOST}@${TENANT_ID}
-    `;
+  msalClient = new msal.ConfidentialClientApplication(this.msalConfig)
 
-    const options = {
-      url: `https://accounts.accesscontrol.windows.net/${TENANT_ID}/tokens/OAuth/2`,
-      headers: {
-        'Accept-Encoding': 'gzip, deflate',
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'OData-MaxVersion': '4.0',
-        'OData-Version': '4.0',
-        Accept: 'application/json',
-        Prefer: 'return=representation',
-      },
-      body: data,
-      encoding: null,
-    };
-
-    return new Promise(resolve => {
-      Request.get(options, (error, response, body) => {
-        const stringifiedBody = body.toString('utf-8');
-        if (response.statusCode >= 400) {
-          console.log('error', stringifiedBody);
-        }
-
-        resolve(JSON.parse(stringifiedBody));
-      });
+  async generateSharePointAccessToken(): Promise<{ access_token: string }> {
+    
+    const result = await this.msalClient.acquireTokenByClientCredential({
+      scopes: [this.config.get("SHAREPOINT_SCOPES")]
     })
+
+
+    const access_token = result.accessToken;
+    console.debug("access_token", access_token);
+    const options = {
+      url: `https://graph.microsoft.com/v1.0/sites/${this.config.get("SHAREPOINT_TARGET_HOST")}`,
+      headers: {
+        'Authorization': `Bearer ${access_token}`,
+        Accept: 'application/json'
+      }
+    }
+
+    const siteDetails = new Promise(resolve => {
+      Request.get(
+        options,
+        (error, response, body) => {
+          console.debug("error", error);
+          console.debug("response", response);
+          console.debug("body", body);
+        })
+    })
+    return {
+      access_token
+    }
   }
 
   async getSharepointDigestInfo(): Promise<any> {
