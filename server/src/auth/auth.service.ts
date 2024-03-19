@@ -1,11 +1,7 @@
-import { 
-  Injectable, 
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
-import * as jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { ConfigService } from '../config/config.service';
 import { ContactService } from '../contact/contact.service';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 
 /**
  * This service is responsible for verifying NYCID tokens presented

@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import * as fs from 'fs';
+import fs from 'fs';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './http-exception.filter';
 import { NestExpressApplication } from '@nestjs/platform-express';

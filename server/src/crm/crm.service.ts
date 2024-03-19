@@ -1,10 +1,6 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable
-} from '@nestjs/common';
-import * as zlib from 'zlib';
-import * as Request from 'request';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import zlib from 'zlib';
+import Request from 'request';
 import { ConfigService } from '../config/config.service';
 import { ADAL } from '../_utils/adal';
 
@@ -284,7 +280,7 @@ export class CrmService {
         }
         else if (response.statusCode === 204 || response.statusCode === 1223) {
           const uri = response.headers["OData-EntityId"];
-          if (uri) {
+          if (uri && typeof uri === "string") {
             // create request - server sends new id
             const regExp = /\(([^)]+)\)/;
             const matches = regExp.exec(uri);
@@ -293,12 +289,12 @@ export class CrmService {
           }
           else {
             // other type of request - no response
-            resolve();
-          }
+            resolve(undefined);
+          } 
         }
         else {
-          resolve();
-        }
+          resolve(undefined);
+          }
       });
     })
   }
@@ -390,9 +386,9 @@ export class CrmService {
           else {
             parseError(body);
 
-          }
         }
-        else resolve();
+      }
+         else resolve(undefined);
       })
     });
   }

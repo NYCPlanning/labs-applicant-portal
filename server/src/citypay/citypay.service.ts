@@ -5,7 +5,7 @@ import { InvoicesService, DCP_PROJECTINVOICE_CODES } from '../invoices/invoices.
 import { InvoicePostbackService } from '../invoice-postback/invoice-postback.service';
 import axios from 'axios';
 import { create } from 'xmlbuilder2';
-import * as  url from 'url';
+import url from 'url';
 import { v4 as uuidv4 } from 'uuid';
 
 const DCP_PACAKAGETYPE_LOOKUP = {

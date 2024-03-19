@@ -3,8 +3,7 @@ import { ConfigService } from '../config/config.service';
 import { CrmService } from '../crm/crm.service';
 import { SharepointService } from '../sharepoint/sharepoint.service';
 import { ADAL } from '../_utils/adal';
-import * as Request from 'request';
-
+import Request from 'request';
 
 // This service currently provides utilities to write files and folders
 // to Sharepoint via CRM. It uses fetchXML api and an undocumented

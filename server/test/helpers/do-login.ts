@@ -1,4 +1,4 @@
-import * as jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 export const doLogin = (appServer, request) => {
   // the signing secret arg here is copied from the test.env file

@@ -1,4 +1,4 @@
-import * as ADALNode from 'adal-node';
+import ADALNode from 'adal-node';
 
 export const ADAL = {
   // In one or more classes that import ADAL,

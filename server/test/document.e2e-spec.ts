@@ -1,14 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from './../src/app.module';
-import * as request from 'supertest';
-import * as nock from 'nock';
-import * as mockedEnvPkg from 'mocked-env';
+import request from 'supertest';
+import nock from 'nock';
+import mockedEnv from 'mocked-env';
 import { doLogin } from './helpers/do-login';
 import { extractJWT } from './helpers/extract-jwt';
 import { oauthMock } from './helpers/mocks/oauth';
 import { v4 as uuidv4 } from 'uuid';
-
-const { 'default': mockedEnv } = mockedEnvPkg;
 
 describe('DocumentController (e2e)', () => {
   let app;

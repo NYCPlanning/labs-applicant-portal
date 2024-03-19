@@ -1,8 +1,8 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import * as crypto from 'crypto';
-import * as utf8 from 'utf8';
-import * as superagent from 'superagent';
-import * as superagentProxy from 'superagent-proxy'
+import crypto from 'crypto';
+import utf8 from 'utf8';
+import superagent from 'superagent';
+import superagentProxy from 'superagent-proxy';
 import { ConfigService } from '../../config/config.service';
 
 function sortValuesByKey(entries) {

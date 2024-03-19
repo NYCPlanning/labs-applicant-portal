@@ -1,10 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from './../src/app.module';
-import * as mockedEnvPkg from 'mocked-env';
-const { 'default': mockedEnv } = mockedEnvPkg;
+import mockedEnv from 'mocked-env';
 import { oauthMock } from './helpers/mocks/oauth';
-import * as request from 'supertest';
-import * as nock from 'nock';
+import request from 'supertest';
+import nock from 'nock';
 import { v4 as uuidv4 } from 'uuid';
 import { CrmService } from '../src/crm/crm.service';
 import { InvoicesService } from '../src/invoices/invoices.service';

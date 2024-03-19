@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import * as Request from 'request';
 import { ConfigService } from '../config/config.service';
+import msal from '@azure/msal-node';
 
 function unnest(folders = []) {
   return folders
@@ -360,7 +361,7 @@ export class SharepointService {
           console.log('error', stringifiedBody);
         }
 
-        resolve();
+        resolve(undefined);
       });
     })
   }

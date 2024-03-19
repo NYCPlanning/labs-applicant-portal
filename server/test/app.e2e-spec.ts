@@ -1,13 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
+import request from 'supertest';
 import { oauthMock } from './helpers/mocks/oauth';
 import { AppModule } from './../src/app.module';
 import { v4 as uuidv4 } from 'uuid';
-import * as nock from 'nock';
-import * as mockedEnvPkg from 'mocked-env';
-
-const { 'default': mockedEnv } = mockedEnvPkg;
+import nock from 'nock';
+import mockedEnv from 'mocked-env';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;

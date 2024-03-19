@@ -1,6 +1,6 @@
 import { Module, MiddlewareConsumer } from '@nestjs/common';
-import * as bodyParser from 'body-parser';
-import * as compression from 'compression';
+import bodyParser from 'body-parser';
+import compression from 'compression';
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
 import { AuthMiddleware } from './auth.middleware';
