@@ -104,7 +104,8 @@ export class ProjectsController {
 
   @Get('/')
   async listOfCurrentUserProjects(@Session() session) {
-    let { contactId, creeperTargetEmail } = session;
+    const { creeperTargetEmail } = session;
+    let { contactId } = session;
 
     // if this needs to be in other parts of the app, consider a pipe or interceptor
     if (creeperTargetEmail) {

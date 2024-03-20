@@ -31,7 +31,7 @@ export class LanduseFormController {
 
   @Patch('/:id')
   async update(@Body() body, @Param('id') id) {
-    let allowedAttrs = pick(body, LANDUSE_FORM_ATTRS);
+    const allowedAttrs = pick(body, LANDUSE_FORM_ATTRS);
 
     // "chosen_zoning_resolution_id" is the id to a related resource,
     // but, unlike other attributes, it may not always be included

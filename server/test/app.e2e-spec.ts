@@ -20,10 +20,8 @@ describe('AppController (e2e)', () => {
   });
 
   beforeAll(function() {
-    let restoreEnv;
-
     // Mocks the local environment with dummy data so the app can boot
-    restoreEnv = mockedEnv({
+    mockedEnv({
       CRM_HOST: 'https://dcppfsuat2.crm9.dynamics.com',
       AUTHORITY_HOST_URL: 'https://login.microsoftonline.com',
       CRM_URL_PATH: '/api/data/v9.1/',

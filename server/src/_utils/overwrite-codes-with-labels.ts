@@ -27,7 +27,7 @@ export function overwriteCodesWithLabels(records, targetFields) {
       .forEach(([, collection]) => {
 
         collection
-          // @ts-ignore
+          // @ts-expect-error "collection" is of unknown type
           .filter(Boolean)
           .map(record => {
             const newRecord = {

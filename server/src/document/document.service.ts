@@ -209,7 +209,7 @@ async getParentSiteLocation() {
   async uploadDocument(entityName, entityID, folderName, fileName, base64File, overwriteExisting, headers) {
     folderName = folderName.replace(/^\~|\#|\%|\&|\*|\{|\}|\\|\:|\<|\>|\?|\/|\||\"/g, '');
 
-    let docLocation = await this.findDocumentLocation(entityID, folderName);
+    const docLocation = await this.findDocumentLocation(entityID, folderName);
     let docLocationID = null;
 
     if (!docLocation) {

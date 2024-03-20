@@ -165,15 +165,15 @@ export class CrmService {
           const parseResponse = jsonText => {
             const json_string = jsonText.toString('utf-8');
 
-            var result = JSON.parse(json_string, this._dateReviver);
+            let result = JSON.parse(json_string, this._dateReviver);
             if (result["@odata.context"].indexOf("/$entity") >= 0) {
               // retrieve single
               result = this._fixLongODataAnnotations(result);
             }
             else if (result.value) {
               // retrieve multiple
-              var array = [];
-              for (var i = 0; i < result.value.length; i++) {
+              const array = [];
+              for (let i = 0; i < result.value.length; i++) {
                 array.push(this._fixLongODataAnnotations(result.value[i]));
               }
               result.value = array;
@@ -248,8 +248,8 @@ export class CrmService {
             // Fix: if we retry error will not show again
             const json_string = jsonText.toString('utf-8');
 
-            var result = JSON.parse(json_string, this._dateReviver);
-            var err = this._parseErrorMessage(result);
+            const result = JSON.parse(json_string, this._dateReviver);
+            const err = this._parseErrorMessage(result);
             reject(err);
           };
           if (encoding && encoding.indexOf('gzip') >= 0) {
@@ -265,7 +265,7 @@ export class CrmService {
         else if (response.statusCode === 200 || response.statusCode === 201) {
           const parseResponse = jsonText => {
             const json_string = jsonText.toString('utf-8');
-            var result = JSON.parse(json_string, this._dateReviver);
+            const result = JSON.parse(json_string, this._dateReviver);
             resolve(result);
           };
 
@@ -300,7 +300,7 @@ export class CrmService {
   }
 
   async _update(entitySetName, guid, data, headers): Promise<any> {
-    var query = entitySetName + "(" + guid + ")";
+    const query = entitySetName + "(" + guid + ")";
     return this._sendPatchRequest(query, data, headers);
   }
 
@@ -330,8 +330,8 @@ export class CrmService {
         if (error || response.statusCode != 204) {
           const parseError = jsonText => {
             const json_string = jsonText.toString('utf-8');
-            var result = JSON.parse(json_string, this._dateReviver);
-            var err = this._parseErrorMessage(result);
+            const result = JSON.parse(json_string, this._dateReviver);
+            const err = this._parseErrorMessage(result);
             reject(err);
           };
           if (encoding && encoding.indexOf('gzip') >= 0) {

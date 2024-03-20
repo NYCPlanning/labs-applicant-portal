@@ -72,7 +72,7 @@ export class RwcdsFormService {
     private readonly pasFormService: PasFormService,
   ) {}
 
-  async _getPackageProjectId(packageId):Promise<String> {
+  async _getPackageProjectId(packageId):Promise<string> {
     const { records: [firstPackage] } = await this.crmService.get('dcp_packages', `
       $select=_dcp_project_value
       &$filter=dcp_packageid eq ${packageId}

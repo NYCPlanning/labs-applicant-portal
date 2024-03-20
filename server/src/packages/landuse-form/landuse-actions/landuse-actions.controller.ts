@@ -28,7 +28,7 @@ export class LanduseActionsController {
 
   @Patch('/:id')
   async update(@Body() body, @Param('id') id) {
-    let allowedAttrs = pick(body, LANDUSE_ACTION_ATTRS);
+    const allowedAttrs = pick(body, LANDUSE_ACTION_ATTRS);
     const dateOfPreviousApproval = this.pickDate(body.dcp_dateofpreviousapproval);
     const lapseDateOfPreviousApproval = this.pickDate(body.dcp_lapsedateofpreviousapproval);
     const recordationDate = this.pickDate(body.dcp_recordationdate);

@@ -160,7 +160,7 @@ export class PackagesService {
       }
 
       // below query filters by Racial Equity Report file type. 
-      let { records: projectArtifacts } = await this.crmService.get(
+      const { records: projectArtifacts } = await this.crmService.get(
         "dcp_artifactses",
         `
         $filter=
