@@ -87,6 +87,7 @@ export class DocumentService {
 // Use to get ID of current CRM's corresponding sharepoint site ID,
 // i.e. "sharepointSiteID" required in findEntityDocumentLocation()
 async getParentSiteLocation() {
+  console.debug("get parent site location in doc service")
   const fetchParentSiteLocationIdXML = [
     `<fetch mapping="logical" distinct="false" top="1">`,
       `<entity name="sharepointsite">`,
@@ -208,6 +209,7 @@ async getParentSiteLocation() {
    * The `entityID` and `folderName` parameters can be acquired and constructed by making separate requests to the API.
    */
   async uploadDocument(entityName, entityID, folderName, fileName, base64File, overwriteExisting, headers) {
+    console.debug("upload your document in the document service");
     folderName = folderName.replace(/^\~|\#|\%|\&|\*|\{|\}|\\|\:|\<|\>|\?|\/|\||\"/g, '');
 
     let docLocation = await this.findDocumentLocation(entityID, folderName);
