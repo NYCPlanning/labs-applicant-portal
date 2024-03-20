@@ -19,10 +19,12 @@ export const ADAL = {
   acquireToken() {
     return new Promise((resolve, reject) => {
       if (this.expirationDate) {
-        const tokenLimit = new Date(this.expirationDate.getTime() - (15*60*1000));
+        const tokenLimit = new Date(
+          this.expirationDate.getTime() - 15 * 60 * 1000,
+        );
         const now = new Date();
 
-        if (now <= tokenLimit){
+        if (now <= tokenLimit) {
           resolve(this.token);
 
           return;
@@ -38,26 +40,28 @@ export const ADAL = {
         clientSecret,
         CRMUrl,
       } = this.ADAL_CONFIG;
-      const context = new AuthenticationContext(`${authorityHostUrl}/${tenantId}${tokenPath}`);
+      const context = new AuthenticationContext(
+        `${authorityHostUrl}/${tenantId}${tokenPath}`,
+      );
 
-      context.acquireTokenWithClientCredentials(CRMUrl, clientId, clientSecret,
-        (err, tokenResponse:any ) => {
+      context.acquireTokenWithClientCredentials(
+        CRMUrl,
+        clientId,
+        clientSecret,
+        (err, tokenResponse: any) => {
           if (err) {
             console.log(`well that didn't work: ${err.stack}`);
             reject(err);
           }
 
-          const {
-            accessToken,
-            expiresOn,
-          } = tokenResponse;
+          const { accessToken, expiresOn } = tokenResponse;
 
           this.token = accessToken;
           this.expirationDate = expiresOn;
 
           resolve(accessToken);
-        }
+        },
       );
-    })
+    });
   },
 };

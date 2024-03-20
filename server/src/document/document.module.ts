@@ -6,17 +6,9 @@ import { DocumentService } from './document.service';
 import { SharepointModule } from '../sharepoint/sharepoint.module';
 
 @Module({
-  imports: [
-    ConfigModule,
-    CrmModule,
-    SharepointModule,
-  ],
-  providers: [
-    DocumentService,
-  ],
-  exports: [
-    DocumentService,
-  ],
+  imports: [ConfigModule, CrmModule, SharepointModule],
+  providers: [DocumentService],
+  exports: [DocumentService],
   controllers: [DocumentController],
 })
 export class DocumentModule {}

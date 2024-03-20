@@ -1,4 +1,16 @@
-import { Controller, Patch, Body, Param, Post, UseInterceptors, UseGuards, UsePipes, Delete, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Patch,
+  Body,
+  Param,
+  Post,
+  UseInterceptors,
+  UseGuards,
+  UsePipes,
+  Delete,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { pick } from 'underscore';
 import { CrmService } from '../../crm/crm.service';
 import { JsonApiSerializeInterceptor } from '../../json-api-serialize.interceptor';
@@ -6,12 +18,12 @@ import { AuthenticateGuard } from '../../authenticate.guard';
 import { JsonApiDeserializePipe } from '../../json-api-deserialize.pipe';
 import { CEQR_INVOICE_QUESTIONNAIRE_ATTRS } from './ceqr-invoice-questionnaires.attrs';
 
-@UseInterceptors(new JsonApiSerializeInterceptor('ceqr-invoice-questionnaires', {
-  id: 'dcp_ceqrinvoicequestionnaireid',
-  attributes: [
-    ...CEQR_INVOICE_QUESTIONNAIRE_ATTRS,
-  ],
-}))
+@UseInterceptors(
+  new JsonApiSerializeInterceptor('ceqr-invoice-questionnaires', {
+    id: 'dcp_ceqrinvoicequestionnaireid',
+    attributes: [...CEQR_INVOICE_QUESTIONNAIRE_ATTRS],
+  }),
+)
 @UseGuards(AuthenticateGuard)
 @UsePipes(JsonApiDeserializePipe)
 @Controller('ceqr-invoice-questionnaires')
@@ -30,6 +42,6 @@ export class CeqrInvoiceQuestionnairesController {
     return {
       dcp_ceqrinvoicequestionnaireid: id,
       ...body,
-    }
+    };
   }
 }

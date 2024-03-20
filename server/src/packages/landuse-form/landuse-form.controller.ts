@@ -14,20 +14,21 @@ import { CrmService } from '../../crm/crm.service';
 import { pick } from 'underscore';
 import { LANDUSE_FORM_ATTRS } from './landuse-form.attrs';
 
+@UseInterceptors(
+  new JsonApiSerializeInterceptor('landuse-forms', {
+    attributes: [
+      ...LANDUSE_FORM_ATTRS,
 
-@UseInterceptors(new JsonApiSerializeInterceptor('landuse-forms', {
-  attributes: [
-    ...LANDUSE_FORM_ATTRS,
-
-    // this is an association. before, we thought it wasn't!
-    'dcp_leadagency',
-  ],
-}))
+      // this is an association. before, we thought it wasn't!
+      'dcp_leadagency',
+    ],
+  }),
+)
 @UseGuards(AuthenticateGuard)
 @UsePipes(JsonApiDeserializePipe)
 @Controller('landuse-forms')
 export class LanduseFormController {
-  constructor(private readonly crmService: CrmService) { }
+  constructor(private readonly crmService: CrmService) {}
 
   @Patch('/:id')
   async update(@Body() body, @Param('id') id) {
@@ -44,9 +45,14 @@ export class LanduseFormController {
     // (which would imply a key for chosen_zoning_resolution_id),
     // to avoid assuming that falsiness indicates a disassociation.
     if (body.chosen_lead_agency_id) {
-      allowedAttrs['dcp_leadagency@odata.bind'] = `/accounts(${body.chosen_lead_agency_id})`;
+      allowedAttrs['dcp_leadagency@odata.bind'] =
+        `/accounts(${body.chosen_lead_agency_id})`;
     } else if (body.chosen_lead_agency_id === null) {
-      await this.crmService.disassociateHasOne('dcp_leadagency', 'dcp_landuses', id);
+      await this.crmService.disassociateHasOne(
+        'dcp_leadagency',
+        'dcp_landuses',
+        id,
+      );
     }
 
     await this.crmService.update('dcp_landuses', id, {
@@ -55,7 +61,7 @@ export class LanduseFormController {
 
     return {
       dcp_landuseid: id,
-      ...body
+      ...body,
     };
   }
 }

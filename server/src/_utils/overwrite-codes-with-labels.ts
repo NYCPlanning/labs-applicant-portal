@@ -4,16 +4,16 @@ const COMMUNITY_DISPLAY_TOKEN = '@OData.Community.Display.V1.FormattedValue';
 // for example, "yes" might appear as "1"
 // This function maps those values with appropriate labels
 export function overwriteCodesWithLabels(records, targetFields) {
-  return records.map(record => {
+  return records.map((record) => {
     const newRecord = {
       ...record,
     };
 
     // parent record
     Object.keys(record)
-      .filter(key => key.includes(COMMUNITY_DISPLAY_TOKEN))
-      .map(key => key.replace(COMMUNITY_DISPLAY_TOKEN, ''))
-      .forEach(key => {
+      .filter((key) => key.includes(COMMUNITY_DISPLAY_TOKEN))
+      .map((key) => key.replace(COMMUNITY_DISPLAY_TOKEN, ''))
+      .forEach((key) => {
         if (targetFields.includes(key)) {
           newRecord[key] = record[`${key}${COMMUNITY_DISPLAY_TOKEN}`];
         }
@@ -25,19 +25,18 @@ export function overwriteCodesWithLabels(records, targetFields) {
     const values = Object.entries(record)
       .filter(([, value]) => Array.isArray(value))
       .forEach(([, collection]) => {
-
         collection
           // @ts-expect-error "collection" is of unknown type
           .filter(Boolean)
-          .map(record => {
+          .map((record) => {
             const newRecord = {
               ...record,
             };
 
             Object.keys(record)
-              .filter(key => key.includes(COMMUNITY_DISPLAY_TOKEN))
-              .map(key => key.replace(COMMUNITY_DISPLAY_TOKEN, ''))
-              .forEach(key => {
+              .filter((key) => key.includes(COMMUNITY_DISPLAY_TOKEN))
+              .map((key) => key.replace(COMMUNITY_DISPLAY_TOKEN, ''))
+              .forEach((key) => {
                 if (targetFields.includes(key)) {
                   newRecord[key] = record[`${key}${COMMUNITY_DISPLAY_TOKEN}`];
                 }

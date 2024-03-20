@@ -25,7 +25,13 @@ import { CeqrInvoiceQuestionnairesController } from './ceqr-invoice-questionnair
 @Module({
   imports: [CrmModule, SharepointModule, CitypayModule, ConfigModule],
   exports: [PackagesService],
-  providers: [ArtifactService, PackagesService, PasFormService, RwcdsFormService, LanduseFormService],
+  providers: [
+    ArtifactService,
+    PackagesService,
+    PasFormService,
+    RwcdsFormService,
+    LanduseFormService,
+  ],
   controllers: [
     PackagesController,
     PasFormController,

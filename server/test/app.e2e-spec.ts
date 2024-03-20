@@ -19,7 +19,7 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  beforeAll(function() {
+  beforeAll(function () {
     // Mocks the local environment with dummy data so the app can boot
     mockedEnv({
       CRM_HOST: 'https://dcppfsuat2.crm9.dynamics.com',
@@ -40,17 +40,20 @@ describe('AppController (e2e)', () => {
 
     // mock a dummy contact throughout to support doLogin()
     scope
-      .get(uri => uri.includes('api/data/v9.1/contacts'))
+      .get((uri) => uri.includes('api/data/v9.1/contacts'))
       .reply(200, {
-        value: [{
-          contactid: 'test',
-          emailaddress1: 'labs_dl@planning.nyc.gov',
-        }], '@odata.context': ''
+        value: [
+          {
+            contactid: 'test',
+            emailaddress1: 'labs_dl@planning.nyc.gov',
+          },
+        ],
+        '@odata.context': '',
       })
       .persist();
 
     scope
-      .post(uri => uri.includes('api/data/v9.1/contacts'))
+      .post((uri) => uri.includes('api/data/v9.1/contacts'))
       .reply(201, function (uri, requestBody: Record<string, any>) {
         return { ...requestBody, contactid: uuidv4() };
       })
@@ -58,8 +61,6 @@ describe('AppController (e2e)', () => {
   });
 
   it('/contacts (GET) is not authenticated', () => {
-    return request(app.getHttpServer())
-      .get('/contacts')
-      .expect(200);
+    return request(app.getHttpServer()).get('/contacts').expect(200);
   });
 });

@@ -31,23 +31,23 @@ export class AuthService {
    * @param      {object}  exp        Metadata about the nyc ID user
    * @return     {string}             String representing ZAP token
    */
-  private signNewToken(
-    contactId: string,
-    nycIdAccount: any = {},
-  ): string {
+  private signNewToken(contactId: string, nycIdAccount: any = {}): string {
     const { ZAP_TOKEN_SECRET } = this;
     const { exp, ...everythingElse } = nycIdAccount;
 
-    return jwt.sign({
-      // JWT standard name for expiration - see https://github.com/auth0/node-jsonwebtoken#token-expiration-exp-claim
-      exp,
+    return jwt.sign(
+      {
+        // JWT standard name for expiration - see https://github.com/auth0/node-jsonwebtoken#token-expiration-exp-claim
+        exp,
 
-      // CRM id — added to this app's JWT for later queries
-      contactId,
+        // CRM id — added to this app's JWT for later queries
+        contactId,
 
-      // additional NYC.ID account information
-      ...everythingElse
-    }, ZAP_TOKEN_SECRET);
+        // additional NYC.ID account information
+        ...everythingElse,
+      },
+      ZAP_TOKEN_SECRET,
+    );
   }
 
   private verifyToken(token, secret): string | {} {
@@ -55,8 +55,8 @@ export class AuthService {
       return jwt.verify(token, secret);
     } catch (e) {
       const error = {
-        code: "INVALID_TOKEN",
-        title: "Invalid token",
+        code: 'INVALID_TOKEN',
+        title: 'Invalid token',
         detail: `Could not verify token. ${e}`,
       };
       console.log(error);
@@ -77,9 +77,9 @@ export class AuthService {
       return this.verifyToken(token, NYCID_TOKEN_SECRET);
     } catch (e) {
       const error = {
-        code: "INVALID_NYCID_TOKEN",
-        title: "Invalid NYCID token",
-        detail: "The acquired NYCID token is invalid."
+        code: 'INVALID_NYCID_TOKEN',
+        title: 'Invalid NYCID token',
+        detail: 'The acquired NYCID token is invalid.',
       };
       console.log(error);
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -89,8 +89,8 @@ export class AuthService {
   /**
    * This function extracts the email from an NYCIDToken and uses it to
    * look up a Contact in CRM. It returns to the client a ZAP token holding
-   * (signed with) the acquired Contact's contactid. 
-   * 
+   * (signed with) the acquired Contact's contactid.
+   *
    * @param      {string}  NYCIDToken  Token from NYCID
    * @return     {string}              String representing generated ZAP Token
    */
@@ -98,13 +98,8 @@ export class AuthService {
     const nycIdAccount = this.verifyNYCIDToken(NYCIDToken);
 
     // need the email to lookup a CRM contact.
-    const {
-      mail,
-      nycExtEmailValidationFlag,
-      GUID,
-      givenName,
-      sn,
-    } = nycIdAccount;
+    const { mail, nycExtEmailValidationFlag, GUID, givenName, sn } =
+      nycIdAccount;
 
     // REDO: all of this "has_crm_contact" stuff is confusing. these methods should just return null
     // if not found, and we need to find a better way to deal with missing crm records + nycid status
@@ -117,18 +112,20 @@ export class AuthService {
     }
 
     // if _that_ doesn't exist, create a new contact
-    const contact = query.has_crm_contact ? query : await this.contactService.create({
-      emailaddress1: mail,
-      dcp_nycid_guid: GUID,
-    });
+    const contact = query.has_crm_contact
+      ? query
+      : await this.contactService.create({
+          emailaddress1: mail,
+          dcp_nycid_guid: GUID,
+        });
 
     const nycIdEmailRegEx = new RegExp(`^${mail}$`, 'gi');
 
     // if their e-mail is validated, associate the NYCID guid
     if (
-      nycExtEmailValidationFlag
-      && contact.dcp_nycid_guid !== GUID
-      && contact.emailaddress1.match(nycIdEmailRegEx)
+      nycExtEmailValidationFlag &&
+      contact.dcp_nycid_guid !== GUID &&
+      contact.emailaddress1.match(nycIdEmailRegEx)
     ) {
       await this.contactService.update(contact.contactid, {
         dcp_nycid_guid: GUID,
@@ -162,9 +159,9 @@ export class AuthService {
       return this.verifyZapToken(token);
     } catch (e) {
       const error = {
-        code: "INVALID_ZAP_TOKEN",
-        title: "Invalid login token provided",
-        detail: "The provided ZAP token is invalid."
+        code: 'INVALID_ZAP_TOKEN',
+        title: 'Invalid login token provided',
+        detail: 'The provided ZAP token is invalid.',
       };
       console.log(error);
       throw new HttpException(error, HttpStatus.UNAUTHORIZED);
@@ -184,9 +181,9 @@ export class AuthService {
       return this.verifyToken(token, ZAP_TOKEN_SECRET);
     } catch (e) {
       const error = {
-        code: "VERIFY_ZAP_TOKEN_ERROR",
-        title: "Error verifying ZAP token",
-        detail: "Perhaps the provided ZAP token is invalid."
+        code: 'VERIFY_ZAP_TOKEN_ERROR',
+        title: 'Error verifying ZAP token',
+        detail: 'Perhaps the provided ZAP token is invalid.',
       };
       console.log(error);
       throw new HttpException(error, HttpStatus.UNAUTHORIZED);

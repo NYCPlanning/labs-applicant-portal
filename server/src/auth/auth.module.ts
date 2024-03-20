@@ -4,10 +4,7 @@ import { ContactModule } from '../contact/contact.module';
 import { AuthService } from './auth.service';
 
 @Module({
-  imports: [
-    ConfigModule,
-    ContactModule,
-  ],
+  imports: [ConfigModule, ContactModule],
   providers: [AuthService],
   exports: [AuthService],
 })

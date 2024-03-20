@@ -13,7 +13,10 @@ export class ConfigService {
   private readonly envConfig: { [key: string]: string } = {};
 
   constructor(filePath: string) {
-    if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
+    if (
+      process.env.NODE_ENV === 'production' ||
+      process.env.NODE_ENV === 'test'
+    ) {
       this.envConfig = process.env;
     } else {
       try {

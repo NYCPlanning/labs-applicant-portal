@@ -1,4 +1,1 @@
-export const ACCOUNT_ATTRS = [
-  'name',
-];
-  
+export const ACCOUNT_ATTRS = ['name'];

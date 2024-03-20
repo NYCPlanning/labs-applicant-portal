@@ -9,12 +9,7 @@ import { ProjectApplicantController } from './project-applicants/project-applica
 import { NycidService } from 'src/contact/nycid/nycid.service';
 
 @Module({
-  imports: [
-    CrmModule,
-    ConfigModule,
-    ContactModule,
-    AuthModule,
-  ],
+  imports: [CrmModule, ConfigModule, ContactModule, AuthModule],
   providers: [ProjectsService],
   exports: [ProjectsService],
   controllers: [ProjectsController, ProjectApplicantController],

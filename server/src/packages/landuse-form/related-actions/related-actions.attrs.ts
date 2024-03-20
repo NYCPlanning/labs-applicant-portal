@@ -5,5 +5,5 @@ export const RELATED_ACTION_ATTRS = [
   'dcp_dispositionorstatus',
   'dcp_calendarnumbercalendarnumber',
   'dcp_landuseid_value',
-  'dcp_landuseid'
+  'dcp_landuseid',
 ];
