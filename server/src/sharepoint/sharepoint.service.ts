@@ -1,7 +1,7 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import Request from 'request';
 import { ConfigService } from '../config/config.service';
-import msal from '@azure/msal-node';
+import { MSAL, MsalProviderType } from 'src/provider/msal.provider';
 
 function unnest(folders = []) {
   return folders
@@ -17,6 +17,7 @@ export type SharepointFolderFiles = {
   Name: string;
   TimeCreated: string;
   ServerRelativeUrl: string;
+  'odata.type': string;
 };
 
 // This service currently only helps you read and delete files from Sharepoint.
@@ -24,9 +25,24 @@ export type SharepointFolderFiles = {
 // use the DocumentService instead.
 @Injectable()
 export class SharepointService {
-  constructor(private readonly config: ConfigService) {}
+  constructor(
+    @Inject(MSAL)
+    private readonly msalProvider: MsalProviderType,
 
-  async generateSharePointAccessToken(): Promise<any> {
+    private readonly config: ConfigService,
+  ) {}
+
+  async generateSharePointAccessTokenGraph() {
+    const response = await this.msalProvider.cca.acquireTokenByClientCredential(
+      {
+        scopes: this.msalProvider.scopes,
+      },
+    );
+    const { accessToken: accessTokenGraph } = response;
+    return { accessTokenGraph };
+  }
+
+  async generateSharePointAccessToken(): Promise<{ access_token: string }> {
     const TENANT_ID = this.config.get('TENANT_ID');
     const SHAREPOINT_CLIENT_ID = this.config.get('SHAREPOINT_CLIENT_ID');
     const SHAREPOINT_CLIENT_SECRET = this.config.get(
@@ -120,7 +136,7 @@ export class SharepointService {
     }
   }
 
-  async getSharepointFolderInfo(folderIdentifier): Promise<any> {
+  async getSharepointFolderInfo(folderIdentifier: string): Promise<any> {
     try {
       const { access_token } = await this.generateSharePointAccessToken();
       const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
@@ -174,7 +190,7 @@ export class SharepointService {
 
   // This function renames the folder specified by `folderIdentifier` by appending `dcp_archived` to the end of its name
   // Example of folderIdentifier: `dcp_package/2021M023_Draft LU Form_3_A234234ASFLKNF3423`
-  async archiveSharepointFolder(folderIdentifier): Promise<any> {
+  async archiveSharepointFolder(folderIdentifier: string): Promise<any> {
     const { 'odata.type': folderOdataType } =
       await this.getSharepointFolderInfo(folderIdentifier);
 
@@ -251,9 +267,11 @@ export class SharepointService {
 
   // Retrieves a list of files in a given Sharepoint folder
   async getSharepointFolderFiles(
-    folderIdentifier,
+    folderIdentifier: string,
   ): Promise<{ value: Array<SharepointFolderFiles> }> {
     try {
+      const { accessTokenGraph } =
+        await this.generateSharePointAccessTokenGraph();
       const { access_token } = await this.generateSharePointAccessToken();
       const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
 
@@ -264,6 +282,9 @@ export class SharepointService {
         `https://nyco365.sharepoint.com/sites/${SHAREPOINT_CRM_SITE}/_api/web/GetFolderByServerRelativeUrl('/sites/${SHAREPOINT_CRM_SITE}/${formattedFolderIdentifier}')/Files`,
       );
 
+      console.debug('folderIdentifier', folderIdentifier);
+      const urlPackageIdGraph = `${this.msalProvider.sharePointSiteUrl}/lists?$filter=displayName eq 'Package'&$select=id`;
+
       const options = {
         url,
         headers: {
@@ -271,6 +292,30 @@ export class SharepointService {
           Accept: 'application/json',
         },
       };
+
+      const optionsGraph = {
+        headers: {
+          Authorization: `Bearer ${accessTokenGraph}`,
+          Accept: 'application/json',
+        },
+      };
+
+      try {
+        const responseGraph = await fetch(urlPackageIdGraph, optionsGraph);
+        const dataGraph = (await responseGraph.json()) as {
+          value: Array<{ id: string }>;
+        };
+        console.debug('dataGraph', dataGraph);
+      } catch {
+        throw new HttpException(
+          {
+            code: 'LOAD_FOLDER_FAILED',
+            title: 'Error loading sharepoint files (Graph)',
+            detail: `Could not load file list from Sharepoint folder "${formattedFolderIdentifier}".`,
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      }
 
       return new Promise((resolve) => {
         Request.post(options, (error, response, body) => {
@@ -289,13 +334,7 @@ export class SharepointService {
           console.debug('sharepoint folder files', JSON.parse(stringifiedBody));
           resolve(
             JSON.parse(stringifiedBody) as {
-              value: [
-                {
-                  Name: string;
-                  TimeCreated: string;
-                  ServerRelativeUrl: string;
-                },
-              ];
+              value: [SharepointFolderFiles];
             },
           );
         });

@@ -97,6 +97,7 @@ export class PackagesService {
   // forms, detects the form type, includes that form with the payload, includes additional
   // munging that's specific to the form, and also includes attached documents.
   async getPackage(packageId) {
+    console.log('packageId', packageId);
     // Note: The reason for making two network calls
     // has to do with a limitation with the Web API: we can't request
     // associated entities from within another associated entity in
@@ -139,6 +140,7 @@ export class PackagesService {
         &$expand=dcp_project($select=${PROJECT_ATTRS.join(',')}),dcp_package_dcp_ceqrinvoicequestionnaire_Package,dcp_package_SharePointDocumentLocations
       `,
       );
+      // console.debug('first package', firstPackage);
       console.debug('first package', firstPackage);
 
       if (!firstPackage) {
