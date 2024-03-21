@@ -118,6 +118,19 @@ export class PackagesService {
     try {
       const {
         records: [firstPackage],
+      }: {
+        records: Array<{
+          dcp_project: {
+            artifact?: unknown;
+            dcp_projectid: string;
+          };
+          dcp_packagetype: number;
+          dcp_package_SharePointDocumentLocations:
+            | Array<{
+                relativeurl: string | null;
+              }>
+            | undefined;
+        }>;
       } = await this.crmService.get(
         'dcp_packages',
         `
@@ -126,6 +139,7 @@ export class PackagesService {
         &$expand=dcp_project($select=${PROJECT_ATTRS.join(',')}),dcp_package_dcp_ceqrinvoicequestionnaire_Package,dcp_package_SharePointDocumentLocations
       `,
       );
+      console.debug('first package', firstPackage);
 
       if (!firstPackage) {
         throw new HttpException(
@@ -314,7 +328,9 @@ export class PackagesService {
    * Navigation property array on a Package entity.
    * @return     {Object[]}     Array of 0 or more Document objects
    */
-  async getPackageSharepointDocuments(packageDocumentLocation) {
+  async getPackageSharepointDocuments(packageDocumentLocation: {
+    relativeurl: string | null;
+  }) {
     // relativeurl is the path url "relative to the entity".
     // In essence it is the Sharepoint folder name.
     // e.g. P2015K0223_Draft Land Use_3

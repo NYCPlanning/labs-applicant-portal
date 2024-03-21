@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import * as Request from 'request';
+import Request from 'request';
 import { ConfigService } from '../config/config.service';
 import msal from '@azure/msal-node';
 
@@ -12,6 +12,12 @@ function unnest(folders = []) {
       return acc.concat(curr);
     }, []);
 }
+
+export type SharepointFolderFiles = {
+  Name: string;
+  TimeCreated: string;
+  ServerRelativeUrl: string;
+};
 
 // This service currently only helps you read and delete files from Sharepoint.
 // If you wish to upload documents to Sharepoint through CRM,
@@ -94,6 +100,7 @@ export class SharepointService {
             );
           }
 
+          console.debug('get sharepoint digest', JSON.parse(stringifiedBody));
           resolve(JSON.parse(stringifiedBody));
         });
       });
@@ -145,6 +152,7 @@ export class SharepointService {
             );
           }
 
+          console.debug('get sharepoint folder info', stringifiedBody);
           resolve(JSON.parse(stringifiedBody));
         });
       });
@@ -221,6 +229,7 @@ export class SharepointService {
             );
           }
 
+          console.debug('archive sharepoint folder', stringifiedBody);
           resolve(stringifiedBody);
         });
       });
@@ -241,7 +250,9 @@ export class SharepointService {
   }
 
   // Retrieves a list of files in a given Sharepoint folder
-  async getSharepointFolderFiles(folderIdentifier): Promise<any> {
+  async getSharepointFolderFiles(
+    folderIdentifier,
+  ): Promise<{ value: Array<SharepointFolderFiles> }> {
     try {
       const { access_token } = await this.generateSharePointAccessToken();
       const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
@@ -275,7 +286,18 @@ export class SharepointService {
             );
           }
 
-          resolve(JSON.parse(stringifiedBody));
+          console.debug('sharepoint folder files', JSON.parse(stringifiedBody));
+          resolve(
+            JSON.parse(stringifiedBody) as {
+              value: [
+                {
+                  Name: string;
+                  TimeCreated: string;
+                  ServerRelativeUrl: string;
+                },
+              ];
+            },
+          );
         });
       });
     } catch (e) {
@@ -344,6 +366,7 @@ export class SharepointService {
           }
           const folderFiles = JSON.parse(stringifiedBody);
 
+          console.debug('sharepoint nested folder files', stringifiedBody);
           resolve([
             ...(folderFiles['Files'] ? folderFiles['Files'] : []),
             ...(folderFiles['Folders'] ? unnest(folderFiles['Folders']) : []),
@@ -380,6 +403,7 @@ export class SharepointService {
       },
     };
 
+    console.debug('get sharepoint file (request)', options);
     // this returns a pipeable stream
     return Request.get(options).on('error', (e) => console.log(e));
   }
@@ -398,6 +422,7 @@ export class SharepointService {
       },
     };
 
+    console.log('delete sharepoint file request', options);
     return new Promise((resolve) => {
       Request.del(options, (error, response, body) => {
         const stringifiedBody = body.toString('utf-8');
