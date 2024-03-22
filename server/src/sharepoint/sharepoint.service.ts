@@ -283,7 +283,12 @@ export class SharepointService {
       );
 
       console.debug('folderIdentifier', folderIdentifier);
-      const urlPackageIdGraph = `${this.msalProvider.sharePointSiteUrl}/lists?$filter=displayName eq 'Package'&$select=id`;
+      // const urlPackageIdGraph = `${this.msalProvider.sharePointSiteUrl}/lists?$filter=displayName eq 'Package'&$select=id`;
+      const urlPackageIdGraph = 'https://graph.microsoft.com/v1.0/search/query';
+      const folderPathGraph = `https://${this.config.get('SHAREPOINT_TARGET_HOST')}/sites/${this.config.get('SHAREPOINT_CRM_SITE')}/${folderIdentifier}`;
+      const documentFilterGraph = 'isDocument=true';
+      const queryStringGraph = `path:"${folderPathGraph}" AND ${documentFilterGraph}`;
+      console.debug('query string graph', queryStringGraph);
 
       const options = {
         url,
@@ -293,20 +298,33 @@ export class SharepointService {
         },
       };
 
+      const bodyGraph = {
+        requests: [
+          {
+            entityTypes: ['driveItem'],
+            query: {
+              queryString: queryStringGraph,
+            },
+          },
+        ],
+      };
       const optionsGraph = {
+        method: 'POST',
         headers: {
           Authorization: `Bearer ${accessTokenGraph}`,
-          Accept: 'application/json',
         },
+        body: JSON.stringify(bodyGraph),
       };
+
+      // console.debug('options graph', optionsGraph);
 
       try {
         const responseGraph = await fetch(urlPackageIdGraph, optionsGraph);
-        const dataGraph = (await responseGraph.json()) as {
-          value: Array<{ id: string }>;
-        };
+        const dataGraph = (await responseGraph.json()) as {};
         console.debug('dataGraph', dataGraph);
-      } catch {
+        // console.debug('response graph', responseGraph);
+      } catch (e) {
+        console.error('graph error', e);
         throw new HttpException(
           {
             code: 'LOAD_FOLDER_FAILED',
