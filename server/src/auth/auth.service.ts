@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { ConfigService } from '../config/config.service';
 import { ContactService } from '../contact/contact.service';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
@@ -26,12 +26,11 @@ export class AuthService {
   /**
    * Generates a new app token, using NYC.ID's expiration, and including the CRM contact id
    *
-   * @param      {string}  contactId  The CRM contactid
-   * @param      {string}  exp        A string coercable to a Date
-   * @param      {object}  exp        Metadata about the nyc ID user
-   * @return     {string}             String representing ZAP token
+   * @param        contactId  The CRM contactid
+   * @param        exp        A string coercable to a Date
+   * @return                  String representing ZAP token
    */
-  private signNewToken(contactId: string, nycIdAccount: any = {}): string {
+  private signNewToken(contactId: string, nycIdAccount: JwtPayload): string {
     const { ZAP_TOKEN_SECRET } = this;
     const { exp, ...everythingElse } = nycIdAccount;
 
@@ -50,7 +49,7 @@ export class AuthService {
     );
   }
 
-  private verifyToken(token, secret): string | {} {
+  private verifyToken(token: string, secret: string): string | JwtPayload {
     try {
       return jwt.verify(token, secret);
     } catch (e) {
@@ -67,10 +66,10 @@ export class AuthService {
   /**
    * Verifies a JWT with the NYCID signature. Returns the token object.
    *
-   * @param      {string}  token   The token
-   * @return     {object}     { mail: 'string', exp: 'string' }
+   * @param      token   The token
+   * @return      // { mail: 'string', exp: 'string' }
    */
-  private verifyNYCIDToken(token): any {
+  private verifyNYCIDToken(token: string) {
     const { NYCID_TOKEN_SECRET } = this;
 
     try {
@@ -97,6 +96,8 @@ export class AuthService {
   public async generateNewToken(NYCIDToken: string): Promise<string> {
     const nycIdAccount = this.verifyNYCIDToken(NYCIDToken);
 
+    if (typeof nycIdAccount === 'string')
+      throw new Error('Incorrectly formatted token');
     // need the email to lookup a CRM contact.
     const { mail, nycExtEmailValidationFlag, GUID, givenName, sn } =
       nycIdAccount;
@@ -174,7 +175,7 @@ export class AuthService {
    * @param      {string}  token   The token
    * @return     {any}     { mail: 'string', exp: 'string' }
    */
-  private verifyZapToken(token): any {
+  private verifyZapToken(token: string): any {
     const { ZAP_TOKEN_SECRET } = this;
 
     try {
