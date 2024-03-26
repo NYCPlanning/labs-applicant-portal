@@ -21,6 +21,7 @@ export type SharepointFolderFiles = {
 };
 
 export type SharepointFolderFilesGraph = {
+  id: string,
   name: string;
   createdDateTime: string;
   webUrl: string;
@@ -383,7 +384,9 @@ export class SharepointService {
     }
   }
 
-  async getSharepointFile(serverRelativeUrl): Promise<any> {
+  async getSharepointFile(driveId: string, fileId: string): Promise<any> {
+    const { accessTokenGraph } =
+      await this.generateSharePointAccessTokenGraph();
     const { access_token } = await this.generateSharePointAccessToken();
     const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
 

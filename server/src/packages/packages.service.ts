@@ -235,10 +235,11 @@ export class PackagesService {
         documents: documents.map((document) => ({
           name: document.name,
           timeCreated: document.createdDateTime,
-          serverRelativeUrl: document.webUrl.replace(
-            `https://${this.config.get('SHAREPOINT_TARGET_HOST')}`,
-            '',
-          ),
+          // serverRelativeUrl: document.webUrl.replace(
+          //   `https://${this.config.get('SHAREPOINT_TARGET_HOST')}`,
+          //   '',
+          // ),
+          serverRelativeUrl: `/${document.id}`
         })),
       };
     } catch (e) {
