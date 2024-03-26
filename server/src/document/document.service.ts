@@ -1,9 +1,8 @@
-import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
-import { ConfigService } from '../config/config.service';
+import { Injectable, HttpStatus, HttpException, Inject } from '@nestjs/common';
 import { CrmService } from '../crm/crm.service';
 import { SharepointService } from '../sharepoint/sharepoint.service';
-import { ADAL } from '../_utils/adal';
 import Request from 'request';
+import { ADAL_SERVICE, AdalProviderType } from 'src/provider/adal.provider';
 
 // This service currently provides utilities to write files and folders
 // to Sharepoint via CRM. It uses fetchXML api and an undocumented
@@ -12,30 +11,12 @@ import Request from 'request';
 // in favor of the Sharepoint service.
 @Injectable()
 export class DocumentService {
-  crmUrlPath = '';
-  crmHost = '';
-  host = '';
-
   constructor(
-    private readonly config: ConfigService,
+    @Inject(ADAL_SERVICE)
+    private readonly adalProvider: AdalProviderType,
     private readonly crmService: CrmService,
     private readonly sharepointService: SharepointService,
-  ) {
-    ADAL.ADAL_CONFIG = {
-      CRMUrl: this.config.get('CRM_HOST'),
-      webAPIurl: this.config.get('CRM_URL_PATH'),
-      clientId: this.config.get('CLIENT_ID'),
-      clientSecret: this.config.get('CLIENT_SECRET'),
-      tenantId: this.config.get('TENANT_ID'),
-      authorityHostUrl: this.config.get('AUTHORITY_HOST_URL'),
-      tokenPath: this.config.get('TOKEN_PATH'),
-    };
-
-    this.crmUrlPath = this.config.get('CRM_URL_PATH');
-    this.crmHost = this.config.get('CRM_HOST');
-    this.host = `${this.crmHost}${this.crmUrlPath}`;
-  }
-
+  ) {}
   _parseErrorMessage(json) {
     if (json) {
       if (json.error) {
@@ -57,7 +38,7 @@ export class DocumentService {
    * *Should not because we still need to more thoroughly verify this.
    * e.g. '2018Q0147 - Tax Map(s) - 1_D2A818330BF0E911A997001DD832112G'
    */
-  async findDocumentLocation(entityID, folderName) {
+  async findDocumentLocation(entityID: string, folderName: string) {
     const fetchDocumentLocationXML = [
       `<fetch mapping="logical" distinct="true" top="1">`,
       `<entity name="sharepointdocumentlocation">`,
@@ -124,10 +105,10 @@ export class DocumentService {
    * Finds folder for an entity (like `dcp_project` or `dcp_communityboarddisposition`).
    * Entity folders contain many instance folders, the paths of which can be
    * acquired instead via findDocumentLocation.
-   * @param { GUID } entityName - name of CRM entity, like  `dcp_project` or `dcp_communityboarddisposition`.
-   * @param { string } sharepointSiteID - ID of CRM's corresponding sharepoint site. Use getParentSiteLocation() to acquire this ID
+   * @param entityName - name of CRM entity, like  `dcp_project` or `dcp_communityboarddisposition`.
+   * @param sharepointSiteID - ID of CRM's corresponding sharepoint site. Use getParentSiteLocation() to acquire this ID
    */
-  async findEntityDocumentLocation(entityName, sharepointSiteID) {
+  async findEntityDocumentLocation(entityName: string, sharepointSiteID: string) {
     const fetchDocumentLocationXML = [
       `<fetch mapping="logical" distinct="true" top="1">`,
       `<entity name="sharepointdocumentlocation">`,
@@ -166,10 +147,10 @@ export class DocumentService {
     headers,
   ) {
     //  get token
-    const JWToken = await ADAL.acquireToken();
+    const JWToken = await this.adalProvider.acquireToken();
 
     const options = {
-      url: `${this.host}AddOrEditLocation`,
+      url: `${this.adalProvider.host}AddOrEditLocation`,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
         Authorization: `Bearer ${JWToken}`,
@@ -290,7 +271,7 @@ export class DocumentService {
     }
 
     //  get token
-    const JWToken = await ADAL.acquireToken();
+    const JWToken = await this.adalProvider.acquireToken();
 
     const entityRef = {
       '@odata.type': 'Microsoft.Dynamics.CRM.' + entityName,
@@ -298,7 +279,7 @@ export class DocumentService {
     entityRef[entityName + 'id'] = entityID;
 
     const options = {
-      url: `${this.host}UploadDocument`,
+      url: `${this.adalProvider.host}UploadDocument`,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
         Authorization: `Bearer ${JWToken}`,

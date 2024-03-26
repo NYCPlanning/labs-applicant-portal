@@ -1,8 +1,7 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import zlib from 'zlib';
 import Request from 'request';
-import { ConfigService } from '../config/config.service';
-import { ADAL } from '../_utils/adal';
+import { ADAL_SERVICE, AdalProviderType } from 'src/provider/adal.provider';
 
 /**
  * This service is responsible for providing convenience
@@ -16,24 +15,11 @@ import { ADAL } from '../_utils/adal';
  */
 @Injectable()
 export class CrmService {
-  crmUrlPath = '';
-  crmHost = '';
-  host = '';
 
-  constructor(private readonly config: ConfigService) {
-    ADAL.ADAL_CONFIG = {
-      CRMUrl: this.config.get('CRM_HOST'),
-      webAPIurl: this.config.get('CRM_URL_PATH'),
-      clientId: this.config.get('CLIENT_ID'),
-      clientSecret: this.config.get('CLIENT_SECRET'),
-      tenantId: this.config.get('TENANT_ID'),
-      authorityHostUrl: this.config.get('AUTHORITY_HOST_URL'),
-      tokenPath: this.config.get('TOKEN_PATH'),
-    };
-
-    this.crmUrlPath = this.config.get('CRM_URL_PATH');
-    this.crmHost = this.config.get('CRM_HOST');
-    this.host = `${this.crmHost}${this.crmUrlPath}`;
+  constructor(
+  @Inject(ADAL_SERVICE)
+  private readonly adalProvider: AdalProviderType
+  ) {
   }
 
   async get(entity: string, query: string, ...options) {
@@ -186,9 +172,9 @@ export class CrmService {
 
   async _get(query, maxPageSize = 100, headers = {}): Promise<any> {
     //  get token
-    const JWToken = await ADAL.acquireToken();
+    const JWToken = await this.adalProvider.acquireToken();
     const options = {
-      url: `${this.host}${query}`,
+      url: `${this.adalProvider.host}${query}`,
       headers: {
         'Accept-Encoding': 'gzip, deflate',
         'Content-Type': 'application/json; charset=utf-8',
@@ -265,9 +251,9 @@ export class CrmService {
 
   async _create(query, data, headers): Promise<any> {
     //  get token
-    const JWToken = await ADAL.acquireToken();
+    const JWToken = await this.adalProvider.acquireToken();
     const options = {
-      url: `${this.host + query}`,
+      url: `${this.adalProvider.host + query}`,
       headers: {
         'Accept-Encoding': 'gzip, deflate',
         'Content-Type': 'application/json; charset=utf-8',
@@ -352,9 +338,9 @@ export class CrmService {
 
   async _sendPatchRequest(query, data, headers) {
     //  get token
-    const JWToken = await ADAL.acquireToken();
+    const JWToken = await this.adalProvider.acquireToken();
     const options = {
-      url: `${this.host + query}`,
+      url: `${this.adalProvider.host + query}`,
       headers: {
         'Accept-Encoding': 'gzip, deflate',
         'Content-Type': 'application/json; charset=utf-8',
@@ -394,9 +380,9 @@ export class CrmService {
 
   async _sendDeleteRequest(query, headers) {
     // get token
-    const JWToken = await ADAL.acquireToken();
+    const JWToken = await this.adalProvider.acquireToken();
     const options = {
-      url: `${this.host + query}`,
+      url: `${this.adalProvider.host + query}`,
       headers: {
         'Accept-Encoding': 'gzip, deflate',
         'Content-Type': 'application/json; charset=utf-8',
@@ -447,7 +433,7 @@ export class CrmService {
     const query =
       entitySetName1 + '(' + guid1 + ')/' + relationshipName + '/$ref';
     const data = {
-      '@odata.id': this.host + entitySetName2 + '(' + guid2 + ')',
+      '@odata.id': this.adalProvider.host + entitySetName2 + '(' + guid2 + ')',
     };
     return this.create(query, data, headers);
   }

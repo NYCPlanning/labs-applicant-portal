@@ -4,7 +4,7 @@ import { AuthenticationContext, TokenResponse } from 'adal-node';
 
 export type AdalProviderType = {
   host: string;
-  acquireToken: () => string;
+  acquireToken: () => Promise<string>;
 };
 
 export const ADAL_SERVICE = Symbol('ADAL_SERVICE');
@@ -39,28 +39,40 @@ export const AdalProvider: FactoryProvider<AdalProviderType> = {
 
     let tokenCache: string | null = null;
     let expirationDate: Date | null = null;
-    const acquireToken = () => {
-      if (tokenCache !== null && expirationDate !== null) {
-        const tokenLimit = new Date(expirationDate.getTime() - 15 * 60 * 1000);
-        const now = new Date();
-        if (now <= tokenLimit) return tokenCache;
-      }
+    const acquireToken  = () => {
+      return new Promise((resolve: (value: string) => void, reject: (reason: string) => void) => {
+        if (tokenCache !== null && expirationDate !== null) {
+          const tokenLimit = new Date(
+            expirationDate.getTime() - 15 * 60 * 1000,
+          );
+          const now = new Date();
+          if (now <= tokenLimit) {
+            resolve(tokenCache);
+          }
+        }
 
-      const authenticationPath = `${authorityHostUrl}/${tenantId}${tokenPath}`;
-      const authCtx = new AuthenticationContext(authenticationPath);
+        const authenticationPath = `${authorityHostUrl}/${tenantId}${tokenPath}`;
+        const authCtx = new AuthenticationContext(authenticationPath);
         authCtx.acquireTokenWithClientCredentials(
-        crmHost,
-        clientId,
-        clientSecret,
-        (error, tokenResponse) => {
-            if(error !== undefined) throw new Error("Error requesting token");
-            if(tokenResponse?.error !== undefined) throw new Error("Error receiving token")
+          crmHost,
+          clientId,
+          clientSecret,
+          (error, tokenResponse) => {
+            if (error !== undefined) {
+              reject('error requesting crm token');
+            }
+            if (tokenResponse?.error !== undefined){
+              reject("error receiving crm token");
+            }
+            
             const { accessToken, expiresOn } = tokenResponse as TokenResponse;
             tokenCache = accessToken;
-            expirationDate = (typeof expiresOn === "string") ? new Date(expiresOn) : expiresOn;
-            return;
-        }
-      )
+            expirationDate =
+              typeof expiresOn === 'string' ? new Date(expiresOn) : expiresOn;
+            resolve(tokenCache);
+          },
+        );
+      });
     };
     return {
       host,
