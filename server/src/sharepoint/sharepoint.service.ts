@@ -20,6 +20,12 @@ export type SharepointFolderFiles = {
   'odata.type': string;
 };
 
+export type SharepointFolderFilesGraph = {
+  name: string;
+  createdDateTime: string;
+  webUrl: string;
+};
+
 // This service currently only helps you read and delete files from Sharepoint.
 // If you wish to upload documents to Sharepoint through CRM,
 // use the DocumentService instead.
@@ -267,109 +273,40 @@ export class SharepointService {
 
   // Retrieves a list of files in a given Sharepoint folder
   async getSharepointFolderFiles(
+    driveId: string,
     folderIdentifier: string,
-  ): Promise<{ value: Array<SharepointFolderFiles> }> {
+  ): Promise<{ value: Array<SharepointFolderFilesGraph> }> {
+    const { accessTokenGraph } =
+      await this.generateSharePointAccessTokenGraph();
+
+    const urlPackageIdGraph = `${this.msalProvider.sharePointSiteUrl}/drives/${driveId}/root:/${folderIdentifier}:/children`;
+    console.debug('graph url', urlPackageIdGraph);
+
+    const optionsGraph = {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${accessTokenGraph}`,
+      },
+    };
+
     try {
-      const { accessTokenGraph } =
-        await this.generateSharePointAccessTokenGraph();
-      const { access_token } = await this.generateSharePointAccessToken();
-      const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
-
-      // Escape apostrophes by duplicating any apostrophes.
-      // See https://sharepoint.stackexchange.com/a/165224
-      const formattedFolderIdentifier = folderIdentifier.replace("'", "''");
-      const url = encodeURI(
-        `https://nyco365.sharepoint.com/sites/${SHAREPOINT_CRM_SITE}/_api/web/GetFolderByServerRelativeUrl('/sites/${SHAREPOINT_CRM_SITE}/${formattedFolderIdentifier}')/Files`,
-      );
-
-      console.debug('folderIdentifier', folderIdentifier);
-      // const urlPackageIdGraph = `${this.msalProvider.sharePointSiteUrl}/lists?$filter=displayName eq 'Package'&$select=id`;
-      const urlPackageIdGraph = 'https://graph.microsoft.com/v1.0/search/query';
-      const folderPathGraph = `https://${this.config.get('SHAREPOINT_TARGET_HOST')}/sites/${this.config.get('SHAREPOINT_CRM_SITE')}/${folderIdentifier}`;
-      const documentFilterGraph = 'isDocument=true';
-      const queryStringGraph = `path:"${folderPathGraph}" AND ${documentFilterGraph}`;
-      console.debug('query string graph', queryStringGraph);
-
-      const options = {
-        url,
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-          Accept: 'application/json',
-        },
+      const responseGraph = await fetch(urlPackageIdGraph, optionsGraph);
+      const dataGraph = (await responseGraph.json()) as {
+        value: Array<SharepointFolderFilesGraph>;
       };
-
-      const bodyGraph = {
-        requests: [
-          {
-            entityTypes: ['driveItem'],
-            query: {
-              queryString: queryStringGraph,
-            },
-          },
-        ],
-      };
-      const optionsGraph = {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${accessTokenGraph}`,
-        },
-        body: JSON.stringify(bodyGraph),
-      };
-
-      // console.debug('options graph', optionsGraph);
-
-      try {
-        const responseGraph = await fetch(urlPackageIdGraph, optionsGraph);
-        const dataGraph = (await responseGraph.json()) as {};
-        console.debug('dataGraph', dataGraph);
-        // console.debug('response graph', responseGraph);
-      } catch (e) {
-        console.error('graph error', e);
-        throw new HttpException(
-          {
-            code: 'LOAD_FOLDER_FAILED',
-            title: 'Error loading sharepoint files (Graph)',
-            detail: `Could not load file list from Sharepoint folder "${formattedFolderIdentifier}".`,
-          },
-          HttpStatus.NOT_FOUND,
-        );
-      }
-
-      return new Promise((resolve) => {
-        Request.post(options, (error, response, body) => {
-          const stringifiedBody = body.toString('utf-8');
-          if (response.statusCode >= 400) {
-            throw new HttpException(
-              {
-                code: 'LOAD_FOLDER_FAILED',
-                title: 'Error loading sharepoint files',
-                detail: `Could not load file list from Sharepoint folder "${formattedFolderIdentifier}". ${stringifiedBody}`,
-              },
-              HttpStatus.NOT_FOUND,
-            );
-          }
-
-          console.debug('sharepoint folder files', JSON.parse(stringifiedBody));
-          resolve(
-            JSON.parse(stringifiedBody) as {
-              value: [SharepointFolderFiles];
-            },
-          );
-        });
-      });
+      console.debug('dataGraph', dataGraph);
+      return dataGraph;
     } catch (e) {
-      if (e instanceof HttpException) {
-        throw e;
-      } else {
-        throw new HttpException(
-          {
-            code: 'REQUEST_FOLDER_FAILED',
-            title: 'Error requesting sharepoint files',
-            detail: `Error while constructing request for Sharepoint folder files`,
-          },
-          HttpStatus.INTERNAL_SERVER_ERROR,
-        );
-      }
+      console.error('graph error', e);
+      const formattedFolderIdentifier = folderIdentifier.replace("'", "''");
+      throw new HttpException(
+        {
+          code: 'LOAD_FOLDER_FAILED',
+          title: 'Error loading sharepoint files (Graph)',
+          detail: `Could not load file list from Sharepoint folder "${formattedFolderIdentifier}".`,
+        },
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 

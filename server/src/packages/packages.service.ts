@@ -7,7 +7,10 @@ import { RwcdsFormService } from './rwcds-form/rwcds-form.service';
 import { LanduseFormService } from './landuse-form/landuse-form.service';
 import { PACKAGE_ATTRS } from './packages.attrs';
 import { PROJECT_ATTRS } from '../projects/projects.attrs';
-import { SharepointService } from '../sharepoint/sharepoint.service';
+import {
+  SharepointFolderFilesGraph,
+  SharepointService,
+} from '../sharepoint/sharepoint.service';
 import { ConfigService } from '../config/config.service';
 
 export const PACKAGE_TYPE_OPTIONSET = {
@@ -159,7 +162,7 @@ export class PackagesService {
         dcp_package_SharePointDocumentLocations: documentLocations,
       } = firstPackage;
 
-      let documents = [];
+      let documents: Array<SharepointFolderFilesGraph> = [];
 
       if (documentLocations && documentLocations.length > 0) {
         // drive-by redefine because the sharepoint lookup
@@ -230,9 +233,12 @@ export class PackagesService {
 
         project: dcp_project,
         documents: documents.map((document) => ({
-          name: document['Name'],
-          timeCreated: document['TimeCreated'],
-          serverRelativeUrl: document['ServerRelativeUrl'],
+          name: document.name,
+          timeCreated: document.createdDateTime,
+          serverRelativeUrl: document.webUrl.replace(
+            `https://${this.config.get('SHAREPOINT_TARGET_HOST')}`,
+            '',
+          ),
         })),
       };
     } catch (e) {
@@ -325,10 +331,10 @@ export class PackagesService {
   }
 
   /**
-   * @param      {Object}  packageDocumentLocation   a Document Location object.
+   * @param        packageDocumentLocation   a Document Location object.
    * This is an one element acquired from the `dcp_package_SharePointDocumentLocations`
    * Navigation property array on a Package entity.
-   * @return     {Object[]}     Array of 0 or more Document objects
+   * @return          Array of 0 or more Document objects
    */
   async getPackageSharepointDocuments(packageDocumentLocation: {
     relativeurl: string | null;
@@ -338,11 +344,13 @@ export class PackagesService {
     // e.g. P2015K0223_Draft Land Use_3
     const { relativeurl: relativeUrl } = packageDocumentLocation;
 
-    if (relativeUrl) {
+    const packageDriveId = this.config.get('SHAREPOINT_PACKAGE_ID_GRAPH');
+    if (relativeUrl && packageDriveId !== undefined) {
       try {
         const { value: documents } =
           await this.sharepointService.getSharepointFolderFiles(
-            `dcp_package/${relativeUrl}`,
+            packageDriveId,
+            relativeUrl,
           );
 
         return documents;
