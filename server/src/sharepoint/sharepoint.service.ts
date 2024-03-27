@@ -401,30 +401,23 @@ export class SharepointService {
     return Request.get(options).on('error', (e) => console.log(e));
   }
 
-  async deleteSharepointFile(serverRelativeUrl): Promise<any> {
-    const { access_token } = await this.generateSharePointAccessToken();
-    const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
-    const url = `https://nyco365.sharepoint.com/sites/${SHAREPOINT_CRM_SITE}/_api/web/GetFileByServerRelativeUrl('${serverRelativeUrl}')`;
+  async deleteSharepointFile(fileIdPath: string): Promise<any> {
+    const {accessTokenGraph: accessToken } = await this.generateSharePointAccessTokenGraph();
+    const packageDriveId = this.config.get("SHAREPOINT_PACKAGE_ID_GRAPH")
+    // Note the lack of slash after "items". This is because the calling controller historically accepted a relative file path.
+    // The request is now based on file id. However, it still passes a preceding slash because of its past structure.
+    const url = `${this.msalProvider.sharePointSiteUrl}/drives/${packageDriveId}/items${fileIdPath}`;
+    console.debug("delete url", url)
 
     const options = {
-      url,
+      method: "DELETE",
       headers: {
-        Authorization: `Bearer ${access_token}`,
+        Authorization: `Bearer ${accessToken}`,
         Accept: 'application/json',
-        'X-HTTP-Method': 'DELETE',
       },
     };
 
-    console.log('delete sharepoint file request', options);
-    return new Promise((resolve) => {
-      Request.del(options, (error, response, body) => {
-        const stringifiedBody = body.toString('utf-8');
-        if (response.statusCode >= 400) {
-          console.log('error', stringifiedBody);
-        }
-
-        resolve(undefined);
-      });
-    });
+    const response = await fetch(url, options);
+    return await response.json();
   }
 }

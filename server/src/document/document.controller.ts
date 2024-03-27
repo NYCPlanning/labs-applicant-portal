@@ -143,7 +143,7 @@ export class DocumentController {
   @Delete('/')
   @HttpCode(204)
   @UseGuards(AuthenticateGuard)
-  async destroy(@Query('serverRelativeUrl') serverRelativeUrl) {
+  async destroy(@Query('serverRelativeUrl') serverRelativeUrl: string) {
     return this.sharepointService.deleteSharepointFile(serverRelativeUrl);
   }
 
