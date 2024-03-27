@@ -229,7 +229,7 @@ export class DocumentService {
     overwriteExisting,
     headers,
   ) {
-    console.debug('upload your document in the document service');
+    console.debug('upload your document in the document service', folderName);
     folderName = folderName.replace(
       /^\~|\#|\%|\&|\*|\{|\}|\\|\:|\<|\>|\?|\/|\||\"/g,
       '',
@@ -271,9 +271,8 @@ export class DocumentService {
 
         // If for some reason the folder already exists, archive it first. Then try creating document location one more time.
         if (e.message && e.message.includes('Record already present in db')) {
-          await this.sharepointService.archiveSharepointFolder(
-            `${entityName}/${folderName}`,
-          );
+          console.debug('folder already exists');
+          await this.sharepointService.archiveSharepointFolder(folderName);
 
           docLocationID = await this.createDocumentLocation(
             entityDocName,

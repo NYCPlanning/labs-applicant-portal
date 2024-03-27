@@ -239,7 +239,7 @@ export class PackagesService {
           //   `https://${this.config.get('SHAREPOINT_TARGET_HOST')}`,
           //   '',
           // ),
-          serverRelativeUrl: `/${document.id}`
+          serverRelativeUrl: `/${document.id}`,
         })),
       };
     } catch (e) {

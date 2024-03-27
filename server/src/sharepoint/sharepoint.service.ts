@@ -21,7 +21,7 @@ export type SharepointFolderFiles = {
 };
 
 export type SharepointFolderFilesGraph = {
-  id: string,
+  id: string;
   name: string;
   createdDateTime: string;
   webUrl: string;
@@ -143,133 +143,21 @@ export class SharepointService {
     }
   }
 
-  async getSharepointFolderInfo(folderIdentifier: string): Promise<any> {
-    try {
-      const { access_token } = await this.generateSharePointAccessToken();
-      const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
-
-      const formattedFolderIdentifier = folderIdentifier.replace("'", "''");
-      const url = encodeURI(
-        `https://nyco365.sharepoint.com/sites/${SHAREPOINT_CRM_SITE}/_api/web/GetFolderByServerRelativeUrl('/sites/${SHAREPOINT_CRM_SITE}/${formattedFolderIdentifier}')/ListItemAllFields`,
-      );
-
-      const options = {
-        url,
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-          Accept: 'application/json',
-        },
-      };
-
-      return new Promise((resolve) => {
-        Request.post(options, (error, response, body) => {
-          const stringifiedBody = body.toString('utf-8');
-          if (response.statusCode >= 400) {
-            throw new HttpException(
-              {
-                code: 'GET_FOLDER_INFO_FAILED',
-                title: 'Error getting folder info',
-                detail: `Could not load info on Sharepoint folder "${formattedFolderIdentifier}". ${stringifiedBody}`,
-              },
-              HttpStatus.NOT_FOUND,
-            );
-          }
-
-          console.debug('get sharepoint folder info', stringifiedBody);
-          resolve(JSON.parse(stringifiedBody));
-        });
-      });
-    } catch (e) {
-      if (e instanceof HttpException) {
-        throw e;
-      } else {
-        throw new HttpException(
-          {
-            code: 'GET_FOLDER_INFO_FAILED',
-            title: 'Error requesting sharepoint folder info',
-            detail: `Error while constructing request for Sharepoint folder info`,
-          },
-          HttpStatus.INTERNAL_SERVER_ERROR,
-        );
-      }
-    }
-  }
-
-  // This function renames the folder specified by `folderIdentifier` by appending `dcp_archived` to the end of its name
-  // Example of folderIdentifier: `dcp_package/2021M023_Draft LU Form_3_A234234ASFLKNF3423`
-  async archiveSharepointFolder(folderIdentifier: string): Promise<any> {
-    const { 'odata.type': folderOdataType } =
-      await this.getSharepointFolderInfo(folderIdentifier);
-
-    const { FormDigestValue: formDigest } =
-      await this.getSharepointDigestInfo();
-
-    const newName =
-      folderIdentifier.replace('dcp_package/', '') + '_dcp_archived';
-
-    try {
-      const { access_token } = await this.generateSharePointAccessToken();
-      const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
-
-      const formattedFolderIdentifier = folderIdentifier.replace("'", "''");
-      const url = encodeURI(
-        `https://nyco365.sharepoint.com/sites/${SHAREPOINT_CRM_SITE}/_api/web/GetFolderByServerRelativeUrl('/sites/${SHAREPOINT_CRM_SITE}/${formattedFolderIdentifier}')/ListItemAllFields`,
-      );
-
-      const postBody = JSON.stringify({
-        __metadata: {
-          type: folderOdataType,
-        },
-        Title: newName,
-        FileLeafRef: newName,
-      });
-
-      const options = {
-        url,
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-          Accept: 'application/json;odata=verbose',
-          'Content-Type': 'application/json;odata=verbose',
-          'Content-Length': postBody.length,
-          'If-Match': '*',
-          'X-HTTP-Method': 'MERGE',
-          'X-RequestDigest': formDigest,
-        },
-        body: postBody,
-      };
-
-      return new Promise((resolve) => {
-        Request.post(options, (error, response, body) => {
-          const stringifiedBody = body.toString('utf-8');
-          if (response.statusCode >= 400) {
-            throw new HttpException(
-              {
-                code: 'ARCHIVE_FOLDER_FAILED',
-                title: 'Error archiving existing folder',
-                detail: `Could not archive Sharepoint folder "${formattedFolderIdentifier}". ${stringifiedBody}`,
-              },
-              HttpStatus.NOT_FOUND,
-            );
-          }
-
-          console.debug('archive sharepoint folder', stringifiedBody);
-          resolve(stringifiedBody);
-        });
-      });
-    } catch (e) {
-      if (e instanceof HttpException) {
-        throw e;
-      } else {
-        throw new HttpException(
-          {
-            code: 'ARCHIVE_FOLDER_FAILED',
-            title: 'Error archiving existing folder',
-            detail: `Error while constructing request to archive Sharepoint folder`,
-          },
-          HttpStatus.INTERNAL_SERVER_ERROR,
-        );
-      }
-    }
+  // This function renames the folder specified by `folderName` by appending `dcp_archived` to the end of its name
+  // Example of folderName: `2021M023_Draft LU Form_3_A234234ASFLKNF3423`
+  async archiveSharepointFolder(folderName: string): Promise<any> {
+    const newName = `${folderName}/_dcp_archived`;
+    const packageDriveId = this.config.get('SHAREPOINT_PACKAGE_ID_GRAPH');
+    const url = `${this.msalProvider.sharePointSiteUrl}/drives/${packageDriveId}/root:/${folderName}`;
+    const body = {
+      name: newName,
+    };
+    const options = {
+      method: 'PATCH',
+      body: JSON.stringify(body),
+    };
+    const response = await fetch(url, options);
+    return response.json();
   }
 
   // Retrieves a list of files in a given Sharepoint folder
@@ -387,7 +275,7 @@ export class SharepointService {
   async getSharepointFile(fileId: string): Promise<any> {
     const { accessTokenGraph: accessToken } =
       await this.generateSharePointAccessTokenGraph();
-    const packageDriveId = this.config.get("SHAREPOINT_PACKAGE_ID_GRAPH")
+    const packageDriveId = this.config.get('SHAREPOINT_PACKAGE_ID_GRAPH');
 
     const url = `${this.msalProvider.sharePointSiteUrl}/drives/${packageDriveId}/items/${fileId}/content`;
     const options = {
@@ -402,15 +290,16 @@ export class SharepointService {
   }
 
   async deleteSharepointFile(fileIdPath: string): Promise<any> {
-    const {accessTokenGraph: accessToken } = await this.generateSharePointAccessTokenGraph();
-    const packageDriveId = this.config.get("SHAREPOINT_PACKAGE_ID_GRAPH")
+    const { accessTokenGraph: accessToken } =
+      await this.generateSharePointAccessTokenGraph();
+    const packageDriveId = this.config.get('SHAREPOINT_PACKAGE_ID_GRAPH');
     // Note the lack of slash after "items". This is because the calling controller historically accepted a relative file path.
     // The request is now based on file id. However, it still passes a preceding slash because of its past structure.
     const url = `${this.msalProvider.sharePointSiteUrl}/drives/${packageDriveId}/items${fileIdPath}`;
-    console.debug("delete url", url)
+    console.debug('delete url', url);
 
     const options = {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
         Authorization: `Bearer ${accessToken}`,
         Accept: 'application/json',
@@ -418,6 +307,8 @@ export class SharepointService {
     };
 
     const response = await fetch(url, options);
-    return await response.json();
+    // return await response.json();
+    // console.debug("delete response", response);
+    return response;
   }
 }
