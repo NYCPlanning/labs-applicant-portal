@@ -147,13 +147,13 @@ export class DocumentController {
     return this.sharepointService.deleteSharepointFile(serverRelativeUrl);
   }
 
-  // "path" refers to the "relative server path", the path
-  // to the file itself on the sharepoint host. for example,
-  // /sites/dcpuat2/.../filename.png
-  @Get('/*')
-  async read(@Param() path, @Res() res) {
-    const pathSegment = path[0];
-    const stream = await this.sharepointService.getSharepointFile(pathSegment);
+  // Historically this endpoint accepted a relative file path.
+  // It now accepts the file id. However, upstream references may
+  // use `serverRelativeUrl` convention because of this historical use.
+  @Get('/:id')
+  async read(@Param() params: { id: string }, @Res() res) {
+    const { id: fileId } = params;
+    const stream = await this.sharepointService.getSharepointFile(fileId);
 
     stream.pipe(res);
   }

@@ -384,23 +384,19 @@ export class SharepointService {
     }
   }
 
-  async getSharepointFile(driveId: string, fileId: string): Promise<any> {
-    const { accessTokenGraph } =
+  async getSharepointFile(fileId: string): Promise<any> {
+    const { accessTokenGraph: accessToken } =
       await this.generateSharePointAccessTokenGraph();
-    const { access_token } = await this.generateSharePointAccessToken();
-    const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
+    const packageDriveId = this.config.get("SHAREPOINT_PACKAGE_ID_GRAPH")
 
-    // see https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/dn775742(v=office.15)
-    const url = `https://nyco365.sharepoint.com/sites/${SHAREPOINT_CRM_SITE}/_api/web/GetFileByServerRelativeUrl('/${serverRelativeUrl}')/$value?binaryStringResponseBody=true`;
-
+    const url = `${this.msalProvider.sharePointSiteUrl}/drives/${packageDriveId}/items/${fileId}/content`;
     const options = {
       url,
       headers: {
-        Authorization: `Bearer ${access_token}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     };
 
-    console.debug('get sharepoint file (request)', options);
     // this returns a pipeable stream
     return Request.get(options).on('error', (e) => console.log(e));
   }
