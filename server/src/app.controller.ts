@@ -1,6 +1,6 @@
-import { 
-  Controller, 
-  Get, 
+import {
+  Controller,
+  Get,
   Query,
   Res,
   HttpException,
@@ -21,8 +21,10 @@ export class AppController {
   async login(@Res() res: Response, @Query('accessToken') NYCIDToken: string) {
     try {
       const ZAPToken = await this.authService.generateNewToken(NYCIDToken);
-      const { contactId } = await this.authService.validateCurrentToken(ZAPToken);
-      const { emailaddress1 } = await this.contactService.findOneById(contactId);
+      const { contactId } =
+        await this.authService.validateCurrentToken(ZAPToken);
+      const { emailaddress1 } =
+        await this.contactService.findOneById(contactId);
 
       res.send({
         access_token: ZAPToken,
@@ -34,9 +36,9 @@ export class AppController {
         throw e;
       } else {
         const error = {
-          code: "LOGIN_ERROR",
-          title: "Failed to login",
-          detail: "An unknown error occured while authenticating user",
+          code: 'LOGIN_ERROR',
+          title: 'Failed to login',
+          detail: 'An unknown error occured while authenticating user',
         };
         console.log(error);
         throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -44,4 +46,3 @@ export class AppController {
     }
   }
 }
-

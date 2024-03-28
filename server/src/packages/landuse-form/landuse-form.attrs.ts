@@ -450,5 +450,5 @@ export const LANDUSE_FORM_ATTRS = [
   'dcp_landuse_dcp_sitedatageneralform_landuseform',
   'dcp_landuse_Annotations',
   'dcp_dcp_landuse_dcp_landuseaction',
-  'dcp_dcp_landuse_dcp_sitedatahform_landuseform'
+  'dcp_dcp_landuse_dcp_sitedatahform_landuseform',
 ];
