@@ -7,7 +7,10 @@ import { RwcdsFormService } from './rwcds-form/rwcds-form.service';
 import { LanduseFormService } from './landuse-form/landuse-form.service';
 import { PACKAGE_ATTRS } from './packages.attrs';
 import { PROJECT_ATTRS } from '../projects/projects.attrs';
-import { SharepointService } from '../sharepoint/sharepoint.service';
+import {
+  SharepointFile,
+  SharepointService,
+} from '../sharepoint/sharepoint.service';
 import { ConfigService } from '../config/config.service';
 
 export const PACKAGE_TYPE_OPTIONSET = {
@@ -116,18 +119,39 @@ export class PackagesService {
 
     // Get package
     try {
-        const { records: [firstPackage] } = await this.crmService.get('dcp_packages', `
+      const {
+        records: [firstPackage],
+      }: {
+        records: Array<{
+          dcp_project: {
+            artifact?: unknown;
+            dcp_projectid: string;
+          };
+          dcp_packagetype: number;
+          dcp_package_SharePointDocumentLocations:
+            | Array<{
+                relativeurl: string | null;
+              }>
+            | undefined;
+        }>;
+      } = await this.crmService.get(
+        'dcp_packages',
+        `
         $select=${PACKAGE_ATTRS.join(',')}
         &$filter=dcp_packageid eq ${packageId}
         &$expand=dcp_project($select=${PROJECT_ATTRS.join(',')}),dcp_package_dcp_ceqrinvoicequestionnaire_Package,dcp_package_SharePointDocumentLocations
-      `);
+      `,
+      );
 
       if (!firstPackage) {
-        throw new HttpException({
-          code: 'PACKAGE_NOT_FOUND',
-          title: 'Package not found',
-          detail: 'Package not found for given ID',
-        }, HttpStatus.NOT_FOUND);
+        throw new HttpException(
+          {
+            code: 'PACKAGE_NOT_FOUND',
+            title: 'Package not found',
+            detail: 'Package not found for given ID',
+          },
+          HttpStatus.NOT_FOUND,
+        );
       }
 
       const {
@@ -135,7 +159,7 @@ export class PackagesService {
         dcp_package_SharePointDocumentLocations: documentLocations,
       } = firstPackage;
 
-      let documents = [];
+      let documents: Array<SharepointFile> = [];
 
       if (documentLocations && documentLocations.length > 0) {
         // drive-by redefine because the sharepoint lookup
@@ -144,44 +168,56 @@ export class PackagesService {
         //
         // TODO: Why does it need to be this? We should check to see if this is still
         // flakey given current configuration
-        documents = await this.getPackageSharepointDocuments(documentLocations[0]);
+        documents = await this.getPackageSharepointDocuments(
+          documentLocations[0],
+        );
       }
 
       let formData = {};
 
       if (
-        firstPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['PAS_PACKAGE'].code
-        || firstPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['RWCDS'].code
-        || firstPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['DRAFT_LU_PACKAGE'].code
-        || firstPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['FILED_LU_PACKAGE'].code
-        || firstPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['POST_CERT_LU'].code
+        firstPackage.dcp_packagetype ===
+          PACKAGE_TYPE_OPTIONSET['PAS_PACKAGE'].code ||
+        firstPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['RWCDS'].code ||
+        firstPackage.dcp_packagetype ===
+          PACKAGE_TYPE_OPTIONSET['DRAFT_LU_PACKAGE'].code ||
+        firstPackage.dcp_packagetype ===
+          PACKAGE_TYPE_OPTIONSET['FILED_LU_PACKAGE'].code ||
+        firstPackage.dcp_packagetype ===
+          PACKAGE_TYPE_OPTIONSET['POST_CERT_LU'].code
       ) {
         formData = await this.fetchPackageForm(firstPackage);
       }
 
-      // below query filters by Racial Equity Report file type. 
-      let { records: projectArtifacts } = await this.crmService.get(
-        "dcp_artifactses",
+      // below query filters by Racial Equity Report file type.
+      const { records: projectArtifacts } = await this.crmService.get(
+        'dcp_artifactses',
         `
         $filter=
           _dcp_project_value eq ${dcp_project.dcp_projectid}
           and (
             _dcp_applicantfiletype_value eq '${this.rerFiletypeUuid}'
           )
-        `
+        `,
       );
 
       let firstArtifactWithDocuments = {};
 
       if (projectArtifacts.length < 1) {
         // TODO: Consider reducing this side effecct in this GET endpoint
-        firstArtifactWithDocuments = await this.artifactService.createEquityReport(dcp_project.dcp_projectid);
+        firstArtifactWithDocuments =
+          await this.artifactService.createEquityReport(
+            dcp_project.dcp_projectid,
+          );
       } else {
         firstArtifactWithDocuments = projectArtifacts[0];
       }
 
       try {
-        firstArtifactWithDocuments = await this.artifactService.artifactWithDocuments(firstArtifactWithDocuments);
+        firstArtifactWithDocuments =
+          await this.artifactService.artifactWithDocuments(
+            firstArtifactWithDocuments,
+          );
       } catch (e) {
         console.log('firstArtifactWithDocuments error', e);
       }
@@ -193,10 +229,10 @@ export class PackagesService {
         ...formData,
 
         project: dcp_project,
-        documents: documents.map(document => ({
-          name: document['Name'],
-          timeCreated: document['TimeCreated'],
-          serverRelativeUrl: document['ServerRelativeUrl'],
+        documents: documents.map((document) => ({
+          name: document.name,
+          timeCreated: document.createdDateTime,
+          serverRelativeUrl: `/${document.id}`,
         })),
       };
     } catch (e) {
@@ -207,11 +243,14 @@ export class PackagesService {
         console.log('Error retrieving package in getPackage HttpException', e);
         throw e;
       } else {
-        throw new HttpException({
-          code: 'LOAD_PACKAGE_FAILED',
-          title: 'Could not load package',
-          detail: `An unknown error occured while loading package ${packageId}`,
-        }, HttpStatus.NOT_FOUND);
+        throw new HttpException(
+          {
+            code: 'LOAD_PACKAGE_FAILED',
+            title: 'Could not load package',
+            detail: `An unknown error occured while loading package ${packageId}`,
+          },
+          HttpStatus.NOT_FOUND,
+        );
       }
     }
   }
@@ -219,42 +258,62 @@ export class PackagesService {
   // packages have a dcp_packagetype which indicates the type of form it will have
   async fetchPackageForm(dcpPackage) {
     try {
-      if (dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['PAS_PACKAGE'].code) {
+      if (
+        dcpPackage.dcp_packagetype ===
+        PACKAGE_TYPE_OPTIONSET['PAS_PACKAGE'].code
+      ) {
         return {
-          dcp_pasform: await this.pasFormService.find(dcpPackage._dcp_pasform_value)
+          dcp_pasform: await this.pasFormService.find(
+            dcpPackage._dcp_pasform_value,
+          ),
         };
       }
 
       if (dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['RWCDS'].code) {
         return {
-          dcp_rwcdsform: await this.rwcdsFormService.find(dcpPackage._dcp_rwcdsform_value)
+          dcp_rwcdsform: await this.rwcdsFormService.find(
+            dcpPackage._dcp_rwcdsform_value,
+          ),
         };
       }
 
-      if (dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['DRAFT_LU_PACKAGE'].code
-      || dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['FILED_LU_PACKAGE'].code
-      || dcpPackage.dcp_packagetype === PACKAGE_TYPE_OPTIONSET['POST_CERT_LU'].code) {
+      if (
+        dcpPackage.dcp_packagetype ===
+          PACKAGE_TYPE_OPTIONSET['DRAFT_LU_PACKAGE'].code ||
+        dcpPackage.dcp_packagetype ===
+          PACKAGE_TYPE_OPTIONSET['FILED_LU_PACKAGE'].code ||
+        dcpPackage.dcp_packagetype ===
+          PACKAGE_TYPE_OPTIONSET['POST_CERT_LU'].code
+      ) {
         return {
-          dcp_landuse: await this.landuseFormService.find(dcpPackage._dcp_landuseapplication_value)
+          dcp_landuse: await this.landuseFormService.find(
+            dcpPackage._dcp_landuseapplication_value,
+          ),
         };
       }
 
-      throw new HttpException({
-        code: "INVALID_PACKAGE_TYPE",
-        title: 'Invalid package type',
-        detail: 'Requested package has invalid type.',
-      }, HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        {
+          code: 'INVALID_PACKAGE_TYPE',
+          title: 'Invalid package type',
+          detail: 'Requested package has invalid type.',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
     } catch (e) {
       console.log('fetchPackageForm error', e);
       if (e instanceof HttpException) {
         console.log('fetchPackageForm HttpException error', e);
         throw e;
       } else {
-        throw new HttpException({
-          code: 'PACKAGE_FORM_ERROR',
-          title: 'Error loading package forms',
-          detail: `Error while acquiring ${dcpPackage} forms attached to the package ${dcpPackage.dcp_packageid}`,
-        }, HttpStatus.INTERNAL_SERVER_ERROR);
+        throw new HttpException(
+          {
+            code: 'PACKAGE_FORM_ERROR',
+            title: 'Error loading package forms',
+            detail: `Error while acquiring ${dcpPackage} forms attached to the package ${dcpPackage.dcp_packageid}`,
+          },
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
       }
     }
   }
@@ -266,35 +325,45 @@ export class PackagesService {
   }
 
   /**
-   * @param      {Object}  packageDocumentLocation   a Document Location object.
+   * @param        packageDocumentLocation   a Document Location object.
    * This is an one element acquired from the `dcp_package_SharePointDocumentLocations`
    * Navigation property array on a Package entity.
-   * @return     {Object[]}     Array of 0 or more Document objects
-  */
-  async getPackageSharepointDocuments(packageDocumentLocation) {
+   * @return          Array of 0 or more Document objects
+   */
+  async getPackageSharepointDocuments(packageDocumentLocation: {
+    relativeurl: string | null;
+  }) {
     // relativeurl is the path url "relative to the entity".
     // In essence it is the Sharepoint folder name.
     // e.g. P2015K0223_Draft Land Use_3
     const { relativeurl: relativeUrl } = packageDocumentLocation;
 
-    if (relativeUrl) {
+    const packageDriveId = this.config.get('SHAREPOINT_PACKAGE_ID_GRAPH');
+    if (relativeUrl && packageDriveId !== undefined) {
       try {
-        const { value: documents } = await this.sharepointService.getSharepointFolderFiles(`dcp_package/${relativeUrl}`);
-  
+        const { value: documents } =
+          await this.sharepointService.getSharepointFolderFiles(
+            packageDriveId,
+            relativeUrl,
+          );
+
         return documents;
       } catch (e) {
-        // Relay errors from crmService 
+        // Relay errors from crmService
         if (e instanceof HttpException) {
           throw e;
         } else {
-          throw new HttpException({
-            code: 'SHAREPOINT_FOLDER_ERROR',
-            title: 'Bad Sharepoint folder lookup',
-            detail: `An error occured while constructing and looking up folder for package. Perhaps the package name or id is wrong.`,
-            meta: {
-              relativeUrl,
-            }
-          }, HttpStatus.INTERNAL_SERVER_ERROR);
+          throw new HttpException(
+            {
+              code: 'SHAREPOINT_FOLDER_ERROR',
+              title: 'Bad Sharepoint folder lookup',
+              detail: `An error occured while constructing and looking up folder for package. Perhaps the package name or id is wrong.`,
+              meta: {
+                relativeUrl,
+              },
+            },
+            HttpStatus.INTERNAL_SERVER_ERROR,
+          );
         }
       }
     }

@@ -13,7 +13,7 @@ import {
   Get,
   Res,
   HttpException,
-  HttpStatus
+  HttpStatus,
 } from '@nestjs/common';
 import { ConfigService } from '../config/config.service';
 import { CrmService } from '../crm/crm.service';
@@ -31,12 +31,12 @@ export class DocumentController {
     private readonly crmService: CrmService,
     private readonly documentService: DocumentService,
     private readonly sharepointService: SharepointService,
-) {}
+  ) {}
 
   /**
-   *  Upload a file to Sharepoint 
+   *  Upload a file to Sharepoint
    *
-   * @param      {FormData}  request  The request body should 
+   * @param      {FormData}  request  The request body should
    * of type FormData, have an 'instanceId' property and a
    * 'file' property
    * with the selected file blob.
@@ -45,9 +45,15 @@ export class DocumentController {
   @Post('/package/')
   @UseInterceptors(FileInterceptor('file'))
   @UseGuards(AuthenticateGuard)
-  async postPackageDocument(@UploadedFile() file, @Body('instanceId') instanceId, @Session() session) {
+  async postPackageDocument(
+    @UploadedFile() file,
+    @Body('instanceId') instanceId,
+  ) {
     if (file.size > MAX_FILESIZE_BYTES) {
-      throw new HttpException('File size too large', HttpStatus.PAYLOAD_TOO_LARGE);
+      throw new HttpException(
+        'File size too large',
+        HttpStatus.PAYLOAD_TOO_LARGE,
+      );
     }
 
     const headers = {
@@ -57,12 +63,14 @@ export class DocumentController {
 
     const encodedBase64File = Buffer.from(file.buffer).toString('base64');
 
-    const packageRecord = (await this.crmService.get(
+    const packageRecord = await this.crmService.get(
       'dcp_packages',
-      `$select=dcp_name&$filter=dcp_packageid eq '${instanceId}'&$top=1`)
+      `$select=dcp_name&$filter=dcp_packageid eq '${instanceId}'&$top=1`,
     );
 
-    const { records: [ { dcp_name: packageName }]} = packageRecord;
+    const {
+      records: [{ dcp_name: packageName }],
+    } = packageRecord;
 
     // We upload documents to the Sharepoint folder that holds documents from
     // previous revisions. This way, the revision folder holds both documents
@@ -71,15 +79,16 @@ export class DocumentController {
     // previous revision documents and one for current revision documents).
     const folderName = `${packageName}_${instanceId.toUpperCase().replace(/-/g, '')}`;
 
-    const strippedFileName =  file.originalname.replace(/[^-a-zA-Z0-9._]/g, '-');
+    const strippedFileName = file.originalname.replace(/[^-a-zA-Z0-9._]/g, '-');
 
-    return this.documentService.uploadDocument('dcp_package',
+    return this.documentService.uploadDocument(
+      'dcp_package',
       instanceId,
       folderName,
       strippedFileName,
       encodedBase64File,
       true,
-      headers
+      headers,
     );
   }
 
@@ -87,9 +96,15 @@ export class DocumentController {
   //  @UseGuards(AuthenticateGuard)
   @Post('/artifact/')
   @UseInterceptors(FileInterceptor('file'))
-  async postArtifactDocument(@UploadedFile() file, @Body('instanceId') instanceId, @Session() session) {
+  async postArtifactDocument(
+    @UploadedFile() file,
+    @Body('instanceId') instanceId,
+  ) {
     if (file.size > MAX_FILESIZE_BYTES) {
-      throw new HttpException('File size too large', HttpStatus.PAYLOAD_TOO_LARGE);
+      throw new HttpException(
+        'File size too large',
+        HttpStatus.PAYLOAD_TOO_LARGE,
+      );
     }
 
     const headers = {
@@ -99,41 +114,44 @@ export class DocumentController {
 
     const encodedBase64File = Buffer.from(file.buffer).toString('base64');
 
-    const artifactRecord = (await this.crmService.get(
+    const artifactRecord = await this.crmService.get(
       'dcp_artifactses',
-      `$select=dcp_name&$filter=dcp_artifactsid eq '${instanceId}'&$top=1`)
+      `$select=dcp_name&$filter=dcp_artifactsid eq '${instanceId}'&$top=1`,
     );
 
-    const { records: [ { dcp_name: artifactName }]} = artifactRecord;
+    const {
+      records: [{ dcp_name: artifactName }],
+    } = artifactRecord;
 
     const folderName = `${artifactName}_${instanceId.toUpperCase().replace(/-/g, '')}`;
 
-    const strippedFileName =  file.originalname.replace(/[^-a-zA-Z0-9._]/g, '-');
+    const strippedFileName = file.originalname.replace(/[^-a-zA-Z0-9._]/g, '-');
 
-    return this.documentService.uploadDocument('dcp_artifacts',
+    return this.documentService.uploadDocument(
+      'dcp_artifacts',
       instanceId,
       folderName,
       strippedFileName,
       encodedBase64File,
       true,
-      headers
+      headers,
     );
   }
 
   @Delete('/')
   @HttpCode(204)
   @UseGuards(AuthenticateGuard)
-  async destroy(@Query('serverRelativeUrl') serverRelativeUrl) {
+  async destroy(@Query('serverRelativeUrl') serverRelativeUrl: string) {
     return this.sharepointService.deleteSharepointFile(serverRelativeUrl);
   }
 
-  // "path" refers to the "relative server path", the path
-  // to the file itself on the sharepoint host. for example,
-  // /sites/dcpuat2/.../filename.png
-  @Get('/*')
-  async read(@Param() path, @Res() res) {
-    const pathSegment = path[0];
-    const stream = await this.sharepointService.getSharepointFile(pathSegment);
+  // Historically this endpoint accepted a relative file path.
+  // It now accepts the file id. However, upstream references may
+  // use `serverRelativeUrl` convention because of this historical use.
+  @Get('/:id')
+  async read(@Param() params: { id: string }, @Res() res) {
+    const { id: fileId } = params;
+    const stream = await this.sharepointService.getSharepointFile(fileId);
 
     stream.pipe(res);
   }
