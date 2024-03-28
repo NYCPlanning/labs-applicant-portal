@@ -10,6 +10,6 @@ import { CitypayService } from './citypay.service';
   imports: [ConfigModule, CrmModule, InvoicesModule, InvoicePostbackModule],
   providers: [CitypayService],
   controllers: [CityPayController],
-  exports: [CitypayService]
+  exports: [CitypayService],
 })
 export class CitypayModule {}

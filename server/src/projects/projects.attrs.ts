@@ -37,12 +37,9 @@ export const MILESTONE_DATE_ATTRS = [
   'dcp_plannedstartdate',
 ];
 
-export const MILESTONE_NON_DATE_ATTRS = [
- 'statuscode',
- '_dcp_milestone_value',
-]
+export const MILESTONE_NON_DATE_ATTRS = ['statuscode', '_dcp_milestone_value'];
 
 export const MILESTONE_ATTRS = [
-   ...MILESTONE_DATE_ATTRS,
-   ...MILESTONE_NON_DATE_ATTRS,
+  ...MILESTONE_DATE_ATTRS,
+  ...MILESTONE_NON_DATE_ATTRS,
 ];

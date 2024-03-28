@@ -1,6 +1,6 @@
 import { Module, MiddlewareConsumer } from '@nestjs/common';
-import * as bodyParser from 'body-parser';
-import * as compression from 'compression';
+import bodyParser from 'body-parser';
+import compression from 'compression';
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
 import { AuthMiddleware } from './auth.middleware';
@@ -30,25 +30,23 @@ import { InvoicePostbackModule } from './invoice-postback/invoice-postback.modul
     CitypayModule,
     ZoningResolutionsModule,
     InvoicesModule,
-    InvoicePostbackModule
+    InvoicePostbackModule,
   ],
   controllers: [AppController],
   providers: [CitypayService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(AuthMiddleware)
-      .forRoutes('*');
+    consumer.apply(AuthMiddleware).forRoutes('*');
 
     consumer
-      .apply(bodyParser.json({
-        type: 'application/vnd.api+json'
-      }))
+      .apply(
+        bodyParser.json({
+          type: 'application/vnd.api+json',
+        }),
+      )
       .forRoutes('*');
 
-    consumer
-      .apply(compression())
-      .forRoutes('*');
+    consumer.apply(compression()).forRoutes('*');
   }
 }

@@ -3,11 +3,9 @@ import {
   ExecutionContext,
   HttpException,
   HttpStatus,
-  Injectable
+  Injectable,
 } from '@nestjs/common';
-import {
-  CrmService
-} from '../crm/crm.service';
+import { CrmService } from '../crm/crm.service';
 
 const APPLICANT_ACTIVE_STATUS_CODE = 1;
 const PROJECT_ACTIVE_STATE_CODE = 0;
@@ -19,26 +17,19 @@ const PROJECT_VISIBILITY_GENERAL_PUBLIC = 717170003;
 // package's project applicant team can access the package
 @Injectable()
 export class PackageAccessGuard implements CanActivate {
-  constructor(
-    private readonly crmService: CrmService,
-  ) {}
+  constructor(private readonly crmService: CrmService) {}
 
-  async canActivate(
-    context: ExecutionContext
-  ): Promise<boolean> {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const {
-      params: {
-        id: packageId,
-      },
-      session: {
-        contactId,
-        isCreeper = false,
-        ...theRest
-      }
+      params: { id: packageId },
+      session: { contactId, isCreeper = false, ...theRest },
     } = context.switchToHttp().getRequest();
 
     // permit internal staff to view
-    if (theRest.mail === 'dcpcreeper@gmail.com' || theRest.mail?.includes('@planning.nyc.gov')) {
+    if (
+      theRest.mail === 'dcpcreeper@gmail.com' ||
+      theRest.mail?.includes('@planning.nyc.gov')
+    ) {
       return true;
     }
 
@@ -51,15 +42,20 @@ export class PackageAccessGuard implements CanActivate {
       return this.isOnApplicantTeam(packageId, contactId);
     }
 
-    throw new HttpException({
-      code: "NO_PACKAGE_ACCESS",
-      title: "No access to package",
-      detail: "Access to the requested package is forbidden."
-    }, HttpStatus.FORBIDDEN);
+    throw new HttpException(
+      {
+        code: 'NO_PACKAGE_ACCESS',
+        title: 'No access to package',
+        detail: 'Access to the requested package is forbidden.',
+      },
+      HttpStatus.FORBIDDEN,
+    );
   }
 
   async isOnApplicantTeam(packageId, contactId) {
-    const { records } = await this.crmService.get('dcp_projects', `
+    const { records } = await this.crmService.get(
+      'dcp_projects',
+      `
       $filter=
         dcp_dcp_project_dcp_package_project/
           any(o:
@@ -76,7 +72,8 @@ export class PackageAccessGuard implements CanActivate {
           or dcp_visibility eq ${PROJECT_VISIBILITY_GENERAL_PUBLIC}
         )
         and statecode eq ${PROJECT_ACTIVE_STATE_CODE}
-      `);
+      `,
+    );
 
     if (records.length > 0) {
       return true;

@@ -18,15 +18,15 @@ import { APPLICANT_REPRESENTATIVE_ATTRS } from './applicant-representative.attrs
 import { APPLICANT_ATTRS } from './applicants.attrs';
 
 /**
-* CRM has two entities for applicants (dcp_applicantinformation and dcp_applicantrepresentativeinformation)
-* On the frontend, we treat applicants as one array (with a target_entity attr to track)/
-* In this controller we manage the logic to split them appropriately when interacting with CRM
-* and making sure we're routing to the correct entity -- this causes some duplication in code
-* and might be simplified by making a 1-to-1 between entity-controller-emberModel.
-* the main hack is when we get existing applicant representatives, we prepend "representative-"
-* to make sure there are unique IDs, and so we are able to delete the correct CRM record in our
-* delete method in this controller (which doesn't have access to body.target_entity!)
-**/
+ * CRM has two entities for applicants (dcp_applicantinformation and dcp_applicantrepresentativeinformation)
+ * On the frontend, we treat applicants as one array (with a target_entity attr to track)/
+ * In this controller we manage the logic to split them appropriately when interacting with CRM
+ * and making sure we're routing to the correct entity -- this causes some duplication in code
+ * and might be simplified by making a 1-to-1 between entity-controller-emberModel.
+ * the main hack is when we get existing applicant representatives, we prepend "representative-"
+ * to make sure there are unique IDs, and so we are able to delete the correct CRM record in our
+ * delete method in this controller (which doesn't have access to body.target_entity!)
+ **/
 
 @UseInterceptors(
   new JsonApiSerializeInterceptor('applicants', {
@@ -64,7 +64,7 @@ export class ApplicantsController {
         'dcp_applicantrepresentativeinformations',
         representativeId,
         allowedAttrs,
-      )
+      );
     }
 
     // regardless of which entity, return same response back to requesting client
@@ -124,12 +124,15 @@ export class ApplicantsController {
           },
         );
       } else if (body.landuse_form) {
-        return this.crmService.create('dcp_applicantrepresentativeinformations', {
-          ...allowedAttrs,
-          'dcp_dcp_applicantrepinformation_dcp_landuse@odata.bind': [
-            `/dcp_landuses(${body.landuse_form})`,
-          ],
-        });
+        return this.crmService.create(
+          'dcp_applicantrepresentativeinformations',
+          {
+            ...allowedAttrs,
+            'dcp_dcp_applicantrepinformation_dcp_landuse@odata.bind': [
+              `/dcp_landuses(${body.landuse_form})`,
+            ],
+          },
+        );
       } else {
         return this.crmService.create(
           `dcp_applicantrepresentativeinformations`,
@@ -141,14 +144,16 @@ export class ApplicantsController {
 
   @Delete('/:id')
   async delete(@Param('id') id) {
-
     if (id.includes('representative')) {
       // FIXME: this is a hack from the package controller json api interceptor
       // since in this method we don't have access to body.target_entity.
       // here we strip the string we prepend in package.controller.ts to use the proper system id
       const representativeId = id.replace('representative-', '');
 
-      await this.crmService.delete('dcp_applicantrepresentativeinformations', representativeId);
+      await this.crmService.delete(
+        'dcp_applicantrepresentativeinformations',
+        representativeId,
+      );
     } else {
       // anything that doesn't have "representative" in the ID is an applicant information entity
       await this.crmService.delete('dcp_applicantinformations', id);

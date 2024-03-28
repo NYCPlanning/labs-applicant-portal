@@ -18,8 +18,8 @@ export const DCP_PROJECTINVOICE_CODES = {
   dcp_invoicetype: {
     LAND_USE: 717170000,
     CEQR: 717170001,
-    TYPE_II: 717170002
-  }
+    TYPE_II: 717170002,
+  },
 };
 
 export function joinLabels(records, attrs = INVOICE_ATTRS) {
@@ -31,25 +31,34 @@ export class InvoicesService {
   constructor(private readonly crmService: CrmService) {}
 
   async getInvoice(id) {
-    const { records } = await this.crmService.get('dcp_projectinvoices', `
+    const { records } = await this.crmService.get(
+      'dcp_projectinvoices',
+      `
       $filter=dcp_projectinvoiceid eq ${id}
       &$expand=dcp_dcp_projectinvoice_dcp_invoicelineitem_projectinvoice
-    `);
+    `,
+    );
     const [invoice] = joinLabels(records);
 
     return {
-      lineitems: overwriteCodesWithLabels(invoice.dcp_dcp_projectinvoice_dcp_invoicelineitem_projectinvoice, ['dcp_fee']),
-      ...invoice
+      lineitems: overwriteCodesWithLabels(
+        invoice.dcp_dcp_projectinvoice_dcp_invoicelineitem_projectinvoice,
+        ['dcp_fee'],
+      ),
+      ...invoice,
     };
   }
 
   // gets Project Invoices for given Package
   async getPackageInvoices(packageId) {
-    const { records } = await this.crmService.get('dcp_projectinvoices', `
+    const { records } = await this.crmService.get(
+      'dcp_projectinvoices',
+      `
       $filter=dcp_packageid eq ${packageId} and
       and statuscode eq 2
       and statecode eq 1
-    `)
+    `,
+    );
 
     return records;
   }
@@ -58,9 +67,13 @@ export class InvoicesService {
     const allowedAttrs = pick(props, INVOICE_ATTRS);
 
     try {
-      const result = await this.crmService.update('dcp_projectinvoices', id, allowedAttrs);
-    } catch(e) {
-      console.log("update failed: ", e);
+      const result = await this.crmService.update(
+        'dcp_projectinvoices',
+        id,
+        allowedAttrs,
+      );
+    } catch (e) {
+      console.log('update failed: ', e);
     }
 
     return 1;
@@ -68,13 +81,10 @@ export class InvoicesService {
 
   async updateByName(dcpName, props) {
     const {
-      records: [
-        {
-          dcp_projectinvoiceid: invoiceId
-        }
-      ]
-    } = await this.crmService.get('dcp_projectinvoices',
-      `$select=dcp_projectinvoiceid&$filter=dcp_name eq '${dcpName}'&$top=1`
+      records: [{ dcp_projectinvoiceid: invoiceId }],
+    } = await this.crmService.get(
+      'dcp_projectinvoices',
+      `$select=dcp_projectinvoiceid&$filter=dcp_name eq '${dcpName}'&$top=1`,
     );
 
     await this.update(invoiceId, props);

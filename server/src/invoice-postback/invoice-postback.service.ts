@@ -6,7 +6,6 @@ import {
   INVOICE_POSTBACK_ATTRS_UPDATE,
 } from './invoice-postback.attrs';
 
-
 @Injectable()
 export class InvoicePostbackService {
   constructor(private readonly crmService: CrmService) {}
@@ -14,7 +13,10 @@ export class InvoicePostbackService {
   async create(props) {
     const allowedAttrs = pick(props, INVOICE_POSTBACK_ATTRS_GET);
 
-    const result = await this.crmService.create('dcp_projectinvoicepostbacks', allowedAttrs);
+    const result = await this.crmService.create(
+      'dcp_projectinvoicepostbacks',
+      allowedAttrs,
+    );
 
     return result;
   }
@@ -23,9 +25,13 @@ export class InvoicePostbackService {
     const allowedAttrs = pick(props, INVOICE_POSTBACK_ATTRS_UPDATE);
 
     try {
-      const result = await this.crmService.update('dcp_projectinvoicepostbacks', id, allowedAttrs);
-    } catch(e) {
-      console.log("update failed: ", e);
+      const result = await this.crmService.update(
+        'dcp_projectinvoicepostbacks',
+        id,
+        allowedAttrs,
+      );
+    } catch (e) {
+      console.log('update failed: ', e);
     }
 
     return 1;

@@ -3,9 +3,7 @@ import { CrmModule } from '../crm/crm.module';
 import { AccountsController } from './accounts.controller';
 
 @Module({
-  imports: [
-    CrmModule,
-  ],
+  imports: [CrmModule],
   providers: [],
   exports: [],
   controllers: [AccountsController],
