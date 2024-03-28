@@ -360,7 +360,7 @@ export class SharepointService {
           console.log('error', stringifiedBody);
         }
 
-        resolve();
+        resolve(undefined);
       });
     })
   }

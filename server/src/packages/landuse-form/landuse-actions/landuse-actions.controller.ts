@@ -28,9 +28,13 @@ export class LanduseActionsController {
 
   @Patch('/:id')
   async update(@Body() body, @Param('id') id) {
-    let allowedAttrs = pick(body, LANDUSE_ACTION_ATTRS);
-    const dateOfPreviousApproval = this.pickDate(body.dcp_dateofpreviousapproval);
-    const lapseDateOfPreviousApproval = this.pickDate(body.dcp_lapsedateofpreviousapproval);
+    const allowedAttrs = pick(body, LANDUSE_ACTION_ATTRS);
+    const dateOfPreviousApproval = this.pickDate(
+      body.dcp_dateofpreviousapproval,
+    );
+    const lapseDateOfPreviousApproval = this.pickDate(
+      body.dcp_lapsedateofpreviousapproval,
+    );
     const recordationDate = this.pickDate(body.dcp_recordationdate);
 
     // "chosen_zoning_resolution_id" is the id to a related resource,
@@ -44,9 +48,14 @@ export class LanduseActionsController {
     // (which would imply a key for chosen_zoning_resolution_id),
     // to avoid assuming that falsiness indicates a disassociation.
     if (body.chosen_zoning_resolution_id) {
-      allowedAttrs['dcp_zoningresolutionsectionactionispursuantto@odata.bind'] = `/dcp_zoningresolutions(${body.chosen_zoning_resolution_id})`;
+      allowedAttrs['dcp_zoningresolutionsectionactionispursuantto@odata.bind'] =
+        `/dcp_zoningresolutions(${body.chosen_zoning_resolution_id})`;
     } else if (body.chosen_zoning_resolution_id === null) {
-      await this.crmService.disassociateHasOne('dcp_zoningresolutionsectionactionispursuantto', 'dcp_landuseactions', id);
+      await this.crmService.disassociateHasOne(
+        'dcp_zoningresolutionsectionactionispursuantto',
+        'dcp_landuseactions',
+        id,
+      );
     }
 
     await this.crmService.update('dcp_landuseactions', id, {
@@ -73,6 +82,6 @@ export class LanduseActionsController {
       return Array.isArray(bodyDateField) ? bodyDateField[0] : bodyDateField;
     } else {
       return null;
-    };
+    }
   }
 }

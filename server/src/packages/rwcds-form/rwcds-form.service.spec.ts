@@ -23,23 +23,37 @@ describe('RwcdsFormService', () => {
   });
 
   it('update() should update both RWCDS form and project if rwcdsForm.buildyear is included ', async () => {
-    jest.spyOn(rwcdsFormService, '_getPackageProjectId').mockImplementation(async () => '123');
-    const updateMock = jest.spyOn(crmService, 'update').mockImplementation(async () => true);
+    jest
+      .spyOn(rwcdsFormService, '_getPackageProjectId')
+      .mockImplementation(async () => '123');
+    const updateMock = jest
+      .spyOn(crmService, 'update')
+      .mockImplementation(async () => true);
 
     await rwcdsFormService.update('123', { dcp_buildyear: 2020 });
 
-    expect(updateMock).toHaveBeenCalledWith('dcp_rwcdsforms', '123', { dcp_buildyear: 2020 });
-    expect(updateMock).toHaveBeenCalledWith('dcp_projects', '123', { dcp_anticipatedyearbuilt: 2020 });
+    expect(updateMock).toHaveBeenCalledWith('dcp_rwcdsforms', '123', {
+      dcp_buildyear: 2020,
+    });
+    expect(updateMock).toHaveBeenCalledWith('dcp_projects', '123', {
+      dcp_anticipatedyearbuilt: 2020,
+    });
     expect(updateMock).toHaveBeenCalledTimes(2);
   });
 
   it('update() should only update RWCDS form if rwcdsForm.buildyear is NOT included ', async () => {
-    jest.spyOn(rwcdsFormService, '_getPackageProjectId').mockImplementation(async () => '123');
-    const updateMock = jest.spyOn(crmService, 'update').mockImplementation(async () => true);
+    jest
+      .spyOn(rwcdsFormService, '_getPackageProjectId')
+      .mockImplementation(async () => '123');
+    const updateMock = jest
+      .spyOn(crmService, 'update')
+      .mockImplementation(async () => true);
 
     await rwcdsFormService.update('123', { dcp_projectname: 'Chelsea' });
 
-    expect(updateMock).toHaveBeenCalledWith('dcp_rwcdsforms', '123', { dcp_projectname: 'Chelsea' });
+    expect(updateMock).toHaveBeenCalledWith('dcp_rwcdsforms', '123', {
+      dcp_projectname: 'Chelsea',
+    });
     expect(updateMock).toHaveBeenCalledTimes(1);
   });
 });

@@ -3,14 +3,14 @@ export function oauthMock(nock, options = {}) {
     .get('/account/api/user.htm')
     .query(true)
     .reply(200, {
-      "ERRORS": {
-        "cpui.unauthorized": "The search is unauthorized." // implies a found user
-      }
+      ERRORS: {
+        'cpui.unauthorized': 'The search is unauthorized.', // implies a found user
+      },
     })
     .persist();
 
   nock('https://login.microsoftonline.com:443')
-    .post(uri => uri.includes('oauth2/token'))
+    .post((uri) => uri.includes('oauth2/token'))
     .reply(200, {
       token_type: 'Bearer',
       expires_in: '3600',

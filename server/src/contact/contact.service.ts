@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { pick } from 'underscore';
 
 import { CONTACT_ATTRS } from './contacts.attrs';
@@ -13,7 +9,7 @@ const ACTIVE_CODE = 1;
 
 // /api/data/v9.1/EntityDefinitions(LogicalName=%27contact%27)/Attributes(8c1618e2-a387-4c54-9054-3b97126c89f8)/Microsoft.Dynamics.CRM.PicklistAttributeMetadata?$select=LogicalName&$expand=OptionSet($select=Options),GlobalOptionSet($select=Options)
 const DCP_CONTACTSTATUSES = {
-  ACTIVE: 717170000
+  ACTIVE: 717170000,
 };
 
 const GHOST_CONTACT = {
@@ -43,27 +39,35 @@ export class ContactService {
    * @return     {object}             Object representing a CRM contact
    */
   public async findOneById(contactId: string) {
-    try  {
-      const { records: [firstRecord = GHOST_CONTACT] } = await this.crmService.get('contacts', `
+    try {
+      const {
+        records: [firstRecord = GHOST_CONTACT],
+      } = await this.crmService.get(
+        'contacts',
+        `
         $select=${CONTACT_ATTRS.join(',')}
         &$filter=contactid eq ${contactId}
           and statuscode eq ${ACTIVE_CODE}
         &$top=1
-      `);
+      `,
+      );
 
       return {
         has_crm_contact: true,
         ...firstRecord, // how can this be ghost and still return an emailaddress1
-        ...await this.nycid.getNycidStatus(firstRecord.emailaddress1, firstRecord.dcp_nycid_guid),
+        ...(await this.nycid.getNycidStatus(
+          firstRecord.emailaddress1,
+          firstRecord.dcp_nycid_guid,
+        )),
       };
-    } catch(e) {
+    } catch (e) {
       console.log(e);
 
       const error = {
-        code: "CONTACT_FROM_ID_ERROR",
-        title: "Error finding contact by ID.",
+        code: 'CONTACT_FROM_ID_ERROR',
+        title: 'Error finding contact by ID.',
         detail: `Error finding contact by ID, possibly due to missing or bad ID. ${e.message}`,
-      }
+      };
       console.log(error);
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -77,23 +81,28 @@ export class ContactService {
    */
   public async findOneByEmail(email: string) {
     try {
-      const { records: [firstRecord = GHOST_CONTACT] } = await this.crmService.get('contacts', `
+      const {
+        records: [firstRecord = GHOST_CONTACT],
+      } = await this.crmService.get(
+        'contacts',
+        `
         $select=${CONTACT_ATTRS.join(',')}
         &$filter=startswith(emailaddress1, '${email}')
           and statuscode eq ${ACTIVE_CODE}
         &$top=1
-      `);
+      `,
+      );
 
       return {
         has_crm_contact: true,
         ...firstRecord,
-        ...await this.nycid.getNycidStatus(email, firstRecord.dcp_nycid_guid),
+        ...(await this.nycid.getNycidStatus(email, firstRecord.dcp_nycid_guid)),
       };
-    } catch(e) {
+    } catch (e) {
       console.log(e);
       const error = {
-        code: "CONTACT_FROM_EMAIL_ERROR",
-        title: "Error finding contact by email.",
+        code: 'CONTACT_FROM_EMAIL_ERROR',
+        title: 'Error finding contact by email.',
         detail: `Error finding contact by email, possibly due to missing or bad email. ${e.message}`,
       };
       console.log(error);
@@ -109,23 +118,31 @@ export class ContactService {
    */
   public async findOneByNycidGuid(nycidGuid: string) {
     try {
-      const { records: [firstRecord = GHOST_CONTACT] } = await this.crmService.get('contacts', `
+      const {
+        records: [firstRecord = GHOST_CONTACT],
+      } = await this.crmService.get(
+        'contacts',
+        `
         $select=${CONTACT_ATTRS.join(',')}
         &$filter=dcp_nycid_guid eq '${nycidGuid}'
           and statuscode eq ${ACTIVE_CODE}
         &$top=1
-      `);
+      `,
+      );
 
       return {
         has_crm_contact: true,
         ...firstRecord,
-        ...await this.nycid.getNycidStatus(firstRecord.emailaddress1, firstRecord.dcp_nycid_guid),
+        ...(await this.nycid.getNycidStatus(
+          firstRecord.emailaddress1,
+          firstRecord.dcp_nycid_guid,
+        )),
       };
     } catch (e) {
       console.log(e);
       const error = {
-        code: "CONTACT_FROM_NYCID_GUID_ERROR",
-        title: "Error finding contact by NYCID GUID.",
+        code: 'CONTACT_FROM_NYCID_GUID_ERROR',
+        title: 'Error finding contact by NYCID GUID.',
         detail: `Error finding contact by NYCID GUID. ${e.message}`,
       };
       console.log(error);
@@ -140,10 +157,8 @@ export class ContactService {
   }
 
   public async synchronize(contactId, accessToken) {
-    const {
-      firstName,
-      lastName,
-    } = await this.nycid.getNycidOAuthUser(accessToken);
+    const { firstName, lastName } =
+      await this.nycid.getNycidOAuthUser(accessToken);
 
     return this.update(contactId, {
       firstname: firstName,
