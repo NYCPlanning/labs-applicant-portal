@@ -3,16 +3,6 @@ import Request from 'request';
 import { ConfigService } from '../config/config.service';
 import { MSAL, MsalProviderType } from 'src/provider/msal.provider';
 
-function unnest(folders = []) {
-  return folders
-    .map((folder) => {
-      return [...folder['Files'], ...unnest(folder['Folders'])];
-    })
-    .reduce((acc, curr) => {
-      return acc.concat(curr);
-    }, []);
-}
-
 export type SharepointFolderFiles = {
   Name: string;
   TimeCreated: string;
@@ -25,6 +15,18 @@ export type SharepointFolderFilesGraph = {
   name: string;
   createdDateTime: string;
   webUrl: string;
+};
+
+export type SharepointFile = {
+  id: string;
+  name: string;
+  createdDateTime: string;
+  file?: {
+    mimeType: string;
+  };
+  folder?: {
+    childCount: number;
+  };
 };
 
 // This service currently only helps you read and delete files from Sharepoint.
@@ -92,57 +94,6 @@ export class SharepointService {
     });
   }
 
-  async getSharepointDigestInfo(): Promise<any> {
-    try {
-      const { access_token } = await this.generateSharePointAccessToken();
-      const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
-
-      const url = encodeURI(
-        `https://nyco365.sharepoint.com/sites/${SHAREPOINT_CRM_SITE}/_api/contextinfo`,
-      );
-
-      const options = {
-        url,
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-          Accept: 'application/json',
-        },
-      };
-
-      return new Promise((resolve) => {
-        Request.post(options, (error, response, body) => {
-          const stringifiedBody = body.toString('utf-8');
-          if (response.statusCode >= 400) {
-            throw new HttpException(
-              {
-                code: 'GET_DIGEST_FAILED',
-                title: 'Error getting sharepoint digest',
-                detail: `Could not get digest`,
-              },
-              HttpStatus.NOT_FOUND,
-            );
-          }
-
-          console.debug('get sharepoint digest', JSON.parse(stringifiedBody));
-          resolve(JSON.parse(stringifiedBody));
-        });
-      });
-    } catch (e) {
-      if (e instanceof HttpException) {
-        throw e;
-      } else {
-        throw new HttpException(
-          {
-            code: 'GET_DIGEST_FAILED',
-            title: 'Error getting sharepoint digest',
-            detail: `Could not get digest`,
-          },
-          HttpStatus.INTERNAL_SERVER_ERROR,
-        );
-      }
-    }
-  }
-
   // This function renames the folder specified by `folderName` by appending `dcp_archived` to the end of its name
   // Example of folderName: `2021M023_Draft LU Form_3_A234234ASFLKNF3423`
   async archiveSharepointFolder(folderName: string): Promise<any> {
@@ -169,7 +120,7 @@ export class SharepointService {
       await this.generateSharePointAccessTokenGraph();
 
     const urlPackageIdGraph = `${this.msalProvider.sharePointSiteUrl}/drives/${driveId}/root:/${folderIdentifier}:/children`;
-    console.debug('graph url', urlPackageIdGraph);
+    // console.debug('graph url', urlPackageIdGraph);
 
     const optionsGraph = {
       method: 'GET',
@@ -183,7 +134,7 @@ export class SharepointService {
       const dataGraph = (await responseGraph.json()) as {
         value: Array<SharepointFolderFilesGraph>;
       };
-      console.debug('dataGraph', dataGraph);
+      // console.debug('dataGraph', dataGraph);
       return dataGraph;
     } catch (e) {
       console.error('graph error', e);
@@ -199,65 +150,60 @@ export class SharepointService {
     }
   }
 
+  async traverseFolders(
+    folderName: string,
+    driveId: string,
+    accessToken: string,
+  ): Promise<Array<SharepointFile>> {
+    const url = `${this.msalProvider.sharePointSiteUrl}/drives/${driveId}/root:/${folderName}:/children?$select=id,name,file,folder,createdDateTime`;
+    const options = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        Accept: 'application/json',
+      },
+    };
+    const response = await fetch(url, options);
+    const data = (await response.json()) as {
+      value: Array<SharepointFile>;
+    };
+    let documents: Array<SharepointFile> = [];
+    const fileCount = data.value.length;
+
+    for (let i = 0; i < fileCount; i++) {
+      const entry = data.value[i];
+      if (entry.file !== undefined) {
+        documents.push(entry);
+      } else if (entry.folder?.childCount > 0) {
+        documents = documents.concat(
+          await this.traverseFolders(
+            `${folderName}/${entry.name}`,
+            driveId,
+            accessToken,
+          ),
+        );
+      }
+    }
+    return documents;
+  }
+
   // Use for artifacts
   async getSharepointNestedFolderFiles(
-    folderIdentifier,
-    path = 'Files',
-    method = 'post',
-  ): Promise<any> {
+    folderUrl: string,
+  ): Promise<Array<SharepointFile>> {
     try {
-      const { access_token } = await this.generateSharePointAccessToken();
+      const { accessTokenGraph: accessToken } =
+        await this.generateSharePointAccessTokenGraph();
 
-      // For Artifacts, folderIdentifier is an absolute URL instead of a relative url, so we extract it
-      // by spltting folderIdentifier with the environment token (e.g. 'dcppfsuat2')
-      const SHAREPOINT_CRM_SITE = this.config.get('SHAREPOINT_CRM_SITE');
-      let [, relativeUrl] = folderIdentifier.split(SHAREPOINT_CRM_SITE);
-
-      // If there's no relative url extracted, it means folderIdentifier was
-      // a true relative url (from a Package) to begin with. So we
-      // use the original folderIdentifier
-      if (!relativeUrl) {
-        relativeUrl = folderIdentifier;
-      }
-
-      const url = encodeURI(
-        `https://nyco365.sharepoint.com/sites/${SHAREPOINT_CRM_SITE}/_api/web/GetFolderByServerRelativeUrl('/sites/${SHAREPOINT_CRM_SITE}/${relativeUrl}')/${path}`,
+      const [, folderName] = folderUrl.split('dcp_artifacts/');
+      const artifactDriveId = this.config.get('SHAREPOINT_ARTIFACT_ID_GRAPH');
+      return await this.traverseFolders(
+        folderName,
+        artifactDriveId,
+        accessToken,
       );
-      const options = {
-        url,
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-          Accept: 'application/json',
-        },
-      };
-
-      return new Promise((resolve, reject) => {
-        Request[method](options, (error, response, body) => {
-          if (error) return;
-          const stringifiedBody = body.toString('utf-8');
-          if (response.statusCode >= 400) {
-            reject(
-              new HttpException(
-                {
-                  code: 'LOAD_FOLDER_FAILED',
-                  title: 'Error loading sharepoint files',
-                  detail: `Could not load file list from Sharepoint folder "${url}". ${stringifiedBody}`,
-                },
-                HttpStatus.NOT_FOUND,
-              ),
-            );
-          }
-          const folderFiles = JSON.parse(stringifiedBody);
-
-          console.debug('sharepoint nested folder files', stringifiedBody);
-          resolve([
-            ...(folderFiles['Files'] ? folderFiles['Files'] : []),
-            ...(folderFiles['Folders'] ? unnest(folderFiles['Folders']) : []),
-          ]);
-        });
-      });
     } catch (e) {
       if (e instanceof HttpException) {
+        console.debug('nested folder error', e);
         throw e;
       } else {
         throw new HttpException(
@@ -296,7 +242,7 @@ export class SharepointService {
     // Note the lack of slash after "items". This is because the calling controller historically accepted a relative file path.
     // The request is now based on file id. However, it still passes a preceding slash because of its past structure.
     const url = `${this.msalProvider.sharePointSiteUrl}/drives/${packageDriveId}/items${fileIdPath}`;
-    console.debug('delete url', url);
+    // console.debug('delete url', url);
 
     const options = {
       method: 'DELETE',

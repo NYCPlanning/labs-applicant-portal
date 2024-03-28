@@ -45,20 +45,19 @@ export class ArtifactService {
     return newArtifact;
   }
 
-  async getArtifactSharepointDocuments(relativeUrl, dcp_name) {
+  async getArtifactSharepointDocuments(relativeUrl: string, dcp_name: string) {
     if (relativeUrl) {
       try {
         const documents =
           await this.sharepointService.getSharepointNestedFolderFiles(
-            `dcp_artifacts/${relativeUrl}`,
-            '?$expand=Files,Folders,Folders/Files,Folders/Folders/Files,Folders/Folders/Folders/Files',
+            relativeUrl,
           );
 
         if (documents) {
           return documents.map((document) => ({
-            name: document['Name'],
-            timeCreated: document['TimeCreated'],
-            serverRelativeUrl: document['ServerRelativeUrl'],
+            name: document.name,
+            timeCreated: document.createdDateTime,
+            serverRelativeUrl: document.id,
           }));
         }
 
@@ -67,7 +66,7 @@ export class ArtifactService {
         if (e instanceof HttpException) {
           throw e;
         } else {
-          const errorMessage = `An error occured while constructing and looking up folder for artifact. Perhaps the artifact name or id is wrong. ${JSON.stringify(e)}`;
+          const errorMessage = `An error occurred while constructing and looking up folder for artifact. Perhaps the artifact name or id is wrong. ${JSON.stringify(e)}`;
           console.log(errorMessage);
 
           throw new HttpException(
