@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { joinLabels as joinInvoiceLabels } from '../invoices/invoices.service';
 import { NycidService } from '../contact/nycid/nycid.service';
 import { CrmService } from '../crm/crm.service';
@@ -17,14 +13,14 @@ const PROJECT_VISIBILITY_GENERAL_PUBLIC = 717170003;
 const PACKAGE_VISIBILITY = {
   APPLICANT_ONLY: 717170002,
   GENERAL_PUBLIC: 717170003,
-}
+};
 const PACKAGE_STATUSCODE = {
   PACKAGE_PREPARATION: 1,
   SUBMITTED: 717170012,
   UNDER_REVIEW: 717170013,
   REVIEWED_NO_REVISIONS_REQUIRED: 717170009,
   REVIEWED_REVISION_REQUIRED: 717170010,
-}
+};
 
 const DCP_PROJECTROLES = {
   LEAD_PLANNER: 717170026,
@@ -40,7 +36,7 @@ const DCP_PROJECTINVOICE_CODES = {
   statecode: {
     ACTIVE: 0,
     INACTIVE: 1,
-  }
+  },
 };
 
 const MILESTONE_PHASES = {
@@ -49,7 +45,7 @@ const MILESTONE_PHASES = {
 
 const DCP_MILESTONE_OWNER_TYPES = {
   DCP: 717170000,
-}
+};
 
 @Injectable()
 export class ProjectsService {
@@ -60,7 +56,9 @@ export class ProjectsService {
 
   public async findManyByContactId(contactId: string) {
     try {
-      const { records } = await this.crmService.get('dcp_projects', `
+      const { records } = await this.crmService.get(
+        'dcp_projects',
+        `
         $filter=
           dcp_dcp_project_dcp_projectapplicant_Project/
             any(o:
@@ -77,20 +75,23 @@ export class ProjectsService {
           dcp_dcp_project_dcp_projectapplicant_Project(
             $filter= statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
           )
-      `);
+      `,
+      );
 
-      return this.overwriteCodesWithLabels(records)
-        .map(project => ({
-          ...project,
-          packages: project.dcp_dcp_project_dcp_package_project,
-          projectApplicants: project['project-applicants'],
-        }));
-    } catch(e) {
+      return this.overwriteCodesWithLabels(records).map((project) => ({
+        ...project,
+        packages: project.dcp_dcp_project_dcp_package_project,
+        projectApplicants: project['project-applicants'],
+      }));
+    } catch (e) {
       const errorMessage = `Unable to find projects for current user. ${e.message}`;
-      throw new HttpException({
-        "code": "USER_PROJECTS_NOT_FOUND",
-        "detail": errorMessage,
-      }, HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        {
+          code: 'USER_PROJECTS_NOT_FOUND',
+          detail: errorMessage,
+        },
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
@@ -103,7 +104,9 @@ export class ProjectsService {
    */
   public async getProject(projectId: string) {
     try {
-      const { records } = await this.crmService.get('dcp_projects', `
+      const { records } = await this.crmService.get(
+        'dcp_projects',
+        `
         $filter=
           dcp_dcp_project_dcp_projectapplicant_Project/
             any(o:
@@ -138,17 +141,23 @@ export class ProjectsService {
             $select=${MILESTONE_ATTRS.join(',')};
             $filter=dcp_milestonephase eq ${MILESTONE_PHASES.PRECERT}
           )
-      `);
+      `,
+      );
 
-      const { records: projectApplicants } = await this.crmService.get('dcp_projectapplicants', `
+      const { records: projectApplicants } = await this.crmService.get(
+        'dcp_projectapplicants',
+        `
         $filter=
           _dcp_project_value eq ${projectId}
           and statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
         &$expand=
           dcp_applicant_customer_contact
-      `);
+      `,
+      );
 
-      const { records: projectTeamMembers } = await this.crmService.get('dcp_dcpprojectteams', `
+      const { records: projectTeamMembers } = await this.crmService.get(
+        'dcp_dcpprojectteams',
+        `
         $select=
           dcp_projectrole,
           dcp_name
@@ -163,14 +172,20 @@ export class ProjectsService {
             $select=internalemailaddress,address1_telephone1
           )
         &$orderby=dcp_name asc
-      `);
+      `,
+      );
 
-      const { records: dcpOwnedMilestones } = await this.crmService.get('dcp_milestones', `
+      const { records: dcpOwnedMilestones } = await this.crmService.get(
+        'dcp_milestones',
+        `
             $select=dcp_milestoneid
             &$filter=dcp_milestoneownertype eq ${DCP_MILESTONE_OWNER_TYPES.DCP}
-      `);
+      `,
+      );
 
-      const { records: projectPackages } = await this.crmService.get('dcp_packages', `
+      const { records: projectPackages } = await this.crmService.get(
+        'dcp_packages',
+        `
         $filter=
           _dcp_project_value eq ${projectId}
           and (
@@ -188,81 +203,108 @@ export class ProjectsService {
           $filter=statuscode eq ${DCP_PROJECTINVOICE_CODES.statuscode.APPROVED}
             or statuscode eq ${DCP_PROJECTINVOICE_CODES.statuscode.PAID}
         )
-      `);
+      `,
+      );
 
-      const projectApplicantsWithContacts = await Promise.all(projectApplicants.map(async applicant => {
-        const contact = applicant.dcp_applicant_customer_contact || {};
-        let is_nycid_email_registered;
+      const projectApplicantsWithContacts = await Promise.all(
+        projectApplicants.map(async (applicant) => {
+          const contact = applicant.dcp_applicant_customer_contact || {};
+          let is_nycid_email_registered;
 
-        // If there's already a nycid GUID, they've already logged in, so their e-mail is registered.
-        if (contact.dcp_nycid_guid) {
-          is_nycid_email_registered = true;
-        } else {
-          ({ is_nycid_email_registered } = await this.nycidService.isNycidEmailRegistered(contact.emailaddress1));
-        }
+          // If there's already a nycid GUID, they've already logged in, so their e-mail is registered.
+          if (contact.dcp_nycid_guid) {
+            is_nycid_email_registered = true;
+          } else {
+            ({ is_nycid_email_registered } =
+              await this.nycidService.isNycidEmailRegistered(
+                contact.emailaddress1,
+              ));
+          }
 
-        return {
-          ...applicant,
-          contact: {
-            ...contact,
-            is_nycid_email_registered,
-          },
-        }
-      }));
+          return {
+            ...applicant,
+            contact: {
+              ...contact,
+              is_nycid_email_registered,
+            },
+          };
+        }),
+      );
 
-      const [ project ] = this.overwriteCodesWithLabels(records);
+      const [project] = this.overwriteCodesWithLabels(records);
 
       if (!project) {
         const errorMessage = `Could not find requested project ${projectId}.`;
         console.log(errorMessage);
 
-        throw new HttpException({
-          "code": "PROJECT_NOT_FOUND",
-          "title": "Project not found",
-          "detail": errorMessage,
-        }, HttpStatus.NOT_FOUND);
+        throw new HttpException(
+          {
+            code: 'PROJECT_NOT_FOUND',
+            title: 'Project not found',
+            detail: errorMessage,
+          },
+          HttpStatus.NOT_FOUND,
+        );
       }
 
-      const projectMilestones = project.dcp_dcp_project_dcp_projectmilestone_project
-        .map(projectMilestone =>({
-          is_dcp_owned: !!dcpOwnedMilestones.find(milestone => milestone.dcp_milestoneid === projectMilestone._dcp_milestone_value),
+      const projectMilestones =
+        project.dcp_dcp_project_dcp_projectmilestone_project.map(
+          (projectMilestone) => ({
+            is_dcp_owned: !!dcpOwnedMilestones.find(
+              (milestone) =>
+                milestone.dcp_milestoneid ===
+                projectMilestone._dcp_milestone_value,
+            ),
 
-          ...projectMilestone,
-        }));
+            ...projectMilestone,
+          }),
+        );
 
-      // we use MILESTONE_NON_DATE_ATTRS because if we include dates when we reformat below, 
+      // we use MILESTONE_NON_DATE_ATTRS because if we include dates when we reformat below,
       // then the dates end up being sent to the frontend as strings, so we exclude them here
-      const formattedProjectMilestones = overwriteCodesWithLabels(projectMilestones, [...MILESTONE_NON_DATE_ATTRS]);
+      const formattedProjectMilestones = overwriteCodesWithLabels(
+        projectMilestones,
+        [...MILESTONE_NON_DATE_ATTRS],
+      );
 
       return {
         ...project,
-        packages: projectPackages.map(pkg => ({
+        packages: projectPackages.map((pkg) => ({
           ...pkg,
-          invoices: joinInvoiceLabels(pkg.dcp_dcp_package_dcp_projectinvoice_package),
+          invoices: joinInvoiceLabels(
+            pkg.dcp_dcp_package_dcp_projectinvoice_package,
+          ),
 
           // NOTE: "virtual" property. Maybe not be available in other requests for pkg data!
-          grand_total: pkg.dcp_dcp_package_dcp_projectinvoice_package
-            .reduce((acc, curr) => curr.dcp_grandtotal + acc, 0),
+          grand_total: pkg.dcp_dcp_package_dcp_projectinvoice_package.reduce(
+            (acc, curr) => curr.dcp_grandtotal + acc,
+            0,
+          ),
         })),
         projectApplicants: project['project-applicants'],
         'project-applicants': projectApplicantsWithContacts,
-        'team-members': projectTeamMembers.map(member => ({
+        'team-members': projectTeamMembers.map((member) => ({
           dcp_dcpprojectteamid: member.dcp_dcpprojectteamid,
           name: member.dcp_name,
-          role: member['dcp_projectrole@OData.Community.Display.V1.FormattedValue'],
+          role: member[
+            'dcp_projectrole@OData.Community.Display.V1.FormattedValue'
+          ],
           email: member.dcp_user.internalemailaddress,
           phone: member.dcp_user.address1_telephone1,
         })),
         milestones: formattedProjectMilestones,
       };
-    } catch(e) {
+    } catch (e) {
       console.log(e);
 
-      throw new HttpException({
-        "code": "PROJECTS_SERVICE_FAILURE",
-        "title": "Could not lookup projects. Something went wrong.",
-        "detail": e,
-      }, HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        {
+          code: 'PROJECTS_SERVICE_FAILURE',
+          title: 'Could not lookup projects. Something went wrong.',
+          detail: e,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 

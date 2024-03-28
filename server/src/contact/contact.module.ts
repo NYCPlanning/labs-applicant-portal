@@ -6,10 +6,7 @@ import { ConfigModule } from '../config/config.module';
 import { NycidService } from './nycid/nycid.service';
 
 @Module({
-  imports: [
-    CrmModule,
-    ConfigModule,
-  ],
+  imports: [CrmModule, ConfigModule],
   providers: [ContactService, NycidService],
   exports: [ContactService, NycidService],
   controllers: [ContactController],

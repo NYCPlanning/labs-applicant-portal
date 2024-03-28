@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import * as fs from 'fs';
+import fs from 'fs';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './http-exception.filter';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -21,12 +21,12 @@ function generateSSLConfiguration() {
 }
 
 async function bootstrap() {
-  let allowedOrigins = <any[]>[
+  let allowedOrigins = [
     /\.planninglabs\.nyc$/,
     /\.planning\.nyc\.gov$/,
     /\.netlify\.app$/,
-    "https://qa--applicant-portal.netlify.app"
-  ];
+    'https://qa--applicant-portal.netlify.app',
+  ] as any[];
 
   // On Heroku instances, default NODE_ENV is 'production'
   console.log(`App NODE_ENV is: ${process.env.NODE_ENV}`);
@@ -51,7 +51,6 @@ async function bootstrap() {
   app.enable('trust proxy');
 
   app.useGlobalFilters(new HttpExceptionFilter());
-
 
   await app.listen(process.env.PORT || 3000);
 }

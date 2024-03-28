@@ -1,10 +1,6 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable
-} from '@nestjs/common';
-import * as zlib from 'zlib';
-import * as Request from 'request';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import zlib from 'zlib';
+import Request from 'request';
 import { ConfigService } from '../config/config.service';
 import { ADAL } from '../_utils/adal';
 
@@ -24,9 +20,7 @@ export class CrmService {
   crmHost = '';
   host = '';
 
-  constructor(
-    private readonly config: ConfigService,
-  ) {
+  constructor(private readonly config: ConfigService) {
     ADAL.ADAL_CONFIG = {
       CRMUrl: this.config.get('CRM_HOST'),
       webAPIurl: this.config.get('CRM_URL_PATH'),
@@ -45,22 +39,25 @@ export class CrmService {
   async get(entity: string, query: string, ...options) {
     try {
       const sanitizedQuery = query.replace(/^\s+|\s+$/g, '');
-      const response = await this._get(`${entity}?${sanitizedQuery}`, ...options);
-      const {
-        value: records,
-        '@odata.count': count,
-      } = response;
+      const response = await this._get(
+        `${entity}?${sanitizedQuery}`,
+        ...options,
+      );
+      const { value: records, '@odata.count': count } = response;
 
       return {
         count,
         records,
       };
     } catch (e) {
-      throw new HttpException({
-        code: 'QUERY_FAILED',
-        title: 'Could not find entity',
-        detail: e,
-      }, HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        {
+          code: 'QUERY_FAILED',
+          title: 'Could not find entity',
+          detail: e,
+        },
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
@@ -73,17 +70,39 @@ export class CrmService {
   }
 
   async delete(entitySetName, guid, headers = {}) {
-    const query = entitySetName + "(" + guid + ")";
+    const query = entitySetName + '(' + guid + ')';
 
     return this._sendDeleteRequest(query, headers);
   }
 
-  async associate(relationshipName, entitySetName1, guid1, entitySetName2, guid2, headers = {}) {
-    return this._associate(relationshipName, entitySetName1, guid1, entitySetName2, guid2, headers);
+  async associate(
+    relationshipName,
+    entitySetName1,
+    guid1,
+    entitySetName2,
+    guid2,
+    headers = {},
+  ) {
+    return this._associate(
+      relationshipName,
+      entitySetName1,
+      guid1,
+      entitySetName2,
+      guid2,
+      headers,
+    );
   }
 
-  async disassociateHasOne(singleValuedNavigationProperty, entitySetName, guid) {
-    return this._disassociateSingleValuedNavigationProperty(singleValuedNavigationProperty, entitySetName, guid);
+  async disassociateHasOne(
+    singleValuedNavigationProperty,
+    entitySetName,
+    guid,
+  ) {
+    return this._disassociateSingleValuedNavigationProperty(
+      singleValuedNavigationProperty,
+      entitySetName,
+      guid,
+    );
   }
 
   /**
@@ -94,12 +113,15 @@ export class CrmService {
    * @return     {string}
    */
   async getWithXMLQuery(entity: string, xmlQuery: string, ...options) {
-    const response = await this._get(`${entity}?fetchXml=${xmlQuery}`, ...options);
+    const response = await this._get(
+      `${entity}?fetchXml=${xmlQuery}`,
+      ...options,
+    );
     return response;
   }
 
   // this provides the formatted values but doesn't do it for top level
-  // TODO: where should this happen? 
+  // TODO: where should this happen?
   _fixLongODataAnnotations(dataObj) {
     return dataObj;
   }
@@ -113,7 +135,7 @@ export class CrmService {
         return json._error;
       }
     }
-    return "Error";
+    return 'Error';
   }
 
   _dateReviver(key, value) {
@@ -121,19 +143,40 @@ export class CrmService {
       // YYYY-MM-DDTHH:mm:ss.sssZ => parsed as UTC
       // YYYY-MM-DD => parsed as local date
 
-      if (value != "") {
-        const a = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/.exec(value);
+      if (value != '') {
+        const a =
+          /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/.exec(
+            value,
+          );
 
         if (a) {
           const s = parseInt(a[6]);
           const ms = Number(a[6]) * 1000 - s * 1000;
-          return new Date(Date.UTC(parseInt(a[1]), parseInt(a[2]) - 1, parseInt(a[3]), parseInt(a[4]), parseInt(a[5]), s, ms));
+          return new Date(
+            Date.UTC(
+              parseInt(a[1]),
+              parseInt(a[2]) - 1,
+              parseInt(a[3]),
+              parseInt(a[4]),
+              parseInt(a[5]),
+              s,
+              ms,
+            ),
+          );
         }
 
         const b = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
 
         if (b) {
-          return new Date(parseInt(b[1]), parseInt(b[2]) - 1, parseInt(b[3]), 0, 0, 0, 0);
+          return new Date(
+            parseInt(b[1]),
+            parseInt(b[2]) - 1,
+            parseInt(b[3]),
+            0,
+            0,
+            0,
+            0,
+          );
         }
       }
     }
@@ -154,7 +197,7 @@ export class CrmService {
         'OData-Version': '4.0',
         Accept: 'application/json',
         Prefer: 'odata.include-annotations="*"',
-        ...headers
+        ...headers,
       },
       encoding: null,
     };
@@ -166,18 +209,17 @@ export class CrmService {
         if (!error && response.statusCode === 200) {
           // If response is gzip, unzip first
 
-          const parseResponse = jsonText => {
+          const parseResponse = (jsonText) => {
             const json_string = jsonText.toString('utf-8');
 
-            var result = JSON.parse(json_string, this._dateReviver);
-            if (result["@odata.context"].indexOf("/$entity") >= 0) {
+            let result = JSON.parse(json_string, this._dateReviver);
+            if (result['@odata.context'].indexOf('/$entity') >= 0) {
               // retrieve single
               result = this._fixLongODataAnnotations(result);
-            }
-            else if (result.value) {
+            } else if (result.value) {
               // retrieve multiple
-              var array = [];
-              for (var i = 0; i < result.value.length; i++) {
+              const array = [];
+              for (let i = 0; i < result.value.length; i++) {
                 array.push(this._fixLongODataAnnotations(result.value[i]));
               }
               result.value = array;
@@ -189,23 +231,21 @@ export class CrmService {
             zlib.gunzip(body, (err, dezipped) => {
               parseResponse(dezipped);
             });
-          }
-          else {
+          } else {
             parseResponse(body);
           }
         } else {
-          const parseError = jsonText => {
+          const parseError = (jsonText) => {
             // Bug: sometimes CRM returns 'object reference' error
             // Fix: if we retry error will not show again
             const json_string = jsonText.toString('utf-8');
             const result = JSON.parse(json_string, this._dateReviver);
             const err = this._parseErrorMessage(result);
 
-            if (err == "Object reference not set to an instance of an object.") {
-              this._get(query, maxPageSize, options)
-                .then(
-                  resolve, reject
-                );
+            if (
+              err == 'Object reference not set to an instance of an object.'
+            ) {
+              this._get(query, maxPageSize, options).then(resolve, reject);
             } else {
               reject(err);
             }
@@ -236,7 +276,7 @@ export class CrmService {
         'OData-Version': '4.0',
         Accept: 'application/json',
         Prefer: 'return=representation',
-        ...headers
+        ...headers,
       },
       body: JSON.stringify(data),
       encoding: null,
@@ -246,30 +286,33 @@ export class CrmService {
       Request.post(options, (error, response, body) => {
         const encoding = response.headers['content-encoding'];
 
-        if (error || (response.statusCode != 200 && response.statusCode != 201 && response.statusCode != 204 && response.statusCode != 1223)) {
-          const parseError = jsonText => {
+        if (
+          error ||
+          (response.statusCode != 200 &&
+            response.statusCode != 201 &&
+            response.statusCode != 204 &&
+            response.statusCode != 1223)
+        ) {
+          const parseError = (jsonText) => {
             // Bug: sometimes CRM returns 'object reference' error
             // Fix: if we retry error will not show again
             const json_string = jsonText.toString('utf-8');
 
-            var result = JSON.parse(json_string, this._dateReviver);
-            var err = this._parseErrorMessage(result);
+            const result = JSON.parse(json_string, this._dateReviver);
+            const err = this._parseErrorMessage(result);
             reject(err);
           };
           if (encoding && encoding.indexOf('gzip') >= 0) {
             zlib.gunzip(body, (err, dezipped) => {
               parseError(dezipped);
             });
-          }
-          else {
+          } else {
             parseError(body);
-
           }
-        }
-        else if (response.statusCode === 200 || response.statusCode === 201) {
-          const parseResponse = jsonText => {
+        } else if (response.statusCode === 200 || response.statusCode === 201) {
+          const parseResponse = (jsonText) => {
             const json_string = jsonText.toString('utf-8');
-            var result = JSON.parse(json_string, this._dateReviver);
+            const result = JSON.parse(json_string, this._dateReviver);
             resolve(result);
           };
 
@@ -277,34 +320,33 @@ export class CrmService {
             zlib.gunzip(body, (err, dezipped) => {
               parseResponse(dezipped);
             });
-          }
-          else {
+          } else {
             parseResponse(body);
           }
-        }
-        else if (response.statusCode === 204 || response.statusCode === 1223) {
-          const uri = response.headers["OData-EntityId"];
-          if (uri) {
+        } else if (
+          response.statusCode === 204 ||
+          response.statusCode === 1223
+        ) {
+          const uri = response.headers['OData-EntityId'];
+          if (uri && typeof uri === 'string') {
             // create request - server sends new id
             const regExp = /\(([^)]+)\)/;
             const matches = regExp.exec(uri);
             const newEntityId = matches[1];
             resolve(newEntityId);
-          }
-          else {
+          } else {
             // other type of request - no response
-            resolve();
+            resolve(undefined);
           }
-        }
-        else {
-          resolve();
+        } else {
+          resolve(undefined);
         }
       });
-    })
+    });
   }
 
   async _update(entitySetName, guid, data, headers): Promise<any> {
-    var query = entitySetName + "(" + guid + ")";
+    const query = entitySetName + '(' + guid + ')';
     return this._sendPatchRequest(query, data, headers);
   }
 
@@ -321,7 +363,7 @@ export class CrmService {
         'OData-Version': '4.0',
         Accept: 'application/json',
         Prefer: 'odata.include-annotations="*"',
-        ...headers
+        ...headers,
       },
       body: JSON.stringify(data),
       encoding: null,
@@ -332,24 +374,21 @@ export class CrmService {
         const encoding = response.headers['content-encoding'];
 
         if (error || response.statusCode != 204) {
-          const parseError = jsonText => {
+          const parseError = (jsonText) => {
             const json_string = jsonText.toString('utf-8');
-            var result = JSON.parse(json_string, this._dateReviver);
-            var err = this._parseErrorMessage(result);
+            const result = JSON.parse(json_string, this._dateReviver);
+            const err = this._parseErrorMessage(result);
             reject(err);
           };
           if (encoding && encoding.indexOf('gzip') >= 0) {
             zlib.gunzip(body, (err, dezipped) => {
               parseError(dezipped);
             });
-          }
-          else {
+          } else {
             parseError(body);
-
           }
-        }
-        else resolve(body);
-      })
+        } else resolve(body);
+      });
     });
   }
 
@@ -366,7 +405,7 @@ export class CrmService {
         'OData-Version': '4.0',
         Accept: 'application/json',
         Prefer: 'odata.include-annotations="*"',
-        ...headers
+        ...headers,
       },
       encoding: null,
     };
@@ -375,8 +414,11 @@ export class CrmService {
       Request.delete(options, (error, response, body) => {
         const encoding = response.headers['content-encoding'];
 
-        if (error || (response.statusCode != 204 && response.statusCode != 1223)) {
-          const parseError = jsonText => {
+        if (
+          error ||
+          (response.statusCode != 204 && response.statusCode != 1223)
+        ) {
+          const parseError = (jsonText) => {
             const json_string = jsonText.toString('utf-8');
             const result = JSON.parse(json_string, this._dateReviver);
             const err = this._parseErrorMessage(result);
@@ -386,27 +428,42 @@ export class CrmService {
             zlib.gunzip(body, (err, dezipped) => {
               parseError(dezipped);
             });
-          }
-          else {
+          } else {
             parseError(body);
-
           }
-        }
-        else resolve();
-      })
+        } else resolve(undefined);
+      });
     });
   }
 
-  async _associate(relationshipName, entitySetName1, guid1, entitySetName2, guid2, headers) {
-    const query = entitySetName1 + "(" + guid1 + ")/" + relationshipName + "/$ref";
+  async _associate(
+    relationshipName,
+    entitySetName1,
+    guid1,
+    entitySetName2,
+    guid2,
+    headers,
+  ) {
+    const query =
+      entitySetName1 + '(' + guid1 + ')/' + relationshipName + '/$ref';
     const data = {
-      "@odata.id": this.host + entitySetName2 + "(" + guid2 + ")"
+      '@odata.id': this.host + entitySetName2 + '(' + guid2 + ')',
     };
     return this.create(query, data, headers);
   }
 
-  async _disassociateSingleValuedNavigationProperty(singleValuedNavigationProperty, entitySetName, guid) {
-    const query = entitySetName + "(" + guid + ")/" + singleValuedNavigationProperty + "/$ref";
+  async _disassociateSingleValuedNavigationProperty(
+    singleValuedNavigationProperty,
+    entitySetName,
+    guid,
+  ) {
+    const query =
+      entitySetName +
+      '(' +
+      guid +
+      ')/' +
+      singleValuedNavigationProperty +
+      '/$ref';
     return this._sendDeleteRequest(query, {});
   }
 }

@@ -5,6 +5,6 @@ import { InvoicePostbackService } from './invoice-postback.service';
 @Module({
   imports: [CrmModule],
   providers: [InvoicePostbackService],
-  exports: [InvoicePostbackService]
+  exports: [InvoicePostbackService],
 })
 export class InvoicePostbackModule {}

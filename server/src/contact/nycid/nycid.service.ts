@@ -1,8 +1,8 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import * as crypto from 'crypto';
-import * as utf8 from 'utf8';
-import * as superagent from 'superagent';
-import * as superagentProxy from 'superagent-proxy'
+import crypto from 'crypto';
+import utf8 from 'utf8';
+import superagent from 'superagent';
+import superagentProxy from 'superagent-proxy';
 import { ConfigService } from '../../config/config.service';
 
 function sortValuesByKey(entries) {
@@ -15,10 +15,8 @@ function sortValuesByKey(entries) {
 
 @Injectable()
 export class NycidService {
-  constructor(
-    private readonly config: ConfigService,
-  ) {
-    superagentProxy(superagent)
+  constructor(private readonly config: ConfigService) {
+    superagentProxy(superagent);
   }
 
   public async getNycidStatus(email = '', dcp_nycid_guid) {
@@ -39,14 +37,19 @@ export class NycidService {
   // problematic because we can't know if they're validated unless they've logged in once.
   // if there's no id passed, it's probably because there isn't one to provide (it's not on the contact record)
   private async isNycidValidated(id) {
-    if (!id) return {
-      is_nycid_validated: null,
-    };
+    if (!id)
+      return {
+        is_nycid_validated: null,
+      };
 
     try {
-      const { body } = await this.makeNycidRequest('GET', '/account/api/isEmailValidated.htm', {
-        guid: id,
-      });
+      const { body } = await this.makeNycidRequest(
+        'GET',
+        '/account/api/isEmailValidated.htm',
+        {
+          guid: id,
+        },
+      );
 
       return {
         is_nycid_validated: body.validated,
@@ -56,15 +59,18 @@ export class NycidService {
       if (e.response.body.ERRORS['cpui.unknownGuid']) {
         return {
           is_nycid_validated: true,
-        }
+        };
       }
 
-      throw new HttpException({
-        code: 'NYCID_REQUEST_FAILED',
-        title: 'Failed getting projects',
-        detail: `An unknown server error occured while communicating with NYCID.`,
-        meta: e.response.body.ERRORS,
-      }, HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        {
+          code: 'NYCID_REQUEST_FAILED',
+          title: 'Failed getting projects',
+          detail: `An unknown server error occured while communicating with NYCID.`,
+          meta: e.response.body.ERRORS,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
@@ -98,7 +104,12 @@ export class NycidService {
 
   public async getNycidOAuthUser(accessToken) {
     try {
-      const { body: user } = await this.makeNycidRequest('GET', '/account/api/oauth/user.htm', {}, accessToken);
+      const { body: user } = await this.makeNycidRequest(
+        'GET',
+        '/account/api/oauth/user.htm',
+        {},
+        accessToken,
+      );
 
       return user;
     } catch (e) {
@@ -107,9 +118,12 @@ export class NycidService {
   }
 
   private makeNycidRequest(method, path, query, accessToken?: string) {
-    const NYCID_SERVICE_ACCOUNT_USERNAME = this.config.get('NYCID_SERVICE_ACCOUNT_USERNAME') || 'applicant-portal-local';
-    const NYCID_DOMAIN = this.config.get('NYCID_DOMAIN') || 'https://accounts-nonprd.nyc.gov';
-    const FIXIE_URL = this.config.get('FIXIE_URL')
+    const NYCID_SERVICE_ACCOUNT_USERNAME =
+      this.config.get('NYCID_SERVICE_ACCOUNT_USERNAME') ||
+      'applicant-portal-local';
+    const NYCID_DOMAIN =
+      this.config.get('NYCID_DOMAIN') || 'https://accounts-nonprd.nyc.gov';
+    const FIXIE_URL = this.config.get('FIXIE_URL');
     // Alphabetize query values: https://www1.nyc.gov/assets/nyc4d/html/services-nycid/web-services.shtml#signature
     const queryValues = sortValuesByKey([
       ...Object.entries(query),
@@ -126,9 +140,10 @@ export class NycidService {
 
     return superagent
       .get(`${NYCID_DOMAIN}${path}`)
-      // @ts-ignore
       .proxy(FIXIE_URL)
-      .set({ ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}) })
+      .set({
+        ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+      })
       .query({
         signature,
         userName: NYCID_SERVICE_ACCOUNT_USERNAME,
@@ -139,7 +154,8 @@ export class NycidService {
   private calculateAuthenticationSignature(method, path, ...params) {
     const stringToSign = `${method}${path}${params.join('')}`;
 
-    return crypto.createHmac('sha256', this.config.get('NYCID_TOKEN_SECRET'))
+    return crypto
+      .createHmac('sha256', this.config.get('NYCID_TOKEN_SECRET'))
       .update(utf8.encode(stringToSign))
       .digest('hex')
       .toLowerCase();

@@ -3,9 +3,7 @@ import { ConfigModule } from '../config/config.module';
 import { CrmService } from '../crm/crm.service';
 
 @Module({
-  imports: [
-    ConfigModule,
-  ],
+  imports: [ConfigModule],
   providers: [CrmService],
   exports: [CrmService],
 })
