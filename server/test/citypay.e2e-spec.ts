@@ -8,6 +8,8 @@ import { CrmService } from '../src/crm/crm.service';
 import { InvoicesService } from '../src/invoices/invoices.service';
 import { InvoicePostbackService } from '../src/invoice-postback/invoice-postback.service';
 import { ConfigService } from '../src/config/config.service';
+import { SharepointService } from 'src/sharepoint/sharepoint.service';
+import { SharepointServiceMock } from './helpers/mocks/sharepoint.service.mock';
 
 const mockCrmHost = 'https://planning.nyc.gov';
 const mockApiPath = 'api';
@@ -30,6 +32,10 @@ describe('CityPayController (e2e)', () => {
       CLIENT_SECRET: 'test',
       TENANT_ID: 'test',
       TOKEN_PATH: '/oauth2/token',
+
+      SHAREPOINT_CLIENT_ID: 'sharepointClientId',
+      SHAREPOINT_CLIENT_SECRET: 'sharepointClientSecret',
+      SHAREPOINT_SITE_ID: 'sharepointSiteId',
 
       ZAP_TOKEN_SECRET: 'test',
       NYCID_TOKEN_SECRET: 'test',
@@ -104,6 +110,8 @@ describe('CityPayController (e2e)', () => {
       .useValue(invoiceService)
       .overrideProvider(invoicePostbackService)
       .useValue(invoicePostbackService)
+      .overrideProvider(SharepointService)
+      .useValue(SharepointServiceMock)
       .compile();
 
     app = moduleFixture.createNestApplication();
