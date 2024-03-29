@@ -123,6 +123,7 @@ export class SharepointService {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${accessToken}`,
+        Accept: 'application/json',
       },
     };
 
@@ -153,6 +154,7 @@ export class SharepointService {
     const url = `${this.msalProvider.sharePointSiteUrl}/drives/${driveId}/root:/${folderName}:/children?$select=id,name,file,folder,createdDateTime`;
     const options = {
       headers: {
+        method: 'GET',
         Authorization: `Bearer ${accessToken}`,
         Accept: 'application/json',
       },
@@ -219,6 +221,7 @@ export class SharepointService {
       url,
       headers: {
         Authorization: `Bearer ${accessToken}`,
+        Accept: 'application/json',
       },
     };
 
