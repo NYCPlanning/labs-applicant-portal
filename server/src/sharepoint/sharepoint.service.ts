@@ -226,7 +226,18 @@ export class SharepointService {
     };
 
     // this returns a pipeable stream
-    return Request.get(options).on('error', (e) => console.log(e));
+    try {
+      return Request.get(options).on('error', (e) => console.log(e));
+    } catch {
+      throw new HttpException(
+        {
+          code: 'DOWNLOAD_FILE_FAILED',
+          title: 'Error downloading sharepoint file',
+          detail: `Error while downloading Sharepoint file`,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   async deleteSharepointFile(fileIdPath: string): Promise<any> {
