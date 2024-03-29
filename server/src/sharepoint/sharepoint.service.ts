@@ -31,6 +31,9 @@ export class SharepointService {
   ) {
     (async () => {
       const { accessToken } = await msalProvider.getGraphClientToken();
+      // Files are only accessible when their parent drive id is known.
+      // We obtain artifact and package drive ids their name
+      // This is done once on initialization and then the results are reused because the ids are not expected to change
       const getDriveIdRequestUrl = (listDisplayName: string) =>
         `${msalProvider.sharePointSiteUrl}/lists?$filter=displayName eq '${listDisplayName}'&$expand=drive($select=id)&$select=name`;
       const artifactDriveIdRequestUrl = getDriveIdRequestUrl('Artifact');
@@ -43,22 +46,38 @@ export class SharepointService {
           Accept: 'application/json',
         },
       };
-      fetch(artifactDriveIdRequestUrl, options).then((response) =>
-        response.json().then((data: { value: Array<SharePointListDrive> }) => {
-          const {
-            drive: { id },
-          } = data.value[0];
-          this.artifactDriveId = id;
-        }),
-      );
-      fetch(packageDriveIdRequestUrl, options).then((response) =>
-        response.json().then((data: { value: Array<SharePointListDrive> }) => {
-          const {
-            drive: { id },
-          } = data.value[0];
-          this.packageDriveId = id;
-        }),
-      );
+      try {
+        // The responses are not awaited because they should not block each other.
+        fetch(artifactDriveIdRequestUrl, options).then((response) =>
+          response
+            .json()
+            .then((data: { value: Array<SharePointListDrive> }) => {
+              const {
+                drive: { id },
+              } = data.value[0];
+              this.artifactDriveId = id;
+            }),
+        );
+        fetch(packageDriveIdRequestUrl, options).then((response) =>
+          response
+            .json()
+            .then((data: { value: Array<SharePointListDrive> }) => {
+              const {
+                drive: { id },
+              } = data.value[0];
+              this.packageDriveId = id;
+            }),
+        );
+      } catch {
+        throw new HttpException(
+          {
+            code: 'INITIALIZE_DRIVE_ID',
+            title: 'Error initializing sharepoint drive ids',
+            detail: 'Could not retrieve ids for sharepoint drives',
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      }
     })();
   }
   artifactDriveId: string;
@@ -102,7 +121,7 @@ export class SharepointService {
         value: Array<SharepointFile>;
       };
       return data;
-    } catch (e) {
+    } catch {
       const formattedFolderIdentifier = folderIdentifier.replace("'", "''");
       throw new HttpException(
         {
