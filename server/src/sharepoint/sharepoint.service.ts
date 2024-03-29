@@ -110,45 +110,9 @@ export class SharepointService {
     }
   }
 
-  // Retrieves a list of files in a given Sharepoint folder
-  async getSharepointFolderFiles(
-    driveId: string,
-    folderIdentifier: string,
-  ): Promise<{ value: Array<SharepointFile> }> {
-    const { accessToken } = await this.msalProvider.getGraphClientToken();
-
-    const urlPackageId = `${this.msalProvider.sharePointSiteUrl}/drives/${driveId}/root:/${folderIdentifier}:/children`;
-
-    const options = {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        Accept: 'application/json',
-      },
-    };
-
-    try {
-      const response = await fetch(urlPackageId, options);
-      const data = (await response.json()) as {
-        value: Array<SharepointFile>;
-      };
-      return data;
-    } catch {
-      const formattedFolderIdentifier = folderIdentifier.replace("'", "''");
-      throw new HttpException(
-        {
-          code: 'LOAD_FOLDER_FAILED',
-          title: 'Error loading sharepoint files',
-          detail: `Could not load file list from Sharepoint folder "${formattedFolderIdentifier}".`,
-        },
-        HttpStatus.NOT_FOUND,
-      );
-    }
-  }
-
   private async traverseFolders(
-    folderName: string,
     driveId: string,
+    folderName: string,
     accessToken: string,
   ): Promise<Array<SharepointFile>> {
     const url = `${this.msalProvider.sharePointSiteUrl}/drives/${driveId}/root:/${folderName}:/children?$select=id,name,file,folder,createdDateTime`;
@@ -173,8 +137,8 @@ export class SharepointService {
       } else if (entry.folder?.childCount > 0) {
         documents = documents.concat(
           await this.traverseFolders(
-            `${folderName}/${entry.name}`,
             driveId,
+            `${folderName}/${entry.name}`,
             accessToken,
           ),
         );
@@ -184,19 +148,14 @@ export class SharepointService {
   }
 
   // Use for artifacts
-  async getSharepointNestedFolderFiles(
-    folderUrl: string,
+  async getSharepointFolderFiles(
+    driveId: string,
+    folderName: string,
   ): Promise<Array<SharepointFile>> {
     try {
       const { accessToken } = await this.msalProvider.getGraphClientToken();
 
-      const [, folderName] = folderUrl.split('dcp_artifacts/');
-      const artifactDriveId = this.artifactDriveId;
-      return await this.traverseFolders(
-        folderName,
-        artifactDriveId,
-        accessToken,
-      );
+      return await this.traverseFolders(driveId, folderName, accessToken);
     } catch (e) {
       if (e instanceof HttpException) {
         throw e;

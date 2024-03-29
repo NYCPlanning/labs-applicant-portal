@@ -7,25 +7,11 @@ export class SharepointServiceMock {
 
   async getSharepointFolderFiles(
     driveId: string,
-    folderIdentifier: string,
-  ): Promise<{ value: Array<SharepointFile> }> {
-    return {
-      value: [
-        {
-          id: `${driveId}-${folderIdentifier}`,
-          name: folderIdentifier,
-          createdDateTime: 'now',
-        },
-      ],
-    };
-  }
-
-  async getSharepointNestedFolderFiles(
     folderUrl: string,
   ): Promise<Array<SharepointFile>> {
     return [
       {
-        id: 'nestedFolderId',
+        id: driveId,
         name: folderUrl,
         createdDateTime: 'now',
       },

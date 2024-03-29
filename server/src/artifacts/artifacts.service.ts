@@ -48,10 +48,11 @@ export class ArtifactService {
   async getArtifactSharepointDocuments(relativeUrl: string, dcp_name: string) {
     if (relativeUrl) {
       try {
-        const documents =
-          await this.sharepointService.getSharepointNestedFolderFiles(
-            relativeUrl,
-          );
+        const [, folderName] = relativeUrl.split('dcp_artifacts/');
+        const documents = await this.sharepointService.getSharepointFolderFiles(
+          this.sharepointService.artifactDriveId,
+          folderName,
+        );
 
         if (documents) {
           return documents.map((document) => ({

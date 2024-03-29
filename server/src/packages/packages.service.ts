@@ -341,13 +341,10 @@ export class PackagesService {
     const packageDriveId = this.sharepointService.packageDriveId;
     if (relativeUrl && packageDriveId !== undefined) {
       try {
-        const { value: documents } =
-          await this.sharepointService.getSharepointFolderFiles(
-            packageDriveId,
-            relativeUrl,
-          );
-
-        return documents;
+        return await this.sharepointService.getSharepointFolderFiles(
+          packageDriveId,
+          relativeUrl,
+        );
       } catch (e) {
         // Relay errors from crmService
         if (e instanceof HttpException) {
