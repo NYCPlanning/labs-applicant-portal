@@ -1,4 +1,4 @@
-import { FactoryProvider } from '@nestjs/common';
+import { FactoryProvider, HttpException, HttpStatus } from '@nestjs/common';
 import { ConfigService } from 'src/config/config.service';
 import msal from '@azure/msal-node';
 
@@ -38,10 +38,22 @@ export const MsalProvider: FactoryProvider<MsalProviderType> = {
 
     // Method also checks for a cached token before calling security token service
     // https://github.com/MicrosoftDocs/entra-docs/blob/main/docs/identity-platform/msal-acquire-cache-tokens.md#recommended-call-pattern-for-public-client-applications
-    const getGraphClientToken = () =>
-      cca.acquireTokenByClientCredential({
-        scopes,
-      });
+    const getGraphClientToken = () => {
+      try {
+        return cca.acquireTokenByClientCredential({
+          scopes,
+        });
+      } catch {
+        throw new HttpException(
+          {
+            code: 'GRAPH_TOKEN_ERROR',
+            title: 'Error retrieving Graph token',
+            detail: 'Error retrieving Graph token',
+          },
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
+    };
 
     return {
       getGraphClientToken,
