@@ -75,7 +75,7 @@ export class SharepointService {
             title: 'Error initializing sharepoint drive ids',
             detail: 'Could not retrieve ids for sharepoint drives',
           },
-          HttpStatus.NOT_FOUND,
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
       }
     })();
@@ -95,8 +95,19 @@ export class SharepointService {
       method: 'PATCH',
       body: JSON.stringify(body),
     };
-    const response = await fetch(url, options);
-    return response.json();
+    try {
+      const response = await fetch(url, options);
+      return response.json();
+    } catch {
+      throw new HttpException(
+        {
+          code: 'ARCHIVE_FOLDER_FAILED',
+          title: 'Error archiving sharepoint folder',
+          detail: `Error while archiving Sharepoint folder`,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   // Retrieves a list of files in a given Sharepoint folder
