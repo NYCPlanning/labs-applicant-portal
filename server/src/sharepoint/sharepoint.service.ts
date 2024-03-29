@@ -128,6 +128,9 @@ export class SharepointService {
       value: Array<SharepointFile>;
     };
     let documents: Array<SharepointFile> = [];
+    // Create a promise for each folder that needs to be search,
+    // allowing child folders to be search simultaneously
+    const pendingDocuments: Array<Promise<SharepointFile[]>> = [];
     const fileCount = data.value.length;
 
     for (let i = 0; i < fileCount; i++) {
@@ -135,14 +138,19 @@ export class SharepointService {
       if (entry.file !== undefined) {
         documents.push(entry);
       } else if (entry.folder?.childCount > 0) {
-        documents = documents.concat(
-          await this.traverseFolders(
+        pendingDocuments.push(
+          this.traverseFolders(
             driveId,
             `${folderName}/${entry.name}`,
             accessToken,
           ),
         );
       }
+    }
+    const resolvedDocuments = await Promise.all(pendingDocuments);
+    const resolvedDocumentsCount = resolvedDocuments.length;
+    for (let i = 0; i < resolvedDocumentsCount; i++) {
+      documents = documents.concat(resolvedDocuments[i]);
     }
     return documents;
   }
