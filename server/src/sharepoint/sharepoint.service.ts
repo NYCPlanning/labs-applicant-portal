@@ -243,7 +243,18 @@ export class SharepointService {
       },
     };
 
-    const response = await fetch(url, options);
-    return response;
+    try {
+      const response = await fetch(url, options);
+      return response;
+    } catch {
+      throw new HttpException(
+        {
+          code: 'DELETE_FILE_FAILED',
+          title: 'Error deleting sharepoint file',
+          detail: `Error while deleting Sharepoint file`,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }
