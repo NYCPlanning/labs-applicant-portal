@@ -6,6 +6,8 @@ import { AppModule } from './../src/app.module';
 import { v4 as uuidv4 } from 'uuid';
 import nock from 'nock';
 import mockedEnv from 'mocked-env';
+import { SharepointService } from 'src/sharepoint/sharepoint.service';
+import { SharepointServiceMock } from './helpers/mocks/sharepoint.service.mock';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -13,7 +15,10 @@ describe('AppController (e2e)', () => {
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile();
+    })
+      .overrideProvider(SharepointService)
+      .useValue(SharepointServiceMock)
+      .compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();
@@ -29,6 +34,10 @@ describe('AppController (e2e)', () => {
       CLIENT_SECRET: 'test',
       TENANT_ID: 'test',
       TOKEN_PATH: '/oauth2/token',
+
+      SHAREPOINT_CLIENT_ID: 'sharepointClientId',
+      SHAREPOINT_CLIENT_SECRET: 'sharepointClientSecret',
+      SHAREPOINT_SITE_ID: 'sharepointSiteId',
 
       ZAP_TOKEN_SECRET: 'test',
       NYCID_TOKEN_SECRET: 'test',
