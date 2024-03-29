@@ -27,16 +27,6 @@ export class SharepointService {
     private readonly config: ConfigService,
   ) {}
 
-  async generateSharePointAccessToken() {
-    const response = await this.msalProvider.cca.acquireTokenByClientCredential(
-      {
-        scopes: this.msalProvider.scopes,
-      },
-    );
-    const { accessToken } = response;
-    return { accessToken };
-  }
-
   // This function renames the folder specified by `folderName` by appending `dcp_archived` to the end of its name
   // Example of folderName: `2021M023_Draft LU Form_3_A234234ASFLKNF3423`
   async archiveSharepointFolder(folderName: string): Promise<any> {
@@ -59,7 +49,7 @@ export class SharepointService {
     driveId: string,
     folderIdentifier: string,
   ): Promise<{ value: Array<SharepointFile> }> {
-    const { accessToken } = await this.generateSharePointAccessToken();
+    const { accessToken } = await this.msalProvider.getGraphClientToken();
 
     const urlPackageId = `${this.msalProvider.sharePointSiteUrl}/drives/${driveId}/root:/${folderIdentifier}:/children`;
 
@@ -130,7 +120,7 @@ export class SharepointService {
     folderUrl: string,
   ): Promise<Array<SharepointFile>> {
     try {
-      const { accessToken } = await this.generateSharePointAccessToken();
+      const { accessToken } = await this.msalProvider.getGraphClientToken();
 
       const [, folderName] = folderUrl.split('dcp_artifacts/');
       const artifactDriveId = this.config.get('SHAREPOINT_ARTIFACT_ID_GRAPH');
@@ -156,7 +146,7 @@ export class SharepointService {
   }
 
   async getSharepointFile(fileId: string): Promise<any> {
-    const { accessToken } = await this.generateSharePointAccessToken();
+    const { accessToken } = await this.msalProvider.getGraphClientToken();
     const packageDriveId = this.config.get('SHAREPOINT_PACKAGE_ID_GRAPH');
 
     const url = `${this.msalProvider.sharePointSiteUrl}/drives/${packageDriveId}/items/${fileId}/content`;
@@ -172,7 +162,7 @@ export class SharepointService {
   }
 
   async deleteSharepointFile(fileIdPath: string): Promise<any> {
-    const { accessToken } = await this.generateSharePointAccessToken();
+    const { accessToken } = await this.msalProvider.getGraphClientToken();
     const packageDriveId = this.config.get('SHAREPOINT_PACKAGE_ID_GRAPH');
     // Note the lack of slash after "items". This is because the calling controller historically accepted a relative file path.
     // The request is now based on file id. However, it still passes a preceding slash because of its past structure.

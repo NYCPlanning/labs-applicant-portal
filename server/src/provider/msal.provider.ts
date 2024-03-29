@@ -1,10 +1,9 @@
 import { FactoryProvider } from '@nestjs/common';
 import { ConfigService } from 'src/config/config.service';
-import msal, { ConfidentialClientApplication } from '@azure/msal-node';
+import msal from '@azure/msal-node';
 
 export type MsalProviderType = {
-  cca: ConfidentialClientApplication;
-  scopes: Array<string>;
+  getGraphClientToken: () => Promise<msal.AuthenticationResult>;
   sharePointSiteUrl: string;
 };
 export const MSAL = Symbol('MSAL_SERVICE');
@@ -38,9 +37,16 @@ export const MsalProvider: FactoryProvider<MsalProviderType> = {
     const graphBaseUrl = 'https://graph.microsoft.com';
     const scopes = [`${graphBaseUrl}/.default`];
     const sharePointSiteUrl = `${graphBaseUrl}/v1.0/sites/${siteId}`;
+
+    // Method also checks for a cached token before calling security token service
+    // https://github.com/MicrosoftDocs/entra-docs/blob/main/docs/identity-platform/msal-acquire-cache-tokens.md#recommended-call-pattern-for-public-client-applications
+    const getGraphClientToken = () =>
+      cca.acquireTokenByClientCredential({
+        scopes,
+      });
+
     return {
-      cca,
-      scopes,
+      getGraphClientToken,
       sharePointSiteUrl,
     };
   },
