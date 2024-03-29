@@ -3,7 +3,6 @@ import {
   Post,
   UseInterceptors,
   UploadedFile,
-  Session,
   Body,
   UseGuards,
   Delete,

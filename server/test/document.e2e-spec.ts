@@ -7,6 +7,8 @@ import { doLogin } from './helpers/do-login';
 import { extractJWT } from './helpers/extract-jwt';
 import { oauthMock } from './helpers/mocks/oauth';
 import { v4 as uuidv4 } from 'uuid';
+import { SharepointService } from 'src/sharepoint/sharepoint.service';
+import { SharepointServiceMock } from './helpers/mocks/sharepoint.service.mock';
 
 describe('DocumentController (e2e)', () => {
   let app;
@@ -20,8 +22,12 @@ describe('DocumentController (e2e)', () => {
       CRM_URL_PATH: '/api/data/v9.1/',
       CLIENT_ID: 'test',
       CLIENT_SECRET: 'test',
-      TENANT_ID: 'test',
+      TENANT_ID: 'tenantId',
       TOKEN_PATH: '/oauth2/token',
+
+      SHAREPOINT_CLIENT_ID: 'sharepointClientId',
+      SHAREPOINT_CLIENT_SECRET: 'sharepointClientSecret',
+      SHAREPOINT_SITE_ID: 'sharepointSiteId',
 
       ZAP_TOKEN_SECRET: 'test',
       NYCID_TOKEN_SECRET: 'test',
@@ -29,7 +35,10 @@ describe('DocumentController (e2e)', () => {
 
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile();
+    })
+      .overrideProvider(SharepointService)
+      .useValue(SharepointServiceMock)
+      .compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();

@@ -115,7 +115,7 @@ export class SharepointService {
     }
   }
 
-  async traverseFolders(
+  private async traverseFolders(
     folderName: string,
     driveId: string,
     accessToken: string,
