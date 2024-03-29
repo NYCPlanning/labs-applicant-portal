@@ -1,8 +1,13 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import Request from 'request';
-import { ConfigService } from 'src/config/config.service';
 import { MSAL, MsalProviderType } from 'src/provider/msal.provider';
 
+export type SharePointListDrive = {
+  name: string;
+  drive: {
+    id: string;
+  };
+};
 export type SharepointFile = {
   id: string;
   name: string;
@@ -23,16 +28,47 @@ export class SharepointService {
   constructor(
     @Inject(MSAL)
     private readonly msalProvider: MsalProviderType,
+  ) {
+    (async () => {
+      const { accessToken } = await msalProvider.getGraphClientToken();
+      const getDriveIdRequestUrl = (listDisplayName: string) =>
+        `${msalProvider.sharePointSiteUrl}/lists?$filter=displayName eq '${listDisplayName}'&$expand=drive($select=id)&$select=name`;
+      const artifactDriveIdRequestUrl = getDriveIdRequestUrl('Artifact');
+      const packageDriveIdRequestUrl = getDriveIdRequestUrl('Package');
 
-    private readonly config: ConfigService,
-  ) {}
+      const options = {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Accept: 'application/json',
+        },
+      };
+      fetch(artifactDriveIdRequestUrl, options).then((response) =>
+        response.json().then((data: { value: Array<SharePointListDrive> }) => {
+          const {
+            drive: { id },
+          } = data.value[0];
+          this.artifactDriveId = id;
+        }),
+      );
+      fetch(packageDriveIdRequestUrl, options).then((response) =>
+        response.json().then((data: { value: Array<SharePointListDrive> }) => {
+          const {
+            drive: { id },
+          } = data.value[0];
+          this.packageDriveId = id;
+        }),
+      );
+    })();
+  }
+  artifactDriveId: string;
+  packageDriveId: string;
 
   // This function renames the folder specified by `folderName` by appending `dcp_archived` to the end of its name
   // Example of folderName: `2021M023_Draft LU Form_3_A234234ASFLKNF3423`
   async archiveSharepointFolder(folderName: string): Promise<any> {
     const newName = `${folderName}/_dcp_archived`;
-    const packageDriveId = this.config.get('SHAREPOINT_PACKAGE_ID_GRAPH');
-    const url = `${this.msalProvider.sharePointSiteUrl}/drives/${packageDriveId}/root:/${folderName}`;
+    const url = `${this.msalProvider.sharePointSiteUrl}/drives/${this.packageDriveId}/root:/${folderName}`;
     const body = {
       name: newName,
     };
@@ -123,7 +159,7 @@ export class SharepointService {
       const { accessToken } = await this.msalProvider.getGraphClientToken();
 
       const [, folderName] = folderUrl.split('dcp_artifacts/');
-      const artifactDriveId = this.config.get('SHAREPOINT_ARTIFACT_ID_GRAPH');
+      const artifactDriveId = this.artifactDriveId;
       return await this.traverseFolders(
         folderName,
         artifactDriveId,
@@ -147,9 +183,8 @@ export class SharepointService {
 
   async getSharepointFile(fileId: string): Promise<any> {
     const { accessToken } = await this.msalProvider.getGraphClientToken();
-    const packageDriveId = this.config.get('SHAREPOINT_PACKAGE_ID_GRAPH');
 
-    const url = `${this.msalProvider.sharePointSiteUrl}/drives/${packageDriveId}/items/${fileId}/content`;
+    const url = `${this.msalProvider.sharePointSiteUrl}/drives/${this.packageDriveId}/items/${fileId}/content`;
     const options = {
       url,
       headers: {
@@ -163,10 +198,9 @@ export class SharepointService {
 
   async deleteSharepointFile(fileIdPath: string): Promise<any> {
     const { accessToken } = await this.msalProvider.getGraphClientToken();
-    const packageDriveId = this.config.get('SHAREPOINT_PACKAGE_ID_GRAPH');
     // Note the lack of slash after "items". This is because the calling controller historically accepted a relative file path.
     // The request is now based on file id. However, it still passes a preceding slash because of its past structure.
-    const url = `${this.msalProvider.sharePointSiteUrl}/drives/${packageDriveId}/items${fileIdPath}`;
+    const url = `${this.msalProvider.sharePointSiteUrl}/drives/${this.packageDriveId}/items${fileIdPath}`;
 
     const options = {
       method: 'DELETE',

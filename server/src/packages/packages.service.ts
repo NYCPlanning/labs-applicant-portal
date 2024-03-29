@@ -338,7 +338,7 @@ export class PackagesService {
     // e.g. P2015K0223_Draft Land Use_3
     const { relativeurl: relativeUrl } = packageDocumentLocation;
 
-    const packageDriveId = this.config.get('SHAREPOINT_PACKAGE_ID_GRAPH');
+    const packageDriveId = this.sharepointService.packageDriveId;
     if (relativeUrl && packageDriveId !== undefined) {
       try {
         const { value: documents } =
