@@ -36,8 +36,6 @@ export default class RwcdsFormModel extends Model {
 
   @attr('string') dcpWhichactionsfromotheragenciesaresought;
 
-  @attr('number') dcpApplicantpursuetype2eligibility;
-
   @attr('string') dcpProposedprojectdevelopmentdescription;
 
   @attr('number') dcpVersion;
@@ -98,12 +96,14 @@ export default class RwcdsFormModel extends Model {
     return Promise.all(
       this.affectedZoningResolutions
         .filter((zoningResolution) => zoningResolution.hasDirtyAttributes)
-        .map((zoningResolution) => zoningResolution.save()),
+        .map((zoningResolution) => zoningResolution.save())
     );
   }
 
   get isAffectedZoningResolutionsDirty() {
-    const dirtyZrs = this.affectedZoningResolutions.filter((zr) => zr.hasDirtyAttributes);
+    const dirtyZrs = this.affectedZoningResolutions.filter(
+      (zr) => zr.hasDirtyAttributes
+    );
 
     return dirtyZrs.length > 0;
   }
