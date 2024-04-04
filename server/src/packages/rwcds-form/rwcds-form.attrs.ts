@@ -19,7 +19,6 @@ export const RWCDS_FORM_ATTRS = [
   'dcp_purposeandneedfortheproposedaction',
   'dcp_describethenoactionscenario',
   'dcp_applicant',
-  'dcp_applicantpursuetype2eligibility',
   'dcp_hasprojectchangedsincesubmissionofthepas',
   'traversedpath',
   'statuscode',
