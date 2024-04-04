@@ -105,22 +105,6 @@
 
     <Ui::Question as |Q|>
       <Q.Legend>
-        Is the applicant seeking to pursue Type II eligibility pursuant to <Ui::ExternalLink href="https://www.nyc.gov/html/oec/downloads/pdf/ceqr/CEQR%20Rules-%2062%20RCNY%20Chapter%205.pdf">62 RCNY 5-05(e) - Green Fast Track for housing?</Ui::ExternalLink>
-      </Q.Legend>
-
-      <form.Field
-        @attribute="dcpPursuetype2eligibility"
-        @type="radio-group"
-        as |RadioGroup|
-      >
-        <RadioGroup
-          @options={{optionset 'pasForm' 'dcpPursuetype2eligibility' 'list'}}>
-        </RadioGroup>
-      </form.Field>
-    </Ui::Question>
-
-    <Ui::Question as |Q|>
-      <Q.Legend>
         Is the proposed Project Area in an <Ui::ExternalLink href="https://zola.planning.nyc.gov/">Industrial Business Zone</Ui::ExternalLink>?
       </Q.Legend>
 
