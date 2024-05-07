@@ -717,6 +717,8 @@ export default class PasFormModel extends Model {
 
   @attr('number') dcpLanduseactiontype2;
 
+  @attr('number') dcpPursuetype2eligibility;
+
   @attr('number') dcpProposedprojectorportionconstruction;
 
   @attr('number') dcpProcommunityfacilitygrosssqft;
@@ -804,7 +806,9 @@ export default class PasFormModel extends Model {
 
   async saveDirtyBbls() {
     return Promise.all(
-      this.bbls.filter((bbl) => bbl.hasDirtyAttributes).map((bbl) => bbl.save())
+      this.bbls
+        .filter((bbl) => bbl.hasDirtyAttributes)
+        .map((bbl) => bbl.save()),
     );
   }
 
@@ -812,7 +816,7 @@ export default class PasFormModel extends Model {
     return Promise.all(
       this.applicants
         .filter((applicant) => applicant.hasDirtyAttributes)
-        .map((applicant) => applicant.save())
+        .map((applicant) => applicant.save()),
     );
   }
 
@@ -833,9 +837,7 @@ export default class PasFormModel extends Model {
   }
 
   get isApplicantsDirty() {
-    const dirtyApplicants = this.applicants.filter(
-      (applicant) => applicant.hasDirtyAttributes
-    );
+    const dirtyApplicants = this.applicants.filter((applicant) => applicant.hasDirtyAttributes);
 
     return dirtyApplicants.length > 0;
   }
