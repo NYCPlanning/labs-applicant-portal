@@ -365,6 +365,15 @@
 
       <Ui::Answer @beside={{true}} as |A|>
         <A.Prompt>
+          Is the applicant seeking to pursue Type II eligibility pursuant to 62 RCNY 5-05(e) - Green Fast Track for housing? 
+        </A.Prompt>
+        <A.Field>
+          {{optionset 'pasForm' 'dcpPursuetype2eligibility' 'label' @package.pasForm.dcpPursuetype2eligibility}}
+        </A.Field>
+      </Ui::Answer>
+
+      <Ui::Answer @beside={{true}} as |A|>
+        <A.Prompt>
           In an Industrial Business Zone
         </A.Prompt>
         <A.Field>
