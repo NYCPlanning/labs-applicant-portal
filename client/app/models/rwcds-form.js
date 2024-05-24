@@ -36,6 +36,8 @@ export default class RwcdsFormModel extends Model {
 
   @attr('string') dcpWhichactionsfromotheragenciesaresought;
 
+  @attr('number') dcpApplicantpursuetype2eligibility;
+
   @attr('string') dcpProposedprojectdevelopmentdescription;
 
   @attr('number') dcpVersion;

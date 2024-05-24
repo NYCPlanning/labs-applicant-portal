@@ -83,6 +83,7 @@ export const PAS_FORM_ATTRS = [
   'dcp_restrictivedeclaration',
   'dcp_cityregisterfilenumber',
   'dcp_restrictivedeclarationrequired',
+  'dcp_pursuetype2eligibility',
 
   // Proposed Development Site
   'dcp_estimatedcompletiondate',
