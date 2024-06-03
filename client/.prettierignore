@@ -13,11 +13,7 @@
 # misc
 /coverage/
 !.*
-.*/
 .eslintcache
-
-# https://www.ember-cli-mirage.com/docs/getting-started/installation#note-for-prettier-users
-/mirage/mirage
 
 # ember-try
 /.node_modules.ember-try/

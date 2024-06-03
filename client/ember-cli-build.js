@@ -1,4 +1,6 @@
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const babelPlugin = require.resolve('ember-auto-import/babel-plugin');
+const sass = require('sass-embedded');
 
 module.exports = function(defaults) {
   const app = new EmberApp(defaults, {
@@ -9,6 +11,7 @@ module.exports = function(defaults) {
       ],
       onlyIncluded: true,
       sourceMap: false,
+      implementation: sass,
     },
     autoprefixer: {
       enabled: true,
@@ -17,6 +20,25 @@ module.exports = function(defaults) {
     },
     'ember-composable-helpers': {
       only: ['toggle', 'map-by', 'reduce', 'includes', 'group-by', 'sort-by', 'keys'],
+    },
+    babel: {
+      plugins: [babelPlugin],
+    },
+   autoImport: {
+      skipBabel: [
+        {
+          package: 'mapbox-gl',
+          semverRange: '*',
+        }
+      ],
+      webpack: {
+        resolve: {
+          fallback: {
+            fs: false,
+            path: false,
+          },
+        },
+      },
     },
   });
 

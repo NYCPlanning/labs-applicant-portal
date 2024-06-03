@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { action } from '@ember/object';
+import { action, get } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import SaveablePasFormValidations from '../../../validations/saveable-pas-form';
@@ -22,7 +22,8 @@ export default class PasFormComponent extends Component {
     SubmittablePackageFormValidations,
   };
 
-  @tracked recordsToDelete = [];
+  @tracked
+  recordsToDelete = [];
 
   @service
   router;
@@ -31,20 +32,28 @@ export default class PasFormComponent extends Component {
   store;
 
   get package() {
+    console.log(" we are here getting package");
+    console.log("getting package", this.args.package ? this.args.package : "failed getting package");
+
     return this.args.package || {};
   }
 
   get pasForm() {
+    console.log(" we are here getting rwcds form");
+    console.log("getting PAS form", this.package.pasForm ? this.package.pasForm : "failed getting PAS form");
     return this.package.pasForm || {};
   }
 
   get packageIsDirtyOrRecordsDeleted() {
+    console.log(" we are here getting packageIsDirtyOrRecordsDeleted");
     return this.package.isDirty || this.recordsToDelete.length > 0;
   }
 
   @action
   async savePackage() {
     try {
+      console.log("saving package", this.args.package ? this.args.package : "no package to save");
+      console.log("saving package", this.recordsToDelete ? this.recordsToDelete : "no records to delete");
       await this.args.package.save(this.recordsToDelete);
       this.recordsToDelete = [];
     } catch (error) {
