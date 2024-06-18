@@ -39,7 +39,7 @@ Once you have SSL enabled...
     - Copy the `server.key` and `server.crt` files from your `local-cert-generator` repo and paste both files into the `labs-applicant-portal/client/ssl/` folder.
     - Activate the compatible node version `nvm use`
     - Run `yarn` to install dependencies for the client.
-    - Run `yarn start:dev` to start a development server
+    - Run `yarn start:ssl` to start a development server
 
 ## Pre-commit linting and testing
  The client and server application node versions have become out of sync with each other. Consequently, the pre-commit hooks have been turned off until both the server and client are on the same node version.
