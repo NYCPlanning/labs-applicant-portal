@@ -287,7 +287,10 @@
 
     <Ui::Answer @beside={{true}} as |A|>
       <A.Prompt>
-        Is the applicant seeking to pursue Type II eligibility pursuant to 62 RCNY 5-05(e) - Green Fast Track for housing? 
+        Is the applicant seeking to pursue Type II eligibility pursuant to 
+        <Ui::ExternalLink href="https://codelibrary.amlegal.com/codes/newyorkcity/latest/NYCrules/0-0-0-89485">
+          62 RCNY 5-05(e) - Green Fast Track for housing?
+        </Ui::ExternalLink>
       </A.Prompt>
       <A.Field>
         {{optionset 'rwcdsForm' 'dcpApplicantpursuetype2eligibility' 'label' @package.rwcdsForm.dcpApplicantpursuetype2eligibility}}
