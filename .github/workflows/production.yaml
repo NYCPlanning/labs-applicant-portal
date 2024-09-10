@@ -1,21 +1,17 @@
-name: 🎭 Deploy to staging
+name: 🎭 Deploy to production
 
-on:
-    push:
-        branches:
-            - main
-
+on: workflow_dispatch
+  
 jobs:
     deploy-server:
         name: 🚀 Deploy server
         environment:
-            name: staging
-            url: https://applicant-portal-staging.herokuapp.com
+            name: production
+            url: https://applicant-portal.herokuapp.com
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
               with:
-                ref: 'main'
                 sparse-checkout: server
             - name: Deploy server to Heroku
               uses: akhileshns/heroku-deploy@v3.13.15
@@ -28,6 +24,14 @@ jobs:
               env:
                 HD_ADO_PRINCIPAL: ${{secrets.ADO_PRINCIPAL}}
                 HD_AUTHORITY_HOST_URL: ${{secrets.AUTHORITY_HOST_URL}}
+                HD_CITYPAY_AGENCYID: ${{secrets.CITYPAY_AGENCYID}}
+                HD_CITYPAY_CUSTOMER_LINK: ${{secrets.CITYPAY_CUSTOMER_LINK}}
+                HD_CITYPAY_DOMAIN: ${{secrets.CITYPAY_DOMAIN}}
+                HD_CITYPAY_PASSWORD: ${{secrets.CITYPAY_PASSWORD}}
+                HD_CITYPAY_POSTBACK: ${{secrets.CITYPAY_POSTBACK}}
+                HD_CITYPAY_RETURN_FROM_CART: ${{secrets.CITYPAY_RETURN_FROM_CART}}
+                HD_CITYPAY_RETURN_FROM_CHECKOUT: ${{secrets.CITYPAY_RETURN_FROM_CHECKOUT}}
+                HD_CITYPAY_USERNAME: ${{secrets.CITYPAY_USERNAME}}
                 HD_CLIENT_ID: ${{secrets.CLIENT_ID}}
                 HD_CLIENT_SECRET: ${{secrets.CLIENT_SECRET}}
                 HD_CRM_HOST: ${{secrets.CRM_HOST}}
