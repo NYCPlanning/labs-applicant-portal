@@ -1,0 +1,163 @@
+name: 🌠 Deploy to production
+
+on: workflow_dispatch
+
+jobs:
+  test-client:
+    name:  🧪 Test client code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: client
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: install dependencies
+        run: yarn install --frozen-lockfile --non-interactive
+        working-directory: client
+      - name: build
+        env:
+          DISABLE_SOURCE_MAPS: true
+          BROCCOLI_ENV: production
+        run: yarn build
+        working-directory: client
+      - name: test
+        run: yarn test
+        working-directory: client
+  deploy-server:
+    name: 🚀 Deploy server
+    needs: test-client
+    environment: 
+      name: production
+      url: https://applicants-api.nycplanningdigital.com
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: server
+      - uses: akhileshns/heroku-deploy@v3.13.15
+        name: Deploy server to Heroku
+        with:
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{ vars.HEROKU_APP_NAME }}
+          team: ${{secrets.HEROKU_TEAM}}
+          appdir: server
+        env:
+          HD_ADO_PRINCIPAL: ${{ secrets.ADO_PRINCIPAL }}
+          HD_AUTHORITY_HOST_URL: ${{ secrets.AUTHORITY_HOST_URL }}
+          HD_CITYPAY_AGENCYID: ${{ secrets.CITYPAY_AGENCYID }}
+          HD_CITYPAY_CUSTOMER_LINK: ${{ secrets.CITYPAY_CUSTOMER_LINK }}
+          HD_CITYPAY_DOMAIN: ${{ secrets.CITYPAY_DOMAIN }}
+          HD_CITYPAY_PASSWORD: ${{ secrets.CITYPAY_PASSWORD }}
+          HD_CITYPAY_POSTBACK: ${{ secrets.CITYPAY_POSTBACK }}
+          HD_CITYPAY_RETURN_FROM_CART: ${{ secrets.CITYPAY_RETURN_FROM_CART }}
+          HD_CITYPAY_RETURN_FROM_CHECKOUT: ${{ secrets.CITYPAY_RETURN_FROM_CHECKOUT }}
+          HD_CITYPAY_USERNAME: ${{ secrets.CITYPAY_USERNAME }}
+          HD_CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          HD_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          HD_CRM_HOST: ${{ secrets.CRM_HOST }}
+          HD_CRM_SERVICE_CONTACT_ID: ${{ secrets.CRM_SERVICE_CONTACT_ID }}
+          HD_CRM_URL_PATH: ${{ secrets.CRM_URL_PATH }}
+          HD_FIXIE_URL: ${{ secrets.FIXIE_URL }}
+          HD_MS_APPLICANT_PORTAL_PASSWORD: ${{ secrets.MS_APPLICANT_PORTAL_PASSWORD }}
+          HD_MS_APPLICANT_PORTAL_USERNAME: ${{ secrets.MS_APPLICANT_PORTAL_USERNAME }}
+          HD_NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
+          HD_NEW_RELIC_LOG: ${{ secrets.NEW_RELIC_LOG }}
+          HD_NODE_ENV: ${{ vars.NODE_ENV }}
+          HD_NYCID_DOMAIN: ${{ secrets.NYCID_DOMAIN }}
+          HD_NYCID_SERVICE_ACCOUNT_USERNAME: ${{ secrets.NYCID_SERVICE_ACCOUNT_USERNAME }}
+          HD_NYCID_TOKEN_SECRET: ${{ secrets.NYCID_TOKEN_SECRET }}
+          HD_PAPERTRAIL_API_TOKEN: ${{ secrets.PAPERTRAIL_API_TOKEN }}
+          HD_PAYMENT_BASE_URL: ${{ secrets.PAYMENT_BASE_URL }}
+          HD_PAYMENT_IP_RANGE: ${{ secrets.PAYMENT_IP_RANGE }}
+          HD_PAYMENT_STEP1_URL: ${{ secrets.PAYMENT_STEP1_URL }}
+          HD_RER_FILETYPE_UUID: ${{ secrets.RER_FILETYPE_UUID }}
+          HD_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          HD_SHAREPOINT_CLIENT_ID: ${{ secrets.SHAREPOINT_CLIENT_ID }}
+          HD_SHAREPOINT_CLIENT_SECRET: ${{ secrets.SHAREPOINT_CLIENT_SECRET }}
+          HD_SHAREPOINT_CRM_SITE: ${{ secrets.SHAREPOINT_CRM_SITE }}
+          HD_SHAREPOINT_SITE_ID: ${{ secrets.SHAREPOINT_SITE_ID }}
+          HD_SHAREPOINT_TARGET_HOST: ${{ secrets.SHAREPOINT_TARGET_HOST }}
+          HD_TENANT_ID: ${{ secrets.TENANT_ID }}
+          HD_TOKEN_PATH: ${{ secrets.TOKEN_PATH }}
+          HD_ZAP_TOKEN_SECRET: ${{ secrets.ZAP_TOKEN_SECRET }}
+  deploy-client-prod:
+    name: 🛫 Deploy client
+    needs: [test-client, deploy-server]
+    environment:
+      name: production
+      url: https://applicants.planninglabs.nyc
+    runs-on: ubuntu-latest
+    env:
+      HOST: ${{ vars.ZAP_API_HOST }}
+      MAINTENANCE_START: ${{ vars.MAINTENANCE_START }}
+      MAINTENANCE_END: ${{ vars.MAINTENANCE_END }}
+      HD_NYCID_DOMAIN: ${{ secrets.NYCID_DOMAIN }}
+      NYCID_CLIENT_ID: ${{ vars.NYCID_CLIENT_ID }}
+      NYCID_DOMAIN: ${{ vars.NYCID_DOMAIN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+            sparse-checkout: client
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 12.x
+      - name: Install application dependencies 
+        working-directory: client
+        run: yarn install --immutable --immutable-cache --check-cache
+      - name: Build client
+        working-directory: client
+        run: yarn run build --environment=production
+      - name: Install netlify
+        # Use npm over yarn because yarn was not respecting the exact version of a dependency
+        run: npm i -g netlify-cli@11.8.3
+      - name: Deploy client to Netlify
+        run: |
+          netlify deploy \
+          --dir client/dist \
+          --site ${{secrets.NETLIFY_SITE_ID}} \
+          --auth ${{secrets.NETLIFY_AUTH_TOKEN}} \
+          --message "${{ github.event.head_commit.message }}"
+          --prod
+  deploy-client-master:
+    name: 🛫 Deploy client
+    needs: [test-client, deploy-server]
+    environment:
+      name: production
+      url: https://applicants.planning.nyc.gov
+    runs-on: ubuntu-latest
+    env:
+      HOST: ${{ vars.ZAP_API_HOST }}
+      MAINTENANCE_START: ${{ vars.MAINTENANCE_START }}
+      MAINTENANCE_END: ${{ vars.MAINTENANCE_END }}
+      HD_NYCID_DOMAIN: ${{ secrets.NYCID_DOMAIN }}
+      NYCID_CLIENT_ID: ${{ vars.NYCID_CLIENT_ID }}
+      NYCID_DOMAIN: ${{ vars.NYCID_DOMAIN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+            sparse-checkout: client
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 12.x
+      - name: Install application dependencies 
+        working-directory: client
+        run: yarn install --immutable --immutable-cache --check-cache
+      - name: Build client
+        working-directory: client
+        run: yarn run build --environment=production
+      - name: Install netlify
+        # Use npm over yarn because yarn was not respecting the exact version of a dependency
+        run: npm i -g netlify-cli@11.8.3
+      - name: Deploy client to Netlify
+        run: |
+          netlify deploy \
+          --dir client/dist \
+          --alias master \
+          --site ${{secrets.NETLIFY_SITE_ID}} \
+          --auth ${{secrets.NETLIFY_AUTH_TOKEN}} \
+          --message "${{ github.event.head_commit.message }}"
