@@ -46,7 +46,7 @@ export default class PackageAdapter extends JSONAPIAdapter {
 
     const data = serializeIntoHash(store, type, snapshot);
 
-    let url = this.buildURL(type.modelName, snapshot.id, snapshot, 'updateRecord');
+    const url = this.buildURL(type.modelName, snapshot.id, snapshot, 'updateRecord');
 
     return this.ajax(url, 'PATCH', { data });
   }
