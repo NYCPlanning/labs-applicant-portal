@@ -11,6 +11,7 @@ export default class Router extends EmberRouterScroll {
 Router.map(function() {
   // eslint-disable-line
   this.route('projects');
+  this.route('project-form');
   this.route('login');
   this.route('logout');
 

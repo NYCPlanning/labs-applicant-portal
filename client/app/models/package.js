@@ -46,6 +46,9 @@ export default class PackageModel extends Model {
   @belongsTo('project', { async: false })
   project;
 
+  @belongsTo('project-form', { async: false })
+  projectForm;
+
   @belongsTo('pas-form', { async: false })
   pasForm;
 
