@@ -1,13 +1,15 @@
 module.exports = function(environment) {
   const ENV = {
-    modulePrefix: 'client',
+    modulePrefix: "client",
     environment,
-    rootURL: '/',
-    locationType: 'auto',
+    rootURL: "/",
+    locationType: "auto",
     host: getHost(environment),
     NYCIDDomain: getOAuthDomain(environment),
     NYCIDLocation: getOAuthLoginEndpoint(environment),
     maintenanceTimes: getMaintenanceTimes(),
+    enableSelfService: getSelfService(),
+
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -20,9 +22,9 @@ module.exports = function(environment) {
     },
     fontawesome: {
       icons: {
-        'free-brands-svg-icons': 'all',
-        'free-regular-svg-icons': 'all',
-        'free-solid-svg-icons': 'all',
+        "free-brands-svg-icons": "all",
+        "free-regular-svg-icons": "all",
+        "free-solid-svg-icons": "all",
       },
     },
 
@@ -31,10 +33,10 @@ module.exports = function(environment) {
       // when it is created
     },
 
-    'labs-search': {
-      host: 'https://search-api-production.herokuapp.com',
-      route: 'search',
-      helpers: ['geosearch-v2', 'bbl'],
+    "labs-search": {
+      host: "https://search-api-production.herokuapp.com",
+      route: "search",
+      helpers: ["geosearch-v2", "bbl"],
     },
   };
 
@@ -138,4 +140,12 @@ function getMaintenanceTimes() {
   } = process.env;
 
   return [MAINTENANCE_START, MAINTENANCE_END];
+}
+
+function getSelfService() {
+const {
+  SHOW_SELF_SERVICE = false
+} = process.env
+
+  return SHOW_SELF_SERVICE;
 }
