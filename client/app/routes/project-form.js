@@ -6,12 +6,7 @@ export default class ProjectFormRoute extends Route.extend(AuthenticatedRouteMix
     authenticationRoute = '/';
 
     async model(params) {
-        const projectFormPackage = await this.store.findRecord('package', params.id, {
-            reload: true,
-            include: [
-                'project.artifact'
-            ].join(),
-        })
+        const projectFormPackage = await this.store.createRecord('project-form')
 
         return RSVP.hash({
             package: projectFormPackage
