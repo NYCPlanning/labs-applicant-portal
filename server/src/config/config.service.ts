@@ -33,4 +33,10 @@ export class ConfigService {
   get(key: string): any {
     return this.envConfig[key];
   }
+
+  get featureFlag() {
+    return {
+      selfService: this.envConfig["FEATURE_FLAG_SELF_SERVICE"] === "ON"
+    }
+  }
 }

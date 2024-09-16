@@ -45,6 +45,7 @@ jobs:
           team: ${{secrets.HEROKU_TEAM}}
           appdir: server
         env:
+          HD_FEATURE_FLAG_SELF_SERVICE: ${{ vars.FEATURE_FLAG_SELF_SERVICE }}
           HD_ADO_PRINCIPAL: ${{ secrets.ADO_PRINCIPAL }}
           HD_AUTHORITY_HOST_URL: ${{ secrets.AUTHORITY_HOST_URL }}
           HD_CITYPAY_AGENCYID: ${{ secrets.CITYPAY_AGENCYID }}
@@ -91,6 +92,7 @@ jobs:
       url: https://applicants.planninglabs.nyc
     runs-on: ubuntu-latest
     env:
+      FEATURE_FLAG_SELF_SERVICE: ${{ vars.FEATURE_FLAG_SELF_SERVICE }}
       HOST: ${{ vars.ZAP_API_HOST }}
       MAINTENANCE_START: ${{ vars.MAINTENANCE_START }}
       MAINTENANCE_END: ${{ vars.MAINTENANCE_END }}
@@ -130,6 +132,7 @@ jobs:
       url: https://applicants.planning.nyc.gov
     runs-on: ubuntu-latest
     env:
+      FEATURE_FLAG_SELF_SERVICE: ${{ vars.FEATURE_FLAG_SELF_SERVICE }}
       HOST: ${{ vars.ZAP_API_HOST }}
       MAINTENANCE_START: ${{ vars.MAINTENANCE_START }}
       MAINTENANCE_END: ${{ vars.MAINTENANCE_END }}
