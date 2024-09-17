@@ -95,7 +95,6 @@ jobs:
       MAINTENANCE_START: ${{ vars.MAINTENANCE_START }}
       MAINTENANCE_END: ${{ vars.MAINTENANCE_END }}
       HD_NYCID_DOMAIN: ${{ secrets.NYCID_DOMAIN }}
-      NODE_ENV: ${{ vars.NODE_ENV }}
     steps:
       - uses: actions/checkout@v4
         with:
