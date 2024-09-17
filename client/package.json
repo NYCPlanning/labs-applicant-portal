@@ -33,7 +33,6 @@
     "ember-auto-import": "^1.5.3",
     "ember-changeset": "^3.3.4",
     "ember-changeset-validations": "^3.3.1",
-    "ember-cli": "~3.17.0",
     "ember-cli-app-version": "^3.2.0",
     "ember-cli-babel": "^7.18.0",
     "ember-cli-clipboard": "^0.15.0",
@@ -95,6 +94,7 @@
     "edition": "octane"
   },
   "dependencies": {
+    "ember-cli": "~3.17.0",
     "jwt-decode": "^3.0.0-beta.2"
   },
   "lint-staged": {
