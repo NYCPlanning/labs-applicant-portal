@@ -80,7 +80,6 @@ jobs:
       HOST: ${{ vars.ZAP_API_HOST }}
       MAINTENANCE_START: ${{ vars.MAINTENANCE_START }}
       MAINTENANCE_END: ${{ vars.MAINTENANCE_END }}
-      NODE_ENV: ${{ vars.NODE_ENV }}
     steps:
       - uses: actions/checkout@v4
         with:
