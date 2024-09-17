@@ -30,7 +30,7 @@ jobs:
         working-directory: client
   deploy-server:
     name: 🚀 Deploy server
-    needs: test-client
+    # needs: test-client
     environment:
       name: staging
       url: https://staging-applicants-api.nycplanningdigital.com
@@ -65,6 +65,7 @@ jobs:
           HD_SHAREPOINT_CLIENT_ID: ${{ secrets.SHAREPOINT_CLIENT_ID }}
           HD_SHAREPOINT_CLIENT_SECRET: ${{ secrets.SHAREPOINT_CLIENT_SECRET }}
           HD_SHAREPOINT_CRM_SITE: ${{ secrets.SHAREPOINT_CRM_SITE }}
+          HD_SHAREPOINT_SITE_ID: ${{ secrets.SHAREPOINT_SITE_ID }}
           HD_SHAREPOINT_TARGET_HOST: ${{ secrets.SHAREPOINT_TARGET_HOST }}
           HD_TENANT_ID: ${{ secrets.TENANT_ID }}
           HD_TOKEN_PATH: ${{ secrets.TOKEN_PATH }}
