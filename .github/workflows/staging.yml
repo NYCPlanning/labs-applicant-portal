@@ -92,7 +92,7 @@ jobs:
           node-version: 12.x
       - name: Install application dependencies 
         working-directory: client
-        run: yarn install --immutable --immutable-cache --check-cache
+        run: yarn install
       - name: Build client
         working-directory: client
         run: yarn run build --environment=production
