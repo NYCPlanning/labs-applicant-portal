@@ -97,7 +97,7 @@ jobs:
         run: yarn install
       - name: Build client
         working-directory: client
-        run: yarn run build
+        run: yarn run build --environment=development
       - name: Install netlify
         # Use npm over yarn because yarn was not respecting the exact version of a dependency
         run: npm i -g netlify-cli@11.8.3
