@@ -89,6 +89,8 @@ jobs:
       HOST: ${{ vars.ZAP_API_HOST }}
       MAINTENANCE_START: ${{ vars.MAINTENANCE_START }}
       MAINTENANCE_END: ${{ vars.MAINTENANCE_END }}
+      NYCID_CLIENT_ID: ${{ vars.NYCID_CLIENT_ID }}
+      NYCID_DOMAIN: ${{ vars.NYCID_DOMAIN }}
     steps:
       - uses: actions/checkout@v4
         with:
