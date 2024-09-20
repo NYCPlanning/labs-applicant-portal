@@ -1,6 +1,7 @@
 import EmberRouterScroll from 'ember-router-scroll';
 import config from './config/environment';
 
+const SHOW_SELF_SERVICE = config.enableSelfService;
 export default class Router extends EmberRouterScroll {
   location = config.locationType;
 
@@ -9,8 +10,13 @@ export default class Router extends EmberRouterScroll {
 
 // TODO: wrap in an authenticated route
 Router.map(function() {
+   console.log(`SHOW_SELF_SERVICE`, SHOW_SELF_SERVICE);
   // eslint-disable-line
-  this.route('projects');
+  this.route('projects', function() {
+    if (SHOW_SELF_SERVICE) {
+      this.route('new-project');
+    }
+  });
   this.route('login');
   this.route('logout');
 

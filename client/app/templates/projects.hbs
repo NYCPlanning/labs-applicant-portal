@@ -2,6 +2,14 @@
   <Crumb @text="My Projects" @current={{true}} />
 </Ui::Breadcrumbs>
 
+<div class="grid-x grid-padding-x button">
+   <LinkTo  
+      @route='projects.new-project'
+      class="button">
+      Create New Project
+    </LinkTo>
+</div>
+
 <div class="grid-x grid-padding-x">
   <div class="cell large-8">
 
