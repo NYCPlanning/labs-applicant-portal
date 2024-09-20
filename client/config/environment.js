@@ -8,7 +8,7 @@ module.exports = function(environment) {
     NYCIDDomain: getOAuthDomain(environment),
     NYCIDLocation: getOAuthLoginEndpoint(environment),
     maintenanceTimes: getMaintenanceTimes(),
-    enableSelfService: getSelfService(),
+    featureFlagSelfService: getFeatureFlagSelfService(),
 
     EmberENV: {
       FEATURES: {
@@ -31,7 +31,6 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-      showSelfService: false,
     },
 
     "labs-search": {
@@ -143,10 +142,6 @@ function getMaintenanceTimes() {
   return [MAINTENANCE_START, MAINTENANCE_END];
 }
 
-function getSelfService() {
-const {
-  SHOW_SELF_SERVICE = false
-} = process.env
-
-  return SHOW_SELF_SERVICE;
+function getFeatureFlagSelfService() {
+  return process.env.FEATURE_FLAG_SELF_SERVICE === "ON";
 }

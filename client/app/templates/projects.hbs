@@ -2,18 +2,6 @@
   <Crumb @text="My Projects" @current={{true}} />
 </Ui::Breadcrumbs>
 
-{{!-- template-lint-disable no-log --}}
-{{log "self service" this.showSelfService}}
-{{#if this.showSelfService}}
-<div class="grid-x grid-padding-x button">
-   <LinkTo  
-      @route='projects.new-project'
-      class="button">
-      Create New Project
-    </LinkTo>
-</div>
-{{/if}}
-
 <div class="grid-x grid-padding-x">
   <div class="cell large-8">
 

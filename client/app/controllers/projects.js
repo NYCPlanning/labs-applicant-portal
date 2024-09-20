@@ -1,12 +1,9 @@
 import Controller from '@ember/controller';
 import { sort } from '@ember/object/computed';
-import ENV from 'client/config/environment';
 import {
   STATUSCODE,
   DCPVISIBILITY,
 } from '../optionsets/package';
-
-const SHOW_SELF_SERVICE = ENV.enableSelfService;
 
 export function packageIsToDo(projectPackages) {
   return projectPackages.some((projectPackage) => {
@@ -59,8 +56,4 @@ export default class ProjectsController extends Controller {
     return projectA.dcpProjectname.localeCompare(projectB.dcpProjectname);
   })
   sortedDoneProjects;
-
-  get showSelfService() {
-    return SHOW_SELF_SERVICE;
-  }
 }
