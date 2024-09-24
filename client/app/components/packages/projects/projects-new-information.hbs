@@ -1,0 +1,18 @@
+{{#let @form as |form|}}
+<form.Section @title="Project Information">
+
+  <Ui::Question @required={{true}} as |Q|>
+    <Q.Label>
+      Project Name
+    </Q.Label>
+
+    <form.Field 
+      @attribute="dcpProjectname" 
+      @type="text-input" 
+      id={{Q.questionId}} 
+      @showCounter={{true}}
+      @maxlength="50"
+    />
+  </Ui::Question>
+</form.Section>
+{{/let}}

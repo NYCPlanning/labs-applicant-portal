@@ -1,0 +1,45 @@
+<SaveableForm
+  @model={{@package}}
+  @validators={{array (hash) this.validations.SubmittableProjectsNewForm }}
+  as |saveableProjectsNewForm|
+>
+  <div class="grid-x grid-margin-x">
+    <div class="cell large-8">
+      <section class="form-section">
+        <h1 class="header-large">
+          Project Initiation Form
+        </h1>
+        <p>
+          The <b>Project Initiation Form</b> begins the project tracking process and gives NYC Planning the necessary
+          details before the Informational Interest meeting. By submitting this form, you confirm your intent to file a
+          Land Use Application with NYC Planning.
+        </p>
+        <p>
+          While some projects might still be in the early stages, all required fields (*) on this form must be completed.
+          Once submitted, your project will be available to view in this portal. After reviewing your submission, NYC
+          Planning will contact you with the next steps.
+        </p>
+      </section>
+      <Packages::Projects::ProjectsNewInformation @form={{saveableProjectsNewForm}} />
+    </div>
+  
+    <div class="cell large-4 sticky-sidebar">
+      <saveableProjectsNewForm.PageNav>
+        <saveableProjectsNewForm.SubmitButton @isEnabled={{saveableProjectsNewForm.isSubmittable}} data-test-save-button />
+      </saveableProjectsNewForm.PageNav>
+      <saveableProjectsNewForm.ConfirmationModal @action={{component saveableProjectsNewForm.SubmitButton
+        isEnabled=saveableProjectsNewForm.isSubmittable onClick=this.submitPackage class="no-margin" }}
+        @continueButtonTitle="Continue Editing" data-test-confirm-submit-button={{true}}>
+        <h6>Confirm New Project Submission</h6>
+        <p class="header-large medium-margin-top small-margin-bottom">
+          Are you sure?
+        </p>
+        <p>
+          Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including
+          the
+          signature form) have been uploaded.
+        </p>
+      </saveableProjectsNewForm.ConfirmationModal>
+    </div>
+  </div>
+</SaveableForm>
