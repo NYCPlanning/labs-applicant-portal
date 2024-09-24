@@ -85,10 +85,10 @@ export default class PackageModel extends Model {
   dcpVisibility;
 
   @attr('number')
-  dcpPackageversion
+  dcpPackageversion;
 
   @attr('string')
-  dcpPackagenotes
+  dcpPackagenotes;
 
   @attr({ defaultValue: () => [] })
   documents;
@@ -101,9 +101,11 @@ export default class PackageModel extends Model {
   }
 
   get isLUPackage() {
-    return this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code
-    || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code
-    || this.dcpPackagetype === DCPPACKAGETYPE.POST_CERT_LU.code;
+    return (
+      this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code
+      || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code
+      || this.dcpPackagetype === DCPPACKAGETYPE.POST_CERT_LU.code
+    );
   }
 
   setAttrsForSubmission() {
@@ -192,15 +194,18 @@ export default class PackageModel extends Model {
     try {
       await this.fileManager.save();
     } catch (e) {
-      console.log('Error saving files: ', e);// eslint-disable-line no-console
+      console.log('Error saving files: ', e); // eslint-disable-line no-console
 
       // See comment on the tracked fileUploadError property
       // definition above.
-      this.fileUploadErrors = [{
-        code: 'UPLOAD_DOC_FAILED',
-        title: 'Failed to upload documents',
-        detail: 'An error occured while  uploading your documents. Please refresh and retry.',
-      }];
+      this.fileUploadErrors = [
+        {
+          code: 'UPLOAD_DOC_FAILED',
+          title: 'Failed to upload documents',
+          detail:
+            'An error occured while  uploading your documents. Please refresh and retry.',
+        },
+      ];
     }
 
     if (this.isLUPackage && this.project.artifact) {
@@ -211,11 +216,14 @@ export default class PackageModel extends Model {
 
         // See comment on the tracked fileUploadError property
         // definition above.
-        this.fileUploadErrors = [{
-          code: 'UPLOAD_DOC_FAILED',
-          title: 'Failed to upload artifact documents',
-          detail: 'An error occured while  uploading your documents. Please refresh and retry.',
-        }];
+        this.fileUploadErrors = [
+          {
+            code: 'UPLOAD_DOC_FAILED',
+            title: 'Failed to upload artifact documents',
+            detail:
+              'An error occured while  uploading your documents. Please refresh and retry.',
+          },
+        ];
       }
     }
 
@@ -233,7 +241,8 @@ export default class PackageModel extends Model {
   get isSingleCeqrInvoiceQuestionnaireDirty() {
     if (this.singleCeqrInvoiceQuestionnaire) {
       return this.singleCeqrInvoiceQuestionnaire.hasDirtyAttributes;
-    } return false;
+    }
+    return false;
   }
 
   async saveDirtySingleCeqrInvoiceQuestionnaire() {
@@ -250,10 +259,7 @@ export default class PackageModel extends Model {
 
   async saveDeletedRecords(recordsToDelete) {
     if (recordsToDelete) {
-      return Promise.all(
-        recordsToDelete
-          .map((record) => record.save()),
-      );
+      return Promise.all(recordsToDelete.map((record) => record.save()));
     }
   }
 
@@ -267,22 +273,28 @@ export default class PackageModel extends Model {
 
   get isDirty() {
     const isPackageDirty = this.hasDirtyAttributes
-      || this.fileManager.isDirty || (this.isLUPackage && this.project.isDirty);
+      || this.fileManager.isDirty
+      || (this.isLUPackage && this.project.isDirty);
 
     if (this.dcpPackagetype === DCPPACKAGETYPE.PAS_PACKAGE.code) {
-      return isPackageDirty
+      return (
+        isPackageDirty
         || this.pasForm.hasDirtyAttributes
         || this.pasForm.isBblsDirty
         || this.pasForm.isApplicantsDirty
-        || this.pasForm.isProjectDirty;
+        || this.pasForm.isProjectDirty
+      );
     }
     if (this.dcpPackagetype === DCPPACKAGETYPE.RWCDS.code) {
-      return isPackageDirty
+      return (
+        isPackageDirty
         || this.rwcdsForm.hasDirtyAttributes
-        || this.rwcdsForm.isAffectedZoningResolutionsDirty;
+        || this.rwcdsForm.isAffectedZoningResolutionsDirty
+      );
     }
     if (this.isLUPackage) {
-      return isPackageDirty
+      return (
+        isPackageDirty
         || this.landuseForm.hasDirtyAttributes
         || this.landuseForm.isBblsDirty
         || this.landuseForm.isApplicantsDirty
@@ -291,15 +303,14 @@ export default class PackageModel extends Model {
         || this.landuseForm.isLanduseGeographiesDirty
         || this.landuseForm.isRelatedActionsDirty
         || this.landuseForm.isAffectedZoningResolutionsDirty
-        || this.landuseForm.isZoningMapChangesDirty;
+        || this.landuseForm.isZoningMapChangesDirty
+      );
     }
     if (this.dcpPackagetype === DCPPACKAGETYPE.FILED_EAS.code) {
-      return isPackageDirty
-        || this.isSingleCeqrInvoiceQuestionnaireDirty;
+      return isPackageDirty || this.isSingleCeqrInvoiceQuestionnaireDirty;
     }
     if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_SCOPE_OF_WORK.code) {
-      return isPackageDirty
-        || this.isSingleCeqrInvoiceQuestionnaireDirty;
+      return isPackageDirty || this.isSingleCeqrInvoiceQuestionnaireDirty;
     }
 
     return isPackageDirty;

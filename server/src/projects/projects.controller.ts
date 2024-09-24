@@ -3,7 +3,6 @@ import {
   Get,
   Patch,
   Body,
-  Query,
   HttpException,
   HttpStatus,
   Session,
@@ -11,6 +10,7 @@ import {
   UseGuards,
   UsePipes,
   Param,
+  Post,
 } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { ConfigService } from '../config/config.service';
@@ -126,6 +126,21 @@ export class ProjectsController {
           HttpStatus.INTERNAL_SERVER_ERROR,
         );
       }
+    }
+  }
+
+  @Post('/')
+  async createProject(@Body() body) {
+    if (!this.config.featureFlag.selfService) {
+      throw new HttpException({
+        code: "NOT_FOUND",
+        title: "Not found",
+      },
+      HttpStatus.NOT_FOUND)
+    }
+
+    return {
+      ...body
     }
   }
 

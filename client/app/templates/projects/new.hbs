@@ -1,0 +1,10 @@
+<Ui::Breadcrumbs as | Crumb |>
+    <Crumb @text="My Projects" @route="projects" />
+    <Crumb @text="New" @current={{true}} />
+</Ui::Breadcrumbs>
+
+<Packages::Projects::New 
+  @package={{@model}}
+/>
+
+{{outlet}}

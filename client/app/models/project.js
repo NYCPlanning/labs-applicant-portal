@@ -233,4 +233,8 @@ export default class ProjectModel extends Model {
       .sortBy('dcpPackageversion')
       .reverse();
   }
+
+  async submit() {
+    await super.save();
+  }
 }
