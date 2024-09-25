@@ -1,4 +1,30 @@
-<h1>Create your new project here</h1>
-{{!-- {{ log "controller data" this.saveProjectNew }} --}}
-<Project::New @controller={{ this }}/>
-{{outlet}}
+<Ui::Breadcrumbs as | Crumb |>
+    <Crumb @text="My Projects" @route="projects" />
+    <Crumb @text="New" @current={{true}} />
+</Ui::Breadcrumbs>
+<div class="grid-x grid-padding-x">
+    <div class="cell large-8">
+        <h2>Project Initiation Form</h2>
+        <p>
+            The <bold>Project Initiation Form</bold> begins the project tracking process and gives NYC planning
+            the necessary details before the Informational Interest Meeting. By submitting this form, you confirm
+            your intent to file a Land Use Application with NYC Planning.
+        </p>
+        <p>
+            While some projects might still be in the early stage, all required fields on this form must be completed.
+            Once submitted, your project will be available to view in this portal. After reviewing your submission,
+            NYC Planning will contact you with the next steps.
+        </p>
+        <Project::New @controller={{ this }}/>
+    </div>
+    <div class="cell large-4">
+        <Ui::PageNav 
+           @navItems={{array
+                (hash anchorId="project-info"
+                    label="Project Information"
+                ) 
+           }} 
+        />
+        <Messages::Assistance />
+    </div>
+</div>
