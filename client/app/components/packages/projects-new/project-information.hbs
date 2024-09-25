@@ -1,0 +1,12 @@
+{{#let @form as |form|}}
+<form.Section @title="Project Information">
+
+    <Ui::Question as |Q|>
+        <Q.Label>
+            Project Name
+        </Q.Label>
+
+        <form.Field @attribute="dcpProjectname" @type="text-area" id={{Q.questionId}} />
+    </Ui::Question>
+</form.Section>
+{{/let}}

@@ -20,11 +20,11 @@ export default class PackageModel extends Model {
 
       this.fileManager = new FileManager(
         this.id,
-        'package',
+        "package",
         this.documents,
         [],
         fileQueue,
-        this.session,
+        this.session
       );
     }
   }
@@ -43,57 +43,60 @@ export default class PackageModel extends Model {
   @service
   fileQueue;
 
-  @belongsTo('project', { async: false })
+  @belongsTo("project", { async: false })
   project;
 
-  @belongsTo('pas-form', { async: false })
+  @belongsTo("pas-form", { async: false })
   pasForm;
 
-  @belongsTo('rwcds-form', { async: false })
+  @belongsTo("rwcds-form", { async: false })
   rwcdsForm;
 
-  @belongsTo('landuse-form', { async: false })
+  @belongsTo("landuse-form", { async: false })
   landuseForm;
+
+  @belongsTo("projects-new", { async: false })
+  projectsNew;
 
   // although the business logic for this field is that
   // one package has ONE ceqr-invoice-questionnaire, the
   // data in CRM is stored as an array of objects, so
   // in this model we have a computed property singleCeqrInvoiceQuestionnaire
   // that just grabs that first (and only) object from the array
-  @hasMany('ceqr-invoice-questionnaire', { async: false })
+  @hasMany("ceqr-invoice-questionnaire", { async: false })
   ceqrInvoiceQuestionnaires;
 
-  @hasMany('invoice', { async: false })
+  @hasMany("invoice", { async: false })
   invoices;
 
-  @attr('number')
+  @attr("number")
   statuscode;
 
-  @attr('date')
+  @attr("date")
   dcpStatusdate;
 
-  @attr('date')
+  @attr("date")
   dcpPackagesubmissiondate;
 
-  @attr('number')
+  @attr("number")
   statecode;
 
-  @attr('number')
+  @attr("number")
   dcpPackagetype;
 
-  @attr('number')
+  @attr("number")
   dcpVisibility;
 
-  @attr('number')
-  dcpPackageversion
+  @attr("number")
+  dcpPackageversion;
 
-  @attr('string')
-  dcpPackagenotes
+  @attr("string")
+  dcpPackagenotes;
 
   @attr({ defaultValue: () => [] })
   documents;
 
-  @attr('number')
+  @attr("number")
   grandTotal;
 
   get singleCeqrInvoiceQuestionnaire() {
@@ -101,9 +104,11 @@ export default class PackageModel extends Model {
   }
 
   get isLUPackage() {
-    return this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code
-    || this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code
-    || this.dcpPackagetype === DCPPACKAGETYPE.POST_CERT_LU.code;
+    return (
+      this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_LU_PACKAGE.code ||
+      this.dcpPackagetype === DCPPACKAGETYPE.FILED_LU_PACKAGE.code ||
+      this.dcpPackagetype === DCPPACKAGETYPE.POST_CERT_LU.code
+    );
   }
 
   setAttrsForSubmission() {
@@ -178,7 +183,7 @@ export default class PackageModel extends Model {
         await this.saveDirtySingleCeqrInvoiceQuestionnaire();
       }
     } catch (e) {
-      console.log('Error saving a Form or Ceqr Invoice Questionnaire: ', e); // eslint-disable-line no-console
+      console.log("Error saving a Form or Ceqr Invoice Questionnaire: ", e); // eslint-disable-line no-console
 
       formAdapterError = true;
     }
@@ -186,54 +191,63 @@ export default class PackageModel extends Model {
     try {
       await super.save();
     } catch (e) {
-      console.log('Error saving package: ', e); // eslint-disable-line no-console
+      console.log("Error saving package: ", e); // eslint-disable-line no-console
     }
 
     try {
       await this.fileManager.save();
     } catch (e) {
-      console.log('Error saving files: ', e);// eslint-disable-line no-console
+      console.log("Error saving files: ", e); // eslint-disable-line no-console
 
       // See comment on the tracked fileUploadError property
       // definition above.
-      this.fileUploadErrors = [{
-        code: 'UPLOAD_DOC_FAILED',
-        title: 'Failed to upload documents',
-        detail: 'An error occured while  uploading your documents. Please refresh and retry.',
-      }];
+      this.fileUploadErrors = [
+        {
+          code: "UPLOAD_DOC_FAILED",
+          title: "Failed to upload documents",
+          detail:
+            "An error occured while  uploading your documents. Please refresh and retry.",
+        },
+      ];
     }
 
     if (this.isLUPackage && this.project.artifact) {
       try {
         await this.project.artifact.fileManager.save();
       } catch (e) {
-        console.log('Error saving artifact files: ', e); // eslint-disable-line no-console
+        console.log("Error saving artifact files: ", e); // eslint-disable-line no-console
 
         // See comment on the tracked fileUploadError property
         // definition above.
-        this.fileUploadErrors = [{
-          code: 'UPLOAD_DOC_FAILED',
-          title: 'Failed to upload artifact documents',
-          detail: 'An error occured while  uploading your documents. Please refresh and retry.',
-        }];
+        this.fileUploadErrors = [
+          {
+            code: "UPLOAD_DOC_FAILED",
+            title: "Failed to upload artifact documents",
+            detail:
+              "An error occured while  uploading your documents. Please refresh and retry.",
+          },
+        ];
       }
     }
 
     if (!formAdapterError && !this.adapterError && !this.fileUploadErrors) {
-      if (this.isLUPackage && this.project.artifact) await this.project.artifact.rollbackAttributes();
+      if (this.isLUPackage && this.project.artifact)
+        await this.project.artifact.rollbackAttributes();
 
       await this.reload();
 
       this._synchronizeDocuments();
 
-      if (this.isLUPackage && this.project.artifact) this.project.artifact._synchronizeDocuments();
+      if (this.isLUPackage && this.project.artifact)
+        this.project.artifact._synchronizeDocuments();
     }
   }
 
   get isSingleCeqrInvoiceQuestionnaireDirty() {
     if (this.singleCeqrInvoiceQuestionnaire) {
       return this.singleCeqrInvoiceQuestionnaire.hasDirtyAttributes;
-    } return false;
+    }
+    return false;
   }
 
   async saveDirtySingleCeqrInvoiceQuestionnaire() {
@@ -250,10 +264,7 @@ export default class PackageModel extends Model {
 
   async saveDeletedRecords(recordsToDelete) {
     if (recordsToDelete) {
-      return Promise.all(
-        recordsToDelete
-          .map((record) => record.save()),
-      );
+      return Promise.all(recordsToDelete.map((record) => record.save()));
     }
   }
 
@@ -266,40 +277,46 @@ export default class PackageModel extends Model {
   }
 
   get isDirty() {
-    const isPackageDirty = this.hasDirtyAttributes
-      || this.fileManager.isDirty || (this.isLUPackage && this.project.isDirty);
+    const isPackageDirty =
+      this.hasDirtyAttributes ||
+      this.fileManager.isDirty ||
+      (this.isLUPackage && this.project.isDirty);
 
     if (this.dcpPackagetype === DCPPACKAGETYPE.PAS_PACKAGE.code) {
-      return isPackageDirty
-        || this.pasForm.hasDirtyAttributes
-        || this.pasForm.isBblsDirty
-        || this.pasForm.isApplicantsDirty
-        || this.pasForm.isProjectDirty;
+      return (
+        isPackageDirty ||
+        this.pasForm.hasDirtyAttributes ||
+        this.pasForm.isBblsDirty ||
+        this.pasForm.isApplicantsDirty ||
+        this.pasForm.isProjectDirty
+      );
     }
     if (this.dcpPackagetype === DCPPACKAGETYPE.RWCDS.code) {
-      return isPackageDirty
-        || this.rwcdsForm.hasDirtyAttributes
-        || this.rwcdsForm.isAffectedZoningResolutionsDirty;
+      return (
+        isPackageDirty ||
+        this.rwcdsForm.hasDirtyAttributes ||
+        this.rwcdsForm.isAffectedZoningResolutionsDirty
+      );
     }
     if (this.isLUPackage) {
-      return isPackageDirty
-        || this.landuseForm.hasDirtyAttributes
-        || this.landuseForm.isBblsDirty
-        || this.landuseForm.isApplicantsDirty
-        || this.landuseForm.isLanduseActionsDirty
-        || this.landuseForm.isSitedatahFormsDirty
-        || this.landuseForm.isLanduseGeographiesDirty
-        || this.landuseForm.isRelatedActionsDirty
-        || this.landuseForm.isAffectedZoningResolutionsDirty
-        || this.landuseForm.isZoningMapChangesDirty;
+      return (
+        isPackageDirty ||
+        this.landuseForm.hasDirtyAttributes ||
+        this.landuseForm.isBblsDirty ||
+        this.landuseForm.isApplicantsDirty ||
+        this.landuseForm.isLanduseActionsDirty ||
+        this.landuseForm.isSitedatahFormsDirty ||
+        this.landuseForm.isLanduseGeographiesDirty ||
+        this.landuseForm.isRelatedActionsDirty ||
+        this.landuseForm.isAffectedZoningResolutionsDirty ||
+        this.landuseForm.isZoningMapChangesDirty
+      );
     }
     if (this.dcpPackagetype === DCPPACKAGETYPE.FILED_EAS.code) {
-      return isPackageDirty
-        || this.isSingleCeqrInvoiceQuestionnaireDirty;
+      return isPackageDirty || this.isSingleCeqrInvoiceQuestionnaireDirty;
     }
     if (this.dcpPackagetype === DCPPACKAGETYPE.DRAFT_SCOPE_OF_WORK.code) {
-      return isPackageDirty
-        || this.isSingleCeqrInvoiceQuestionnaireDirty;
+      return isPackageDirty || this.isSingleCeqrInvoiceQuestionnaireDirty;
     }
 
     return isPackageDirty;
