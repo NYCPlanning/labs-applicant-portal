@@ -10,13 +10,10 @@ export default class Router extends EmberRouterScroll {
 // TODO: wrap in an authenticated route
 Router.map(function() {
   // eslint-disable-line
-  this.route('projects', function() {
-  });
-  
-if (config.featureFlagSelfService) {
-  this.route('projects/new', {path: 'projects/new'} );
-}
-  
+  this.route('projects');
+
+  this.route(config.featureFlagSelfService ? 'projects/new' : 'not-found', { path: 'projects/new' });
+
   this.route('login');
   this.route('logout');
 
