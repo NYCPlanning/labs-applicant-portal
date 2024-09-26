@@ -6,18 +6,19 @@ export default class ProjectsModel extends Model {
 
   @attr('string') dcpProjectname;
 
-  async save() {
-    await this.saveDirtyProject();
-    await super.save();
-  }
+  // async save() {
+  //   await this.saveDirtyProject();
+  //   await super.save();
+  // }
 
-  async saveDirtyProject() {
-    if (this.isProjectDirty) {
-      this.package.project.save();
-    }
-  }
+  // async saveDirtyProject() {
+  //   if (this.isProjectDirty) {
+  //     this.package.project.save();
+  //   }
+  // }
 
-  get isProjectDirty() {
-    return this.package.project.hasDirtyAttributes;
-  }
+  // get isProjectDirty() {
+  //   // return this.package.project.hasDirtyAttributes;
+  //   return true;
+  // }
 }
