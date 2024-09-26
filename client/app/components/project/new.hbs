@@ -1,21 +1,33 @@
-<section class="form-section">
-    <h1 class="header-large">
-        <span id="project-info" class="section-anchor"/>
-        Project Information
-    </h1>
-    {{ log "some controller" @controller.saveProjectNew }}
-    <form>
-        <Ui::Label
-            for="project-name"
-            @required={{true}}
-        >
-            Project Name
-        </Ui::Label>
-        <SaveableForm::Field::TextInput
-            @id="project-name"
-            @value={{this._dcpProjectname}}
-            @showCounter={{true}}
-            {{ on "input" this.updateDcpProjectname }}
-        />
-    </form>
-</section>
+
+<SaveableForm
+    @model={{@package}} 
+    @validators={{array (hash) this.validations.SubmittableProjectFormValidations }}
+    as | saveableProjectForm |
+>
+    <section class="form-section">
+        <h1 class="header-large">
+            <span id="project-info" class="section-anchor"/>
+            Project Information
+        </h1>
+        {{ log "some controller" @package }}
+            <Ui::Label
+                for="project-name"
+                @required={{true}}
+            >
+                Project Name
+            </Ui::Label>
+            <SaveableForm::Field 
+                id="project-name"
+                @type="text-input"
+                @showCounter={{ true }}
+                @attribute="dcpProjectname"
+            />
+
+            {{!-- <saveableProjectForm::Field
+                @type="text-input"
+                @id="project-name"
+                @showCounter={{true}}
+                @attribute="dcpProjectname"
+            /> --}}
+    </section>
+</SaveableForm>

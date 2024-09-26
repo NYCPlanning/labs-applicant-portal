@@ -6,8 +6,11 @@ export default class ProjectsNewRoute extends Route.extend(AuthenticatedRouteMix
 
     // static createProjectNewRecord = this.store.createRecord('project-new');
 
-    // model() {
-    //   return this.store.createRecord('project-new');
-    // //   return this.createProjectNewRecord;
+    async model() {
+      return await this.store.createRecord('project-new');
+    //   return this.createProjectNewRecord;
+    // return {
+    //     dcpProjectName: "set in the route"
     // }
+    }
 }
