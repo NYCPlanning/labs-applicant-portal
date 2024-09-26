@@ -1,9 +1,14 @@
 import Component from "@glimmer/component";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
+import { SaveableProjectForm } from "../../../validations/saveable-project-form";
+import { SubmittableProjectForm } from "../../../validations/submittable-project-form";
 
 export default class ProjectsNewFormComponent extends Component {
-  validations = {};
+  validations = {
+    SaveableProjectForm,
+    SubmittableProjectForm
+  };
 
   @service
   router;
