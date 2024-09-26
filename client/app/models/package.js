@@ -55,7 +55,7 @@ export default class PackageModel extends Model {
   @belongsTo("landuse-form", { async: false })
   landuseForm;
 
-  @belongsTo("projects-new", { async: false })
+  @belongsTo("projects", { async: false })
   projectsNew;
 
   // although the business logic for this field is that

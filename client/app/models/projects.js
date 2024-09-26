@@ -1,6 +1,6 @@
 import Model, { belongsTo, attr } from "@ember-data/model";
 
-export default class ProjectsNewFormModel extends Model {
+export default class ProjectsFormModel extends Model {
 
   @belongsTo('package', {async: false})
   package;
