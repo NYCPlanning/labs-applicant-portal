@@ -17,7 +17,11 @@
       </section>
       <Packages::Projects::ProjectInformation @form={{saveableForm}} />
     </div>
+    <div class="cell large-4 sticky-sidebar">
+      <saveableForm.SubmitButton 
+        @onClick={{this.savePackage}}
+      />
+    </div>
   </div>
-
 
 </SaveableForm>
