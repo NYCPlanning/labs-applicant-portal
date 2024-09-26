@@ -56,7 +56,7 @@ export default class PackageModel extends Model {
   landuseForm;
 
   @belongsTo("projects", { async: false })
-  projectsNew;
+  projects;
 
   // although the business logic for this field is that
   // one package has ONE ceqr-invoice-questionnaire, the
