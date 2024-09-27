@@ -10,10 +10,7 @@ export default {
     ...SaveableProjectForm.dcpProjectname,
     validatePresence({
       presence: true,
-      message: "This field is required",
+      message: 'This field is required',
     }),
   ],
 };
-
-
-
