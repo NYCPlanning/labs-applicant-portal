@@ -1,9 +1,9 @@
 module.exports = function(environment) {
   const ENV = {
-    modulePrefix: "client",
+    modulePrefix: 'client',
     environment,
-    rootURL: "/",
-    locationType: "auto",
+    rootURL: '/',
+    locationType: 'auto',
     host: getHost(environment),
     NYCIDDomain: getOAuthDomain(environment),
     NYCIDLocation: getOAuthLoginEndpoint(environment),
@@ -22,9 +22,9 @@ module.exports = function(environment) {
     },
     fontawesome: {
       icons: {
-        "free-brands-svg-icons": "all",
-        "free-regular-svg-icons": "all",
-        "free-solid-svg-icons": "all",
+        'free-brands-svg-icons': 'all',
+        'free-regular-svg-icons': 'all',
+        'free-solid-svg-icons': 'all',
       },
     },
 
@@ -33,10 +33,10 @@ module.exports = function(environment) {
       // when it is created
     },
 
-    "labs-search": {
-      host: "https://search-api-production.herokuapp.com",
-      route: "search",
-      helpers: ["geosearch-v2", "bbl"],
+    'labs-search': {
+      host: 'https://search-api-production.herokuapp.com',
+      route: 'search',
+      helpers: ['geosearch-v2', 'bbl'],
     },
   };
 
@@ -142,6 +142,6 @@ function getMaintenanceTimes() {
   return [MAINTENANCE_START, MAINTENANCE_END];
 }
 
-function  getFeatureFlagSelfService() {
-  return process.env.FEATURE_FLAG_SELF_SERVICE === "ON";
+function getFeatureFlagSelfService() {
+  return process.env.FEATURE_FLAG_SELF_SERVICE === 'ON';
 }
