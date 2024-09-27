@@ -17,9 +17,9 @@ export default class ProjectsNewFormComponent extends Component {
   store;
 
   @action
-  async savePackage() {
+  async submitPackage() {
     try {
-      await this.args.package.save();
+      await this.args.package.submit();
     } catch (error) {
       console.log("Save new project package error:", error);
     }

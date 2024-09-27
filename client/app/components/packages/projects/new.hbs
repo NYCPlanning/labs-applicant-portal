@@ -18,10 +18,14 @@
       <Packages::Projects::ProjectInformation @form={{saveableForm}} />
     </div>
     <div class="cell large-4 sticky-sidebar">
-      <saveableForm.SaveButton 
-        @onClick={{this.savePackage}}
+           <saveableForm.SubmitButton 
+        @isEnabled={{saveableForm.isSaveable}}
+        @onClick={{this.submitPackage}}
       />
     </div>
+    <saveableForm.ConfirmationModal>
+      Great job.
+    </saveableForm.ConfirmationModal>
   </div>
 
 </SaveableForm>
