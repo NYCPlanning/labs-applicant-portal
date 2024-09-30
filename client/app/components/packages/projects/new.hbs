@@ -1,13 +1,9 @@
 <SaveableForm
   @model={{@package}}
-  @validators={{array (hash) this.validations.SubmittableProjectForm this.validations.SaveableProjectForm}}
-  as |saveablePackageForm|
+  @validators={{array (hash) this.validations.SaveableProjectForm }}
+  as |saveableProjectForm|
 >
-  <saveablePackageForm.SaveableForm 
-    @model={{saveablePackageForm.data}}
-    @validators={{array (hash)  this.validations.SaveableProjectForm this.validations.SubmittableProjectForm}}
-    as |saveableForm|>
-    {{log 'saveablePackageForm.data' saveablePackageForm.data}}
+    {{ log 'saveableProjectForm' saveableProjectForm }}
     <div class="grid-x grid-margin-x">
       <div class="cell large-8">
         <section class="form-section">
@@ -21,18 +17,13 @@
             While some projects might still be in the early stages, all required fields (*) on this form must be completed. Once submitted, your project will be available to view in this portal. After reviewing your submission, NYC Planning will contact you with the next steps.
           </p>
         </section>
-        <Packages::Projects::ProjectInformation @form={{saveableForm}} />
+        <Packages::Projects::ProjectInformation @form={{saveableProjectForm}} />
       </div>
       <div class="cell large-4 sticky-sidebar">
-            <saveableForm.SubmitButton 
-          @isEnabled={{saveablePackageForm.isSubmittable}}
+        <saveableProjectForm.SubmitButton 
+          @isEnabled={{saveableProjectForm.isSaveable}}
           @onClick={{this.submitPackage}}
         />
       </div>
-      <saveableForm.ConfirmationModal>
-        Great job.
-      </saveableForm.ConfirmationModal>
     </div>
-  </saveablePackageForm.SaveableForm>
-
 </SaveableForm>

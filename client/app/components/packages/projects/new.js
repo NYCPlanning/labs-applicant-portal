@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 import { SaveableProjectForm } from '../../../validations/saveable-project-form';
 import { SubmittableProjectForm } from '../../../validations/submittable-project-form';
 
-export default class ProjectsNewFormComponent extends Component {
+export default class ProjectsNewComponent extends Component {
   validations = {
     SaveableProjectForm,
     SubmittableProjectForm,
