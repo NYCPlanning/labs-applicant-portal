@@ -1,57 +1,52 @@
 <SaveableForm
   @model={{@package}}
-  @validators={{array (hash) this.validations.SaveableProjectForm this.validations.SubmittableProjectForm }}
+  @validators={{array (hash) this.validations.SubmittableProjectNewForm this.validations.SubmittableProjectNewForm }}
   as |saveableProjectForm|
 >
-  <saveableProjectForm.SaveableForm 
-    @model={{@package}}
-    @validators={{array (hash)  this.validations.SaveableProjectForm this.validations.SubmittableProjectForm}}
-    as |saveableForm|>
-    {{!-- template-lint-disable no-log --}}
-    {{log 'saveableProjectForm.data' saveableProjectForm.data}}
-    <div class="grid-x grid-margin-x">
-      <div class="cell large-8">
-        <section class="form-section">
-          <h1 class="header-large">
-            Project Initiation Form
-          </h1>
-          <p>
-            The <b>Project Initiation Form</b> begins the project tracking  process and gives NYC Planning the necessary details before the Informational Interest meeting. By submitting this form, you confirm your intent to file a Land Use Application with NYC Planning.
-          </p>
-          <p>
-            While some projects might still be in the early stages, all required fields (*) on this form must be completed. Once submitted, your project will be available to view in this portal. After reviewing your submission, NYC Planning will contact you with the next steps.
-          </p>
-        </section>
-        <Packages::Projects::ProjectInformation @form={{saveableForm}} />
-      </div>
-
-      <div class="cell large-4 sticky-sidebar">
-        <saveableForm.PageNav>
-          <saveableForm.SubmitButton 
-            @isEnabled={{saveableProjectForm.isSaveable}}
-            data-test-submit-button
-          />
-        </saveableForm.PageNav>
-        <saveableForm.ConfirmationModal
-          @action={{component saveableProjectForm.SubmitButton
-            isEnabled=saveableProjectForm.isSubmittable
-            onClick=this.submitPackage
-            class="no-margin"
-          }}
-          @continueButtonTitle="Continue Editing"
-          data-test-confirm-submit-button={{true}}
-        >
-          <h6>Confirm New Project Submission</h6>
-          <p class="header-large medium-margin-top small-margin-bottom">
-            Are you sure?
-          </p>
-          <p>
-            Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including the
-            signature form) have been uploaded.
-          </p>
-        </saveableForm.ConfirmationModal>
-      </div>
+  {{!-- template-lint-disable no-log --}}
+  {{log 'saveableProjectForm' saveableProjectForm }}
+  <div class="grid-x grid-margin-x">
+    <div class="cell large-8">
+      <section class="form-section">
+        <h1 class="header-large">
+          Project Initiation Form
+        </h1>
+        <p>
+          The <b>Project Initiation Form</b> begins the project tracking  process and gives NYC Planning the necessary details before the Informational Interest meeting. By submitting this form, you confirm your intent to file a Land Use Application with NYC Planning.
+        </p>
+        <p>
+          While some projects might still be in the early stages, all required fields (*) on this form must be completed. Once submitted, your project will be available to view in this portal. After reviewing your submission, NYC Planning will contact you with the next steps.
+        </p>
+      </section>
+      <Packages::Projects::ProjectInformation @form={{saveableProjectForm}} />
     </div>
-  </saveableProjectForm.SaveableForm>
+
+    <div class="cell large-4 sticky-sidebar">
+      <saveableProjectForm.PageNav>
+        <saveableProjectForm.SubmitButton 
+          @isEnabled={{ saveableProjectForm.isSubmittable }}
+          data-test-submit-button
+        />
+      </saveableProjectForm.PageNav>
+      <saveableProjectForm.ConfirmationModal
+        @action={{component saveableProjectForm.SubmitButton
+          isEnabled=saveableProjectForm.isSubmittable
+          onClick=this.submitPackage
+          class="no-margin"
+        }}
+        @continueButtonTitle="Continue Editing"
+        data-test-confirm-submit-button={{true}}
+      >
+        <h6>Confirm New Project Submission</h6>
+        <p class="header-large medium-margin-top small-margin-bottom">
+          Are you sure?
+        </p>
+        <p>
+          Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including the
+          signature form) have been uploaded.
+        </p>
+      </saveableProjectForm.ConfirmationModal>
+    </div>
+  </div>
 
 </SaveableForm>

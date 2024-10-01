@@ -27,6 +27,9 @@ export default class ValidatorComponent extends Component {
   }
 
   get isValid() {
+    console.log("changeset", this.changeset)
+    console.log("validator model", this.args.model)
+    console.log("validator validator", this.args.validator)
     return this.changeset.isValid && this._hasValidDescendants;
   }
 
