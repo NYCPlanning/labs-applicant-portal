@@ -1,10 +1,10 @@
 <SaveableForm
   @model={{@package}}
-  @validators={{array (hash) this.validations.SubmittableProjectForm this.validations.SaveableProjectForm}}
+  @validators={{array (hash) this.validations.SaveableProjectForm this.validations.SubmittableProjectForm }}
   as |saveableProjectForm|
 >
   <saveableProjectForm.SaveableForm 
-    @model={{saveableProjectForm.data}}
+    @model={{@package}}
     @validators={{array (hash)  this.validations.SaveableProjectForm this.validations.SubmittableProjectForm}}
     as |saveableForm|>
     {{!-- template-lint-disable no-log --}}
@@ -24,15 +24,33 @@
         </section>
         <Packages::Projects::ProjectInformation @form={{saveableForm}} />
       </div>
+
       <div class="cell large-4 sticky-sidebar">
-        <saveableForm.SubmitButton 
-          @isEnabled={{saveableProjectForm.isSubmittable}}
-          @onClick={{this.submitPackage}}
-        />
+        <saveableForm.PageNav>
+          <saveableForm.SubmitButton 
+            @isEnabled={{saveableProjectForm.isSaveable}}
+            data-test-submit-button
+          />
+        </saveableForm.PageNav>
+        <saveableForm.ConfirmationModal
+          @action={{component saveableProjectForm.SubmitButton
+            isEnabled=saveableProjectForm.isSubmittable
+            onClick=this.submitPackage
+            class="no-margin"
+          }}
+          @continueButtonTitle="Continue Editing"
+          data-test-confirm-submit-button={{true}}
+        >
+          <h6>Confirm New Project Submission</h6>
+          <p class="header-large medium-margin-top small-margin-bottom">
+            Are you sure?
+          </p>
+          <p>
+            Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including the
+            signature form) have been uploaded.
+          </p>
+        </saveableForm.ConfirmationModal>
       </div>
-      <saveableForm.ConfirmationModal>
-        Great job.
-      </saveableForm.ConfirmationModal>
     </div>
   </saveableProjectForm.SaveableForm>
 
