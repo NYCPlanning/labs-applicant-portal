@@ -28,7 +28,7 @@
   
     <div class="cell large-4 sticky-sidebar">
       <saveableProjectForm.PageNav>
-        <saveableProjectForm.SubmitButton @isEnabled={{saveableProjectForm.isSaveable}} data-test-save-button />
+        <saveableProjectForm.SubmitButton @isEnabled={{saveableProjectForm.isSubmittable}} data-test-save-button />
       </saveableProjectForm.PageNav>
       <saveableProjectForm.ConfirmationModal @action={{component saveableProjectForm.SubmitButton
         isEnabled=saveableProjectForm.isSubmittable onClick=this.submitPackage class="no-margin" }}
