@@ -55,9 +55,6 @@ export default class PackageModel extends Model {
   @belongsTo('landuse-form', { async: false })
   landuseForm;
 
-  @belongsTo('projects', { async: false })
-  projects;
-
   // although the business logic for this field is that
   // one package has ONE ceqr-invoice-questionnaire, the
   // data in CRM is stored as an array of objects, so

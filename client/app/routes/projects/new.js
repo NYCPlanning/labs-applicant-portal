@@ -6,6 +6,6 @@ export default class ProjectsNewRoute extends Route.extend(AuthenticatedRouteMix
   @service store;
 
   async model() {
-    return this.store.createRecord('projects');
+    return await this.store.createRecord('projects');
   }
 }
