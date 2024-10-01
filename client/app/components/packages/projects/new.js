@@ -1,13 +1,12 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import SaveableProjectForm from '../../../validations/saveable-project-form';
-import SubmittableProjectForm from '../../../validations/submittable-project-form';
+import SubmittableProjectNewForm from '../../../validations/submittable-project-new-form';
+
 
 export default class ProjectsNewFormComponent extends Component {
   validations = {
-    SaveableProjectForm,
-    SubmittableProjectForm,
+    SubmittableProjectNewForm,
   };
 
   @service
@@ -20,8 +19,10 @@ export default class ProjectsNewFormComponent extends Component {
   async submitPackage() {
     try {
       await this.args.package.submit();
+
+      this.router.transitionTo('projects');
     } catch (error) {
-      console.log('Save new project package error:', error);
+      console.log("Save new project package error:", error);
     }
   }
 }
