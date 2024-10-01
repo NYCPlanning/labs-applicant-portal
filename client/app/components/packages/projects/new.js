@@ -22,7 +22,7 @@ export default class ProjectsNewFormComponent extends Component {
 
       this.router.transitionTo('projects');
     } catch (error) {
-      console.log("Save new project package error:", error);
+      console.log('Save new project package error:', error);
     }
   }
 }
