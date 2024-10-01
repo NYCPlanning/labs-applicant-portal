@@ -19,8 +19,6 @@ export default class ProjectsNewFormComponent extends Component {
   async submitPackage() {
     try {
       await this.args.package.submit();
-
-      this.router.transitionTo('projects');
     } catch (error) {
       console.log('Save new project package error:', error);
     }
