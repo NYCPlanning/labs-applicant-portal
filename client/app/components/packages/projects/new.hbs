@@ -3,6 +3,14 @@
   @validators={{array (hash) this.validations.SubmittableProjectsNewForm }}
   as |saveableProjectsNewForm|
 >
+  {{ log "new project model" saveableProjectsNewForm.data }}
+  <saveableProjectsNewForm.SaveableForm
+    @model={{saveableProjectsNewForm.data.projectApplicants}}
+    @validators={{ array (hash) this.validations.SubmittableProjectApplicantForm }}
+    as | saveableApplicantForm |
+  >
+    <Packages::Projects::ApplicantInformation @form={{saveableApplicantForm}} />
+  </saveableProjectsNewForm.SaveableForm>
   <div class="grid-x grid-margin-x">
     <div class="cell large-8">
       <section class="form-section">

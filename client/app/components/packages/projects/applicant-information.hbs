@@ -1,0 +1,16 @@
+{{#let @form as |form|}}
+<form.Section @title="Primary Contact">
+    <Ui::Question @required={{true}} as |Q|>
+        <Q.Label>
+            Email
+        </Q.Label>
+        <form.Field
+            id={{Q.questionId}}
+            @attribute="emailaddress1"
+            @type="text-input"
+            @showCounter={{true}}
+            @maxlength="50"
+        />
+    </Ui::Question>
+</form.Section>
+{{/let}}
