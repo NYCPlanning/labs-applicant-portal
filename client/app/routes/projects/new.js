@@ -6,6 +6,14 @@ export default class ProjectsNewRoute extends Route.extend(AuthenticatedRouteMix
   @service store;
 
   async model() {
-    return await this.store.createRecord('project');
+    // return await this.store.createRecord('project');
+    return {
+      contactFirstName: '',
+      contactLastName: '',
+      contactEmail: '',
+      applicantFirstName: '',
+      applicantLastName: '',
+      projectName: ''
+    }
   }
 }

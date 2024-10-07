@@ -234,7 +234,7 @@ export default class ProjectModel extends Model {
       .reverse();
   }
 
-  async submit() {
-    await super.save();
+  get projectApplicants() {
+    return this.projectApplicants
   }
 }

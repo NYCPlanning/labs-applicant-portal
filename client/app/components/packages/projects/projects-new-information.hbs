@@ -1,13 +1,28 @@
 {{#let @form as |form|}}
 <form.Section @title="Project Information">
+  {{!-- template-lint-disable no-log --}}
+  {{!-- {{log "model" @model }} --}}
 
+  <Ui::Question @required={{true}} as |Q|>
+    <Q.Label>
+      Contact Email
+    </Q.Label>
+
+    <form.Field 
+      @attribute="contactEmail" 
+      @type="text-input" 
+      id={{Q.questionId}} 
+      @showCounter={{true}}
+      @maxlength="50"
+    />
+  </Ui::Question>
   <Ui::Question @required={{true}} as |Q|>
     <Q.Label>
       Project Name
     </Q.Label>
 
     <form.Field 
-      @attribute="dcpProjectname" 
+      @attribute="projectName" 
       @type="text-input" 
       id={{Q.questionId}} 
       @showCounter={{true}}

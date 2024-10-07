@@ -4,7 +4,7 @@ import {
 } from 'ember-changeset-validations/validators';
 
 export default {
-  dcpProjectname: [
+  projectName: [
     validateLength({
       min: 0,
       max: 50,
