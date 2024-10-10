@@ -132,16 +132,22 @@ export class ProjectsController {
   @Post('/')
   async createProject(@Body() body) {
     if (!this.config.featureFlag.selfService) {
-      throw new HttpException({
-        code: "NOT_FOUND",
-        title: "Not found",
-      },
-      HttpStatus.NOT_FOUND)
+      throw new HttpException(
+        {
+          code: 'NOT_FOUND',
+          title: 'Not found',
+        },
+        HttpStatus.NOT_FOUND,
+      );
     }
-
+    const project = await this.crmService.create('dcp_projects', {
+      dcp_projectname: 'firstSelfServiceProject',
+      dcp_borough: 717170002,
+    });
+    console.debug('project created?', project);
     return {
-      ...body
-    }
+      ...body,
+    };
   }
 
   @Get('/:id')
