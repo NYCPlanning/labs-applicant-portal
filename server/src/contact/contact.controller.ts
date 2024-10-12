@@ -11,6 +11,7 @@ import {
   UsePipes,
   Body,
   Param,
+  Post,
 } from '@nestjs/common';
 import { ContactService } from './contact.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
@@ -41,7 +42,7 @@ export class ContactController {
   ) {}
 
   @Get('/')
-  async getContact(@Session() session, @Query('me') me, @Query('email') email) {
+  async getContact(@Session() session, @Query('me') me, @Query('email') email, @Query('includeAllStatusCodes') includeAllStatusCodes = 'false') {
     // if this is a self-check, lookup the contact id from session
     if (me) {
       const { contactId } = session;
@@ -55,8 +56,15 @@ export class ContactController {
         return this.contactService.findOneById(contactId);
       }
     } else {
-      return this.contactService.findOneByEmail(email);
+      return this.contactService.findOneByEmail(email, includeAllStatusCodes === 'true');
     }
+  }
+
+  @UseGuards(AuthenticateGuard)
+  @UsePipes(JsonApiDeserializePipe)
+  @Post('/')
+  async create(@Body() body) {
+    return await this.contactService.create(body); 
   }
 
   @UseGuards(AuthenticateGuard)
