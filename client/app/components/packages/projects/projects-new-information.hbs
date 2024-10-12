@@ -1,17 +1,133 @@
 {{#let @form as |form|}}
 <form.Section @title="Project Information">
-
   <Ui::Question @required={{true}} as |Q|>
     <Q.Label>
       Project Name
     </Q.Label>
 
     <form.Field 
-      @attribute="dcpProjectname" 
+      @attribute="projectName" 
       @type="text-input" 
       id={{Q.questionId}} 
       @showCounter={{true}}
       @maxlength="50"
+    />
+  </Ui::Question>
+</form.Section>
+<form.Section @title="Contact Information">
+  <h3>Primary Contact</h3>
+  <p>This contact is the person who will respond to public inquiries regarding the application.</p>
+  <Ui::Question @required={{true}} as |Q|>
+    <Q.Label>
+      First Name 
+    </Q.Label>
+
+    <form.Field 
+      @attribute="primaryContactFirstName"
+      @type="text-input"
+      id={{Q.questionId}}
+      @showCounter={{true}}
+      @maxlength="50"
+    />
+  </Ui::Question>
+  <Ui::Question @required={{true}} as |Q|>
+    <Q.Label>
+      Last Name 
+    </Q.Label>
+
+    <form.Field 
+      @attribute="primaryContactLastName"
+      @type="text-input"
+      id={{Q.questionId}}
+      @showCounter={{true}}
+      @maxlength="50"
+    />
+  </Ui::Question>
+  <Ui::Question @required={{true}} as |Q|>
+    <Q.Label>
+      Email
+    </Q.Label>
+
+    <form.Field 
+      @attribute="primaryContactEmail" 
+      @type="text-input" 
+      id={{Q.questionId}} 
+      @showCounter={{true}}
+      @maxlength="50"
+    />
+  </Ui::Question>
+  <Ui::Question @required={{false}} as |Q|>
+    <Q.Label>
+      Phone
+    </Q.Label>
+    <p class="q-help">
+      No dashes, parentheses, or special characters.
+    </p>
+
+    <form.Field 
+      @attribute="primaryContactPhone" 
+      @type="text-input" 
+      id={{Q.questionId}} 
+      @showCounter={{true}}
+      @maxlength="10"
+    />
+  </Ui::Question>
+
+  <h3>Applicant</h3>
+  <p>The owner, entity, or representative of the project described in this application.</p>
+  <Ui::Question @required={{true}} as |Q|>
+    <Q.Label>
+      First Name 
+    </Q.Label>
+
+    <form.Field 
+      @attribute="applicantFirstName"
+      @type="text-input"
+      id={{Q.questionId}}
+      @showCounter={{true}}
+      @maxlength="50"
+    />
+  </Ui::Question>
+  <Ui::Question @required={{true}} as |Q|>
+    <Q.Label>
+      Last Name 
+    </Q.Label>
+
+    <form.Field 
+      @attribute="applicantLastName"
+      @type="text-input"
+      id={{Q.questionId}}
+      @showCounter={{true}}
+      @maxlength="50"
+    />
+  </Ui::Question>
+  <Ui::Question @required={{true}} as |Q|>
+    <Q.Label>
+      Email
+    </Q.Label>
+
+    <form.Field 
+      @attribute="applicantEmail" 
+      @type="text-input" 
+      id={{Q.questionId}} 
+      @showCounter={{true}}
+      @maxlength="50"
+    />
+  </Ui::Question>
+  <Ui::Question @required={{false}} as |Q|>
+    <Q.Label>
+      Phone
+    </Q.Label>
+    <p class="q-help">
+      No dashes, parentheses, or special characters.
+    </p>
+
+    <form.Field 
+      @attribute="applicantPhone" 
+      @type="text-input" 
+      id={{Q.questionId}} 
+      @showCounter={{true}}
+      @maxlength="10"
     />
   </Ui::Question>
 </form.Section>
