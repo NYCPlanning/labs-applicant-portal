@@ -77,9 +77,10 @@ export class ContactService {
    * Uses the CRM Web API to query and return a Contact entity for given email
    *
    * @param      {string}  email      Email matching a CRM Contact Entity's emailaddress1 property
+   * @param      {boolean} includeAllStatusCodes A boolean on whether to only return active contacts. defaults to false.
    * @return     {object}             Object representing a CRM contact
    */
-  public async findOneByEmail(email: string) {
+  public async findOneByEmail(email: string, includeAllStatusCodes = false) {
     try {
       const {
         records: [firstRecord = GHOST_CONTACT],
@@ -88,7 +89,7 @@ export class ContactService {
         `
         $select=${CONTACT_ATTRS.join(',')}
         &$filter=startswith(emailaddress1, '${email}')
-          and statuscode eq ${ACTIVE_CODE}
+          ${includeAllStatusCodes ? '' : `and statuscode eq ${ACTIVE_CODE}`}
         &$top=1
       `,
       );
