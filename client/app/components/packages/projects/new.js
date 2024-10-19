@@ -1,7 +1,10 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import SubmittableProjectsNewForm from '../../../validations/submittable-projects-new-form';
+import { optionset } from '../../../helpers/optionset';
+
 
 export default class ProjectsNewFormComponent extends Component {
   validations = {
@@ -13,6 +16,24 @@ export default class ProjectsNewFormComponent extends Component {
 
   @service
   store;
+
+  @tracked
+  selectedBorough = null;
+
+  get boroughOptions() {
+    return optionset(['project', 'boroughs', 'list']);
+  }
+
+  @action
+  handleBoroughChange(selectedBorough) {
+    console.log('Selected borough:', selectedBorough);
+
+    this.selectedBorough = selectedBorough;
+
+    if (this.args.form) {
+      this.args.form.set('borough', selectedBorough);
+    }
+  }
 
   @action
   async submitPackage() {
@@ -34,12 +55,12 @@ export default class ProjectsNewFormComponent extends Component {
 
     const contactInputs = [primaryContactInput, applicantInput];
     try {
-      const contactPromises = contactInputs
-        .map((contact) => this.store.queryRecord('contact',
-          {
-            email: contact.email,
-            includeAllStatusCodes: true,
-          }));
+      const contactPromises = contactInputs.map((contact) =>
+        this.store.queryRecord('contact', {
+          email: contact.email,
+          includeAllStatusCodes: true,
+        })
+      );
 
       const contacts = await Promise.all(contactPromises);
 
