@@ -24,7 +24,11 @@
         @form={{saveableProjectsNewForm}} 
         @boroughOptions={{this.boroughOptions}} 
         @onBoroughChange={{this.handleBoroughChange}} 
-        @selectedBorough={{this.selectedBorough}} />
+        @selectedBorough={{this.selectedBorough}} 
+        @onApplicantTypeSelection={{this.handleApplicantTypeChange}}
+        @selectedApplicantType={{this.selectedApplicantType}}
+        @applicantOptions={{this.applicantOptions}}
+      />
       <Packages::Projects::ProjectsNewAddContacts 
         @form={{saveableProjectsNewForm}} />
     </div>

@@ -74,23 +74,23 @@ export const STATUSCODE = {
 export const BOROUGHS = {
   BRONX: {
     code: 717170000,
-    label: "Bronx",
+    label: 'Bronx',
   },
   BROOKLYN: {
     code: 717170002,
-    label: "Brooklyn",
+    label: 'Brooklyn',
   },
   MANHATTAN: {
     code: 717170001,
-    label: "Manhattan",
+    label: 'Manhattan',
   },
   QUEENS: {
     code: 717170003,
-    label: "Queens",
+    label: 'Queens',
   },
   STATEN_ISLAND: {
     code: 717170004,
-    label: "Staten Island",
+    label: 'Staten Island',
   },
 };
 
