@@ -1,12 +1,10 @@
+/* eslint-disable no-console */
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import fetch from 'fetch';
-import SubmittableProjectsNewForm from '../../../validations/submittable-projects-new-form';
-import { optionset } from '../../../helpers/optionset';
-import config from '../../../config/environment';
-
+import SubmittableProjectsNewForm from '../../validations/submittable-projects-new-form';
+import { optionset } from '../../helpers/optionset';
+import config from '../../config/environment';
 
 export default class ProjectsNewFormComponent extends Component {
   validations = {
@@ -19,12 +17,6 @@ export default class ProjectsNewFormComponent extends Component {
   @service
   store;
 
-  @tracked
-  selectedBorough = null;
-
-  @tracked
-  selectedApplicantType = null;
-
   get boroughOptions() {
     return optionset(['project', 'boroughs', 'list']);
   }
@@ -34,35 +26,12 @@ export default class ProjectsNewFormComponent extends Component {
   }
 
   @action
-  handleBoroughChange(selectedBorough) {
-    console.log('Selected borough:', selectedBorough);
-
-    this.selectedBorough = selectedBorough;
-
-    if (this.args.form) {
-      this.args.form.set('borough', selectedBorough);
-    }
-  }
-
-  @action
-  handleApplicantTypeChange(selectedApplicantType) {
-    console.log('Selected Applicant Type:', selectedApplicantType);
-
-    this.selectedApplicantType = selectedApplicantType;
-
-    if (this.args.form) {
-      this.args.form.set('dcpApplicantType', selectedApplicantType);
-    }
-  }
-
-  @action
-  async submitPackage() {
+  async submitProject() {
     const primaryContactInput = {
       first: this.args.package.primaryContactFirstName,
       last: this.args.package.primaryContactLastName,
       email: this.args.package.primaryContactEmail,
       phone: this.args.package.primaryContactPhone,
-      role: 'contact',
     };
 
     const applicantInput = {
@@ -70,15 +39,16 @@ export default class ProjectsNewFormComponent extends Component {
       last: this.args.package.applicantLastName,
       email: this.args.package.applicantEmail,
       phone: this.args.package.applicantPhone,
-      role: 'applicant',
     };
 
     const contactInputs = [primaryContactInput, applicantInput];
+
     try {
-      const contactPromises = contactInputs.map((contact) => this.store.queryRecord('contact', {
-        email: contact.email,
-        includeAllStatusCodes: true,
-      }));
+      const contactPromises = contactInputs.map((contact) => this.store.queryRecord('contact',
+        {
+          email: contact.email,
+          includeAllStatusCodes: true,
+        }));
 
       const contacts = await Promise.all(contactPromises);
 
@@ -95,6 +65,7 @@ export default class ProjectsNewFormComponent extends Component {
         }
         return contact;
       });
+
       const [verifiedPrimaryContact, verifiedApplicant] = await Promise.all(verifiedContactPromises);
 
       const authSessionRaw = localStorage.getItem('ember_simple_auth-session');
@@ -119,18 +90,18 @@ export default class ProjectsNewFormComponent extends Component {
           data: {
             attributes: {
               dcpProjectname: this.args.package.projectName,
-              dcpBorough: this.selectedBorough.code,
-              dcpApplicanttype: this.selectedApplicantType.code,
+              dcpBorough: this.args.package.borough.code,
+              dcpApplicanttype: this.args.package.applicantType.code,
               dcpProjectbrief: '',
               _dcpApplicantadministratorCustomerValue: verifiedPrimaryContact.id,
               _dcpApplicantCustomerValue: verifiedApplicant.id,
-              _dcpLeadplannerValue: verifiedApplicant.id,
             },
           },
         }),
       });
-    } catch (e) {
-      console.log('Save new project package error', e);
+    } catch (error) {
+      console.log('Save new project package error', error.message);
+      console.log('the error', error);
     }
   }
 }

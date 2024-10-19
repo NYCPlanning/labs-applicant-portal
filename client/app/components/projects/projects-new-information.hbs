@@ -4,7 +4,6 @@
     <Q.Label>
       Project Name
     </Q.Label>
-
     <form.Field 
       @attribute='projectName' 
       @type='text-input' 
@@ -18,17 +17,22 @@
     <Q.Label data-test-projects-new-borough-dropdown>
       Borough
     </Q.Label>
-    <PowerSelect
-      supportsDataTestProperties={{true}}
-      @attribute='borough'
-      @options={{@boroughOptions}}
-      @onChange={{@onBoroughChange}}
-      @selected={{@selectedBorough}} 
-      @searchField='label'
-      data-test-id='project-new-borough-dropdown'
-      @placeholder='select a borough' as |borough| >
-      {{borough.label}}
+    <PowerSelect 
+      supportsDataTestProperties={{true}} 
+      @attribute='borough' 
+      @options={{@boroughOptions}} 
+      @onChange={{fn (mut @project.borough)}}
+      @selected={{@project.borough}}  
+      @searchField='label' 
+      data-test-id='project-new-borough-dropdown' 
+      @placeholder='select a borough' as |borough|>
+       {{borough.label}}
     </PowerSelect>
+    {{#if form.errors.borough}}
+      {{#each form.errors.borough.validation as |message|}}
+        <div class="form-error is-visible" data-test-validation-message="select a borough">{{message}}</div>
+      {{/each}}
+    {{/if}}
   </Ui::Question>
   <Ui::Question @required={{true}} as |Q|>
     <Q.Label data-test-projects-new-applicant-type>
@@ -39,15 +43,22 @@
     </p>
     <PowerSelect
       supportsDataTestProperties={{true}}
-      @attribute='dcpApplicantType'
+      @attribute='applicantType'
       @options={{@applicantOptions}} 
-      @onChange={{@onApplicantTypeSelection}} 
-      @selected={{@selectedApplicantType}}
+      @onChange={{fn (mut @project.applicantType)}}
+      @selected={{@project.applicantType}}
       @searchField='label'
       data-test-id='projects-new-applicant-type'
       @placeholder='select applicant type' as |dcpApplicantType| >
       {{dcpApplicantType.label}}
     </PowerSelect>
+    {{#if form.errors.applicantType}}
+      {{#each form.errors.applicantType.validation as |message|}}
+          <div class="form-error is-visible"    data-test-validation-message="select an Applicant Type"> {{message}}
+        </div>
+      {{/each}}
+    {{/if}}
   </Ui::Question>
 </form.Section>
 {{/let}}
+
