@@ -20,9 +20,14 @@
           Planning will contact you with the next steps.
         </p>
       </section>
-      <Packages::Projects::ProjectsNewInformation @form={{saveableProjectsNewForm}} />
+      <Packages::Projects::ProjectsNewInformation 
+        @form={{saveableProjectsNewForm}} 
+        @boroughOptions={{this.boroughOptions}} 
+        @onBoroughChange={{this.handleBoroughChange}} 
+        @selectedBorough={{this.selectedBorough}} />
+      <Packages::Projects::ProjectsNewAddContacts 
+        @form={{saveableProjectsNewForm}} />
     </div>
-  
     <div class="cell large-4 sticky-sidebar">
       <saveableProjectsNewForm.PageNav>
         <saveableProjectsNewForm.SubmitButton @isEnabled={{saveableProjectsNewForm.isSubmittable}} data-test-save-button />
