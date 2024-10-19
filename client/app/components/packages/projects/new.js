@@ -20,8 +20,15 @@ export default class ProjectsNewFormComponent extends Component {
   @tracked
   selectedBorough = null;
 
+  @tracked
+  selectedApplicantType = null;
+
   get boroughOptions() {
     return optionset(['project', 'boroughs', 'list']);
+  }
+
+  get applicantOptions() {
+    return optionset(['applicant', 'dcpApplicantType', 'list']);
   }
 
   @action
@@ -32,6 +39,17 @@ export default class ProjectsNewFormComponent extends Component {
 
     if (this.args.form) {
       this.args.form.set('borough', selectedBorough);
+    }
+  }
+
+  @action
+  handleApplicantTypeChange(selectedApplicantType) {
+    console.log('Selected Applicant Type:', selectedApplicantType);
+
+    this.selectedApplicantType = selectedApplicantType;
+
+    if (this.args.form) {
+      this.args.form.set('dcpApplicantType', selectedApplicantType);
     }
   }
 

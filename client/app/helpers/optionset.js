@@ -38,6 +38,7 @@ const OPTIONSET_LOOKUP = {
   applicant: {
     dcpState: APPLICANT_OPTIONSETS.DCPSTATE,
     dcpType: APPLICANT_OPTIONSETS.DCPTYPE,
+    dcpApplicantType: APPLICANT_OPTIONSETS.DCP_APPLICANTTYPE,
   },
   bbl: {
     boroughs: BBL_OPTIONSETS.BOROUGHS,

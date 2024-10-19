@@ -1,16 +1,17 @@
 {{#let @form as |form|}}
-<form.Section @title="Project Information">
+<form.Section @title='Project Information'>
   <Ui::Question @required={{true}} as |Q|>
     <Q.Label>
       Project Name
     </Q.Label>
 
     <form.Field 
-      @attribute="projectName" 
-      @type="text-input" 
+      @attribute='projectName' 
+      @type='text-input' 
       id={{Q.questionId}} 
       @showCounter={{true}}
-      @maxlength="50"
+      @maxlength='50'
+      placeholder="project name"
     />
   </Ui::Question>
   <Ui::Question @required={{true}} as |Q|>
@@ -21,11 +22,25 @@
       @options={{@boroughOptions}}
       @onChange={{@onBoroughChange}}
       @selected={{@selectedBorough}} 
-      @searchField="label"
-      @placeholder="Select a borough"
-      as |borough|
-      >
+      @searchField='label'
+      @placeholder='select a borough' as |borough| >
       {{borough.label}}
+    </PowerSelect>
+  </Ui::Question>
+  <Ui::Question @required={{true}} as |Q|>
+    <Q.Label>
+      Applicant Type
+    </Q.Label>
+    <p class='q-help'>
+      Identify if you represent a public agency or are a private entity.
+    </p>
+    <PowerSelect 
+      @options={{@applicantOptions}} 
+      @onChange={{@onApplicantTypeSelection}} 
+      @selected={{@selectedApplicantType}}
+      @searchField='label' 
+      @placeholder='select applicant type' as |applicantType| >
+      {{applicantType.label}}
     </PowerSelect>
   </Ui::Question>
 </form.Section>
