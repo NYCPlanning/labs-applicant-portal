@@ -1,134 +1,54 @@
 {{#let @form as |form|}}
-<form.Section @title="Project Information">
+<form.Section @title='Project Information'>
   <Ui::Question @required={{true}} as |Q|>
     <Q.Label>
       Project Name
     </Q.Label>
 
     <form.Field 
-      @attribute="projectName" 
-      @type="text-input" 
+      @attribute='projectName' 
+      @type='text-input' 
       id={{Q.questionId}} 
       @showCounter={{true}}
-      @maxlength="50"
-    />
-  </Ui::Question>
-</form.Section>
-<form.Section @title="Contact Information">
-  <h3>Primary Contact</h3>
-  <p>This contact is the person who will respond to public inquiries regarding the application.</p>
-  <Ui::Question @required={{true}} as |Q|>
-    <Q.Label>
-      First Name 
-    </Q.Label>
-
-    <form.Field 
-      @attribute="primaryContactFirstName"
-      @type="text-input"
-      id={{Q.questionId}}
-      @showCounter={{true}}
-      @maxlength="50"
+      @maxlength='50'
+      placeholder="project name"
     />
   </Ui::Question>
   <Ui::Question @required={{true}} as |Q|>
-    <Q.Label>
-      Last Name 
+    <Q.Label data-test-projects-new-borough-dropdown>
+      Borough
     </Q.Label>
-
-    <form.Field 
-      @attribute="primaryContactLastName"
-      @type="text-input"
-      id={{Q.questionId}}
-      @showCounter={{true}}
-      @maxlength="50"
-    />
+    <PowerSelect
+      supportsDataTestProperties={{true}}
+      @attribute='borough'
+      @options={{@boroughOptions}}
+      @onChange={{@onBoroughChange}}
+      @selected={{@selectedBorough}} 
+      @searchField='label'
+      data-test-id='project-new-borough-dropdown'
+      @placeholder='select a borough' as |borough| >
+      {{borough.label}}
+    </PowerSelect>
   </Ui::Question>
   <Ui::Question @required={{true}} as |Q|>
-    <Q.Label>
-      Email
+    <Q.Label data-test-projects-new-applicant-type>
+      Applicant Type
     </Q.Label>
-
-    <form.Field 
-      @attribute="primaryContactEmail" 
-      @type="text-input" 
-      id={{Q.questionId}} 
-      @showCounter={{true}}
-      @maxlength="50"
-    />
-  </Ui::Question>
-  <Ui::Question @required={{false}} as |Q|>
-    <Q.Label>
-      Phone
-    </Q.Label>
-    <p class="q-help">
-      No dashes, parentheses, or special characters.
+    <p class='q-help'>
+      Identify if you represent a public agency or are a private entity.
     </p>
-
-    <form.Field 
-      @attribute="primaryContactPhone" 
-      @type="text-input" 
-      id={{Q.questionId}} 
-      @showCounter={{true}}
-      @maxlength="10"
-    />
-  </Ui::Question>
-
-  <h3>Applicant</h3>
-  <p>The owner, entity, or representative of the project described in this application.</p>
-  <Ui::Question @required={{true}} as |Q|>
-    <Q.Label>
-      First Name 
-    </Q.Label>
-
-    <form.Field 
-      @attribute="applicantFirstName"
-      @type="text-input"
-      id={{Q.questionId}}
-      @showCounter={{true}}
-      @maxlength="50"
-    />
-  </Ui::Question>
-  <Ui::Question @required={{true}} as |Q|>
-    <Q.Label>
-      Last Name 
-    </Q.Label>
-
-    <form.Field 
-      @attribute="applicantLastName"
-      @type="text-input"
-      id={{Q.questionId}}
-      @showCounter={{true}}
-      @maxlength="50"
-    />
-  </Ui::Question>
-  <Ui::Question @required={{true}} as |Q|>
-    <Q.Label>
-      Email
-    </Q.Label>
-
-    <form.Field 
-      @attribute="applicantEmail" 
-      @type="text-input" 
-      id={{Q.questionId}} 
-      @showCounter={{true}}
-      @maxlength="50"
-    />
-  </Ui::Question>
-  <Ui::Question @required={{false}} as |Q|>
-    <Q.Label>
-      Phone
-    </Q.Label>
-    <p class="q-help">
-      No dashes, parentheses, or special characters.
-    </p>
-
-    <form.Field 
-      @attribute="applicantPhone" 
-      @type="text-input" 
-      id={{Q.questionId}} 
-      @showCounter={{true}}
-      @maxlength="10"
-    />
+    <PowerSelect
+      supportsDataTestProperties={{true}}
+      @attribute='dcpApplicantType'
+      @options={{@applicantOptions}} 
+      @onChange={{@onApplicantTypeSelection}} 
+      @selected={{@selectedApplicantType}}
+      @searchField='label'
+      data-test-id='projects-new-applicant-type'
+      @placeholder='select applicant type' as |dcpApplicantType| >
+      {{dcpApplicantType.label}}
+    </PowerSelect>
   </Ui::Question>
 </form.Section>
 {{/let}}
+
