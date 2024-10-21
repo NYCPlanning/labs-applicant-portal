@@ -84,7 +84,7 @@ jobs:
           HD_TENANT_ID: ${{ secrets.TENANT_ID }}
           HD_TOKEN_PATH: ${{ secrets.TOKEN_PATH }}
           HD_ZAP_TOKEN_SECRET: ${{ secrets.ZAP_TOKEN_SECRET }}
-  deploy-client-prod:
+  deploy-client:
     name: 🛫 Deploy client
     needs: [test-client, deploy-server]
     environment:
@@ -124,43 +124,3 @@ jobs:
           --auth ${{secrets.NETLIFY_AUTH_TOKEN}} \
           --message "${{ github.event.head_commit.message }}"
           --prod
-  deploy-client-master:
-    name: 🛫 Deploy client
-    needs: [test-client, deploy-server]
-    environment:
-      name: production
-      url: https://applicants.planning.nyc.gov
-    runs-on: ubuntu-latest
-    env:
-      FEATURE_FLAG_SELF_SERVICE: ${{ vars.FEATURE_FLAG_SELF_SERVICE }}
-      HOST: ${{ vars.ZAP_API_HOST }}
-      MAINTENANCE_START: ${{ vars.MAINTENANCE_START }}
-      MAINTENANCE_END: ${{ vars.MAINTENANCE_END }}
-      HD_NYCID_DOMAIN: ${{ secrets.NYCID_DOMAIN }}
-      NYCID_CLIENT_ID: ${{ vars.NYCID_CLIENT_ID }}
-      NYCID_DOMAIN: ${{ vars.NYCID_DOMAIN }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-            sparse-checkout: client
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 12.x
-      - name: Install application dependencies 
-        working-directory: client
-        run: yarn install --immutable --immutable-cache --check-cache
-      - name: Build client
-        working-directory: client
-        run: yarn run build --environment=production
-      - name: Install netlify
-        # Use npm over yarn because yarn was not respecting the exact version of a dependency
-        run: npm i -g netlify-cli@11.8.3
-      - name: Deploy client to Netlify
-        run: |
-          netlify deploy \
-          --dir client/dist \
-          --alias master \
-          --site ${{secrets.NETLIFY_SITE_ID}} \
-          --auth ${{secrets.NETLIFY_AUTH_TOKEN}} \
-          --message "${{ github.event.head_commit.message }}"
