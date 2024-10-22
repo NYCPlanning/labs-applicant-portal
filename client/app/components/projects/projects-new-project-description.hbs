@@ -1,0 +1,15 @@
+{{#let @form as |form|}}
+<form.Section @title="Project Description">
+    <Ui::Question @required={{true}} as |Q|>
+        <Q.Label>
+            Please replace information in the brackets to the best of your ability.
+        </Q.Label>
+
+        <form.Field
+            @attribute="projectBrief"
+            @type="text-area"
+            id={{Q.questionId}}
+            />
+    </Ui::Question>
+</form.Section>
+{{/let}}

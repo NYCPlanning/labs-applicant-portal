@@ -64,7 +64,7 @@ export class ProjectsService {
             any(o:
               o/_dcp_applicant_customer_value eq '${contactId}'
               and o/statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
-            ) 
+            )
           and (
             dcp_visibility eq ${PROJECT_VISIBILITY_APPLICANT_ONLY}
             or dcp_visibility eq ${PROJECT_VISIBILITY_GENERAL_PUBLIC}
@@ -96,6 +96,35 @@ export class ProjectsService {
   }
 
   /**
+   * Create a project, including the contact id for the primary contact and applicant
+   * Lead planner is automatically assigned by CRM based on the borough
+   *
+   * @param body
+   */
+  public async create(attributes: {
+    dcp_projectname: string;
+    dcp_borough: string;
+    dcp_applicanttype: string;
+    dcp_projectbrief: string;
+    _dcp_applicant_customer_value: string;
+    _dcp_applicantadministrator_customer_value: string;
+  }) {
+    const data = {
+      dcp_projectname: attributes.dcp_projectname,
+      dcp_borough: attributes.dcp_borough,
+      dcp_applicanttype: attributes.dcp_applicanttype,
+      dcp_projectbrief: attributes.dcp_projectbrief,
+      'dcp_applicant_customer_contact@odata.bind': `/contacts(${attributes._dcp_applicant_customer_value})`,
+      'dcp_applicantadministrator_customer_contact@odata.bind': `/contacts(${attributes._dcp_applicantadministrator_customer_value})`,
+    };
+    console.debug('server data', data);
+    return {
+        dcp_projectid: '',
+    };
+    // return await this.crmService.create('dcp_projects', data);
+  }
+
+  /**
    * Gets a Project for given dcp_projectid and contactid
    *
    * @param      {string}  projectId   CRM Project dcp_projectid
@@ -123,19 +152,19 @@ export class ProjectsService {
             $filter= statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
           ),
           dcp_dcp_project_dcp_dcpprojectteam_project,
-          dcp_dcp_project_dcp_package_project(	
-            $filter= 	
-            (	
-              dcp_visibility eq ${PACKAGE_VISIBILITY.APPLICANT_ONLY}	
-              or dcp_visibility eq ${PACKAGE_VISIBILITY.GENERAL_PUBLIC}	
-            )	
-            and (	
-              statuscode eq ${PACKAGE_STATUSCODE.PACKAGE_PREPARATION}	
-              or statuscode eq ${PACKAGE_STATUSCODE.SUBMITTED}	
-              or statuscode eq ${PACKAGE_STATUSCODE.UNDER_REVIEW}	
-              or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_NO_REVISIONS_REQUIRED}	
-              or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_REVISION_REQUIRED}	
-            )	
+          dcp_dcp_project_dcp_package_project(
+            $filter=
+            (
+              dcp_visibility eq ${PACKAGE_VISIBILITY.APPLICANT_ONLY}
+              or dcp_visibility eq ${PACKAGE_VISIBILITY.GENERAL_PUBLIC}
+            )
+            and (
+              statuscode eq ${PACKAGE_STATUSCODE.PACKAGE_PREPARATION}
+              or statuscode eq ${PACKAGE_STATUSCODE.SUBMITTED}
+              or statuscode eq ${PACKAGE_STATUSCODE.UNDER_REVIEW}
+              or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_NO_REVISIONS_REQUIRED}
+              or statuscode eq ${PACKAGE_STATUSCODE.REVIEWED_REVISION_REQUIRED}
+            )
           ),
           dcp_dcp_project_dcp_projectmilestone_project(
             $select=${MILESTONE_ATTRS.join(',')};

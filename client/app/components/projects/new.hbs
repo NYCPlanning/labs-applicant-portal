@@ -20,15 +20,27 @@
           Planning will contact you with the next steps.
         </p>
       </section>
-      <Packages::Projects::ProjectsNewInformation @form={{saveableProjectsNewForm}} />
+      <Projects::ProjectsNewInformation
+        @project={{saveableProjectsNewForm.data}}
+        @form={{saveableProjectsNewForm}} 
+        @boroughOptions={{this.boroughOptions}} 
+        @onBoroughChange={{this.handleBoroughChange}} 
+        @selectedBorough={{this.selectedBorough}} 
+        @onApplicantTypeSelection={{this.handleApplicantTypeChange}}
+        @selectedApplicantType={{this.selectedApplicantType}}
+        @applicantOptions={{this.applicantOptions}}
+      />
+      <Projects::ProjectsNewAddContacts 
+        @form={{saveableProjectsNewForm}} />
+      <Projects::ProjectsNewProjectDescription
+        @form={{saveableProjectsNewForm}} />
     </div>
-  
     <div class="cell large-4 sticky-sidebar">
       <saveableProjectsNewForm.PageNav>
         <saveableProjectsNewForm.SubmitButton @isEnabled={{saveableProjectsNewForm.isSubmittable}} data-test-save-button />
       </saveableProjectsNewForm.PageNav>
       <saveableProjectsNewForm.ConfirmationModal @action={{component saveableProjectsNewForm.SubmitButton
-        isEnabled=saveableProjectsNewForm.isSubmittable onClick=this.submitPackage class="no-margin" }}
+        isEnabled=saveableProjectsNewForm.isSubmittable onClick=this.submitProject class="no-margin" }}
         @continueButtonTitle="Continue Editing" data-test-confirm-submit-button={{true}}>
         <h6>Confirm New Project Submission</h6>
         <p class="header-large medium-margin-top small-margin-bottom">
