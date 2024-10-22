@@ -131,6 +131,8 @@ export class ProjectsController {
 
   @Post('/')
   async createProject(@Body() body) {
+    const allowedAttrs = pick(body, PROJECT_ATTRS);
+    console.debug("allowed", allowedAttrs);
     if (!this.config.featureFlag.selfService) {
       throw new HttpException({
         code: "NOT_FOUND",
