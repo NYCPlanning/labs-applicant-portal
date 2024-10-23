@@ -114,4 +114,16 @@ export default {
       message: 'This field is required',
     }),
   ],
+  borough: [
+    validatePresence({
+      presence: true,
+      message: 'Please select a Borough',
+    }),
+  ],
+  dcpApplicantType: [
+    validatePresence({
+      presence: true,
+      message: 'Please select an Applicant Type',
+    }),
+  ],
 };
