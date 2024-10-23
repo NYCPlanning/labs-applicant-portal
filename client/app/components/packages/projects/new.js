@@ -120,7 +120,7 @@ export default class ProjectsNewFormComponent extends Component {
             attributes: {
               dcpProjectname: this.args.package.projectName,
               dcpBorough: this.selectedBorough.code,
-              dcpApplicantType: this.selectedApplicantType.code,
+              dcpApplicanttype: this.selectedApplicantType.code,
               dcpProjectbrief: '',
               _dcpApplicantadministratorCustomerValue: verifiedPrimaryContact.id,
               _dcpApplicantCustomerValue: verifiedApplicant.id,
