@@ -147,9 +147,7 @@ export class ProjectsController {
       'dcp_applicanttype': allowedAttrs['dcp_applicanttype'],
       'dcp_applicant_customer_contact@odata.bind': `/contacts(${allowedAttrs['_dcp_applicant_customer_value']})`,
       'dcp_applicantadministrator_customer_contact@odata.bind': `/contacts(${allowedAttrs['_dcp_applicantadministrator_customer_value']})`,
-      // 'dcp_leadplanner': null,
-      'dcp_leadplanner': allowedAttrs['_dcp_leadplanner_value'],
-      // 'dcp_leadplanner_contact@odata.bind': `/contacts(${allowedAttrs['_dcp_leadplanner_value']})`,
+      // 'dcp_leadplanner@odata.bind': `/systemusers(${guid})`,
     })
     return newProject;
   }
