@@ -2,3 +2,7 @@
 .vscode/
 **/node_modules
 .eslintcache
+
+# ODataModels
+ODataV4Metadata.xml
+generated
