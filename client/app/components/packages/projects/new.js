@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import SubmittableProjectsNewForm from '../../../validations/submittable-projects-new-form';
 import { optionset } from '../../../helpers/optionset';
@@ -17,12 +16,6 @@ export default class ProjectsNewFormComponent extends Component {
   @service
   store;
 
-  @tracked
-  selectedBorough = null;
-
-  @tracked
-  selectedApplicantType = null;
-
   get boroughOptions() {
     return optionset(['project', 'boroughs', 'list']);
   }
@@ -32,29 +25,16 @@ export default class ProjectsNewFormComponent extends Component {
   }
 
   @action
-  handleBoroughChange(selectedBorough) {
-    console.log('Selected borough:', selectedBorough);
-
-    this.selectedBorough = selectedBorough;
-
-    if (this.args.form) {
-      this.args.form.set('borough', selectedBorough);
-    }
-  }
-
-  @action
-  handleApplicantTypeChange(selectedApplicantType) {
-    console.log('Selected Applicant Type:', selectedApplicantType);
-
-    this.selectedApplicantType = selectedApplicantType;
-
-    if (this.args.form) {
-      this.args.form.set('dcpApplicantType', selectedApplicantType);
-    }
-  }
-
-  @action
   async submitPackage() {
+    /* eslint-disable no-console */
+    console.log('this dot args dot packages?', this.args.package);
+
+    const projectInformation = {
+      projectName: this.args.package.projectName,
+      borough: this.args.package.borough.code,
+      applicantType: this.args.package.applicantType.code,
+    };
+
     const primaryContactInput = {
       first: this.args.package.primaryContactFirstName,
       last: this.args.package.primaryContactLastName,
@@ -72,12 +52,14 @@ export default class ProjectsNewFormComponent extends Component {
     };
 
     const contactInputs = [primaryContactInput, applicantInput];
+
     try {
-      const contactPromises = contactInputs.map((contact) =>
-        this.store.queryRecord('contact', {
-          email: contact.email,
-          includeAllStatusCodes: true,
-        })
+      const contactPromises = contactInputs.map(
+        (contact) => this.store.queryRecord('contact',
+          {
+            email: contact.email,
+            includeAllStatusCodes: true,
+          }),
       );
 
       const contacts = await Promise.all(contactPromises);
@@ -95,9 +77,27 @@ export default class ProjectsNewFormComponent extends Component {
         }
         return contact;
       });
-      await Promise.all(verifiedContactPromises);
-    } catch {
-      console.log('Save new project package error');
+
+      const saveProjectInformation = () => {
+        const projectModel = this.store.createRecord('project', {
+          dcpProjectName: projectInformation.projectName,
+          dcpBorough: projectInformation.borough,
+          dcoApplicantType: projectInformation.applicantType,
+        });
+        return projectModel.save();
+      };
+
+      await Promise.all(
+        [
+          verifiedContactPromises,
+          saveProjectInformation,
+        ],
+      )
+        .then(
+          await this.args.package.submit(),
+        );
+    } catch (error) {
+      console.log('Save new project package error', error);
     }
   }
 }

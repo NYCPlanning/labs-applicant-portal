@@ -20,7 +20,8 @@
           Planning will contact you with the next steps.
         </p>
       </section>
-      <Packages::Projects::ProjectsNewInformation 
+      <Packages::Projects::ProjectsNewInformation
+        @project={{saveableProjectsNewForm.data}}
         @form={{saveableProjectsNewForm}} 
         @boroughOptions={{this.boroughOptions}} 
         @onBoroughChange={{this.handleBoroughChange}} 
