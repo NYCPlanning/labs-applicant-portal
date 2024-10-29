@@ -4,6 +4,8 @@ import { pick } from 'underscore';
 import { CONTACT_ATTRS } from './contacts.attrs';
 import { CrmService } from '../crm/crm.service';
 import { NycidService } from './nycid/nycid.service';
+import buildQuery, { Filter, Select } from 'odata-query';
+import { contact } from 'generated/dynamics/microsoft-dynamics-crm/contact/contact';
 
 const ACTIVE_CODE = 1;
 
@@ -81,18 +83,26 @@ export class ContactService {
    * @return     {object}             Object representing a CRM contact
    */
   public async findOneByEmail(email: string, includeAllStatusCodes = false) {
+    const select: Select<contact> = [
+      'contactid',
+      'dcp_nycid_guid',
+      'firstname',
+      'lastname',
+      'emailaddress1',
+      'telephone1',
+      'statuscode',
+      'statecode',
+    ];
+    const filter: Filter<contact> = {
+      emailaddress1: { startswith: email },
+      statuscode: includeAllStatusCodes ? undefined : { eq: ACTIVE_CODE },
+    };
+    const top = 1;
+    const query = buildQuery({ select, filter, top });
     try {
       const {
         records: [firstRecord = GHOST_CONTACT],
-      } = await this.crmService.get(
-        'contacts',
-        `
-        $select=${CONTACT_ATTRS.join(',')}
-        &$filter=startswith(emailaddress1, '${email}')
-          ${includeAllStatusCodes ? '' : `and statuscode eq ${ACTIVE_CODE}`}
-        &$top=1
-      `,
-      );
+      } = await this.crmService.get('contacts', query);
 
       return {
         has_crm_contact: true,
@@ -100,13 +110,13 @@ export class ContactService {
         ...(await this.nycid.getNycidStatus(email, firstRecord.dcp_nycid_guid)),
       };
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       const error = {
         code: 'CONTACT_FROM_EMAIL_ERROR',
         title: 'Error finding contact by email.',
         detail: `Error finding contact by email, possibly due to missing or bad email. ${e.message}`,
       };
-      console.log(error);
+      // console.log(error);
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

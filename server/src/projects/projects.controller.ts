@@ -132,16 +132,18 @@ export class ProjectsController {
   @Post('/')
   async createProject(@Body() body) {
     if (!this.config.featureFlag.selfService) {
-      throw new HttpException({
-        code: "NOT_FOUND",
-        title: "Not found",
-      },
-      HttpStatus.NOT_FOUND)
+      throw new HttpException(
+        {
+          code: 'NOT_FOUND',
+          title: 'Not found',
+        },
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     return {
-      ...body
-    }
+      ...body,
+    };
   }
 
   @Get('/:id')
