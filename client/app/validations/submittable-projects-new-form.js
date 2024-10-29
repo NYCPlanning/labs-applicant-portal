@@ -120,7 +120,7 @@ export default {
       message: 'Please select a Borough',
     }),
   ],
-  dcpApplicantType: [
+  applicantType: [
     validatePresence({
       presence: true,
       message: 'Please select an Applicant Type',

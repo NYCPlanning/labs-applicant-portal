@@ -28,8 +28,12 @@
       @placeholder='select a borough' as |borough|>
        {{borough.label}}
     </PowerSelect>
+    {{#if form.errors.borough}}
+      {{#each form.errors.borough.validation as |message|}}
+        <div class="form-error is-visible" data-test-validation-message="select a borough">{{message}}</div>
+      {{/each}}
+    {{/if}}
   </Ui::Question>
-
   <Ui::Question @required={{true}} as |Q|>
     <Q.Label data-test-projects-new-applicant-type>
       Applicant Type
@@ -48,6 +52,12 @@
       @placeholder='select applicant type' as |dcpApplicantType| >
       {{dcpApplicantType.label}}
     </PowerSelect>
+    {{#if form.errors.applicantType}}
+      {{#each form.errors.applicantType.validation as |message|}}
+          <div class="form-error is-visible"    data-test-validation-message="select an Applicant Type"> {{message}}
+        </div>
+      {{/each}}
+    {{/if}}
   </Ui::Question>
 </form.Section>
 {{/let}}
