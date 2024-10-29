@@ -1,8 +1,8 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import SubmittableProjectsNewForm from '../../../validations/submittable-projects-new-form';
-import { optionset } from '../../../helpers/optionset';
+import SubmittableProjectsNewForm from '../../validations/submittable-projects-new-form';
+import { optionset } from '../../helpers/optionset';
 
 
 export default class ProjectsNewFormComponent extends Component {
