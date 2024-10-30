@@ -23,4 +23,5 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'warn',
     '@typescript-eslint/camelcase': 'off',
   },
+  ignorePatterns: ["src/gen/dynamics/*"]
 };

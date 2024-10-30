@@ -5,7 +5,7 @@ import { CONTACT_ATTRS } from './contacts.attrs';
 import { CrmService } from '../crm/crm.service';
 import { NycidService } from './nycid/nycid.service';
 import buildQuery, { Filter, Select } from 'odata-query';
-import { contact } from 'generated/dynamics/microsoft-dynamics-crm/contact/contact';
+import { contact } from '../gen/dynamics/microsoft-dynamics-crm/contact/contact';
 
 const ACTIVE_CODE = 1;
 

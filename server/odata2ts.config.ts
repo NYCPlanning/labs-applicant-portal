@@ -7,7 +7,7 @@ export default {
     dynamics: {
       serviceName: "dynamics",
       source: "ODataV4Metadata.xml",
-      output: "generated/dynamics",
+      output: "src/gen/dynamics",
       // absolutely needed when confronted with huge EDMX files!
       bundledFileGeneration: false,
       byTypeAndName: [
