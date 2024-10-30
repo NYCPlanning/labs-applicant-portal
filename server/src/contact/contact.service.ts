@@ -98,7 +98,12 @@ export class ContactService {
       statuscode: includeAllStatusCodes ? undefined : { eq: ACTIVE_CODE },
     };
     const top = 1;
-    const query = buildQuery({ select, filter, top });
+    let query = buildQuery({ select, filter, top });
+
+    // CRM service and build query both add question marks
+    // Exactly one question mark is to be used
+    // Remove the question mark added by build query
+    query = query.startsWith('?') ? query.replace('?','') : query;
     try {
       const {
         records: [firstRecord = GHOST_CONTACT],
