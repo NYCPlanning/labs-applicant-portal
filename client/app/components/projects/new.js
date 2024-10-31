@@ -35,6 +35,8 @@ export default class ProjectsNewFormComponent extends Component {
       applicantType: this.args.package.applicantType.code,
     };
 
+    console.log("projectInformation", projectInformation);
+
     const primaryContactInput = {
       first: this.args.package.primaryContactFirstName,
       last: this.args.package.primaryContactLastName,
@@ -50,6 +52,16 @@ export default class ProjectsNewFormComponent extends Component {
       phone: this.args.package.applicantPhone,
       role: 'applicant',
     };
+
+     let newProject = this.store.createRecord("project", {
+         dcpProjectname: projectInformation.projectName,
+         dcpBorough: projectInformation.borough,
+         dcpApplicanttype: projectInformation.applicantType,
+       });
+      //  return projectModel.save();
+
+    console.log('new project?', newProject);
+    console.log('new project?', newProject.changedAttributes());
 
     const contactInputs = [primaryContactInput, applicantInput];
 
@@ -78,21 +90,16 @@ export default class ProjectsNewFormComponent extends Component {
         return contact;
       });
 
-      const saveProjectInformation = () => {
-        const projectModel = this.store.createRecord('project', {
-          dcpProjectName: projectInformation.projectName,
-          dcpBorough: projectInformation.borough,
-          dcoApplicantType: projectInformation.applicantType,
-        });
-        return projectModel.save();
-      };
+      // const saveProjectInformation = () => {
+      //   const projectModel = this.store.createRecord('project', {
+      //     dcpProjectName: projectInformation.projectName,
+      //     dcpBorough: projectInformation.borough,
+      //     dcoApplicantType: projectInformation.applicantType,
+      //   });
+      //   return projectModel.save();
+      // };
 
-      await Promise.all(
-        [
-          verifiedContactPromises,
-          saveProjectInformation,
-        ],
-      )
+      await Promise.all(verifiedContactPromises)
         .then(
           await this.args.package.submit(),
         );
