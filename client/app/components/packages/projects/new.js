@@ -56,7 +56,27 @@ export default class ProjectsNewFormComponent extends Component {
         }
         return contact;
       });
-      await Promise.all(verifiedContactPromises);
+      const verifiedContacts = await Promise.all(verifiedContactPromises);
+      const applicants = verifiedContacts.map((contact) => {
+        const applicant = this.store.createRecord('project-applicant');
+        applicant.contact = contact;
+        return applicant;
+      });
+      console.debug('project name', this.args.package.projectName)
+      const project = this.store.createRecord('project', {
+        dcpProjectname: this.args.package.projectName,
+      });
+      applicants.forEach((applicant) => project.projectApplicants.pushObject(applicant));
+      console.debug("project with applicants", project.projectApplicants)
+
+      
+      applicants.forEach(applicant => {
+        applicant.project = project;
+        applicant.save();
+      });
+      await project.save();
+
+      console.debug("yes, I saved")
     } catch {
       console.log('Save new project package error');
     }
