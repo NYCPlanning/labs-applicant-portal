@@ -25,7 +25,7 @@ export default class ProjectsNewFormComponent extends Component {
   }
 
   @action
-  async submitPackage() {
+  async submitProject() {
     /* eslint-disable no-console */
     console.log('this dot args dot packages?', this.args.package);
 
