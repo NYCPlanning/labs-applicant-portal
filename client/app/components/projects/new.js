@@ -59,7 +59,6 @@ export default class ProjectsNewFormComponent extends Component {
       });
 
       await projectModel.save();
-      console.log('new project?', projectModel);
 
       const projects = await this.store.findAll('project');
       const sortedProjects = projects.sortBy('createdAt').reverse();
@@ -91,7 +90,11 @@ export default class ProjectsNewFormComponent extends Component {
 
       const verifiedContacts = await Promise.all(verifiedContactPromises);
 
-      const applicantRoleCodes = [DCPAPPLICANTROLE.PRIMARY_CONTACT.code, DCPAPPLICANTROLE.PRIMARY_APPLICANT.code];
+      const applicantRoleCodes = [
+        DCPAPPLICANTROLE.PRIMARY_CONTACT.code,
+        DCPAPPLICANTROLE.PRIMARY_APPLICANT.code,
+      ];
+
       const applicants = applicantRoleCodes.map((code) => {
         const applicant = this.store.createRecord('project-applicant', {
           dcpApplicantrole: code,
@@ -111,11 +114,6 @@ export default class ProjectsNewFormComponent extends Component {
         (applicant) => mostRecentProject.projectApplicants.pushObject(applicant),
       );
       applicants.forEach((applicant) => {
-        console.log('applicant', applicant);
-        console.log(
-          'mostRecentProject.projectApplicants',
-          mostRecentProject.projectApplicants,
-        );
         applicant.mostRecentProject = mostRecentProject;
         applicant.save();
       });
