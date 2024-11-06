@@ -132,7 +132,7 @@ export class ProjectsController {
   @Post('/')
   async createProject(@Body() body) {
     const allowedAttrs = pick(body, PROJECT_ATTRS);
-    console.debug("allowed", allowedAttrs);
+    console.debug("body", body);
     if (!this.config.featureFlag.selfService) {
       throw new HttpException({
         code: "NOT_FOUND",
@@ -141,15 +141,17 @@ export class ProjectsController {
       HttpStatus.NOT_FOUND)
     }
 
-    const newProject = await this.crmService.create('dcp_projects', {
-      'dcp_projectname': allowedAttrs['dcp_projectname'],
-      'dcp_borough': allowedAttrs['dcp_borough'],
-      'dcp_applicanttype': allowedAttrs['dcp_applicanttype'],
-      'dcp_applicant_customer_contact@odata.bind': `/contacts(${allowedAttrs['_dcp_applicant_customer_value']})`,
-      'dcp_applicantadministrator_customer_contact@odata.bind': `/contacts(${allowedAttrs['_dcp_applicantadministrator_customer_value']})`,
-      // 'dcp_leadplanner@odata.bind': `/systemusers(${guid})`,
-    })
-    return newProject;
+    return body;
+
+    // const newProject = await this.crmService.create('dcp_projects', {
+    //   'dcp_projectname': allowedAttrs['dcp_projectname'],
+    //   'dcp_borough': allowedAttrs['dcp_borough'],
+    //   'dcp_applicanttype': allowedAttrs['dcp_applicanttype'],
+    //   'dcp_applicant_customer_contact@odata.bind': `/contacts(${allowedAttrs['_dcp_applicant_customer_value']})`,
+    //   'dcp_applicantadministrator_customer_contact@odata.bind': `/contacts(${allowedAttrs['_dcp_applicantadministrator_customer_value']})`,
+      // 'dcp_leadplanner@odata.bind': `/systemusers()`,
+    // })
+    // return newProject;
   }
 
   @Get('/:id')

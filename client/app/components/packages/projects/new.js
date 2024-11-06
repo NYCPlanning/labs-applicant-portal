@@ -122,11 +122,31 @@ export default class ProjectsNewFormComponent extends Component {
               dcpBorough: this.selectedBorough.code,
               dcpApplicanttype: this.selectedApplicantType.code,
               dcpProjectbrief: '',
-              _dcpApplicantadministratorCustomerValue: verifiedPrimaryContact.id,
-              _dcpApplicantCustomerValue: verifiedApplicant.id,
-              _dcpLeadplannerValue: verifiedApplicant.id,
             },
           },
+          relationships: {
+            'project-applicants': {
+              data: [
+                { id: verifiedPrimaryContact.id, type: 'contact' },
+                { id: verifiedApplicant.id, type: 'contact' }],
+            },
+          },
+          included: [
+            {
+              id: verifiedPrimaryContact.id,
+              type: 'contact',
+              attributes: {
+                dcpApplicantRole: '012',
+              },
+            },
+            {
+              id: verifiedApplicant.id,
+              type: 'contact',
+              attributes: {
+                dcpApplicantRole: '2345',
+              },
+            },
+          ],
         }),
       });
     } catch (e) {
