@@ -6,8 +6,6 @@ export default class ProjectsNewRoute extends Route.extend(AuthenticatedRouteMix
   @service store;
 
   async model() {
-    // console.log(`store`, this.store);
-    // console.log(`model`, this.model);
     return {
       projectName: '',
       borough: '',
@@ -20,6 +18,7 @@ export default class ProjectsNewRoute extends Route.extend(AuthenticatedRouteMix
       applicantLastName: '',
       applicantEmail: '',
       applicantPhone: '',
+      dcpProjectbrief: '',
     };
   }
 }

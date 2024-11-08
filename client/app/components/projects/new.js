@@ -27,6 +27,7 @@ export default class ProjectsNewFormComponent extends Component {
 
   @action
   async submitProject() {
+    console.log(`this.args.package: `, this.args.package);
     const primaryContactInput = {
       first: this.args.package.primaryContactFirstName,
       last: this.args.package.primaryContactLastName,
@@ -92,7 +93,7 @@ export default class ProjectsNewFormComponent extends Component {
               dcpProjectname: this.args.package.projectName,
               dcpBorough: this.args.package.borough.code,
               dcpApplicanttype: this.args.package.applicantType.code,
-              dcpProjectbrief: '',
+              dcpProjectbrief: this.args.package.dcpProjectbrief,
               _dcpApplicantadministratorCustomerValue: verifiedPrimaryContact.id,
               _dcpApplicantCustomerValue: verifiedApplicant.id,
             },

@@ -126,4 +126,15 @@ export default {
       message: 'Please select an Applicant Type',
     }),
   ],
+  dcpProjectbrief: [
+    validateLength({
+      min: 0,
+      max: 500,
+      message: 'Text is too long (max {max} characters)',
+    }),
+    validatePresence({
+      presence: true,
+      message: 'This field is required',
+    }),
+  ],
 };
