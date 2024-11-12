@@ -3,7 +3,7 @@ import { optionset } from '../helpers/optionset';
 
 export default class ProjectModel extends Model {
   // The human-readable, descriptive name.
-  // e.g. "Marcus Garvey Blvd Project"
+  // e.g. 'Marcus Garvey Blvd Project'
   @attr dcpProjectname;
 
   // The CRM Project 5-letter ID.
@@ -85,18 +85,22 @@ export default class ProjectModel extends Model {
   @hasMany('milestone', { async: false })
   milestones;
 
-  get isDirty () {
+  get isDirty() {
     return this.hasDirtyAttributes || (this.artifact && this.artifact.isDirty);
   }
 
   get publicStatusGeneralPublicProject() {
-    const isGeneralPublic = this.dcpVisibility === optionset(['project', 'dcpVisibility', 'code', 'GENERAL_PUBLIC']);
+    const isGeneralPublic = this.dcpVisibility
+      === optionset(['project', 'dcpVisibility', 'code', 'GENERAL_PUBLIC']);
     return this.dcpPublicstatus && isGeneralPublic;
   }
 
   get pasPackages() {
     const pasPackages = this.packages
-      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'PAS_PACKAGE']))
+      .filter(
+        (projectPackage) => projectPackage.dcpPackagetype
+          === optionset(['package', 'dcpPackagetype', 'code', 'PAS_PACKAGE']),
+      )
       .sortBy('dcpPackageversion')
       .reverse();
 
@@ -105,7 +109,10 @@ export default class ProjectModel extends Model {
 
   get rwcdsPackages() {
     const rwcdsPackages = this.packages
-      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'RWCDS']))
+      .filter(
+        (projectPackage) => projectPackage.dcpPackagetype
+          === optionset(['package', 'dcpPackagetype', 'code', 'RWCDS']),
+      )
       .sortBy('dcpPackageversion')
       .reverse();
 
@@ -124,7 +131,10 @@ export default class ProjectModel extends Model {
 
   get draftLandusePackages() {
     const landusePackages = this.packages
-      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'DRAFT_LU_PACKAGE']))
+      .filter(
+        (projectPackage) => projectPackage.dcpPackagetype
+          === optionset(['package', 'dcpPackagetype', 'code', 'DRAFT_LU_PACKAGE']),
+      )
       .sortBy('dcpPackageversion')
       .reverse();
 
@@ -133,7 +143,10 @@ export default class ProjectModel extends Model {
 
   get filedLandusePackages() {
     const landusePackages = this.packages
-      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'FILED_LU_PACKAGE']))
+      .filter(
+        (projectPackage) => projectPackage.dcpPackagetype
+          === optionset(['package', 'dcpPackagetype', 'code', 'FILED_LU_PACKAGE']),
+      )
       .sortBy('dcpPackageversion')
       .reverse();
 
@@ -142,23 +155,26 @@ export default class ProjectModel extends Model {
 
   get postCertLUPackages() {
     return this.packages
-      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'POST_CERT_LU']))
+      .filter(
+        (projectPackage) => projectPackage.dcpPackagetype
+          === optionset(['package', 'dcpPackagetype', 'code', 'POST_CERT_LU']),
+      )
       .sortBy('dcpPackageversion')
       .reverse();
   }
 
   get easPackages() {
-    const easPackages = [
-      ...this.filedEasPackages,
-      ...this.draftEasPackages,
-    ];
+    const easPackages = [...this.filedEasPackages, ...this.draftEasPackages];
 
     return easPackages;
   }
 
   get draftEasPackages() {
     const easPackages = this.packages
-      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'DRAFT_EAS']))
+      .filter(
+        (projectPackage) => projectPackage.dcpPackagetype
+          === optionset(['package', 'dcpPackagetype', 'code', 'DRAFT_EAS']),
+      )
       .sortBy('dcpPackageversion')
       .reverse();
 
@@ -167,7 +183,10 @@ export default class ProjectModel extends Model {
 
   get filedEasPackages() {
     const easPackages = this.packages
-      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'FILED_EAS']))
+      .filter(
+        (projectPackage) => projectPackage.dcpPackagetype
+          === optionset(['package', 'dcpPackagetype', 'code', 'FILED_EAS']),
+      )
       .sortBy('dcpPackageversion')
       .reverse();
 
@@ -176,7 +195,15 @@ export default class ProjectModel extends Model {
 
   get scopeOfWorkDraftPackages() {
     const scopeOfWorkDraftPackages = this.packages
-      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(['package', 'dcpPackagetype', 'code', 'DRAFT_SCOPE_OF_WORK']))
+      .filter(
+        (projectPackage) => projectPackage.dcpPackagetype
+          === optionset([
+            'package',
+            'dcpPackagetype',
+            'code',
+            'DRAFT_SCOPE_OF_WORK',
+          ]),
+      )
       .sortBy('dcpPackageversion')
       .reverse();
 
@@ -184,19 +211,17 @@ export default class ProjectModel extends Model {
   }
 
   get eisPackages() {
-    const eisPackages = [
-      ...this.feisPackages,
-      ...this.deisPackages,
-    ];
+    const eisPackages = [...this.feisPackages, ...this.deisPackages];
 
     return eisPackages;
   }
 
   get deisPackages() {
     const eisPackages = this.packages
-      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(
-        ['package', 'dcpPackagetype', 'code', 'PDEIS'],
-      ))
+      .filter(
+        (projectPackage) => projectPackage.dcpPackagetype
+          === optionset(['package', 'dcpPackagetype', 'code', 'PDEIS']),
+      )
       .sortBy('dcpPackageversion')
       .reverse();
 
@@ -205,9 +230,10 @@ export default class ProjectModel extends Model {
 
   get feisPackages() {
     const eisPackages = this.packages
-      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(
-        ['package', 'dcpPackagetype', 'code', 'EIS'],
-      ))
+      .filter(
+        (projectPackage) => projectPackage.dcpPackagetype
+          === optionset(['package', 'dcpPackagetype', 'code', 'EIS']),
+      )
       .sortBy('dcpPackageversion')
       .reverse();
 
@@ -216,9 +242,10 @@ export default class ProjectModel extends Model {
 
   get technicalMemoPackages() {
     const technicalMemoPackages = this.packages
-      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(
-        ['package', 'dcpPackagetype', 'code', 'TECHNICAL_MEMO'],
-      ))
+      .filter(
+        (projectPackage) => projectPackage.dcpPackagetype
+          === optionset(['package', 'dcpPackagetype', 'code', 'TECHNICAL_MEMO']),
+      )
       .sortBy('dcpPackageversion')
       .reverse();
 
@@ -227,9 +254,10 @@ export default class ProjectModel extends Model {
 
   get workingPackages() {
     return this.packages
-      .filter((projectPackage) => projectPackage.dcpPackagetype === optionset(
-        ['package', 'dcpPackagetype', 'code', 'WORKING_PACKAGE'],
-      ))
+      .filter(
+        (projectPackage) => projectPackage.dcpPackagetype
+          === optionset(['package', 'dcpPackagetype', 'code', 'WORKING_PACKAGE']),
+      )
       .sortBy('dcpPackageversion')
       .reverse();
   }

@@ -114,4 +114,27 @@ export default {
       message: 'This field is required',
     }),
   ],
+  borough: [
+    validatePresence({
+      presence: true,
+      message: 'Please select a Borough',
+    }),
+  ],
+  applicantType: [
+    validatePresence({
+      presence: true,
+      message: 'Please select an Applicant Type',
+    }),
+  ],
+  projectBrief: [
+    validateLength({
+      min: 0,
+      max: 500,
+      message: 'Text is too long (max {max} characters)',
+    }),
+    validatePresence({
+      presence: true,
+      message: 'This field is required',
+    }),
+  ],
 };
