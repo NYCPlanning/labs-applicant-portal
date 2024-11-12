@@ -38,7 +38,9 @@
     <div class="cell large-4 sticky-sidebar">
       <saveableProjectsNewForm.PageNav>
         <saveableProjectsNewForm.SubmitButton @isEnabled={{saveableProjectsNewForm.isSubmittable}} data-test-save-button />
+        
       </saveableProjectsNewForm.PageNav>
+      <Messages::Assistance />
       <saveableProjectsNewForm.ConfirmationModal @action={{component saveableProjectsNewForm.SubmitButton
         isEnabled=saveableProjectsNewForm.isSubmittable onClick=this.submitProject class="no-margin" }}
         @continueButtonTitle="Continue Editing" data-test-confirm-submit-button={{true}}>
