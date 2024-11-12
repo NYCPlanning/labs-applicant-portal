@@ -248,9 +248,21 @@ export const DCPSTATE = {
   },
 };
 
+export const DCP_APPLICANTTYPE = {
+  OTHER_PUBLIC_AGENCY: {
+    label: 'Other Public Agency',
+    code: 717170001,
+  },
+  PRIVATE: {
+    label: 'Private',
+    code: 717170002,
+  },
+};
+
 const APPLICANT_OPTIONSETS = {
   DCPTYPE,
   DCPSTATE,
+  DCP_APPLICANTTYPE,
 };
 
 export default APPLICANT_OPTIONSETS;

@@ -1,13 +1,16 @@
 import Route from '@ember/routing/route';
-import { inject as service } from '@ember/service';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default class ProjectsNewRoute extends Route.extend(AuthenticatedRouteMixin) {
-  @service store;
+export default class ProjectsNewRoute extends Route.extend(
+  AuthenticatedRouteMixin,
+) {
+  authenticationRoute = '/';
 
   async model() {
     return {
       projectName: '',
+      borough: '',
+      applicantType: '',
       primaryContactFirstName: '',
       primaryContactLastName: '',
       primaryContactEmail: '',
@@ -16,6 +19,7 @@ export default class ProjectsNewRoute extends Route.extend(AuthenticatedRouteMix
       applicantLastName: '',
       applicantEmail: '',
       applicantPhone: '',
+      projectBrief: '',
     };
   }
 }
