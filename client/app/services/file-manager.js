@@ -12,7 +12,10 @@ export default class FileManager {
     filesToUpload, // EmberFileUpload Queue Object
     session,
   ) {
-    console.assert(entityType === 'package' || entityType === 'artifact', "entityType must be 'package' or 'artifact'");
+    console.assert(
+      entityType === 'package' || entityType === 'artifact',
+      "entityType must be 'package' or 'artifact'",
+    );
 
     this.recordId = recordId;
     this.entityType = entityType;
@@ -61,18 +64,24 @@ export default class FileManager {
     this.numFilesToUpload -= 1;
   }
 
-  async uploadFiles() {
+  async uploadFiles(instanceId = this.recordId) {
     for (let i = 0; i < this.filesToUpload.files.length; i += 1) {
-      await this.filesToUpload.files[i].upload(`${ENV.host}/documents/${this.entityType}`, { // eslint-disable-line
-        fileKey: 'file',
-        headers: {
-          Authorization: `Bearer ${this.session.data.authenticated.access_token}`,
+      // eslint-disable-next-line no-await-in-loop
+      await this.filesToUpload.files[i].upload(
+        `${ENV.host}/documents/${this.entityType}`,
+        {
+          // eslint-disable-line
+          fileKey: 'file',
+          headers: {
+            Authorization: `Bearer ${this.session.data.authenticated.access_token}`,
+          },
+          data: {
+            instanceId,
+            entityName:
+              this.entityType === 'artifact' ? 'dcp_artifacts' : 'dcp_package',
+          },
         },
-        data: {
-          instanceId: this.recordId,
-          entityName: this.entityType === 'artifact' ? 'dcp_artifacts' : 'dcp_package',
-        },
-      });
+      );
     }
   }
 
@@ -82,21 +91,24 @@ export default class FileManager {
     // TODO: If this is not possible, rework this to be a
     // POST request to a differently named endpoint, like
     // deleteDocument
-    return Promise.all(this.filesToDelete.map((file) => fetch(
-      `${ENV.host}/documents?serverRelativeUrl=${file.serverRelativeUrl}`, {
-        method: 'DELETE',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${this.session.data.authenticated.access_token}`,
+    return Promise.all(
+      this.filesToDelete.map((file) => fetch(
+        `${ENV.host}/documents?serverRelativeUrl=${file.serverRelativeUrl}`,
+        {
+          method: 'DELETE',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${this.session.data.authenticated.access_token}`,
+          },
         },
-      },
-    )));
+      )),
+    );
   }
 
-  async save() {
+  async save(instanceId) {
     // See TODO at top of this file.
-    await this.uploadFiles();
+    await this.uploadFiles(instanceId);
 
     await this.deleteFiles();
 

@@ -78,6 +78,7 @@ jobs:
           HD_PAYMENT_IP_RANGE: ${{ secrets.PAYMENT_IP_RANGE }}
           HD_PAYMENT_STEP1_URL: ${{ secrets.PAYMENT_STEP1_URL }}
           HD_RER_FILETYPE_UUID: ${{ secrets.RER_FILETYPE_UUID }}
+          HD_LETTER_FILETYPE_UUID: ${{ secrets.LETTER_FILETYPE_UUID }}
           HD_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           HD_SHAREPOINT_CLIENT_ID: ${{ secrets.SHAREPOINT_CLIENT_ID }}
           HD_SHAREPOINT_CLIENT_SECRET: ${{ secrets.SHAREPOINT_CLIENT_SECRET }}

@@ -4,6 +4,7 @@ import { NycidService } from '../contact/nycid/nycid.service';
 import { CrmService } from '../crm/crm.service';
 import { overwriteCodesWithLabels } from '../_utils/overwrite-codes-with-labels';
 import { MILESTONE_ATTRS, MILESTONE_NON_DATE_ATTRS } from './projects.attrs';
+import { ArtifactService } from '../artifacts/artifacts.service';
 
 const APPLICANT_ACTIVE_STATUS_CODE = 1;
 const PROJECT_ACTIVE_STATE_CODE = 0;
@@ -52,6 +53,7 @@ export class ProjectsService {
   constructor(
     private readonly crmService: CrmService,
     private readonly nycidService: NycidService,
+    private readonly artifactService: ArtifactService,
   ) {}
 
   public async findManyByContactId(contactId: string) {
@@ -122,8 +124,14 @@ export class ProjectsService {
         'dcp_projects',
         data,
       );
+      const { dcp_artifactsid } =
+        await this.artifactService.createProjectInitiationArtifacts(
+          dcp_projectid,
+        );
+
       return {
         dcp_projectid,
+        dcp_artifactsid,
       };
     } catch (e) {
       console.error('error creating project', e);
