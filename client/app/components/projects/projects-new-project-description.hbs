@@ -1,16 +1,16 @@
 {{#let @form as |form|}}
-<form.Section @title="Project Description">
-    <Ui::Question @required={{true}} as |Q|>
-        <Q.Label>
-            Please replace information in the brackets to the best of your ability.
-        </Q.Label>
+<form.Section @title="Project Brief">
+  <Ui::Question @required={{true}} as |Q|>
+    <Q.Label>
+      Please replace information in the brackets to the best of your ability.
+    </Q.Label>
 
-        <form.Field
-            @attribute="projectBrief"
-            @type="text-area"
-            id={{Q.questionId}}
-            @maxlength='500'
-            value={{"A [action(s)] [ZR#'s for ZR, ZS, ZA] to facilitate a [new] [# of max stories], [total zsf, (# DU's)], [use] development, including [sf for each use, sf open space], is being sought by [public/private] [applicant] at [address] in [neighborhood], [Community District], [Borough]."}} />
-    </Ui::Question>
+    <form.Field
+      @attribute="projectBrief"
+      @type="text-area"
+      id={{Q.questionId}}
+      @maxlength='500'
+      value={{"A [action(s)] [ZR#'s for ZR, ZS, ZA] to facilitate a [new] [# of max stories], [total zsf, (# DU's)], [use] development, including [sf for each use, sf open space], is being sought by [public/private] [applicant] at [address] in [neighborhood], [Community District], [Borough]."}} />
+  </Ui::Question>
 </form.Section>
 {{/let}}

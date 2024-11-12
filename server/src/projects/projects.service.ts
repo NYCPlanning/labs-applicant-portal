@@ -4,6 +4,7 @@ import { NycidService } from '../contact/nycid/nycid.service';
 import { CrmService } from '../crm/crm.service';
 import { overwriteCodesWithLabels } from '../_utils/overwrite-codes-with-labels';
 import { MILESTONE_ATTRS, MILESTONE_NON_DATE_ATTRS } from './projects.attrs';
+import { ArtifactService } from '../artifacts/artifacts.service';
 
 const APPLICANT_ACTIVE_STATUS_CODE = 1;
 const PROJECT_ACTIVE_STATE_CODE = 0;
@@ -52,6 +53,7 @@ export class ProjectsService {
   constructor(
     private readonly crmService: CrmService,
     private readonly nycidService: NycidService,
+    private readonly artifactService: ArtifactService,
   ) {}
 
   public async findManyByContactId(contactId: string) {
@@ -118,17 +120,36 @@ export class ProjectsService {
         'dcp_applicant_customer_contact@odata.bind': `/contacts(${attributes._dcp_applicant_customer_value})`,
         'dcp_applicantadministrator_customer_contact@odata.bind': `/contacts(${attributes._dcp_applicantadministrator_customer_value})`,
       };
-      const { dcp_projectid } = await this.crmService.create(
+      const { records } = await this.crmService.get(
         'dcp_projects',
-        data,
+        // 3e5 = created within 5 minutes
+        `
+        $filter=
+          dcp_projectname eq '${encodeURIComponent(data.dcp_projectname)}'
+          and createdon ge '${new Date(Date.now() - 3e5).toISOString()}'
+        `,
       );
+      if (records.length > 0) throw new Error('Project already exists');
+
+      const project = await this.crmService.create('dcp_projects', data);
+      const dcpProjectId = project['dcp_projectid'];
+      if (dcpProjectId === undefined)
+        throw new Error('Failed to create project');
+
+      const artifact =
+        await this.artifactService.createProjectInitiationArtifacts(dcpProjectId);
+
+      const dcpArtifactsId = artifact['dcp_artifactsid'];
+      if (dcpArtifactsId === undefined)
+        throw new Error('Failed to create artifact for project');
       return {
-        dcp_projectid,
+        dcp_projectid: dcpProjectId,
+        dcp_artifactsid: dcpArtifactsId,
       };
     } catch (e) {
-      console.debug('error creating project', e);
+      console.error('error creating project', e);
       throw new HttpException(
-        'Unable to create project',
+        'Error while creating project',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }

@@ -1,0 +1,23 @@
+{{#let @form as |form|}}
+<@form.Section @title='Attached Documents'>
+  <p>
+    Please attach the required items listed on the
+    <Ui::ExternalLink @href="https://www.nyc.gov/assets/planning/download/pdf/applicants/applicant-portal/interest_checklist.pdf">
+      Informational Interest Meeting Checklist
+    </Ui::ExternalLink> &nbsp;in at least one PDF document. The maximum
+    size for a document is 50MB.
+  </p>
+
+  <SaveableForm::FieldValidationMessage
+    @attribute='documents'
+    @validation={{@form.errors.documents.validation}} />
+
+  <Projects::ProjectsNewAttachments
+    @package={{@form.data}}
+    @artifact={{@artifact}}
+    @fileManager={{@model.fileManager}}
+    @attribute="documents"
+    data-test-section='attachments' />
+</@form.Section>
+
+{{/let}}

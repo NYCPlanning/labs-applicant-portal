@@ -38,6 +38,7 @@ import { INVOICE_ATTRS } from '../invoices/invoices.attrs';
       'team-members',
       'contacts',
       'milestones',
+      'dcp_artifactsid',
     ],
     packages: {
       ref: 'dcp_packageid',

@@ -3,6 +3,7 @@ import {
   validateLength,
   validatePresence,
 } from 'ember-changeset-validations/validators';
+import validateFileUpload from '../validators/validate-file-presence';
 
 export default {
   primaryContactFirstName: [
@@ -135,6 +136,11 @@ export default {
     validatePresence({
       presence: true,
       message: 'This field is required',
+    }),
+  ],
+  documents: [
+    validateFileUpload({
+      message: 'One or more document uploads is required.',
     }),
   ],
 };

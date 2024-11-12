@@ -7,6 +7,7 @@ import { ConfigService } from '../config/config.service';
 @Injectable()
 export class ArtifactService {
   rerFiletypeUuid = '';
+  letterFiletypeUuid = '';
 
   constructor(
     private readonly crmService: CrmService,
@@ -14,6 +15,7 @@ export class ArtifactService {
     private readonly config: ConfigService,
   ) {
     this.rerFiletypeUuid = this.config.get('RER_FILETYPE_UUID');
+    this.letterFiletypeUuid = this.config.get('LETTER_FILETYPE_UUID');
   }
 
   public async createEquityReport(projectId: string) {
@@ -43,6 +45,32 @@ export class ArtifactService {
     }
 
     return newArtifact;
+  }
+
+  public async createProjectInitiationArtifacts(projectId: string) {
+    try {
+      return this.crmService.create('dcp_artifactses', {
+        dcp_name: `Project Initiation`,
+        dcp_isdcpinternal: false,
+        dcp_filecreator: 717170000, // Applicant
+        dcp_filecategory: 717170006, // Other
+        dcp_visibility: 717170002, // Applicant Only
+        'dcp_applicantfiletype@odata.bind': `/dcp_filetypes(${this.letterFiletypeUuid})`,
+        ...(projectId
+          ? { 'dcp_project@odata.bind': `/dcp_projects(${projectId})` }
+          : {}),
+      });
+    } catch (e) {
+      throw new HttpException(
+        {
+          code: 'CREATE_PROJECT_ARTIFACT_ERROR',
+          title: `Unable to create Project Initiation Artifact dcp_artifactses entity for project with UUID ${projectId}`,
+          detail: e,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+
   }
 
   async getArtifactSharepointDocuments(relativeUrl: string, dcp_name: string) {
