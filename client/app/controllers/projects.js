@@ -1,5 +1,7 @@
 import Controller from '@ember/controller';
 import { sort } from '@ember/object/computed';
+import config from 'client/config/environment';
+import { tracked } from '@glimmer/tracking';
 import {
   STATUSCODE,
   DCPVISIBILITY,
@@ -20,19 +22,23 @@ export function packageIsToDo(projectPackages) {
 }
 
 export default class ProjectsController extends Controller {
+  @tracked
+  selfServiceFlagOn = config.featureFlagSelfService;
   // TODO: organize this business logic as computed properties on the projects model
 
   // Projects awaiting the applicant's submission
   // (includes active projects with packages that haven't been submitted)
   get toDoProjects() {
     // Check that at least ONE of the packages is currently editable
-    return this.model.filter((project) => packageIsToDo(project.pasPackages)
-      || packageIsToDo(project.rwcdsPackages)
-      || (packageIsToDo(project.landusePackages))
-      || (packageIsToDo(project.easPackages))
-      || (packageIsToDo(project.scopeOfWorkDraftPackages))
-      || (packageIsToDo(project.eisPackages))
-      || (packageIsToDo(project.technicalMemoPackages)));
+    return this.model.filter(
+      (project) => packageIsToDo(project.pasPackages)
+        || packageIsToDo(project.rwcdsPackages)
+        || packageIsToDo(project.landusePackages)
+        || packageIsToDo(project.easPackages)
+        || packageIsToDo(project.scopeOfWorkDraftPackages)
+        || packageIsToDo(project.eisPackages)
+        || packageIsToDo(project.technicalMemoPackages),
+    );
   }
 
   // Projects in NYC Planning's hands
