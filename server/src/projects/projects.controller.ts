@@ -38,6 +38,7 @@ import { INVOICE_ATTRS } from '../invoices/invoices.attrs';
       'team-members',
       'contacts',
       'milestones',
+      'dcp_artifactsid',
     ],
     packages: {
       ref: 'dcp_packageid',
@@ -82,6 +83,7 @@ import { INVOICE_ATTRS } from '../invoices/invoices.attrs';
 @Controller('projects')
 export class ProjectsController {
   CRM_IMPOSTER_ID = '';
+  requestCounter = 0;
 
   constructor(
     private readonly projectsService: ProjectsService,
@@ -131,6 +133,7 @@ export class ProjectsController {
 
   @Post('/')
   async createProject(@Body() body) {
+    const requestStartTime = Date.now();
     const allowedAttrs = pick(body, PROJECT_ATTRS) as {
       dcp_projectname: string;
       dcp_borough: string;
@@ -148,6 +151,10 @@ export class ProjectsController {
         HttpStatus.NOT_FOUND,
       );
     }
+    const requestEndTime = Date.now();
+    this.requestCounter++;
+    console.log(`LOGGER: [Total Requests Made in the controller] ${this.requestCounter}`)
+    console.debug(`LOGGER: POST request in the controller to took ${requestEndTime - requestStartTime} ms`);
 
     return await this.projectsService.create(allowedAttrs);
   }

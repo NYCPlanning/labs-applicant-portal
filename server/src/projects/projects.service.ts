@@ -4,11 +4,13 @@ import { NycidService } from '../contact/nycid/nycid.service';
 import { CrmService } from '../crm/crm.service';
 import { overwriteCodesWithLabels } from '../_utils/overwrite-codes-with-labels';
 import { MILESTONE_ATTRS, MILESTONE_NON_DATE_ATTRS } from './projects.attrs';
+import { ArtifactService } from '../artifacts/artifacts.service';
 
 const APPLICANT_ACTIVE_STATUS_CODE = 1;
 const PROJECT_ACTIVE_STATE_CODE = 0;
 const PROJECT_VISIBILITY_APPLICANT_ONLY = 717170002;
 const PROJECT_VISIBILITY_GENERAL_PUBLIC = 717170003;
+let requestCounter = 0;
 
 const PACKAGE_VISIBILITY = {
   APPLICANT_ONLY: 717170002,
@@ -52,6 +54,7 @@ export class ProjectsService {
   constructor(
     private readonly crmService: CrmService,
     private readonly nycidService: NycidService,
+    private readonly artifactService: ArtifactService,
   ) {}
 
   public async findManyByContactId(contactId: string) {
@@ -110,6 +113,9 @@ export class ProjectsService {
     _dcp_applicantadministrator_customer_value: string;
   }) {
     try {
+      const requestStartTime = Date.now();
+
+
       const data = {
         dcp_projectname: attributes.dcp_projectname,
         dcp_borough: attributes.dcp_borough,
@@ -118,15 +124,38 @@ export class ProjectsService {
         'dcp_applicant_customer_contact@odata.bind': `/contacts(${attributes._dcp_applicant_customer_value})`,
         'dcp_applicantadministrator_customer_contact@odata.bind': `/contacts(${attributes._dcp_applicantadministrator_customer_value})`,
       };
-      const { dcp_projectid } = await this.crmService.create(
+      // const { dcp_projectid } = await this.crmService.create(
+      //   'dcp_projects',
+      //   data,
+      // );
+      const project = await this.crmService.create(
         'dcp_projects',
         data,
       );
+      console.debug("LOGGER: (service) project", project);
+      const { dcp_projectid } = project;
+
+      // const { dcp_artifactsid } =
+      //   await this.artifactService.createProjectInitiationArtifacts(
+      //     dcp_projectid,
+      //   );
+
+      const artifact =
+        await this.artifactService.createProjectInitiationArtifacts(
+          dcp_projectid,
+        );
+      console.debug('LOGGER: (service) artifact', artifact);
+      const { dcp_artifactsid } = artifact;
+      const requestEndTime = Date.now();
+      console.debug(`LOGGER: POST (service)  request in the service to took ${requestEndTime - requestStartTime} ms`);
+      requestCounter++;
+      console.log(`LOGGER: [Total Requests Made in the service] ${requestCounter}`);
       return {
         dcp_projectid,
+        dcp_artifactsid,
       };
     } catch (e) {
-      console.debug('error creating project', e);
+      console.debug('(service) error creating project', e);
       throw new HttpException(
         'Unable to create project',
         HttpStatus.INTERNAL_SERVER_ERROR,
