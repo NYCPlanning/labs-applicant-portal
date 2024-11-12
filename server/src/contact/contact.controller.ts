@@ -42,7 +42,12 @@ export class ContactController {
   ) {}
 
   @Get('/')
-  async getContact(@Session() session, @Query('me') me, @Query('email') email, @Query('includeAllStatusCodes') includeAllStatusCodes = 'false') {
+  async getContact(
+    @Session() session,
+    @Query('me') me,
+    @Query('email') email,
+    @Query('includeAllStatusCodes') includeAllStatusCodes = 'false',
+  ) {
     // if this is a self-check, lookup the contact id from session
     if (me) {
       const { contactId } = session;
@@ -56,7 +61,10 @@ export class ContactController {
         return this.contactService.findOneById(contactId);
       }
     } else {
-      return this.contactService.findOneByEmail(email, includeAllStatusCodes === 'true');
+      return this.contactService.findOneByEmail(
+        email,
+        includeAllStatusCodes === 'true',
+      );
     }
   }
 
@@ -64,7 +72,7 @@ export class ContactController {
   @UsePipes(JsonApiDeserializePipe)
   @Post('/')
   async create(@Body() body) {
-    return await this.contactService.create(body); 
+    return await this.contactService.create(body);
   }
 
   @UseGuards(AuthenticateGuard)
