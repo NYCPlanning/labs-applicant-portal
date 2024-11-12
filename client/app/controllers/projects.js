@@ -4,6 +4,8 @@ import {
   STATUSCODE,
   DCPVISIBILITY,
 } from '../optionsets/package';
+import config from 'client/config/environment'
+import { tracked } from '@glimmer/tracking';
 
 export function packageIsToDo(projectPackages) {
   return projectPackages.some((projectPackage) => {
@@ -20,19 +22,24 @@ export function packageIsToDo(projectPackages) {
 }
 
 export default class ProjectsController extends Controller {
+  @tracked
+  selfServiceFlagOn = config.featureFlagSelfService;
   // TODO: organize this business logic as computed properties on the projects model
 
   // Projects awaiting the applicant's submission
   // (includes active projects with packages that haven't been submitted)
   get toDoProjects() {
     // Check that at least ONE of the packages is currently editable
-    return this.model.filter((project) => packageIsToDo(project.pasPackages)
-      || packageIsToDo(project.rwcdsPackages)
-      || (packageIsToDo(project.landusePackages))
-      || (packageIsToDo(project.easPackages))
-      || (packageIsToDo(project.scopeOfWorkDraftPackages))
-      || (packageIsToDo(project.eisPackages))
-      || (packageIsToDo(project.technicalMemoPackages)));
+    return this.model.filter(
+      (project) =>
+        packageIsToDo(project.pasPackages) ||
+        packageIsToDo(project.rwcdsPackages) ||
+        packageIsToDo(project.landusePackages) ||
+        packageIsToDo(project.easPackages) ||
+        packageIsToDo(project.scopeOfWorkDraftPackages) ||
+        packageIsToDo(project.eisPackages) ||
+        packageIsToDo(project.technicalMemoPackages)
+    );
   }
 
   // Projects in NYC Planning's hands
@@ -47,12 +54,12 @@ export default class ProjectsController extends Controller {
   // addresses should first be sorted alphabetically by their street name,
   // and secondly by their house number. (Currently, the sort is alphabetical
   // even across the house number, so "123" < "8" === true)
-  @sort('toDoProjects', function (projectA, projectB) {
+  @sort("toDoProjects", function (projectA, projectB) {
     return projectA.dcpProjectname.localeCompare(projectB.dcpProjectname);
   })
   sortedToDoProjects;
 
-  @sort('doneProjects', function (projectA, projectB) {
+  @sort("doneProjects", function (projectA, projectB) {
     return projectA.dcpProjectname.localeCompare(projectB.dcpProjectname);
   })
   sortedDoneProjects;

@@ -45,8 +45,25 @@
 
     {{/if}}
 
-  </div>{{! end left/main column }}
+  </div>
   <div class="cell large-4 sticky-sidebar">
+    {{#if this.selfServiceFlagOn}}
+      <p class="text-dark-gray">
+        To initiate a new project engagement with the Department, complete this form with as many
+        <a href="https://home.nyc.gov/assets/planning/download/pdf/applicants/applicant-portal/interest_checklist.pdf">
+          checklist items </a>
+        as possible.
+      </p>
+      
+      <LinkTo @route="projects/new">
+        <button type="button" class="button no-margin">
+          <FaIcon @icon="edit" />
+          <strong>
+            Initiate New Project
+          </strong>
+        </button>
+      </LinkTo>
+    {{/if}}
 
     <Messages::Assistance class="large-margin-top" />
 
