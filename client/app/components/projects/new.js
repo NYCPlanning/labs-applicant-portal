@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import SubmittableProjectsNewForm from '../../validations/submittable-projects-new-form';
 import { optionset } from '../../helpers/optionset';
 import config from '../../config/environment';
+import validateFileUpload from '../../validators/validate-file-presence';
 
 export default class ProjectsNewFormComponent extends Component {
   validations = {
@@ -41,6 +42,17 @@ export default class ProjectsNewFormComponent extends Component {
     };
 
     const contactInputs = [primaryContactInput, applicantInput];
+
+    const validationResult = validateFileUpload(
+      {
+        message: 'Please upload at least one file before submitting.',
+      },
+    )('documents', this.args.package.documents);
+
+    if (validationResult !== true) {
+      this.errorMessage = validationResult;
+      return;
+    }
 
     try {
       const contactPromises = contactInputs.map((contact) => this.store.queryRecord('contact', {
@@ -96,13 +108,16 @@ export default class ProjectsNewFormComponent extends Component {
               dcpApplicanttype: this.args.package.applicantType.code,
               dcpProjectbrief: this.args.package.projectBrief,
               _dcpApplicantadministratorCustomerValue:
-                verifiedPrimaryContact.id,
+              verifiedPrimaryContact.id,
               _dcpApplicantCustomerValue: verifiedApplicant.id,
             },
           },
         }),
       });
       const { data: project } = await response.json();
+
+      this.args.package.saveAttachedFiles(project.attributes['dcp-artifactsid']);
+
       this.router.transitionTo('project', project.id);
     } catch {
       /* eslint-disable-next-line no-console */

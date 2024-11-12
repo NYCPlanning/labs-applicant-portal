@@ -40,6 +40,7 @@ import { AuthorizeGuard } from 'src/authorize.guard';
       'team-members',
       'contacts',
       'milestones',
+      'dcp_artifactsid',
     ],
     packages: {
       ref: 'dcp_packageid',
