@@ -1,11 +1,11 @@
 import Controller from '@ember/controller';
+import { tracked } from '@glimmer/tracking';
+import config from 'client/config/environment';
 import { sort } from '@ember/object/computed';
 import {
   STATUSCODE,
   DCPVISIBILITY,
 } from '../optionsets/package';
-import config from 'client/config/environment'
-import { tracked } from '@glimmer/tracking';
 
 export function packageIsToDo(projectPackages) {
   return projectPackages.some((projectPackage) => {
@@ -32,13 +32,13 @@ export default class ProjectsController extends Controller {
     // Check that at least ONE of the packages is currently editable
     return this.model.filter(
       (project) =>
-        packageIsToDo(project.pasPackages) ||
-        packageIsToDo(project.rwcdsPackages) ||
-        packageIsToDo(project.landusePackages) ||
-        packageIsToDo(project.easPackages) ||
-        packageIsToDo(project.scopeOfWorkDraftPackages) ||
-        packageIsToDo(project.eisPackages) ||
-        packageIsToDo(project.technicalMemoPackages)
+        packageIsToDo(project.pasPackages)
+      || packageIsToDo(project.rwcdsPackages)
+      || packageIsToDo(project.landusePackages)
+      || packageIsToDo(project.easPackages)
+      || packageIsToDo(project.scopeOfWorkDraftPackages)
+      || packageIsToDo(project.eisPackages)
+      || packageIsToDo(project.technicalMemoPackages),
     );
   }
 
@@ -53,13 +53,13 @@ export default class ProjectsController extends Controller {
   // in front of addresses. One possible implementation is that
   // addresses should first be sorted alphabetically by their street name,
   // and secondly by their house number. (Currently, the sort is alphabetical
-  // even across the house number, so "123" < "8" === true)
-  @sort("toDoProjects", function (projectA, projectB) {
+  // even across the house number, so '123' < '8' === true)
+  @sort('toDoProjects', function (projectA, projectB) {
     return projectA.dcpProjectname.localeCompare(projectB.dcpProjectname);
   })
   sortedToDoProjects;
 
-  @sort("doneProjects", function (projectA, projectB) {
+  @sort('doneProjects', function (projectA, projectB) {
     return projectA.dcpProjectname.localeCompare(projectB.dcpProjectname);
   })
   sortedDoneProjects;
