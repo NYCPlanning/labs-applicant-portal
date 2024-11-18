@@ -41,6 +41,8 @@ export default class ProjectsNewFormComponent extends Component {
     };
 
     const contactInputs = [primaryContactInput, applicantInput];
+    console.debug('applicant input', applicantInput);
+    return;
 
     try {
       const contactPromises = contactInputs.map((contact) => this.store.queryRecord('contact', {
