@@ -34,6 +34,12 @@
         @form={{saveableProjectsNewForm}} />
       <Projects::ProjectsNewProjectDescription
         @form={{saveableProjectsNewForm}} />
+      {{log "save data" saveableProjectsNewForm.data.documents}}
+      {{log "fileManager" @package.fileManager }}
+      <Packages::Attachments
+        @package={{saveableProjectsNewForm.data}}
+        @fileManager={{@package.fileManager}}
+      />
     </div>
     <div class="cell large-4 sticky-sidebar">
       <saveableProjectsNewForm.PageNav>

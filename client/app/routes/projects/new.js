@@ -11,6 +11,9 @@ export default class ProjectsNewRoute extends Route.extend(
   store
 
   async model() {
-    return this.store.createRecord('project-new');
+    const projectNew = await this.store.createRecord('project-new');
+    projectNew.id = 'new';
+    projectNew.createFileQueue();
+    return projectNew;
   }
 }
