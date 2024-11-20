@@ -16,6 +16,32 @@ export class ArtifactService {
     this.rerFiletypeUuid = this.config.get('RER_FILETYPE_UUID');
   }
 
+  public async createProjectIntiation(projectId: string) {
+    try {
+      const artifact = this.crmService.create('dcp_artifactses', {
+        dcp_name: `Racial Equity Report`,
+        dcp_isdcpinternal: false,
+        dcp_filecreator: 717170000, // Applicant
+        dcp_filecategory: 717170006, // Other
+        dcp_visibility: 717170002, // Applicant Only
+        'dcp_applicantfiletype@odata.bind': `/dcp_filetypes(${this.rerFiletypeUuid})`,
+        ...(projectId
+          ? { 'dcp_project@odata.bind': `/dcp_projects(${projectId})` }
+          : {}),
+      });
+      console.debug('artifact', artifact);
+      return artifact;
+    } catch (e) {
+      throw new HttpException(
+        {
+          code: 'CREATE_RER_ERROR',
+          title: `Unable to create Racial Equity Report dcp_artifactses entity for project with UUID ${projectId}`,
+          detail: e,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
   public async createEquityReport(projectId: string) {
     let newArtifact = null;
 
