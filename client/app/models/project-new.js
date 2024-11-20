@@ -10,11 +10,11 @@ export default class ProjectNew extends Model {
     if (this.fileManager) {
       this.fileManager.existingFiles = this.documents;
     } else {
-      const fileQueue = this.fileQueue.create(`package${this.id}`)
+      const fileQueue = this.fileQueue.create(`artifact${this.id}`)
 
       this.fileManager = new FileManager(
         this.id,
-        'package',
+        'artifact',
         this.documents,
         [],
         fileQueue,
