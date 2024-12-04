@@ -28,7 +28,7 @@ jobs:
   deploy-server:
     name: 🚀 Deploy server
     needs: test-client
-    environment: 
+    environment:
       name: production
       url: https://applicants-api.nycplanningdigital.com
     runs-on: ubuntu-latest
@@ -75,6 +75,7 @@ jobs:
           HD_PAYMENT_IP_RANGE: ${{ secrets.PAYMENT_IP_RANGE }}
           HD_PAYMENT_STEP1_URL: ${{ secrets.PAYMENT_STEP1_URL }}
           HD_RER_FILETYPE_UUID: ${{ secrets.RER_FILETYPE_UUID }}
+          HD_LETTER_FILETYPE_UUID: ${{ secrets.LETTER_FILETYPE_UUID }}
           HD_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           HD_SHAREPOINT_CLIENT_ID: ${{ secrets.SHAREPOINT_CLIENT_ID }}
           HD_SHAREPOINT_CLIENT_SECRET: ${{ secrets.SHAREPOINT_CLIENT_SECRET }}
@@ -107,7 +108,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 12.x
-      - name: Install application dependencies 
+      - name: Install application dependencies
         working-directory: client
         run: yarn install --immutable --immutable-cache --check-cache
       - name: Build client

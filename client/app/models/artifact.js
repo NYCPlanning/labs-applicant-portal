@@ -33,6 +33,9 @@ export default class ArtifactModel extends Model {
   @belongsTo('project', { async: false })
   project;
 
+  @belongsTo('project-new', { async: false })
+  projectNew
+
   @attr()
   dcpName;
 
