@@ -18,6 +18,7 @@ import { JsonApiDeserializePipe } from '../../json-api-deserialize.pipe';
 import { PROJECTAPPLICANT_ATTRS } from './project-applicants.attrs';
 import { CONTACT_ATTRS } from '../../contact/contacts.attrs';
 import { ContactService } from '../../contact/contact.service';
+import { ProjectAccessGuard } from '../project-access.guard';
 
 const ACTIVE_STATUSCODE = 1;
 const INACTIVE_STATUSCODE = 2;
@@ -45,6 +46,7 @@ export class ProjectApplicantController {
     private readonly contactService: ContactService,
   ) {}
 
+  @UseGuards(ProjectAccessGuard)
   @Post('/')
   async create(@Body() body) {
     const allowedAttrs = pick(body, PROJECTAPPLICANT_ATTRS);
@@ -130,6 +132,7 @@ export class ProjectApplicantController {
     };
   }
 
+  @UseGuards(ProjectAccessGuard)
   @Delete('/:id')
   async deactivate(@Param('id') id) {
     try {

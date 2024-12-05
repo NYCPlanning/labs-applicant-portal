@@ -6,6 +6,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { CrmService } from '../crm/crm.service';
+import { ConfigService } from 'src/config/config.service';
 
 const APPLICANT_ACTIVE_STATUS_CODE = 1;
 const PROJECT_ACTIVE_STATE_CODE = 0;
@@ -17,24 +18,22 @@ const PROJECT_VISIBILITY_GENERAL_PUBLIC = 717170003;
 // package's project applicant team can access the package
 @Injectable()
 export class PackageAccessGuard implements CanActivate {
-  constructor(private readonly crmService: CrmService) {}
+  constructor(
+    private readonly crmService: CrmService,
+    private readonly config: ConfigService,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const {
       params: { id: packageId },
-      session: { contactId, isCreeper = false, ...theRest },
+      session: { contactId, mail },
     } = context.switchToHttp().getRequest();
 
-    // permit internal staff to view
+    // permit internal staff to access
     if (
-      theRest.mail === 'dcpcreeper@gmail.com' ||
-      theRest.mail?.includes('@planning.nyc.gov')
+      mail?.endsWith('@planning.nyc.gov') ||
+      (this.config.featureFlag.creeper && mail === 'dcpcreeper@gmail.com')
     ) {
-      return true;
-    }
-
-    // because creeper mode allows authorization on all resources, skip this layer
-    if (isCreeper) {
       return true;
     }
 

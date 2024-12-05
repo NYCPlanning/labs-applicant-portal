@@ -26,6 +26,7 @@ import { PROJECTAPPLICANT_ATTRS } from './project-applicants/project-applicants.
 import { TEAMMEMBER_ATTRS } from './team-members/team-members.attrs';
 import { CONTACT_ATTRS } from '../contact/contacts.attrs';
 import { INVOICE_ATTRS } from '../invoices/invoices.attrs';
+import { ProjectAccessGuard } from './project-access.guard';
 
 @UseInterceptors(
   new JsonApiSerializeInterceptor('projects', {
@@ -152,8 +153,9 @@ export class ProjectsController {
     return await this.projectsService.create(allowedAttrs);
   }
 
+  @UseGuards(ProjectAccessGuard)
   @Get('/:id')
-  async projectById(@Param('id') id) {
+  async projectById(@Param('id') id: string) {
     try {
       return await this.projectsService.getProject(id);
     } catch (e) {
@@ -172,6 +174,7 @@ export class ProjectsController {
     }
   }
 
+  @UseGuards(ProjectAccessGuard)
   @Patch('/:id')
   async update(@Body() body, @Param('id') id) {
     const allowedAttrs = pick(body, PROJECT_ATTRS);
