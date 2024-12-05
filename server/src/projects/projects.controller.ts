@@ -26,6 +26,8 @@ import { PROJECTAPPLICANT_ATTRS } from './project-applicants/project-applicants.
 import { TEAMMEMBER_ATTRS } from './team-members/team-members.attrs';
 import { CONTACT_ATTRS } from '../contact/contacts.attrs';
 import { INVOICE_ATTRS } from '../invoices/invoices.attrs';
+import { Relationships } from 'src/relationships.decorator';
+import { AuthorizeGuard } from 'src/authorize.guard';
 
 @UseInterceptors(
   new JsonApiSerializeInterceptor('projects', {
@@ -77,7 +79,7 @@ import { INVOICE_ATTRS } from '../invoices/invoices.attrs';
     },
   }),
 )
-@UseGuards(AuthenticateGuard)
+@UseGuards(AuthenticateGuard, AuthorizeGuard)
 @UsePipes(JsonApiDeserializePipe)
 @Controller('projects')
 export class ProjectsController {
@@ -93,6 +95,7 @@ export class ProjectsController {
   }
 
   @Get('/')
+  @Relationships('helper', 'self')
   async listOfCurrentUserProjects(@Session() session) {
     const { creeperTargetEmail } = session;
     let { contactId } = session;
@@ -130,6 +133,7 @@ export class ProjectsController {
   }
 
   @Post('/')
+  @Relationships('self')
   async createProject(@Body() body) {
     const allowedAttrs = pick(body, PROJECT_ATTRS) as {
       dcp_projectname: string;
@@ -152,8 +156,9 @@ export class ProjectsController {
     return await this.projectsService.create(allowedAttrs);
   }
 
-  @Get('/:id')
-  async projectById(@Param('id') id) {
+  @Get('/:projectId')
+  @Relationships('helper', 'applicant-team')
+  async projectById(@Param('projectId') id: string) {
     try {
       return await this.projectsService.getProject(id);
     } catch (e) {
@@ -172,8 +177,9 @@ export class ProjectsController {
     }
   }
 
-  @Patch('/:id')
-  async update(@Body() body, @Param('id') id) {
+  @Patch('/:projectId')
+  @Relationships('applicant-team')
+  async update(@Body() body, @Param('projectId') id: string) {
     const allowedAttrs = pick(body, PROJECT_ATTRS);
 
     await this.crmService.update('dcp_projects', id, allowedAttrs);

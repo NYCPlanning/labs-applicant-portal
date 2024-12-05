@@ -126,7 +126,7 @@ export class ProjectsService {
         dcp_projectid,
       };
     } catch (e) {
-      console.debug('error creating project', e);
+      console.error('error creating project', e);
       throw new HttpException(
         'Unable to create project',
         HttpStatus.INTERNAL_SERVER_ERROR,
