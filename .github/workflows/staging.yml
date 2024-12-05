@@ -50,6 +50,7 @@ jobs:
           appdir: server
         env:
           HD_FEATURE_FLAG_SELF_SERVICE: ${{ vars.FEATURE_FLAG_SELF_SERVICE }}
+          HD_FEATURE_FLAG_CREEPER: ${{ vars.FEATURE_FLAG_CREEPER }}
           HD_ADO_PRINCIPAL: ${{ secrets.ADO_PRINCIPAL }}
           HD_AUTHORITY_HOST_URL: ${{ secrets.AUTHORITY_HOST_URL }}
           HD_CLIENT_ID: ${{ secrets.CLIENT_ID }}
@@ -94,7 +95,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 12.x
-      - name: Install application dependencies 
+      - name: Install application dependencies
         working-directory: client
         run: yarn install
       - name: Build client

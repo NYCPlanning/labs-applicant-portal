@@ -18,6 +18,8 @@ import { JsonApiDeserializePipe } from '../../json-api-deserialize.pipe';
 import { PROJECTAPPLICANT_ATTRS } from './project-applicants.attrs';
 import { CONTACT_ATTRS } from '../../contact/contacts.attrs';
 import { ContactService } from '../../contact/contact.service';
+import { Relationships } from 'src/relationships.decorator';
+import { AuthorizeGuard } from 'src/authorize.guard';
 
 const ACTIVE_STATUSCODE = 1;
 const INACTIVE_STATUSCODE = 2;
@@ -36,7 +38,7 @@ const INACTIVE_STATECODE = 1;
     },
   }),
 )
-@UseGuards(AuthenticateGuard)
+@UseGuards(AuthenticateGuard, AuthorizeGuard)
 @UsePipes(JsonApiDeserializePipe)
 @Controller('project-applicants')
 export class ProjectApplicantController {
@@ -46,6 +48,7 @@ export class ProjectApplicantController {
   ) {}
 
   @Post('/')
+  @Relationships('applicant-team')
   async create(@Body() body) {
     const allowedAttrs = pick(body, PROJECTAPPLICANT_ATTRS);
     // NOTE: dcp_name field in projectApplicant entity is automatically filled with...
@@ -130,8 +133,9 @@ export class ProjectApplicantController {
     };
   }
 
-  @Delete('/:id')
-  async deactivate(@Param('id') id) {
+  @Delete('/:projectApplicantId')
+  @Relationships('applicant-team')
+  async deactivate(@Param('projectApplicantId') id: string) {
     try {
       await this.crmService.update('dcp_projectapplicants', id, {
         statuscode: INACTIVE_STATUSCODE,

@@ -39,9 +39,8 @@ export class AuthMiddleware implements NestMiddleware {
         const { mail: userEmail } = validatedToken; // the "creepers" actual email, for verification.
 
         if (
-          email &&
-          (userEmail === 'dcpcreeper@gmail.com' ||
-            userEmail.includes('@planning.nyc.gov'))
+          this.config.featureFlag.creeper &&
+          userEmail === 'dcpcreeper@gmail.com'
         ) {
           // simply include the "creeper" param in the session
           validatedToken = {
@@ -81,8 +80,6 @@ export class AuthMiddleware implements NestMiddleware {
       await this.authService.generateNewToken(spoofedNycIdToken);
     const validatedSpoofedToken =
       await this.authService.validateCurrentToken(spoofedZapToken);
-
-    validatedSpoofedToken.isCreeper = true;
 
     return validatedSpoofedToken;
   }
