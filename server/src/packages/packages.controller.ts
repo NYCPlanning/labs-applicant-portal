@@ -13,7 +13,6 @@ import {
 import { PackagesService } from './packages.service';
 import { JsonApiSerializeInterceptor } from '../json-api-serialize.interceptor';
 import { JsonApiDeserializePipe } from '../json-api-deserialize.pipe';
-import { PackageAccessGuard } from './package-access.guard';
 import { pick } from 'underscore';
 import { LANDUSE_FORM_ATTRS } from './landuse-form/landuse-form.attrs';
 import { RWCDS_FORM_ATTRS } from './rwcds-form/rwcds-form.attrs';
@@ -35,6 +34,9 @@ import { ZONING_MAP_CHANGE_ATTRS } from './landuse-form/zoning-map-changes/zonin
 import { CEQR_INVOICE_QUESTIONNAIRE_ATTRS } from './ceqr-invoice-questionnaires/ceqr-invoice-questionnaires.attrs';
 import { CitypayService } from '../citypay/citypay.service';
 import { ARTIFACTS_ATTRS } from '../artifacts/artifacts.attrs';
+import { AuthenticateGuard } from 'src/authenticate.guard';
+import { AuthorizeGuard } from 'src/authorize.guard';
+import { Relationships } from 'src/relationships.decorator';
 
 @UseInterceptors(
   new JsonApiSerializeInterceptor('packages', {
@@ -299,7 +301,7 @@ import { ARTIFACTS_ATTRS } from '../artifacts/artifacts.attrs';
   }),
 )
 @UsePipes(JsonApiDeserializePipe)
-@UseGuards(PackageAccessGuard)
+@UseGuards(AuthenticateGuard, AuthorizeGuard)
 @Controller('packages')
 export class PackagesController {
   constructor(
@@ -307,8 +309,9 @@ export class PackagesController {
     private readonly cityPay: CitypayService,
   ) {}
 
-  @Get('/:id')
-  getPackage(@Param('id') id) {
+  @Get('/:packageId')
+  @Relationships('helper', 'applicant-team')
+  getPackage(@Param('packageId') id: string) {
     try {
       return this.packagesService.getPackage(id);
     } catch (e) {
@@ -327,8 +330,9 @@ export class PackagesController {
     }
   }
 
-  @Patch('/:id')
-  async patchPackage(@Body() body, @Param('id') id) {
+  @Patch('/:packageId')
+  @Relationships('applicant-team')
+  async patchPackage(@Body() body, @Param('packageId') id: string) {
     try {
       const allowedAttrs = pick(body, PACKAGE_ATTRS);
 
@@ -354,8 +358,9 @@ export class PackagesController {
     }
   }
 
-  @Get('/pay/:id')
-  async generatePaymentLink(@Param('id') id) {
+  @Get('/pay/:packageId')
+  @Relationships('helper', 'applicant-team')
+  async generatePaymentLink(@Param('packageId') id: string) {
     return {
       city_pay_url: await this.cityPay.generateCityPayLink(id),
     };

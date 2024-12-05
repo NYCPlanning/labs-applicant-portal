@@ -38,11 +38,7 @@ export class AuthMiddleware implements NestMiddleware {
         const email = refererParams.searchParams.get('email'); // the query param, email, sent from the client. this is who the "Creeper" wants to be.
         const { mail: userEmail } = validatedToken; // the "creepers" actual email, for verification.
 
-        if (
-          email &&
-          (userEmail === 'dcpcreeper@gmail.com' ||
-            userEmail.includes('@planning.nyc.gov'))
-        ) {
+        if (email && userEmail === 'dcpcreeper@gmail.com') {
           // simply include the "creeper" param in the session
           validatedToken = {
             ...validatedToken,
@@ -81,8 +77,6 @@ export class AuthMiddleware implements NestMiddleware {
       await this.authService.generateNewToken(spoofedNycIdToken);
     const validatedSpoofedToken =
       await this.authService.validateCurrentToken(spoofedZapToken);
-
-    validatedSpoofedToken.isCreeper = true;
 
     return validatedSpoofedToken;
   }
