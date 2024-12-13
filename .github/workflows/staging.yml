@@ -40,6 +40,8 @@ jobs:
         with:
           ref: 'main'
           sparse-checkout: server
+      - name: 'Install Heroku CLI'
+        run: curl https://cli-assets.heroku.com/install.sh | sh
       - uses: akhileshns/heroku-deploy@v3.13.15
         name: Deploy server to Heroku
         with:
@@ -94,7 +96,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 12.x
-      - name: Install application dependencies 
+      - name: Install application dependencies
         working-directory: client
         run: yarn install
       - name: Build client
