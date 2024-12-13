@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import SubmittableProjectsNewForm from '../../validations/submittable-projects-new-form';
 import { optionset } from '../../helpers/optionset';
@@ -10,6 +11,12 @@ export default class ProjectsNewFormComponent extends Component {
   validations = {
     SubmittableProjectsNewForm,
   };
+
+  @tracked
+  submissionError = false;
+
+  @tracked
+  isSubmitting = false;
 
   @service
   router;
@@ -27,6 +34,10 @@ export default class ProjectsNewFormComponent extends Component {
 
   @action
   async submitProject() {
+    this.submissionError = false;
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
+
     const primaryContactInput = {
       first: this.args.package.primaryContactFirstName,
       last: this.args.package.primaryContactLastName,
@@ -116,12 +127,20 @@ export default class ProjectsNewFormComponent extends Component {
       });
       const { data: project } = await response.json();
 
-      this.args.package.saveAttachedFiles(project.attributes['dcp-artifactsid']);
+      const artifactsId = project.attributes['dcp-artifactsid'];
+      if (artifactsId === undefined) {
+        throw new Error('failed to create project with artifact');
+      }
 
-      this.router.transitionTo('project', project.id);
+      await this.args.package.saveAttachedFiles(artifactsId);
+
+      this.router.transitionTo('projects');
     } catch {
+      this.submissionError = true;
       /* eslint-disable-next-line no-console */
       console.error('Error while creating project');
+    } finally {
+      this.isSubmitting = false;
     }
   }
 }

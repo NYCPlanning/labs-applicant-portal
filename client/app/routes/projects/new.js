@@ -13,6 +13,10 @@ export default class ProjectsNewRoute extends Route.extend(
   async model() {
     const projectsNewForm = this.store.createRecord('project-new');
 
+    /*
+      We need to create a pseudo project id in order to enable document attachments within the new projects form.
+      The actual project id will be assigned after the form is submitted to the CRM
+     */
     projectsNewForm.id = `new${self.crypto.randomUUID()}`;
     projectsNewForm.createFileQueue();
 

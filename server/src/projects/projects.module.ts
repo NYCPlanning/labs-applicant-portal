@@ -10,7 +10,13 @@ import { ArtifactService } from '../artifacts/artifacts.service';
 import { SharepointModule } from '../sharepoint/sharepoint.module';
 
 @Module({
-  imports: [CrmModule, SharepointModule, ConfigModule, ContactModule, AuthModule],
+  imports: [
+    CrmModule,
+    SharepointModule,
+    ConfigModule,
+    ContactModule,
+    AuthModule,
+  ],
   providers: [ProjectsService, ArtifactService],
   exports: [ProjectsService],
   controllers: [ProjectsController, ProjectApplicantController],
