@@ -10,6 +10,7 @@ const APPLICANT_ACTIVE_STATUS_CODE = 1;
 const PROJECT_ACTIVE_STATE_CODE = 0;
 const PROJECT_VISIBILITY_APPLICANT_ONLY = 717170002;
 const PROJECT_VISIBILITY_GENERAL_PUBLIC = 717170003;
+let requestCounter = 0;
 
 const PACKAGE_VISIBILITY = {
   APPLICANT_ONLY: 717170002,
@@ -112,6 +113,11 @@ export class ProjectsService {
     _dcp_applicantadministrator_customer_value: string;
   }) {
     try {
+      const requestStartTime = Date.now();
+      console.log(`[Total Requests Made in the service] ${requestCounter}`);
+
+      requestCounter++;
+
       const data = {
         dcp_projectname: attributes.dcp_projectname,
         dcp_borough: attributes.dcp_borough,
@@ -120,15 +126,31 @@ export class ProjectsService {
         'dcp_applicant_customer_contact@odata.bind': `/contacts(${attributes._dcp_applicant_customer_value})`,
         'dcp_applicantadministrator_customer_contact@odata.bind': `/contacts(${attributes._dcp_applicantadministrator_customer_value})`,
       };
-      const { dcp_projectid } = await this.crmService.create(
+      // const { dcp_projectid } = await this.crmService.create(
+      //   'dcp_projects',
+      //   data,
+      // );
+      const project = await this.crmService.create(
         'dcp_projects',
         data,
       );
-      const { dcp_artifactsid } =
+      console.debug("project", project);
+      console.debug("project response", project.response);
+      const { dcp_projectid } = project;
+
+      // const { dcp_artifactsid } =
+      //   await this.artifactService.createProjectInitiationArtifacts(
+      //     dcp_projectid,
+      //   );
+
+      const artifact =
         await this.artifactService.createProjectInitiationArtifacts(
           dcp_projectid,
         );
-
+      console.debug('artifact', artifact);
+      const { dcp_artifactsid } = artifact;
+      const requestEndTime = Date.now();
+      console.debug(`POST request in the service to took ${requestEndTime - requestStartTime} ms`);
       return {
         dcp_projectid,
         dcp_artifactsid,

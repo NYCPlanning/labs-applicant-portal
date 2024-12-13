@@ -11,6 +11,8 @@ export default class ProjectsNewFormComponent extends Component {
     SubmittableProjectsNewForm,
   };
 
+  requestCounter = 0;
+
   @service
   router;
 
@@ -27,6 +29,9 @@ export default class ProjectsNewFormComponent extends Component {
 
   @action
   async submitProject() {
+    const requestStartTime = Date.now();
+    console.log(`[Total Requests Made in the service] ${this.requestCounter}`);
+
     const primaryContactInput = {
       first: this.args.package.primaryContactFirstName,
       last: this.args.package.primaryContactLastName,
@@ -115,6 +120,9 @@ export default class ProjectsNewFormComponent extends Component {
         }),
       });
       const { data: project } = await response.json();
+      const requestEndTime = Date.now();
+      console.debug(`POST request in the service to took ${requestEndTime - requestStartTime} ms`);
+      console.debug('response in client controller: ', response, 'response status: ', response.status);
 
       this.args.package.saveAttachedFiles(project.attributes['dcp-artifactsid']);
 
