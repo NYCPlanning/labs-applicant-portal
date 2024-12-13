@@ -120,18 +120,21 @@ export class ProjectsService {
         'dcp_applicant_customer_contact@odata.bind': `/contacts(${attributes._dcp_applicant_customer_value})`,
         'dcp_applicantadministrator_customer_contact@odata.bind': `/contacts(${attributes._dcp_applicantadministrator_customer_value})`,
       };
-      const { dcp_projectid } = await this.crmService.create(
-        'dcp_projects',
-        data,
-      );
-      const { dcp_artifactsid } =
-        await this.artifactService.createProjectInitiationArtifacts(
-          dcp_projectid,
-        );
+
+      const project = await this.crmService.create('dcp_projects', data);
+
+      const dcpProjectId = project['dcp_projectid'];
+      if (dcpProjectId === undefined) throw new Error('Failed to create project');
+
+      const artifact =
+        await this.artifactService.createProjectInitiationArtifacts(dcpProjectId);
+
+      const dcpArtifactsId = artifact['dcp_artifactsid'];
+      if (dcpArtifactsId === undefined) throw new Error('Failed to create artifact for project');
 
       return {
-        dcp_projectid,
-        dcp_artifactsid,
+        dcp_projectid: dcpProjectId,
+        dcp_artifactsid: dcpArtifactsId,
       };
     } catch (e) {
       console.error('error creating project', e);

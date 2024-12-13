@@ -62,7 +62,14 @@ export class CrmService {
   }
 
   async create(query, data, headers = {}) {
-    return this._create(query, data, headers);
+    try {
+      const response = this._create(query, data, headers);
+
+      return response;
+
+    } catch (e) {
+      console.debug(`error in CRM create: ${e}`);
+    }
   }
 
   async update(entity, guid, data, headers = {}) {
