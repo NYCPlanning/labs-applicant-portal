@@ -126,7 +126,7 @@ export default class ProjectsNewFormComponent extends Component {
 
       this.args.package.saveAttachedFiles(project.attributes['dcp-artifactsid']);
 
-      this.router.transitionTo('project', project.id);
+      this.router.transitionTo('projects');
     } catch {
       /* eslint-disable-next-line no-console */
       console.error('Error while creating project');
