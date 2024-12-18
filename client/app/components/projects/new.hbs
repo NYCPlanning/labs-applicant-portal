@@ -30,10 +30,17 @@
         @selectedApplicantType={{this.selectedApplicantType}}
         @applicantOptions={{this.applicantOptions}}
       />
+
       <Projects::ProjectsNewAddContacts
         @form={{saveableProjectsNewForm}} />
+
       <Projects::ProjectsNewProjectDescription
         @form={{saveableProjectsNewForm}} />
+
+      <Projects::ProjectsNewAttachedDocuments
+        @artifact={{saveableProjectsNewForm.data}}
+        @form={{saveableProjectsNewForm}}
+        @model={{@package}} />
     </div>
     <div class="cell large-4 sticky-sidebar">
       <saveableProjectsNewForm.PageNav>
@@ -48,9 +55,8 @@
           Are you sure?
         </p>
         <p>
-          Before submitting, ensure that your answers are accurate and complete, and that necessary attachments (including
-          the
-          signature form) have been uploaded.
+          Before submitting, ensure that your answers are accurate and complete, and that necessary attachments have been uploaded. If NYC Planning does not receive enough accurate information to provide guidance, the Lead Planner will notify you and request that this form be resubmitted with necessary materials, corrections, or
+          clarifications.
         </p>
       </saveableProjectsNewForm.ConfirmationModal>
     </div>
