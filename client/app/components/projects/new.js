@@ -30,7 +30,8 @@ export default class ProjectsNewFormComponent extends Component {
   @action
   async submitProject() {
     const requestStartTime = Date.now();
-    console.log(`[Total Requests Made in the service] ${this.requestCounter}`);
+    this.requestCounter++;
+    console.log(`LOGGER: [Total Requests Made in the client controller] ${this.requestCounter}`);
 
     const primaryContactInput = {
       first: this.args.package.primaryContactFirstName,
@@ -121,7 +122,7 @@ export default class ProjectsNewFormComponent extends Component {
       });
       const { data: project } = await response.json();
       const requestEndTime = Date.now();
-      console.debug(`POST request in the service to took ${requestEndTime - requestStartTime} ms`);
+      console.debug(`LOGGER: POST request in the client controller to took ${requestEndTime - requestStartTime} ms`);
       console.debug('response in client controller: ', response, 'response status: ', response.status);
 
       this.args.package.saveAttachedFiles(project.attributes['dcp-artifactsid']);

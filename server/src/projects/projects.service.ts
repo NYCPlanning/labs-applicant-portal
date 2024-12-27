@@ -114,9 +114,7 @@ export class ProjectsService {
   }) {
     try {
       const requestStartTime = Date.now();
-      console.log(`[Total Requests Made in the service] ${requestCounter}`);
 
-      requestCounter++;
 
       const data = {
         dcp_projectname: attributes.dcp_projectname,
@@ -134,8 +132,7 @@ export class ProjectsService {
         'dcp_projects',
         data,
       );
-      console.debug("project", project);
-      console.debug("project response", project.response);
+      console.debug("LOGGER: (service) project", project);
       const { dcp_projectid } = project;
 
       // const { dcp_artifactsid } =
@@ -147,16 +144,18 @@ export class ProjectsService {
         await this.artifactService.createProjectInitiationArtifacts(
           dcp_projectid,
         );
-      console.debug('artifact', artifact);
+      console.debug('LOGGER: (service) artifact', artifact);
       const { dcp_artifactsid } = artifact;
       const requestEndTime = Date.now();
-      console.debug(`POST request in the service to took ${requestEndTime - requestStartTime} ms`);
+      console.debug(`LOGGER: POST (service)  request in the service to took ${requestEndTime - requestStartTime} ms`);
+      requestCounter++;
+      console.log(`LOGGER: [Total Requests Made in the service] ${requestCounter}`);
       return {
         dcp_projectid,
         dcp_artifactsid,
       };
     } catch (e) {
-      console.error('error creating project', e);
+      console.debug('(service) error creating project', e);
       throw new HttpException(
         'Unable to create project',
         HttpStatus.INTERNAL_SERVER_ERROR,

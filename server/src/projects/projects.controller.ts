@@ -138,7 +138,6 @@ export class ProjectsController {
   @Relationships('self')
   async createProject(@Body() body) {
     const requestStartTime = Date.now();
-      console.log(`[Total Requests Made in the controller] ${this.requestCounter}`)
     const allowedAttrs = pick(body, PROJECT_ATTRS) as {
       dcp_projectname: string;
       dcp_borough: string;
@@ -157,7 +156,9 @@ export class ProjectsController {
       );
     }
     const requestEndTime = Date.now();
-      console.debug(`POST request in the controller to took ${requestEndTime - requestStartTime} ms`);
+    this.requestCounter++;
+    console.log(`LOGGER: [Total Requests Made in the controller] ${this.requestCounter}`)
+    console.debug(`LOGGER: POST request in the controller to took ${requestEndTime - requestStartTime} ms`);
 
     return await this.projectsService.create(allowedAttrs);
   }
