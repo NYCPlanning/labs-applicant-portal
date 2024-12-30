@@ -38,10 +38,7 @@ export class AuthMiddleware implements NestMiddleware {
         const email = refererParams.searchParams.get('email'); // the query param, email, sent from the client. this is who the "Creeper" wants to be.
         const { mail: userEmail } = validatedToken; // the "creepers" actual email, for verification.
 
-        if (
-          this.config.featureFlag.creeper &&
-          userEmail === 'dcpcreeper@gmail.com'
-        ) {
+        if (userEmail === 'dcpcreeper@gmail.com') {
           // simply include the "creeper" param in the session
           validatedToken = {
             ...validatedToken,

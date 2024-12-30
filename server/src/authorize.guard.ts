@@ -39,30 +39,34 @@ export class AuthorizeGuard implements CanActivate {
         mail: string;
         creeperTargetEmail: string | null | undefined;
       };
-      body: any
+      body: {
+        data?: {
+          relationships?: {
+            project?: {
+              data: {
+                id: string;
+              };
+            };
+          };
+        };
+      };
     };
 
+    const projectIdBody = body?.data?.relationships?.project?.data?.id;
     const relationships: Array<Relationship> =
       this.reflector.get('relationships', context.getHandler()) ?? [];
-
-    console.debug('body', body);
-    console.debug('creeperTargetEmail', creeperTargetEmail);
-    console.debug('projectId', projectId);
-    console.debug('packageId', packageId);
-    console.debug('projectApplicantId', projectApplicantId);
-    console.debug('mail', mail);
-    console.debug('contactId', contactId);
 
     return (
       this.withHelper(relationships, creeperTargetEmail, mail) ||
       this.withSelf(relationships, creeperTargetEmail) ||
-      (await this.withApplicantTeam(
+      (await this.withApplicantTeam({
         contactId,
         packageId,
         projectId,
+        projectIdBody,
         projectApplicantId,
         relationships,
-      ))
+      }))
     );
   }
 
@@ -73,6 +77,7 @@ export class AuthorizeGuard implements CanActivate {
   ) {
     if (!this.config.featureFlag.creeper) return false;
     if (!relationships.includes('helper')) return false;
+    // There is no account being helped by creeper
     if (creeperTargetEmail === null || creeperTargetEmail === undefined)
       return false;
     if (mail === 'dcpcreeper@gmail.com') return true;
@@ -84,25 +89,35 @@ export class AuthorizeGuard implements CanActivate {
     creeperTargetEmail: string | null | undefined,
   ) {
     if (!relationships.includes('self')) return false;
+    // Access is not being attempted by the creeper account
     if (creeperTargetEmail === null || creeperTargetEmail === undefined)
       return true;
     return false;
   }
 
-  withApplicantTeam(
-    contactId: string,
-    packageId: string | undefined,
-    projectId: string | undefined,
-    projectApplicantId: string | undefined,
-    relationships: Array<Relationship>,
-  ) {
+  withApplicantTeam({
+    contactId,
+    packageId,
+    projectId,
+    projectIdBody,
+    projectApplicantId,
+    relationships,
+  }: {
+    contactId: string;
+    packageId: string | undefined;
+    projectId: string | undefined;
+    projectIdBody: string | undefined;
+    projectApplicantId: string | undefined;
+    relationships: Array<Relationship>;
+  }) {
     if (!relationships.includes('applicant-team')) return false;
     if (projectId !== undefined) {
       return this.checkByProjectId(contactId, projectId);
+    } else if (projectIdBody !== undefined) {
+      return this.checkByProjectId(contactId, projectIdBody);
     } else if (packageId !== undefined) {
       return this.checkByPackageId(contactId, packageId);
     } else if (projectApplicantId !== undefined) {
-      console.debug('checking by project applicant id', projectApplicantId);
       return this.checkByProjectApplicantId(contactId, projectApplicantId);
     } else {
       return false;
