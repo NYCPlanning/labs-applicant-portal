@@ -49,6 +49,7 @@ export default class ProjectsNewFormComponent extends Component {
 
     const contactInputs = [primaryContactInput, applicantInput];
 
+    // TODO: I think we want this to run on field update, rather than sumbmission
     const validationResult = validateFileUpload(
       {
         message: 'Please upload at least one file before submitting.',
@@ -125,6 +126,8 @@ export default class ProjectsNewFormComponent extends Component {
       console.debug(`LOGGER: POST request in the client controller to took ${requestEndTime - requestStartTime} ms`);
       console.debug('response in client controller: ', response, 'response status: ', response.status);
 
+      // TODO: check that dcp-artifactsid is a valid value before calling with it
+      // TODO: await this happening before transitioning to new page
       this.args.package.saveAttachedFiles(project.attributes['dcp-artifactsid']);
 
       this.router.transitionTo('projects');

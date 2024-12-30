@@ -140,6 +140,8 @@ export class ProjectsService {
       //     dcp_projectid,
       //   );
 
+      // TODO: Be more defensive about creating artifact
+      // Perhaps create a whole separate request in the client
       const artifact =
         await this.artifactService.createProjectInitiationArtifacts(
           dcp_projectid,

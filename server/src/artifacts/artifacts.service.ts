@@ -47,6 +47,7 @@ export class ArtifactService {
     return newArtifact;
   }
 
+  // Generalize to any letter artifact
   public async createProjectInitiationArtifacts(projectId: string) {
     let newArtifact = null;
 
