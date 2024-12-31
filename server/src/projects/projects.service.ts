@@ -128,11 +128,24 @@ export class ProjectsService {
       //   'dcp_projects',
       //   data,
       // );
+      const crmResponse =  await this.crmService.get(
+        'dcp_projects',
+        // 3e5 = created within 5 minutes
+
+        `
+        $filter=
+          dcp_projectname eq '${data.dcp_projectname}'
+          and createdon ge '${new Date(Date.now() - 3e5).toISOString()}'
+        `
+      )
+
+      console.debug('HELLO??: crm response', crmResponse);
+
       const project = await this.crmService.create(
         'dcp_projects',
         data,
       );
-      console.debug("LOGGER: (service) project", project);
+      // console.debug("LOGGER: (service) project", project);
       const { dcp_projectid } = project;
 
       // const { dcp_artifactsid } =
@@ -144,7 +157,7 @@ export class ProjectsService {
         await this.artifactService.createProjectInitiationArtifacts(
           dcp_projectid,
         );
-      console.debug('LOGGER: (service) artifact', artifact);
+      // console.debug('LOGGER: (service) artifact', artifact);
       const { dcp_artifactsid } = artifact;
       const requestEndTime = Date.now();
       console.debug(`LOGGER: POST (service)  request in the service to took ${requestEndTime - requestStartTime} ms`);

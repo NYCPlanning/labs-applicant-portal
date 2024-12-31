@@ -125,7 +125,12 @@ export default class ProjectsNewFormComponent extends Component {
       console.debug(`LOGGER: POST request in the client controller to took ${requestEndTime - requestStartTime} ms`);
       console.debug('response in client controller: ', response, 'response status: ', response.status);
 
-      this.args.package.saveAttachedFiles(project.attributes['dcp-artifactsid']);
+      const artifactsId = project.attributes['dcp-artifactsid'];
+      if (artifactsId === undefined) {
+        throw new Error('failed to create project with artifact');
+      }
+
+      await this.args.package.saveAttachedFiles(artifactsId);
 
       this.router.transitionTo('projects');
     } catch {

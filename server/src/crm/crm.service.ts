@@ -19,6 +19,7 @@ export class CrmService {
   crmUrlPath = '';
   crmHost = '';
   host = '';
+  requestCounter = 0;
 
   constructor(private readonly config: ConfigService) {
     ADAL.ADAL_CONFIG = {
@@ -62,7 +63,21 @@ export class CrmService {
   }
 
   async create(query, data, headers = {}) {
-    return this._create(query, data, headers);
+    try {
+      console.debug(
+        "LOGGER CRM create query", query,
+        "LOGGER CRM create data", data,
+        "LOGGER CRM create headers", headers,
+      );
+      const requestStartTime = Date.now();
+      const response = this._create(query, data, headers);
+      const requestEndTime = Date.now();
+      console.debug(`LOGGER: LOGGER CRM create request took ${requestEndTime - requestStartTime} ms`);
+      return response;
+
+    } catch (e) {
+      console.debug(`LOGGER error in CRM create: ${e}`);
+    }
   }
 
   async update(entity, guid, data, headers = {}) {
