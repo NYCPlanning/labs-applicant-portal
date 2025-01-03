@@ -132,15 +132,16 @@ export class AuthorizeGuard implements CanActivate {
       const { records } = await this.crmService.get(
         'dcp_projects',
         `
-              $filter=
-                dcp_dcp_project_dcp_projectapplicant_Project/
-                  any(o:
-                    o/dcp_projectapplicantid eq '${projectApplicantId}'
-                  )
-                and dcp_dcp_project_dcp_projectapplicant_Project/
-                  any(o:
-                    o/_dcp_applicant_customer_value eq '${contactId}'
-                  )
+          $filter=
+            dcp_dcp_project_dcp_projectapplicant_Project/
+              any(o:
+                o/dcp_projectapplicantid eq '${projectApplicantId}'
+              )
+            and dcp_dcp_project_dcp_projectapplicant_Project/
+              any(o:
+                o/_dcp_applicant_customer_value eq '${contactId}'
+                and o/statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
+              )
             `,
       );
       return records.length > 0;
@@ -158,12 +159,13 @@ export class AuthorizeGuard implements CanActivate {
       const { records } = await this.crmService.get(
         'dcp_projects',
         `
-              $filter=
-                dcp_dcp_project_dcp_projectapplicant_Project/
-                  any(o:
-                    o/_dcp_applicant_customer_value eq '${contactId}'
-                  )
-                and dcp_projectid eq '${projectId}'
+          $filter=
+            dcp_dcp_project_dcp_projectapplicant_Project/
+              any(o:
+                o/_dcp_applicant_customer_value eq '${contactId}'
+                and o/statuscode eq ${APPLICANT_ACTIVE_STATUS_CODE}
+              )
+            and dcp_projectid eq '${projectId}'
             `,
       );
 
