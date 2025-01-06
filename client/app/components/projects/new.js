@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import SubmittableProjectsNewForm from '../../validations/submittable-projects-new-form';
 import { optionset } from '../../helpers/optionset';
@@ -10,6 +11,12 @@ export default class ProjectsNewFormComponent extends Component {
   validations = {
     SubmittableProjectsNewForm,
   };
+
+  @tracked
+  submissionError = false;
+
+  @tracked
+  isSubmitting = false;
 
   requestCounter = 0;
 
@@ -29,6 +36,9 @@ export default class ProjectsNewFormComponent extends Component {
 
   @action
   async submitProject() {
+    this.submissionError = false;
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
     const requestStartTime = Date.now();
     this.requestCounter++;
     console.log(`LOGGER: [Total Requests Made in the client controller] ${this.requestCounter}`);
@@ -134,8 +144,11 @@ export default class ProjectsNewFormComponent extends Component {
 
       this.router.transitionTo('projects');
     } catch {
+      this.submissionError = true;
       /* eslint-disable-next-line no-console */
       console.error('Error while creating project');
+    } finally {
+      this.isSubmitting = false;
     }
   }
 }

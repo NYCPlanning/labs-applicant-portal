@@ -47,17 +47,25 @@
         <saveableProjectsNewForm.SubmitButton @isEnabled={{saveableProjectsNewForm.isSubmittable}} data-test-save-button />
       </saveableProjectsNewForm.PageNav>
       <Messages::Assistance class="large-margin-top" />
-      <saveableProjectsNewForm.ConfirmationModal @action={{component saveableProjectsNewForm.SubmitButton
-        isEnabled=saveableProjectsNewForm.isSubmittable onClick=this.submitProject class="no-margin" }}
+      <saveableProjectsNewForm.ConfirmationModal @action={{component saveableProjectsNewForm.SubmitButton onClick=this.submitProject class="no-margin" }}
+        disabled={{or (not saveableProjectsNewForm.isSubmittable) this.submissionError this.isSubmitting}}
         @continueButtonTitle="Continue Editing" data-test-confirm-submit-button={{true}}>
         <h6>Confirm New Project Submission</h6>
-        <p class="header-large medium-margin-top small-margin-bottom">
-          Are you sure?
-        </p>
-        <p>
-          Before submitting, ensure that your answers are accurate and complete, and that necessary attachments have been uploaded. If NYC Planning does not receive enough accurate information to provide guidance, the Lead Planner will notify you and request that this form be resubmitted with necessary materials, corrections, or
-          clarifications.
-        </p>
+        {{#if this.submissionError}}
+        <div class="grid-x medium-padding-top medium-padding-bottom">
+          <p class="header-large medium-marin-top small-margin-bottom">Error while creating project. Lorem Ipsum.....</p>
+        </div>
+        {{else}}
+          <p class="header-large medium-margin-top small-margin-bottom">
+            Are you sure?
+          </p>
+          <p>
+            Before submitting, ensure that your answers are accurate and complete, and that necessary attachments have been
+            uploaded. If NYC Planning does not receive enough accurate information to provide guidance, the Lead Planner will
+            notify you and request that this form be resubmitted with necessary materials, corrections, or
+            clarifications.
+          </p>
+        {{/if}}
       </saveableProjectsNewForm.ConfirmationModal>
     </div>
   </div>

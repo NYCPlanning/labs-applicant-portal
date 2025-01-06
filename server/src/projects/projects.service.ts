@@ -115,7 +115,6 @@ export class ProjectsService {
     try {
       const requestStartTime = Date.now();
 
-
       const data = {
         dcp_projectname: attributes.dcp_projectname,
         dcp_borough: attributes.dcp_borough,
@@ -124,51 +123,28 @@ export class ProjectsService {
         'dcp_applicant_customer_contact@odata.bind': `/contacts(${attributes._dcp_applicant_customer_value})`,
         'dcp_applicantadministrator_customer_contact@odata.bind': `/contacts(${attributes._dcp_applicantadministrator_customer_value})`,
       };
-      // const { dcp_projectid } = await this.crmService.create(
-      //   'dcp_projects',
-      //   data,
-      // );
-      const crmResponse =  await this.crmService.get(
-        'dcp_projects',
-        // 3e5 = created within 5 minutes
 
-        `
-        $filter=
-          dcp_projectname eq '${data.dcp_projectname}'
-          and createdon ge '${new Date(Date.now() - 3e5).toISOString()}'
-        `
-      )
+      const project = await this.crmService.create('dcp_projects', data);
 
-      console.debug('HELLO??: crm response', crmResponse);
-
-      const project = await this.crmService.create(
-        'dcp_projects',
-        data,
-      );
-      // console.debug("LOGGER: (service) project", project);
-      const { dcp_projectid } = project;
-
-      // const { dcp_artifactsid } =
-      //   await this.artifactService.createProjectInitiationArtifacts(
-      //     dcp_projectid,
-      //   );
+      const dcpProjectId = project['dcp_projectid'];
+      if (dcpProjectId === undefined) throw new Error('Failed to create project');
 
       const artifact =
-        await this.artifactService.createProjectInitiationArtifacts(
-          dcp_projectid,
-        );
-      // console.debug('LOGGER: (service) artifact', artifact);
-      const { dcp_artifactsid } = artifact;
+        await this.artifactService.createProjectInitiationArtifacts(dcpProjectId);
+
+      const dcpArtifactsId = artifact['dcp_artifactsid'];
+      if (dcpArtifactsId === undefined) throw new Error('Failed to create artifact for project');
+
       const requestEndTime = Date.now();
       console.debug(`LOGGER: POST (service)  request in the service to took ${requestEndTime - requestStartTime} ms`);
       requestCounter++;
       console.log(`LOGGER: [Total Requests Made in the service] ${requestCounter}`);
       return {
-        dcp_projectid,
-        dcp_artifactsid,
+        dcp_projectid: dcpProjectId,
+        dcp_artifactsid: dcpArtifactsId,
       };
     } catch (e) {
-      console.debug('(service) error creating project', e);
+      console.error('(service) error creating project', e);
       throw new HttpException(
         'Unable to create project',
         HttpStatus.INTERNAL_SERVER_ERROR,
