@@ -12,6 +12,8 @@ export default class ProjectsNewFormComponent extends Component {
     SubmittableProjectsNewForm,
   };
 
+  @tracked isSubmitting = false;
+
   @tracked submissionError = false;
 
   @service
@@ -31,6 +33,7 @@ export default class ProjectsNewFormComponent extends Component {
   @action
   async submitProject() {
     this.submissionError = false;
+    this.isSubmitting = true;
     const primaryContactInput = {
       first: this.args.package.primaryContactFirstName,
       last: this.args.package.primaryContactLastName,
@@ -127,9 +130,11 @@ export default class ProjectsNewFormComponent extends Component {
 
       await this.args.package.saveAttachedFiles(artifactsId);
 
+      this.isSubmitting = false;
       this.router.transitionTo('projects');
     } catch {
       this.submissionError = true;
+      this.isSubmitting = false;
     }
   }
 }

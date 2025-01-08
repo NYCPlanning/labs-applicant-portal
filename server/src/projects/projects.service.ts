@@ -120,17 +120,6 @@ export class ProjectsService {
         'dcp_applicant_customer_contact@odata.bind': `/contacts(${attributes._dcp_applicant_customer_value})`,
         'dcp_applicantadministrator_customer_contact@odata.bind': `/contacts(${attributes._dcp_applicantadministrator_customer_value})`,
       };
-      const { records } = await this.crmService.get(
-        'dcp_projects',
-        // 3e5 = created within 5 minutes
-        `
-        $filter=
-          dcp_projectname eq '${encodeURIComponent(data.dcp_projectname)}'
-          and createdon ge '${new Date(Date.now() - 3e5).toISOString()}'
-        `,
-      );
-      if (records.length > 0) throw new Error('Project already exists');
-
       const project = await this.crmService.create('dcp_projects', data);
       const dcpProjectId = project['dcp_projectid'];
       if (dcpProjectId === undefined)

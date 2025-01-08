@@ -48,7 +48,7 @@
       </saveableProjectsNewForm.PageNav>
       <Messages::Assistance class="large-margin-top" />
       <saveableProjectsNewForm.ConfirmationModal @action={{component saveableProjectsNewForm.SubmitButton onClick=this.submitProject class="no-margin" }}
-        disabled={{or (not saveableProjectsNewForm.isSubmittable) this.submissionError}}
+        disabled={{or (not saveableProjectsNewForm.isSubmittable) this.submissionError this.isSubmitting }}
         @continueButtonTitle="Continue Editing" data-test-confirm-submit-button={{true}}>
         <h6>Confirm New Project Submission</h6>
         {{#if this.submissionError}}
