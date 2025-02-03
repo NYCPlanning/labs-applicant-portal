@@ -13,7 +13,7 @@
 
 # qa team
 [context.qa]
-  environment = { HOST="https://applicant-portal-qa.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-qa', NYCID_DOMAIN='https://accounts-nonprd.nyc.gov', MAINTENANCE_START='06/01/22 15:00', MAINTENANCE_END='06/01/22 16:00' }
+  environment = { HOST="https://qa-applicants-api.nycplanningdigital.com", NYCID_CLIENT_ID='applicant-portal-qa', NYCID_DOMAIN='https://accounts-nonprd.nyc.gov', MAINTENANCE_START='06/01/22 15:00', MAINTENANCE_END='06/01/22 16:00' }
 
 # training
 [context.training]
