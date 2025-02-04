@@ -9,6 +9,7 @@ module.exports = function(environment) {
     NYCIDLocation: getOAuthLoginEndpoint(environment),
     maintenanceTimes: getMaintenanceTimes(),
     featureFlagSelfService: getFeatureFlagSelfService(),
+    featureFlagPhishingWarning: getFeatureFlagPhishingWarning(),
 
     EmberENV: {
       FEATURES: {
@@ -144,4 +145,8 @@ function getMaintenanceTimes() {
 
 function getFeatureFlagSelfService() {
   return process.env.FEATURE_FLAG_SELF_SERVICE === 'ON';
+}
+
+function getFeatureFlagPhishingWarning() {
+  return process.env.FEATURE_FLAG_PHISHING_WARNING === 'ON';
 }

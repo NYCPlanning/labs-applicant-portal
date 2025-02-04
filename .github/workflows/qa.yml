@@ -93,6 +93,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       FEATURE_FLAG_SELF_SERVICE: ${{ vars.FEATURE_FLAG_SELF_SERVICE }}
+      FEATURE_FLAG_PHISHING_WARNING: ${{ vars.FEATURE_FLAG_PHISHING_WARNING }}
       HOST: ${{ vars.ZAP_API_HOST }}
       MAINTENANCE_START: ${{ vars.MAINTENANCE_START }}
       MAINTENANCE_END: ${{ vars.MAINTENANCE_END }}
