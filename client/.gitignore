@@ -30,3 +30,6 @@
 # ignore sensitive certs!
 ssl/server.key
 ssl/server.crt
+
+# robots dynamically generated on build
+public/robots.txt

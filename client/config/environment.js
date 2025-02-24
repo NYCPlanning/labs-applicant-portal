@@ -11,6 +11,7 @@ module.exports = function(environment) {
     featureFlagSelfService: getFeatureFlagSelfService(),
     featureFlagPhishingWarning: getFeatureFlagPhishingWarning(),
     featureFlagShowSandboxWarning: getFeatureFlagShowSandboxWarning(),
+    featureFlagExcludeFromSearchResults: getFeatureFlagExcludeFromSearchResults(),
 
     EmberENV: {
       FEATURES: {
@@ -151,6 +152,11 @@ function getFeatureFlagSelfService() {
 function getFeatureFlagPhishingWarning() {
   return process.env.FEATURE_FLAG_PHISHING_WARNING === 'ON';
 }
+
 function getFeatureFlagShowSandboxWarning() {
   return process.env.FEATURE_FLAG_SHOW_SANDBOX_WARNING === 'ON';
+}
+
+function getFeatureFlagExcludeFromSearchResults() {
+  return process.env.FEATURE_FLAG_EXCLUDE_FROM_SEARCH_RESULTS === 'ON';
 }

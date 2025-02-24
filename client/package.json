@@ -95,6 +95,7 @@
     "edition": "octane"
   },
   "dependencies": {
+    "ember-cli-inline-content": "^0.4.1",
     "jwt-decode": "^3.0.0-beta.2"
   },
   "lint-staged": {
