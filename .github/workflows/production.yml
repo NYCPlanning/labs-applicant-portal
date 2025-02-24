@@ -96,14 +96,15 @@ jobs:
       url: https://applicants.planninglabs.nyc
     runs-on: ubuntu-latest
     env:
+      FEATURE_FLAG_EXCLUDE_FROM_SEARCH_RESULTS: ${{vars.FEATURE_FLAG_EXCLUDE_FROM_SEARCH_RESULTS}}
       FEATURE_FLAG_SELF_SERVICE: ${{ vars.FEATURE_FLAG_SELF_SERVICE }}
       FEATURE_FLAG_PHISHING_WARNING: ${{ vars.FEATURE_FLAG_PHISHING_WARNING }}
-      HOST: ${{ vars.ZAP_API_HOST }}
       MAINTENANCE_START: ${{ vars.MAINTENANCE_START }}
       MAINTENANCE_END: ${{ vars.MAINTENANCE_END }}
       HD_NYCID_DOMAIN: ${{ secrets.NYCID_DOMAIN }}
       NYCID_CLIENT_ID: ${{ vars.NYCID_CLIENT_ID }}
       NYCID_DOMAIN: ${{ vars.NYCID_DOMAIN }}
+      HOST: ${{ vars.ZAP_API_HOST }}
     steps:
       - uses: actions/checkout@v4
         with:

@@ -10,6 +10,7 @@ module.exports = function(environment) {
     maintenanceTimes: getMaintenanceTimes(),
     featureFlagSelfService: getFeatureFlagSelfService(),
     featureFlagPhishingWarning: getFeatureFlagPhishingWarning(),
+    featureFlagExcludeFromSearchResults: getFeatureFlagExcludeFromSearchResults(),
 
     EmberENV: {
       FEATURES: {
@@ -149,4 +150,8 @@ function getFeatureFlagSelfService() {
 
 function getFeatureFlagPhishingWarning() {
   return process.env.FEATURE_FLAG_PHISHING_WARNING === 'ON';
+}
+
+function getFeatureFlagExcludeFromSearchResults() {
+  return process.env.FEATURE_FLAG_EXCLUDE_FROM_SEARCH_RESULTS === 'ON';
 }
