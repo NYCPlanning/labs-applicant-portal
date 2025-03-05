@@ -1,7 +1,13 @@
 {{#if this.header}}
   {{#if this.phishingWarningFlagOn}}
-    <p class="labs-beta-notice hide-for-print">Beware of phishing scams: DCP will never request applicants to make a land use or CEQR payment directly via email, only through the Applicant Portal. Official emails always end in @planning.nyc.gov.</p>
-  {{/if}}
+    <AdvisoryMessageBar
+      @message="Beware of phishing scams: DCP will never request applicants to make a land use or CEQR payment directly via email, only through the Applicant Portal. Official emails always end in @planning.nyc.gov."
+    />
+    {{/if}}
+    {{#if this.showSandboxWarningOn}}
+      <AdvisoryMessageBar
+      @message="Sandbox for Testing Purposes" />
+    {{/if}}
   <LabsUi::SiteHeader
     @responsiveNav={{true}}
     @responsiveSize="medium"

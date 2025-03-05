@@ -7,6 +7,9 @@ export default class ApplicationController extends Controller {
   @tracked
   phishingWarningFlagOn = config.featureFlagPhishingWarning;
 
+  @tracked
+  showSandboxWarningOn = config.featureFlagShowSandboxWarning;
+
   queryParams = ['email', 'header'];
 
   header = true;
