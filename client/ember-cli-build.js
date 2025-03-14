@@ -1,4 +1,7 @@
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const fs = require('fs');
+const path = require('path');
+const ENV = require('./config/environment')(process.env.EMBER_ENV);
 
 module.exports = function(defaults) {
   const app = new EmberApp(defaults, {
@@ -18,6 +21,12 @@ module.exports = function(defaults) {
     'ember-composable-helpers': {
       only: ['toggle', 'map-by', 'reduce', 'includes', 'group-by', 'sort-by', 'keys'],
     },
+    inlineContent: {
+      robotMeta: {
+        content: '<meta name="robots" content="noindex, nofollow">\n',
+        enabled: ENV.featureFlagExcludeFromSearchResults,
+      },
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated
@@ -32,6 +41,12 @@ module.exports = function(defaults) {
   // modules that you would like to import into your application
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
+
+  const robotsContent = ENV.featureFlagExcludeFromSearchResults
+    ? 'User-agent: *\nDisallow: /'
+    : 'User-agent: *\nAllow: /';
+
+  fs.writeFileSync(path.join(__dirname, 'public', 'robots.txt'), robotsContent);
 
   return app.toTree();
 };
