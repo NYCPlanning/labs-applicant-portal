@@ -1,6 +1,7 @@
 import { FactoryProvider, HttpException, HttpStatus } from '@nestjs/common';
 import { ConfigService } from 'src/config/config.service';
 import msal from '@azure/msal-node';
+import Request from 'request';
 
 export type MsalProviderType = {
   getGraphClientToken: () => Promise<msal.AuthenticationResult>;
@@ -51,6 +52,25 @@ export const MsalProvider: FactoryProvider<MsalProviderType> = {
         );
       }
     };
+
+    getGraphClientToken().then((response) => {
+      const { accessToken } = response;
+      const options = {
+        url: `https://graph.microsoft.com/v1.0/sites/${config.get("SHAREPOINT_TARGET_HOST")}`,
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          Accept: 'application/json'
+        }
+      }
+      Request.get(
+        options,
+        (error, response, body) => {
+          console.debug("error", error);
+          console.debug("response", response);
+          console.debug("body", body);
+        })
+    });
+
 
     return {
       getGraphClientToken,
