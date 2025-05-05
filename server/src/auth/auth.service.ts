@@ -107,6 +107,13 @@ export class AuthService {
     // need to first lookup contact by nycIdGUID, and prefer that.
     let query = await this.contactService.findOneByNycidGuid(GUID);
 
+    // if contact exists from nyc id, sync the email address between NYC.ID and ZAP
+    if (query.has_crm_contact && mail && query.emailaddress1 !== mail) {
+      await this.contactService.update(query.contactid, {
+        emailaddress1: mail
+      });
+    }
+
     // if it's not a CRM contact, prefer an e-mail lookup
     if (!query.has_crm_contact) {
       query = await this.contactService.findOneByEmail(mail);
