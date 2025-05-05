@@ -15,7 +15,7 @@ export class AppController {
   constructor(
     private readonly authService: AuthService,
     private readonly contactService: ContactService,
-  ) {}
+  ) { }
 
   @Get('/login')
   async login(@Res() res: Response, @Query('accessToken') NYCIDToken: string) {
@@ -25,6 +25,9 @@ export class AppController {
         await this.authService.validateCurrentToken(ZAPToken);
       const { emailaddress1 } =
         await this.contactService.findOneById(contactId);
+      this.contactService.synchronize(contactId, NYCIDToken);
+
+
 
       res.send({
         access_token: ZAPToken,

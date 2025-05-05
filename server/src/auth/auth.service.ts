@@ -94,6 +94,7 @@ export class AuthService {
    * @return     {string}              String representing generated ZAP Token
    */
   public async generateNewToken(NYCIDToken: string): Promise<string> {
+    console.debug("generate new token");
     const nycIdAccount = this.verifyNYCIDToken(NYCIDToken);
 
     if (typeof nycIdAccount === 'string')
@@ -105,46 +106,57 @@ export class AuthService {
     // REDO: all of this "has_crm_contact" stuff is confusing. these methods should just return null
     // if not found, and we need to find a better way to deal with missing crm records + nycid status
     // need to first lookup contact by nycIdGUID, and prefer that.
-    let query = await this.contactService.findOneByNycidGuid(GUID);
+    const zapContactFromNycId = await this.contactService.findOneByNycidGuid(GUID);
 
-    // if it's not a CRM contact, prefer an e-mail lookup
-    if (!query.has_crm_contact) {
-      query = await this.contactService.findOneByEmail(mail);
+    // if the GUIDs match, prefer NYC.ID profile information
+    if (zapContactFromNycId.has_crm_contact) {
+      if (zapContactFromNycId.dcp_nycid_guid !== GUID || !givenName || !sn || !mail) {
+        throw new Error("Failed to login: invalid NYC ID");
+      }
+      await this.contactService.update(zapContactFromNycId.contactid, {
+        firstname: givenName,
+        lastname: sn,
+        emailaddress1: mail,
+        adx_identity_emailaddress1confirmed: true, // "enables for portal" field in CRM
+      });
+
+      return this.signNewToken(zapContactFromNycId.contactid, {
+        NYCIDToken, // include the token for later authorization
+        ...nycIdAccount,
+      });
     }
-
-    // if _that_ doesn't exist, create a new contact
-    const contact = query.has_crm_contact
-      ? query
-      : await this.contactService.create({
-          emailaddress1: mail,
-          dcp_nycid_guid: GUID,
-        });
 
     const nycIdEmailRegEx = new RegExp(`^${mail}$`, 'gi');
 
+    // if it's not a CRM contact, prefer an e-mail lookup
+    const zapContactFromEmail = await this.contactService.findOneByEmail(mail);
+
     // if their e-mail is validated, associate the NYCID guid
-    if (
-      nycExtEmailValidationFlag &&
-      contact.dcp_nycid_guid !== GUID &&
-      contact.emailaddress1.match(nycIdEmailRegEx)
-    ) {
-      await this.contactService.update(contact.contactid, {
-        dcp_nycid_guid: GUID,
-        firstname: givenName,
-        lastname: sn,
+    if (zapContactFromEmail.has_crm_contact) {
+      if (zapContactFromEmail.dcp_nycid_guid !== GUID) {
+        if (!nycExtEmailValidationFlag || !zapContactFromEmail.emailaddress1.match(nycIdEmailRegEx) || !givenName || !sn) {
+          throw new Error("Failed to login: unable to link email to valid nyc id");
+        }
+        await this.contactService.update(zapContactFromEmail.contactid, {
+          dcp_nycid_guid: GUID,
+          firstname: givenName,
+          lastname: sn,
+        });
+
+      }
+      return this.signNewToken(zapContactFromEmail.contactid, {
+        NYCIDToken, // include the token for later authorization
+        ...nycIdAccount,
       });
     }
 
-    // if the GUIDs match, prefer NYC.ID profile information
-    if (contact.dcp_nycid_guid === GUID && givenName && sn) {
-      await this.contactService.update(contact.contactid, {
-        firstname: givenName,
-        lastname: sn,
-        adx_identity_emailaddress1confirmed: true, // "enables for portal" field in CRM
-      });
-    }
+    // if _that_ doesn't exist, create a new contact
+    const createdZapContact = await this.contactService.create({
+      emailaddress1: mail,
+      dcp_nycid_guid: GUID,
+    });
 
-    return this.signNewToken(contact.contactid, {
+    return this.signNewToken(createdZapContact.contactid, {
       NYCIDToken, // include the token for later authorization
       ...nycIdAccount,
     });

@@ -30,7 +30,7 @@ export class ContactService {
   constructor(
     private readonly crmService: CrmService,
     private readonly nycid: NycidService,
-  ) {}
+  ) { }
 
   /**
    * Uses the CRM Web API to query and return a Contact entity for given contactid
@@ -158,8 +158,10 @@ export class ContactService {
   }
 
   public async synchronize(contactId, accessToken) {
-    const { firstName, lastName } =
-      await this.nycid.getNycidOAuthUser(accessToken);
+    console.debug("sync contact")
+    const user = await this.nycid.getNycidOAuthUser(accessToken);
+    console.debug("user", user);
+    const { firstName, lastName } = user;
 
     return this.update(contactId, {
       firstname: firstName,
