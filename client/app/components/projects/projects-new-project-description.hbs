@@ -1,9 +1,14 @@
 {{#let @form as |form|}}
 <form.Section @title="Project Brief">
   <Ui::Question @required={{true}} as |Q|>
-    <Q.Label>
-      Please replace information in the brackets to the best of your ability.
-    </Q.Label>
+    <p>
+      Use the
+      <Ui::ExternalLink
+        @href="https://www.nyc.gov/assets/planning/downloads/pdf/applicants/preparing-application/applications-reviewed-by-city-planning.pdf">
+        Applications Reviewed by City Planning
+      </Ui::ExternalLink> &nbsp;to reference action types and abbreviations to replace bracketed text with the appropriate
+      information.<Ui::RequiredAsterisk />
+    </p>
 
     <form.Field
       @attribute="projectBrief"
