@@ -22,5 +22,6 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'warn',
     '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/no-loss-of-precision': 'off'
   },
 };
