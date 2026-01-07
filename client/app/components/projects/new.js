@@ -118,6 +118,7 @@ export default class ProjectsNewFormComponent extends Component {
               dcpBorough: this.args.package.borough.code,
               dcpApplicanttype: this.args.package.applicantType.code,
               dcpProjectbrief: this.args.package.projectBrief,
+              dcpFasttrackindicator: this.args.package.dcpFasttrackindicator,
               _dcpApplicantadministratorCustomerValue:
               verifiedPrimaryContact.id,
               _dcpApplicantCustomerValue: verifiedApplicant.id,
@@ -125,6 +126,7 @@ export default class ProjectsNewFormComponent extends Component {
           },
         }),
       });
+
       const { data: project } = await response.json();
 
       const artifactsId = project.attributes['dcp-artifactsid'];

@@ -204,6 +204,20 @@ $sticky-sidebar-offset: 6rem + rem-calc(20);
   }
 }
 
+// styling for LEAP fast track checkbox
+.fast-track-checkbox {
+  display: inline-flex;
+  align-items: flex-start;
+}
+
+.fast-track-checkbox input[type="checkbox"] {
+  margin-top: 0.4rem;
+}
+
+.fast-track-checkbox p {
+  margin: 0.25rem 0 0;
+}
+
 @media (max-width:600px) {
   .equitable-development-reporting {
     .ember-tooltip {

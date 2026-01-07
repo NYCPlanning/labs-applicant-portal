@@ -141,6 +141,7 @@ export class ProjectsController {
       dcp_borough: string;
       dcp_applicanttype: string;
       dcp_projectbrief: string;
+      dcp_fasttrackindicator: string;
       _dcp_applicant_customer_value: string;
       _dcp_applicantadministrator_customer_value: string;
     };
