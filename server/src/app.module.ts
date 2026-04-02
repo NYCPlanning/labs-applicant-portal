@@ -1,4 +1,7 @@
 import { Module, MiddlewareConsumer } from '@nestjs/common';
+import { SentryModule } from "@sentry/nestjs/setup";
+import { APP_FILTER } from "@nestjs/core";
+import { SentryGlobalFilter } from "@sentry/nestjs/setup";
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import { AppController } from './app.controller';
@@ -18,7 +21,15 @@ import { InvoicesModule } from './invoices/invoices.module';
 import { InvoicePostbackModule } from './invoice-postback/invoice-postback.module';
 
 @Module({
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: SentryGlobalFilter,
+    },
+    CitypayService
+  ],
   imports: [
+    SentryModule.forRoot(),
     AuthModule,
     AccountsModule,
     ConfigModule,
@@ -33,7 +44,6 @@ import { InvoicePostbackModule } from './invoice-postback/invoice-postback.modul
     InvoicePostbackModule,
   ],
   controllers: [AppController],
-  providers: [CitypayService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
