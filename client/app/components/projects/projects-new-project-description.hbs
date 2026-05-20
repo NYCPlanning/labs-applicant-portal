@@ -17,28 +17,30 @@
       @maxlength='500'
       value={{"A [action(s)] [ZR#'s for ZR, ZS, ZA] to facilitate a [new] [# of max stories], [total zsf, (# DU's)], [use] development, including [sf for each use, sf open space], is being sought by [public/private] [applicant] at [address] in [neighborhood], [Community District], [Borough]."}} />
   </Ui::Question>
-  <Ui::Question @required={{true}} as |Q|>
-    <form.Field
-      @attribute="dcpFasttrackindicator"
-      id={{Q.questionId}}
-      name="fastTrackCheckbox"
-      value="true"
-      @type="checkbox" as |Checkbox|>
-      <span class="fast-track-checkbox">
-        <Checkbox>
-          <span class="text-weight-bold">
-            Check this box if the project qualifies for
-            <Ui::ExternalLink @href="https://www.nyc.gov/content/planning/pages/applicants/special-processes">
-              LEAP
-            </Ui::ExternalLink>&nbsp;and the applicant team intends to pursue
-            <br />this expedited pathway.
-          </span>
-          <p>
-            NYC Planning will review your project brief and submitted materials to confirm LEAP eligibility.
-          </p>
-        </Checkbox>
-      </span>
-    </form.Field>
-  </Ui::Question>
+  {{#if this.fastTrackFlagOn}}
+    <Ui::Question @required={{true}} as |Q|>
+      <form.Field
+        @attribute="dcpFasttrackindicator"
+        id={{Q.questionId}}
+        name="fastTrackCheckbox"
+        value="true"
+        @type="checkbox" as |Checkbox|>
+        <span class="fast-track-checkbox">
+          <Checkbox>
+            <span class="text-weight-bold">
+              Check this box if the project qualifies for
+              <Ui::ExternalLink @href="https://www.nyc.gov/content/planning/pages/applicants/special-processes">
+                LEAP
+              </Ui::ExternalLink>&nbsp;and the applicant team intends to pursue
+              <br />this expedited pathway.
+            </span>
+            <p>
+              NYC Planning will review your project brief and submitted materials to confirm LEAP eligibility.
+            </p>
+          </Checkbox>
+        </span>
+      </form.Field>
+    </Ui::Question>
+  {{/if}}
 </form.Section>
 {{/let}}

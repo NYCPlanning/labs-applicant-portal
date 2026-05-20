@@ -53,6 +53,7 @@ jobs:
         env:
           HD_FEATURE_FLAG_SELF_SERVICE: ${{ vars.FEATURE_FLAG_SELF_SERVICE }}
           HD_FEATURE_FLAG_CREEPER: ${{ vars.FEATURE_FLAG_CREEPER }}
+          HD_SHOW_FAST_TRACK_CHECKBOX: ${{vars.FEATURE_FLAG_SHOW_FAST_TRACK_CHECKBOX}}
           HD_ADO_PRINCIPAL: ${{ secrets.ADO_PRINCIPAL }}
           HD_AUTHORITY_HOST_URL: ${{ secrets.AUTHORITY_HOST_URL }}
           HD_CLIENT_ID: ${{ secrets.CLIENT_ID }}
