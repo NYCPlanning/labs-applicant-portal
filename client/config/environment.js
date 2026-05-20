@@ -12,6 +12,7 @@ module.exports = function(environment) {
     featureFlagPhishingWarning: getFeatureFlagPhishingWarning(),
     featureFlagShowSandboxWarning: getFeatureFlagShowSandboxWarning(),
     featureFlagExcludeFromSearchResults: getFeatureFlagExcludeFromSearchResults(),
+    featureFlagShowFastTrackCheckbox: getFeatureFlagShowFastTrackCheckbox(),
 
     EmberENV: {
       FEATURES: {
@@ -159,4 +160,8 @@ function getFeatureFlagShowSandboxWarning() {
 
 function getFeatureFlagExcludeFromSearchResults() {
   return process.env.FEATURE_FLAG_EXCLUDE_FROM_SEARCH_RESULTS === 'ON';
+}
+
+function getFeatureFlagShowFastTrackCheckbox() {
+  return process.env.FEATURE_FLAG_SHOW_FAST_TRACK_CHECKBOX === 'ON';
 }
