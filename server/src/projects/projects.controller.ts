@@ -145,15 +145,6 @@ export class ProjectsController {
       _dcp_applicant_customer_value: string;
       _dcp_applicantadministrator_customer_value: string;
     };
-    if (!this.config.featureFlag.selfService) {
-      throw new HttpException(
-        {
-          code: 'NOT_FOUND',
-          title: 'Not found',
-        },
-        HttpStatus.NOT_FOUND,
-      );
-    }
 
     return await this.projectsService.create(allowedAttrs);
   }

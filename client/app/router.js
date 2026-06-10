@@ -12,7 +12,7 @@ Router.map(function() {
   // eslint-disable-line
   this.route('projects');
 
-  this.route(config.featureFlagSelfService ? 'projects/new' : 'not-found', { path: 'projects/new' });
+  this.route('projects/new', { path: 'projects/new' });
 
   this.route('login');
   this.route('logout');
