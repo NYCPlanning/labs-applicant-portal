@@ -8,7 +8,6 @@ module.exports = function(environment) {
     NYCIDDomain: getOAuthDomain(environment),
     NYCIDLocation: getOAuthLoginEndpoint(environment),
     maintenanceTimes: getMaintenanceTimes(),
-    featureFlagSelfService: getFeatureFlagSelfService(),
     featureFlagPhishingWarning: getFeatureFlagPhishingWarning(),
     featureFlagShowSandboxWarning: getFeatureFlagShowSandboxWarning(),
     featureFlagExcludeFromSearchResults: getFeatureFlagExcludeFromSearchResults(),
@@ -144,10 +143,6 @@ function getMaintenanceTimes() {
   } = process.env;
 
   return [MAINTENANCE_START, MAINTENANCE_END];
-}
-
-function getFeatureFlagSelfService() {
-  return process.env.FEATURE_FLAG_SELF_SERVICE === 'ON';
 }
 
 function getFeatureFlagPhishingWarning() {

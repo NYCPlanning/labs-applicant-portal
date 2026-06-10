@@ -23,9 +23,6 @@ export function packageIsToDo(projectPackages) {
 
 export default class ProjectsController extends Controller {
   @tracked
-  selfServiceFlagOn = config.featureFlagSelfService;
-
-  @tracked
   fastTrackFlagOn = config.featureFlagShowFastTrackCheckbox;
   // TODO: organize this business logic as computed properties on the projects model
 
