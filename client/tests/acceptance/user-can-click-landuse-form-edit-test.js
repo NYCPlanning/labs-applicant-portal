@@ -6,6 +6,7 @@ import {
   settled,
   fillIn,
   triggerKeyEvent,
+  waitFor,
 } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -429,7 +430,7 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     await visit('/landuse-form/1/edit');
 
     // remove the applicant
-    await click('[data-test-remove-applicant-button');
+    await click('[data-test-remove-applicant-button]');
 
     // FIXME: user shouldn't see the fieldset
     assert.dom('[data-test-applicant-fieldset="0"]').doesNotExist();
@@ -786,6 +787,8 @@ module('Acceptance | user can click landuse form edit', function (hooks) {
     // labs-ember-search class for search input
     await fillIn('.map-search-input', '1000120001');
     await triggerKeyEvent('.labs-geosearch', 'keypress', 13);
+
+    await waitFor('[data-test-bbl-title="1000120001"]');
 
     assert.dom('[data-test-bbl-title="3071590115"]').exists();
     assert.dom('[data-test-bbl-title="1000120001"]').exists();
