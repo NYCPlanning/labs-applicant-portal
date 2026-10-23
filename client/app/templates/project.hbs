@@ -41,6 +41,14 @@
           @prefix="far"
           class="text-gray"
         />
+        {{#if (and this.fastTrackFlagOn this.fastTrackStatusOn)}}
+
+        <p>
+          <strong>Sprint Interest:</strong> {{@model.sprintInterestLabel}}
+          <span class="text-gray"> | </span>
+          <strong>Pre-Cert Path:</strong> {{@model.preCertPathLabel}}
+        </p>
+        {{/if}}
 
         {{#if @model.publicStatusGeneralPublicProject}}
           <Ui::ExternalLink @href="https://zap.planning.nyc.gov/projects/{{@model.dcpName}}"> {{optionset 'project' 'dcpPublicstatus' 'label' @model.dcpPublicstatus}} </Ui::ExternalLink>

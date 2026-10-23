@@ -8,8 +8,8 @@ export default class Router extends EmberRouterScroll {
 }
 
 // TODO: wrap in an authenticated route
+// eslint-disable-next-line array-callback-return
 Router.map(function() {
-  // eslint-disable-line
   this.route('projects');
 
   this.route('projects/new');

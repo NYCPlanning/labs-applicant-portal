@@ -7,6 +7,7 @@ export const PROJECT_ATTRS = [
   'dcp_visibility',
   'dcp_publicstatus',
   'dcp_projectbrief',
+  'dcp_precertpath',
   "dcp_fasttrackindicator",
   'dcp_applicanttype',
   '_dcp_applicant_customer_value',
