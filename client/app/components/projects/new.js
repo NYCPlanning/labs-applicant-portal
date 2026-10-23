@@ -8,6 +8,16 @@ import config from '../../config/environment';
 import validateFileUpload from '../../validators/validate-file-presence';
 
 export default class ProjectsNewFormComponent extends Component {
+  fastTrackFlagOn = config.featureFlagShowFastTrackCheckbox;
+
+  @tracked isFastTrackChecked = false;
+
+  @action
+  updateFastTrackChecked(checked) {
+    this.isFastTrackChecked = checked;
+  }
+
+
   validations = {
     SubmittableProjectsNewForm,
   };

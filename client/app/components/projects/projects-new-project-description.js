@@ -1,6 +1,11 @@
 import Component from '@glimmer/component';
-import config from 'client/config/environment';
+import { action } from '@ember/object';
 
 export default class ProjectsNewProjectDescription extends Component {
-  fastTrackFlagOn = config.featureFlagShowFastTrackCheckbox;
+  @action
+  handleFastTrackChange(event) {
+    if (event.target.type !== 'checkbox') return;
+
+    this.args.onFastTrackChange(event.target.checked);
+  }
 }

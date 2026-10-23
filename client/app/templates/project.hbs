@@ -17,11 +17,19 @@
       <p>
         <strong>Primary Applicant:</strong> {{@model.dcpApplicantCustomerValue}}
       </p>
-
+      {{#if this.fastTrackFlagOn}}
       <p>
         <strong>Project Brief:</strong> {{@model.dcpProjectbrief}}
       </p>
 
+      <p>
+        <strong>Pre-Cert Path:</strong> {{@model.preCertPathLabel}}
+      </p>
+
+      <p>
+        <strong>Sprint Interest:</strong> {{@model.sprintInterestLabel}}
+      </p>
+      {{/if}}
       <h2>Status</h2>
 
       {{#each

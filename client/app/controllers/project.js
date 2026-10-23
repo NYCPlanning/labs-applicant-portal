@@ -3,9 +3,12 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { optionset } from '../helpers/optionset';
+import config from '../config/environment';
 
 export default class ProjectController extends Controller {
   @tracked landuse = false;
+
+  fastTrackFlagOn = config.featureFlagShowFastTrackCheckbox;
 
   @service
   store;

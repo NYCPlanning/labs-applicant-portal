@@ -1,6 +1,13 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { optionset } from '../helpers/optionset';
 
+const PRE_CERT_PATH_LABELS = {
+  717170000: 'Not Assessed',
+  717170001: 'In Review',
+  717170002: 'Sprint',
+  717170003: 'Standard',
+};
+
 export default class ProjectModel extends Model {
   // The human-readable, descriptive name.
   // e.g. 'Marcus Garvey Blvd Project'
@@ -23,6 +30,10 @@ export default class ProjectModel extends Model {
   @attr dcpApplicantCustomerValue;
 
   @attr dcpProjectbrief;
+
+  @attr dcpFasttrackindicator;
+
+  @attr dcpPrecertpath;
 
   // equitable development project attrs
   @attr('number') dcpNonresatleast50000;
@@ -260,5 +271,21 @@ export default class ProjectModel extends Model {
       )
       .sortBy('dcpPackageversion')
       .reverse();
+  }
+
+  get sprintInterestLabel() {
+    if (this.dcpFasttrackindicator === true) {
+      return 'Yes';
+    }
+
+    if (this.dcpFasttrackindicator === false) {
+      return 'No';
+    }
+
+    return '';
+  }
+
+  get preCertPathLabel() {
+    return PRE_CERT_PATH_LABELS[this.dcpPrecertpath] ?? 'Not Assessed';
   }
 }
