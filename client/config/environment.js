@@ -1,3 +1,10 @@
+const path = require('path');
+const dotenv = require('dotenv');
+
+dotenv.config({
+  path: path.resolve(__dirname, '../../server/development.env'),
+});
+
 module.exports = function(environment) {
   const ENV = {
     modulePrefix: 'client',
@@ -12,6 +19,7 @@ module.exports = function(environment) {
     featureFlagShowSandboxWarning: getFeatureFlagShowSandboxWarning(),
     featureFlagExcludeFromSearchResults: getFeatureFlagExcludeFromSearchResults(),
     featureFlagShowFastTrackCheckbox: getFeatureFlagShowFastTrackCheckbox(),
+    featureFlagShowFastTrackStatus: getFeatureFlagShowFastTrackStatus(),
 
     EmberENV: {
       FEATURES: {
@@ -159,4 +167,8 @@ function getFeatureFlagExcludeFromSearchResults() {
 
 function getFeatureFlagShowFastTrackCheckbox() {
   return process.env.FEATURE_FLAG_SHOW_FAST_TRACK_CHECKBOX === 'ON';
+}
+
+function getFeatureFlagShowFastTrackStatus() {
+  return process.env.FEATURE_FLAG_SHOW_FAST_TRACK_STATUS === 'ON';
 }

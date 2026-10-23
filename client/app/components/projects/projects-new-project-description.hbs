@@ -17,30 +17,32 @@
       @maxlength='500'
       value={{"A [action(s)] [ZR#'s for ZR, ZS, ZA] to facilitate a [new] [# of max stories], [total zsf, (# DU's)], [use] development, including [sf for each use, sf open space], is being sought by [public/private] [applicant] at [address] in [neighborhood], [Community District], [Borough]."}} />
   </Ui::Question>
-  {{#if this.fastTrackFlagOn}}
-    <Ui::Question @required={{true}} as |Q|>
-      <form.Field
-        @attribute="dcpFasttrackindicator"
-        id={{Q.questionId}}
-        name="fastTrackCheckbox"
-        value="true"
-        @type="checkbox" as |Checkbox|>
-        <span class="fast-track-checkbox">
-          <Checkbox>
-            <span class="text-weight-bold">
-              Check this box if the project qualifies for
-              <Ui::ExternalLink @href="https://www.nyc.gov/content/planning/pages/applicants/special-processes">
-                LEAP
-              </Ui::ExternalLink>&nbsp;and the applicant team intends to pursue
-              <br />this expedited pathway.
-            </span>
-            <p>
-              NYC Planning will review your project brief and submitted materials to confirm LEAP eligibility.
-            </p>
-          </Checkbox>
-        </span>
-      </form.Field>
-    </Ui::Question>
+  {{#if @fastTrackFlagOn}}
+  <Ui::Question @required={{true}} as |Q|>
+    <form.Field
+      @attribute="dcpFasttrackindicator"
+      id={{Q.questionId}}
+      name="fastTrackCheckbox"
+      value="true"
+      @type="checkbox" as |Checkbox|
+    >
+      <span
+        class="fast-track-checkbox"
+        {{! template-lint-disable no-invalid-interactive }}
+        {{on "change" this.handleFastTrackChange}}
+      >
+        <Checkbox>
+          Check this box if this project qualifies for the
+            <Ui::ExternalLink
+              @href="https://www.nyc.gov/content/planning/pages/applicants/preparing-application/sprint-application">
+              pre-cert sprint process
+            </Ui::ExternalLink>
+          . NYC Planning will review your project brief and submitted materials to determine if your project is sprint eligible.
+        </Checkbox>
+      </span>
+      {{! template-lint-enable no-invalid-interactive }}
+    </form.Field>
+  </Ui::Question>
   {{/if}}
 </form.Section>
 {{/let}}

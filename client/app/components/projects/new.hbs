@@ -35,12 +35,15 @@
         @form={{saveableProjectsNewForm}} />
 
       <Projects::ProjectsNewProjectDescription
-        @form={{saveableProjectsNewForm}} />
+        @form={{saveableProjectsNewForm}}
+        @fastTrackFlagOn={{this.fastTrackFlagOn}}
+        @onFastTrackChange={{this.updateFastTrackChecked}}/>
 
       <Projects::ProjectsNewAttachedDocuments
         @artifact={{saveableProjectsNewForm.data}}
         @form={{saveableProjectsNewForm}}
-        @model={{@package}} />
+        @model={{@package}}
+        @isFastTrackChecked={{this.isFastTrackChecked}}/>
     </div>
     <div class="cell large-4 sticky-sidebar">
       <saveableProjectsNewForm.PageNav>

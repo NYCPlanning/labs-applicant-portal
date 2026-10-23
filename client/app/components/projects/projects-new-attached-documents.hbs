@@ -1,12 +1,25 @@
 {{#let @form as |form|}}
 <@form.Section @title='Attached Documents'>
-  <p>
-    Please attach the required items listed on the
-    <Ui::ExternalLink @href="https://s-media.nyc.gov/agencies/dcp/assets/files/AE/interest-checklist.pdf">
-      Informational Interest Meeting Checklist
-    </Ui::ExternalLink> &nbsp;in at least one PDF document. The maximum
-    size for a document is 50MB.
-  </p>
+  {{#if @isFastTrackChecked}}
+    <p>
+      Refer to the
+      <Ui::ExternalLink @href="https://www.nyc.gov/content/planning/pages/applicants/preparing-application">
+        Application Overview
+      </Ui::ExternalLink>
+      for relevant standard and sprint guidance and the associated list of required items.
+      Items must be submitted in at least one PDF document. The maximum size for a document is 50MB. If you have indicated
+      interest in the sprint process and the required items are not submitted, the project will not be considered for the
+      6-month pre-certification timeline.
+    </p>
+  {{else}}
+    <p>
+      Please attach the required items listed on the
+      <Ui::ExternalLink @href="https://s-media.nyc.gov/agencies/dcp/assets/files/AE/interest-checklist.pdf">
+        Informational Interest Meeting Checklist
+      </Ui::ExternalLink> &nbsp;in at least one PDF document. The maximum
+      size for a document is 50MB.
+    </p>
+  {{/if}}
 
   <SaveableForm::FieldValidationMessage
     @attribute='documents'
