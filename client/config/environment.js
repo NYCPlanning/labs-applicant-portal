@@ -1,3 +1,10 @@
+const path = require('path');
+const dotenv = require('dotenv');
+
+dotenv.config({
+  path: path.resolve(__dirname, '../../server/development.env'),
+});
+
 module.exports = function(environment) {
   const ENV = {
     modulePrefix: 'client',
