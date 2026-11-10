@@ -9,6 +9,7 @@ export default class ProjectController extends Controller {
   @tracked landuse = false;
 
   fastTrackFlagOn = config.featureFlagShowFastTrackCheckbox;
+
   fastTrackStatusOn = config.featureFlagShowFastTrackStatus;
 
   @service
