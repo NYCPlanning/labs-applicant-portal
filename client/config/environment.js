@@ -1,10 +1,6 @@
 const path = require('path');
 const dotenv = require('dotenv');
 
-dotenv.config({
-  path: path.resolve(__dirname, '../../server/development.env'),
-});
-
 module.exports = function(environment) {
   const ENV = {
     modulePrefix: 'client',
@@ -52,6 +48,9 @@ module.exports = function(environment) {
   };
 
   if (environment === 'development') {
+    dotenv.config({
+      path: path.resolve(__dirname, '../../server/development.env'),
+    });
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
