@@ -1,10 +1,6 @@
 const path = require('path');
 const dotenv = require('dotenv');
 
-dotenv.config({
-  path: path.resolve(__dirname, '../../server/development.env'),
-});
-
 module.exports = function(environment) {
   const ENV = {
     modulePrefix: 'client',
@@ -52,6 +48,9 @@ module.exports = function(environment) {
   };
 
   if (environment === 'development') {
+    dotenv.config({
+      path: path.resolve(__dirname, '../../server/development.env'),
+    });
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
@@ -172,3 +171,13 @@ function getFeatureFlagShowFastTrackCheckbox() {
 function getFeatureFlagShowFastTrackStatus() {
   return process.env.FEATURE_FLAG_SHOW_FAST_TRACK_STATUS === 'ON';
 }
+
+console.log(
+  'BUILD FEATURE_FLAG_SELF_SERVICE:',
+  process.env.FEATURE_FLAG_SELF_SERVICE,
+);
+
+console.log(
+  'BUILD FEATURE_FLAG_SHOW_FAST_TRACK_CHECKBOX:',
+  process.env.FEATURE_FLAG_SHOW_FAST_TRACK_CHECKBOX,
+);
