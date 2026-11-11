@@ -87,6 +87,15 @@ jobs:
           HD_TENANT_ID: ${{ secrets.TENANT_ID }}
           HD_TOKEN_PATH: ${{ secrets.TOKEN_PATH }}
           HD_ZAP_TOKEN_SECRET: ${{ secrets.ZAP_TOKEN_SECRET }}
+      - name: Log environment values
+        run: |
+          echo "SVR - HD_SHOW_FAST_TRACK_CHECKBOX=$HD_SHOW_FAST_TRACK_CHECKBOX"
+          echo "SVR - HD_FEATURE_FLAG_SELF_SERVICE=$HD_FEATURE_FLAG_SELF_SERVICE"
+          echo "GH SVR - HD_SHOW_FAST_TRACK_CHECKBOX: ${{vars.FEATURE_FLAG_SHOW_FAST_TRACK_CHECKBOX}}"
+          echo ""GH SVR - HD_FEATURE_FLAG_SELF_SERVICE: ${{ vars.FEATURE_FLAG_SELF_SERVICE }}
+        env:
+          HD_SHOW_FAST_TRACK_CHECKBOX: "ON"
+          HD_FEATURE_FLAG_SELF_SERVICE: ${{ vars.FEATURE_FLAG_SELF_SERVICE }}
   deploy-client:
     name: 🛫 Deploy client
     needs: [test-client, deploy-server]
@@ -130,3 +139,9 @@ jobs:
           --site ${{secrets.NETLIFY_SITE_ID}} \
           --auth ${{secrets.NETLIFY_AUTH_TOKEN}} \
           --message "${{ github.event.head_commit.message }}"
+      - name: Log environment values
+        run: |
+          echo "CLI  - SHOW_FAST_TRACK_CHECKBOX=$SHOW_FAST_TRACK_CHECKBOX"
+          echo "CLI  - FEATURE_FLAG_SELF_SERVICE: $FEATURE_FLAG_SELF_SERVICE"
+          echo "GH - CLI  - FEATURE_FLAG_SELF_SERVICE: ${{ vars.FEATURE_FLAG_SELF_SERVICE }}"
+          echo "GH - CLI  - SHOW_FAST_TRACK_CHECKBOX: ${{ vars.SHOW_FAST_TRACK_CHECKBOX }}"
