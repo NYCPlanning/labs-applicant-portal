@@ -91,8 +91,8 @@ jobs:
         run: |
           echo "SVR - HD_SHOW_FAST_TRACK_CHECKBOX=$HD_SHOW_FAST_TRACK_CHECKBOX"
           echo "SVR - HD_FEATURE_FLAG_SELF_SERVICE=$HD_FEATURE_FLAG_SELF_SERVICE"
-          echo "GH SVR - HD_SHOW_FAST_TRACK_CHECKBOX: ${{vars.FEATURE_FLAG_SHOW_FAST_TRACK_CHECKBOX}}"
-          echo ""GH SVR - HD_FEATURE_FLAG_SELF_SERVICE: ${{ vars.FEATURE_FLAG_SELF_SERVICE }}
+          echo "GH SVR - HD_SHOW_FAST_TRACK_CHECKBOX=${{vars.FEATURE_FLAG_SHOW_FAST_TRACK_CHECKBOX}}"
+          echo ""GH SVR - HD_FEATURE_FLAG_SELF_SERVICE=${{ vars.FEATURE_FLAG_SELF_SERVICE }}
         env:
           HD_SHOW_FAST_TRACK_CHECKBOX: "ON"
           HD_FEATURE_FLAG_SELF_SERVICE: ${{ vars.FEATURE_FLAG_SELF_SERVICE }}
@@ -106,7 +106,7 @@ jobs:
     env:
       FEATURE_FLAG_EXCLUDE_FROM_SEARCH_RESULTS: ${{vars.FEATURE_FLAG_EXCLUDE_FROM_SEARCH_RESULTS}}
       FEATURE_FLAG_SELF_SERVICE: "ON"
-      HD_SHOW_FAST_TRACK_CHECKBOX: "ON"
+      SHOW_FAST_TRACK_CHECKBOX: "ON"
       FEATURE_FLAG_PHISHING_WARNING: ${{ vars.FEATURE_FLAG_PHISHING_WARNING }}
       FEATURE_FLAG_SHOW_SANDBOX_WARNING: ${{vars.FEATURE_FLAG_SHOW_SANDBOX_WARNING}}
       HOST: ${{ vars.ZAP_API_HOST }}
@@ -125,6 +125,12 @@ jobs:
       - name: Install application dependencies
         working-directory: client
         run: yarn install --immutable --immutable-cache --check-cache
+      - name: Log client environment values
+        run: |
+          echo "CLIENT - FEATURE_FLAG_SELF_SERVICE=$FEATURE_FLAG_SELF_SERVICE"
+          echo "CLIENT - FEATURE_FLAG_SHOW_FAST_TRACK_CHECKBOX=$FEATURE_FLAG_SHOW_FAST_TRACK_CHECKBOX"
+          echo "GH - FEATURE_FLAG_SELF_SERVICE=${{ vars.FEATURE_FLAG_SELF_SERVICE }}"
+          echo "GH - FEATURE_FLAG_SHOW_FAST_TRACK_CHECKBOX=${{ vars.FEATURE_FLAG_SHOW_FAST_TRACK_CHECKBOX }}"
       - name: Build client
         working-directory: client
         run: yarn run build --environment=production
@@ -139,9 +145,3 @@ jobs:
           --site ${{secrets.NETLIFY_SITE_ID}} \
           --auth ${{secrets.NETLIFY_AUTH_TOKEN}} \
           --message "${{ github.event.head_commit.message }}"
-      - name: Log environment values
-        run: |
-          echo "CLI  - SHOW_FAST_TRACK_CHECKBOX=$SHOW_FAST_TRACK_CHECKBOX"
-          echo "CLI  - FEATURE_FLAG_SELF_SERVICE: $FEATURE_FLAG_SELF_SERVICE"
-          echo "GH - CLI  - FEATURE_FLAG_SELF_SERVICE: ${{ vars.FEATURE_FLAG_SELF_SERVICE }}"
-          echo "GH - CLI  - SHOW_FAST_TRACK_CHECKBOX: ${{ vars.SHOW_FAST_TRACK_CHECKBOX }}"
