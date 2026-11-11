@@ -174,10 +174,10 @@ function getFeatureFlagShowFastTrackStatus() {
 
 console.log(
   'BUILD FEATURE_FLAG_SELF_SERVICE:',
-  process.env.FEATURE_FLAG_SELF_SERVICE
+  process.env.FEATURE_FLAG_SELF_SERVICE,
 );
 
 console.log(
   'BUILD FEATURE_FLAG_SHOW_FAST_TRACK_CHECKBOX:',
-  process.env.FEATURE_FLAG_SHOW_FAST_TRACK_CHECKBOX
+  process.env.FEATURE_FLAG_SHOW_FAST_TRACK_CHECKBOX,
 );
