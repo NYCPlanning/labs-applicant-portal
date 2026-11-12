@@ -4,25 +4,50 @@
   ignore = "/bin/false"
 
 # production
-[context.master]
-  environment = { HOST="https://applicant-portal.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-production', MAINTENANCE_START='11/14/22 22:00', MAINTENANCE_END='11/15/22 13:00' }
+[context.master.environment]
+  HOST = "https://applicant-portal.herokuapp.com"
+  NYCID_CLIENT_ID = 'applicant-portal-production'
+  MAINTENANCE_START = '11/14/22 22:00'
+  MAINTENANCE_END = '11/15/22 13:00'
 
 # staging
-[context.staging]
-  environment = { HOST="https://applicant-portal-staging.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-staging', NYCID_DOMAIN='https://accounts-nonprd.nyc.gov', MAINTENANCE_START='06/01/22 15:00', MAINTENANCE_END='06/01/22 16:00' }
+[context.staging.environment]
+  HOST = "https://applicant-portal-staging.herokuapp.com"
+  NYCID_CLIENT_ID = 'applicant-portal-staging'
+  NYCID_DOMAIN = 'https://accounts-nonprd.nyc.gov'
+  MAINTENANCE_START = '06/01/22 15:00'
+  MAINTENANCE_END = '06/01/22 16:00'
 
 # qa team
-[context.qa]
-  environment = { HOST="https://applicant-portal-qa.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-qa', NYCID_DOMAIN='https://accounts-nonprd.nyc.gov', MAINTENANCE_START='06/01/22 15:00', MAINTENANCE_END='06/01/22 16:00' }
+[context.qa.environment]
+  HOST = "https://applicant-portal-qa.herokuapp.com"
+  NYCID_CLIENT_ID = 'applicant-portal-qa'
+  NYCID_DOMAIN = 'https://accounts-nonprd.nyc.gov'
+  MAINTENANCE_START = '06/01/22 15:00'
+  MAINTENANCE_END = '06/01/22 16:00'
 
 # training
-[context.training]
-  environment = { HOST="https://applicant-portal-training.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-training', NYCID_DOMAIN='https://accounts-nonprd.nyc.gov', MAINTENANCE_START='06/01/22 15:00', MAINTENANCE_END='06/01/22 16:00' }
+[context.training.environment]
+  HOST = "https://applicant-portal-training.herokuapp.com"
+  NYCID_CLIENT_ID = 'applicant-portal-training'
+  NYCID_DOMAIN = 'https://accounts-nonprd.nyc.gov'
+  MAINTENANCE_START = '06/01/22 15:00'
+  MAINTENANCE_END = '06/01/22 16:00'
 
 # develop
-[context.develop]
-  environment = { HOST="https://applicant-portal-develop.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-develop', NYCID_DOMAIN='https://accounts-nonprd.nyc.gov', MAINTENANCE_START='06/01/22 15:00', MAINTENANCE_END='06/01/22 16:00' }
+[context.develop.environment]
+  HOST = "https://applicant-portal-develop.herokuapp.com"
+  NYCID_CLIENT_ID = 'applicant-portal-develop'
+  NYCID_DOMAIN = 'https://accounts-nonprd.nyc.gov'
+  MAINTENANCE_START = '06/01/22 15:00'
+  MAINTENANCE_END = '06/01/22 16:00'
+  NYCID_OIDC_ENDPOINT = "https://nonprd-login.nyc.gov/oidc/op/v1.0/3_DkZigi2v_eW7z-cZt8PAw-cYWQYg2d8VqABUFRZUhhzxNAdwR5brLl_h8Hqbo7Bm"
+  NYCID_RELYING_PARTY_CLIENT_ID='0w6K_AXocsT2ABdwUC0tpkFV'
 
 # deploy-preview
-[context.deploy-preview]
- environment = { HOST="https://applicant-portal-develop.herokuapp.com", NYCID_CLIENT_ID='applicant-portal-develop', NYCID_DOMAIN='https://accounts-nonprd.nyc.gov', MAINTENANCE_START='06/01/22 15:00', MAINTENANCE_END='06/01/22 16:00' }
+[context.deploy-preview.environment]
+  HOST = "https://applicant-portal-develop.herokuapp.com"
+  NYCID_CLIENT_ID = 'applicant-portal-develop'
+  NYCID_DOMAIN = 'https://accounts-nonprd.nyc.gov'
+  MAINTENANCE_START = '06/01/22 15:00'
+  MAINTENANCE_END = '06/01/22 16:00'

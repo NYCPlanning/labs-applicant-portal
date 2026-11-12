@@ -18,31 +18,35 @@ export class AppController {
   ) {}
 
   @Get('/login')
-  async login(@Res() res: Response, @Query('accessToken') NYCIDToken: string) {
+  async login(
+    @Query("code") code: string,
+    @Query("codeVerifier") codeVerifier: string,
+    @Query("redirectUri") redirectUri: string,
+    @Res() res
+  ) {
     try {
-      const ZAPToken = await this.authService.generateNewToken(NYCIDToken);
-      const { contactId } =
-        await this.authService.validateCurrentToken(ZAPToken);
-      const { emailaddress1 } =
-        await this.contactService.findOneById(contactId);
-
-      res.send({
+      const {
+        ZAPToken,
+        idTokenClaims
+      } = await this.authService.generateNewTokenFromCode(
+        code,
+        codeVerifier,
+        redirectUri
+      );
+      const { email, sub, given_name, family_name } = idTokenClaims;
+      
+      res.status(HttpStatus.OK).json({
         access_token: ZAPToken,
-        emailaddress1,
-        contactId,
+        nycid: { email, sub, given_name, family_name }
       });
     } catch (e) {
+      console.log("ERROR GENERATING TOKEN", e);
       if (e instanceof HttpException) {
-        throw e;
+        res.status(e.getStatus()).send({ errors: [e] });
       } else {
-        const error = {
-          code: 'LOGIN_ERROR',
-          title: 'Failed to login',
-          detail: 'An unknown error occured while authenticating user',
-        };
-        console.log(error);
-        throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        res.status(500).send({ errors: [e] });
       }
     }
   }
+   
 }
