@@ -159,9 +159,9 @@ function getFeatureFlagExcludeFromSearchResults() {
   return process.env.FEATURE_FLAG_EXCLUDE_FROM_SEARCH_RESULTS === 'ON';
 }
 
-function getFeatureFlagShowFastTrackCheckbox() {
-  return process.env.FEATURE_FLAG_SHOW_FAST_TRACK_CHECKBOX === 'ON';
-}
+// function getFeatureFlagShowFastTrackCheckbox() {
+//   return process.env.FEATURE_FLAG_SHOW_FAST_TRACK_CHECKBOX === 'ON';
+// }
 
 function getFeatureFlagShowFastTrackStatus() {
   return process.env.FEATURE_FLAG_SHOW_FAST_TRACK_STATUS === 'ON';
