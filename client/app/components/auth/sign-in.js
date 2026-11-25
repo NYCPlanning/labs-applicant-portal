@@ -22,8 +22,9 @@ export default class AuthSignInComponent extends Component {
   @action
   async startLogin(loginEmail, event) {
     event.preventDefault();
-
+    console.log("startLogin", loginEmail);
     this.isLoginStarted = true;
+
 
     const {
       isNycidValidated,

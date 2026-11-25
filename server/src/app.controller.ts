@@ -27,17 +27,21 @@ export class AppController {
     try {
       const {
         ZAPToken,
-        idTokenClaims
+        idTokenClaims,
+        contactId
       } = await this.authService.generateNewTokenFromCode(
         code,
         codeVerifier,
         redirectUri
       );
+
+      console.log("idTokenClaims", idTokenClaims);
       const { email, sub, given_name, family_name } = idTokenClaims;
       
       res.status(HttpStatus.OK).json({
         access_token: ZAPToken,
-        nycid: { email, sub, given_name, family_name }
+        nycid: { email, sub, given_name, family_name },
+        contactId: contactId
       });
     } catch (e) {
       console.log("ERROR GENERATING TOKEN", e);

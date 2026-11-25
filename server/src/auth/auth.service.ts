@@ -156,6 +156,7 @@ export class AuthService {
     return {
       ZAPToken,
       idTokenClaims,
+      contactId: contactid,
     };
   }
 
