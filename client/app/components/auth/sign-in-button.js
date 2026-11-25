@@ -19,7 +19,7 @@ export default class SignInButtonComponent extends Component {
       + `&redirect_uri=${redirectUri}`
       + '&code_challenge_method=S256'
       + `&code_challenge=${codeChallenge}`
-      + '&scope=openid%20email';
+      + '&scope=openid%20email%20profile%20uid';
     console.log('ENV.NYCIDLocation', loginLocation);
     window.location.assign(loginLocation);
   }

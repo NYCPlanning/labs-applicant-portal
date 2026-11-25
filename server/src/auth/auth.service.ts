@@ -135,6 +135,18 @@ export class AuthService {
       email_verified,
     } = idTokenClaims;
 
+    // Without an email we can't match a CRM contact, and lookupContact
+    // would create a blank one. Stop the login instead.
+    if (!email) {
+      const error = {
+        code: 'NYCID_MISSING_EMAIL',
+        title: 'Could not complete NYC.ID login',
+        detail: 'NYC.ID did not provide an email address for this user.',
+      };
+      console.log(error);
+      throw new HttpException(error, HttpStatus.UNAUTHORIZED);
+    }
+
     const { contactid } = await this.lookupContact({
       email,
       GUID,
@@ -168,7 +180,7 @@ export class AuthService {
     code: string,
     codeVerifier: string,
     redirectUri: string,
-  ): Promise<JwtPayload> {
+  ): Promise<any> {
     const {
       NYCID_OIDC_ENDPOINT,
       NYCID_RELYING_PARTY_CLIENT_ID,
@@ -218,7 +230,53 @@ export class AuthService {
       throw new HttpException(error, HttpStatus.UNAUTHORIZED);
     }
 
-    return this.verifyNYCIDIdToken(tokenResponse.id_token);
+    const idTokenClaims = await this.verifyNYCIDIdToken(tokenResponse.id_token);
+
+    // NYC.ID's ID token only identifies the token (sub, aud, exp...).
+    // The user's details (email, GUID, names) come from the userinfo endpoint.
+    const userInfo = await this.fetchNYCIDUserInfo(tokenResponse.access_token);
+
+    // OIDC spec: userinfo must describe the same user as the ID token
+    if (userInfo.sub !== idTokenClaims.sub) {
+      const error = {
+        code: 'NYCID_USERINFO_MISMATCH',
+        title: 'Could not complete NYC.ID login',
+        detail: 'NYC.ID user info does not match the ID token.',
+      };
+      console.log(error);
+      throw new HttpException(error, HttpStatus.UNAUTHORIZED);
+    }
+
+    return {
+      ...idTokenClaims,
+      ...userInfo,
+    };
+  }
+
+  /**
+   * Gets the user's profile details (email, GUID, names) from NYC.ID,
+   * using the access token returned by the token endpoint.
+   * Which fields come back depends on the scopes the client requested.
+   */
+  private async fetchNYCIDUserInfo(accessToken: string): Promise<any> {
+    try {
+      const request = superagent
+        .get(`${this.NYCID_OIDC_ENDPOINT}/userinfo`)
+        .set('Authorization', `Bearer ${accessToken}`);
+
+      if (this.FIXIE_URL) request.proxy(this.FIXIE_URL);
+
+      return (await request).body;
+    } catch (e) {
+      const error = {
+        code: 'NYCID_USERINFO_FAILED',
+        title: 'Could not complete NYC.ID login',
+        detail: 'Could not get user details from NYC.ID.',
+        meta: (e as any).response?.body,
+      };
+      console.log(error);
+      throw new HttpException(error, HttpStatus.UNAUTHORIZED);
+    }
   }
 
   /**

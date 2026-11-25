@@ -6,12 +6,8 @@ import ENV from '../../config/environment';
 export default class DoLogout extends Component {
   @service session;
 
-  get nycIDHost() {
-    const { origin } = new URL(ENV.NYCIDLocation || this.origin);
-
-    return `${origin}/account/idpLogout.htm?x-frames-allow-from=${this.origin}`;
-  }
-
+  nycidLogoutBaseUrl = ENV.NYCID_LOGOUT_BASE_URL;
+  
   origin = window.location.origin;
 
   iFrameDidLoad = false;

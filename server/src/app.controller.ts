@@ -37,11 +37,14 @@ export class AppController {
 
       console.log("idTokenClaims", idTokenClaims);
       const { email, sub, given_name, family_name } = idTokenClaims;
-      
+      const { emailaddress1 } =
+        await this.contactService.findOneById(contactId);
+
       res.status(HttpStatus.OK).json({
         access_token: ZAPToken,
         nycid: { email, sub, given_name, family_name },
-        contactId: contactId
+        contactId: contactId,
+        emailaddress1,
       });
     } catch (e) {
       console.log("ERROR GENERATING TOKEN", e);
