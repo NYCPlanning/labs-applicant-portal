@@ -1,3 +1,7 @@
+const NYCID_RELYING_PARTY_CLIENT_ID = process.env.NYCID_RELYING_PARTY_CLIENT_ID || '0w6K_AXocsT2ABdwUC0tpkFV';
+const NYCID_OIDC_ENDPOINT = process.env.NYCID_OIDC_ENDPOINT || 'https://nonprd-login.nyc.gov/oidc/op/v1.0/3_DkZigi2v_eW7z-cZt8PAw-cYWQYg2d8VqABUFRZUhhzxNAdwR5brLl_h8Hqbo7Bm';
+const NYCID_LOGOUT_BASE_URL = process.env.NYCID_LOGOUT_BASE_URL || 'https://accounts-nonprd.nyc.gov/account';
+
 module.exports = function(environment) {
   const ENV = {
     modulePrefix: 'client',
@@ -5,8 +9,9 @@ module.exports = function(environment) {
     rootURL: '/',
     locationType: 'auto',
     host: getHost(environment),
+    NYCID_LOGOUT_BASE_URL,
     NYCIDDomain: getOAuthDomain(environment),
-    NYCIDLocation: getOAuthLoginEndpoint(environment),
+    NYCIDLocation: `${NYCID_OIDC_ENDPOINT}/authorize?response_type=code&client_id=${NYCID_RELYING_PARTY_CLIENT_ID}`,
     maintenanceTimes: getMaintenanceTimes(),
     EmberENV: {
       FEATURES: {
@@ -103,33 +108,36 @@ function getOAuthDomain(environment) {
   return '';
 }
 
-function getOAuthLoginEndpoint(environment) {
-  const { NYCID_CLIENT_ID, HOST } = process.env;
+// function getOAuthLoginEndpoint(environment) {
+//   const { NYCID_CLIENT_ID, HOST, NYCID_OIDC_ENDPOINT, NYCID_RELYING_PARTY_CLIENT_ID } = process.env;
 
-  const DOMAIN = getOAuthDomain(environment);
+//   const DOMAIN = getOAuthDomain(environment);
+//   console.log("NYCID_CLIENT_ID", NYCID_CLIENT_ID);
+//   console.log("NYCID_OIDC_ENDPOINT", NYCID_OIDC_ENDPOINT);
+//   // plain local development, no local backing server
+//   if (environment === 'development' && !HOST) {
+//     console.log("doesn't have a host");
+//     return `${DOMAIN}/login#access_token=test`;
+//   }
 
-  // plain local development, no local backing server
-  if (environment === 'development' && !HOST) {
-    return `${DOMAIN}/login#access_token=test`;
-  }
+//   // if we're running locally and a HOST is provided
+//   if (environment === 'development' && HOST) {
+//     console.log("has a host");
+//     const NYCID_CLIENT_ID_LOCAL = 'applicant-portal-local';
 
-  // if we're running locally and a HOST is provided
-  if (environment === 'development' && HOST) {
-    const NYCID_CLIENT_ID_LOCAL = 'applicant-portal-local';
+//     return `${NYCID_OIDC_ENDPOINT}/authorize?response_type=code&client_id=${NYCID_RELYING_PARTY_CLIENT_ID}`;
+//   }
 
-    return `${DOMAIN}/account/api/oauth/authorize.htm?response_type=token&client_id=${NYCID_CLIENT_ID_LOCAL}`;
-  }
+//   if (environment === 'production') {
+//     return `${DOMAIN}/account/api/oauth/authorize.htm?response_type=token&client_id=${NYCID_CLIENT_ID}`;
+//   }
 
-  if (environment === 'production') {
-    return `${DOMAIN}/account/api/oauth/authorize.htm?response_type=token&client_id=${NYCID_CLIENT_ID}`;
-  }
+//   if (environment === 'test') {
+//     return '';
+//   }
 
-  if (environment === 'test') {
-    return '';
-  }
-
-  return '';
-}
+//   return '';
+// }
 
 function getMaintenanceTimes() {
   const {

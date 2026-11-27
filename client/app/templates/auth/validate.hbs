@@ -13,7 +13,7 @@
 </p>
 
 <a
-  href="{{get-env-variable 'NYCIDDomain'}}/account/validateEmail.htm?emailAddress={{this.loginEmail}}&target={{nycid-target url=(get-env-variable 'NYCIDLocation')}}"
+  href="{{get-env-variable 'NYCIDDomain'}}/account/validateEmail.htm?emailAddress={{this.loginEmail}}&target={{nycid-target url=(concat (window-object 'location.origin') '/auth/login')}}"
   class="button text-weight-bold"
   rel="noreferrer noopener"
 >
