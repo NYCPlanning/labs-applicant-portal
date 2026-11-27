@@ -93,7 +93,7 @@
 
 You’ve been added as an editor of the project, {{@projectName}}. To access this projects, you’ll need to create an NYC.ID account with the email address {{@emailAddress}}.
 
-{{get-env-variable 'NYCIDDomain'}}/account/register.htm?disableEmail=true&emailAddress={{@emailAddress}}&hideSecurityQuestionFields=true&target={{nycid-target url=(get-env-variable 'NYCIDLocation')}}
+{{get-env-variable 'NYCIDDomain'}}/account/register.htm?disableEmail=true&emailAddress={{@emailAddress}}&hideSecurityQuestionFields=true&target={{nycid-target url=(concat (window-object 'location.origin') '/auth/login')}}
   </textarea>
 
   <div class="grid-x">

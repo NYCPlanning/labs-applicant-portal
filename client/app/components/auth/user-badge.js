@@ -17,10 +17,10 @@ export default class UserBadgeComponent extends Component {
   }
 
   get userProfileURI() {
-    const { origin } = new URL(ENV.NYCIDLocation || 'https://accounts-nonprd.nyc.gov');
-    console.log('SLDKFJLSKDJ', `${origin}/account/user/profile.htm?returnOnSave=true&target=${encodeToBase64(this.redirectTarget)}`)
+    const { NYCIDDomain } = ENV;
+
     // base64 is a requirement of NYC.ID — target value must be Base64-encoded
-    return `${origin}/account/user/profile.htm?returnOnSave=true&target=${encodeToBase64(this.redirectTarget)}`;
+    return `${NYCIDDomain}/account/user/profile.htm?returnOnSave=true&target=${encodeToBase64(this.redirectTarget)}`;
   }
 
   @action
